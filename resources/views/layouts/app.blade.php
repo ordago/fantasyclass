@@ -17,6 +17,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <div id="app">
@@ -72,7 +76,7 @@
         </nav>
         @endauth
 
-        <main class="py-4">
+        <main class="">
             @yield('content')
         </main>
     </div>

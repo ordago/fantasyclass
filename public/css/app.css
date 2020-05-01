@@ -12180,7 +12180,7 @@ h1.card-text {
 
 /* Bottstrap */
 
-.form-conrol {
+.form-control {
   display: flex;
   flex-grow: 1;
 }
@@ -14147,11 +14147,6 @@ details.card > summary::-webkit-details-marker {
   max-width: 500px;
   margin: 0 auto 0;
   padding: 30px;
-  border-top-left-radius: 3px;
-  border-top-right-radius: 3px;
-  border-bottom-left-radius: 3px;
-  border-bottom-right-radius: 3px;
-  text-align: center;
 }
 
 .cardShadow {
@@ -14283,7 +14278,6 @@ details.card > summary::-webkit-details-marker {
 .container {
   position: relative;
   z-index: 1;
-  max-width: 300px;
   margin: 0 auto;
 }
 

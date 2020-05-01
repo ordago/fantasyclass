@@ -8,7 +8,7 @@
   <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <div class="col-md-12">
                     <input id="email" type="email" placeholder="{{ __('E-Mail Address') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div class="form-group row mb-2">
                 <div class="col-md-12">
                     <input id="password" type="password" placeholder="{{ __('Password') }}" class="form-control p-4 mb-1 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
@@ -42,15 +42,21 @@
 
             <div class="form-group row mb-0 mt-0">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary">
-                        {{ __('Login') }}
+                    <button type="submit" class="btn btn-primary mb-2">
+                        <i class="far fa-lock-open-alt"></i> {{ __('Login') }}
                     </button>
-
-                    @if (Route::has('password.request'))
-                        <a class="btn btn-link" href="{{ route('password.request') }}">
-                            {{ __('Forgot Your Password?') }}
-                        </a>
-                    @endif
+                    <button class="btn buttonLogin" onclick="window.location.href='../oauth2callback.php?redirect=fantasyclass.gamifica.online&admin=1'"><i class="fab fa-google"></i> Google login</button>
+                    <div class="d-flex align-items-center">
+                        @if (Route::has('register'))
+                            <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        @endif
+                        <i class="fal fa-ellipsis-v pt-1"></i>
+                        @if (Route::has('password.request'))
+                            <a class="nav-link" href="{{ route('password.request') }}">
+                                {{ __('Forgot Your Password?') }}
+                            </a>
+                        @endif
+                    </div>
                 </div>
             </div>
         </form>
