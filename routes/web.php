@@ -17,6 +17,7 @@ Route::get('/', function () {
 });
 */
 Route::get('/', 'HomeController@index')->name('home');
+Route::get('/classroom/create', 'ClassroomController@create');
 
 Auth::routes(['verify' => true]);
 

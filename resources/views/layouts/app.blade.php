@@ -21,6 +21,9 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
+      <!-- Mobile -->
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
 </head>
 <body>
     <div id="app">
@@ -76,7 +79,7 @@
         </nav>
         @endauth
 
-        <main class="">
+        <main class="my-3">
             @yield('content')
         </main>
     </div>

@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    <a href="/classroom/create">__{{ 'Create Classroom' }}</a>
                 </div>
             </div>
         </div>
