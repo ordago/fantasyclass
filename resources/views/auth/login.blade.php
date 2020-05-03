@@ -4,13 +4,12 @@
 <h1 class="fantasyTitle">FantasyClass</h1>
 <div class="form cardShadow rounded">
   <div class="thumbnail"><img src="img/logo.svg" width="200px"/></div>
-
   <form method="POST" action="{{ route('login') }}">
             @csrf
 
             <div class="form-group row mb-2">
                 <div class="col-md-12">
-                    <input id="email" type="email" placeholder="{{ __('E-Mail Address') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                    <input id="email" type="email" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                     @error('email')
                         <span class="invalid-feedback" role="alert">
