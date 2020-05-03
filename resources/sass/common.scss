@@ -3,7 +3,10 @@
     font-family: logo;
     src: url(/fonts/wizzta.otf);
   }
-  
+  .fullScreen.modal-lg {
+    max-width: 100%!important;
+  }
+
   .noselect {
     -webkit-touch-callout: none;
   

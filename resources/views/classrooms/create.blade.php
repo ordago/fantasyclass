@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-  <div class="modal-dialog fullScreen modal-lg">
+  <div class="modal-dialog fullScreen modal-lg p-2 m-2">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="wizard-title"><i class="fal fa-chalkboard-teacher"></i> Classroom Wizard</h5>
@@ -126,5 +125,4 @@
       </div>
     </div>
   </div>
-</div>
 @endsection
