@@ -3,7 +3,7 @@
     font-family: logo;
     src: url(/fonts/wizzta.otf);
   }
-  .fullScreen.modal-lg {
+  .full-screen.modal-lg {
     max-width: 100%!important;
   }
 
@@ -54,11 +54,11 @@
     padding: 30px;
   }
   
-  .cardShadow {
+  .card-shadow {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
   }
   
-  .cardShadowS {
+  .card-shadow-s {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.19), 0 2px 2px rgba(0, 0, 0, 0.23);
   }
   
@@ -212,11 +212,6 @@
         color: #4d4d4d;
         font-size: 12px;
   
-        a {
-          color: #000000;
-          text-decoration: none;
-        }
-  
         .fa {
           color: #EF3B3A;
         }
@@ -233,6 +228,11 @@
     display: grid;
     grid-gap: .25em .25em;
     grid-auto-flow: row dense;
+  }
+ 
+  .grid4g {
+      grid-gap: .5em .5em;
+      grid-template-columns: 24.6% 24.6% 24.6% 24.6%;
   }
   
   .grid3g {
@@ -362,7 +362,7 @@
   
   /*Duotone */
   
-  .menuLabels {
+  .menu-labels {
     .fad {
       --fa-primary-color:#fff;
       --fa-secondary-color:#fff;
@@ -1310,20 +1310,9 @@
     border-radius: 5px;
   }
   
-  .settings_top {
-    a {
-      &:link, &:visited {
-        color: #575757;
-      }
-    }
-  
-    .set_top {
-      &:hover {
-        color: #575757;
-      }
-  
-      color: #575757;
-      font-weight: bold;
+  .resources a, .right-menu-bar a {
+    &:link, &:visited, &:hover {
+      color: white;
     }
   }
   
@@ -1615,10 +1604,13 @@
     width: 32px;
   }
   
-  .resources a {
-    &:link, &:visited {
+  .resources a, .right-menu-bar a {
+    &:link, &:visited, &:hover {
       color: white;
     }
+  }
+  .right-menu-bar a:hover {
+    color: white;
   }
   
   .resource {

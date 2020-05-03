@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="form cardShadow my-4 p-5 rounded">
+<div class="form card-shadow-s my-4 p-5 rounded">
         <div class="text-center pb-4">
                 <img src="img/logo.svg" width="100px"/>
         </div>

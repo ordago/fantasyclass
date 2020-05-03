@@ -408,13 +408,7 @@ span.round-tab:hover {
 }
 
 .card-body {
-  a {
-    color: black !important;
 
-    &:link, &:hover {
-      color: black !important;
-    }
-  }
 
   p {
     color: black !important;
@@ -439,7 +433,7 @@ span.round-tab:hover {
 
 /********* Menú ***********/
 
-.menuLabels {
+.menu-labels {
   .fad {
     --fa-primary-color:#555;
     --fa-secondary-color:#555;
@@ -452,10 +446,7 @@ span.round-tab:hover {
     --fa-secondary-opacity:0.5;
   }
 
-  position: fixed;
   width: 100%;
-  left: 0;
-  top: 0;
   background-color: #f7f7f7;
   z-index: 12;
 
@@ -471,28 +462,36 @@ span.round-tab:hover {
     }
 
     &:hover {
-      span {
-        /*  display: initial;
-          width: auto;*/
-      }
-
       background-color: #fafafa;
-      border-left: 1px solid #aaa;
-      border-right: 1px solid #aaa;
       border-radius: 0;
       cursor: pointer;
     }
   }
 
-  > * {
-    margin: 10px auto 10px auto;
-  }
-
   > label.selected {
-    color: #555;
+    color: $dark;
     border-right: 2px solid darkorange;
     border-left: 2px solid darkorange;
   }
+
+  > label {
+    background-color: transparent;
+    box-sizing: border-box;
+    color: $dark;
+    display: inline-block;
+    height: 100%;
+    margin: 0;
+    text-align: center;
+    width: auto;
+    border-left: 1px solid #f7f7f7;
+    border-right: 1px solid #f7f7f7;
+  }
+
+  span {
+    color: $dark;
+  }
+
+  height: 60px;
 }
 
 .login_container label {
@@ -508,40 +507,20 @@ span.round-tab:hover {
   width: auto;
 }
 
-.menuLabels {
-  > label {
-    background-color: transparent;
-    box-sizing: border-box;
-    color: #555;
-    display: inline-block;
-    font-weight: 600;
-    padding: 20px 16px;
-    height: 100%;
-    margin: 0;
-    text-align: center;
-    width: auto;
-    border-left: 1px solid #f7f7f7;
-    border-right: 1px solid #f7f7f7;
-  }
 
-  span {
-    color: #555;
-  }
-}
-
-.rightMenuBar {
+.right-menu-bar {
   position: absolute;
   top: 0;
   right: 0;
   color: #fff;
   display: flex;
   margin: 0;
+  height: 60px;
 }
 
-.settingsMenu {
+.settings-menu {
   height: 100%;
   margin: 0;
-  padding: 10px;
   border-top-left-radius: 7px;
   border-bottom-left-radius: 7px;
   background-color: #888;
@@ -587,7 +566,7 @@ span.round-tab:hover {
   color: #fff !important;
 }
 
-.menuLabels .rightMenuBar .fad {
+.menu-labels .rightMenuBar .fad {
   --fa-primary-color:#fff;
   --fa-secondary-color:#fff;
   --fa-secondary-opacity:0.7;
@@ -1947,10 +1926,6 @@ h1:before, label:before {
   margin-right: 10px;
 }
 
-.menuLabels > label:not(.selected):hover {
-  color: white;
-  cursor: pointer;
-}
 
 #menuGroups:checked ~ #content1, #menuCards:checked ~ #content2, #menuLevels:checked ~ #content3, #tab4:checked ~ #content4, #tab5:checked ~ #content5, #tab6:checked ~ #content6, #tab7:checked ~ #content7, #tab9:checked ~ #content9, #tab10:checked ~ #mapContent, #tabBadges:checked ~ #sectionBadges, #tab8:checked ~ #content8 {
   display: block;
@@ -1976,14 +1951,6 @@ input {
   }
 }
 
-a, .link {
-  color: #777;
-  font-size: 1.2em;
-  text-align: center;
-  margin-left: 2px;
-  margin-right: 2px;
-  cursor: pointer;
-}
 
 .hpUp {
   background-color: #c8e6c9;
@@ -2000,12 +1967,6 @@ a, .link {
     --fa-primary-color:#777;
     --fa-secondary-color:#aaa;
     --fa-secondary-opacity:1.0;
-  }
-}
-
-a {
-  &:hover, &:visited:hover {
-    color: black;
   }
 }
 
@@ -2389,7 +2350,7 @@ span.input-group-text {
 
 /* ***** Regions * CLASSROOM ********** */
 
-.classroomRoundSub {
+.classroom-round {
   padding: 15px;
   text-align: center;
   border: 1px solid #555;
@@ -2809,7 +2770,7 @@ details.card > summary {
     }
   }
 
-  .menuLabels {
+  .menu-labels {
     height: 60px;
 
     label {
@@ -2847,7 +2808,7 @@ details.card > summary {
     display: none !important;
   }
 
-  .menuLabels:hover {
+  .menu-labels:hover {
     width: 100%;
   }
 
@@ -2905,7 +2866,7 @@ details.card > summary {
     display: none;
   }
 
-  .menuLabels label {
+  .menu-labels label {
     &.selected > span, &:hover > span {
       display: none;
     }
@@ -3106,7 +3067,7 @@ details.card > summary {
     display: none;
   }
 
-  .menuLabels label {
+  .menu-labels label {
     &.selected > span, &:hover > span {
       display: none;
     }
@@ -3143,12 +3104,10 @@ details.card > summary {
     z-index: 100;
   }
 
-  .settingsMenu {
+  .settings-menu {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 50px;
-    height: 50px;
     overflow: hidden;
     border-radius: 0;
     border-top-right-radius: 7px;
@@ -3174,11 +3133,11 @@ details.card > summary {
     left: 20px;
   }
 
-  .settingsMenu .onlyMobile {
+  .settings-menu .onlyMobile {
     display: initial;
   }
 
-  .menuLabels {
+  .menu-labels {
     display: flex;
     align-items: center;
     align-content: center;

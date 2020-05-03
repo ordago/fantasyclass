@@ -16,13 +16,14 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/', 'HomeController@index')->name('home');
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/locale/{locale}', function ($locale) {
-    if (! in_array($locale, ['en', 'es', 'ca'])) {
+// Localization
+Route::get('/locale/{locale}', function ($locale){
+
+    if (! in_array($locale, Config::get('app.locales'))) {
         abort(404);
     }
-    \App::setLocale($locale);
-
-    return back()->withInput();
+    Session::put('locale', $locale);
+    return redirect()->back();
 });
 
 

@@ -1,10 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-2 m-2 grid grid3g">
-  {{ App::getLocale() }}
-    <div class="p-5 bg-light rounded text-center">
-      <a  href="/classrooms/create">Create Classroom</a>
+<div class="p-2 m-2 grid grid4g">
+    <div class="">
+      <h4>
+        <a href="/classrooms/create" class="p-5 bg-light rounded classroom-round  card-shadow-s text-center pointer">Create Classroom</a>
+      </h4>
     </div>
     
     

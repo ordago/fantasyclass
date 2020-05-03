@@ -7,6 +7,9 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+// Fontawesome animation
+@import '~font-awesome-animation/dist/font-awesome-animation.min.css';
+
 // FantasyClass
-@import 'manage';
 @import 'common';
+@import 'manage';
