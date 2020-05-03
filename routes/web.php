@@ -35,6 +35,7 @@ Route::middleware([Localization::class])->group(function () {
     // Classrooms
     Route::get('/classrooms', 'ClassroomsController@index');
     Route::get('/classrooms/create', 'ClassroomsController@create');
+    
 });
 
 

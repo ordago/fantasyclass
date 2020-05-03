@@ -84,10 +84,11 @@
         -->
 
         <nav class="menu-labels card-shadow-s">
-            <label title="FantasyClass" class="classroomSelect mobileHidden pl-5">
-            <img src="/img/logo.png" class="logoImg">
-            <label class="p-3">FantasyClass</label>
-              <div class="right-menu-bar">
+            <div class="d-flex align-items-center h-100">
+                <img src="/img/logo.png" width="48px" height="48px" class="ml-1">
+                <label class="label-title pl-2 m-0">FantasyClass</label>
+            </div>
+            <div class="right-menu-bar">
                     <div class="helpMenu flexCenter tryHide"  data-toggle="popovermenu"  data-tippy-content="Follow">
                         <a href="https://twitter.com/GamificaOnline" target="_blank"><i class="fab fa-twitter"></i></a>
                     </div>

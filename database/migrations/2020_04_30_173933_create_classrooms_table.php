@@ -18,6 +18,7 @@ class CreateClassroomsTable extends Migration
             $table->string('name', 100);
             $table->string('md5', 32);
             $table->string('enrollment_code', 6);
+            $table->unsignedBigInteger('user_id');
             $table->smallInteger('character_theme');
             $table->boolean('configured')->default(0);
             $table->boolean('finished')->default(0);

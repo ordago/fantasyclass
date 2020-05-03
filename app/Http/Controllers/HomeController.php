@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Classes\Queries;
 
 class HomeController extends Controller
 {
@@ -13,6 +14,7 @@ class HomeController extends Controller
     }
     public function index()
     {
-        return view('home');
+        $bg = Queries::getBg();
+        return view('home', compact('bg'));
     }
 }

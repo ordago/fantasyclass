@@ -2,7 +2,7 @@
 
 @section('content')
 <h1 class="fantasyTitle">FantasyClass</h1>
-<div class="form cardShadow rounded">
+<div class="form card-shadow-s rounded">
   <div class="thumbnail"><img src="img/logo.svg" width="200px"/></div>
   <form method="POST" action="{{ route('login') }}">
             @csrf
