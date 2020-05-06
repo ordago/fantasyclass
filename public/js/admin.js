@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -1927,72 +1927,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     console.log('Component mounted.');
-  }
-});
-
-/***/ }),
-
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js&":
-/*!***********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js& ***!
-  \***********************************************************************************************************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['text'],
-  data: function data() {
-    return {
-      next: 'nameAndGoals',
-      elem: null
-    };
-  },
-  methods: {
-    goNextTab: function goNextTab() {
-      var elem = document.getElementById(this.next);
-      var tabElem = document.querySelector('[href="#' + this.next + '"]');
-      elem.classList.remove('active');
-      tabElem.classList.remove('active');
-
-      switch (this.next) {
-        case 'nameAndGoals':
-          this.next = 'cardsPanel';
-          break;
-
-        case 'cardsPanel':
-          this.next = 'levelsPanel';
-          break;
-
-        case 'levelsPanel':
-          this.next = 'themePanel';
-          break;
-
-        case 'themePanel':
-          this.next = 'characterPanel';
-          break;
-
-        case 'characterPanel':
-          this.next = 'infoPanel';
-          break;
-
-        case 'infoPanel':
-          this.next = 'nameAndGoals';
-          break;
-      }
-
-      elem = document.getElementById(this.next);
-      tabElem = document.querySelector('[href="#' + this.next + '"]');
-      elem.classList.add('active');
-      tabElem.classList.add('active');
-    }
   }
 });
 
@@ -37674,43 +37608,6 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098&":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098& ***!
-  \***************************************************************************************************************************************************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-secondary",
-        attrs: { type: "button" },
-        on: { click: _vm.goNextTab }
-      },
-      [
-        _vm._v(" " + _vm._s(_vm.text) + " "),
-        _c("i", { staticClass: "fal fa-chevron-right" })
-      ]
-    )
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-
-
-
-/***/ }),
-
 /***/ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js":
 /*!********************************************************************!*\
   !*** ./node_modules/vue-loader/lib/runtime/componentNormalizer.js ***!
@@ -49894,7 +49791,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-Vue.component('next-step-button', __webpack_require__(/*! ./components/classroom/NextStepButton.vue */ "./resources/js/components/classroom/NextStepButton.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -49960,6 +49856,16 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /***/ (function(module, exports, __webpack_require__) {
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+new Vue({
+  el: '#newClassroom',
+  data: {
+    filter: '',
+    people: ['Jorge', 'Carlos', 'Cinthia']
+  },
+  mounted: function mounted() {
+    console.log("Mounted");
+  }
+});
 
 /***/ }),
 
@@ -50032,96 +49938,15 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/classroom/NextStepButton.vue":
-/*!**************************************************************!*\
-  !*** ./resources/js/components/classroom/NextStepButton.vue ***!
-  \**************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NextStepButton.vue?vue&type=template&id=398a8098& */ "./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098&");
-/* harmony import */ var _NextStepButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NextStepButton.vue?vue&type=script&lang=js& */ "./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
-
-
-
-
-
-/* normalize component */
-
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _NextStepButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
-  false,
-  null,
-  null,
-  null
-  
-)
-
-/* hot reload */
-if (false) { var api; }
-component.options.__file = "resources/js/components/classroom/NextStepButton.vue"
-/* harmony default export */ __webpack_exports__["default"] = (component.exports);
-
-/***/ }),
-
-/***/ "./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js&":
-/*!***************************************************************************************!*\
-  !*** ./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js& ***!
-  \***************************************************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NextStepButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./NextStepButton.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/classroom/NextStepButton.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_NextStepButton_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
-
-/***/ }),
-
-/***/ "./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098&":
-/*!*********************************************************************************************!*\
-  !*** ./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098& ***!
-  \*********************************************************************************************/
-/*! exports provided: render, staticRenderFns */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./NextStepButton.vue?vue&type=template&id=398a8098& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/classroom/NextStepButton.vue?vue&type=template&id=398a8098&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__["render"]; });
-
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NextStepButton_vue_vue_type_template_id_398a8098___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
-
-
-
-/***/ }),
-
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*****************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/js/classroom.js ./resources/sass/app.scss ***!
-  \*****************************************************************************************/
+/***/ 2:
+/*!***************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/js/classroom.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\js\classroom.js */"./resources/js/classroom.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\js\classroom.js */"./resources/js/classroom.js");
 
 
 /***/ })

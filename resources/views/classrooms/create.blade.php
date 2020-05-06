@@ -1,13 +1,17 @@
 @extends('layouts.app')
 
 @section('content')
-  <div class="modal-dialog full-screen modal-lg p-2 m-2">
-    <div class="modal-content">
+<form action="/classroom" method="post">
+@csrf
+
+
+<div class="modal-dialog full-screen modal-lg my-0 mx-3" id="newClassroom">
+    <div class="modal-content" style="min-height: calc(100vh - 100px);">
       <div class="modal-header">
         <h5 class="modal-title" id="wizard-title"><i class="fal fa-chalkboard-teacher"></i> Classroom Wizard</h5>
       </div>
       <div class="modal-body grassbg p-3">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs" id="myTab" tabIndex="2" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#nameAndGoals" role="tab"><i class="fal fa-scroll"></i> {{ __('classroom/create.nameAndGoals') }}</a>
           <li>
@@ -28,70 +32,70 @@
           <li>
         </ul>
         <div class="tab-content mt-2">
-          <div class="tab-pane fade show active fs-1" id="nameAndGoals" role="tabpanel">
+          <div class="tab-pane show active fs-1" id="nameAndGoals" role="tabpanel">
             <h1><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ __('classroom/create.classPrepared') }}</h1>
             <div class="form-group">
-              <label for="wizardName">{{ __('classroom/create.customNameWizard') }} <i class="fas fa-question-circle ml-2" data-toggle='popover' data-placement='top' data-trigger='hover' data-tippy-content=""></i></label>
-              <input type="text" class="form-control form-text" id='wizardName' value=""></input>
+              <label for="wizardName">{{ __('classroom/create.name') }} <i class="fas fa-question-circle ml-2" {{ Popper::pop('Tooltip!') }}></i></label>
+              <input type="text" name="name" class="form-control form-text" value=""></input>
+              @error('name')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+              @enderror
+            </div>
+            <div class="form-group">
+              <label for="adventureName">{{ __('classroom/create.customNameWizard') }} <i class="fas fa-question-circle ml-2" data-toggle='popover' data-placement='top' data-trigger='hover' data-tippy-content=""></i></label>
+              <input type="text" class="form-control form-text" name="adventureName" id='adventureName' value=""></input>
+              @error('adventureName')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+              @enderror
             </div>
             {{ __('classroom/create.goalChange') }}
             <div class="btn-group btn-group-toggle mt-3" data-toggle="buttons" style="width: 100%; overflow-x: auto">
-              <?php
-              //foreach(getGoalType() as $goal) {
-                // $active = "";
-                //$checked = "";
-                //$icon = getPropertyValue('goal_type');
-                //$id = $icon ? $icon : 1;
-                // if($goal['id'] == $id) {
-                  //  $active = "active ";
-                  //  $checked = "checked ";
-                  //}
-                  ?>
-              <label class="btn btn-secondary" data-action="typeGoalOptWizard">
-                <input type="radio" name="nameShowOpt" value="$goal['id' }}" autocomplete="off"><i class="$goal['icon' }} colored" style="color:$goal['color' }}"></i>
-              </label>
-              <?php //} ?>
+                @foreach ($goals as $goal)
+                  <label class="btn btn-secondary">
+                      @if ($loop->first)
+                        <input type="radio" checked name="nameShowOpt" value="{{ $goal->id }}" autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
+                      @else
+                        <input type="radio" name="nameShowOpt" value="{{ $goal->id }}" autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
+                      @endif
+                  </label>
+                @endforeach
             </div>
-            <?php
-            //$goalName = getPropertyValue('goal_name', $_SESSION['adventure'], $_SESSION['active_classroom_id'], 'settings_text');
-            //if(!$goalName) {
-              //    $goalName = {{ __('cities'];)
-                //}
-                ?>
-            {{ __('classroom/create.whatAreGoals') }} <input type="text" name="goalNameWizard" class="mt-2 bootstrapInlineForm" value=""/>
-            <br><br>
-            <button class="btn btn-secondary" id="nameAndGoalsContinue">{{ __('classroom/create.nextStep') }} <i class="fal fa-chevron-right"></i></button>
-          </div>
-          <div class="tab-pane fade" id="cardsPanel" role="tabpanel">
+                      </div>
+          <div class="tab-pane" id="cardsPanel" role="tabpanel">
             <h4>{{ __('menu.cards') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.cardsTextWizard') }}</h6>
-            <iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>
-            <button class="btn btn-secondary" id="cardsContinue">{{ __('classroom/create.nextStep') }} <i class="fal fa-chevron-right"></i></button>
+            <!--<iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>-->
           </div>
-          <div class="tab-pane fade" id="levelsPanel" role="tabpanel">
+          <div class="tab-pane" id="levelsPanel" role="tabpanel">
             <h4>{{ __('menu.levels') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.levelsTextWizard') }} <i class="fas fa-smile-beam colored"></i></h6>
-            <iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>
-            <button class="btn btn-secondary" id="levelsPanelContinue">{{ __('classroom/create.nextStep') }} <i class="fal fa-chevron-right"></i></button>
+            <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>-->
           </div>
-          <div class="tab-pane fade" id="themePanel" role="tabpanel">
+          <div class="tab-pane" id="themePanel" role="tabpanel">
             <h4>Tema</h4>
             <h6 class="mt-3">{{ __('classroom/create.themeWizard') }}</h6>
-            <div class="wizardTheme">
-              <?php
-                //require_once $_SERVER['DOCUMENT_ROOT']."/management/utils/populateThemes.php";
-                ?>
+            <div class="themes">
+                @foreach ($themes as $theme)
+                <div class="theme bg_color_theme" style="background-color: {{ $theme->color }}">
+                    @if($theme->type == 1)
+                        <img src="/img/bg/{{ $theme->name }}"/>
+                    @endif
+                  </div>
+                @endforeach
             </div>
             <br>
-            <button class="btn btn-secondary" id="themePanelContinue">{{ __('nextStep') }} <i class="fal fa-chevron-right"></i></button>
           </div>
-          <div class="tab-pane fade" id="characterPanel" role="tabpanel">
+          <div class="tab-pane" id="characterPanel" role="tabpanel">
             <h1><i class="fal fa-ghost faa-float animated"></i> {{ __('classroom/create.charTheme') }}</h1>
-            <img data-id="1" onclick="selectPreview(this)" src="/management/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
+            <!--<img data-id="1" onclick="selectPreview(this)" src="/management/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
             <img data-id="2" onclick="selectPreview(this)" src="/management/img/character/themes-preview/robots.png" class="themePreview" data-toggle='popover' data-placement='top' data-trigger='hover' data-html="true" data-tippy-content="<i class='fab fa-twitter'></i> @ideemaestramari">
             <img data-id="3" onclick="selectPreview(this)" src="/management/img/character/themes-preview/superheros.png" class="themePreview">
             <img data-id="4" onclick="selectPreview(this)" src="/management/img/character/themes-preview/pirateanimals.png" class="themePreview"  data-toggle='popover' data-placement='top' data-trigger='hover' data-html="true" data-tippy-content="<i class='fab fa-twitter'></i> @ideemaestramari">
-            <img data-id="0" onclick="selectPreview(this)" src="/management/img/character/themes-preview/custom.png" class="themePreview" data-toggle='popover' data-placement='top' data-trigger='hover' data-html="true" data-tippy-content="">
+            <img data-id="0" onclick="selectPreview(this)" src="/management/img/character/themes-preview/custom.png" class="themePreview" data-toggle='popover' data-placement='top' data-trigger='hover' data-html="true" data-tippy-content="">-->
             <?php
             //require_once 'Classroom.php';
             //$class = Classroom::getClassById($_SESSION['active_classroom_id']);
@@ -101,7 +105,6 @@
 <br>
 <div class="alert alert-info">{{ __('classroom/create.charThemeInfo') }}</div>
 <br>
-<button class="btn btn-secondary" id="characterPanelContinue">{{ __('classroom/create.nextStep') }} <i class="fal fa-chevron-right"></i></button>
 
 </div>
 <div class="tab-pane fade" id="infoPanel" role="tabpanel">
@@ -118,10 +121,12 @@
           </div>
         </div>
       </div>
+
       <div class="modal-footer footerbg">
-        <button type="button" class="btn btn-secondary"  data-action="cancelWizard" data-dismiss="modal">{{ __('classroom/create.cancelWizard') }}</button>
-        <button type="button" class="btn btn-success hide mr-5" data-action="endWizard"><i class="fal fa-badge-check  faa-vertical animated faa-slow"></i> {{ 'classroom/create.endWizard' }}</button>
+        <next-step-button text="{{ __('classroom/create.nextStep') }}"></next-step-button>
+        <button type="button" type="submit" class="btn btn-success" data-action="endWizard"><i class="fal fa-badge-check faa-vertical animated faa-slow"></i> {{ __('classroom/create.endWizard') }}</button>
       </div>
     </div>
   </div>
+</form>
 @endsection

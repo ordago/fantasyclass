@@ -10,6 +10,7 @@ return [
     |
     */
 
+    'name' => "Nombre de la clase. P.E: 4ºESO 1920",
     'nameAndGoals' => "Nombre y objetivos",
     'classPrepared' => "¡Qué bien! Ya tenemos la clase preparada, pero hay más...",
     'customNameWizard' => "¿Quieres darle un nombre de juego personalizado a esta clase?",
