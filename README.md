@@ -20,7 +20,9 @@ Configure .env:
 
 ### Refresh strings to VUE translation
 
-> php artisan export:messages-flat
+```
+ php artisan export:messages-flat
+```
 
 ### Migrate and seed
 
