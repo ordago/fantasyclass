@@ -145,7 +145,7 @@
         </nav>
         @endauth
 
-        <main class="my-3">
+        <main class="my-1">
             @yield('content')
         </main>
     </div>

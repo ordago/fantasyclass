@@ -1,10 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
+@foreach (language()->allowed() as $code => $name)
+    <a href="{{ language()->back($code) }}">{{ $name }}</a>
+@endforeach
 <form action="/classroom" method="post">
 @csrf
-
-
+  <create-classroom-form></create-classroom-form>
+<!--
 <div class="modal-dialog full-screen modal-lg my-0 mx-3" id="newClassroom">
     <div class="modal-content" style="min-height: calc(100vh - 100px);">
       <div class="modal-header">
@@ -68,13 +71,15 @@
           <div class="tab-pane" id="cardsPanel" role="tabpanel">
             <h4>{{ __('menu.cards') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.cardsTextWizard') }}</h6>
-            <!--<iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>-->
+            <!--<iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>ç
+          -->
+          <!--
           </div>
           <div class="tab-pane" id="levelsPanel" role="tabpanel">
             <h4>{{ __('menu.levels') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.levelsTextWizard') }} <i class="fas fa-smile-beam colored"></i></h6>
             <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>-->
-          </div>
+          <!--</div>
           <div class="tab-pane" id="themePanel" role="tabpanel">
             <h4>Tema</h4>
             <h6 class="mt-3">{{ __('classroom/create.themeWizard') }}</h6>
@@ -101,7 +106,7 @@
             //$class = Classroom::getClassById($_SESSION['active_classroom_id']);
             //$theme = $class->getCharacterTheme();
             ?>
-
+<!--
 <br>
 <div class="alert alert-info">{{ __('classroom/create.charThemeInfo') }}</div>
 <br>
@@ -128,5 +133,6 @@
       </div>
     </div>
   </div>
+-->
 </form>
 @endsection

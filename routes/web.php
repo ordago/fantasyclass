@@ -24,15 +24,16 @@ Route::get('/locale/{locale}', function ($locale){
     return redirect()->back();
 });
 
+Route::group(['middleware' => 'language'], function () {
 
-Route::middleware([Localization::class])->group(function () {
+//Route::middleware([Localization::class])->group(function () {
 
     Auth::routes(['verify' => true]);
     
     // Home
     Route::redirect('/', '/classrooms');
     
-    // Classrooms
+    // Classroom
     Route::get('/classrooms', 'ClassroomsController@index');
     Route::get('/classrooms/create', 'ClassroomsController@create');
     

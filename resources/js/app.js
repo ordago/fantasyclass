@@ -6,7 +6,20 @@
 
 require('./bootstrap');
 
+
+
 window.Vue = require('vue');
+
+// BootStrap
+import { TabsPlugin, CardPlugin, ButtonPlugin, ButtonGroupPlugin } from 'bootstrap-vue'
+Vue.use(TabsPlugin)
+Vue.use(CardPlugin)
+Vue.use(ButtonPlugin)
+Vue.use(ButtonGroupPlugin)
+
+// i18n
+//import VueI18n from 'vue-i18n'
+//Vue.use(VueI18n)
 
 /**
  * The following block of code may be used to automatically register your
@@ -20,7 +33,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('next-step-button', require('./components/classroom/NextStepButton.vue').default);
+Vue.component('create-classroom-form', require('./components/classroom/CreateClassroomForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
