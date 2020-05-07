@@ -20,6 +20,12 @@ Configure .env:
 
 > php artisan export:messages-flat
 
+### Migrate and seed
+
+> php artisan migrate
+> php artisan migrate:fresh (drop all data)
+> php artisan db:seed (add user admin@gamifica.online / admin)
+
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).
