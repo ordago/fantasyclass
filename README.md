@@ -8,14 +8,14 @@ Register in [mailtrap.io](https://mailtrap.io)
 Configure .env:
 
 ``` 
-MAIL\_MAILER=smtp
- MAIL\_HOST=smtp.mailtrap.io
- MAIL\_PORT=2525
- MAIL\_USERNAME=
- MAIL\_PASSWORD=
- MAIL\_ENCRYPTION=null
- MAIL\_FROM_ADDRESS=register@gamifica.online
- MAIL\_FROM_NAME="${APP\_NAME}"
+ MAIL_MAILER=smtp
+ MAIL_HOST=smtp.mailtrap.io
+ MAIL_PORT=2525
+ MAIL_USERNAME=
+ MAIL_PASSWORD=
+ MAIL_ENCRYPTION=null
+ MAIL_FROM_ADDRESS=register@gamifica.online
+ MAIL_FROM_NAME="${APP_NAME}"
 ```
 
 ### Refresh strings to VUE translation
