@@ -26,8 +26,6 @@ Route::get('/locale/{locale}', function ($locale){
 
 Route::group(['middleware' => 'language'], function () {
 
-//Route::middleware([Localization::class])->group(function () {
-
     Auth::routes(['verify' => true]);
     
     // Home

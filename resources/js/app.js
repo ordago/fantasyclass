@@ -21,6 +21,17 @@ Vue.use(ButtonGroupPlugin)
 //import VueI18n from 'vue-i18n'
 //Vue.use(VueI18n)
 
+import Lang from 'lang.js';
+import messages from '../assets/js/ll_messages';
+const default_locale = window.default_locale;
+const fallback_locale = window.fallback_locale;
+
+Vue.prototype.trans = new Lang( {
+    messages,
+    locale: default_locale,
+    fallback: fallback_locale
+    });
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -33,7 +44,6 @@ Vue.use(ButtonGroupPlugin)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('create-classroom-form', require('./components/classroom/CreateClassroomForm.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
