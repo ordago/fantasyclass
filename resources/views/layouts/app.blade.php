@@ -25,68 +25,18 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 </head>
-@if (isset($bg))
-<body {!! $bg !!}>
-@else
-<body>
-@endif
+    <body @if (isset($bg)) {!! $bg !!} @endif>
+
     <div id="app">
-            
         @auth
-        <!--
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    <span class="p-3">FantasyClass</span>
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        
-                            <!--<li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif -->
-                            <!--
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        -->
-
         <nav class="menu-labels card-shadow-s">
             <div class="d-flex align-items-center h-100">
+                <a href="/classrooms" style="text-decoration: none">
                 <img src="/img/logo.png" width="48px" height="48px" class="ml-1">
-                <label class="label-title pl-2 m-0">FantasyClass</label>
+                <label class="label-title pl-2 m-0">
+                    @yield('title','FantasyClass')
+                </label>
+                </a>
             </div>
             <div class="right-menu-bar">
                     <div class="helpMenu flexCenter tryHide"  data-toggle="popovermenu"  data-tippy-content="Follow">
@@ -99,24 +49,6 @@
                         <a href="#" onclick=""><i class="fas fa-hand-holding-heart"></i></a>
                     </div>
                     <div class="flexCenter settings-menu">
-                        <!--<div class="dropdown">
-                        <i class="fas fa-globe-americas"></i>
-                        <?php
-                        //$languages = ['ca', 'es', 'en'];
-                        //if(isset($_COOKIE['lang']))
-                        //$current = $_COOKIE['lang'];
-                        //else
-                        //    $current = 'es';
-                        ?>
-                            <a>es</a>
-                            <div class="dropdown-content">
-                                @foreach (Config::get('app.locales') as $locale)
-                                    <a href="/locale/{{ $locale }}">{{ $locale }}</a>
-                                @endforeach
-                            </div>
-
-                        </div>-->
-
                         <div class="ml-2 flexCenter" id="barNotif">
 
                         </div>

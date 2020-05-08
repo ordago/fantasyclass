@@ -12,7 +12,7 @@ return [
 
     'name' => "Nombre de la clase. P.E: 4ºESO 1920",
     'nameAndGoals' => "Nombre y objetivos",
-    'classPrepared' => "¡Qué bien! Ya tenemos la clase preparada, pero hay más...",
+    'classPrepared' => "¡Vamos a preparar la clase!",
     'customNameWizard' => "¿Quieres darle un nombre de juego personalizado a esta clase?",
     'goalChange' => "Por defecto los objetivos son ciudades, pero puedes cambiarlo. Si lo quieres hacer, elije un icono y un nombre:",
     'whatAreGoals' => "¿Qué son los objetivos?",

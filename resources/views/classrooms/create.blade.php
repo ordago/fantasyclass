@@ -18,10 +18,10 @@
           <a class="nav-link" data-toggle="tab" href="#levelsPanel" role="tab"><i class="fal fa-trophy"></i> {{ __('menu.levels') }}</a>
         <li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#themePanel" role="tab"><i class="fal fa-palette"></i> {{ __('theme') }}</a>
+          <a class="nav-link" data-toggle="tab" href="#themePanel" role="tab"><i class="fal fa-palette"></i> {{ __('settings.theme') }}</a>
         <li>
         <li class="nav-item">
-          <a class="nav-link" data-toggle="tab" href="#characterPanel" role="tab"><i class="fal fa-mask"></i> {{ __('charTheme') }}</a>
+          <a class="nav-link" data-toggle="tab" href="#characterPanel" role="tab"><i class="fal fa-mask"></i> {{ __('classroom/create.charTheme') }}</a>
         <li>
           <li class="nav-item">
             <a class="nav-link" data-toggle="tab" data-action="showEnd" href="#infoPanel" role="tab"><i class="fal fa-info"></i> +Info</a>
@@ -42,7 +42,7 @@
             </div>
             <div class="form-group">
               <label for="adventureName">{{ __('classroom/create.customNameWizard') }} <i class="fas fa-question-circle ml-2" data-toggle='popover' data-placement='top' data-trigger='hover' data-tippy-content=""></i></label>
-              <input type="text" value="{{ old('adventureName') }}" class="form-control form-text @error('adventureName') is-invalid @enderror" name="adventureName" id='adventureName' value=""></input>
+              <input type="text" value="{{ old('adventureName') ? old('adventureName') : 'FantasyClass' }}" class="form-control form-text @error('adventureName') is-invalid @enderror" name="adventureName" id='adventureName' value=""></input>
               @error('adventureName')
                 <span class="invalid-feedback" role="alert">
                   <strong>{{ $message }}</strong>
@@ -54,9 +54,9 @@
                 @foreach ($goals as $goal)
                   <label class="btn btn-secondary">
                       @if ($loop->first)
-                        <input type="radio" checked name="goalType" value="{{ $goal->id }}" autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
+                        <input type="radio" name="goalType"  value="{{ $goal->id }}" @if(!old('goalType') or old('goalType') == $goal->id) checked @endif autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
                       @else
-                        <input type="radio" name="goalType" value="{{ $goal->id }}" autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
+                        <input type="radio" name="goalType" @if(old('goalType') == $goal->id) checked @endif value="{{ $goal->id }}" autocomplete="off"><i class="{{ $goal->icon }} colored" style="color:{{ $goal->color }}"></i>
                       @endif
                   </label>
                 @endforeach
@@ -65,11 +65,13 @@
           <div class="tab-pane" id="cardsPanel" role="tabpanel">
             <h4>{{ __('menu.cards') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.cardsTextWizard') }}</h6>
+            <h1>S'ha de crear abans les cartes</h1>
             <!--<iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>-->
           </div>
           <div class="tab-pane" id="levelsPanel" role="tabpanel">
             <h4>{{ __('menu.levels') }}</h4>
             <h6 class="mt-3">{{ __('classroom/create.levelsTextWizard') }} <i class="fas fa-smile-beam colored"></i></h6>
+            <h1>S'ha de crear els nivells</h1>
             <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>-->
           </div>
           <div class="tab-pane" id="themePanel" role="tabpanel">
@@ -82,7 +84,7 @@
                     @if ($loop->first)
                       <input type="radio" name="bgtheme" title="i'm the first" value="{{ $theme->id }}" @if(!old('bgtheme')) checked @endif {{ (old('bgtheme') == "$theme->id") ? "checked" : "" }} checked>
                     @else
-                      <input type="radio" name="bgtheme" value="{{ $theme->id }}" {{ (old('theme') && old('bgtheme') == "$theme->id") ? "checked" : "" }} checked>
+                      <input type="radio" name="bgtheme" value="{{ $theme->id }}" {{ (old('bgtheme') && old('bgtheme') == "$theme->id") ? "checked" : "" }}>
                     @endif
                     <div class="theme bg_color_theme" style="background-color: {{ $theme->color }}">
                       @if($theme->type == 1)
@@ -118,11 +120,6 @@
                 <input type="radio" name="charTheme" value="0" {{ (old('charTheme') == "0") ? "checked" : "" }}>
                 <img src="/img/character/themes-preview/custom.png" class="themePreview" data-toggle='popover' data-placement='top' data-trigger='hover' data-html="true" data-tippy-content="">
               </label>
-            <?php
-            //require_once 'Classroom.php';
-            //$class = Classroom::getClassById($_SESSION['active_classroom_id']);
-            //$theme = $class->getCharacterTheme();
-            ?>
 <br>
 <div class="alert alert-info">{{ __('classroom/create.charThemeInfo') }}</div>
 <br>
@@ -144,7 +141,6 @@
       </div>
 
       <div class="modal-footer footerbg">
-        <!--<next-step-button text="{{ __('classroom/create.nextStep') }}"></next-step-button>-->
         <button type="submit" class="btn btn-success"><i class="fal fa-badge-check faa-vertical animated faa-slow"></i> {{ __('classroom/create.endWizard') }}</button>
       </div>
     </div>

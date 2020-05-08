@@ -16,15 +16,18 @@ class CreateClassroomsTable extends Migration
         Schema::create('classrooms', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
-            $table->string('adventureName', 255);
-            $table->string('md5', 32);
+            $table->string('adventure_name', 255);
+            $table->string('code', 32)->unique();
             $table->string('enrollment_code', 6);
-            $table->unsignedBigInteger('user_id');
             $table->smallInteger('character_theme');
-            $table->boolean('configured')->default(0);
+            $table->unsignedBigInteger('goal_type');
+            $table->unsignedBigInteger('theme_id');
             $table->boolean('finished')->default(0);
             $table->boolean('disabled')->default(0);
             $table->timestamps();
+
+            $table->foreign('theme_id')->references('id')->on('themes');
+            $table->foreign('goal_type')->references('id')->on('goal_themes');
         });
     }
 

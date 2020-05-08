@@ -4,6 +4,9 @@ use Illuminate\Support\Str;
 
 return [
 
+    'strict' => false,
+
+
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name

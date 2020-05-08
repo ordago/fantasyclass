@@ -5,9 +5,9 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\GoalThemes;
 use App\Theme;
-use Illuminate\Http\Request;
 use App\Http\Classes\Queries;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class ClassroomsController extends Controller
 {
@@ -15,6 +15,20 @@ class ClassroomsController extends Controller
     public function __construct()
     {
         $this->middleware('verified');
+    }
+
+    public function reference($num)
+    {
+        
+        $unique = Str::random($num);
+
+        $check = Classroom::where('code', $unique)->first();
+
+        if ($check) {
+            return $this->reference($num);
+        }
+
+        return $unique;
     }
 
     public function store() {
@@ -33,14 +47,23 @@ class ClassroomsController extends Controller
             return redirect('/classrooms/create')
                         ->withErrors($validator)
                         ->withInput();
-        }
-
-        Classroom::create([
+                    }
+                    
+        $classroom = Classroom::create([
             'name' => $data['name'],
-            'name' => $data['name'],
-            'name' => $data['name'],
-            'name' => $data['name'],
+            'adventure_name' => $data['adventureName'],
+            'code' => $this->reference(8),
+            'enrollment_code' => $this->reference(4),
+            'character_theme' => $data['charTheme'],
+            'theme_id' => $data['bgtheme'],
+            'goal_type' => $data['goalType'],
         ]);
+
+        auth()->user()->classrooms()->attach([
+            $classroom->id => ['is_admin' => 1],
+        ]);
+        
+        return redirect('/classrooms');
 
     }
     
@@ -55,5 +78,11 @@ class ClassroomsController extends Controller
         $user = auth()->user();
         $bg = Queries::getBg();
         return view('classrooms.index', compact('user', 'bg'));
+    }
+    
+    public function show($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        return view('classrooms.show', compact('class'));
+        
     }
 }
