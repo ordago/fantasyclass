@@ -7,6 +7,7 @@ use App\GoalThemes;
 use App\Theme;
 use Illuminate\Http\Request;
 use App\Http\Classes\Queries;
+use Illuminate\Support\Facades\Validator;
 
 class ClassroomsController extends Controller
 {
@@ -16,24 +17,31 @@ class ClassroomsController extends Controller
         $this->middleware('verified');
     }
 
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'min:3', 'max:255', 'unique:classroom'],
+    public function store() {
+
+        $data = request()->all();
+
+        $validator = Validator::make($data, [
+            'name' => ['required', 'string', 'min:3', 'max:255'],
             'adventureName' => ['required', 'string', 'min:3', 'max:255'],
             'goalType' => ['required', 'integer'],
-            'theme' => ['required', 'integer'],
+            'bgtheme' => ['required', 'integer'],
             'charTheme' => ['required', 'integer'],
         ]);
-    }
 
-    public function store(Array $data) {
-        return Classroom::create([
+        if ($validator->fails()) {
+            return redirect('/classrooms/create')
+                        ->withErrors($validator)
+                        ->withInput();
+        }
+
+        Classroom::create([
             'name' => $data['name'],
-           // 'email' => $data['email'],
-            //'username' => $data['username'],
-            //'password' => Hash::make($data['password']),
+            'name' => $data['name'],
+            'name' => $data['name'],
+            'name' => $data['name'],
         ]);
+
     }
     
     public function create() {

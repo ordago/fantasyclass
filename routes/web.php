@@ -14,16 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Localization
-Route::get('/locale/{locale}', function ($locale){
-
-    if (! in_array($locale, Config::get('app.locales'))) {
-        abort(404);
-    }
-    \Session::put('locale', $locale);
-    return redirect()->back();
-});
-
 Route::group(['middleware' => 'language'], function () {
 
     Auth::routes(['verify' => true]);
@@ -33,6 +23,7 @@ Route::group(['middleware' => 'language'], function () {
     
     // Classroom
     Route::get('/classrooms', 'ClassroomsController@index');
+    Route::post('/classrooms', 'ClassroomsController@store');
     Route::get('/classrooms/create', 'ClassroomsController@create');
     
 });
