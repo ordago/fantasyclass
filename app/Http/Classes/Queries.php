@@ -7,11 +7,14 @@ use Illuminate\Support\Facades\DB;
 
 class Queries
 {
-    public static function getBg($ui = false)
+    public static function getBg($id = null, $ui = false)
     {
+      if(!$id)
+        $theme = DB::table('themes')->where('id', '>=', 17)->inRandomOrder()->first();
+      else 
+        $theme = DB::table('themes')->where('id', '=', $id)->first();
 
-       $theme = DB::table('themes')->where('id', '>=', 17)->inRandomOrder()->first();
-       return " style='background: url(/img/bg/".$theme->name."); background-color:".$theme->color.";background-position: center bottom;background-size: 100%; background-attachment: fixed;background-repeat: no-repeat;'";
+        return " style='background: url(/img/bg/".$theme->name."); background-color:".$theme->color.";background-position: center bottom;background-size: 100%; background-attachment: fixed;background-repeat: no-repeat;'";
        
        /* $theme = Queries::getPropertyValue('students_theme');
         if ($theme) {

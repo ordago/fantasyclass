@@ -82,7 +82,8 @@ class ClassroomsController extends Controller
     
     public function show($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        return view('classrooms.show', compact('class'));
+        $bg = Queries::getBg($class->theme_id);
+        return view('classrooms.show', compact('class', 'bg'));
         
     }
 }
