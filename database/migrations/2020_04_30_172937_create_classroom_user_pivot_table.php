@@ -14,12 +14,13 @@ class CreateClassroomUserPivotTable extends Migration
     public function up()
     {
         Schema::create('classroom_user', function (Blueprint $table) {
-            //$table->id();
+            $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('classroom_id');
-            $table->boolean('is_admin')->default(0);
+            // 0 -> student; 1-> teacher; 2-> admin
+            $table->boolean('role')->default(0);
             $table->timestamps();
-            $table->primary(['user_id', 'classroom_id']);
+            $table->unique(['user_id', 'classroom_id']);
         });
     }
 

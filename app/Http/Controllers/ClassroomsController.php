@@ -60,7 +60,7 @@ class ClassroomsController extends Controller
         ]);
 
         auth()->user()->classrooms()->attach([
-            $classroom->id => ['is_admin' => 1],
+            $classroom->id => ['role' => 2],
         ]);
         
         return redirect('/classrooms');

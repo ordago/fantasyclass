@@ -18,7 +18,7 @@ class Classroom extends Model
     ];
 
     public function users() {
-        return $this->belongsToMany(User::class)->withPivot('is_admin');
+        return $this->belongsToMany(User::class)->withPivot('role');
     }
 
     public function getTheme() {

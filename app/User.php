@@ -38,7 +38,7 @@ class User extends Authenticatable implements MustVerifyEmail
     ];
 
     public function classrooms() {
-        return $this->belongsToMany(Classroom::class)->withPivot('is_admin');
+        return $this->belongsToMany(Classroom::class)->withPivot('role');
     }
 
 }
