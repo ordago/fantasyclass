@@ -49,7 +49,7 @@ return [
          * Type can be 'sharp' or 'round'
          */
         'arrow' => [
-            'active' => true,
+            'active' => false,
             'type' => 'round',
         ],
 

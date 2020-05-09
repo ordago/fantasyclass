@@ -11700,30 +11700,6 @@ span.round-tab:hover {
   margin-top: 0;
 }
 
-@media (max-width: 585px) {
-  .wizard {
-    width: 90%;
-    height: auto !important;
-  }
-
-  span.round-tab {
-    font-size: 16px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-  }
-
-  .wizard .nav-tabs > li a {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-  }
-  .wizard li.active:after {
-    content: " ";
-    position: absolute;
-    left: 35%;
-  }
-}
 /***************/
 /********* Notifications  ***********/
 .notifications {
@@ -11796,7 +11772,7 @@ span.round-tab:hover {
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px;
+  height: 53px;
 }
 .menu-labels .fad {
   --fa-primary-color:#555;
@@ -11807,11 +11783,6 @@ span.round-tab:hover {
   --fa-primary-color:#555;
   --fa-secondary-color:#555;
   --fa-secondary-opacity:0.5;
-}
-.menu-labels span {
-  width: 0px;
-  display: none;
-  transition: all 500ms ease;
 }
 .menu-labels label.selected span {
   display: initial;
@@ -11859,6 +11830,10 @@ span.round-tab:hover {
   width: auto;
 }
 
+.menu a {
+  text-decoration: none;
+}
+
 .right-menu-bar {
   position: absolute;
   top: 0;
@@ -11866,7 +11841,7 @@ span.round-tab:hover {
   color: #fff;
   display: flex;
   margin: 0;
-  height: 60px;
+  height: 53px;
 }
 
 .settings-menu {
@@ -13101,7 +13076,6 @@ section {
   background-color: rgba(255, 255, 255, 0.5);
   margin-top: 52px;
   color: #555;
-  display: none;
   min-height: calc(100vh - 52px);
 }
 
@@ -14361,6 +14335,30 @@ details.card > summary::-webkit-details-marker {
   }
   #users tr:first-child {
     display: none;
+  }
+}
+@media (max-width: 585px) {
+  .wizard {
+    width: 90%;
+    height: auto !important;
+  }
+
+  span.round-tab {
+    font-size: 16px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+
+  .wizard .nav-tabs > li a {
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+  }
+  .wizard li.active:after {
+    content: " ";
+    position: absolute;
+    left: 35%;
   }
 }
 @media screen and (max-width: 500px) {

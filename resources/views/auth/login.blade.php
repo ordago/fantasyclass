@@ -9,9 +9,9 @@
 
             <div class="form-group row mb-2">
                 <div class="col-md-12">
-                    <input id="email" type="email" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
-
-                    @error('email')
+                    <input id="username" type="username" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required  autofocus>
+                    <!--<input id="email" type="email" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>-->
+                    @error('username')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>

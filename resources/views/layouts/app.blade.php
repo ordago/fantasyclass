@@ -26,17 +26,20 @@
 
 </head>
     <body @if (isset($bg)) {!! $bg !!} @endif>
-
     <div id="app">
         @auth
         <nav class="menu-labels card-shadow-s">
             <div class="d-flex align-items-center h-100">
-                <a href="/classrooms" style="text-decoration: none">
-                <img src="/img/logo.png" width="48px" height="48px" class="ml-1">
-                <label class="label-title pl-2 m-0">
-                    @yield('title','FantasyClass')
-                </label>
+                <a href="/classrooms" class="d-flex align-items-center" style="text-decoration: none">
+                    <img src="/img/logo.png" width="36px" height="38px" class="ml-1">
+                    <label class="label-title pl-2 m-0">
+                        @yield('title','FantasyClass')
+                    </label>
                 </a>
+                @if(isset($class))
+                    @yield('menu')
+                @endif
+
             </div>
             <div class="right-menu-bar">
                     <div class="helpMenu flexCenter tryHide"  data-toggle="popovermenu"  data-tippy-content="Follow">
@@ -53,7 +56,7 @@
 
                         </div>
                         <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link px-2 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown" class="nav-link p-0 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     <i class="fas fa-user-graduate"></i> {{ Auth::user()->username }} <span class="caret"></span>
                                 </a>
 
@@ -69,7 +72,7 @@
                                         @csrf
                                     </form>
                                 </div>
-                            </li>
+                        </li>
                     </div>
               </div>
         </nav>

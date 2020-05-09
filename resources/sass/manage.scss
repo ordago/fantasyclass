@@ -227,33 +227,6 @@ span.round-tab:hover {
   }
 }
 
-@media (max-width: 585px) {
-  .wizard {
-    width: 90%;
-    height: auto !important;
-  }
-
-  span.round-tab {
-    font-size: 16px;
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-  }
-
-  .wizard {
-    .nav-tabs > li a {
-      width: 50px;
-      height: 50px;
-      line-height: 50px;
-    }
-
-    li.active:after {
-      content: " ";
-      position: absolute;
-      left: 35%;
-    }
-  }
-}
 
 /***************/
 
@@ -351,11 +324,6 @@ span.round-tab:hover {
   background-color: #f7f7f7;
   z-index: 12;
 
-  span {
-    width: 0px;
-    display: none;
-    transition: all 500ms ease;
-  }
 
   label {
     &.selected span {
@@ -395,7 +363,7 @@ span.round-tab:hover {
   position: fixed;
   top: 0;
   left: 0;
-  height: 60px;
+  height: 53px;
 }
 
 .main-content {
@@ -415,6 +383,11 @@ span.round-tab:hover {
   width: auto;
 }
 
+.menu {
+  a {
+    text-decoration: none;
+  }
+}
 
 .right-menu-bar {
   position: absolute;
@@ -423,7 +396,7 @@ span.round-tab:hover {
   color: #fff;
   display: flex;
   margin: 0;
-  height: 60px;
+  height: 53px;
 }
 
 .settings-menu {
@@ -1778,7 +1751,6 @@ section {
   background-color: rgba(255, 255, 255, 0.5);
   margin-top: 52px;
   color: #555;
-  display: none;
   min-height: calc(100vh - 52px);
 }
 

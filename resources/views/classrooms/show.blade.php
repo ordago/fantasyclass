@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layouts.menu')
 
 @section('title')
 <span style="display:initial" title="{{ $class->name }}">
-  {{ \Illuminate\Support\Str::limit($class->name, 8, $end='...') }}
+  {{ Str::limit($class->name, 8, $end='...') }}
 </span>
-  @endsection
+@endsection
 
 @section('content')
 <div>
