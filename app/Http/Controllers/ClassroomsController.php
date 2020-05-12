@@ -21,13 +21,10 @@ class ClassroomsController extends Controller
     {
         
         $unique = Str::random($num);
-
         $check = Classroom::where('code', $unique)->first();
-
         if ($check) {
             return $this->reference($num);
         }
-
         return $unique;
     }
 

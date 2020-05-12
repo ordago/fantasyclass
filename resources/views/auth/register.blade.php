@@ -27,7 +27,7 @@
                 <label for="username" class="col-12 col-form-label">{{ __('Username') }}</label>
 
                 <div class="col-12">
-                    <input id="username" type="text" pattern="[a-zA-Z][a-zA-Z0-9]{4,31}" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+                    <input id="username" type="text" pattern="[a-zA-Z][a-zA-Z0-9]{3,31}" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
 
                     @error('username')
                         <span class="invalid-feedback" role="alert">
@@ -36,7 +36,7 @@
                     @enderror
                 </div>
                 <div class="col-12">
-                    <small class="form-text text-muted mb-0">It should start with a letter, 5 character minimum and without special characters, spaces...</small>
+                    <small class="form-text text-muted mb-0">It should start with a letter, 4 character minimum and without special characters, spaces...</small>
                 </div>
             </div>
             <div class="form-group row my-0">

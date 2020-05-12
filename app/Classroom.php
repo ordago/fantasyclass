@@ -18,7 +18,11 @@ class Classroom extends Model
     ];
 
     public function users() {
-        return $this->belongsToMany(User::class)->withPivot('role');
+        return $this->belongsToMany(User::class)->using(ClassroomUser::class)->withPivot('role', 'id');
+    }
+
+    public function students() {
+        return $this->hasManyThrough('App\Student', 'App\ClassroomUser', 'classroom_id', 'classroom_user_id', 'id');
     }
 
     public function getTheme() {
