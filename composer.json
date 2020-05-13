@@ -18,7 +18,8 @@
         "laravel/framework": "^7.0",
         "laravel/telescope": "^3.3",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "^2.0"
+        "laravel/ui": "^2.0",
+        "taylornetwork/laravel-username-generator": "^2.3"
     },
     "require-dev": {
         "facade/ignition": "^2.0",

@@ -20,9 +20,21 @@ Configure .env:
 
 ### Refresh strings to VUE translation
 
+https://github.com/kg-bot/laravel-localization-to-vue
+
 ```
  php artisan export:messages-flat
 ```
+
+### Plugin documentation
+
+Translation in vue:
+https://github.com/kg-bot/laravel-localization-to-vue
+https://medium.com/@sumeshvasu/laravel-vuejs-localization-with-package-laravel-localization-to-vue-73a87d2eec78
+
+Toasts:
+https://github.com/shakee93/vue-toasted
+
 
 ### Migrate and seed
 

@@ -17,9 +17,6 @@ Vue.use(CardPlugin)
 Vue.use(ButtonPlugin)
 Vue.use(ButtonGroupPlugin)
 
-// i18n
-//import VueI18n from 'vue-i18n'
-//Vue.use(VueI18n)
 
 import Lang from 'lang.js';
 import messages from '../assets/js/ll_messages';
@@ -31,6 +28,9 @@ Vue.prototype.trans = new Lang( {
     locale: default_locale,
     fallback: fallback_locale
     });
+
+import Toasted from 'vue-toasted';
+Vue.use(Toasted)
 
 /**
  * The following block of code may be used to automatically register your

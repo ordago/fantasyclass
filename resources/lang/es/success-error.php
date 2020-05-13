@@ -10,8 +10,9 @@ return [
     |
     */
 
-    'insertSuccess' => "Element añadido correctamente",
-    'updateSuccess' => "Elemento actualitzado correctamente",
+    'insertSuccess' => "Elemento añadido|añadidos correctamente",
+    'insertSuccessVuePlural' => "Elementos añadidos correctamente",
+    'updateSuccess' => "Elemento|Elementos actualitzado|actualizados correctamente",
     'deleteSuccess' => "Elemento eliminado correctamente",
     'confirm' => "Estas seguro/segura? Esta acción no se puede deshacer",
     'confirmGear' => "Estas seguro/segura? Esta acción no se puede deshacer. El equipo perderá todo el equipamiento",
