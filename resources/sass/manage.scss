@@ -566,8 +566,10 @@ span.round-tab:hover {
   background-color: rgba(255, 255, 255, 0.8);
   position: relative;
 }
-
-.deleteQuestion {
+.relative {
+  position: relative;
+}
+.deleteQuestion, .delete-button-right {
   position: absolute;
   right: 0;
   top: 0;
@@ -1929,9 +1931,6 @@ table {
   padding: 15px;
 }
 
-.form-control {
-  border: 1px solid #555;
-}
 
 div.input-group-text {
   border-top-left-radius: 5px;

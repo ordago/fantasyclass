@@ -23,8 +23,13 @@ Route::group(['middleware' => 'language'], function () {
     
     // Classroom
     Route::get('/classrooms', 'ClassroomsController@index')->name('classrooms');
-    Route::post('/classrooms', 'ClassroomsController@store');
+    Route::post('/classrooms', 'ClassroomsController@store'); //Policy protect
     Route::get('/classrooms/create', 'ClassroomsController@create');
-    Route::get('/classrooms/{code}', 'ClassroomsController@show');
+    Route::get('/classrooms/{code}', 'ClassroomsController@show'); // Policy protect
+    
+    // Students
+    Route::get('/classrooms/{code}/students/add', 'StudentController@create'); // Policy protect
+    Route::post('/classrooms/students/', 'StudentController@store'); // Policy protect (?)
+    
     
 });

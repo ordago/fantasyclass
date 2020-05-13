@@ -8,6 +8,9 @@
 
 @section('content')
 <div>
-  <h1>{{ $class->name }}</h1>
+  <div class="bg-light m-2 p-3">
+    <a href="/classrooms/{{ $class->code }}/students/add">Add students</a>
+  </div>
+
 </div>
 @endsection

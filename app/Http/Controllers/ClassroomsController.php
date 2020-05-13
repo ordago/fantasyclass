@@ -20,7 +20,7 @@ class ClassroomsController extends Controller
     public function reference($num)
     {
         
-        $unique = Str::random($num);
+        $unique = strtolower(Str::random($num));
         $check = Classroom::where('code', $unique)->first();
         if ($check) {
             return $this->reference($num);
@@ -81,6 +81,5 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $bg = Queries::getBg($class->theme_id);
         return view('classrooms.show', compact('class', 'bg'));
-        
     }
 }
