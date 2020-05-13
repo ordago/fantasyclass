@@ -35,13 +35,16 @@ https://medium.com/@sumeshvasu/laravel-vuejs-localization-with-package-laravel-l
 Toasts:
 https://github.com/shakee93/vue-toasted
 
+Popper tippy:
+ - Blade: https://github.com/andcarpi/laravel-popper
+ - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
 
 ### Migrate and seed
 
 ```
  php artisan migrate
  php artisan migrate:fresh (drop all data)
- php artisan db:seed (add user admin@gamifica.online / admin)
+ php artisan db:seed (add user admin / admin)
 ```
 
 ## License

@@ -29,8 +29,15 @@ Vue.prototype.trans = new Lang( {
     fallback: fallback_locale
     });
 
+// Toast management
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
+
+// Tippy poppover
+import VueTippy, { TippyComponent } from "vue-tippy";
+Vue.use(VueTippy);
+Vue.component("tippy", TippyComponent);
+
 
 /**
  * The following block of code may be used to automatically register your

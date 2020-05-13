@@ -20,7 +20,10 @@
       @else
         <i class="far fa-user admin" {{ Popper::pop('Student') }}></i>
       @endif
-      <a href="/classrooms/{{ $classroom->code }}" class="p-5 h-100 rounded classroom-round card-shadow-s text-center pointer" @if($classroom->getTheme()->type == 0) style="background-color: {{ $classroom->getTheme()->color }}" @else style="background: url('/img/bg/{{ $classroom->getTheme()->name }}');background-size: cover" @endif>
+      @php 
+        $theme = $classroom->getTheme();
+      @endphp
+      <a href="/classrooms/{{ $classroom->code }}" class="p-5 h-100 rounded classroom-round card-shadow-s text-center pointer" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/{{ $theme->name }}');background-size: cover" @endif>
         {{ $classroom->name }}
       </a>
     </h4>

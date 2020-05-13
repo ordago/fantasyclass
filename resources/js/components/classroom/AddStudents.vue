@@ -4,7 +4,7 @@
         <div class="row">
             <span class="mr-2 py-3"><i class="far fa-user-plus"></i></span>
             <input type="text" v-model="stdName" placeholder="Name and surname" class="form-control col-5 mr-1">
-            <input type="email" v-model="stdEmail" placeholder="email" class="form-control col-5 mr-1">
+            <input type="email" v-model="stdEmail" placeholder="Email (optional)" class="form-control col-5 mr-1">
             <button class="btn btn-success" @click="addStudent">+ Add</button>
         </div>
        <!--<form @submit="formSubmit">
@@ -12,19 +12,19 @@
                 <!-- CSRF gets injected into this slot -->
            <!-- </slot> 
         </form>-->
-        <div class="rounded" v-for="(student, index) in students" v-bind:key="student.name">
-            <div class="row p-3 mt-2 bg-light relative">
-                <span class="badge badge-secondary p-2 m-1 mr-2">{{ index + 1 }}</span> {{ student.name }} <small class="pl-1 font-italic">{{ student.email }}</small> | {{ student.username }} <button class="ml-2 btn btn-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
+        <button v-if="students.length" class="btn btn-success mt-2 mb-1 ml-0">Create students</button>
+        <div v-for="(student, index) in students" v-bind:key="student.name">
+            <div class="row p-3 mt-2 bg-secondary rounded text-light relative">
+                <span class="badge badge-secondary p-2 m-1 mr-2">{{ index + 1 }}</span> {{ student.name }} <i class="fal fa-at pl-2" v-if="student.email.length"></i> <span class="px-1 font-italic"> {{ student.email }}</span> <i class="fal fa-user px-2"></i> {{ student.username }} <button class="ml-2 btn btn-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
-        <button v-if="students.length" class="btn btn-success my-2 ml-0">Create students</button>
     </div>
 </template>
 
 <script>
     export default {
         mounted() {
-            
+           
         },
         data: function() {
             return {
@@ -63,10 +63,10 @@
             },
             sendStudents() {
                 if(this.students.length) {
-                    axios.post('/classrooms/students/getusername', {'name' : this.stdName, 'email' : this.stdEmail })
+                    axios.post('/classrooms/students', this.students)
                         .then(response => {
                             // Toast Ok
-                            let toast = this.$toasted.show("Toasted !!", { 
+                            let toast = this.$toasted.show("Yea !!", { 
                                 theme: "outline", 
                                 position: "top-center", 
                                 duration : 5000
