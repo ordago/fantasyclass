@@ -34,7 +34,7 @@
             <div class="form-group row mb-0">
                 <div class="col-md-12">
                     <div class="form-check">
-                        <input class="form-check-input" type="checkbox" checked name="remember" style="display: none" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <input class="form-check-input" type="checkbox" checked name="remember" style="display: none" id="remember">
                     </div>
                 </div>
             </div>

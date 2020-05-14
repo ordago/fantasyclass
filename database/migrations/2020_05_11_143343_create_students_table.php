@@ -16,10 +16,11 @@ class CreateStudentsTable extends Migration
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('classroom_user_id');
+            $table->string('name', 100);
             $table->float('xp')->default(0);
             $table->float('gold')->default(0);
             $table->float('hp')->default(100);
-            $table->float('password_plain')->string(6);
+            $table->string('password_plain')->nullable();
             $table->timestamps();
         });
     }

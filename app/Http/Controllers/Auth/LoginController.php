@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
 {
@@ -54,12 +55,16 @@ class LoginController extends Controller
         ]);
   
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
+        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']),$request->remember))
         {
             return redirect()->route('classrooms');
-        }else{
-            return redirect()->route('login')
-                ->with('error','Email-Address And Password Are Wrong.');
+        } else {
+
+            $errors = new MessageBag();
+            // add your error messages:
+            $errors->add('username', __('auth.failed'));
+
+            return view('auth.login')->withErrors($errors);
         }
           
     }

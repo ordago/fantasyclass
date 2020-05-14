@@ -20,7 +20,7 @@ class CreateClassroomUserPivotTable extends Migration
             // 0 -> student; 1-> teacher; 2-> admin
             $table->boolean('role')->default(0);
             $table->timestamps();
-            $table->unique(['user_id', 'classroom_id']);
+            $table->unique(['user_id', 'classroom_id', 'role']);
         });
     }
 

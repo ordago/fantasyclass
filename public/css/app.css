@@ -9952,6 +9952,10 @@ h3 {
   max-width: 100% !important;
 }
 
+.cursor-default {
+  cursor: default;
+}
+
 .noselect {
   -webkit-touch-callout: none;
   /* iOS Safari */

@@ -14,8 +14,11 @@ class Queries
       else 
         $theme = DB::table('themes')->where('id', '=', $id)->first();
 
-        return " style='background: url(/img/bg/".$theme->name."); background-color:".$theme->color.";background-position: center bottom;background-size: 100%; background-attachment: fixed;background-repeat: no-repeat;'";
-       
+        if($theme->type == 0)
+          return " style='background-color:".$theme->color.";'";
+        
+          return " style='background: url(/img/bg/".$theme->name."); background-color:".$theme->color."; background-position: center bottom;background-size: 100%; background-attachment: fixed;background-repeat: no-repeat;'";
+
        /* $theme = Queries::getPropertyValue('students_theme');
         if ($theme) {
             $theme = DB::table('themes')->where('id', $theme)->first();

@@ -5,18 +5,9 @@
  */
 
 require('./bootstrap');
-
-
+require('./utils');
 
 window.Vue = require('vue');
-
-// BootStrap
-import { TabsPlugin, CardPlugin, ButtonPlugin, ButtonGroupPlugin } from 'bootstrap-vue'
-Vue.use(TabsPlugin)
-Vue.use(CardPlugin)
-Vue.use(ButtonPlugin)
-Vue.use(ButtonGroupPlugin)
-
 
 import Lang from 'lang.js';
 import messages from '../assets/js/ll_messages';
@@ -27,7 +18,7 @@ Vue.prototype.trans = new Lang( {
     messages,
     locale: default_locale,
     fallback: fallback_locale
-    });
+});
 
 // Toast management
 import Toasted from 'vue-toasted';
@@ -37,7 +28,6 @@ Vue.use(Toasted)
 import VueTippy, { TippyComponent } from "vue-tippy";
 Vue.use(VueTippy);
 Vue.component("tippy", TippyComponent);
-
 
 /**
  * The following block of code may be used to automatically register your

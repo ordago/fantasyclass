@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('title')
+<span style="display:initial" title="{{ $class->name }}">
+  {{ Str::limit($class->name, 8, $end='...') }}
+</span>
+@endsection
+
 @section('menu')
     <div class="pl-2 h-100 d-flex menu">
         <a href="/classrooms/{{ $class->code }}" class="h-100 py-3 pl-3 pr-2 d-flex align-items-center" {{ Popper::theme('dark')->pop('Users and groups') }}><i class="fad fa-users"></i></a>

@@ -55,13 +55,16 @@
                         <div class="ml-2 flexCenter" id="barNotif">
 
                         </div>
-                        <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link p-0 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user-graduate"></i> {{ Auth::user()->username }} <span class="caret"></span>
+                        <li class="nav-item dropdown h-100 p-0">
+                                <a id="navbarDropdown" class="nav-link h-100 d-flex align-items-center p-0 px-2 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user-graduate"></i> <span class="pl-2 text-light" title="{{ Auth::user()->username }}">{{ Str::limit(Auth::user()->username, 8, $end='...') }}</span><span class="caret"></span>
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item text-dark py-2" href="/preferences/edit"><i class="fal fa-cog"></i> Preferences</a>
+                                <div class="dropdown-menu dropdown-menu-right" style="min-width: max-content!important" aria-labelledby="navbarDropdown">
+                                    <div></div>
+                                    <span class="dropdown-item py-2 text-center cursor-default">{{ Auth::user()->name }}</span>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item text-dark py-2" href="/preferences/edit"><i class="fal fa-cog"></i> Profile</a>
                                     <a class="dropdown-item text-dark py-2" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

@@ -12,6 +12,10 @@ class ClassroomUser extends Pivot
         return $this->hasOne('App\Student', 'classroom_user_id', 'id');
       }
 
+      public function user() {
+          return $this->belongsTo(User::class);
+      }
+
       public function getId() {
         return $this->id;
       }

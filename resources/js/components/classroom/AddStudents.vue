@@ -7,24 +7,20 @@
             <input type="email" v-model="stdEmail" placeholder="Email (optional)" class="form-control col-5 mr-1">
             <button class="btn btn-success" @click="addStudent">+ Add</button>
         </div>
-       <!--<form @submit="formSubmit">
-            <slot>
-                <!-- CSRF gets injected into this slot -->
-           <!-- </slot> 
-        </form>-->
-        <button v-if="students.length" class="btn btn-success mt-2 mb-1 ml-0">Create students</button>
+        <button v-if="students.length" @click="sendStudents" class="btn btn-success mt-2 mb-1 ml-0">Create students</button>
         <div v-for="(student, index) in students" v-bind:key="student.name">
             <div class="row p-3 mt-2 bg-secondary rounded text-light relative">
-                <span class="badge badge-secondary p-2 m-1 mr-2">{{ index + 1 }}</span> {{ student.name }} <i class="fal fa-at pl-2" v-if="student.email.length"></i> <span class="px-1 font-italic"> {{ student.email }}</span> <i class="fal fa-user px-2"></i> {{ student.username }} <button class="ml-2 btn btn-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
+                <span class="badge badge-secondary p-2 m-1 mr-2">{{ index + 1 }}</span> {{ student.name }} <i class="fal fa-at pl-2" v-if="student.email.length"></i> <span class="px-1 font-italic"> {{ student.email }}</span> <span class="badge badge-success p-2 ml-2" v-if="student.username.length" v-tippy content="User already exists in FantasyClass, it'll be registered in the classroom"><i class="fal fa-user pr-2"></i> {{ student.username }}</span> <button class="ml-2 btn btn-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
     </div>
 </template>
 
 <script>
-    export default {
+  import Utils from "../../utils.js";
+
+  export default {
         mounted() {
-           
         },
         data: function() {
             return {
@@ -38,7 +34,10 @@
         },
         methods: {
             addStudent(){
-                //if (this.students.some('name': this.stdName == item)) return;
+                if(this.stdEmail && !Utils.validEmail(this.stdEmail)) {
+                    Utils.toast(this, this.trans.get("validation.email"), 2);
+                    return false;
+                }
                 let search = this.students.find(student => student.name === this.stdName);
                 if(this.stdName && !search) {
                     axios.post('/classrooms/students/getusername', {'name' : this.stdName, 'email' : this.stdEmail })
@@ -51,48 +50,49 @@
                                 username: this.stdUsername,
                                 });
                             this.stdName = this.stdEmail = this.stdUsername = '';
-                            let toast = this.$toasted.show("<i class='fas fa-fist-raised'></i>Toasted !!", { 
-                                    theme: "outline", 
-                                    position: "top-center", 
-                                    duration : 5000
-                            });
                         });
                 } else {
+                    Utils.toast(this, this.trans.get("validation.distinct"), 2);
                 }
-                // else toast
             },
             sendStudents() {
                 if(this.students.length) {
-                    axios.post('/classrooms/students', this.students)
-                        .then(response => {
-                            // Toast Ok
-                            let toast = this.$toasted.show("Yea !!", { 
-                                theme: "outline", 
-                                position: "top-center", 
-                                duration : 5000
+                    axios.post('/classrooms/students', {
+                        students: this.students,
+                    })
+                    .then(response => {
+                        if(response.data) {
+                            console.log();
+                            response.data.forEach(element => {
+
+                                 this.$toasted.show(element, { 
+                                        theme: 'bubble',
+                                        position: "top-center", 
+                                        iconPack: 'fontawesome',
+                                        action : {
+                                            text : 'Close',
+                                            onClick : (e, toastObject) => {
+                                                toastObject.goAway(0);
+                                            }
+                                        },
+                                });
+                                
+                                //Utils.toast(this, element, 2);
                             });
                             this.students = [];
-                        });
+                        } else {
+                            window.history.back();
+                        }
+                    })
+                    .catch( error => {
+                         Utils.toast(this, error, 2);
+                         this.students = [];
+                    });
                 }
             },
             deleteStudent(index){
                 this.students.splice(index, 1)
             },
-
-            formSubmit(e) {
-                e.preventDefault();
-                let currentObj = this;
-                axios.post('/formSubmit', {
-                    name: this.name,
-                    description: this.description
-                })
-                .then(function (response) {
-                    currentObj.output = response.data;
-                })
-                .catch(function (error) {
-                    currentObj.output = error;
-                });
-            }
         }
     }
 </script>

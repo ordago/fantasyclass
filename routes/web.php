@@ -30,7 +30,7 @@ Route::group(['middleware' => 'language'], function () {
     // Students
     Route::get('/classrooms/{code}/students/add', 'StudentController@create'); // Policy protect
     Route::post('/classrooms/students/', 'StudentController@store'); // Policy protect (?)
-    Route::post('/classrooms/students/getusername', 'StudentController@generateUsername');
+    Route::post('/classrooms/students/getusername', 'StudentController@getUsername');
     
     
 });

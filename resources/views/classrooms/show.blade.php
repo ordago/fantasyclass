@@ -1,16 +1,22 @@
 @extends('layouts.menu')
 
-@section('title')
-<span style="display:initial" title="{{ $class->name }}">
-  {{ Str::limit($class->name, 8, $end='...') }}
-</span>
-@endsection
-
 @section('content')
 <div>
-  <div class="bg-light m-2 p-3">
-    <a href="/classrooms/{{ $class->code }}/students/add">Add students</a>
-  </div>
+
+  <a class="btn btn-primary p-2 mx-3 text-light" href="/classrooms/{{ $class->code }}/students/add">
+    Add students
+  </a>
+
+  <div class="d-flex">  
+  @foreach($class->students as $student)
+    @php
+      $user = $student->classroom->user;
+    @endphp
+      <div class="rounded p-4 m-2 bg-dark text-light">
+        {{ $student->name }}
+      </div>
+      @endforeach
+    </div>
 
 </div>
 @endsection
