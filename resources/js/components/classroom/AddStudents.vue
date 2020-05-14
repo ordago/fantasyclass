@@ -76,12 +76,10 @@
                                             }
                                         },
                                 });
-                                
-                                //Utils.toast(this, element, 2);
-                            });
+                             });
                             this.students = [];
                         } else {
-                            window.history.back();
+                            window.location = document.referrer;
                         }
                     })
                     .catch( error => {

@@ -2025,12 +2025,11 @@ __webpack_require__.r(__webpack_exports__);
                     toastObject.goAway(0);
                   }
                 }
-              }); //Utils.toast(this, element, 2);
-
+              });
             });
             _this2.students = [];
           } else {
-            window.history.back();
+            window.location = document.referrer;
           }
         })["catch"](function (error) {
           _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this2, error, 2);
