@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="container py-2">
         <!--{{trans.get('success-error.insertSuccessVuePlural')}}-->
         <div class="row">
             <span class="mr-2 py-3"><i class="far fa-user-plus"></i></span>

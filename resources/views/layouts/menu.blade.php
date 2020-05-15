@@ -8,9 +8,9 @@
 
 @section('menu')
     <div class="pl-2 h-100 d-flex menu">
-        <a href="/classrooms/{{ $class->code }}" class="h-100 py-3 pl-3 pr-2 d-flex align-items-center" {{ Popper::theme('dark')->pop('Users and groups') }}><i class="fad fa-users"></i></a>
-        <li class="nav-item dropdown h-100 p-2 d-flex align-items-center">
-            <a id="navbarDropdown" class="nav-link h-100 p-3 d-flex align-items-center dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+        <a href="/classrooms/{{ $class->code }}" class="h-100 pl-3 pr-2 d-flex align-items-center" {{ Popper::theme('dark')->pop('Users and groups') }}><i class="fad fa-users"></i></a>
+        <li class="nav-item dropdown h-100 px-2 py-0 d-flex align-items-center">
+            <a id="navbarDropdown" class="nav-link h-100 px-3 d-flex align-items-center dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="fad fa-treasure-chest"></i>
             </a>
 

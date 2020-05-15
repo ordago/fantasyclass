@@ -10312,12 +10312,9 @@ h3 {
   position: absolute;
   left: 0;
   z-index: 0;
-  background-color: #555;
   text-align: center;
   color: white;
   font-weight: bold;
-  border-radius: 5px;
-  border: 1px solid #333;
   transition: all 0.5s ease;
 }
 
@@ -10334,7 +10331,6 @@ h3 {
   position: relative;
   display: flex;
   width: 100%;
-  height: 40px;
   align-items: center;
   align-content: center;
   justify-content: center;
@@ -10965,15 +10961,12 @@ body {
 
 .gold, .score {
   position: relative;
-  margin-bottom: 10px;
-  padding: 10px;
   color: white;
   border: 1px solid #555;
   border-radius: 3px;
   text-align: center;
   font-size: 1.25em;
   font-weight: bold;
-  line-height: 30px;
 }
 
 .gemInfo {
@@ -11817,7 +11810,7 @@ span.round-tab:hover {
 }
 
 .main-content {
-  margin-top: 75px;
+  margin-top: 54px;
 }
 
 .login_container label {
