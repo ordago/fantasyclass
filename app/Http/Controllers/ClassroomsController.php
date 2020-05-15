@@ -65,7 +65,7 @@ class ClassroomsController extends Controller
     }
     
     public function create() {
-        $bg = Queries::getBg();
+        $bg = Theme::getBg();
         $goals = GoalThemes::All();
         $themes = Theme::All();
         return view('classrooms.create', compact('bg', 'goals', 'themes'));
@@ -73,13 +73,13 @@ class ClassroomsController extends Controller
     
     public function index() {
         $user = auth()->user();
-        $bg = Queries::getBg();
+        $bg = Theme::getBg();
         return view('classrooms.index', compact('user', 'bg'));
     }
     
     public function show($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $bg = Queries::getBg($class->theme_id);
+        $bg = $class->theme;
         return view('classrooms.show', compact('class', 'bg'));
     }
 }

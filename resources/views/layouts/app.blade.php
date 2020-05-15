@@ -25,7 +25,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 </head>
-    <body @if (isset($bg)) {!! $bg !!} @endif>
+    <body @if (isset($bg)) {!! $bg !!} @endif @yield('bg')>
     <div id="app">
         @auth
         <nav class="menu-labels card-shadow-s">

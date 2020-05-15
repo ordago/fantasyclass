@@ -29,6 +29,10 @@ import VueTippy, { TippyComponent } from "vue-tippy";
 Vue.use(VueTippy);
 Vue.component("tippy", TippyComponent);
 
+// Cookies
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -41,7 +45,7 @@ Vue.component("tippy", TippyComponent);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('add-students', require('./components/classroom/AddStudents.vue').default);
-Vue.component('show-student', require('./components/student/ShowStudent.vue').default);
+Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
