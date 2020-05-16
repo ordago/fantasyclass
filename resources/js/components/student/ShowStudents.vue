@@ -50,9 +50,9 @@
                             </span> {{ student.xp }}
                         </div>
                         <div class="changeScore my-2">
-                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="btn btn-secondary btn-submit">+100</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="btn btn-secondary btn-submit">+50</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="btn btn-secondary btn-submit">+10</button>                            
+                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="btn btn-secondary px-2">+100</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="btn btn-secondary px-2">+50</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="btn btn-secondary px-2">+10</button>                            
                             <tippy 
                                 interactive 
                                 :animate-fill="false" 
@@ -72,18 +72,18 @@
                                 </div>
                             </span>
                             </tippy>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -10)" class="btn btn-outline-secondary btn-submit">-10</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -50)" class="btn btn-outline-secondary btn-submit">-50</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -100)" class="btn btn-outline-secondary btn-submit">-100</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -10)" class="btn btn-outline-secondary px-2">-10</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -50)" class="btn btn-outline-secondary px-2">-50</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -100)" class="btn btn-outline-secondary px-2">-100</button>
                         </div>
                         <div class="gold p-2 my-1">
                             <i class="fas fa-coins colored"></i> {{ student.gold }}
                         </div>
                         <div class="changeGold my-2">
                             <div class="changeGold">
-                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="btn btn-warning btn-submit editgold">+100</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="btn btn-warning btn-submit editgold">+50</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="btn btn-warning btn-submit editgold">+10</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="btn btn-warning px-2">+100</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="btn btn-warning px-2">+50</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="btn btn-warning px-2">+10</button>
                                                                 <tippy 
                                     interactive 
                                     :animate-fill="false" 
@@ -104,9 +104,9 @@
                                     </div>
                                 </span>
                                 </tippy>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -10)" class="btn btn-outline-secondary btn-submit editgold">-10</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -50)" class="btn btn-outline-secondary btn-submit editgold">-50</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -100)" class="btn btn-outline-secondary btn-submit editgold">-100</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -10)" class="btn btn-outline-secondary px-2">-10</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -50)" class="btn btn-outline-secondary px-2">-50</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -100)" class="btn btn-outline-secondary px-2">-100</button>
                             </div>
                         </div>
                     </div>

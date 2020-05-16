@@ -39027,7 +39027,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-secondary btn-submit",
+                          staticClass: "btn btn-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39041,7 +39041,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-secondary btn-submit",
+                          staticClass: "btn btn-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39055,7 +39055,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-secondary btn-submit",
+                          staticClass: "btn btn-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39160,7 +39160,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-secondary btn-submit",
+                          staticClass: "btn btn-outline-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39174,7 +39174,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-secondary btn-submit",
+                          staticClass: "btn btn-outline-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39188,7 +39188,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-outline-secondary btn-submit",
+                          staticClass: "btn btn-outline-secondary px-2",
                           attrs: { type: "submit" },
                           on: {
                             click: function($event) {
@@ -39219,7 +39219,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-warning btn-submit editgold",
+                            staticClass: "btn btn-warning px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
@@ -39233,7 +39233,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-warning btn-submit editgold",
+                            staticClass: "btn btn-warning px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
@@ -39247,7 +39247,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-warning btn-submit editgold",
+                            staticClass: "btn btn-warning px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
@@ -39354,8 +39354,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass:
-                              "btn btn-outline-secondary btn-submit editgold",
+                            staticClass: "btn btn-outline-secondary px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
@@ -39369,8 +39368,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass:
-                              "btn btn-outline-secondary btn-submit editgold",
+                            staticClass: "btn btn-outline-secondary px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {
@@ -39384,8 +39382,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass:
-                              "btn btn-outline-secondary btn-submit editgold",
+                            staticClass: "btn btn-outline-secondary px-2",
                             attrs: { type: "submit" },
                             on: {
                               click: function($event) {

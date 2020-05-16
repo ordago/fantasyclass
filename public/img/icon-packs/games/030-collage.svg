@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="512pt" version="1.1" viewBox="0 0 512 512" width="512pt">
+<g id="surface1">
+<path d="M 512 256 C 512 397.386719 397.386719 512 256 512 C 114.613281 512 0 397.386719 0 256 C 0 114.613281 114.613281 0 256 0 C 397.386719 0 512 114.613281 512 256 Z M 512 256 " style=" stroke:none;fill-rule:nonzero;fill:rgb(20%,22.352941%,25.098039%);fill-opacity:1;" />
+<path d="M 512 256 C 512 242.289062 510.910156 228.835938 508.835938 215.710938 L 406.125 113 L 113 406.125 L 215.710938 508.835938 C 228.835938 510.910156 242.289062 512 256 512 C 397.386719 512 512 397.386719 512 256 Z M 512 256 " style=" stroke:none;fill-rule:nonzero;fill:rgb(13.72549%,15.294118%,16.862745%);fill-opacity:1;" />
+<path d="M 113 113 L 406.125 113 L 406.125 406.125 L 113 406.125 Z M 113 113 " style=" stroke:none;fill-rule:nonzero;fill:rgb(99.607843%,41.568627%,8.627451%);fill-opacity:1;" />
+<path d="M 113 406.125 L 299.691406 406.125 L 352.742188 353.074219 L 259.394531 259.730469 Z M 113 406.125 " style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,100%,100%);fill-opacity:1;" />
+<path d="M 352.742188 353.074219 L 259.394531 259.730469 L 259.394531 406.125 L 299.691406 406.125 Z M 352.742188 353.074219 " style=" stroke:none;fill-rule:nonzero;fill:rgb(91.372549%,92.941176%,96.078431%);fill-opacity:1;" />
+<path d="M 313.8125 205.3125 L 259.394531 259.730469 L 352.742188 353.074219 L 406.125 299.691406 L 406.125 297.625 Z M 313.8125 205.3125 " style=" stroke:none;fill-rule:nonzero;fill:rgb(35.294118%,32.941176%,87.843137%);fill-opacity:1;" />
+<path d="M 406.125 113 L 312.894531 206.230469 L 406.125 299.457031 Z M 406.125 113 " style=" stroke:none;fill-rule:nonzero;fill:rgb(2.352941%,80%,67.058824%);fill-opacity:1;" />
+<path d="M 406.125 299.691406 L 299.691406 406.125 L 406.125 406.125 Z M 406.125 299.691406 " style=" stroke:none;fill-rule:nonzero;fill:rgb(99.607843%,41.568627%,8.627451%);fill-opacity:1;" />
+<path d="M 113 406.125 L 259.394531 259.730469 L 113 113 Z M 113 406.125 " style=" stroke:none;fill-rule:nonzero;fill:rgb(100%,85.490196%,0%);fill-opacity:1;" />
+<path d="M 113 113 L 259.394531 259.730469 L 406.125 113 Z M 113 113 " style=" stroke:none;fill-rule:nonzero;fill:rgb(99.607843%,41.568627%,8.627451%);fill-opacity:1;" />
+<path d="M 259.394531 113 L 259.394531 259.730469 L 406.125 113 Z M 259.394531 113 " style=" stroke:none;fill-rule:nonzero;fill:rgb(94.901961%,27.058824%,0%);fill-opacity:1;" />
+</g>
+</svg>
