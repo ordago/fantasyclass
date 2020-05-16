@@ -29,6 +29,7 @@ GOOGE_REDIRECT=http://localhost:8000/callback/google
 
 ## After every pull from the server
 ```
+ composer update
  php artisan migrate:fresh
  php artisan db:seed
 ```

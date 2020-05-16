@@ -31,9 +31,11 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/classrooms/{code}/students/add', 'StudentController@create'); // Policy protect
     Route::post('/classrooms/students/', 'StudentController@store'); // Policy protect (?)
     Route::post('/classrooms/students/getusername', 'StudentController@getUsername');
+    Route::post('/classrooms/students/update', 'StudentController@update'); // Policty protect
 
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
+
     
 });

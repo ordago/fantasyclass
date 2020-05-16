@@ -35,7 +35,7 @@
         methods: {
             addStudent(){
                 if(this.stdEmail && !Utils.validEmail(this.stdEmail)) {
-                    Utils.toast(this, this.trans.get("validation.email"), 2);
+                    Utils.toast(this, this.trans.get("validation.email"), 2)
                     return false;
                 }
                 let search = this.students.find(student => student.name === this.stdName);
@@ -48,11 +48,11 @@
                                 name: this.stdName,
                                 email: this.stdEmail,
                                 username: this.stdUsername,
-                                });
-                            this.stdName = this.stdEmail = this.stdUsername = '';
+                                })
+                            this.stdName = this.stdEmail = this.stdUsername = ''
                         });
                 } else {
-                    Utils.toast(this, this.trans.get("validation.distinct"), 2);
+                    Utils.toast(this, this.trans.get("validation.distinct"), 2)
                 }
             },
             sendStudents() {
@@ -62,7 +62,7 @@
                     })
                     .then(response => {
                         if(response.data) {
-                            console.log();
+                            console.log()
                             response.data.forEach(element => {
 
                                  this.$toasted.show(element, { 
@@ -75,16 +75,16 @@
                                                 toastObject.goAway(0);
                                             }
                                         },
-                                });
-                             });
+                                })
+                             })
                             this.students = [];
                         } else {
-                            window.location = document.referrer;
+                            window.location = document.referrer
                         }
                     })
                     .catch( error => {
-                         Utils.toast(this, error, 2);
-                         this.students = [];
+                         Utils.toast(this, error, 2)
+                         this.students = []
                     });
                 }
             },

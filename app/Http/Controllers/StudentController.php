@@ -92,6 +92,11 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
+    public function update(Request $request) {
+        $student = Student::findOrFail($request->id);
+        return $student->setProperty($request->prop, $request->value);
+    }
+
     public function getUsername(Request $request) 
     {
         

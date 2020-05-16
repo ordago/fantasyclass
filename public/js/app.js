@@ -2109,6 +2109,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['students', 'code'],
@@ -2123,7 +2160,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       studentsJson: [],
       sortKey: '',
-      viewGrid: ''
+      viewGrid: '',
+      custom: 0
     };
   },
   methods: {
@@ -2134,12 +2172,29 @@ __webpack_require__.r(__webpack_exports__);
     changeView: function changeView() {
       this.viewGrid = (this.viewGrid + 1) % 3;
       this.$cookies.set('viewGrid', this.viewGrid, Infinity);
+    },
+    updateProp: function updateProp(id, prop, value) {
+      var _this = this;
+
+      var options = {
+        'id': id,
+        'prop': prop,
+        'value': value
+      };
+      axios.post('/classrooms/students/update', options).then(function (response) {
+        if (prop == 'xp') _this.studentsJson.find(function (el) {
+          return el.id === id;
+        }).xp = response.data;else if (prop == 'gold') _this.studentsJson.find(function (el) {
+          return el.id === id;
+        }).gold = response.data;
+        _this.custom = 0;
+      });
     }
   },
   computed: {
     orderedStudents: function orderedStudents() {
-      var order = 'asc';
-      if (this.sortKey == 'hp') order = 'desc';
+      var order = 'desc';
+      if (this.sortKey == 'name') order = 'asc';
       return _.orderBy(this.studentsJson, this.sortKey, order);
     }
   }
@@ -38901,15 +38956,18 @@ var render = function() {
         _vm._l(_vm.orderedStudents, function(student) {
           return _c("div", { key: student.id }, [
             _c("div", { staticClass: "rounded card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _vm._v(
-                  "\r\n                    " +
-                    _vm._s(student.name) +
-                    "\r\n                "
-                )
+              _c("div", { staticClass: "card-header text-center" }, [
+                _c("img", {
+                  staticClass: "rounded",
+                  attrs: { src: "/img/no_avatar.png", width: "20%" }
+                }),
+                _vm._v(" "),
+                _c("h3", { staticClass: "mt-2 mb-0" }, [
+                  _vm._v(_vm._s(student.name))
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "card-body p-2" }, [
                 _c("div", [
                   _c("div", { staticClass: "centeredAttribute p-2 my-3" }, [
                     _c(
@@ -38962,7 +39020,187 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(5, true),
+                  _c(
+                    "div",
+                    { staticClass: "changeScore my-2" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", 100)
+                            }
+                          }
+                        },
+                        [_vm._v("+100")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", 50)
+                            }
+                          }
+                        },
+                        [_vm._v("+50")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", 10)
+                            }
+                          }
+                        },
+                        [_vm._v("+10")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "tippy",
+                        {
+                          staticStyle: { display: "inline-block" },
+                          attrs: {
+                            interactive: "",
+                            "animate-fill": false,
+                            theme: "light",
+                            placement: "bottom",
+                            animation: "fade",
+                            trigger: "click",
+                            arrow: ""
+                          },
+                          scopedSlots: _vm._u(
+                            [
+                              {
+                                key: "trigger",
+                                fn: function() {
+                                  return [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-primary",
+                                        attrs: { type: "submit" }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-hashtag"
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                },
+                                proxy: true
+                              }
+                            ],
+                            null,
+                            true
+                          )
+                        },
+                        [
+                          _vm._v(" "),
+                          _c("span", [
+                            _c("div", { staticClass: "row px-3" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.custom,
+                                    expression: "custom"
+                                  }
+                                ],
+                                staticClass: "form-control col-8",
+                                attrs: { type: "number" },
+                                domProps: { value: _vm.custom },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.custom = $event.target.value
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary col-4 pl-1",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.updateProp(
+                                        student.id,
+                                        "xp",
+                                        _vm.custom
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.trans.get("users_groups.apply"))
+                                  )
+                                ]
+                              )
+                            ])
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", -10)
+                            }
+                          }
+                        },
+                        [_vm._v("-10")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", -50)
+                            }
+                          }
+                        },
+                        [_vm._v("-50")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-outline-secondary btn-submit",
+                          attrs: { type: "submit" },
+                          on: {
+                            click: function($event) {
+                              return _vm.updateProp(student.id, "xp", -100)
+                            }
+                          }
+                        },
+                        [_vm._v("-100")]
+                      )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "gold p-2 my-1" }, [
                     _c("i", { staticClass: "fas fa-coins colored" }),
@@ -38973,7 +39211,194 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(6, true)
+                  _c("div", { staticClass: "changeGold my-2" }, [
+                    _c(
+                      "div",
+                      { staticClass: "changeGold" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", 100)
+                              }
+                            }
+                          },
+                          [_vm._v("+100")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", 50)
+                              }
+                            }
+                          },
+                          [_vm._v("+50")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-warning btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", 10)
+                              }
+                            }
+                          },
+                          [_vm._v("+10")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "tippy",
+                          {
+                            staticStyle: { display: "inline-block" },
+                            attrs: {
+                              interactive: "",
+                              "animate-fill": false,
+                              theme: "light",
+                              placement: "bottom",
+                              animation: "fade",
+                              trigger: "click",
+                              arrow: ""
+                            },
+                            scopedSlots: _vm._u(
+                              [
+                                {
+                                  key: "trigger",
+                                  fn: function() {
+                                    return [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          attrs: { type: "submit" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-hashtag"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ],
+                              null,
+                              true
+                            )
+                          },
+                          [
+                            _vm._v(" "),
+                            _c("span", [
+                              _c("div", { staticClass: "row px-3" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.custom,
+                                      expression: "custom"
+                                    }
+                                  ],
+                                  staticClass: "form-control col-8",
+                                  attrs: { type: "number" },
+                                  domProps: { value: _vm.custom },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.custom = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-primary col-4 pl-1",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "gold",
+                                          _vm.custom
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans.get("users_groups.apply")
+                                      )
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline-secondary btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", -10)
+                              }
+                            }
+                          },
+                          [_vm._v("-10")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline-secondary btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", -50)
+                              }
+                            }
+                          },
+                          [_vm._v("-50")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-outline-secondary btn-submit editgold",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "gold", -100)
+                              }
+                            }
+                          },
+                          [_vm._v("-100")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
                 ])
               ])
             ])
@@ -39045,157 +39470,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fas fa-fist-raised colored" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "changeScore my-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-submit",
-          attrs: { type: "submit", value: "100" }
-        },
-        [_vm._v("+100")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-submit",
-          attrs: { type: "submit", value: "50" }
-        },
-        [_vm._v("+50")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-secondary btn-submit",
-          attrs: { type: "submit", value: "10" }
-        },
-        [_vm._v("+10")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-primary customValue",
-          attrs: {
-            type: "submit",
-            "data-toggle": "modal",
-            "data-target": "#customXPmodal"
-          }
-        },
-        [_c("i", { staticClass: "fas fa-hashtag" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-secondary btn-submit",
-          attrs: { type: "submit", value: "-10" }
-        },
-        [_vm._v("-10")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-secondary btn-submit",
-          attrs: { type: "submit", value: "-50" }
-        },
-        [_vm._v("-50")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-outline-secondary btn-submit",
-          attrs: { type: "submit", value: "-100" }
-        },
-        [_vm._v("-100")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "changeGold my-2" }, [
-      _c("div", { staticClass: "changeGold" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-warning btn-submit editgold",
-            attrs: { type: "submit", value: "100" }
-          },
-          [_vm._v("+100")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-warning btn-submit editgold",
-            attrs: { type: "submit", value: "50" }
-          },
-          [_vm._v("+50")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-warning btn-submit editgold",
-            attrs: { type: "submit", value: "10" }
-          },
-          [_vm._v("+10")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary",
-            attrs: {
-              type: "button",
-              "data-action": "popover",
-              "data-tippy-content": "Valor personalizado",
-              "data-toggle": "modal",
-              "data-type": "editGold",
-              "data-target": "#customXPmodal"
-            }
-          },
-          [_c("i", { staticClass: "fas fa-hashtag" })]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-secondary btn-submit editgold",
-            attrs: { type: "submit", value: "-10" }
-          },
-          [_vm._v("-10")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-secondary btn-submit editgold",
-            attrs: { type: "submit", value: "-50" }
-          },
-          [_vm._v("-50")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-outline-secondary btn-submit editgold",
-            attrs: { type: "submit", value: "-100" }
-          },
-          [_vm._v("-100")]
-        )
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -56616,6 +56890,7 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   "en.auth": {
+    "provider_failed": "The e-mail is not registered.",
     "failed": "These credentials do not match our records.",
     "throttle": "Too many login attempts. Please try again in :seconds seconds.",
     "email": "E-mail or username"
@@ -56672,7 +56947,8 @@ __webpack_require__.r(__webpack_exports__);
     "order_name": "Order by name",
     "order_hp": "Order by health points",
     "order_xp": "Order by experience",
-    "order_gold": "Order by gold"
+    "order_gold": "Order by gold",
+    "apply": "Apply"
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",

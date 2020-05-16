@@ -13,4 +13,12 @@ class Student extends Model
         return $this->belongsTo(ClassroomUser::class, 'classroom_user_id');
     }
 
+    public function setProperty($prop, $value) {
+        $value = max($this->$prop + $value, 0);
+        $this->fill([
+            $prop => $value,
+        ])->save();
+        return $value;
+    }
+
 }

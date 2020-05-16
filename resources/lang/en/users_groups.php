@@ -15,6 +15,7 @@ return [
     'order_hp' => 'Order by health points',
     'order_xp' => 'Order by experience',
     'order_gold' => 'Order by gold',
-
+    
+    'apply' => 'Apply',
 
 ];
