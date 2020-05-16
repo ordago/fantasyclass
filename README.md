@@ -26,6 +26,13 @@ GOOGLE_CLIENT_ID=
 GOOGLE_SECRET=
 ```
 
+## After every pull from the server
+```
+ php artisan migrate:fresh
+ php artisan db:seed
+```
+These commands will recreate the DB, wipe all the data and create a user admin/admin
+
 ### Refresh strings to VUE translation
 
 https://github.com/kg-bot/laravel-localization-to-vue
@@ -46,14 +53,6 @@ https://github.com/shakee93/vue-toasted
 Popper tippy:
  - Blade: https://github.com/andcarpi/laravel-popper
  - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
-
-### Migrate and seed
-
-```
- php artisan migrate
- php artisan migrate:fresh (drop all data)
- php artisan db:seed (add user admin / admin)
-```
 
 ## License
 
