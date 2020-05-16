@@ -2114,21 +2114,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['students', 'code'],
   mounted: function mounted() {
-    var _$cookies$get;
+    var _$cookies$get, _$cookies$get2;
 
     this.studentsJson = JSON.parse(this.students);
     this.sortKey = (_$cookies$get = $cookies.get('order')) !== null && _$cookies$get !== void 0 ? _$cookies$get : 'name';
+    this.viewGrid = (_$cookies$get2 = $cookies.get('viewGrid')) !== null && _$cookies$get2 !== void 0 ? _$cookies$get2 : 0;
   },
   data: function data() {
     return {
       studentsJson: [],
-      sortKey: ''
+      sortKey: '',
+      viewGrid: ''
     };
   },
   methods: {
     orderBy: function orderBy(sorKey) {
       this.$cookies.set('order', sorKey, Infinity);
       this.sortKey = sorKey;
+    },
+    changeView: function changeView() {
+      this.viewGrid = (this.viewGrid + 1) % 3;
+      this.$cookies.set('viewGrid', this.viewGrid, Infinity);
     }
   },
   computed: {
@@ -38791,9 +38797,21 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _c("div", { staticClass: "flexCenter floatR" }, [
-          _vm._m(1),
+          _c(
+            "span",
+            {
+              staticClass: "mr-1 hideGrid pointer",
+              on: { click: _vm.changeView }
+            },
+            [
+              _c("i", {
+                staticClass: "fas fa-th fs-1 colored",
+                staticStyle: { color: "white" }
+              })
+            ]
+          ),
           _vm._v(" "),
-          _vm._m(2),
+          _vm._m(1),
           _vm._v(" "),
           _c("span", [
             _c("i", {
@@ -38845,7 +38863,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("input", {
             staticClass: "cbx",
@@ -38853,16 +38871,23 @@ var render = function() {
             attrs: { type: "checkbox", id: "toggleStdView" }
           }),
           _vm._v(" "),
-          _vm._m(4),
+          _vm._m(3),
           _vm._v(" "),
-          _vm._m(5)
+          _vm._m(4)
         ])
       ]
     ),
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "grid grid4g my-2" },
+      {
+        staticClass: "grid  my-2",
+        class: [
+          this.viewGrid == 0 ? "grid4g" : "",
+          this.viewGrid == 1 ? "grid3g" : "",
+          this.viewGrid == 2 ? "grid2g" : ""
+        ]
+      },
       [
         _vm._l(_vm.orderedStudents, function(student) {
           return _c("div", { key: student.id }, [
@@ -38922,13 +38947,13 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "score p-2 mt-1" }, [
-                    _vm._m(6, true),
+                    _vm._m(5, true),
                     _vm._v(
                       " " + _vm._s(student.xp) + "\r\n                        "
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(7, true),
+                  _vm._m(6, true),
                   _vm._v(" "),
                   _c("div", { staticClass: "gold p-2 my-1" }, [
                     _c("i", { staticClass: "fas fa-coins colored" }),
@@ -38939,7 +38964,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(8, true)
+                  _vm._m(7, true)
                 ])
               ])
             ])
@@ -38976,17 +39001,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "tools rounded-left" }, [
       _c("i", { staticClass: "fal fa-tools" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-1 hideGrid pointer" }, [
-      _c("i", {
-        staticClass: "fas fa-th fs-1 colored",
-        staticStyle: { color: "white" }
-      })
     ])
   },
   function() {

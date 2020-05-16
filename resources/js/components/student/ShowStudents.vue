@@ -18,7 +18,7 @@
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
         -->
         <div class="flexCenter floatR">
-            <span class="mr-1 hideGrid pointer"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
+            <span class="mr-1 hideGrid pointer" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
 
             <span><i class="fal fa-sort-numeric-down-alt mr-2"></i></span>
             <span ><i class="fas fa-user colored pointer mr-2" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
@@ -31,7 +31,7 @@
             <span><i class="fas fa-user ml-2 outer_glow"></i></span>
         </div>
     </div>
-        <div class="grid grid4g my-2">
+        <div class="grid  my-2" v-bind:class="[ this.viewGrid == 0 ? 'grid4g' : '', this.viewGrid == 1 ? 'grid3g' : '', this.viewGrid == 2 ? 'grid2g' : '']">
         <div v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="rounded card">
                 <div class="card-header">
@@ -94,6 +94,7 @@
         mounted() {
             this.studentsJson = JSON.parse(this.students);
             this.sortKey = $cookies.get('order') ?? 'name';
+            this.viewGrid = $cookies.get('viewGrid') ?? 0;
         },
         data: function() {
             return {
@@ -101,12 +102,17 @@
                  
                     ],
                     sortKey: '',
+                    viewGrid: '',
             }
         },
         methods: {
               orderBy: function(sorKey) {
                     this.$cookies.set('order', sorKey , Infinity);
                     this.sortKey = sorKey
+                },
+                changeView: function() {
+                    this.viewGrid = (this.viewGrid + 1) % 3;
+                    this.$cookies.set('viewGrid', this.viewGrid , Infinity);
                 }
             },
             computed: {
