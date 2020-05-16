@@ -18,14 +18,13 @@
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
         -->
         <div class="flexCenter floatR">
-            <span class="mr-1 hideGrid pointer" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
+            <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
 
             <span><i class="fal fa-sort-numeric-down-alt mr-2"></i></span>
-            <span ><i class="fas fa-user colored pointer mr-2" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
-            <span ><i class="fas fa-heart colored pointer mr-2" v-bind:class="{ coloredGray: sortKey != 'hp' }" @click="orderBy('hp');"></i></span>
-            <span ><i class="fas fa-fist-raised colored pointer mr-2" v-bind:class="{ coloredGray: sortKey != 'xp' }" @click="orderBy('xp');"></i></span>
-            <span ><i class="fas fa-coins colored pointer mr-2" v-bind:class="{ coloredGray: sortKey != 'gold' }" @click="orderBy('gold');"></i></span>
-            <span><i class="fal fa-sort-numeric-down-alt mr-2"></i></span>
+            <span ><i class="fas fa-user colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_name')" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
+            <span ><i class="fas fa-heart colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_hp')" v-bind:class="{ coloredGray: sortKey != 'hp' }" @click="orderBy('hp');"></i></span>
+            <span ><i class="fas fa-fist-raised colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_xp')" v-bind:class="{ coloredGray: sortKey != 'xp' }" @click="orderBy('xp');"></i></span>
+            <span ><i class="fas fa-coins colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_gold')" v-bind:class="{ coloredGray: sortKey != 'gold' }" @click="orderBy('gold');"></i></span>
             <input type="checkbox" id="toggleStdView" class="cbx" style="display:none"/>
             <label  style="width: 40px" for="toggleStdView" class="toggle"><span></span></label>
             <span><i class="fas fa-user ml-2 outer_glow"></i></span>

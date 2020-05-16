@@ -2109,7 +2109,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['students', 'code'],
@@ -38800,7 +38799,9 @@ var render = function() {
           _c(
             "span",
             {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "mr-1 hideGrid pointer",
+              attrs: { content: _vm.trans.get("users_groups.change_layout") },
               on: { click: _vm.changeView }
             },
             [
@@ -38815,10 +38816,14 @@ var render = function() {
           _vm._v(" "),
           _c("span", [
             _c("i", {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "fas fa-user colored pointer mr-2",
               class: { coloredGray: _vm.sortKey != "name" },
               staticStyle: { color: "#eee" },
-              attrs: { "data-id": "0" },
+              attrs: {
+                content: _vm.trans.get("users_groups.order_name"),
+                "data-id": "0"
+              },
               on: {
                 click: function($event) {
                   return _vm.orderBy("name")
@@ -38829,8 +38834,10 @@ var render = function() {
           _vm._v(" "),
           _c("span", [
             _c("i", {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "fas fa-heart colored pointer mr-2",
               class: { coloredGray: _vm.sortKey != "hp" },
+              attrs: { content: _vm.trans.get("users_groups.order_hp") },
               on: {
                 click: function($event) {
                   return _vm.orderBy("hp")
@@ -38841,8 +38848,10 @@ var render = function() {
           _vm._v(" "),
           _c("span", [
             _c("i", {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "fas fa-fist-raised colored pointer mr-2",
               class: { coloredGray: _vm.sortKey != "xp" },
+              attrs: { content: _vm.trans.get("users_groups.order_xp") },
               on: {
                 click: function($event) {
                   return _vm.orderBy("xp")
@@ -38853,8 +38862,10 @@ var render = function() {
           _vm._v(" "),
           _c("span", [
             _c("i", {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "fas fa-coins colored pointer mr-2",
               class: { coloredGray: _vm.sortKey != "gold" },
+              attrs: { content: _vm.trans.get("users_groups.order_gold") },
               on: {
                 click: function($event) {
                   return _vm.orderBy("gold")
@@ -38863,17 +38874,15 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
           _c("input", {
             staticClass: "cbx",
             staticStyle: { display: "none" },
             attrs: { type: "checkbox", id: "toggleStdView" }
           }),
           _vm._v(" "),
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(3)
         ])
       ]
     ),
@@ -38947,13 +38956,13 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "score p-2 mt-1" }, [
-                    _vm._m(5, true),
+                    _vm._m(4, true),
                     _vm._v(
                       " " + _vm._s(student.xp) + "\r\n                        "
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(6, true),
+                  _vm._m(5, true),
                   _vm._v(" "),
                   _c("div", { staticClass: "gold p-2 my-1" }, [
                     _c("i", { staticClass: "fas fa-coins colored" }),
@@ -38964,7 +38973,7 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _vm._m(7, true)
+                  _vm._m(6, true)
                 ])
               ])
             ])
@@ -39001,14 +39010,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "tools rounded-left" }, [
       _c("i", { staticClass: "fal fa-tools" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [
-      _c("i", { staticClass: "fal fa-sort-numeric-down-alt mr-2" })
     ])
   },
   function() {
@@ -56614,476 +56615,16 @@ module.exports = function(module) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  "ca.Lvl": {
-    "currentLvls": "Nivells actuals",
-    "lvlNmber": "N\xFAmero de nivell",
-    "minLvlScore": "Puntuaci\xF3 m\xEDnima del nivell",
-    "Lvl": "Nivell",
-    "minScore": "Minima puntuaci\xF3",
-    "actionLvl": "Accions",
-    "createLvlCard": "Nou nivell",
-    "updateLvlCard": "Edita nivell"
-  },
-  "ca.auth": {
-    "failed": "These credentials do not match our records.",
-    "throttle": "Too many login attempts. Please try again in :seconds seconds.",
-    "email": "Usuari o correu electr\xF2nic"
-  },
-  "ca.cards": {
-    "card": "Carta",
-    "randomCard": "Carta aleat\xF2ria",
-    "cardGenerator": "Generador de cartes recomanat",
-    "minLvl": "Nivell m\xEDnim",
-    "specialCard": "Especial (no ocupa lloc)",
-    "special": "Especial",
-    "typeCard": "Tipus",
-    "actionCard": "Accions",
-    "typeCardCommon": "Comuna",
-    "typeCardRare": "Rara",
-    "typeCardEpic": "\xC8pica",
-    "typeCardLegendary": "Legend\xE0ria",
-    "currentCards": "Cartes actuals",
-    "noCards": "Actualment no hi ha cartes",
-    "createCard": "Nova carta",
-    "updateCard": "Edita carta",
-    "assign": "Assigna",
-    "disable": "Deshabilita"
-  },
-  "ca.custom-card": {
-    "bgColor": "Color de fons"
-  },
-  "ca.general": {
-    "add": "Afegeix",
-    "update": "Actualitza",
-    "delete": "Elimina",
-    "title": "Gesti\xF3 Gamificaci\xF3",
-    "changelog": "Changelog",
-    "undo": "Desf\xE9s el darrer canvi",
-    "guide": "Guia completa del joc",
-    "telegram": "Grup de telegram per dubtes / sugger\xE8ncies (pots cercar FantasyClass directament des del m\xF2bil)",
-    "getStats": "Estad\xEDstiques de tot l'alumnat",
-    "startEvent": "Event d'inici de classe",
-    "music": "M\xFAsica",
-    "randomName": "Nom aleatori",
-    "randomGroup": "Grup aleatori",
-    "close": "Tanca",
-    "endGame": "Finalitza joc",
-    "continueGame": "Continua joc"
-  },
-  "ca.grades-charts": {
-    "dragSlices": "Arrossega porcions a l'altra banda",
-    "wInteractions": "Sense interaccions",
-    "city": "Ciutat",
-    "description": "Descripci\xF3",
-    "percent": "Percentatge",
-    "grade": "Nota",
-    "weihghted": "Ponderada",
-    "evaluationType1": "Una \xFAnica avaluaci\xF3",
-    "evaluationType2": "Avaluaci\xF3 per cada regi\xF3",
-    "evaluate": "Avalua"
-  },
-  "ca.groups": {
-    "studentLink": "Enlla\xE7 per l\\'alumnat [ Catal\xE0 / Valenci\xE0 ]",
-    "placeholderName": "Nom i cognoms",
-    "cities": "Ciutats",
-    "newGroup": "Nou grup",
-    "placeholderImg": "Selecciona una imatge a pujar",
-    "ngName": "Nom del grup",
-    "ngXp": "Experi\xE8ncia inicial",
-    "ngGold": "Monedes inicials",
-    "numCards": "Revisar n\xFAmero de cartes!",
-    "useCard": "Utilitzar la carta",
-    "deleteCard": "Elimina la carta",
-    "addMember": "Afegeix estudiant",
-    "passwordGroup": "Contrasenya d'acc\xE9s",
-    "chooseImg": "Selecciona imatge",
-    "chooseRandomImg": "Imatge al\xB7leat\xF2ria",
-    "imgFeedback": "Selecciona la imatge del grup",
-    "groupAction": "Acci\xF3 a tot el grup"
-  },
-  "ca.hp-items": {
-    "hp_participation": "Participaci\xF3",
-    "hp_homework": "Fa els deures",
-    "hp_behaviour": "Bon comportament",
-    "hp_task_effort": "Esfor\xE7 en tasca",
-    "hp_attendance": "Puntualitat",
-    "hp_team_work": "Treball en equip",
-    "hp_answer_ok": "Contesta b\xE9 pregunta",
-    "hp_5": "Gen\xE8ric",
-    "hp_10": "Gen\xE8ric",
-    "hp_custom": "Personalitzat ",
-    "hp_mobile": "M\xF2bil a classe",
-    "hp_no_homework": "No fa els deures",
-    "hp_bad_behaviour": "Mal comportament",
-    "hp_no_subject": "No fa la mat\xE8ria",
-    "hp_late": "Arriba tard",
-    "hp_attendance_down": "Falta assist\xE8ncia",
-    "hp_eating": "Menja a classe",
-    "hp_answer_ko": "Contesta malament pregunta",
-    "track": "Seguiment",
-    "hp_late_msg": "Tornava corrent i s\\'ha relliscat perdent ",
-    "hp_mobile_msg": "S'ha despistat mirant la bru\xEDxola, s'ha estampat contra un arbre i ha perdut ",
-    "hp_no_subject_msg": "No estava fent la feina que havia de fer, s'ha xafat un dit i ha perdut ",
-    "hp_attendance_down_msg": "S'ha perdut pel bosc i l'ha mossegat un jabal\xED ",
-    "hp_eating_msg": "Ha menjat fruita enverinada i ha perdut ",
-    "hp_default_msg": "Ha caigut i ha perdut ",
-    "lostXp": "Ha perdut ",
-    "lostXp2": " <i class='fas fa-fist-raised'><\/i>. Els seus guerrers s'hauran de posar les piles <i class='fas fa-sad-tear'><\/i>",
-    "gainXp": "Ha guanyat ",
-    "gainXp2": " <i class='fas fa-fist-raised'><\/i> ",
-    "recoverHp": "Ha descansat i ha recuperat "
-  },
-  "ca.maps-stories": {
-    "updateMap": "Actualitza el mapa",
-    "geniallyRes": "Recursos per",
-    "mapPreview": "Vista pr\xE8via",
-    "newStory": "Nova hist\xF2ria",
-    "titleStory": "T\xEDtol",
-    "publishDate": "Data publicaci\xF3",
-    "currentStories": "Hist\xF2ries actuals",
-    "noStories": "Actualment no hi ha hist\xF2ries",
-    "conquerStory": "Prova de conquesta?",
-    "file": "Fitxer",
-    "linkWebpage": "Enlla\xE7 a p\xE0gina web",
-    "displayName": "Nom a mostrar (opcional)",
-    "link": "Enlla\xE7",
-    "embed": "Incrustat",
-    "latex": "Pots afegir f\xF2rmules en LaTeX!"
-  },
-  "ca.menu": {
-    "groups": "Grups",
-    "cards": "Cartes",
-    "levels": "Nivells",
-    "story": "Hist\xF2ria",
-    "goals": "Objectius",
-    "shop": "Botiga",
-    "settings": "Prefer\xE8ncies",
-    "howPlay": "Com jugar?",
-    "start": "Inici"
-  },
-  "ca.messages": {
-    "positiveFeedback": "Go go go! <i class='fas fa-smile-wink'><\/i><i class='fas fa-laugh-beam'><\/i>"
-  },
-  "ca.mysql-errors": {
-    "error1062": "Element duplicat, l'element que vols introduir ja existeix.",
-    "error1451": "L'element que vols eliminat o actualitzar cont\xE9 elements i no pot ser eliminat.",
-    "errorDefault": "Alguna cosa ha anat malament, contacta amb l'administrador."
-  },
-  "ca.pagination": {
-    "previous": "&laquo; Previous",
-    "next": "Next &raquo;"
-  },
-  "ca.passwords": {
-    "password": "Passwords must be at least eight characters and match the confirmation.",
-    "reset": "Your password has been reset!",
-    "sent": "We have e-mailed your password reset link!",
-    "token": "This password reset token is invalid.",
-    "user": "We can't find a user with that e-mail address."
-  },
-  "ca.patreon": {
-    "patreon": "Col\xB7labora!",
-    "help": "Ajuda"
-  },
-  "ca.random-events": {
-    "closeButton": "Tanca",
-    "everybodyLoses": "Tothom perd ",
-    "acceptDestiny": "Accepta el dest\xED",
-    "assistant": "ser\xE0 l'ajudant encarregat",
-    "chooses": "decideix que",
-    "back2life": "Torna a la vida!",
-    "nobodyDead": "No hi ha morts que reviure",
-    "joke": "Contar\xE0 un acudit. Pot guanyar",
-    "joke2": "o perdre",
-    "winOrLose": "Pot guanyar o perdre",
-    "paid": "Ha pagat",
-    "enter": "Entrem!",
-    "betterNot": "Millor que no ..."
-  },
-  "ca.regions": {
-    "cityName": "Nom de la ciutat",
-    "regionName": "Nom de la regi\xF3",
-    "gold": "Or",
-    "cards": "Cartes",
-    "regionErrorInput": "Icona i text obligatoris",
-    "descCity": "Descripci\xF3 de la tasca. Per exemple: exercicis de trigonometria.",
-    "commonDescription": "Descripci\xF3 comuna (si no hi ha descripci\xF3 personalitzada, es mostrar\xE0 aquesta)",
-    "customDescription": "Descripci\xF3 personalitzada (si vols diferenciar-la entre classes)"
-  },
-  "ca.rubric": {
-    "rubricInfoOpt": "Les files marcades com opcionals, es mostraran al final de la r\xFAbrica i seran considerades com punts extra (sobre 10).",
-    "name": "Nom",
-    "rubricCreator": "Creador r\xFAbriques",
-    "generalDesc": "Descripci\xF3 general",
-    "points": "Punts",
-    "emojiAdd": "Insertar emoji en el camp actiu",
-    "saveRubric": "Guardar r\xFAbrica",
-    "addRowItem": "Afegir element a la fila",
-    "optional": "Opcional",
-    "addRow": "Afegir fila"
-  },
-  "ca.settings": {
-    "common": "Comunes",
-    "rare": "Rares",
-    "epic": "\xC8piques",
-    "legendary": "Legend\xE0ries",
-    "generalPreferences": "Prefer\xE8ncies generals",
-    "gameNameEdit": "Nom del joc (visible pels estudiants)",
-    "probabilities": "Probabilitats",
-    "hpItems": "Objectes de vida",
-    "privilegeItems": "Privilegis individuals",
-    "privileInfo": "Els privilegis personals apareixeran a l'alumnat. Quan fem clic s'habilita i si tornem a fer clic es deshabilita. Pots assignar-los a l'arribar a un nivell o si superen una prova de conquesta.",
-    "editHP": "Edita objectes de vida",
-    "weatherMngmnt": "Gesti\xF3 del temps",
-    "passwdChange": "Canvi de contrasenya",
-    "teachers": "Docents",
-    "oldPassword": "Antiga contrasenya",
-    "newPassword": "Nova contrasenya",
-    "repeatPassword": "Repeteix contrasenya",
-    "rulesPage": "Instruccions alumnat / P\xE0gina de normes",
-    "fullLog": "Log sencer",
-    "classMngmt": "Gesti\xF3 de classes",
-    "loadClassroom": "Carrega classe",
-    "addClassroom": "Afegir classe",
-    "delClassroom": "Elimina classe",
-    "delConfirmClassroom": "Est\xE0s segur/segura que vols eliminar la classe? Aquesta acci\xF3 no es pot desfer",
-    "classroomName": "Nom de la classe",
-    "classrooms": "Classes disponibles",
-    "subject": "Mat\xE8ria",
-    "studentsName": "Visualitzaci\xF3 del nom dels estudiants: ",
-    "multiDisciplinarMsg": "En un joc multidisciplinar, els docents comparteixen grups, classes, mapa i configuraci\xF3. Les hist\xF2ries, la descripci\xF3 dels objectius i la superaci\xF3 dels mateixos s\xF3n independents. L'alumnat veur\xE0 tot el contingut de les diferents mat\xE8ries. Aquesta \xE9s una funci\xF3 experimental que requereix molt testeig. Si decideixes continuar, esperem que entenguis que es poden producir comportaments no desitjats.",
-    "multiDisciplinarMsg2": "Crea els docentes que tindran acc\xE9s a l'aplicaci\xF3, assigna'ls una mat\xE8ria i despr\xE9s activa l'opci\xF3 de multidisciplinar.",
-    "infoUpdateItems": "Posa valors positius (bon comportament) o negatius (mal comportament)",
-    "infoUpdatePlaceholder": "Breu descripci\xF3",
-    "from": "De",
-    "to": "a",
-    "interval": "Interval",
-    "theme": "Tema",
-    "wvgame": "Joc no violent"
-  },
-  "ca.shop": {
-    "discount": "amb descompte",
-    "shopDiscount": "% descompte en cartes del tresor (\xFAs i eliminaci\xF3)",
-    "slotExtra": "slot\/s extra de cartes.",
-    "hidden": "Ocult pels estudiants",
-    "shown": "Visible pels estudiants",
-    "equipment": "Equipament",
-    "forSale": "A la venda?"
-  },
-  "ca.students-view": {
-    "notStarted": "Encara no ha comen\xE7at l'aventura!",
-    "map": "Mapa",
-    "story": "Hist\xF2ria",
-    "rules": "Normes del joc",
-    "groups": "Grups",
-    "shop": "Botiga",
-    "licenses": "Llic\xE8ncies",
-    "licensesContent": "Llic\xE8ncies i reconeixements",
-    "progress": "Progr\xE9s",
-    "indProgress": "Progr\xE9s individual",
-    "inventory": "Inventari",
-    "dndHp": "Arrastra al membre del grup sobre el que ho vols aplicar",
-    "buyItems": "Est\xE0s segur que vols comprar-ho?",
-    "recover": "Recupera ",
-    "calMonthly": "Mensual",
-    "calWeekly": "Setmanal",
-    "calDaily": "Diari",
-    "calToday": "Hui \/ Avui",
-    "showAll": "Mostrar tots",
-    "invNN": "Qu\xE8 ser\xE0 aix\xF2?",
-    "groupAccess": "Acc\xE9s grups",
-    "studentAccess": "Acc\xE9s \xE0rea personal",
-    "event": "Esdeveniments",
-    "lastEvents": "Darrers esdeveniments",
-    "groupView": "Carregar vista de grup"
-  },
-  "ca.students": {
-    "modalStudentTitle": "Configuraci\xF3 estudiant",
-    "saveStudent": "Confirma canvis"
-  },
-  "ca.success-error": {
-    "insertSuccess": "Element inserit correctament",
-    "updateSuccess": "Element actualitzat correctament",
-    "deleteSuccess": "Element esborrat correctament",
-    "confirm": "Est\xE0s segur/segura? Aquesta acci\xF3 no es pot desfer",
-    "confirmGear": "Est\xE0s segur/segura? Aquesta acci\xF3 no es pot desfer. L'equip perdr\xE0 tot l'equipament",
-    "changeError": "Ja t\xE9 assignada aquesta classe",
-    "cardLvlError": "Nivell insuficient",
-    "memberEmpty": "El nom no pot estar buit",
-    "feedbackUsername": "M\xEDnim 3 car\xE0cters",
-    "feedbackPassword": "M\xEDnim 6 car\xE0cters",
-    "attachmentFeedback": "La URL \xE9s obligat\xF2ria",
-    "addCityFeedback": "Els camps nom, XP, Or i cartes s\xF3n obligatoris",
-    "classroomAddFeedback": "El nom \xE9s obligatori",
-    "errorRubricName": "El nom de la r\xFAbrica \xE9s obligatori"
-  },
-  "ca.support": {
-    "title": "Ens agrada veure't per aqu\xED",
-    "content1": "Sabem que costa contribuir a projectes digitals, per\xF2 si ja est\xE0s aqu\xED \xE9s perqu\xE8 creus que s'ha de valorar la feina tot i que no siga tangible.",
-    "content2": "Per a qu\xE8 ser\xE0 la teua aportaci\xF3? La plataforma t\xE9 despeses mensuals relacionades amb el domini i l'allotjament. Per altra banda, estan totes les hores dedicades al projecte, que no s\xF3c poques, i totes les que queden! A m\xE9s, serveix com a injecci\xF3 de moral <i class='fas fa-smile-wink'></i>",
-    "content3": "Si vols col\xB7laborar i agrair la feina a la plataforma, ho pots fer de dues maneres:",
-    "btn1": "Aportaci\xF3 \xFAnica",
-    "btn2": "Aportaci\xF3 mensual (Sponsors)",
-    "thnx": "Molt\xEDssimes gr\xE0cies per ajudar a que FantasyClass continue endavant!",
-    "contributors": "Persones i entitats que fan possible que FantasyClass continue endavant. Molt\xEDssimes gr\xE0cies!!!"
-  },
-  "ca.tools": {
-    "rollDice": "Tira el dau!"
-  },
-  "ca.trophys": {
-    "luckyGuy": "Sort m\xE0xima! (persona viva amb m\xE9s vida perduda)",
-    "lateOne": "El/la que m\xE9s arriba tard",
-    "richest": "Els ricatxons",
-    "moneySpendMax": "El grup malgastador",
-    "boarResistance": "Resist\xE8ncia a senglars",
-    "cardMasters": "M\xE0sters de la baralla (m\xE9s cartes utilitzades/eliminades)"
-  },
-  "ca.validation": {
-    "accepted": "The :attribute must be accepted.",
-    "active_url": "The :attribute is not a valid URL.",
-    "after": "The :attribute must be a date after :date.",
-    "after_or_equal": "The :attribute must be a date after or equal to :date.",
-    "alpha": "The :attribute may only contain letters.",
-    "alpha_dash": "The :attribute may only contain letters, numbers, dashes and underscores.",
-    "alpha_num": "The :attribute may only contain letters and numbers.",
-    "array": "The :attribute must be an array.",
-    "before": "The :attribute must be a date before :date.",
-    "before_or_equal": "The :attribute must be a date before or equal to :date.",
-    "between": {
-      "numeric": "The :attribute must be between :min and :max.",
-      "file": "The :attribute must be between :min and :max kilobytes.",
-      "string": "The :attribute must be between :min and :max characters.",
-      "array": "The :attribute must have between :min and :max items."
-    },
-    "boolean": "The :attribute field must be true or false.",
-    "confirmed": "The :attribute confirmation does not match.",
-    "date": "The :attribute is not a valid date.",
-    "date_equals": "The :attribute must be a date equal to :date.",
-    "date_format": "The :attribute does not match the format :format.",
-    "different": "The :attribute and :other must be different.",
-    "digits": "The :attribute must be :digits digits.",
-    "digits_between": "The :attribute must be between :min and :max digits.",
-    "dimensions": "The :attribute has invalid image dimensions.",
-    "distinct": "The :attribute field has a duplicate value.",
-    "email": "The :attribute must be a valid email address.",
-    "exists": "The selected :attribute is invalid.",
-    "file": "The :attribute must be a file.",
-    "filled": "The :attribute field must have a value.",
-    "gt": {
-      "numeric": "The :attribute must be greater than :value.",
-      "file": "The :attribute must be greater than :value kilobytes.",
-      "string": "The :attribute must be greater than :value characters.",
-      "array": "The :attribute must have more than :value items."
-    },
-    "gte": {
-      "numeric": "The :attribute must be greater than or equal :value.",
-      "file": "The :attribute must be greater than or equal :value kilobytes.",
-      "string": "The :attribute must be greater than or equal :value characters.",
-      "array": "The :attribute must have :value items or more."
-    },
-    "image": "The :attribute must be an image.",
-    "in": "The selected :attribute is invalid.",
-    "in_array": "The :attribute field does not exist in :other.",
-    "integer": "The :attribute must be an integer.",
-    "ip": "The :attribute must be a valid IP address.",
-    "ipv4": "The :attribute must be a valid IPv4 address.",
-    "ipv6": "The :attribute must be a valid IPv6 address.",
-    "json": "The :attribute must be a valid JSON string.",
-    "lt": {
-      "numeric": "The :attribute must be less than :value.",
-      "file": "The :attribute must be less than :value kilobytes.",
-      "string": "The :attribute must be less than :value characters.",
-      "array": "The :attribute must have less than :value items."
-    },
-    "lte": {
-      "numeric": "The :attribute must be less than or equal :value.",
-      "file": "The :attribute must be less than or equal :value kilobytes.",
-      "string": "The :attribute must be less than or equal :value characters.",
-      "array": "The :attribute must not have more than :value items."
-    },
-    "max": {
-      "numeric": "The :attribute may not be greater than :max.",
-      "file": "The :attribute may not be greater than :max kilobytes.",
-      "string": "The :attribute may not be greater than :max characters.",
-      "array": "The :attribute may not have more than :max items."
-    },
-    "mimes": "The :attribute must be a file of type: :values.",
-    "mimetypes": "The :attribute must be a file of type: :values.",
-    "min": {
-      "numeric": "The :attribute must be at least :min.",
-      "file": "The :attribute must be at least :min kilobytes.",
-      "string": "The :attribute must be at least :min characters.",
-      "array": "The :attribute must have at least :min items."
-    },
-    "not_in": "The selected :attribute is invalid.",
-    "not_regex": "The :attribute format is invalid.",
-    "numeric": "The :attribute must be a number.",
-    "present": "The :attribute field must be present.",
-    "regex": "The :attribute format is invalid.",
-    "required": "The :attribute field is required.",
-    "required_if": "The :attribute field is required when :other is :value.",
-    "required_unless": "The :attribute field is required unless :other is in :values.",
-    "required_with": "The :attribute field is required when :values is present.",
-    "required_with_all": "The :attribute field is required when :values are present.",
-    "required_without": "The :attribute field is required when :values is not present.",
-    "required_without_all": "The :attribute field is required when none of :values are present.",
-    "same": "The :attribute and :other must match.",
-    "size": {
-      "numeric": "The :attribute must be :size.",
-      "file": "The :attribute must be :size kilobytes.",
-      "string": "The :attribute must be :size characters.",
-      "array": "The :attribute must contain :size items."
-    },
-    "starts_with": "The :attribute must start with one of the following: :values",
-    "string": "The :attribute must be a string.",
-    "timezone": "The :attribute must be a valid zone.",
-    "unique": "The :attribute has already been taken.",
-    "uploaded": "The :attribute failed to upload.",
-    "url": "The :attribute format is invalid.",
-    "uuid": "The :attribute must be a valid UUID.",
-    "custom": {
-      "attribute-name": {
-        "rule-name": "custom-message"
-      }
-    },
-    "attributes": []
-  },
-  "en.Lvl": {
-    "currentLvls": "Current levels",
-    "lvlNmber": "Level number",
-    "minLvlScore": "Minimum score",
-    "Lvl": "Level",
-    "minScore": "Minimum Score",
-    "actionLvl": "Actions",
-    "createLvlCard": "New level",
-    "updateLvlCard": "Edit level"
-  },
   "en.auth": {
     "failed": "These credentials do not match our records.",
     "throttle": "Too many login attempts. Please try again in :seconds seconds.",
     "email": "E-mail or username"
   },
-  "en.cards": {
-    "card": "Card",
-    "randomCard": "Random card",
-    "cardGenerator": "Recommended card generator",
-    "minLvl": "Minimum level",
-    "specialCard": "Special (doesn't use slot)",
-    "special": "Special",
-    "typeCard": "Type",
-    "actionCard": "Actions",
-    "typeCardCommon": "Common",
-    "typeCardRare": "Rare",
-    "typeCardEpic": "Epic",
-    "typeCardLegendary": "Legendary",
-    "currentCards": "Current cards",
-    "noCards": "There are no cards available",
-    "createCard": "New card",
-    "updateCard": "Edit card",
-    "assign": "Assign",
-    "disable": "Disable"
-  },
-  "en.custom-card": {
-    "bgColor": "Background color"
+  "en.classroom": {
+    "add": "Add Classroom",
+    "student": "Student",
+    "teacher": "Teacher",
+    "admin": "Admin"
   },
   "en.general": {
     "add": "Add",
@@ -57103,87 +56644,8 @@ __webpack_require__.r(__webpack_exports__);
     "endGame": "End game",
     "continueGame": "Continue game"
   },
-  "en.grades-charts": {
-    "dragSlices": "Drag slices over the line",
-    "wInteractions": "Without interactions",
-    "city": "City",
-    "description": "Description",
-    "percent": "Percent",
-    "grade": "Grade",
-    "weihghted": "Weighted",
-    "evaluationType1": "Only one evaluation",
-    "evaluationType2": "Evaluation every region",
-    "evaluate": "Evaluate"
-  },
-  "en.groups": {
-    "studentLink": "Students link [ English ]",
-    "placeholderName": "Name and surname",
-    "cities": "Cities",
-    "newGroup": "New group",
-    "placeholderImg": "Image to upload",
-    "ngName": "Group name",
-    "ngXp": "Initial XP",
-    "ngGold": "Initial Gold",
-    "numCards": "Check number of cards!",
-    "useCard": "Use card",
-    "deleteCard": "Delete card",
-    "addMember": "Add student",
-    "passwordGroup": "Access password",
-    "chooseImg": "Choose image",
-    "chooseRandomImg": "Random image",
-    "imgFeedback": "Select the group image",
-    "groupAction": "All group action"
-  },
-  "en.hp-items": {
-    "hp_participation": "Participation",
-    "hp_homework": "Do the homework",
-    "hp_behaviour": "Good behaviour",
-    "hp_task_effort": "Task effort",
-    "hp_attendance": "Punctuality and attendance",
-    "hp_team_work": "Team work",
-    "hp_answer_ok": "Correct answer",
-    "hp_5": "Generic",
-    "hp_10": "Generic",
-    "hp_custom": "Custom ",
-    "hp_mobile": "Mobile in class",
-    "hp_no_homework": "Don't do homework",
-    "hp_bad_behaviour": "Bad behaviour",
-    "hp_no_subject": "Other subject",
-    "hp_late": "Come late to class",
-    "hp_attendance_down": "Not justified absence",
-    "hp_eating": "Eating in class",
-    "hp_answer_ko": "Wrong answer",
-    "lostXp": "Has lost ",
-    "lostXp2": " <i class='fas fa-fist-raised'><\/i>. The heroes should keep going on <i class='fas fa-sad-tear'><\/i>",
-    "gainXp": "Has won ",
-    "gainXp2": " <i class='fas fa-fist-raised'><\/i>. ",
-    "recoverHp": "Has rested and recovered ",
-    "track": "Track",
-    "hp_late_msg": "Came running and slipped losing ",
-    "hp_mobile_msg": "Lost the attention looking at the compass, crashed into a tree losing ",
-    "hp_no_subject_msg": "Was not doing the tasks he\/she had to, he\/she has cut his finger losing ",
-    "hp_attendance_down_msg": "has been lost and has been bitten by a wild pig losing ",
-    "hp_eating_msg": "Has eaten posioned fruit and has lost ",
-    "hp_default_msg": "Has fallen and has lost "
-  },
-  "en.maps-stories": {
-    "updateMap": "Update map",
-    "geniallyRes": "Resources for",
-    "mapPreview": "Preview",
-    "newStory": "New story",
-    "titleStory": "Title",
-    "publishDate": "Publish date",
-    "currentStories": "Current stories",
-    "noStories": "There are no stories available",
-    "conquerStory": "Conquer story?",
-    "file": "File",
-    "linkWebpage": "Website link",
-    "displayName": "Name to show (optional)",
-    "link": "Link",
-    "embed": "Embedded",
-    "latex": "You can add LaTeX formulas!"
-  },
   "en.menu": {
+    "user_groups": "Users and groups",
     "groups": "Groups",
     "cards": "Cards",
     "levels": "Levels",
@@ -57191,16 +56653,7 @@ __webpack_require__.r(__webpack_exports__);
     "goals": "Goals",
     "shop": "Shop",
     "settings": "Settings",
-    "howPlay": "How to play",
-    "start": "Start"
-  },
-  "en.messages": {
-    "positiveFeedback": "Go go go! <i class='fas fa-smile-wink'><\/i><i class='fas fa-laugh-beam'><\/i>"
-  },
-  "en.mysql-errors": {
-    "error1062": "Duplicated element. The element you are trying to insert or update exists.",
-    "error1451": "The element you're trying to remove or update has elements and can't be removed.",
-    "errorDefault": "Something went wrong, ask to the administrator for help."
+    "profile": "Profile"
   },
   "en.pagination": {
     "previous": "&laquo; Previous",
@@ -57213,620 +56666,15 @@ __webpack_require__.r(__webpack_exports__);
     "token": "This password reset token is invalid.",
     "user": "We can't find a user with that e-mail address."
   },
-  "en.patreon": {
-    "patreon": "Support us!",
-    "help": "Help"
-  },
-  "en.random-events": {
-    "everybodyLoses": "Todos pierden ",
-    "acceptDestiny": "Acepta el destino",
-    "assistant": "ser\xE1 el ayudante encargado",
-    "chooses": "decide que",
-    "back2life": "Vuelve a la vida!",
-    "nobodyDead": "No hay muertos que revivir",
-    "joke": "Contar\xE1 un chiste. Puede ganar",
-    "joke2": "o perder",
-    "winOrLose": "Puede ganar o perder",
-    "paid": "Ha pagado",
-    "enter": "Entramos!",
-    "betterNot": "Mejor que no ..."
-  },
-  "en.regions": {
-    "cityName": "City name",
-    "regionName": "Region name",
-    "gold": "Gold",
-    "cards": "Cards",
-    "regionErrorInput": "Icon and text are required",
-    "descCity": "Task description. E.g: trigonometry exercises",
-    "commonDescription": "Common description (if the custom description is empty, this will be shown)",
-    "customDescription": "Custom description (if you want to have different descriptions between classrooms)"
-  },
-  "en.rubric": {
-    "rubricInfoOpt": "Optional rows will be showed at the end of the rubric, and it'll be extra points (over 10).",
-    "name": "Name",
-    "rubricCreator": "Rubric creator",
-    "generalDesc": "General description",
-    "points": "Points",
-    "emojiAdd": "Insert emoji in current field",
-    "saveRubric": "Save rubric",
-    "addRowItem": "Add item to the row",
-    "optional": "Optional",
-    "addRow": "Add row"
-  },
-  "en.settings": {
-    "common": "Common",
-    "rare": "Rares",
-    "epic": "Epics",
-    "legendary": "Legendaries",
-    "generalPreferences": "General settings",
-    "gameNameEdit": "Game name (visible in students' view)",
-    "probabilities": "Probabilities",
-    "hpItems": "Health objects",
-    "privilegeItems": "Individual privileges",
-    "privileInfo": "Personal privileges will be shown in group's view. With one click it'll be enabled and with another click disabled. You can assign privileges in certain levels or if the group conquer a city.",
-    "editHP": "Edit health objects",
-    "weatherMngmnt": "Weather management",
-    "passwdChange": "Password change",
-    "teachers": "Teachers",
-    "oldPassword": "Old password",
-    "newPassword": "New password",
-    "repeatPassword": "Repeat password",
-    "rulesPage": "Student instructions \/ Rules page",
-    "fullLog": "Full log",
-    "classMngmt": "Classroom management",
-    "loadClassroom": "Load classroom",
-    "addClassroom": "Add classroom",
-    "delClassroom": "Delete classroom",
-    "delConfirmClassroom": "Do you want to delete the class? This actions can\\'t be undone",
-    "classroomName": "Classroom name",
-    "classrooms": "Available classrooms",
-    "subject": "Subject",
-    "studentsName": "Student's name vistualization: ",
-    "multiDisciplinarMsg": "In a multidisciplinary game, teachers share groups, classes, maps and settings. The stories, the description of the objectives and the overcoming of them are independent. The students will see all the content of the different teachers. This is an experimental function that requires a lot of testing. If you decide to continue, we hope you understand that unwanted behaviors may occur",
-    "multiDisciplinarMsg2": "Create the teachers that have access to the application, assign them a subject and then activate the multidisciplinary option.",
-    "infoUpdateItems": "Positive values are considered 'good behaviour' and negatives 'bad behaviour'",
-    "infoUpdatePlaceholder": "Small description",
-    "from": "From",
-    "to": "to",
-    "interval": "Interval",
-    "theme": "Theme",
-    "wvgame": "Non violent game"
-  },
-  "en.shop": {
-    "discount": "with discount",
-    "shopDiscount": "% discount in treasure cards (use and remove)",
-    "slotExtra": "extra slots.",
-    "hidden": "Hidden to students",
-    "shown": "Visible to students",
-    "equipment": "Equipment",
-    "forSale": "For sale?"
-  },
-  "en.students-view": {
-    "notStarted": "The adventure has not started yet!",
-    "map": "Map",
-    "story": "Story",
-    "rules": "Game rules",
-    "groups": "Groups",
-    "shop": "Shop",
-    "licenses": "Licenses",
-    "licensesContent": "Licenses and recognitions",
-    "progress": "Progress",
-    "indProgress": "Personal progress",
-    "inventory": "Inventory",
-    "dndHp": "Drag to the desired student",
-    "buyItems": "Are you sure you want to buy?",
-    "recover": "Recover ",
-    "calMonthly": "Monthly",
-    "calWeekly": "Weekly",
-    "calDaily": "Daily",
-    "calToday": "Today",
-    "showAll": "Show all",
-    "invNN": "What is that?",
-    "groupAccess": "Group access",
-    "studentAccess": "Personal area access",
-    "event": "Events",
-    "lastEvents": "Last events",
-    "groupView": "Load group view"
-  },
-  "en.students": {
-    "modalStudentTitle": "Student management",
-    "saveStudent": "Confirm changes"
-  },
-  "en.success-error": {
-    "insertSuccess": "Item creation successful",
-    "updateSuccess": "Item update successful",
-    "deleteSuccess": "Item removal successful",
-    "confirm": "Are you sure? This action can\\'t be undone",
-    "confirmGear": "Are you sure? This action can\\'t be undone. The team will lose all equipment",
-    "changeError": "This is the current team class",
-    "cardLvlError": "Insufficient level",
-    "memberEmpty": "The student name can't be empty",
-    "feedbackUsername": "3 characters minimum",
-    "feedbackPassword": "6 characters minimum",
-    "attachmentFeedback": "The URL is mandatory",
-    "addCityFeedback": "Fields name, XP, gold and cards are mandatory",
-    "classroomAddFeedback": "Classroom name is mandatory",
-    "errorRubricName": "Rubric name is mandatory"
-  },
-  "en.support": {
-    "title": "We love having you here",
-    "content1": "We know is hard to contribute to digital projects, but if you are here is because you think that all work need to be valued, even if it's not physical.",
-    "content2": "What are we going to do with your contribution? We have montly payments for the domain and the hosting. Also, there are a lots of hours of work in the platform, and it'll be more! You can view also as a moral injection",
-    "content3": "If you want to contribute, you have two ways:",
-    "btn1": "One time contribution",
-    "btn2": "Monthly contribution (Sponsors)",
-    "thnx": "Thank you so much for helping FantasyClass to keep forward!",
-    "contributors": "People and entities that keep FantasyClass going forward. Thank you so much!!!"
-  },
-  "en.tools": {
-    "rollDice": "Roll the dice!"
-  },
-  "en.trophys": {
-    "luckyGuy": "Suerte m\xE1xima! (persona viva com m\xE1s vida perdida)",
-    "lateOne": "El tard\xF3n / la tardona",
-    "richest": "Los ricachones",
-    "moneySpendMax": "El grupo derrochador",
-    "boarResistance": "Resistencia a jabal\xEDs",
-    "cardMasters": "M\xE1sters de la baraja (m\xE1s cartas utilizadas/eliminadas)"
+  "en.success_error": [],
+  "en.users_groups": {
+    "change_layout": "Toggle layout view",
+    "order_name": "Order by name",
+    "order_hp": "Order by health points",
+    "order_xp": "Order by experience",
+    "order_gold": "Order by gold"
   },
   "en.validation": {
-    "accepted": "The :attribute must be accepted.",
-    "active_url": "The :attribute is not a valid URL.",
-    "after": "The :attribute must be a date after :date.",
-    "after_or_equal": "The :attribute must be a date after or equal to :date.",
-    "alpha": "The :attribute may only contain letters.",
-    "alpha_dash": "The :attribute may only contain letters, numbers, dashes and underscores.",
-    "alpha_num": "The :attribute may only contain letters and numbers.",
-    "array": "The :attribute must be an array.",
-    "before": "The :attribute must be a date before :date.",
-    "before_or_equal": "The :attribute must be a date before or equal to :date.",
-    "between": {
-      "numeric": "The :attribute must be between :min and :max.",
-      "file": "The :attribute must be between :min and :max kilobytes.",
-      "string": "The :attribute must be between :min and :max characters.",
-      "array": "The :attribute must have between :min and :max items."
-    },
-    "boolean": "The :attribute field must be true or false.",
-    "confirmed": "The :attribute confirmation does not match.",
-    "date": "The :attribute is not a valid date.",
-    "date_equals": "The :attribute must be a date equal to :date.",
-    "date_format": "The :attribute does not match the format :format.",
-    "different": "The :attribute and :other must be different.",
-    "digits": "The :attribute must be :digits digits.",
-    "digits_between": "The :attribute must be between :min and :max digits.",
-    "dimensions": "The :attribute has invalid image dimensions.",
-    "distinct": "The :attribute field has a duplicate value.",
-    "email": "The :attribute must be a valid email address.",
-    "exists": "The selected :attribute is invalid.",
-    "file": "The :attribute must be a file.",
-    "filled": "The :attribute field must have a value.",
-    "gt": {
-      "numeric": "The :attribute must be greater than :value.",
-      "file": "The :attribute must be greater than :value kilobytes.",
-      "string": "The :attribute must be greater than :value characters.",
-      "array": "The :attribute must have more than :value items."
-    },
-    "gte": {
-      "numeric": "The :attribute must be greater than or equal :value.",
-      "file": "The :attribute must be greater than or equal :value kilobytes.",
-      "string": "The :attribute must be greater than or equal :value characters.",
-      "array": "The :attribute must have :value items or more."
-    },
-    "image": "The :attribute must be an image.",
-    "in": "The selected :attribute is invalid.",
-    "in_array": "The :attribute field does not exist in :other.",
-    "integer": "The :attribute must be an integer.",
-    "ip": "The :attribute must be a valid IP address.",
-    "ipv4": "The :attribute must be a valid IPv4 address.",
-    "ipv6": "The :attribute must be a valid IPv6 address.",
-    "json": "The :attribute must be a valid JSON string.",
-    "lt": {
-      "numeric": "The :attribute must be less than :value.",
-      "file": "The :attribute must be less than :value kilobytes.",
-      "string": "The :attribute must be less than :value characters.",
-      "array": "The :attribute must have less than :value items."
-    },
-    "lte": {
-      "numeric": "The :attribute must be less than or equal :value.",
-      "file": "The :attribute must be less than or equal :value kilobytes.",
-      "string": "The :attribute must be less than or equal :value characters.",
-      "array": "The :attribute must not have more than :value items."
-    },
-    "max": {
-      "numeric": "The :attribute may not be greater than :max.",
-      "file": "The :attribute may not be greater than :max kilobytes.",
-      "string": "The :attribute may not be greater than :max characters.",
-      "array": "The :attribute may not have more than :max items."
-    },
-    "mimes": "The :attribute must be a file of type: :values.",
-    "mimetypes": "The :attribute must be a file of type: :values.",
-    "min": {
-      "numeric": "The :attribute must be at least :min.",
-      "file": "The :attribute must be at least :min kilobytes.",
-      "string": "The :attribute must be at least :min characters.",
-      "array": "The :attribute must have at least :min items."
-    },
-    "not_in": "The selected :attribute is invalid.",
-    "not_regex": "The :attribute format is invalid.",
-    "numeric": "The :attribute must be a number.",
-    "present": "The :attribute field must be present.",
-    "regex": "The :attribute format is invalid.",
-    "required": "The :attribute field is required.",
-    "required_if": "The :attribute field is required when :other is :value.",
-    "required_unless": "The :attribute field is required unless :other is in :values.",
-    "required_with": "The :attribute field is required when :values is present.",
-    "required_with_all": "The :attribute field is required when :values are present.",
-    "required_without": "The :attribute field is required when :values is not present.",
-    "required_without_all": "The :attribute field is required when none of :values are present.",
-    "same": "The :attribute and :other must match.",
-    "size": {
-      "numeric": "The :attribute must be :size.",
-      "file": "The :attribute must be :size kilobytes.",
-      "string": "The :attribute must be :size characters.",
-      "array": "The :attribute must contain :size items."
-    },
-    "starts_with": "The :attribute must start with one of the following: :values",
-    "string": "The :attribute must be a string.",
-    "timezone": "The :attribute must be a valid zone.",
-    "unique": "The :attribute has already been taken.",
-    "uploaded": "The :attribute failed to upload.",
-    "url": "The :attribute format is invalid.",
-    "uuid": "The :attribute must be a valid UUID.",
-    "custom": {
-      "attribute-name": {
-        "rule-name": "custom-message"
-      }
-    },
-    "attributes": []
-  },
-  "es.Lvl": {
-    "currentLvls": "Niveles actuales",
-    "lvlNmber": "N\xFAmero de nivel",
-    "minLvlScore": "Puntuaci\xF3n m\xEDnima del nivel",
-    "Lvl": "Nivel",
-    "minScore": "Minima puntuaci\xF3n",
-    "actionLvl": "Acciones",
-    "createLvlCard": "Nuevo nivel",
-    "updateLvlCard": "Edita nivel"
-  },
-  "es.auth": {
-    "failed": "These credentials do not match our records.",
-    "throttle": "Too many login attempts. Please try again in :seconds seconds.",
-    "email": "Usuario o correo electr\xF3nico"
-  },
-  "es.cards": {
-    "card": "Carta",
-    "randomCard": "Carta aleatoria",
-    "cardGenerator": "Generador de cartas recomendado",
-    "minLvl": "Nivel m\xEDnimo",
-    "specialCard": "Especial (no ocupa espacio)",
-    "special": "Especial",
-    "typeCard": "Tipo",
-    "actionCard": "Acciones",
-    "typeCardCommon": "Com\xFAn",
-    "typeCardRare": "Rara",
-    "typeCardEpic": "\xC9pica",
-    "typeCardLegendary": "Legendaria",
-    "currentCards": "Cartas actuales",
-    "noCards": "Actualmente no hay cartas",
-    "createCard": "Nueva carta",
-    "updateCard": "Edita carta",
-    "assign": "Asigna",
-    "disable": "Deshabilita"
-  },
-  "es.create": {
-    "name": "Nombre de la clase. P.E: 4\xBAESO 1920",
-    "nameAndGoals": "Nombre y objetivos",
-    "classPrepared": "\xA1Vamos a preparar la clase!",
-    "customNameWizard": "\xBFQuieres darle un nombre de juego personalizado a esta clase?",
-    "goalChange": "Por defecto los objetivos son ciudades, pero puedes cambiarlo. Si lo quieres hacer, elije un icono y un nombre:",
-    "whatAreGoals": "\xBFQu\xE9 son los objetivos?",
-    "nextStep": "Siguiente paso",
-    "cardsTextWizard": "El juego ya viene con un pack de cartas disponible, pero entre todos podemos compartir cartas. \xBFQuieres importar a tu juego alguna otra carta creada por otros docentes? No es obligatorio, si no quieres importar ninguna, contin\xFAa con el siguiente paso.",
-    "levelsTextWizard": "Elije un pack de niveles para tu juego. Pod\xE9is modificar los niveles a vuestro antojo una vez importados y una vez definidos, los pod\xE9is compartir con los dem\xE1s docentes. \xA1Estamos impacientes por ver vuestras aportaciones!",
-    "themeWizard": "\xBFQu\xE9 tema quieres para esta clase?",
-    "finishTitle": "\xA1Ya est\xE1s a punto de hacer cosas maravillosas!",
-    "rememberFinish": "\xA1No te olvides de hacer clic en \"<strong>Finalizar asistente</strong>\"! Pero antes, \xBFqu\xE9 hacer ahora?",
-    "infoWizard0": "Ya tienes gran parte configurada, ahora:",
-    "infoWizard1": "Visita la secci\xF3n de \xBFC\xF3mo jugar? Representada por el icono",
-    "infoWizard2": "Define las regiones y objetivos",
-    "infoWizard3": "Crea los grupos, los alumnos y alumnas",
-    "infoWizard4": "Consulta cualquier duda pregunta por el grupo de telegram o desde la secci\xF3n de ayuda, te ayudaremos encantados",
-    "infoWizard5": "\xA1Empieza la aventura!",
-    "cancelWizard": "No gracias, ya configurar\xE9 m\xE1s tarde la clase",
-    "endWizard": "Finalizar asistente",
-    "charTheme": "Tema personajes",
-    "charThemeInfo": "Si ya has creado grupos en esta clase, tendr\xE1s que cambiar manualment sus subclases."
-  },
-  "es.custom-card": {
-    "bgColor": "Color de fondo"
-  },
-  "es.general": {
-    "add": "A\xF1adir",
-    "update": "Actualiza",
-    "delete": "Elimina",
-    "title": "Gesti\xF3n Gamificaci\xF3n",
-    "changelog": "Changelog",
-    "undo": "Deshaz el \xFAltimo cambio",
-    "guide": "Gu\xEDa completa del juego",
-    "telegram": "Grupo de telegram para dudas / sugerencias (puedes buscar FantasyClass directamente desde el m\xF3vil)",
-    "getStats": "Estad\xEDsticas del alumnado",
-    "startEvent": "Evento de inicio de clase",
-    "music": "M\xFAsica",
-    "randomName": "Nombre aleatorio",
-    "randomGroup": "Grupo aleatorio",
-    "close": "Cerrar",
-    "endGame": "Finaliza juego",
-    "continueGame": "Continua juego"
-  },
-  "es.grades-charts": {
-    "dragSlices": "Arrastra porciones al otro lado",
-    "wInteractions": "Sin interacciones",
-    "city": "Ciudad",
-    "description": "Descripci\xF3n",
-    "percent": "Porcentaje",
-    "grade": "Nota",
-    "weihghted": "Ponderada",
-    "evaluationType1": "Una \xFAnica evaluaci\xF3n",
-    "evaluationType2": "Evaluaci\xF3n por cada regi\xF3n",
-    "evaluate": "Eval\xFAa"
-  },
-  "es.groups": {
-    "studentLink": "Enlace para el alumnado [ Castellano ]",
-    "placeholderName": "Nombre y apellidos",
-    "cities": "Ciudades",
-    "newGroup": "Nuevo grupo",
-    "placeholderImg": "Selecciona una imagen a subir",
-    "ngName": "Nombre del grupo",
-    "ngXp": "Experiencia inicial",
-    "ngGold": "Monedas iniciales",
-    "numCards": "Revisar n\xFAmero de cartas!",
-    "useCard": "Utilizar la carta",
-    "deleteCard": "Eliminar la carta",
-    "addMember": "A\xF1ade estudiante",
-    "passwordGroup": "Contrase\xF1a de acceso",
-    "chooseImg": "Selecciona imagen",
-    "chooseRandomImg": "Imagen aleatoria",
-    "imgFeedback": "Selecciona la imagen del grupo",
-    "groupAction": "Acci\xF3n a todo el grupo"
-  },
-  "es.hp-items": {
-    "hp_participation": "Participaci\xF3n",
-    "hp_homework": "Hace los deberes",
-    "hp_behaviour": "Buen comportamiento",
-    "hp_task_effort": "Esfuerzo en tarea",
-    "hp_attendance": "Puntualidad y asistencia",
-    "hp_team_work": "Trabajo en equipo",
-    "hp_answer_ok": "Contesta bi\xE9n pregunta",
-    "hp_5": "Gen\xE9rico",
-    "hp_10": "Gen\xE9rico",
-    "hp_mobile": "M\xF3vil en clase",
-    "hp_no_homework": "No hace los deberes",
-    "hp_bad_behaviour": "Mal comportamiento",
-    "hp_no_subject": "No hace la materia",
-    "hp_late": "Llega tarde",
-    "hp_attendance_down": "Falta asistencia",
-    "hp_eating": "Come en classe",
-    "hp_answer_ko": "Contesta incorrectamente",
-    "hp_late_msg": "Volv\xEDa corriendo y se ha resbalado perdiendo ",
-    "hp_mobile_msg": "Se ha despistado mirando la br\xFAjula, se ha estampado contra un \xE1rbol y ha perdido ",
-    "hp_no_subject_msg": "No estaba haciendo las tareas que ten\xEDa que hacer, se ha pisado el dedo y ha perdido ",
-    "hp_attendance_down_msg": "Se ha perdido por el bosque y le ha mordido un jabal\xED ",
-    "hp_eating_msg": "Ha comido fruta envenenada y ha perdido ",
-    "hp_default_msg": "Ha ca\xEDdo y ha perdido ",
-    "lostXp": "Han perdido ",
-    "lostXp2": " <i class='fas fa-fist-raised'></i>. Sus guerreros se tendr\xE1n que poner las pilas <i class='fas fa-sad-tear'></i>",
-    "gainXp": "Ha ganado ",
-    "gainXp2": " <i class='fas fa-fist-raised'><\/i>. ",
-    "recoverHp": "Ha descansado y recuperado ",
-    "track": "Seguimiento"
-  },
-  "es.maps-stories": {
-    "updateMap": "Actualiza el mapa",
-    "geniallyRes": "Recursos para",
-    "mapPreview": "Vista previa",
-    "newStory": "Nueva historia",
-    "titleStory": "T\xEDtulo",
-    "publishDate": "Fecha publicaci\xF3n",
-    "currentStories": "Historias actuales",
-    "noStories": "Actualmente no hay historias",
-    "conquerStory": "Historia de conquista?",
-    "file": "Fichero",
-    "linkWebpage": "Enlace a p\xE1gina web",
-    "displayName": "Nombre a mostrar (opcional)",
-    "link": "Enlace",
-    "embed": "Incrustado",
-    "latex": "Puedes a\xF1adir f\xF3rmulas en LaTeX!"
-  },
-  "es.menu": {
-    "groups": "Grupos",
-    "cards": "Cartas",
-    "levels": "Niveles",
-    "story": "Historia",
-    "goals": "Objetivos",
-    "shop": "Tienda",
-    "settings": "Preferencias",
-    "howPlay": "\xBFC\xF3mo jugar?",
-    "start": "Inicio"
-  },
-  "es.messages": {
-    "positiveFeedback": "Go go go! <i class='fas fa-smile-wink'><\/i><i class='fas fa-laugh-beam'><\/i>"
-  },
-  "es.mysql-errors": {
-    "error1062": "Elemento duplicado, el elemento que quieres introducir ya existe.",
-    "error1451": "El elemento que quieres eliminar o actualizar contiene elementos y no se puede eliminar.",
-    "errorDefault": "Alguna cosa no ha ido bien, contacta con el administrador."
-  },
-  "es.pagination": {
-    "previous": "&laquo; Previous",
-    "next": "Next &raquo;"
-  },
-  "es.passwords": {
-    "password": "Passwords must be at least eight characters and match the confirmation.",
-    "reset": "Your password has been reset!",
-    "sent": "We have e-mailed your password reset link!",
-    "token": "This password reset token is invalid.",
-    "user": "We can't find a user with that e-mail address."
-  },
-  "es.patreon": {
-    "patreon": "\xA1Colabora!",
-    "help": "Ayuda"
-  },
-  "es.random-events": {
-    "closeButton": "Cierra",
-    "everybodyLoses": "Todos pierden ",
-    "acceptDestiny": "Acepta el destino",
-    "assistant": "ser\xE1 el ayudante encargado",
-    "chooses": "decide que",
-    "back2life": "Vuelve a la vida!",
-    "nobodyDead": "No hay muertos que revivir",
-    "joke": "Contar\xE1 un chiste. Puede ganar",
-    "joke2": "o perder",
-    "winOrLose": "Puede ganar o perder",
-    "paid": "Ha pagado",
-    "enter": "Entramos!",
-    "betterNot": "Mejor que no ..."
-  },
-  "es.regions": {
-    "cityName": "Nombre de la ciudad",
-    "regionName": "Nombre de la regi\xF3n",
-    "gold": "Oro",
-    "cards": "Cartas",
-    "regionErrorInput": "Icono y texto obligatorios",
-    "descCity": "Descripci\xF3n de la tarea. Por ejemplo: exercicios de trigonometria",
-    "commonDescription": "Descripci\xF3n com\xFAn (si no hay descripci\xF3n personalizada, se mostrar\xE1 \xE9sta)",
-    "customDescription": "Descripci\xF3n personalizada (si quieres diferenciarla entre clases)"
-  },
-  "es.rubric": {
-    "rubricInfoOpt": "Las filas marcadas como opcionales, se mostrar\xE1n al final de la r\xFAbrica y ser\xE1n consideradas como puntos extra (sobre 10).",
-    "name": "Nombre",
-    "rubricCreator": "Creador r\xFAbricas",
-    "generalDesc": "Descripci\xF3n general",
-    "points": "Puntos",
-    "emojiAdd": "Insertar emoji en el campo activo",
-    "saveRubric": "Guardar r\xFAbrica",
-    "addRowItem": "A\xF1adir elemento a la fila",
-    "optional": "Opcional",
-    "addRow": "A\xF1adir fila"
-  },
-  "es.settings": {
-    "common": "Comunes",
-    "rare": "Raras",
-    "epic": "\xC9picas",
-    "legendary": "Legendarias",
-    "generalPreferences": "Preferencias generales",
-    "gameNameEdit": "Nombre del juego (visible por los estudiantes)",
-    "probabilities": "Probabilidades",
-    "hpItems": "Objetos de vida",
-    "privilegeItems": "Privilegios individuales",
-    "privileInfo": "Los privilegios personales apareceran en la vista de grupos en cada alumno\/alumna. Cuando hacemos clic se habilitan y si volvemos a hacer clic se inhabilitan. Puedes asignarlos al llegar a un nivel o si superan una prueba de conquista.",
-    "editHP": "Edita objetos de vida",
-    "weatherMngmnt": "Gesti\xF3n del tiempo",
-    "passwdChange": "Cambio de contrase\xF1a",
-    "teachers": "Docentes",
-    "oldPassword": "Antigua contrase\xF1a",
-    "newPassword": "Nueva contrase\xF1a",
-    "repeatPassword": "Repite contrase\xF1a",
-    "rulesPage": "Instrucciones para el alumnado / P\xE1gina de normas",
-    "fullLog": " Log entero",
-    "classMngmt": "Gesti\xF3n de clases",
-    "loadClassroom": "Carga clase",
-    "addClassroom": "A\xF1ade clase",
-    "delClassroom": "Elimina clase",
-    "delConfirmClassroom": "Est\xE1s seguro/segura que quieres eliminar la clase? Esta acci\xF3n no se puede deshacer",
-    "classroomName": "Nombre de la clase",
-    "classrooms": "Clases disponibles",
-    "subject": "Materia",
-    "studentsName": "Visualizaci\xF3n del nombre de los estudiantes: ",
-    "multiDisciplinarMsg": "En un juego multidisciplinar, los docentes comparten grupos, clases, mapa y configuraci\xF3n. Las historias, la descripci\xF3n de los objetivos y la superaci\xF3n de los mismos son independientes. El alumnado ver\xE1 todo el contenido de los distintos docentes. Esta es una funci\xF3n experimental que requiere mucho testeo. Si decides continuar, esperamos que entiendas que se pueden producir comportamientos no deseados.",
-    "multiDisciplinarMsg2": "Crea los docentes que tendr\xE1n acceso a la aplicaci\xF3n, as\xEDgnales una materia y luego activa la opci\xF3n de multidisciplinar.",
-    "infoUpdateItems": "Pon valores positivos (buen comportamiento) o negativos (mal comportamiento)",
-    "infoUpdatePlaceholder": "Breve descripci\xF3n",
-    "from": "De",
-    "to": "a",
-    "interval": "Intervalo",
-    "theme": "Tema",
-    "wvgame": "Juego no violento"
-  },
-  "es.shop": {
-    "discount": "con descuento",
-    "shopDiscount": "% descuento en cartas del tesoro (uso y eliminaci\xF3n)",
-    "slotExtra": "slot\/s extra de cartas.",
-    "hidden": "Oculto a los estudiantes",
-    "shown": "Visible para los estudiantes",
-    "equipment": "Equipamiento",
-    "forSale": "\xBFSe vende?"
-  },
-  "es.students-view": {
-    "notStarted": "A\xFAn no ha empezado la aventura!",
-    "map": "Mapa",
-    "story": "Historia",
-    "rules": "Normas del juego",
-    "groups": "Grupos",
-    "shop": "Tienda",
-    "licenses": "Licencias",
-    "licensesContent": "Licencias y reconocimientos",
-    "progress": "Progreso",
-    "indProgress": "Progreso individual",
-    "inventory": "Inventario",
-    "dndHp": "Arrastra al miembro del grupo sobre el que lo quieres aplicar",
-    "buyItems": "\xBFEst\xE1s seguro que quieres comprar?",
-    "recover": "Recupera ",
-    "calMonthly": "Mensual",
-    "calWeekly": "Semanal",
-    "calDaily": "Diario",
-    "calToday": "Hoy",
-    "showAll": "Mostrar todos",
-    "invNN": "\xBFQu\xE9 ser\xE1 esto?",
-    "groupAccess": "Acceso grupos",
-    "studentAccess": "Acceso area personal",
-    "event": "Eventos",
-    "lastEvents": "\xDAltimos eventos",
-    "groupView": "Cargar vista de grupo"
-  },
-  "es.students": {
-    "modalStudentTitle": "Configuraci\xF3n estudiante",
-    "saveStudent": "Confirma cambios"
-  },
-  "es.success-error": {
-    "insertSuccess": "Elemento a\xF1adido|a\xF1adidos correctamente",
-    "insertSuccessVuePlural": "Elementos a\xF1adidos correctamente",
-    "updateSuccess": "Elemento|Elementos actualitzado|actualizados correctamente",
-    "deleteSuccess": "Elemento eliminado correctamente",
-    "confirm": "Estas seguro/segura? Esta acci\xF3n no se puede deshacer",
-    "confirmGear": "Estas seguro/segura? Esta acci\xF3n no se puede deshacer. El equipo perder\xE1 todo el equipamiento",
-    "changeError": "Ya tiene asignada esta clase",
-    "cardLvlError": "Nivel insuficiente",
-    "memberEmpty": "El nombre no puede estar vac\xEDo",
-    "feedbackUsername": "3 car\xE1cteres m\xEDnimo",
-    "feedbackPassword": "6 car\xE1cteres m\xEDnimo",
-    "attachmentFeedback": "La URL es obligatoria",
-    "addCityFeedback": "Los campos nombre, XP, oro y cartas s\xF3n obligatorios",
-    "classroomAddFeedback": "El nombre \xE9s obligatorio",
-    "errorRubricName": "El nombre de la r\xFAbrica es obligatorio"
-  },
-  "es.support": {
-    "title": "Nos gusta verte por aqu\xED",
-    "content1": "Sabemos que cuesta contribuir en proyectos digitales, pero si est\xE1s aqu\xED es porque crees que se tiene que valorar el trabajo aunque \xE9ste no sea tangible.",
-    "content2": "\xBFPara qu\xE9 ser\xE1 tu aportaci\xF3n? La plataforma tiene gastos mensuales relacionados con el dominio y el alojamiento. Por otra parte, est\xE1n todas las horas dedicadas al proyecto, que no s\xF3n pocas ... \xA1Y todas las que quedan! Adem\xE1s de servir como inyecci\xF3n de moral <i class='fas fa-smile-wink'></i>",
-    "content3": "Si quieres colaborar y agradecer el trabajo en la plataforma, lo puedes hacer de dos maneras:",
-    "btn1": "Aportaci\xF3n \xFAnica",
-    "btn2": "Aportaci\xF3n mensual (Sponsors)",
-    "thnx": "\xA1Much\xEDsimas gracias por ayudar a que FantasyClass continue adelante!",
-    "contributors": "Personas y entidades que hacen posible que FantasyClass continue adelante. Much\xEDsimas gracias!!!"
-  },
-  "es.tools": {
-    "rollDice": "\xA1Tira el dado!"
-  },
-  "es.trophys": {
-    "luckyGuy": "Suerte m\xE1xima! (persona viva com m\xE1s vida perdida)",
-    "lateOne": "El tard\xF3n / la tardona",
-    "richest": "Los ricachones",
-    "moneySpendMax": "El grupo derrochador",
-    "boarResistance": "Resistencia a jabal\xEDs",
-    "cardMasters": "M\xE1sters de la baraja (m\xE1s cartas utilizadas/eliminadas)"
-  },
-  "es.validation": {
     "accepted": "The :attribute must be accepted.",
     "active_url": "The :attribute is not a valid URL.",
     "after": "The :attribute must be a date after :date.",

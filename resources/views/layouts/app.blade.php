@@ -62,9 +62,13 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" style="min-width: max-content!important" aria-labelledby="navbarDropdown">
                                     <div></div>
-                                    <span class="dropdown-item py-2 text-center cursor-default">{{ Auth::user()->name }}</span>
+                                    <span class="dropdown-item py-2 text-center cursor-default">
+                                        {{ Auth::user()->name }}
+                                    </span>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item text-dark py-2" href="/preferences/edit"><i class="fal fa-cog"></i> Profile</a>
+                                    <a class="dropdown-item text-dark py-2" href="/preferences/edit">
+                                        <i class="fal fa-cog"></i> {{ __('menu.profile') }}
+                                    </a>
                                     <a class="dropdown-item text-dark py-2" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

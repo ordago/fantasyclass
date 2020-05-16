@@ -9,7 +9,7 @@ return [
     |
     |
     */
-
+    'user_groups' => 'Users and groups',
     'groups' => 'Groups',
     'cards' => 'Cards',
     'levels' => 'Levels',
@@ -17,7 +17,6 @@ return [
     'goals' => 'Goals',
     'shop' => "Shop",
     'settings' => 'Settings',
-    'howPlay' => "How to play",
-    'start' => "Start",
+    'profile' => 'Profile',
 
 ];
