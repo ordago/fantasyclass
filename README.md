@@ -18,6 +18,14 @@ Configure .env:
  MAIL_FROM_NAME="${APP_NAME}"
 ```
 
+To enable Google Login:
+Go to https://console.developers.google.com/, register a project and get the Oauth ID and SECRET put them in .env
+
+```
+GOOGLE_CLIENT_ID=
+GOOGLE_SECRET=
+```
+
 ### Refresh strings to VUE translation
 
 https://github.com/kg-bot/laravel-localization-to-vue

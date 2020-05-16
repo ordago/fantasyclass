@@ -44,7 +44,7 @@
                     <button type="submit" class="btn btn-primary mb-2">
                         <i class="far fa-lock-open-alt"></i> {{ __('Login') }}
                     </button>
-                    <button class="btn buttonLogin" disabled onclick="window.location.href='../oauth2callback.php?redirect=fantasyclass.gamifica.online&admin=1'"><i class="fab fa-google"></i> Google login</button>
+                    <a href="{{ url('/auth/redirect/google') }}" class="btn buttonLogin"><i class="fa fa-google"></i> Google</a>
                     <div class="d-flex align-items-center">
                         @if (Route::has('register'))
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>

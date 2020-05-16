@@ -18,13 +18,15 @@ class StudentController extends Controller
         $this->middleware('verified');
     }
 
-    public function create($code) {
+    public function create($code) 
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         session()->put('classroom', $class->id);
         return view('students.create', compact('class'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request) 
+    {
         $classId = session()->get('classroom');
         if(!$classId)
             return false;
@@ -90,7 +92,8 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
-    public function getUsername(Request $request) {
+    public function getUsername(Request $request) 
+    {
         
         $email = $request->email;
         if(!$email)
