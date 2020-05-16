@@ -24,6 +24,7 @@ Go to https://console.developers.google.com/, register a project and get the Oau
 ```
 GOOGLE_CLIENT_ID=
 GOOGLE_SECRET=
+GOOGE_REDIRECT=http://localhost:8000/callback/google
 ```
 
 ## After every pull from the server
