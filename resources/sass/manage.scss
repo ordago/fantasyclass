@@ -83,20 +83,6 @@
 /****Wizard********/
 
 .wizard {
-  margin: 20px auto;
-  background: #fff;
-  z-index: 100002;
-
-  .nav-tabs {
-    position: relative;
-    margin: 40px auto;
-    margin-bottom: 0;
-    border-bottom-color: #e0e0e0;
-  }
-
-  > div.wizard-inner {
-    position: relative;
-  }
   [type=radio] { 
     position: absolute;
     opacity: 0;
@@ -219,7 +205,6 @@ span.round-tab:hover {
 
   .tab-pane {
     position: relative;
-    padding-top: 50px;
   }
 
   h3 {
