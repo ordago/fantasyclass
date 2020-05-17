@@ -42,7 +42,7 @@ class ClassroomsController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('/classrooms/create')
+            return redirect('/classroom/create')
                         ->withErrors($validator)
                         ->withInput();
                     }
@@ -61,7 +61,7 @@ class ClassroomsController extends Controller
             $classroom->id => ['role' => 2],
         ]);
         
-        return redirect('/classrooms');
+        return redirect('/classroom');
 
     }
     
@@ -83,7 +83,7 @@ class ClassroomsController extends Controller
     public function show($code) 
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $bg = $class->theme;
+        $bg = Theme::getBg($class->theme->id);
         return view('classrooms.show', compact('class', 'bg'));
     }
 }

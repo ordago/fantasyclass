@@ -17,6 +17,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gamifica.online',
             'email_verified_at' => '2020-05-03 19:21:43',
             'password' => Hash::make('admin'),
+            'locale' => 'en',
         ]);
     }
 }

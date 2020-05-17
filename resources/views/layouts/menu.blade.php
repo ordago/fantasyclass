@@ -19,7 +19,7 @@
 
 @section('menu')
     <div class="pl-2 h-100 d-flex menu">
-        <a href="/classrooms/{{ $class->code }}" {{ Popper::theme('dark')->pop(__("menu.user_groups")) }} class="h-100 pl-3 pr-2 d-flex align-items-center">
+        <a href="/classroom/{{ $class->code }}" {{ Popper::theme('dark')->pop(__("menu.user_groups")) }} class="h-100 pl-3 pr-2 d-flex align-items-center">
             <i class="fad fa-users"></i>
         </a>
         <li class="nav-item dropdown h-100 px-2 py-0 d-flex align-items-center">
@@ -28,15 +28,17 @@
             </a>
 
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <i class="fad fa-club"></i>
+                <a class="dropdown-item text-dark py-2" href="/classroom/{{ $class->code }}/cards">
+                    <i class="fad fa-club"></i> {{ __('menu.cards') }}
+                </a>
             </div>
         </li>
-        <a href="/classrooms/{{ $class->code }}/map" class="h-100 py-3 pr-3 pl-1 d-flex align-items-center"><i class="fad fa-map-marked-alt"></i></a>
-        <a href="/classrooms/{{ $class->code }}/stories" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pen-fancy"></i></a>
-        <a href="/classrooms/{{ $class->code }}/missions" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-tasks"></i></a>
-        <a href="/classrooms/{{ $class->code }}/store" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-store"></i></a>
-        <a href="/classrooms/{{ $class->code }}/rules" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pencil-ruler"></i></a>
-        <a href="/classrooms/{{ $class->code }}/log" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-file-alt"></i></a>
-        <a href="/classrooms/{{ $class->code }}/settings" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-sliders-v-square"></i></a>
+        <a href="/classroom/{{ $class->code }}/map" class="h-100 py-3 pr-3 pl-1 d-flex align-items-center"><i class="fad fa-map-marked-alt"></i></a>
+        <a href="/classroom/{{ $class->code }}/stories" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pen-fancy"></i></a>
+        <a href="/classroom/{{ $class->code }}/missions" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-tasks"></i></a>
+        <a href="/classroom/{{ $class->code }}/store" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-store"></i></a>
+        <a href="/classroom/{{ $class->code }}/rules" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pencil-ruler"></i></a>
+        <a href="/classroom/{{ $class->code }}/log" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-file-alt"></i></a>
+        <a href="/classroom/{{ $class->code }}/settings" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-sliders-v-square"></i></a>
     </div>
 @endsection

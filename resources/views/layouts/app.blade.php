@@ -30,7 +30,7 @@
         @auth
         <nav class="menu-labels card-shadow-s">
             <div class="d-flex align-items-center h-100">
-                <a href="/classrooms" class="d-flex align-items-center" style="text-decoration: none">
+                <a href="/classroom" class="d-flex align-items-center" style="text-decoration: none">
                     <img src="/img/logo.png" width="36px" height="38px" class="ml-1">
                     <label class="label-title pl-2 m-0">
                         @yield('title','FantasyClass')

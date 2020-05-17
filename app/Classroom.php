@@ -28,4 +28,8 @@ class Classroom extends Model
     public function theme() {
         return $this->hasOne(Theme::class, 'id', 'theme_id');
     }
+
+    public function cards() {
+        return $this->hasMany(Card::class);
+    }
 }

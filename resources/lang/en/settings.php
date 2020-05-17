@@ -4,16 +4,15 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | General
+    | Settings
     |--------------------------------------------------------------------------
     |
     |
     */
     
-    'add' => 'Add',
-    'update' => "Update",
-    'edit' => "Edit",
-    'delete' => "Delete",
-    'close' => "Close",
+    'rare' => 'Rare',
+    'common' => "Common",
+    'epic' => "epic",
+    'legendary' => "Legendary",
     
 ];

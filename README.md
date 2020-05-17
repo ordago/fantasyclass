@@ -35,6 +35,18 @@ GOOGE_REDIRECT=http://localhost:8000/callback/google
 ```
 These commands will recreate the DB, wipe all the data and create a user admin/admin
 
+### Controller syntax
+
+| Verb      | Path                | Action  | Route Name    |
+|-----------|---------------------|---------|---------------|
+| GET       | /photo              | index   | photo.index   |
+| GET       | /photo/create       | create  | photo.create  |
+| POST      | /photo              | store   | photo.store   |
+| GET       | /photo/{photo}      | show    | photo.show    |
+| GET       | /photo/{photo}/edit | edit    | photo.edit    |
+| PUT/PATCH | /photo/{photo}      | update  | photo.update  |
+| DELETE    | /photo/{photo}      | destroy | photo.destroy |
+
 ### Refresh strings to VUE translation
 
 https://github.com/kg-bot/laravel-localization-to-vue

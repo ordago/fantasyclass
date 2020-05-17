@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<form action="/classrooms" method="post">
+<form action="/classroom" method="post">
 @csrf
 
 <div class="modal-dialog full-screen  modal-lg my-3 pt-3 mx-3" id="newClassroom">
@@ -11,9 +11,6 @@
           <li class="nav-item">
             <a class="nav-link active" data-toggle="tab" href="#nameAndGoals" role="tab"><i class="fal fa-scroll"></i> {{ __('classroom.name_and_goals') }}</a>
           <li>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="tab" href="#cardsPanel" role="tab"><i class="fal fa-award"></i> {{ __('menu.cards') }}</a>
-        <li>
         <li class="nav-item">
           <a class="nav-link" data-toggle="tab" href="#levelsPanel" role="tab"><i class="fal fa-trophy"></i> {{ __('menu.levels') }}</a>
         <li>
@@ -62,12 +59,6 @@
                   </label>
                 @endforeach
             </div>
-          </div>
-          <div class="tab-pane" id="cardsPanel" role="tabpanel">
-            <h4>{{ __('menu.cards') }}</h4>
-            <h6 class="mt-3">{{ __('classroom.cards_text') }}</h6>
-            <h1 class="bg-danger">WIP. First create cards</h1>
-            <!--<iframe src="utils/cardBank.php" style="width:100%; height: 50vh;"></iframe>-->
           </div>
           <div class="tab-pane" id="levelsPanel" role="tabpanel">
             <h4>{{ __('menu.levels') }}</h4>

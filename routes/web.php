@@ -19,19 +19,25 @@ Route::group(['middleware' => 'language'], function () {
     Auth::routes(['verify' => true]);
     
     // Home
-    Route::redirect('/', '/classrooms');
+    Route::redirect('/', '/classroom');
     
     // Classroom
-    Route::get('/classrooms', 'ClassroomsController@index')->name('classrooms');
-    Route::post('/classrooms', 'ClassroomsController@store'); //Policy protect
-    Route::get('/classrooms/create', 'ClassroomsController@create');
-    Route::get('/classrooms/{code}', 'ClassroomsController@show'); // Policy protect
+    Route::get('/classroom', 'ClassroomsController@index')->name('classrooms');
+    Route::post('/classroom', 'ClassroomsController@store'); //Policy protect
+    Route::get('/classroom/create', 'ClassroomsController@create');
+    Route::get('/classroom/{code}', 'ClassroomsController@show'); // Policy protect
     
+    // Cards
+    Route::delete('/classroom/card/{id}', 'CardsController@destroy'); // Policy protect
+    Route::get('/classroom/{code}/cards', 'CardsController@index'); // Policy protect
+    Route::get('/classroom/{code}/cards/import/default', 'CardsController@importDefault'); // Policy protect
+    Route::get('/classroom/{code}/cards/create', 'CardsController@create'); // Policy protect
+
     // Students
-    Route::get('/classrooms/{code}/students/add', 'StudentController@create'); // Policy protect
-    Route::post('/classrooms/students/', 'StudentController@store'); // Policy protect (?)
-    Route::post('/classrooms/students/getusername', 'StudentController@getUsername');
-    Route::post('/classrooms/students/update', 'StudentController@update'); // Policty protect
+    Route::get('/classroom/{code}/students/add', 'StudentController@create'); // Policy protect
+    Route::post('/classroom/students/', 'StudentController@store'); // Policy protect (?)
+    Route::post('/classroom/students/getusername', 'StudentController@getUsername');
+    Route::post('/classroom/students/update', 'StudentController@update'); // Policty protect
 
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');

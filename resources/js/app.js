@@ -44,8 +44,11 @@ Vue.use(VueCookies)
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('add-students', require('./components/classroom/AddStudents.vue').default);
+Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
+Vue.component('show-card', require('./components/card/ShowCard.vue').default);
+Vue.component('show-cards', require('./components/card/ShowCards.vue').default);
+Vue.component('create-card', require('./components/card/CreateCard.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

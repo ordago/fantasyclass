@@ -10840,8 +10840,8 @@ td {
   border: 1px solid black;
 }
 
-.textshadow {
-  text-shadow: -1px -1px 0 #9f7757, 1px -1px 0 #9f7757, -1px 1px 0 #9f7757, 1px 1px 0 #9f7757;
+.text_shadow {
+  text-shadow: 0.5px 0.5px black;
 }
 
 /* Multisubject */
@@ -11231,7 +11231,6 @@ h5 {
   color: white;
   text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
   width: 250px;
-  font-family: logo, Verdana, Geneva, Arial, Helvetica, sans-serif;
   font-weight: bolder;
   line-height: 1;
   margin: 0;
@@ -11341,7 +11340,6 @@ p {
   text-align: center;
   margin: auto;
   bottom: -25px;
-  visibility: hidden;
 }
 
 .xp_modify {
@@ -11570,19 +11568,19 @@ textPath {
 
 /****************************/
 /****Wizard********/
-.wizard {
+.wizard, .hide-radios {
   /* IMAGE STYLES */
 }
-.wizard [type=radio] {
+.wizard [type=radio], .hide-radios [type=radio] {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.wizard [type=radio] + img, .wizard [type=radio] + div {
+.wizard [type=radio] + img, .wizard [type=radio] + div, .hide-radios [type=radio] + img, .hide-radios [type=radio] + div {
   cursor: pointer;
 }
-.wizard [type=radio]:checked + img, .wizard [type=radio]:checked + div {
+.wizard [type=radio]:checked + img, .wizard [type=radio]:checked + div, .hide-radios [type=radio]:checked + img, .hide-radios [type=radio]:checked + div {
   box-shadow: 0 0 3pt 2pt #4fc3f7;
 }
 

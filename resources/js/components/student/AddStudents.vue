@@ -40,7 +40,7 @@
                 }
                 let search = this.students.find(student => student.name === this.stdName);
                 if(this.stdName && !search) {
-                    axios.post('/classrooms/students/getusername', {'name' : this.stdName, 'email' : this.stdEmail })
+                    axios.post('/classroom/students/getusername', {'name' : this.stdName, 'email' : this.stdEmail })
                         .then(response => {
                             this.stdUsername = response.data;
                             this.students.push({
@@ -57,7 +57,7 @@
             },
             sendStudents() {
                 if(this.students.length) {
-                    axios.post('/classrooms/students', {
+                    axios.post('/classroom/students', {
                         students: this.students,
                     })
                     .then(response => {
@@ -66,9 +66,9 @@
                             response.data.forEach(element => {
 
                                  this.$toasted.show(element, { 
-                                        theme: 'bubble',
-                                        position: "top-center", 
+                                        position: "top-right", 
                                         iconPack: 'fontawesome',
+                                        type: 'error',
                                         action : {
                                             text : 'Close',
                                             onClick : (e, toastObject) => {

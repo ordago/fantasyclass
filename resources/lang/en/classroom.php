@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     "add" => "Add Classroom",
 
     /* Roles */

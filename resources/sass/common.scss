@@ -969,8 +969,8 @@
     border: 1px solid black;
   }
   
-  .textshadow {
-    text-shadow: -1px -1px 0 #9f7757, 1px -1px 0 #9f7757, -1px 1px 0 #9f7757, 1px 1px 0 #9f7757;
+  .text_shadow {
+    text-shadow: 0.5px 0.5px black;  
   }
   
   /* Multisubject */
@@ -1394,7 +1394,6 @@
     color: white;
     text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
     width: 250px;
-    font-family: logo, Verdana, Geneva, Arial, Helvetica, sans-serif;
     font-weight: bolder;
     line-height: 1;
     margin: 0;
@@ -1504,7 +1503,6 @@
     text-align: center;
     margin: auto;
     bottom: -25px;
-    visibility: hidden;
   }
   
   .xp_modify {

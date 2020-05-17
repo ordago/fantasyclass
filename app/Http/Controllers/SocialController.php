@@ -22,7 +22,7 @@ class SocialController extends Controller
         
         if($user) {
             Auth::login($user);
-            return redirect()->to('/classrooms/');
+            return redirect()->to('/classroom/');
         } else {
             $errors = new MessageBag();
             // add your error messages:
