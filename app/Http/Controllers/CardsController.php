@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Card;
 use App\Classroom;
-use Spatie\Image\Image;
+use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CardsController extends Controller
 {
@@ -52,12 +53,12 @@ class CardsController extends Controller
             } else {
                 $image = null;   
             }
-
+            
             $classId = $class = Classroom::where('code', '=', $code)->firstOrFail()->id;
-
+            
             if(!$classId)
-                return false;
-
+            return false;
+            
             $card = Card::create([
                 'src' => $image,
                 'title' => $data['title'],
@@ -77,21 +78,23 @@ class CardsController extends Controller
                 'slot' => $data['slot'],
                 'fullscreen' => isset($data['fullscreen']) ? $data['fullscreen'] : 0,
                 'classroom_id' => $classId,
-        ]);
-
-        if($image == null)
-            // $card->addMedia()
-            // ->withManipulations(['thumb' => ['orientation' => '90'])
-            //                         ->toMediaCollection('card')
-            //                         ->width($data['width'])
-            //                         ->singleFile();
-
-             $card->addMedia(request()->image)
-             ->toMediaCollection('card');
-             
+                ]);
+                
+                if($image == null) {
+                    $card->addMedia(request()->file('image'))
+                    ->toMediaCollection('card');
+                
+                    $cardPath = $card->getMedia('card')->first();
+                    $imgPath = '/'.$cardPath->id.'/'.$cardPath->file_name;
+                    $path = Storage::disk('public')->path('/').$imgPath;        
+                    $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save();
+                    $card->update(['src' => '/storage'.$imgPath]);  
+                }
 
         return redirect('/classroom/'.$code.'/cards');
-
+        
     }
     
     // Add default cards
