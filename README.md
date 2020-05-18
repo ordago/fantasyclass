@@ -4,6 +4,12 @@
 
 [Laravel Installation](https://laravel.com/docs/7.x/installation)
 
+
+### Requirements
+
+Requirement: php 7.4+
+https://docs.spatie.be/laravel-medialibrary/v8/installation-setup/
+
 Register in [mailtrap.io](https://mailtrap.io)
 Configure .env:
 

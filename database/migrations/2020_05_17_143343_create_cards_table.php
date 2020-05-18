@@ -15,7 +15,7 @@ class CreateCardsTable extends Migration
      {
          Schema::create('cards', function (Blueprint $table) {
              $table->id();
-             $table->string('src');
+             $table->string('src')->nullable();
              $table->string('title', 40)->nullable();
              $table->string('description')->nullable();
              $table->tinyInteger('min_lvl')->default(0);

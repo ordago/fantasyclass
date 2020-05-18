@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Card;
 use App\Classroom;
+use Spatie\Image\Image;
 use Illuminate\Http\Request;
 
 class CardsController extends Controller
@@ -48,14 +49,16 @@ class CardsController extends Controller
             
             if(!isset($data['image']) || !$data['image']) {
                 $image = "/img/cards/card_bg.png";
-            } else $image  = $data['image'];
+            } else {
+                $image = null;   
+            }
 
             $classId = $class = Classroom::where('code', '=', $code)->firstOrFail()->id;
 
             if(!$classId)
                 return false;
 
-            $classroom = Card::create([
+            $card = Card::create([
                 'src' => $image,
                 'title' => $data['title'],
                 'description' => $data['description'],
@@ -75,6 +78,17 @@ class CardsController extends Controller
                 'fullscreen' => isset($data['fullscreen']) ? $data['fullscreen'] : 0,
                 'classroom_id' => $classId,
         ]);
+
+        if($image == null)
+            // $card->addMedia()
+            // ->withManipulations(['thumb' => ['orientation' => '90'])
+            //                         ->toMediaCollection('card')
+            //                         ->width($data['width'])
+            //                         ->singleFile();
+
+             $card->addMedia(request()->image)
+             ->toMediaCollection('card');
+             
 
         return redirect('/classroom/'.$code.'/cards');
 
