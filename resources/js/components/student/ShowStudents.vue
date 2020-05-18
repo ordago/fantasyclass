@@ -4,8 +4,8 @@
         <div class="tools rounded-left">
             <i class="fal fa-tools"></i>
         </div>
-        <!--<span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
+        <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span>
+        <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="link outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <span class="link outer_glow"><i class="fad fa-poll-people" style="font-size: 2em;"></i></span>
         <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>

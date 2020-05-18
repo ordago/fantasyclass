@@ -2093,9 +2093,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {},
+  props: ['classroom'],
+  created: function created() {
+    this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+  },
   data: function data() {
     return {
       width: 250,
@@ -2114,10 +2123,18 @@ __webpack_require__.r(__webpack_exports__);
       title: '',
       content: '',
       image: '/img/cards/card_bg.png',
-      background_color: '#000000'
+      background_color: '#000000',
+      csrfToken: null
     };
   },
   methods: {
+    formSubmit: function formSubmit(e) {
+      if (this.title == '' && this.content == '' && !this.fullscreen) {
+        if (confirm(this.trans.get("cards.confirm_empty"))) {
+          return true;
+        } else e.preventDefault();
+      }
+    },
     getImage: function getImage(e) {
       var _this = this;
 
@@ -39043,908 +39060,1156 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container bg-light h-100 w-100" }, [
-    _c("div", { staticClass: "d-flex pt-3" }, [
-      _c("div", { staticClass: "flex1" }, [
-        _c(
-          "div",
-          {
-            staticClass: "cardContainer",
-            style: "background-color: " + _vm.background_color + ";",
-            attrs: { id: "customCard", name: "card" }
-          },
-          [
-            _vm.min_lvl > 0
-              ? _c("div", { staticClass: "lvlTopLeft", attrs: { id: "lvl" } }, [
-                  _c("img", {
-                    staticClass: "levelCard",
-                    attrs: { src: "/img/cardgen/lvl.png" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "numberLvl" }, [
-                    _vm._v(_vm._s(this.min_lvl))
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.fullscreen
-              ? _c("img", {
-                  staticClass: "typeCard",
-                  attrs: {
-                    src: "/img/cardgen/type_" + _vm.type + ".png",
-                    id: "circleType"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("div", [
-              _c("h3", { staticClass: "title editable_card" }, [
-                _c("svg", { attrs: { viewBox: "0 0 500 150" } }, [
-                  _c("path", {
-                    attrs: {
-                      id: "curve",
-                      d:
-                        "m 3.2938789,150.87387 c 5.55773,-3.11588 91.0078161,-49.44517 248.1526411,-48.83221 154.64384,0.61296 237.31506,46.12499 243.28962,49.54732"
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("text", { attrs: { width: "250px" } }, [
-                    _c(
-                      "textPath",
-                      {
-                        attrs: {
-                          "xlink:href": "#curve",
-                          startOffset: "50%",
-                          "text-anchor": "middle"
-                        }
-                      },
+    _c(
+      "form",
+      {
+        attrs: {
+          method: "post",
+          action: "/classroom/" + this.classroom + "/cards",
+          enctype: "multipart/form-data"
+        },
+        on: { submit: _vm.formSubmit }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrfToken }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.width,
+              expression: "width"
+            }
+          ],
+          attrs: { name: "width", type: "hidden" },
+          domProps: { value: _vm.width },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.width = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.margin_top,
+              expression: "margin_top"
+            }
+          ],
+          attrs: { name: "marginTop", type: "hidden" },
+          domProps: { value: _vm.margin_top },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.margin_top = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.margin_left,
+              expression: "margin_left"
+            }
+          ],
+          attrs: { name: "marginLeft", type: "hidden" },
+          domProps: { value: _vm.margin_left },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.margin_left = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "d-flex pt-3" }, [
+          _c("div", { staticClass: "flex1" }, [
+            _c(
+              "div",
+              {
+                staticClass: "cardContainer",
+                style: "background-color: " + _vm.background_color + ";",
+                attrs: { id: "customCard", name: "card" }
+              },
+              [
+                _vm.min_lvl > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "lvlTopLeft", attrs: { id: "lvl" } },
                       [
-                        _vm._v(
-                          "\n                        " +
-                            _vm._s(this.title) +
-                            "\n                      "
-                        )
+                        _c("img", {
+                          staticClass: "levelCard",
+                          attrs: { src: "/img/cardgen/lvl.png" }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "numberLvl" }, [
+                          _vm._v(_vm._s(this.min_lvl))
+                        ])
                       ]
                     )
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.fullscreen
+                  ? _c("img", {
+                      staticClass: "typeCard",
+                      attrs: {
+                        src: "/img/cardgen/type_" + _vm.type + ".png",
+                        id: "circleType"
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("div", [
+                  _c("h3", { staticClass: "title editable_card" }, [
+                    _c("svg", { attrs: { viewBox: "0 0 500 150" } }, [
+                      _c("path", {
+                        attrs: {
+                          id: "curve",
+                          d:
+                            "m 3.2938789,150.87387 c 5.55773,-3.11588 91.0078161,-49.44517 248.1526411,-48.83221 154.64384,0.61296 237.31506,46.12499 243.28962,49.54732"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("text", { attrs: { width: "250px" } }, [
+                        _c(
+                          "textPath",
+                          {
+                            attrs: {
+                              "xlink:href": "#curve",
+                              startOffset: "50%",
+                              "text-anchor": "middle"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(this.title) +
+                                "\n                      "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                attrs: { type: "hidden", name: "textHidden", value: "Text 1" }
-              })
-            ]),
-            _vm._v(" "),
-            !_vm.fullscreen
-              ? _c("img", {
-                  staticClass: "ribbon",
-                  attrs: {
-                    src: "/img/cardgen/ribbon-" + _vm.type + ".png",
-                    id: "ribbonType"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            !_vm.special && !_vm.fullscreen
-              ? _c("img", {
-                  staticClass: "background",
-                  attrs: {
-                    src: "/img/cardgen/only_back_" + _vm.bg_type + ".png"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.special && !_vm.fullscreen
-              ? _c("img", {
-                  staticClass: "background",
-                  attrs: {
-                    src: "/img/cardgen/only_back_" + _vm.bg_type + "_gold.png"
-                  }
-                })
-              : _vm._e(),
-            _vm._v(" "),
-            _c("p", { staticClass: "content text_shadow editable_card" }, [
-              _vm._v(
-                "\n                " +
-                  _vm._s(this.content) +
-                  "\n                "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "hiding-parent" }, [
-              _c("img", {
-                staticClass: "image back",
-                style:
-                  "border-radius: " +
-                  _vm.radius / 2 +
-                  "%;margin-top: " +
-                  _vm.margin_top +
-                  "px; margin-left: " +
-                  _vm.margin_left +
-                  "px;",
-                attrs: {
-                  name: "image",
-                  src: _vm.image,
-                  width: _vm.width + "px"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm.xp > 0
-              ? _c("div", { staticClass: "xp_modify modifiers" }, [
-                  _c("img", { attrs: { src: "/img/cardgen/xp_modify.png" } }),
-                  _vm._v(" "),
-                  _c("span", { attrs: { id: "xp_modify_span" } }, [
-                    _vm._v(_vm._s(_vm.xp))
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.hp > 0
-              ? _c("div", { staticClass: "hp_modify modifiers" }, [
-                  _c("img", { attrs: { src: "/img/cardgen/hp_modify.png" } }),
-                  _vm._v(" "),
-                  _c("span", { attrs: { id: "hp_modify_span" } }, [
-                    _vm._v(_vm._s(_vm.hp))
-                  ])
-                ])
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.gold > 0
-              ? _c("div", { staticClass: "gold_modify modifiers" }, [
-                  _c("img", { attrs: { src: "/img/cardgen/gold_modify.png" } }),
-                  _vm._v(" "),
-                  _c("span", { attrs: { id: "gold_modify_span" } }, [
-                    _vm._v(_vm._s(_vm.gold))
-                  ])
-                ])
-              : _vm._e()
-          ]
-        ),
-        _vm._v(" "),
-        _vm._m(0)
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "properties", attrs: { id: "propertiesCard" } },
-        [
-          _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.width = _vm.width + 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-search-plus" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                attrs: { type: "button" },
-                on: {
-                  click: function($event) {
-                    _vm.width = _vm.width - 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-search-minus" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "btn-group", attrs: { role: "group" } }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.margin_top = _vm.margin_top + 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-down" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.margin_top = _vm.margin_top - 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-up" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.margin_left = _vm.margin_left - 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-left" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.margin_left = _vm.margin_left + 5
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-arrow-right" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary",
-                on: {
-                  click: function($event) {
-                    _vm.margin_top = 0
-                    _vm.margin_left = 0
-                    _vm.width = 250
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-undo" })]
-            )
-          ]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "my-2 p-3 border border-secondary rounded",
-            staticStyle: { display: "none" },
-            attrs: { type: "file", id: "file-upload" },
-            on: { change: _vm.getImage }
-          }),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("div", { staticClass: "input-group-prepend" }, [
-              _c(
-                "label",
-                { staticClass: "input-group-text", attrs: { for: "title" } },
-                [
-                  _vm._v(_vm._s(_vm.trans.get("cards.title")) + " "),
-                  _c("i", { staticClass: "fas fa-question-circle ml-2" })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.title,
-                  expression: "title"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "title",
-                placeholder: _vm.trans.get("cards.title")
-              },
-              domProps: { value: _vm.title },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.title = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("div", { staticClass: "input-group-prepend" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "input-group-text",
-                  attrs: { for: "description" }
-                },
-                [
-                  _vm._v(_vm._s(_vm.trans.get("cards.description")) + " "),
-                  _c("i", { staticClass: "fas fa-question-circle ml-2" })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.content,
-                  expression: "content"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "text",
-                id: "description",
-                placeholder: _vm.trans.get("cards.description")
-              },
-              domProps: { value: _vm.content },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.content = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3 hide-radios" }, [
-            _c("label", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bg_type,
-                    expression: "bg_type"
-                  }
-                ],
-                attrs: {
-                  type: "radio",
-                  checked: "",
-                  name: "bgTheme",
-                  value: "0"
-                },
-                domProps: { checked: _vm._q(_vm.bg_type, "0") },
-                on: {
-                  change: function($event) {
-                    _vm.bg_type = "0"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                attrs: {
-                  src: "/img/cardgen/only_back_0_prev.png",
-                  content: "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "ml-1" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bg_type,
-                    expression: "bg_type"
-                  }
-                ],
-                attrs: { type: "radio", name: "bgTheme", value: "1" },
-                domProps: { checked: _vm._q(_vm.bg_type, "1") },
-                on: {
-                  change: function($event) {
-                    _vm.bg_type = "1"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                attrs: {
-                  src: "/img/cardgen/only_back_1_prev.png",
-                  content: "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "ml-1" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bg_type,
-                    expression: "bg_type"
-                  }
-                ],
-                attrs: { type: "radio", name: "bgTheme", value: "2" },
-                domProps: { checked: _vm._q(_vm.bg_type, "2") },
-                on: {
-                  change: function($event) {
-                    _vm.bg_type = "2"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                attrs: {
-                  src: "/img/cardgen/only_back_2_prev.png",
-                  content: "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "ml-1" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bg_type,
-                    expression: "bg_type"
-                  }
-                ],
-                attrs: { type: "radio", name: "bgTheme", value: "3" },
-                domProps: { checked: _vm._q(_vm.bg_type, "3") },
-                on: {
-                  change: function($event) {
-                    _vm.bg_type = "3"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                attrs: {
-                  src: "/img/cardgen/only_back_3_prev.png",
-                  content: "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("label", { staticClass: "ml-1" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.bg_type,
-                    expression: "bg_type"
-                  }
-                ],
-                attrs: { type: "radio", name: "bgTheme", value: "4" },
-                domProps: { checked: _vm._q(_vm.bg_type, "4") },
-                on: {
-                  change: function($event) {
-                    _vm.bg_type = "4"
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("img", {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                attrs: {
-                  src: "/img/cardgen/only_back_4_prev.png",
-                  content: "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("div", { staticClass: "input-group-prepend" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "input-group-text",
-                  attrs: { for: "colorText" }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("cards.background_color")))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.background_color,
-                  expression: "background_color"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "color" },
-              domProps: { value: _vm.background_color },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.background_color = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.radius,
-                  expression: "radius"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: {
-                type: "number",
-                id: "radiusImg",
-                min: "0",
-                value: "0",
-                max: "100",
-                required: ""
-              },
-              domProps: { value: _vm.radius },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.radius = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("div", { staticClass: "input-group-prepend" }, [
-              _c(
-                "label",
-                { staticClass: "input-group-text", attrs: { for: "minLvl" } },
-                [
-                  _vm._v(_vm._s(_vm.trans.get("cards.min_lvl")) + " "),
-                  _c("i", {
-                    staticClass: "fas fa-question-circle ml-2",
+                ]),
+                _vm._v(" "),
+                !_vm.fullscreen
+                  ? _c("img", {
+                      staticClass: "ribbon",
+                      attrs: {
+                        src: "/img/cardgen/ribbon-" + _vm.type + ".png",
+                        id: "ribbonType"
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                !_vm.special && !_vm.fullscreen
+                  ? _c("img", {
+                      staticClass: "background",
+                      attrs: {
+                        src: "/img/cardgen/only_back_" + _vm.bg_type + ".png"
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.special && !_vm.fullscreen
+                  ? _c("img", {
+                      staticClass: "background",
+                      attrs: {
+                        src:
+                          "/img/cardgen/only_back_" + _vm.bg_type + "_gold.png"
+                      }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("p", { staticClass: "content text_shadow editable_card" }, [
+                  _vm._v(
+                    "\n                " +
+                      _vm._s(this.content) +
+                      "\n                "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "hiding-parent" }, [
+                  _c("img", {
+                    staticClass: "image back",
+                    style:
+                      "border-radius: " +
+                      _vm.radius / 2 +
+                      "%;margin-top: " +
+                      _vm.margin_top +
+                      "px; margin-left: " +
+                      _vm.margin_left +
+                      "px;",
                     attrs: {
-                      "data-toggle": "popover",
-                      "data-placement": "top",
-                      "data-trigger": "hover",
-                      "data-tippy-content":
-                        "Define si se tiene que tener un nivel mínimo para utilizar una carta."
+                      name: "image",
+                      src: _vm.image,
+                      width: _vm.width + "px"
                     }
                   })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.min_lvl,
-                  expression: "min_lvl"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number", min: "0", value: "0", required: "" },
-              domProps: { value: _vm.min_lvl },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.min_lvl = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("div", { staticClass: "input-group-prepend" }, [
-              _c(
-                "label",
-                {
-                  staticClass: "input-group-text",
-                  attrs: { for: "typeSelect" }
-                },
-                [
-                  _vm._v(_vm._s(_vm.trans.get("cards.type")) + " "),
-                  _c("i", {
-                    staticClass: "fas fa-question-circle ml-2",
-                    attrs: {
-                      "data-toggle": "popover",
-                      "data-placement": "top",
-                      "data-trigger": "hover",
-                      "data-tippy-content":
-                        "Definirá la probabilidad de que salga una carta. Los porcentajes de cada tipo se pueden configurar en preferencias."
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.type,
-                    expression: "type"
-                  }
-                ],
-                staticClass: "form-control col-9",
-                attrs: { onchange: "changeType(this)", name: "cardType" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.type = $event.target.multiple
-                      ? $$selectedVal
-                      : $$selectedVal[0]
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "1" } }, [
-                  _vm._v(_vm._s(_vm.trans.get("settings.common")))
                 ]),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "2" } }, [
-                  _vm._v(_vm._s(_vm.trans.get("settings.rare")))
-                ]),
+                _vm.xp != 0
+                  ? _c("div", { staticClass: "xp_modify modifiers" }, [
+                      _c("img", {
+                        attrs: { src: "/img/cardgen/xp_modify.png" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { attrs: { id: "xp_modify_span" } }, [
+                        _vm._v(_vm._s(_vm.xp))
+                      ])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "3" } }, [
-                  _vm._v(_vm._s(_vm.trans.get("settings.epic")))
-                ]),
+                _vm.hp != 0
+                  ? _c("div", { staticClass: "hp_modify modifiers" }, [
+                      _c("img", {
+                        attrs: { src: "/img/cardgen/hp_modify.png" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { attrs: { id: "hp_modify_span" } }, [
+                        _vm._v(_vm._s(_vm.hp))
+                      ])
+                    ])
+                  : _vm._e(),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "4" } }, [
-                  _vm._v(_vm._s(_vm.trans.get("settings.legendary")))
-                ])
+                _vm.gold != 0
+                  ? _c("div", { staticClass: "gold_modify modifiers" }, [
+                      _c("img", {
+                        attrs: { src: "/img/cardgen/gold_modify.png" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", { attrs: { id: "gold_modify_span" } }, [
+                        _vm._v(_vm._s(_vm.gold))
+                      ])
+                    ])
+                  : _vm._e()
               ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.special,
-                  expression: "special"
-                }
-              ],
-              staticClass: "cbx",
-              staticStyle: { display: "none" },
-              attrs: { type: "checkbox", id: "checkspecial", name: "special" },
-              domProps: {
-                checked: Array.isArray(_vm.special)
-                  ? _vm._i(_vm.special, null) > -1
-                  : _vm.special
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.special,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.special = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.special = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.special = $$c
-                  }
-                }
-              }
-            }),
+            ),
             _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _c(
-              "label",
-              {
-                staticClass: "col-9 col-form-label",
-                attrs: { for: "checkspecial" }
-              },
-              [
-                _vm._v(_vm._s(_vm.trans.get("cards.special")) + " "),
-                _c("i", {
-                  staticClass: "fas fa-question-circle ml-2",
-                  attrs: {
-                    "data-toggle": "popover",
-                    "data-placement": "top",
-                    "data-trigger": "hover",
-                    "data-tippy-content":
-                      "Las cartas especiales no ocupan espacio (los grupos tienen un límite de 5 cartas) y además, no consumen oro y gemas cuando son utilizadas o eliminadas."
-                  }
-                })
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "input-group mb-3" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.fullscreen,
-                  expression: "fullscreen"
-                }
-              ],
-              staticClass: "cbx",
-              staticStyle: { display: "none" },
-              attrs: { type: "checkbox", id: "fullscreenCard" },
-              domProps: {
-                checked: Array.isArray(_vm.fullscreen)
-                  ? _vm._i(_vm.fullscreen, null) > -1
-                  : _vm.fullscreen
-              },
-              on: {
-                change: function($event) {
-                  var $$a = _vm.fullscreen,
-                    $$el = $event.target,
-                    $$c = $$el.checked ? true : false
-                  if (Array.isArray($$a)) {
-                    var $$v = null,
-                      $$i = _vm._i($$a, $$v)
-                    if ($$el.checked) {
-                      $$i < 0 && (_vm.fullscreen = $$a.concat([$$v]))
-                    } else {
-                      $$i > -1 &&
-                        (_vm.fullscreen = $$a
-                          .slice(0, $$i)
-                          .concat($$a.slice($$i + 1)))
-                    }
-                  } else {
-                    _vm.fullscreen = $$c
-                  }
-                }
-              }
-            }),
-            _vm._v(" "),
-            _vm._m(4),
-            _vm._v(" "),
-            _vm._m(5)
-          ])
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "properties2", attrs: { id: "properties2Card" } },
-        [
-          _c("div", { staticClass: "form-group" }, [
-            _c("div", { staticClass: "input-group mb-3" }, [
-              _vm._m(6),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.xp,
-                    expression: "xp"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", value: "0" },
-                domProps: { value: _vm.xp },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.xp = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group mb-3" }, [
-              _vm._m(7),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.gold,
-                    expression: "gold"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number" },
-                domProps: { value: _vm.gold },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.gold = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group mb-3" }, [
-              _vm._m(8),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.hp,
-                    expression: "hp"
-                  }
-                ],
-                staticClass: "form-control col-11",
-                attrs: { type: "number" },
-                domProps: { value: _vm.hp },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.hp = $event.target.value
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _vm._m(9)
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-success createCard" }, [
-            _vm._v("Nueva carta")
+            _vm._m(0)
           ]),
           _vm._v(" "),
           _c(
-            "button",
-            {
-              staticClass: "btn btn-primary updateCard",
-              staticStyle: { visibility: "hidden" }
-            },
-            [_vm._v("Edita carta")]
+            "div",
+            { staticClass: "properties", attrs: { id: "propertiesCard" } },
+            [
+              _c(
+                "div",
+                { staticClass: "btn-group", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.width = _vm.width + 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-search-plus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.width = _vm.width - 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-search-minus" })]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "btn-group", attrs: { role: "group" } },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.margin_top = _vm.margin_top + 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-arrow-down" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.margin_top = _vm.margin_top - 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-arrow-up" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.margin_left = _vm.margin_left - 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-arrow-left" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.margin_left = _vm.margin_left + 5
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-arrow-right" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: {
+                        click: function($event) {
+                          _vm.margin_top = 0
+                          _vm.margin_left = 0
+                          _vm.width = 250
+                        }
+                      }
+                    },
+                    [_c("i", { staticClass: "fas fa-undo" })]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "btn btn-primary mt-2",
+                  staticStyle: { display: "block" },
+                  attrs: { for: "file-upload" }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-cloud-upload" }),
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.trans.get("cards.custom_image")) +
+                      "\n              "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "my-2 p-3 border border-secondary rounded",
+                staticStyle: { display: "none" },
+                attrs: {
+                  type: "file",
+                  accept: "image/*",
+                  id: "file-upload",
+                  name: "image"
+                },
+                on: { change: _vm.getImage }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "title" }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("cards.title")))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.title,
+                      expression: "title"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "title",
+                    id: "title",
+                    placeholder: _vm.trans.get("cards.title")
+                  },
+                  domProps: { value: _vm.title },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.title = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "description" }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("cards.description")))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.content,
+                      expression: "content"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    name: "description",
+                    id: "description",
+                    placeholder: _vm.trans.get("cards.description")
+                  },
+                  domProps: { value: _vm.content },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.content = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3 hide-radios" }, [
+                _c("label", [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bg_type,
+                        expression: "bg_type"
+                      }
+                    ],
+                    attrs: {
+                      type: "radio",
+                      checked: "",
+                      name: "bgType",
+                      value: "0"
+                    },
+                    domProps: { checked: _vm._q(_vm.bg_type, "0") },
+                    on: {
+                      change: function($event) {
+                        _vm.bg_type = "0"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    attrs: {
+                      src: "/img/cardgen/only_back_0_prev.png",
+                      content:
+                        "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "ml-1" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bg_type,
+                        expression: "bg_type"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "bgType", value: "1" },
+                    domProps: { checked: _vm._q(_vm.bg_type, "1") },
+                    on: {
+                      change: function($event) {
+                        _vm.bg_type = "1"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    attrs: {
+                      src: "/img/cardgen/only_back_1_prev.png",
+                      content:
+                        "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "ml-1" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bg_type,
+                        expression: "bg_type"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "bgType", value: "2" },
+                    domProps: { checked: _vm._q(_vm.bg_type, "2") },
+                    on: {
+                      change: function($event) {
+                        _vm.bg_type = "2"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    attrs: {
+                      src: "/img/cardgen/only_back_2_prev.png",
+                      content:
+                        "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "ml-1" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bg_type,
+                        expression: "bg_type"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "bgType", value: "3" },
+                    domProps: { checked: _vm._q(_vm.bg_type, "3") },
+                    on: {
+                      change: function($event) {
+                        _vm.bg_type = "3"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    attrs: {
+                      src: "/img/cardgen/only_back_3_prev.png",
+                      content:
+                        "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "ml-1" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.bg_type,
+                        expression: "bg_type"
+                      }
+                    ],
+                    attrs: { type: "radio", name: "bgType", value: "4" },
+                    domProps: { checked: _vm._q(_vm.bg_type, "4") },
+                    on: {
+                      change: function($event) {
+                        _vm.bg_type = "4"
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("img", {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    attrs: {
+                      src: "/img/cardgen/only_back_4_prev.png",
+                      content:
+                        "By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "colorText" }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("cards.background_color")))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.background_color,
+                      expression: "background_color"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "color", name: "background" },
+                  domProps: { value: _vm.background_color },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.background_color = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "radiusImg" }
+                    },
+                    [
+                      _vm._v("Radius "),
+                      _c("i", {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "fas fa-question-circle ml-2",
+                        attrs: { content: _vm.trans.get("cards.radius_help") }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.radius,
+                      expression: "radius"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    required: "",
+                    name: "radius",
+                    id: "radiusImg",
+                    min: "0",
+                    value: "0",
+                    max: "100"
+                  },
+                  domProps: { value: _vm.radius },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.radius = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "minLvl" }
+                    },
+                    [
+                      _vm._v(_vm._s(_vm.trans.get("cards.min_lvl")) + " "),
+                      _c("i", {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "fas fa-question-circle ml-2",
+                        attrs: { content: _vm.trans.get("cards.min_lvl_help") }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.min_lvl,
+                      expression: "min_lvl"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "number",
+                    name: "minLvl",
+                    required: "",
+                    min: "0",
+                    value: "0"
+                  },
+                  domProps: { value: _vm.min_lvl },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.min_lvl = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("div", { staticClass: "input-group-prepend" }, [
+                  _c(
+                    "label",
+                    {
+                      staticClass: "input-group-text",
+                      attrs: { for: "typeSelect" }
+                    },
+                    [
+                      _vm._v(_vm._s(_vm.trans.get("cards.type")) + " "),
+                      _c("i", {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "fas fa-question-circle ml-2",
+                        attrs: { content: _vm.trans.get("cards.type_help") }
+                      })
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.type,
+                        expression: "type"
+                      }
+                    ],
+                    staticClass: "form-control col-9",
+                    attrs: { name: "type" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.type = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "1" } }, [
+                      _vm._v(_vm._s(_vm.trans.get("settings.common")))
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "2" } }, [
+                      _vm._v(_vm._s(_vm.trans.get("settings.rare")))
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "3" } }, [
+                      _vm._v(_vm._s(_vm.trans.get("settings.epic")))
+                    ]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "4" } }, [
+                      _vm._v(_vm._s(_vm.trans.get("settings.legendary")))
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.special,
+                      expression: "special"
+                    }
+                  ],
+                  staticClass: "cbx",
+                  staticStyle: { display: "none" },
+                  attrs: {
+                    type: "checkbox",
+                    value: "1",
+                    id: "checkspecial",
+                    name: "special"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.special)
+                      ? _vm._i(_vm.special, "1") > -1
+                      : _vm.special
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.special,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = "1",
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.special = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.special = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.special = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(1),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-9 col-form-label",
+                    attrs: { for: "checkspecial" }
+                  },
+                  [
+                    _vm._v(_vm._s(_vm.trans.get("cards.special")) + " "),
+                    _c("i", {
+                      directives: [{ name: "tippy", rawName: "v-tippy" }],
+                      staticClass: "fas fa-question-circle ml-2",
+                      attrs: { content: _vm.trans.get("cards.special_help") }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "input-group mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fullscreen,
+                      expression: "fullscreen"
+                    }
+                  ],
+                  staticClass: "cbx",
+                  staticStyle: { display: "none" },
+                  attrs: {
+                    type: "checkbox",
+                    name: "fullscreen",
+                    value: "1",
+                    id: "fullscreenCard"
+                  },
+                  domProps: {
+                    checked: Array.isArray(_vm.fullscreen)
+                      ? _vm._i(_vm.fullscreen, "1") > -1
+                      : _vm.fullscreen
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.fullscreen,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = "1",
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 && (_vm.fullscreen = $$a.concat([$$v]))
+                        } else {
+                          $$i > -1 &&
+                            (_vm.fullscreen = $$a
+                              .slice(0, $$i)
+                              .concat($$a.slice($$i + 1)))
+                        }
+                      } else {
+                        _vm.fullscreen = $$c
+                      }
+                    }
+                  }
+                }),
+                _vm._v(" "),
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "col-9 col-form-label",
+                    attrs: { for: "fullscreenCard" }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-expand" }),
+                    _vm._v(" Fullscreen "),
+                    _c("i", {
+                      directives: [{ name: "tippy", rawName: "v-tippy" }],
+                      staticClass: "fas fa-question-circle ml-2",
+                      attrs: { content: _vm.trans.get("cards.fullscreen_help") }
+                    })
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "properties2", attrs: { id: "properties2Card" } },
+            [
+              _c("div", { staticClass: "form-group" }, [
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "input-group-text",
+                        attrs: { for: "xp_modify" }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-fist-raised colored" }),
+                        _vm._v(" "),
+                        _c("i", {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "fas fa-question-circle ml-2",
+                          attrs: { content: _vm.trans.get("cards.xp_help") }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.xp,
+                        expression: "xp"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      required: "",
+                      name: "xp",
+                      value: "0"
+                    },
+                    domProps: { value: _vm.xp },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.xp = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "input-group-text",
+                        attrs: { for: "gold_modify" }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-coins colored" }),
+                        _vm._v(" "),
+                        _c("i", {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "fas fa-question-circle ml-2",
+                          attrs: { content: _vm.trans.get("cards.gold_help") }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.gold,
+                        expression: "gold"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "number", required: "", name: "gold" },
+                    domProps: { value: _vm.gold },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.gold = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "input-group-text",
+                        attrs: { for: "hp_modify" }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-heart colored" }),
+                        _vm._v(" "),
+                        _c("i", {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "fas fa-question-circle ml-2",
+                          attrs: { content: _vm.trans.get("cards.hp_help") }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.hp,
+                        expression: "hp"
+                      }
+                    ],
+                    staticClass: "form-control col-11",
+                    attrs: { type: "number", required: "", name: "hp" },
+                    domProps: { value: _vm.hp },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.hp = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "input-group-text",
+                        attrs: { for: "slot_modify" }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-club colored" }),
+                        _vm._v(" "),
+                        _c("i", {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "fas fa-question-circle ml-2",
+                          attrs: { content: _vm.trans.get("cards.slot_help") }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "number",
+                      required: "",
+                      id: "slot_modify",
+                      name: "slot",
+                      min: "0",
+                      value: "0"
+                    }
+                  })
+                ])
+              ]),
+              _vm._v(" "),
+              _c("button", { staticClass: "btn btn-success createCard" }, [
+                _vm._v(_vm._s(_vm.trans.get("cards.create_card")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary updateCard",
+                  staticStyle: { visibility: "hidden" }
+                },
+                [_vm._v(_vm._s(_vm.trans.get("cards.edit_card")))]
+              )
+            ]
           )
-        ]
-      )
-    ])
+        ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -39960,47 +40225,6 @@ var staticRenderFns = [
       _vm._v("^ // _ "),
       _c("u", [_vm._v("Underline")]),
       _vm._v(" _ // [BR]\n          ")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "btn btn-primary mt-2",
-        staticStyle: { display: "block" },
-        attrs: { for: "file-upload" }
-      },
-      [
-        _c("i", { staticClass: "fa fa-cloud-upload" }),
-        _vm._v(" Custom Upload\n              ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c(
-        "label",
-        { staticClass: "input-group-text", attrs: { for: "radiusImg" } },
-        [
-          _vm._v("Radius "),
-          _c("i", {
-            staticClass: "fas fa-question-circle ml-2",
-            attrs: {
-              "data-toggle": "popover",
-              "data-placement": "top",
-              "data-trigger": "hover",
-              "data-tippy-content":
-                "Se define el redondeo de los bordes de la imagen, 0 implica bordes cuadrados y a medida que se aumenta el valor se produce el redondeo."
-            }
-          })
-        ]
-      )
     ])
   },
   function() {
@@ -40030,136 +40254,6 @@ var staticRenderFns = [
       },
       [_c("span")]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "col-9 col-form-label", attrs: { for: "fullscreenCard" } },
-      [
-        _c("i", { staticClass: "fas fa-expand" }),
-        _vm._v(" Fullscreen "),
-        _c("i", {
-          staticClass: "fas fa-question-circle ml-2",
-          attrs: {
-            "data-toggle": "popover",
-            "data-placement": "top",
-            "data-trigger": "hover",
-            "data-tippy-content":
-              "Márcala para usar cartas generadas desde otro generador de cartas."
-          }
-        })
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c(
-        "label",
-        { staticClass: "input-group-text", attrs: { for: "xp_modify" } },
-        [
-          _c("i", { staticClass: "fas fa-fist-raised colored" }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fas fa-question-circle ml-2",
-            attrs: {
-              "data-toggle": "popover",
-              "data-placement": "top",
-              "data-trigger": "hover",
-              "data-tippy-content":
-                "Experiencia que se gana (valor positivo) o se pierde (valor negativo) al utilizar la carta."
-            }
-          })
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c(
-        "label",
-        { staticClass: "input-group-text", attrs: { for: "gold_modify" } },
-        [
-          _c("i", { staticClass: "fas fa-coins colored" }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fas fa-question-circle ml-2",
-            attrs: {
-              "data-toggle": "popover",
-              "data-placement": "top",
-              "data-trigger": "hover",
-              "data-tippy-content":
-                " Oro que se gana (valor positivo) o se pierde (valor negativo) al utilizar la carta."
-            }
-          })
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c(
-        "label",
-        { staticClass: "input-group-text", attrs: { for: "hp_modify" } },
-        [
-          _c("i", { staticClass: "fas fa-heart colored" }),
-          _vm._v(" "),
-          _c("i", {
-            staticClass: "fas fa-question-circle ml-2",
-            attrs: {
-              "data-toggle": "popover",
-              "data-placement": "top",
-              "data-trigger": "hover",
-              "data-tippy-content":
-                "Vida que se gana (valor positivo) o se pierde (valor negativo) al utilizar la carta."
-            }
-          })
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group mb-3" }, [
-      _c("div", { staticClass: "input-group-prepend" }, [
-        _c(
-          "label",
-          { staticClass: "input-group-text", attrs: { for: "slot_modify" } },
-          [
-            _c("i", { staticClass: "fas fa-club colored" }),
-            _vm._v(" "),
-            _c("i", {
-              staticClass: "fas fa-question-circle ml-2",
-              attrs: {
-                "data-toggle": "popover",
-                "data-placement": "top",
-                "data-trigger": "hover",
-                "data-tippy-content":
-                  "Sitios para cartas que podemos aumentar o disminuir del total de cartas."
-              }
-            })
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control",
-        attrs: { type: "number", id: "slot_modify", min: "0", value: "0" }
-      })
-    ])
   }
 ]
 render._withStripped = true
@@ -40274,7 +40368,9 @@ var render = function() {
           _c("img", {
             staticClass: "back",
             style:
-              "margin-top:" +
+              "margin-left: " +
+              _vm.card.margin_left +
+              "px;margin-top:" +
               _vm.card.margin_top +
               "px;width:" +
               _vm.card.width +
@@ -40285,7 +40381,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _vm.card.xp > 0
+        _vm.card.xp != 0
           ? _c("div", { staticClass: "xp_modify modifiers" }, [
               _c("img", { attrs: { src: "/img/cardgen/xp_modify.png" } }),
               _vm._v(" "),
@@ -40293,7 +40389,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.card.hp > 0
+        _vm.card.hp != 0
           ? _c("div", { staticClass: "hp_modify modifiers" }, [
               _c("img", { attrs: { src: "/img/cardgen/hp_modify.png" } }),
               _vm._v(" "),
@@ -40301,7 +40397,7 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm.card.gold > 0
+        _vm.card.gold != 0
           ? _c("div", { staticClass: "gold_modify modifiers" }, [
               _c("img", { attrs: { src: "/img/cardgen/gold_modify.png" } }),
               _vm._v(" "),
@@ -40578,6 +40674,8 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
         _vm.studentsJson.length > 0
           ? _c("div", { staticClass: "flexCenter floatR" }, [
               _c(
@@ -40598,7 +40696,7 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("span", [
                 _c("i", {
@@ -40666,9 +40764,9 @@ var render = function() {
                 attrs: { type: "checkbox", id: "toggleStdView" }
               }),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(3),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(4)
             ])
           : _vm._e()
       ]
@@ -40746,7 +40844,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "score p-2 mt-1" }, [
-                    _vm._m(4, true),
+                    _vm._m(5, true),
                     _vm._v(
                       " " + _vm._s(student.xp) + "\r\n                        "
                     )
@@ -41163,6 +41261,24 @@ var staticRenderFns = [
     return _c("div", { staticClass: "tools rounded-left" }, [
       _c("i", { staticClass: "fal fa-tools" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      {
+        staticClass: "link outer_glow",
+        attrs: { "data-action": "randomEvent" }
+      },
+      [
+        _c("i", {
+          staticClass: "fad fa-scroll-old outer_glow",
+          staticStyle: { "font-size": "2em" }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -58625,12 +58741,24 @@ __webpack_require__.r(__webpack_exports__);
   "en.cards": {
     "import_default": "Import default cards",
     "create_card": "Create card",
+    "edit_card": "Edit card",
     "title": "Title",
     "description": "Description",
     "background_color": "Background color",
     "min_lvl": "Min level",
     "type": "Type",
-    "special": "Special (doesn't use slot)"
+    "special": "Special (doesn't use slot)",
+    "custom_image": "Custom image",
+    "confirm_empty": "Title and content are empty, are you sure you want to create an empty card?",
+    "radius_help": "The rounding of the edges of the image is defined, 0 implies square edges and as the value is increased the rounding occurs.",
+    "min_lvl_help": "Defines if you need a minimum level to use a card.",
+    "type_help": "Type defines the probability of a card coming out. The percentages of each type can be configured in preferences.",
+    "special_help": "Special cards do not occupy space (groups have a 5 card limit) and in addition, they do not consume gold and gems when used or eliminated.",
+    "fullscreen_help": "Mark it to use cards generated from another card generator.",
+    "xp_help": "Experience gained (positive value) or lost (negative value) when using the card.",
+    "gold_help": "Gold gained (positive value) or lost (negative value) when using the card.",
+    "hp_help": "Health points gained (positive value) or lost (negative value) when using the card.",
+    "slot_help": "Slots for cards that we can increase or decrease from the total number of cards."
   },
   "en.classroom": {
     "add": "Add Classroom",

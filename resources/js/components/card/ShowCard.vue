@@ -24,17 +24,17 @@
       <div class="content text_shadow">{{ card.description }}</div>
     
       <div class="hiding-parent">
-        <img :src="card.src" :style="'margin-top:'+ card.margin_top +'px;width:'+card.width+'px;border-radius:'+ card.radius +'px'" class="back">
+        <img :src="card.src" :style="'margin-left: '+ card.margin_left + 'px;margin-top:'+ card.margin_top +'px;width:'+card.width+'px;border-radius:'+ card.radius +'px'" class="back">
       </div>
-      <div class="xp_modify modifiers" v-if="card.xp>0">
+      <div class="xp_modify modifiers" v-if="card.xp!=0">
         <img src="/img/cardgen/xp_modify.png" class="">
         <span>{{ card.xp }}</span>
       </div>
-      <div class="hp_modify modifiers" v-if="card.hp>0">
+      <div class="hp_modify modifiers" v-if="card.hp!=0">
         <img src="/img/cardgen/hp_modify.png" class="">
         <span>{{ card.hp }}</span>
       </div>
-      <div class="gold_modify modifiers" v-if="card.gold>0">
+      <div class="gold_modify modifiers" v-if="card.gold!=0">
         <img src="/img/cardgen/gold_modify.png">
         <span>{{ card.gold }}</span>
       </div>

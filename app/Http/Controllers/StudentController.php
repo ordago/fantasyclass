@@ -27,7 +27,7 @@ class StudentController extends Controller
 
     public function store(Request $request) 
     {
-        $classId = session()->get('classroom');
+        $classId = session()->pull('classroom');
         if(!$classId)
             return false;
             foreach ($request->students as $student) {
@@ -49,7 +49,6 @@ class StudentController extends Controller
                 ]);
                 $id = $user->id;
             }
-
             try {
                 $tmp = ClassroomUser::create([
                     'user_id' => $id,
@@ -57,6 +56,7 @@ class StudentController extends Controller
                     'role' => 0,
                 ]);
             } catch (\Throwable $th) {
+                session()->put('classroom', $classId);
                 if(!isset($error))
                     $error = [];
                 array_push($error, $student['name']." can't be created");

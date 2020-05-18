@@ -2,6 +2,6 @@
 
 @section('content')
 <div class="w-100 bg-light">
-  <create-card></create-card>
+  <create-card classroom="{{ $class->code }}"></create-card>
 </div>
 @endsection
