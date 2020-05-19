@@ -5,7 +5,7 @@
           <img src="/img/cardgen/lvl.png" class="levelCard">
           <span class="numberLvl">{{ card.min_lvl }}</span>
         </div>
-      <img :src="'/img/cardgen/type_' + card.type + '.png'" class="typeCard">
+      <img :src="'/img/cardgen/type_' + card.type + '.png'"  v-if="!card.fullscreen" class="typeCard">
       <div>
         <h3 class="title textShadow">
           <svg viewBox="0 0 500 500">
@@ -17,9 +17,9 @@
             </svg>
           </h3>
       </div>
-      <img :src="'/img/cardgen/ribbon-' + card.type + '.png'" class="ribbon">
-      <img :src="'/img/cardgen/only_back_'+ card.type_bg +'.png'" class="background" v-if="!card.special">
-      <img :src="'/img/cardgen/only_back_'+ card.type_bg +'_gold.png'" class="background" v-if="card.special">
+      <img :src="'/img/cardgen/ribbon-' + card.type + '.png'" class="ribbon" v-if="!card.fullscreen">
+      <img :src="'/img/cardgen/only_back_'+ card.type_bg +'.png'" class="background" v-if="!card.special && !card.fullscreen">
+      <img :src="'/img/cardgen/only_back_'+ card.type_bg +'_gold.png'" class="background" v-if="card.special  && !card.fullscreen">
 
       <div class="content text_shadow">{{ card.description }}</div>
     
@@ -51,6 +51,7 @@
   export default {
         props: ['card', 'admin'],
         mounted() {
+          console.log(this.card.fullscreen)
         
         },
         data: function() {

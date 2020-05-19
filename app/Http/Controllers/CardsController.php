@@ -83,13 +83,16 @@ class CardsController extends Controller
                 if($image == null) {
                     $card->addMedia(request()->file('image'))
                     ->toMediaCollection('card');
-                
+                    
                     $cardPath = $card->getMedia('card')->first();
                     $imgPath = '/'.$cardPath->id.'/'.$cardPath->file_name;
                     $path = Storage::disk('public')->path('/').$imgPath;        
-                    $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
-                        $constraint->aspectRatio();
-                    })->save();
+                    if($cardPath->mime_type != "image/gif" || $cardPath->size >= 500000) {
+                        $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
+                            $constraint->aspectRatio();
+                        })->save();
+                        
+                    }
                     $card->update(['src' => '/storage'.$imgPath]);  
                 }
 

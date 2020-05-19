@@ -2222,7 +2222,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['card', 'admin'],
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    console.log(this.card.fullscreen);
+  },
   data: function data() {
     return {};
   },
@@ -40299,10 +40301,12 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("img", {
-          staticClass: "typeCard",
-          attrs: { src: "/img/cardgen/type_" + _vm.card.type + ".png" }
-        }),
+        !_vm.card.fullscreen
+          ? _c("img", {
+              staticClass: "typeCard",
+              attrs: { src: "/img/cardgen/type_" + _vm.card.type + ".png" }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c("div", [
           _c("h3", { staticClass: "title textShadow" }, [
@@ -40337,12 +40341,14 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("img", {
-          staticClass: "ribbon",
-          attrs: { src: "/img/cardgen/ribbon-" + _vm.card.type + ".png" }
-        }),
+        !_vm.card.fullscreen
+          ? _c("img", {
+              staticClass: "ribbon",
+              attrs: { src: "/img/cardgen/ribbon-" + _vm.card.type + ".png" }
+            })
+          : _vm._e(),
         _vm._v(" "),
-        !_vm.card.special
+        !_vm.card.special && !_vm.card.fullscreen
           ? _c("img", {
               staticClass: "background",
               attrs: {
@@ -40351,7 +40357,7 @@ var render = function() {
             })
           : _vm._e(),
         _vm._v(" "),
-        _vm.card.special
+        _vm.card.special && !_vm.card.fullscreen
           ? _c("img", {
               staticClass: "background",
               attrs: {

@@ -21,8 +21,10 @@
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
-      <!-- Mobile -->
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <script src="/js/pace.min.js"></script>
 
 </head>
     <body @if (isset($bg)) {!! $bg !!} @endif @yield('bg')>

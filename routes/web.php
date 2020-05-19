@@ -33,6 +33,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/classroom/{code}/cards/import/default', 'CardsController@importDefault'); // Policy protect
     Route::get('/classroom/{code}/cards/create', 'CardsController@create'); // Policy protect
     Route::post('/classroom/{code}/cards', 'CardsController@store'); // Policy protect
+    Route::post('/classroom/{code}/cards', 'CardsController@store'); // Policy protect
 
     // Students
     Route::get('/classroom/{code}/students/add', 'StudentController@create'); // Policy protect
