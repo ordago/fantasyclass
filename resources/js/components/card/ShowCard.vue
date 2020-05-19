@@ -40,7 +40,7 @@
       </div>
     </div>
     <div style="text-align:center;" v-if="this.admin==1">
-        <button type="submit" class="btn btn-secondary"><i class="fas fa-edit"></i></button>
+        <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
         <button type="submit" @click="deleteCard" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
         <button type="submit" class="btn btn-success"><i class="fas fa-share-alt"></i></button>
       </div>
@@ -49,10 +49,9 @@
 
 <script>
   export default {
-        props: ['card', 'admin'],
+        props: ['card', 'admin', 'code'],
         mounted() {
-          console.log(this.card.fullscreen)
-        
+          
         },
         data: function() {
             return {

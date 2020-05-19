@@ -2101,17 +2101,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['classroom'],
+  props: ['code', 'card'],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    if (this.card) {
+      var cardJson = JSON.parse(this.card);
+      this.id = cardJson.id;
+      this.width = cardJson.width;
+      this.margin_top = cardJson.margin_top;
+      this.margin_left = cardJson.margin_left;
+      this.type = cardJson.type;
+      this.type_bg = cardJson.type_bg;
+      this.radius = cardJson.radius;
+      this.xp = cardJson.xp;
+      this.hp = cardJson.hp;
+      this.gold = cardJson.gold;
+      this.min_lvl = cardJson.min_lvl;
+      this.special = cardJson.special;
+      this.fullscreen = cardJson.fullscreen;
+      this.slot = cardJson.slot;
+      this.title = cardJson.title;
+      this.description = cardJson.description;
+      this.src = cardJson.src;
+      this.background = cardJson.background;
+    }
   },
   data: function data() {
     return {
+      id: -1,
       width: 250,
       margin_top: 0,
       margin_left: 0,
       type: 1,
-      bg_type: 0,
+      type_bg: 0,
       radius: 0,
       xp: 0,
       hp: 0,
@@ -2119,11 +2142,11 @@ __webpack_require__.r(__webpack_exports__);
       min_lvl: 0,
       special: false,
       fullscreen: false,
-      slots: 0,
+      slot: 0,
       title: '',
-      content: '',
-      image: '/img/cards/card_bg.png',
-      background_color: '#000000',
+      description: '',
+      src: '/img/cards/card_bg.png',
+      background: '#000000',
       csrfToken: null
     };
   },
@@ -2153,9 +2176,23 @@ __webpack_require__.r(__webpack_exports__);
         reader.readAsDataURL(imageU);
 
         reader.onload = function (e) {
-          _this.image = e.target.result;
+          _this.src = e.target.result;
         };
       }
+    },
+    updateCard: function updateCard() {
+      var _this2 = this;
+
+      axios.patch('/classroom/' + this.code + '/cards/' + this.id, this.$data).then(function (response) {
+        _this2.$toasted.show(response.data.message, {
+          position: "top-center",
+          duration: 3000,
+          iconPack: 'fontawesome',
+          icon: response.data.icon,
+          type: response.data.type
+        }); //location.reload();
+
+      });
     }
   }
 });
@@ -2221,10 +2258,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['card', 'admin'],
-  mounted: function mounted() {
-    console.log(this.card.fullscreen);
-  },
+  props: ['card', 'admin', 'code'],
+  mounted: function mounted() {},
   data: function data() {
     return {};
   },
@@ -2261,7 +2296,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['cards'],
+  props: ['cards', 'code'],
   mounted: function mounted() {
     this.cardsJson = JSON.parse(this.cards);
   },
@@ -39067,7 +39102,7 @@ var render = function() {
       {
         attrs: {
           method: "post",
-          action: "/classroom/" + this.classroom + "/cards",
+          action: "/classroom/" + this.code + "/cards",
           enctype: "multipart/form-data"
         },
         on: { submit: _vm.formSubmit }
@@ -39147,7 +39182,7 @@ var render = function() {
               "div",
               {
                 staticClass: "cardContainer",
-                style: "background-color: " + _vm.background_color + ";",
+                style: "background-color: " + _vm.background + ";",
                 attrs: { id: "customCard", name: "card" }
               },
               [
@@ -39226,7 +39261,7 @@ var render = function() {
                   ? _c("img", {
                       staticClass: "background",
                       attrs: {
-                        src: "/img/cardgen/only_back_" + _vm.bg_type + ".png"
+                        src: "/img/cardgen/only_back_" + _vm.type_bg + ".png"
                       }
                     })
                   : _vm._e(),
@@ -39236,7 +39271,7 @@ var render = function() {
                       staticClass: "background",
                       attrs: {
                         src:
-                          "/img/cardgen/only_back_" + _vm.bg_type + "_gold.png"
+                          "/img/cardgen/only_back_" + _vm.type_bg + "_gold.png"
                       }
                     })
                   : _vm._e(),
@@ -39244,7 +39279,7 @@ var render = function() {
                 _c("p", { staticClass: "content text_shadow editable_card" }, [
                   _vm._v(
                     "\n                " +
-                      _vm._s(this.content) +
+                      _vm._s(this.description) +
                       "\n                "
                   )
                 ]),
@@ -39262,7 +39297,7 @@ var render = function() {
                       "px;",
                     attrs: {
                       name: "image",
-                      src: _vm.image,
+                      src: _vm.src,
                       width: _vm.width + "px"
                     }
                   })
@@ -39427,34 +39462,38 @@ var render = function() {
               _vm._v(" "),
               _c("br"),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "btn btn-primary mt-2",
-                  staticStyle: { display: "block" },
-                  attrs: { for: "file-upload" }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-cloud-upload" }),
-                  _vm._v(
-                    " " +
-                      _vm._s(_vm.trans.get("cards.custom_image")) +
-                      "\n              "
+              !_vm.card
+                ? _c(
+                    "label",
+                    {
+                      staticClass: "btn btn-primary mt-2",
+                      staticStyle: { display: "block" },
+                      attrs: { for: "file-upload" }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-cloud-upload" }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.trans.get("cards.custom_image")) +
+                          "\n              "
+                      )
+                    ]
                   )
-                ]
-              ),
+                : _vm._e(),
               _vm._v(" "),
-              _c("input", {
-                staticClass: "my-2 p-3 border border-secondary rounded",
-                staticStyle: { display: "none" },
-                attrs: {
-                  type: "file",
-                  accept: "image/*",
-                  id: "file-upload",
-                  name: "image"
-                },
-                on: { change: _vm.getImage }
-              }),
+              !_vm.card
+                ? _c("input", {
+                    staticClass: "my-2 p-3 border border-secondary rounded",
+                    staticStyle: { display: "none" },
+                    attrs: {
+                      type: "file",
+                      accept: "image/*",
+                      id: "file-upload",
+                      name: "image"
+                    },
+                    on: { change: _vm.getImage }
+                  })
+                : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
                 _c("div", { staticClass: "input-group-prepend" }, [
@@ -39513,8 +39552,8 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.content,
-                      expression: "content"
+                      value: _vm.description,
+                      expression: "description"
                     }
                   ],
                   staticClass: "form-control",
@@ -39524,13 +39563,13 @@ var render = function() {
                     id: "description",
                     placeholder: _vm.trans.get("cards.description")
                   },
-                  domProps: { value: _vm.content },
+                  domProps: { value: _vm.description },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.content = $event.target.value
+                      _vm.description = $event.target.value
                     }
                   }
                 })
@@ -39543,8 +39582,8 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.bg_type,
-                        expression: "bg_type"
+                        value: _vm.type_bg,
+                        expression: "type_bg"
                       }
                     ],
                     attrs: {
@@ -39553,10 +39592,10 @@ var render = function() {
                       name: "bgType",
                       value: "0"
                     },
-                    domProps: { checked: _vm._q(_vm.bg_type, "0") },
+                    domProps: { checked: _vm._q(_vm.type_bg, "0") },
                     on: {
                       change: function($event) {
-                        _vm.bg_type = "0"
+                        _vm.type_bg = "0"
                       }
                     }
                   }),
@@ -39577,15 +39616,15 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.bg_type,
-                        expression: "bg_type"
+                        value: _vm.type_bg,
+                        expression: "type_bg"
                       }
                     ],
                     attrs: { type: "radio", name: "bgType", value: "1" },
-                    domProps: { checked: _vm._q(_vm.bg_type, "1") },
+                    domProps: { checked: _vm._q(_vm.type_bg, "1") },
                     on: {
                       change: function($event) {
-                        _vm.bg_type = "1"
+                        _vm.type_bg = "1"
                       }
                     }
                   }),
@@ -39606,15 +39645,15 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.bg_type,
-                        expression: "bg_type"
+                        value: _vm.type_bg,
+                        expression: "type_bg"
                       }
                     ],
                     attrs: { type: "radio", name: "bgType", value: "2" },
-                    domProps: { checked: _vm._q(_vm.bg_type, "2") },
+                    domProps: { checked: _vm._q(_vm.type_bg, "2") },
                     on: {
                       change: function($event) {
-                        _vm.bg_type = "2"
+                        _vm.type_bg = "2"
                       }
                     }
                   }),
@@ -39635,15 +39674,15 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.bg_type,
-                        expression: "bg_type"
+                        value: _vm.type_bg,
+                        expression: "type_bg"
                       }
                     ],
                     attrs: { type: "radio", name: "bgType", value: "3" },
-                    domProps: { checked: _vm._q(_vm.bg_type, "3") },
+                    domProps: { checked: _vm._q(_vm.type_bg, "3") },
                     on: {
                       change: function($event) {
-                        _vm.bg_type = "3"
+                        _vm.type_bg = "3"
                       }
                     }
                   }),
@@ -39664,15 +39703,15 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.bg_type,
-                        expression: "bg_type"
+                        value: _vm.type_bg,
+                        expression: "type_bg"
                       }
                     ],
                     attrs: { type: "radio", name: "bgType", value: "4" },
-                    domProps: { checked: _vm._q(_vm.bg_type, "4") },
+                    domProps: { checked: _vm._q(_vm.type_bg, "4") },
                     on: {
                       change: function($event) {
-                        _vm.bg_type = "4"
+                        _vm.type_bg = "4"
                       }
                     }
                   }),
@@ -39705,19 +39744,19 @@ var render = function() {
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.background_color,
-                      expression: "background_color"
+                      value: _vm.background,
+                      expression: "background"
                     }
                   ],
                   staticClass: "form-control",
                   attrs: { type: "color", name: "background" },
-                  domProps: { value: _vm.background_color },
+                  domProps: { value: _vm.background },
                   on: {
                     input: function($event) {
                       if ($event.target.composing) {
                         return
                       }
-                      _vm.background_color = $event.target.value
+                      _vm.background = $event.target.value
                     }
                   }
                 })
@@ -40182,31 +40221,52 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.slot,
+                        expression: "slot"
+                      }
+                    ],
                     staticClass: "form-control",
                     attrs: {
                       type: "number",
                       required: "",
                       id: "slot_modify",
                       name: "slot",
-                      min: "0",
                       value: "0"
+                    },
+                    domProps: { value: _vm.slot },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.slot = $event.target.value
+                      }
                     }
                   })
                 ])
               ]),
               _vm._v(" "),
-              _c("button", { staticClass: "btn btn-success createCard" }, [
-                _vm._v(_vm._s(_vm.trans.get("cards.create_card")))
-              ]),
+              _vm.card
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary",
+                      attrs: { type: "button" },
+                      on: { click: _vm.updateCard }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("cards.edit_card")))]
+                  )
+                : _vm._e(),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-primary updateCard",
-                  staticStyle: { visibility: "hidden" }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("cards.edit_card")))]
-              )
+              !_vm.card
+                ? _c("button", { staticClass: "btn btn-success" }, [
+                    _vm._v(_vm._s(_vm.trans.get("cards.create_card")))
+                  ])
+                : _vm._e()
             ]
           )
         ])
@@ -40415,7 +40475,17 @@ var render = function() {
     _vm._v(" "),
     this.admin == 1
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
-          _vm._m(0),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-secondary",
+              attrs: {
+                href: "/classroom/" + _vm.code + "/cards/" + _vm.card.id,
+                type: "submit"
+              }
+            },
+            [_c("i", { staticClass: "fas fa-edit" })]
+          ),
           _vm._v(" "),
           _c(
             "button",
@@ -40427,22 +40497,12 @@ var render = function() {
             [_c("i", { staticClass: "fas fa-trash-alt" })]
           ),
           _vm._v(" "),
-          _vm._m(1)
+          _vm._m(0)
         ])
       : _vm._e()
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-secondary", attrs: { type: "submit" } },
-      [_c("i", { staticClass: "fas fa-edit" })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -40481,7 +40541,7 @@ var render = function() {
     _vm._l(this.orderedCards, function(card) {
       return _c("show-card", {
         key: card.id,
-        attrs: { admin: "1", card: card }
+        attrs: { code: _vm.code, admin: "1", card: card }
       })
     }),
     1

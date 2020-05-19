@@ -27,6 +27,14 @@ class CardsController extends Controller
         return view('cards.create', compact('class'));
     }
 
+    public function show($code, $id) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $card = Card::where('id', '=', $id)
+                    ->where('classroom_id', "=", $class->id)
+                    ->firstOrFail();
+        return view('cards.create', compact('class', 'card'));
+    }
+
     public function store($code) {
         $data = request()->validate([
             'width' => ['required', 'numeric'],
@@ -91,12 +99,33 @@ class CardsController extends Controller
                         $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
                             $constraint->aspectRatio();
                         })->save();
-                        
+
                     }
                     $card->update(['src' => '/storage'.$imgPath]);  
                 }
 
         return redirect('/classroom/'.$code.'/cards');
+        
+    }
+
+    public function update($code, $card) {
+        try {
+            $card = Card::findOrFail($card);
+            $card->update(request()->all());
+            return [
+                    "message" => __('success_error.update_success'),
+                    "type" => "success",
+                    "icon" => "check"
+            ];
+            
+        } catch (\Throwable $th) {
+            return [
+                    "message" => __('success_error.error'),
+                    "type" => "times",
+                    "type" => "error"
+            ];
+            return $th;
+        }
         
     }
     

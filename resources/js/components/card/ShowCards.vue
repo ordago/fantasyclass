@@ -1,6 +1,6 @@
 <template>
 <div class="p-2 d-flex flex-wrap justify-content-center">
-  <show-card v-for="card in this.orderedCards" :admin="'1'" :card="card" v-bind:key="card.id"></show-card>
+  <show-card v-for="card in this.orderedCards" :code="code" :admin="'1'" :card="card" v-bind:key="card.id"></show-card>
 </div>
 </template>
 
@@ -8,7 +8,7 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['cards'],
+        props: ['cards', 'code'],
         mounted() {
             this.cardsJson = JSON.parse(this.cards)
         },

@@ -12,6 +12,6 @@
     </a>
     @endif
   </div>
-  <show-cards cards="{{ $cards }}"></show-cards>
+  <show-cards cards="{{ $cards }}" code="{{ $class->code }}"></show-cards>
 </div>
 @endsection

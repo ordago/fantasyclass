@@ -1,6 +1,6 @@
 <template>
     <div class="container bg-light h-100 w-100">
-        <form method="post" @submit="formSubmit" :action="'/classroom/' + this.classroom + '/cards'" enctype="multipart/form-data">
+        <form method="post" @submit="formSubmit" :action="'/classroom/' + this.code + '/cards'" enctype="multipart/form-data">
             <input :value="csrfToken" type="hidden" name="_token"/>
             <input v-model="width" name="width" type="hidden"/>
             <input v-model="margin_top" name="marginTop" type="hidden"/>
@@ -9,7 +9,7 @@
             <div class="d-flex pt-3">
               <!-- CARD -->
               <div class="flex1">
-              <div class="cardContainer" id="customCard" name="card" :style="'background-color: '+ background_color +';'">
+              <div class="cardContainer" id="customCard" name="card" :style="'background-color: '+ background +';'">
                 <div class="lvlTopLeft" id="lvl" v-if="min_lvl>0">
                   <img src="/img/cardgen/lvl.png" class="levelCard">
                   <span class="numberLvl">{{ this.min_lvl }}</span>
@@ -28,15 +28,15 @@
                   </h3>
                 </div>
                 <img :src="'/img/cardgen/ribbon-'+ type +'.png'" class="ribbon" id="ribbonType" v-if="!fullscreen">
-                <img :src="'/img/cardgen/only_back_'+ bg_type +'.png'" class="background" v-if="!special && !fullscreen">
-                <img :src="'/img/cardgen/only_back_'+ bg_type +'_gold.png'" class="background" v-if="special && !fullscreen">
+                <img :src="'/img/cardgen/only_back_'+ type_bg +'.png'" class="background" v-if="!special && !fullscreen">
+                <img :src="'/img/cardgen/only_back_'+ type_bg +'_gold.png'" class="background" v-if="special && !fullscreen">
                 <!-- Text -->
                 <p class="content text_shadow editable_card">
-                    {{ this.content }}
+                    {{ this.description }}
                     </p>
                 <!-- back image -->
                 <div class="hiding-parent">
-                  <img name="image" :src="image" :width="width + 'px'" :style="'border-radius: '+ radius/2 +'%;margin-top: '+ margin_top +'px; margin-left: ' + margin_left + 'px;'" class="image back">
+                  <img name="image" :src="src" :width="width + 'px'" :style="'border-radius: '+ radius/2 +'%;margin-top: '+ margin_top +'px; margin-left: ' + margin_left + 'px;'" class="image back">
                 </div>
                 <div class="xp_modify modifiers" v-if="xp!=0">
                   <img src="/img/cardgen/xp_modify.png" class="">
@@ -72,10 +72,10 @@
                     <button type="button" class="btn btn-primary" @click="margin_top=0;margin_left=0;width=250;"><i class="fas fa-undo"></i></button>
                   </div>
                   <br>
-                  <label for="file-upload" style="display: block;" class="btn btn-primary mt-2">
+                  <label v-if="!card" for="file-upload" style="display: block;" class="btn btn-primary mt-2">
                     <i class="fa fa-cloud-upload"></i> {{ trans.get('cards.custom_image') }}
                   </label>
-                  <input type="file" accept="image/*" id="file-upload" name="image" style="display:none" class="my-2 p-3 border border-secondary rounded" @change="getImage">
+                  <input v-if="!card" type="file" accept="image/*" id="file-upload" name="image" style="display:none" class="my-2 p-3 border border-secondary rounded" @change="getImage">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="title">{{ trans.get('cards.title') }}</label>
@@ -86,27 +86,27 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="description">{{ trans.get('cards.description') }}</label>
                     </div>
-                    <input type="text" v-model="content" name="description" id="description" :placeholder="trans.get('cards.description')" class="form-control">
+                    <input type="text" v-model="description" name="description" id="description" :placeholder="trans.get('cards.description')" class="form-control">
                   </div>
                   <div class="input-group mb-3 hide-radios">
                         <label>
-                            <input type="radio" v-model="bg_type" checked name="bgType" value="0">
+                            <input type="radio" v-model="type_bg" checked name="bgType" value="0">
                             <img src="/img/cardgen/only_back_0_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                         <label class="ml-1">
-                            <input type="radio" v-model="bg_type" name="bgType" value="1">
+                            <input type="radio" v-model="type_bg" name="bgType" value="1">
                             <img src="/img/cardgen/only_back_1_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                         <label class="ml-1">
-                            <input type="radio" v-model="bg_type" name="bgType" value="2">
+                            <input type="radio" v-model="type_bg" name="bgType" value="2">
                             <img src="/img/cardgen/only_back_2_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                         <label class="ml-1">
-                            <input type="radio" v-model="bg_type" name="bgType" value="3">
+                            <input type="radio" v-model="type_bg" name="bgType" value="3">
                             <img src="/img/cardgen/only_back_3_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                         <label class="ml-1">
-                            <input type="radio" v-model="bg_type" name="bgType" value="4">
+                            <input type="radio" v-model="type_bg" name="bgType" value="4">
                             <img src="/img/cardgen/only_back_4_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                   </div>
@@ -114,7 +114,7 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="colorText">{{ trans.get('cards.background_color') }}</label>
                     </div>
-                    <input type="color" name="background" v-model="background_color" class="form-control">
+                    <input type="color" name="background" v-model="background" class="form-control">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
@@ -175,12 +175,12 @@
                     <div class="input-group-prepend">
                       <label class="input-group-text" for="slot_modify"><i class="fas fa-club colored"></i> <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.slot_help')"></i></label>
                     </div>
-                    <input type="number" required id="slot_modify" name="slot" min="0" value="0" class="form-control">
+                    <input type="number" required id="slot_modify" v-model="slot" name="slot" value="0" class="form-control">
                   </div>
                 </div>
         
-                    <button class="btn btn-success createCard">{{ trans.get('cards.create_card') }}</button>
-                    <button class="btn btn-primary updateCard" style="visibility: hidden">{{ trans.get('cards.edit_card') }}</button>
+                    <button class="btn btn-primary" @click="updateCard" v-if="card" type="button">{{ trans.get('cards.edit_card') }}</button>
+                    <button class="btn btn-success" v-if="!card">{{ trans.get('cards.create_card') }}</button>
 
             </div>
           </div>
@@ -192,17 +192,39 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['classroom'],
+        props: ['code', 'card'],
         created() {
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+          if(this.card) {
+            let cardJson = JSON.parse(this.card);
+            this.id = cardJson.id
+            this.width = cardJson.width
+            this.margin_top = cardJson.margin_top
+            this.margin_left = cardJson.margin_left
+            this.type = cardJson.type
+            this.type_bg = cardJson.type_bg
+            this.radius = cardJson.radius
+            this.xp = cardJson.xp
+            this.hp = cardJson.hp
+            this.gold = cardJson.gold
+            this.min_lvl = cardJson.min_lvl
+            this.special = cardJson.special
+            this.fullscreen = cardJson.fullscreen
+            this.slot = cardJson.slot
+            this.title = cardJson.title
+            this.description = cardJson.description
+            this.src = cardJson.src
+            this.background = cardJson.background
+          }
         },
         data: function() {
             return {
+                id: -1,
                 width: 250,
                 margin_top: 0,
                 margin_left: 0,
                 type: 1,
-                bg_type: 0,
+                type_bg: 0,
                 radius: 0,
                 xp: 0,
                 hp: 0,
@@ -210,11 +232,11 @@
                 min_lvl: 0,
                 special: false,
                 fullscreen: false,
-                slots: 0,
+                slot: 0,
                 title: '',
-                content: '',
-                image: '/img/cards/card_bg.png',
-                background_color: '#000000',
+                description: '',
+                src: '/img/cards/card_bg.png',
+                background: '#000000',
                 csrfToken: null,
             }
         },
@@ -243,9 +265,23 @@
                     let reader = new FileReader()
                     reader.readAsDataURL(imageU)
                     reader.onload = e => {
-                        this.image = e.target.result
+                        this.src = e.target.result
                     }
                 }
+            },
+            updateCard: function() {
+              axios.patch('/classroom/'+ this.code + '/cards/' + this.id, this.$data)
+               .then(response => {
+                           this.$toasted.show(response.data.message, { 
+                                        position: "top-center",
+                                        duration: 3000, 
+                                        iconPack: 'fontawesome',
+                                        icon: response.data.icon,
+                                        type: response.data.type,
+                                       
+                            })
+                           //location.reload();
+                });
 
             }
         }
