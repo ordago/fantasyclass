@@ -40509,7 +40509,10 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "button",
-      { staticClass: "btn btn-success", attrs: { type: "submit" } },
+      {
+        staticClass: "btn btn-success",
+        attrs: { type: "submit", disabled: "" }
+      },
       [_c("i", { staticClass: "fas fa-share-alt" })]
     )
   }

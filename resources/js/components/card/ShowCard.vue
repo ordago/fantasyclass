@@ -42,7 +42,7 @@
     <div style="text-align:center;" v-if="this.admin==1">
         <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
         <button type="submit" @click="deleteCard" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-        <button type="submit" class="btn btn-success"><i class="fas fa-share-alt"></i></button>
+        <button type="submit" disabled class="btn btn-success"><i class="fas fa-share-alt"></i></button>
       </div>
   </div>
 </template>
