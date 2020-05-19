@@ -17,7 +17,7 @@ class CreateBehavioursTable extends Migration
             $table->id();
             $table->string('icon', 50);
             $table->string('name', 200);
-            $table->string('custom_text', 255);
+            $table->string('custom_text', 255)->nullable();
             $table->smallInteger('hp')->default(0);
             $table->smallInteger('xp')->default(0);
             $table->smallInteger('gold')->default(0);

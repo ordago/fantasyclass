@@ -25,4 +25,8 @@ return [
     'gold_help' => 'Gold gained (positive value) or lost (negative value) when using the card.',
     'hp_help' => 'Health points gained (positive value) or lost (negative value) when using the card.',
     'slot_help' => 'Slots for cards that we can increase or decrease from the total number of cards.',
+
+    /* Default cards */
+    'party_title' => 'El rey de la fiesta',
+    'party_description' => 'Te permite pedir música al profesor mientras realizáis un ejercicio',
 ];

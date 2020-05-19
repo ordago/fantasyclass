@@ -32,7 +32,8 @@ class BehaviourController extends Controller
         ]);
 
         $behaviour = Behaviour::create($data);
-        $class->behaviours->save($behaviour);
+        $class->behaviours()->save($behaviour);
+        return redirect('/classroom/'.$code.'/behaviours');
         
     }
 }
