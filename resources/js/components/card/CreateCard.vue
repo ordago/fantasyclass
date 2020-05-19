@@ -280,7 +280,6 @@
                                         type: response.data.type,
                                        
                             })
-                           //location.reload();
                 });
 
             }

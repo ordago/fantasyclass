@@ -22,29 +22,41 @@ Route::group(['middleware' => 'language'], function () {
     Route::redirect('/', '/classroom');
     
     // Classroom
-    Route::get('/classroom', 'ClassroomsController@index')->name('classrooms');
-    Route::post('/classroom', 'ClassroomsController@store'); //Policy protect
-    Route::get('/classroom/create', 'ClassroomsController@create');
-    Route::get('/classroom/{code}', 'ClassroomsController@show'); // Policy protect
+    Route::prefix('classroom')->group(function () {
+        Route::get('/', 'ClassroomsController@index')->name('classrooms');
+        Route::post('/', 'ClassroomsController@store'); //Policy protect
+        
+        Route::get('create', 'ClassroomsController@create');
+        Route::get('{code}', 'ClassroomsController@show'); // Policy protect
+
+        // Cards
+        Route::delete('/card/{id}', 'CardsController@destroy'); // Policy protect
+        Route::get('/{code}/cards', 'CardsController@index'); // Policy protect
+        Route::get('/{code}/cards/import/default', 'CardsController@importDefault'); // Policy protect
+        Route::get('/{code}/cards/create', 'CardsController@create'); // Policy protect
+        Route::post('/{code}/cards', 'CardsController@store'); // Policy protect
+        Route::get('/{code}/cards/{card}', 'CardsController@show'); // Policy protect
+        Route::patch('/{code}/cards/{card}', 'CardsController@update'); // Policy protect
+        
+        // Students
+        Route::get('/{code}/students/add', 'StudentController@create'); // Policy protect
+        Route::post('/students/', 'StudentController@store'); // Policy protect (?)
+        Route::post('/students/getusername', 'StudentController@getUsername');
+        Route::post('/students/update', 'StudentController@update'); // Policty protect
+        
+        // Behaviours
+        Route::get('/{code}/behaviours', 'BehaviourController@index'); // Policy protect
+        Route::post('/{code}/behaviours/create', 'BehaviourController@create'); // Policy protect
+        
+    });
     
-    // Cards
-    Route::delete('/classroom/card/{id}', 'CardsController@destroy'); // Policy protect
-    Route::get('/classroom/{code}/cards', 'CardsController@index'); // Policy protect
-    Route::get('/classroom/{code}/cards/import/default', 'CardsController@importDefault'); // Policy protect
-    Route::get('/classroom/{code}/cards/create', 'CardsController@create'); // Policy protect
-    Route::post('/classroom/{code}/cards', 'CardsController@store'); // Policy protect
-    Route::get('/classroom/{code}/cards/{card}', 'CardsController@show'); // Policy protect
-    Route::patch('/classroom/{code}/cards/{card}', 'CardsController@update'); // Policy protect
-
-    // Students
-    Route::get('/classroom/{code}/students/add', 'StudentController@create'); // Policy protect
-    Route::post('/classroom/students/', 'StudentController@store'); // Policy protect (?)
-    Route::post('/classroom/students/getusername', 'StudentController@getUsername');
-    Route::post('/classroom/students/update', 'StudentController@update'); // Policty protect
-
+    
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
+
+
+
 
     
 });

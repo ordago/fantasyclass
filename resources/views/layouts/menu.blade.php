@@ -27,10 +27,18 @@
                 <i class="fad fa-treasure-chest"></i>
             </a>
 
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item text-dark py-2" href="/classroom/{{ $class->code }}/cards">
+            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item text-dark py-3" href="/classroom/{{ $class->code }}/cards">
                     <i class="fad fa-club"></i> {{ __('menu.cards') }}
                 </a>
+                <a class="dropdown-item text-dark py-3" href="/classroom/{{ $class->code }}/behaviours">
+                    <i class="fad fa-heart"></i> {{ __('menu.behaviours') }}
+                </a>
+                <!--
+                <a class="dropdown-item text-dark py-3 text-center" href="/classroom/{{ $class->code }}/cards">
+                    <i class="fad fa-trophy"></i> {{ __('menu.levels') }}
+                </a>
+                -->
             </div>
         </li>
         <a href="/classroom/{{ $class->code }}/map" class="h-100 py-3 pr-3 pl-1 d-flex align-items-center"><i class="fad fa-map-marked-alt"></i></a>

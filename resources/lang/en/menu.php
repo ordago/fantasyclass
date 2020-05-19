@@ -18,5 +18,6 @@ return [
     'shop' => "Shop",
     'settings' => 'Settings',
     'profile' => 'Profile',
+    'behaviours' => 'Behaviours',
 
 ];

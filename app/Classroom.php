@@ -32,4 +32,8 @@ class Classroom extends Model
     public function cards() {
         return $this->hasMany(Card::class);
     }
+
+    public function behaviours() {
+        return $this->hasMany(Behaviour::class);
+    }
 }

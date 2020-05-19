@@ -2190,8 +2190,7 @@ __webpack_require__.r(__webpack_exports__);
           iconPack: 'fontawesome',
           icon: response.data.icon,
           type: response.data.type
-        }); //location.reload();
-
+        });
       });
     }
   }
