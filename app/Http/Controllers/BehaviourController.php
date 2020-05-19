@@ -16,7 +16,7 @@ class BehaviourController extends Controller
 
     public function create($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        return view('behaviours.index', compact('class'));
+        return view('behaviours.create', compact('class'));
     }
     
     public function store($code) {

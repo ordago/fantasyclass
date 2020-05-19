@@ -46,7 +46,8 @@ Route::group(['middleware' => 'language'], function () {
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index'); // Policy protect
-        Route::post('/{code}/behaviours/create', 'BehaviourController@create'); // Policy protect
+        Route::get('/{code}/behaviours/create', 'BehaviourController@create'); // Policy protect
+        Route::post('/{code}/behaviours/create', 'BehaviourController@store'); // Policy protect
         
     });
     

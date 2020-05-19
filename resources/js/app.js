@@ -49,6 +49,7 @@ Vue.component('show-students', require('./components/student/ShowStudents.vue').
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', require('./components/card/ShowCards.vue').default);
 Vue.component('create-card', require('./components/card/CreateCard.vue').default);
+Vue.component('create-behaviour', require('./components/behaviour/CreateBehaviour.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
