@@ -38,17 +38,28 @@
                 </div>
                 <div class="card-body p-2">
                     <div>
-                        <div class="centeredAttribute p-2 my-3">
+                        <div class="centeredAttribute p-2 mt-3 mb-2">
                             <span class="attribute py-2 bg-light rounded" style="width:100%;">10</span>
                             <span class="attribute bg-light py-2 rounded" style="width:100%;"><span> </span><span v-if="student.hp<20">{{ student.hp }}</span></span>
                             <span class="attribute bg-danger py-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
+                        </div>
+                        <div class="my-1 text-center">
+                            <button v-for="behaviour in mainBehavioursJson" v-tippy v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" class="btn m-1" v-bind:class="{'hp_up': behaviour.hp + behaviour.xp + behaviour.gold  >= 0, 'hp_down': behaviour.hp + behaviour.xp + behaviour.gold < 0 }" v-bind:key="behaviour.id">
+                                    <i :class="behaviour.icon"></i>
+                            </button>
+                            <div class="btn btn-primary" @click="show2l=!show2l"><i class="fas fa-plus"></i></div>
+                            <div v-if="show2l">
+                                <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" class="btn m-1" v-bind:class="{'hp_up': behaviour.hp + behaviour.xp + behaviour.gold  >= 0, 'hp_down': behaviour.hp + behaviour.xp + behaviour.gold < 0 }" v-bind:key="behaviour.id">
+                                    <i :class="behaviour.icon"></i>
+                                </button>
+                            </div>
                         </div>
                         <div class="score p-2 mt-1">
                             <span>
                                 <i class="fas fa-fist-raised colored"></i>
                             </span> {{ student.xp }}
                         </div>
-                        <div class="changeScore my-2">
+                        <div class="my-2 text-center">
                             <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="btn btn-secondary px-2">+100</button>
                             <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="btn btn-secondary px-2">+50</button>
                             <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="btn btn-secondary px-2">+10</button>                            
@@ -78,8 +89,8 @@
                         <div class="gold p-2 my-1">
                             <i class="fas fa-coins colored"></i> {{ student.gold }}
                         </div>
-                        <div class="changeGold my-2">
-                            <div class="changeGold">
+                        <div class="my-2 text-center">
+                            <div class="">
                                 <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="btn btn-warning px-2">+100</button>
                                 <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="btn btn-warning px-2">+50</button>
                                 <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="btn btn-warning px-2">+10</button>
@@ -125,26 +136,38 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['students', 'code'],
+        props: ['students', 'code', 'behaviours'],
         mounted() {
             this.studentsJson = JSON.parse(this.students)
+            this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems)
+            this.otherBehavioursJson = JSON.parse(this.behaviours).slice(this.numItems)
             this.sortKey = $cookies.get('order') ?? 'name'
             this.viewGrid = $cookies.get('viewGrid') ?? 0
         },
         data: function() {
             return {
-                    studentsJson: [
-                 
-                    ],
+                    studentsJson: [],
+                    behavioursJson: [],
+                    mainBehavioursJson: [],
+                    otherBehavioursJson: [],
                     sortKey: '',
                     viewGrid: '',
+                    buttons: '',
                     custom: 0,
+                    numItems: 5,
+                    show2l: false,
+
             }
         },
         methods: {
               orderBy: function(sorKey) {
                     this.$cookies.set('order', sorKey , Infinity)
                     this.sortKey = sorKey
+                },
+                updateSlice() {
+                    this.numItems--
+                    this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems)
+                    this.otherBehavioursJson = JSON.parse(this.behaviours).slice(this.numItems)
                 },
                 changeView: function() {
                     this.viewGrid = (this.viewGrid + 1) % 3

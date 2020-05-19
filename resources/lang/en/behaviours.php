@@ -2,6 +2,7 @@
 
 return [
 
+    'add' => 'Add behaviour',
     'create' => 'Create behaviour',
     'icon_select' => 'Select icon',
     'icon' => 'Icon',

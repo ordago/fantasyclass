@@ -13149,12 +13149,12 @@ input[type=color] {
   height: 40px;
 }
 
-.hpUp {
+.hp_up {
   background-color: #c8e6c9;
   color: #555;
 }
 
-.hpDown {
+.hp_down {
   background-color: #ffcdd2;
   color: #555;
 }
@@ -13471,10 +13471,6 @@ h5 {
   font-size: 1em;
   margin: 1px;
   padding: 8px;
-}
-
-.changeGold, .changeScore {
-  text-align: center;
 }
 
 .notAllowed {

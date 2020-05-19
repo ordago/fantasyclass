@@ -40,7 +40,7 @@
           <div class="col-md-4 mb-3">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text" v-bind:class="{ 'bg-success': hp>0, 'bg-danger': hp<0 }"><i class="fas fa-heart colored"></i></span>
+                <span class="input-group-text" v-bind:class="{ 'hp_up': hp+xp+gold >= 0, 'hp_down': hp+xp+gold < 0 }"><i class="fas fa-heart colored"></i></span>
               </div>
               <input type="number" name="hp" class="form-control" v-model="hp" required>
             </div>
@@ -48,7 +48,7 @@
           <div class="col-md-4 mb-3">
             <div class="input-group">
               <div class="input-group-prepend">
-                <span class="input-group-text"  v-bind:class="{ 'bg-success': xp>0, 'bg-danger': xp<0 }"><i class="fas fa-fist-raised colored"></i></span>
+                <span class="input-group-text"  v-bind:class="{ 'hp_up': xp>0, 'hp_down': xp<0 }"><i class="fas fa-fist-raised colored"></i></span>
               </div>
               <input type="number" name="xp" class="form-control" v-model="xp" required>
             </div>

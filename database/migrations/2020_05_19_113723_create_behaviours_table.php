@@ -22,6 +22,7 @@ class CreateBehavioursTable extends Migration
             $table->smallInteger('xp')->default(0);
             $table->smallInteger('gold')->default(0);
             $table->unsignedBigInteger('classroom_id')->nullable();
+            $table->integer('count_number')->default(0);
             $table->timestamps();
         });
     }

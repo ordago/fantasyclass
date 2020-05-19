@@ -2686,28 +2686,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['students', 'code'],
+  props: ['students', 'code', 'behaviours'],
   mounted: function mounted() {
     var _$cookies$get, _$cookies$get2;
 
     this.studentsJson = JSON.parse(this.students);
+    this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems);
+    this.otherBehavioursJson = JSON.parse(this.behaviours).slice(this.numItems);
     this.sortKey = (_$cookies$get = $cookies.get('order')) !== null && _$cookies$get !== void 0 ? _$cookies$get : 'name';
     this.viewGrid = (_$cookies$get2 = $cookies.get('viewGrid')) !== null && _$cookies$get2 !== void 0 ? _$cookies$get2 : 0;
   },
   data: function data() {
     return {
       studentsJson: [],
+      behavioursJson: [],
+      mainBehavioursJson: [],
+      otherBehavioursJson: [],
       sortKey: '',
       viewGrid: '',
-      custom: 0
+      buttons: '',
+      custom: 0,
+      numItems: 5,
+      show2l: false
     };
   },
   methods: {
     orderBy: function orderBy(sorKey) {
       this.$cookies.set('order', sorKey, Infinity);
       this.sortKey = sorKey;
+    },
+    updateSlice: function updateSlice() {
+      this.numItems--;
+      this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems);
+      this.otherBehavioursJson = JSON.parse(this.behaviours).slice(this.numItems);
     },
     changeView: function changeView() {
       this.viewGrid = (this.viewGrid + 1) % 3;
@@ -42122,7 +42146,10 @@ var render = function() {
                   "span",
                   {
                     staticClass: "input-group-text",
-                    class: { "bg-success": _vm.hp > 0, "bg-danger": _vm.hp < 0 }
+                    class: {
+                      hp_up: _vm.hp + _vm.xp + _vm.gold >= 0,
+                      hp_down: _vm.hp + _vm.xp + _vm.gold < 0
+                    }
                   },
                   [_c("i", { staticClass: "fas fa-heart colored" })]
                 )
@@ -42159,7 +42186,7 @@ var render = function() {
                   "span",
                   {
                     staticClass: "input-group-text",
-                    class: { "bg-success": _vm.xp > 0, "bg-danger": _vm.xp < 0 }
+                    class: { hp_up: _vm.xp > 0, hp_down: _vm.xp < 0 }
                   },
                   [_c("i", { staticClass: "fas fa-fist-raised colored" })]
                 )
@@ -44035,49 +44062,151 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "card-body p-2" }, [
                 _c("div", [
-                  _c("div", { staticClass: "centeredAttribute p-2 my-3" }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "attribute py-2 bg-light rounded",
-                        staticStyle: { width: "100%" }
-                      },
-                      [_vm._v("10")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "span",
-                      {
-                        staticClass: "attribute bg-light py-2 rounded",
-                        staticStyle: { width: "100%" }
-                      },
-                      [
-                        _c("span"),
-                        student.hp < 20
-                          ? _c("span", [_vm._v(_vm._s(student.hp))])
-                          : _vm._e()
-                      ]
-                    ),
-                    _vm._v(" "),
-                    student.hp > 0
-                      ? _c(
-                          "span",
+                  _c(
+                    "div",
+                    { staticClass: "centeredAttribute p-2 mt-3 mb-2" },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "attribute py-2 bg-light rounded",
+                          staticStyle: { width: "100%" }
+                        },
+                        [_vm._v("10")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          staticClass: "attribute bg-light py-2 rounded",
+                          staticStyle: { width: "100%" }
+                        },
+                        [
+                          _c("span"),
+                          student.hp < 20
+                            ? _c("span", [_vm._v(_vm._s(student.hp))])
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      student.hp > 0
+                        ? _c(
+                            "span",
+                            {
+                              staticClass:
+                                "attribute bg-danger py-2 rounded-left",
+                              class: { rounded: student.hp == 100 },
+                              style: "width: " + student.hp + "%"
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-heart" }),
+                              _vm._v(" "),
+                              student.hp >= 20
+                                ? _c("span", [_vm._v(_vm._s(student.hp))])
+                                : _vm._e()
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "my-1 text-center" },
+                    [
+                      _vm._l(_vm.mainBehavioursJson, function(behaviour) {
+                        return _c(
+                          "button",
                           {
-                            staticClass:
-                              "attribute bg-danger py-2 rounded-left",
-                            class: { rounded: student.hp == 100 },
-                            style: "width: " + student.hp + "%"
+                            directives: [
+                              { name: "tippy", rawName: "v-tippy" },
+                              { name: "tippy", rawName: "v-tippy" }
+                            ],
+                            key: behaviour.id,
+                            staticClass: "btn m-1",
+                            class: {
+                              hp_up:
+                                behaviour.hp + behaviour.xp + behaviour.gold >=
+                                0,
+                              hp_down:
+                                behaviour.hp + behaviour.xp + behaviour.gold < 0
+                            },
+                            attrs: {
+                              content:
+                                behaviour.name +
+                                " <small>(<i class='fas fa-heart colored'></i> " +
+                                behaviour.hp +
+                                " <i class='fas fa-fist-raised colored'></i> " +
+                                behaviour.xp +
+                                " <i class='fas fa-coins colored'></i> " +
+                                behaviour.gold +
+                                ")</small>"
+                            }
                           },
-                          [
-                            _c("i", { staticClass: "fas fa-heart" }),
-                            _vm._v(" "),
-                            student.hp >= 20
-                              ? _c("span", [_vm._v(_vm._s(student.hp))])
-                              : _vm._e()
-                          ]
+                          [_c("i", { class: behaviour.icon })]
                         )
-                      : _vm._e()
-                  ]),
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "btn btn-primary",
+                          on: {
+                            click: function($event) {
+                              _vm.show2l = !_vm.show2l
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-plus" })]
+                      ),
+                      _vm._v(" "),
+                      _vm.show2l
+                        ? _c(
+                            "div",
+                            _vm._l(_vm.otherBehavioursJson, function(
+                              behaviour
+                            ) {
+                              return _c(
+                                "button",
+                                {
+                                  directives: [
+                                    { name: "tippy", rawName: "v-tippy" }
+                                  ],
+                                  key: behaviour.id,
+                                  staticClass: "btn m-1",
+                                  class: {
+                                    hp_up:
+                                      behaviour.hp +
+                                        behaviour.xp +
+                                        behaviour.gold >=
+                                      0,
+                                    hp_down:
+                                      behaviour.hp +
+                                        behaviour.xp +
+                                        behaviour.gold <
+                                      0
+                                  },
+                                  attrs: {
+                                    content:
+                                      behaviour.name +
+                                      " <small>(<i class='fas fa-heart colored'></i> " +
+                                      behaviour.hp +
+                                      " <i class='fas fa-fist-raised colored'></i> " +
+                                      behaviour.xp +
+                                      " <i class='fas fa-coins colored'></i> " +
+                                      behaviour.gold +
+                                      ")</small>"
+                                  }
+                                },
+                                [_c("i", { class: behaviour.icon })]
+                              )
+                            }),
+                            0
+                          )
+                        : _vm._e()
+                    ],
+                    2
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "score p-2 mt-1" }, [
                     _vm._m(5, true),
@@ -44088,7 +44217,7 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "changeScore my-2" },
+                    { staticClass: "my-2 text-center" },
                     [
                       _c(
                         "button",
@@ -44277,10 +44406,10 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "changeGold my-2" }, [
+                  _c("div", { staticClass: "my-2 text-center" }, [
                     _c(
                       "div",
-                      { staticClass: "changeGold" },
+                      {},
                       [
                         _c(
                           "button",
@@ -62911,6 +63040,9 @@ __webpack_require__.r(__webpack_exports__);
       iconPack: 'fontawesome',
       icon: ficon
     });
+  },
+  sendBehaviour: function sendBehaviour(id) {
+    console.log(id);
   },
   validEmail: function validEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
