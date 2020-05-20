@@ -11388,6 +11388,10 @@ label.panel-block:hover {
   height: 100vh;
 }
 
+.rounded {
+  border-radius: 0.25rem !important;
+}
+
 .is-all-centered {
   align-items: center;
   justify-content: center;
@@ -11711,22 +11715,20 @@ label.panel-block:hover {
   width: 100%;
 }
 
-.centeredAttribute {
+.centered-attribute {
   position: relative;
   display: flex;
-  width: 100%;
   align-items: center;
   align-content: center;
   justify-content: center;
-  text-shadow: 1px 1px #555;
 }
-.centeredAttribute img {
+.centered-attribute img {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 1;
 }
-.centeredAttribute > i {
+.centered-attribute > i {
   z-index: 1;
   margin: 0 !important;
   width: 40px;
@@ -11794,7 +11796,7 @@ label.panel-block:hover {
   right: 0;
 }
 
-.flexCenter {
+.flex-center {
   display: flex !important;
   align-items: center !important;
 }
@@ -11985,7 +11987,7 @@ summary {
   position: relative;
 }
 
-.flexCenter {
+.flex-center {
   align-content: center;
 }
 
@@ -12504,7 +12506,7 @@ h5 {
   border-radius: 5px;
 }
 
-.resources a:link, .resources a:visited, .resources a:hover, .right-menu-bar a:link, .right-menu-bar a:visited, .right-menu-bar a:hover {
+.resources a:link, .resources a:visited, .resources a:hover {
   color: white;
 }
 
@@ -12785,14 +12787,6 @@ textPath {
 
 .resource img {
   width: 32px;
-}
-
-.resources a:link, .resources a:visited, .resources a:hover, .right-menu-bar a:link, .right-menu-bar a:visited, .right-menu-bar a:hover {
-  color: white;
-}
-
-.right-menu-bar a:hover {
-  color: white;
 }
 
 .resource {
@@ -14294,14 +14288,6 @@ p {
   line-height: 1.5;
 }
 
-section {
-  background-color: white;
-  background-color: rgba(255, 255, 255, 0.5);
-  margin-top: 52px;
-  color: #555;
-  min-height: calc(100vh - 52px);
-}
-
 #content7 h2 {
   padding-top: 7rem;
   margin-top: -6rem;
@@ -15029,15 +15015,6 @@ details.card > summary::-webkit-details-marker {
 
   .hideGrid {
     display: none;
-  }
-}
-@media screen and (max-width: 1200px) {
-  .tryHide i {
-    display: none !important;
-  }
-
-  .rightMenuBar:hover .tryHide i {
-    display: initial !important;
   }
 }
 @media screen and (max-width: 1125px) {

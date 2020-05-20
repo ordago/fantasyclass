@@ -27,7 +27,7 @@
     <script src="/js/pace.min.js"></script>
 
 </head>
-    <body @yield('bg')>
+    <body @yield('bg') class="has-background-white-bis">
     <div id="app">
         @auth
         <nav class="menu-labels card-shadow-s">
@@ -44,60 +44,30 @@
 
             </div>
             <div class="right-menu-bar">
-                    <div class="helpMenu flexCenter tryHide"  data-toggle="popovermenu"  data-tippy-content="Follow">
+                    <div class="helpMenu flex-center"  data-toggle="popovermenu"  data-tippy-content="Follow">
                         <a href="https://twitter.com/GamificaOnline" target="_blank"><i class="fab fa-twitter"></i></a>
                     </div>
-                    <div class="telegramMenu flexCenter tryHide" data-toggle="popovermenu"  data-tippy-content="Telegram">
+                    <div class="telegramMenu flex-center" data-toggle="popovermenu"  data-tippy-content="Telegram">
                         <a href="https://t.me/fantasyclass" target="_blank"><i class="fab fa-telegram"></i></a>
                     </div>
-                    <div class="patreonMenu flexCenter tryHide" data-toggle="popovermenu"  data-tippy-content="">
+                    <div class="patreonMenu flex-center" data-toggle="popovermenu"  data-tippy-content="">
                         <a href="#" onclick=""><i class="fas fa-hand-holding-heart"></i></a>
                     </div>
-                    <div class="flexCenter settings-menu">
-                        <div class="ml-2 flexCenter" id="barNotif">
+                    <div class="flex-center settings-menu">
+                        <div class="ml-2 flex-center" id="barNotif">
 
                         </div>
 
-                        <div class="dropdown is-hoverable is-right">
+                        <div class="dropdown is-hoverable is-right has-margin-x-4">
                             <div class="dropdown-trigger">
-                                <i class="fas fa-user-graduate"></i> <span class="pl-2 text-light" title="{{ Auth::user()->username }}">{{ Str::limit(Auth::user()->username, 8, $end='...') }}</span><span class="caret"></span>
-                                
+                                <i class="fas fa-user-graduate"></i> <span class="pl-2 text-light cursor-default" title="{{ Auth::user()->username }}">{{ Str::limit(Auth::user()->username, 8, $end='...') }}</span><span class="caret"></span>
                                 <span class="icon is-small">
                                     <i class="fas fa-angle-down" aria-hidden="true"></i>
                                 </span>
-                                
                             </div>
                             <div class="dropdown-menu" id="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
-                                <a href="#" class="dropdown-item">
-                                    Dropdown item
-                                </a>
-                                <a class="dropdown-item">
-                                    Other dropdown item
-                                </a>
-                                <a href="#" class="dropdown-item is-active">
-                                    Active dropdown item
-                                </a>
-                                <a href="#" class="dropdown-item">
-                                    Other dropdown item
-                                </a>
-                                <hr class="dropdown-divider">
-                                <a href="#" class="dropdown-item">
-                                    With a divider
-                                </a>
-                                </div>
-                            </div>
-                            </div>
-
-                        
-                        <li class="nav-item dropdown h-100 p-0">
-                                <a id="navbarDropdown" class="nav-link h-100 d-flex align-items-center p-0 px-2 dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user-graduate"></i> <span class="pl-2 text-light" title="{{ Auth::user()->username }}">{{ Str::limit(Auth::user()->username, 8, $end='...') }}</span><span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" style="min-width: max-content!important" aria-labelledby="navbarDropdown">
-                                    <div></div>
-                                    <span class="dropdown-item py-2 text-center cursor-default">
+                                    <span class="dropdown-item cursor-default">
                                         {{ Auth::user()->name }}
                                     </span>
                                     <div class="dropdown-divider"></div>
@@ -114,7 +84,8 @@
                                         @csrf
                                     </form>
                                 </div>
-                        </li>
+                            </div>
+                            </div>
                     </div>
               </div>
         </nav>

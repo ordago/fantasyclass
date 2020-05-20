@@ -12,8 +12,8 @@
 @endsection
 
 @section('title')
-<span style="display:initial" title="{{ $class->name }}">
-  {{ Str::limit($class->name, 8, $end='...') }}
+<span style="display:initial" class="pointer" title="{{ $class->name }}">
+    <i class="fal fa-chalkboard"></i> {{ Str::limit($class->name, 8, $end='...') }}
 </span>
 @endsection
 
@@ -23,7 +23,7 @@
             <i class="fad fa-users"></i>
         </a>
 
-        <div class="dropdown is-hoverable">
+        <div class="dropdown is-hoverable has-padding-left-3 has-padding-left-2">
             <div class="dropdown-trigger">
                 <i class="fad fa-treasure-chest"></i>
                 <span class="icon is-small">
@@ -32,6 +32,10 @@
             </div>
             <div class="dropdown-menu" id="dropdown-menu4" role="menu">
                 <div class="dropdown-content">
+                     <span class="dropdown-item cursor-default">
+                        {{ __('menu.rewards') }}
+                    </span>
+                    <div class="dropdown-divider"></div>
                     <a class="dropdown-item has-padding-y-3" href="/classroom/{{ $class->code }}/cards">
                         <i class="fad fa-club"></i> {{ __('menu.cards') }}
                     </a>

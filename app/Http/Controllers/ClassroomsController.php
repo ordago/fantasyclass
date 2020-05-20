@@ -67,17 +67,15 @@ class ClassroomsController extends Controller
     
     public function create() 
     {
-        $bg = Theme::getBg();
         $goals = GoalThemes::All();
         $themes = Theme::All();
-        return view('classrooms.create', compact('bg', 'goals', 'themes'));
+        return view('classrooms.create', compact('goals', 'themes'));
     }
     
     public function index() 
     {
         $user = auth()->user();
-        $bg = Theme::getBg();
-        return view('classrooms.index', compact('user', 'bg'));
+        return view('classrooms.index', compact('user'));
     }
     
     public function show($code) 

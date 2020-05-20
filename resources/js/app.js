@@ -37,21 +37,14 @@ Vue.use(VueCookies)
 import Vue from 'vue'
 
 import Buefy from 'buefy'
-//import { Table, Field, Select, Switch, Button, Icon } from 'buefy'
-//import 'buefy/dist/buefy.css'
 
 // Download excel
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
 Vue.use(Buefy)
-// Vue.use(Table)
-// Vue.use(Select)
-// Vue.use(Switch)
-// Vue.use(Field)
-// Vue.use(Button)
-// Vue.use(Icon)
 
+Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);

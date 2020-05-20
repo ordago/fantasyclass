@@ -19,5 +19,6 @@ return [
     'settings' => 'Settings',
     'profile' => 'Profile',
     'behaviours' => 'Behaviours',
+    'rewards' => 'Rewards',
 
 ];

@@ -8,16 +8,7 @@
       display: none;
     }
   }
-  
-  @media screen and (max-width: 1200px) {
-    .tryHide i {
-      display: none !important;
-    }
-  
-    .rightMenuBar:hover .tryHide i {
-      display: initial !important;
-    }
-  }
+
   
   @media screen and (max-width: 1125px) {
     .logoImg {

@@ -17,7 +17,7 @@
         <a href="random.php?class=" target="_blank"><i class="fad fa-random outer_glow" style="font-size:2em;"></i></a>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
         -->
-        <div class="flexCenter floatR" v-if="studentsJson.length>0">
+        <div class="flex-center floatR" v-if="studentsJson.length>0">
             <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
             <span><i class="fal fa-sort-numeric-down-alt mr-2"></i></span>
             <span ><i class="fas fa-user colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_name')" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
@@ -29,40 +29,44 @@
             <span><i class="fas fa-user ml-2 outer_glow"></i></span>
         </div>
     </div>
-        <div class="grid  my-2" v-bind:class="[ this.viewGrid == 0 ? 'grid4g' : '', this.viewGrid == 1 ? 'grid3g' : '', this.viewGrid == 2 ? 'grid2g' : '']">
+        <div class="grid has-margin-y-3" v-bind:class="[ this.viewGrid == 0 ? 'grid4g' : '', this.viewGrid == 1 ? 'grid3g' : '', this.viewGrid == 2 ? 'grid2g' : '']">
         <div v-for="student in orderedStudents" v-bind:key="student.id">
-            <div class="rounded card">
-                <div class="card-header text-center">
-                    <img src="/img/no_avatar.png" class="rounded" width="20%">
-                    <h3 class="mt-2 mb-0">{{ student.name }}</h3>
+            <div class="box">
+                <div class="card-header has-text-centered">
+                    <div class="card-header-title">
+                        <img src="/img/no_avatar.png" class="rounded" width="20%">
+                        <h3 class="has-margin-2 has-margin-bottom-0">{{ student.name }}</h3>
+                    </div>
                 </div>
-                <div class="card-body p-2">
+                <div class="card-body">
                     <div>
-                        <div class="centeredAttribute p-2 mt-3 mb-2">
-                            <span class="attribute py-2 bg-light rounded" style="width:100%;">10</span>
-                            <span class="attribute bg-light py-2 rounded" style="width:100%;"><span> </span><span v-if="student.hp<20">{{ student.hp }}</span></span>
-                            <span class="attribute bg-danger py-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
+                        <div class="centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3">
+                            <span class="attribute has-padding-y-2 bg-light rounded" style="width:100%;">10</span>
+                            <span class="attribute bg-light has-padding-y-2 rounded" style="width:100%;"><span> </span><span v-if="student.hp<20">{{ student.hp }}</span></span>
+                            <span class="attribute has-background-danger has-padding-y-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
                         </div>
-                        <div class="my-1 text-center">
-                            <button v-for="behaviour in mainBehavioursJson" v-tippy v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" class="btn m-1" v-bind:class="{'hp_up': behaviour.hp + behaviour.xp + behaviour.gold  >= 0, 'hp_down': behaviour.hp + behaviour.xp + behaviour.gold < 0 }" v-bind:key="behaviour.id">
+                        <div class="my-1 has-text-centered">
+                            <button v-for="behaviour in mainBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                                 class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
                                     <i :class="behaviour.icon"></i>
                             </button>
-                            <div class="btn btn-primary" @click="show2l=!show2l"><i class="fas fa-plus"></i></div>
+                            <div class="button is-link is-light has-margin-1" @click="show2l=!show2l"><i class="fas fa-plus"></i></div>
                             <div v-if="show2l">
-                                <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" class="btn m-1" v-bind:class="{'hp_up': behaviour.hp + behaviour.xp + behaviour.gold  >= 0, 'hp_down': behaviour.hp + behaviour.xp + behaviour.gold < 0 }" v-bind:key="behaviour.id">
+                                <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" 
+                                    class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']" v-bind:key="behaviour.id">
                                     <i :class="behaviour.icon"></i>
                                 </button>
                             </div>
                         </div>
-                        <div class="score p-2 mt-1">
+                        <div class="score has-padding-3 has-margin-1">
                             <span>
                                 <i class="fas fa-fist-raised colored"></i>
                             </span> {{ student.xp }}
                         </div>
-                        <div class="my-2 text-center">
-                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="btn btn-secondary px-2">+100</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="btn btn-secondary px-2">+50</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="btn btn-secondary px-2">+10</button>                            
+                        <div class="has-margin-y-2 has-text-centered">
+                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="button is-dark has-padding-x-2">+100</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="button is-dark has-padding-x-2">+50</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="button is-dark has-padding-x-2">+10</button>                            
                             <tippy 
                                 interactive 
                                 :animate-fill="false" 
@@ -73,28 +77,28 @@
                                 style="display:inline-block"
                                 arrow>
                             <template v-slot:trigger>
-                                <button type="submit" class="btn btn-primary"><i class="fas fa-hashtag"></i></button>
+                                <button type="submit" class="button is-primary"><i class="fas fa-hashtag"></i></button>
                             </template>
                             <span>
-                                <div class="row px-3">
-                                    <input type="number" v-model="custom" class="form-control col-8">
-                                    <button @click="updateProp(student.id, 'xp', custom)" class="btn btn-primary col-4 pl-1">{{trans.get('users_groups.apply')}}</button>
+                                <div class="is-flex">
+                                    <input type="number" v-model="custom" class="input has-margin-right-1">
+                                    <button @click="updateProp(student.id, 'xp', custom)" class="button is-primary is-inline">{{trans.get('users_groups.apply')}}</button>
                                 </div>
                             </span>
                             </tippy>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -10)" class="btn btn-outline-secondary px-2">-10</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -50)" class="btn btn-outline-secondary px-2">-50</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', -100)" class="btn btn-outline-secondary px-2">-100</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -10)" class="button is-dark is-outlined has-padding-x-2">-10</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -50)" class="button is-dark is-outlined has-padding-x-2">-50</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', -100)" class="button is-dark is-outlined has-padding-x-2">-100</button>
                         </div>
-                        <div class="gold p-2 my-1">
+                        <div class="gold has-padding-3 has-margin-y-1">
                             <i class="fas fa-coins colored"></i> {{ student.gold }}
                         </div>
-                        <div class="my-2 text-center">
+                        <div class="has-margin-y-2 has-text-centered">
                             <div class="">
-                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="btn btn-warning px-2">+100</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="btn btn-warning px-2">+50</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="btn btn-warning px-2">+10</button>
-                                                                <tippy 
+                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="button is-warning has-padding-x-2">+100</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="button is-warning has-padding-x-2">+50</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="button is-warning has-padding-x-2">+10</button>
+                                <tippy 
                                     interactive 
                                     :animate-fill="false" 
                                     theme="light"
@@ -104,26 +108,26 @@
                                     style="display:inline-block"
                                     arrow>
                                 <template v-slot:trigger>
-                                    <button type="submit" class="btn btn-primary"><i class="fas fa-hashtag"></i></button>
+                                    <button type="submit" class="button is-primary"><i class="fas fa-hashtag"></i></button>
                                 </template>
 
                                 <span>
-                                    <div class="row px-3">
-                                        <input type="number" v-model="custom" class="form-control col-8">
-                                        <button @click="updateProp(student.id, 'gold', custom)" class="btn btn-primary col-4 pl-1">{{trans.get('users_groups.apply')}}</button>
+                                    <div class="is-flex">
+                                        <input type="number" v-model="custom" class="input has-margin-right-1">
+                                        <button @click="updateProp(student.id, 'gold', custom)" class="button is-primary col-4 pl-1">{{trans.get('users_groups.apply')}}</button>
                                     </div>
                                 </span>
                                 </tippy>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -10)" class="btn btn-outline-secondary px-2">-10</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -50)" class="btn btn-outline-secondary px-2">-50</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', -100)" class="btn btn-outline-secondary px-2">-100</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -10)" class="button is-dark is-outlined has-padding-x-2">-10</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -50)" class="button is-dark is-outlined has-padding-x-2">-50</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', -100)" class="button is-dark is-outlined has-padding-x-2">-100</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="rounded card h-100 d-flex align-items-center text-center">
+        <div class="box is-flex is-all-centered">
             <div class="p-4">
                 <a :href="'/classroom/' + code + '/students/add'">Add students (afegir imatge)</a>
             </div>

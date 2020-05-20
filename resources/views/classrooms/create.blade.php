@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+
+  <create-classroom goals="{{ $goals }}"></create-classroom>
+<!--
 <form action="/classroom" method="post">
 @csrf
 
@@ -64,7 +67,7 @@
             <h4>{{ __('menu.levels') }}</h4>
             <h6 class="mt-3">{{ __('classroom.levels_text') }} <i class="fas fa-smile-beam colored"></i></h6>
             <h1 class="bg-danger">WIP. First create levels</h1>
-            <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>-->
+            <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>
           </div>
           <div class="tab-pane" id="themePanel" role="tabpanel">
             <h4>{{ __('classroom.theme') }}</h4>
@@ -134,5 +137,5 @@
       </div>
     </div>
   </div>
-</form>
+</form>-->
 @endsection
