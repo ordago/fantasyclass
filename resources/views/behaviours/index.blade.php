@@ -3,7 +3,7 @@
 @section('content')
 <div class="bg-light p-2 h-100">
   <a href="/classroom/{{ $class->code }}/behaviours/create" class="btn btn-primary">{{ __('behaviours.add') }}</a>
-  <div class="d-flex flex-wrap">  
+  <!--<div class="d-flex flex-wrap">  
     @foreach($behaviours as $behaviour)
       @php
         if(($behaviour->xp + $behaviour->hp + $behaviour->gold) >= 0)
@@ -24,6 +24,7 @@
           </div>
       </div>
     @endforeach
-  </div>
+  </div>-->
+  <show-behaviours behaviours="{{ $behaviours }}"></show-behaviours>
 </div>
 @endsection

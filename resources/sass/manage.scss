@@ -34,50 +34,6 @@
     width: 60px;
   }
 
-  .table-users {
-    border: 1px solid #327a81;
-    border-radius: 10px;
-    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
-
-    /*max-width: calc(100% - 2em);*/
-    overflow: hidden;
-  }
-
-  table {
-    width: 100%;
-
-    td, th {
-      color: #2b686e;
-      padding: 10px;
-    }
-
-    td {
-      text-align: center;
-      vertical-align: middle;
-
-      &:last-child {
-        font-size: 0.95em;
-        line-height: 1.4;
-        text-align: left;
-        justify-content: center;
-      }
-    }
-
-    th {
-      background-color: #efefef;
-      font-weight: 300;
-    }
-
-    tr {
-      &:nth-child(2n) {
-        background-color: white;
-      }
-
-      &:nth-child(2n+1) {
-        background-color: #efefef;
-      }
-    }
-  }
 }
 
 /****************************/
@@ -670,14 +626,6 @@ span.round-tab:hover {
   background-color: white;
 }
 
-.table {
-  border: 1px solid black;
-
-  td {
-    border: 1px solid black;
-  }
-}
-
 .logRow span {
   font-size: 100%;
 }
@@ -1176,16 +1124,6 @@ h1.card-text {
 
 .padding_div {
   padding: 20px;
-}
-
-.table-icons {
-  td {
-    padding: 1px;
-  }
-
-  tr {
-    border: none;
-  }
 }
 
 .col-1 {
@@ -1856,9 +1794,6 @@ a.btn:hover, .groupContainer a {
   color: white;
 }
 
-table {
-  margin: 0 auto;
-}
 
 .textBorder {
   background-color: transparent;
@@ -1953,9 +1888,7 @@ div.input-group {
     border: 1px solid black;
   }
 
-  table {
-    margin: 2px;
-  }
+
 }
 
 summary {

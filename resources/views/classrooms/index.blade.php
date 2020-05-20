@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-2 grid grid4g">
+<div class="p-2 grid grid4g is-overlay">
     <div>
       <h4 class="h-100">
         <a href="/classroom/create" class="bg-info h-100 rounded classroom-round card-shadow-s text-center pointer">

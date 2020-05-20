@@ -4,7 +4,7 @@
 <form action="/classroom" method="post">
 @csrf
 
-<div class="modal-dialog full-screen  modal-lg my-3 pt-3 mx-3" id="newClassroom">
+<div class="modal-dialog full-screen modal-lg my-3 pt-3 mx-3" id="newClassroom">
     <div class="modal-content " style="min-height: calc(100vh - 95px);">
       <div class="card-header p-0 pt-3 border-0">
         <ul class="nav nav-tabs" id="myTab" tabIndex="2" role="tablist">

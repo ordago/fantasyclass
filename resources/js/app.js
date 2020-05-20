@@ -33,16 +33,24 @@ Vue.component("tippy", TippyComponent);
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+// Buefy
+import Vue from 'vue'
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
+import Buefy from 'buefy'
+//import { Table, Field, Select, Switch, Button, Icon } from 'buefy'
+//import 'buefy/dist/buefy.css'
+
+// Download excel
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
+
+Vue.use(Buefy)
+// Vue.use(Table)
+// Vue.use(Select)
+// Vue.use(Switch)
+// Vue.use(Field)
+// Vue.use(Button)
+// Vue.use(Icon)
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
@@ -50,6 +58,7 @@ Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', require('./components/card/ShowCards.vue').default);
 Vue.component('create-card', require('./components/card/CreateCard.vue').default);
 Vue.component('create-behaviour', require('./components/behaviour/CreateBehaviour.vue').default);
+Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

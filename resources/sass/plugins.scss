@@ -27,3 +27,13 @@
     height: 2px;
   }
 /*                                              */
+
+/* Buefy */
+
+.b-table {
+  .table {
+    td {
+      vertical-align: middle;
+    }
+  }
+}

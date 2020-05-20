@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class BehaviourController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
+    
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $behaviours = $class->behaviours;
