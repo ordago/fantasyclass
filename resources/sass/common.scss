@@ -1,8 +1,28 @@
+  #app {
+    height: 100vh;
+  }
+
+  .is-all-centered {
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+  }
+  .align-items-center {
+    align-items: center;
+  }
 
   @font-face {
     font-family: logo;
     src: url(/fonts/wizzta.otf);
   }
+
+  .w-100 {
+    width: 100%;
+  }
+  .h-100 {
+    width: 100%;
+  }
+
   .full-screen.modal-lg {
     max-width: 100%!important;
   }
@@ -85,39 +105,6 @@
         width: 100%;
       }
     }
-  
-    input, select {
-      outline: 0;
-      background: #f2f2f2;
-      width: 100%;
-      border: 0;
-      padding: 15px;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-      border-bottom-left-radius: 3px;
-      border-bottom-right-radius: 3px;
-      box-sizing: border-box;
-      font-size: 14px;
-    }
-  
-    button {
-      margin-bottom: 5px;
-      outline: 0;
-      width: 100%;
-      border: 0;
-      padding: 15px;
-      border-top-left-radius: 3px;
-      border-top-right-radius: 3px;
-      border-bottom-left-radius: 3px;
-      border-bottom-right-radius: 3px;
-      color: #FFFFFF;
-      font-size: 14px;
-      -webkit-transition: all 0.3 ease;
-      transition: all 0.3 ease;
-      cursor: pointer;
-      margin-left: 0;
-      background: #64b5f6;
-    }
   }
   
   .buttonLogin {
@@ -165,11 +152,6 @@
   
   .buttonLoginStd {
     background-color: #ba68c8 !important;
-  }
-  
-  .fantasyTitle {
-    margin: 10px auto 0 auto !important;
-    padding-bottom: 0;
   }
   
   .form {
@@ -297,40 +279,7 @@
     background-color: #555;
     border-radius: 50%;
   }
-  
-  /*dropdown */
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    padding: 10px 0;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    top: 20px;
-    background-color: #f1f1f1;
-    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
-    border-radius: 5px;
-  
-    a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-  
-      &:hover {
-        background-color: #ddd;
-      }
-    }
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
+    
   /******************************************************/
   
   /* Emoji */
@@ -363,30 +312,13 @@
     border: 1px solid #aaa;
     border-left: none;
   }
-  
-  /*Duotone */
-  
-  .menu-labels {
-    .fad {
-      --fa-primary-color:#fff;
-      --fa-secondary-color:#fff;
-      --fa-secondary-opacity:0.7;
-    }
-  
-    .selected .fad {
-      --fa-primary-color:#000;
-      --fa-secondary-color:#000;
-      --fa-secondary-opacity:0.5;
-    }
-  }
-  
+    
   .top-left {
     position: absolute;
     top: 0;
     left: 0;
     background-color: white;
     border-radius: 50%;
-    border: 1.5px solid white;
   }
   
   /* bar hp */
@@ -977,7 +909,18 @@
     font: 13px/1 'Oxygen', sans-serif!important;
     font-family: 'Oxygen', sans-serif;
     scroll-behavior: smooth;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background-size: 100% auto;
+    background-position: left bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  
+    background-color: #e2e2e2;
   }
+
   
   /* messages */
   
@@ -1184,7 +1127,7 @@
   }
   
   .fantasyTitle {
-    margin-bottom: 10px;
+    text-align: center;
     color: #fff;
     text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px #000;
     font-family: logo;
@@ -1197,20 +1140,6 @@
       margin: 5px;
       margin-top: -8px;
     }
-  }
-  
-  body {
-    color: #555;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-blend-mode: normal;
-    background-attachment: fixed;
-  
-    /*background-image: url('/management/libraries/bg/planet.png');*/
-    background-size: 100% auto;
-    background-position: left bottom;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
   }
   
   .imgBanner {

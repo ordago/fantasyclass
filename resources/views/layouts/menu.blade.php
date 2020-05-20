@@ -18,35 +18,35 @@
 @endsection
 
 @section('menu')
-    <div class="pl-2 h-100 d-flex menu">
-        <a href="/classroom/{{ $class->code }}" {{ Popper::theme('dark')->pop(__("menu.user_groups")) }} class="h-100 pl-3 pr-2 d-flex align-items-center">
+    <div class="has-padding-2 is-flex menu">
+        <a class="has-padding-x-4" href="/classroom/{{ $class->code }}" {{ Popper::theme('dark')->pop(__("menu.user_groups")) }}>
             <i class="fad fa-users"></i>
         </a>
-        <li class="nav-item dropdown h-100 px-2 py-0 d-flex align-items-center">
-            <a id="navbarDropdown" class="nav-link h-100 px-3 d-flex align-items-center dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                <i class="fad fa-treasure-chest"></i>
-            </a>
 
-            <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item text-dark py-3" href="/classroom/{{ $class->code }}/cards">
-                    <i class="fad fa-club"></i> {{ __('menu.cards') }}
-                </a>
-                <a class="dropdown-item text-dark py-3" href="/classroom/{{ $class->code }}/behaviours">
-                    <i class="fad fa-heart"></i> {{ __('menu.behaviours') }}
-                </a>
-                <!--
-                <a class="dropdown-item text-dark py-3 text-center" href="/classroom/{{ $class->code }}/cards">
-                    <i class="fad fa-trophy"></i> {{ __('menu.levels') }}
-                </a>
-                -->
+        <div class="dropdown is-hoverable">
+            <div class="dropdown-trigger">
+                <i class="fad fa-treasure-chest"></i>
+                <span class="icon is-small">
+                    <i class="fas fa-angle-down" aria-hidden="true"></i>
+                </span>
             </div>
-        </li>
-        <a href="/classroom/{{ $class->code }}/map" class="h-100 py-3 pr-3 pl-1 d-flex align-items-center"><i class="fad fa-map-marked-alt"></i></a>
-        <a href="/classroom/{{ $class->code }}/stories" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pen-fancy"></i></a>
-        <a href="/classroom/{{ $class->code }}/missions" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-tasks"></i></a>
-        <a href="/classroom/{{ $class->code }}/store" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-store"></i></a>
-        <a href="/classroom/{{ $class->code }}/rules" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-pencil-ruler"></i></a>
-        <a href="/classroom/{{ $class->code }}/log" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-file-alt"></i></a>
-        <a href="/classroom/{{ $class->code }}/settings" class="h-100 p-3 d-flex align-items-center"><i class="fad fa-sliders-v-square"></i></a>
+            <div class="dropdown-menu" id="dropdown-menu4" role="menu">
+                <div class="dropdown-content">
+                    <a class="dropdown-item has-padding-y-3" href="/classroom/{{ $class->code }}/cards">
+                        <i class="fad fa-club"></i> {{ __('menu.cards') }}
+                    </a>
+                    <a class="dropdown-item has-padding-y-3" href="/classroom/{{ $class->code }}/behaviours">
+                        <i class="fad fa-heart"></i> {{ __('menu.behaviours') }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <a href="/classroom/{{ $class->code }}/map" class="has-padding-x-4 pl-1"><i class="fad fa-map-marked-alt"></i></a>
+        <a href="/classroom/{{ $class->code }}/stories" class="has-padding-x-4"><i class="fad fa-pen-fancy"></i></a>
+        <a href="/classroom/{{ $class->code }}/missions" class="has-padding-x-4"><i class="fad fa-tasks"></i></a>
+        <a href="/classroom/{{ $class->code }}/store" class="has-padding-x-4"><i class="fad fa-store"></i></a>
+        <a href="/classroom/{{ $class->code }}/rules" class="has-padding-x-4"><i class="fad fa-pencil-ruler"></i></a>
+        <a href="/classroom/{{ $class->code }}/log" class="has-padding-x-4"><i class="fad fa-file-alt"></i></a>
+        <a href="/classroom/{{ $class->code }}/settings" class="has-padding-x-4"><i class="fad fa-sliders-v-square"></i></a>
     </div>
 @endsection

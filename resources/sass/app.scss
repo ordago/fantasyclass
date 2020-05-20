@@ -5,11 +5,15 @@
 @import 'variables';
 
 // Bootstrap
-//@import '~bootstrap/scss/bootstrap';
+// @import '~bootstrap/scss/bootstrap';
 
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+// @import "tailwindcss/base";
+// @import "tailwindcss/components";
+// @import "tailwindcss/utilities";
+
+@import "~bulma/bulma.sass";
+@import "~bulma-helper-spacing/spacing";
+@import "~buefy/dist/buefy.min.css";
 
 // Fontawesome animation
 @import '~font-awesome-animation/dist/font-awesome-animation.min.css';

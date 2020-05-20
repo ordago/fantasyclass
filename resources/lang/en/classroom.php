@@ -1,7 +1,8 @@
 <?php
 
 return [
-    "add" => "Add Classroom",
+    "add" => "Add classroom",
+    "join" => "Join classroom",
 
     /* Roles */
     "student" => "Student",

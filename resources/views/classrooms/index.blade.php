@@ -1,18 +1,25 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="p-2 grid grid4g is-overlay">
-    <div>
-      <h4 class="h-100">
-        <a href="/classroom/create" class="bg-info h-100 rounded classroom-round card-shadow-s text-center pointer">
+<div class="p-2 grid grid4g">
+    <div class="box has-margin-bottom-0 is-flex is-all-centered">
+      <h3 class="w-100 has-text-centered">
+        <a href="/classroom/create" class="is-rounded text-center pointer">
           <i class="fal fa-chalkboard-teacher mr-2"></i> {{ __('classroom.add') }}
         </a>
-      </h4>
+        <hr>
+        <a href="/classroom/create" class="is-rounded text-center pointer">
+          <i class="fal fa-user mr-2"></i> {{ __('classroom.join') }}
+        </a>
+      </h3>
     </div>
 
   @foreach ($user->classrooms as $classroom)
-  <div>
-    <h4 style="position: relative;" class="h-100">
+  @php 
+    $theme = $classroom->theme;
+  @endphp
+  <div class="box d-flex is-relative rounded classroom-round card-shadow-s text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/{{ $theme->name }}');background-size: cover" @endif>
+    <h3 class="is-size-5 has-text-light">
       @if($classroom->pivot->role == 2)
         <i class="far fa-user-crown admin" {{ Popper::pop(__('classroom.admin')) }}></i>
       @elseif($classroom->pivot->role == 1)
@@ -20,13 +27,10 @@
       @else
         <i class="far fa-user admin" {{ Popper::pop(__('classroom.student')) }}></i>
       @endif
-      @php 
-        $theme = $classroom->theme;
-      @endphp
-      <a href="/classroom/{{ $classroom->code }}" class="p-5 h-100 d-flex rounded classroom-round card-shadow-s text-center pointer" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/{{ $theme->name }}');background-size: cover" @endif>
+      <a href="/classroom/{{ $classroom->code }}" class="has-text-light">
         {{ $classroom->name }}
       </a>
-    </h4>
+    </h3>
   </div>
   @endforeach
 </div>

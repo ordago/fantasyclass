@@ -1,55 +1,47 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 class="fantasyTitle">FantasyClass</h1>
-<div class="form card-shadow-s rounded p-2 m-b-xl">
+<h1 class="fantasyTitle has-margin-top-4 has-margin-bottom-3">FantasyClass</h1>
+<div class="box form has-padding-5">
   <div class="thumbnail"><img src="img/logo.svg" width="200px"/></div>
   <form method="POST" action="{{ route('login') }}">
             @csrf
 
-            <div class="form-group row mb-2">
-                <div class="col-md-12">
-                    <input id="username" type="username" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" required  autofocus>
-                    <!--<input id="email" type="email" placeholder="{{ __('auth.email') }}" class="form-control p-4 mb-1 @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>-->
-                    @error('username')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                <div class="field">
+                <p class="control has-icons-left">
+                    <input id="username" type="username" placeholder="{{ __('auth.email') }}" class="input is-info  @error('username') is-danger @enderror" name="username" value="{{ old('username') }}" required  autofocus>
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-user"></i>
+                    </span>
+                </p>
                 </div>
-            </div>
-
-            <div class="form-group row mb-2">
-                <div class="col-md-12">
-                    <input id="password" type="password" placeholder="{{ __('Password') }}" class="form-control p-4 mb-1 @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                    @error('password')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                    @enderror
+                <div class="field">
+                <p class="control has-icons-left">
+                    <input id="password" type="password" placeholder="{{ __('Password') }}" class="input is-info  @error('username') is-danger @enderror" name="password" required autocomplete="current-password">
+                    <span class="icon is-small is-left">
+                    <i class="fas fa-lock"></i>
+                    </span>
+                </p>
+                @error('username')
+                    <p class="help is-danger">
+                        {{ $message }}
+                    </p>
+                @enderror
                 </div>
-            </div>
 
-            <div class="form-group row mb-0">
-                <div class="col-md-12">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" checked name="remember" style="display: none" id="remember">
-                    </div>
-                </div>
-            </div>
-
-            <div class="form-group row mb-0 mt-0">
-                <div class="col-md-12">
-                    <button type="submit" class="btn btn-primary mb-2">
-                        <i class="far fa-lock-open-alt"></i> {{ __('Login') }}
+            <input class="form-check-input" type="checkbox" checked name="remember" style="display: none" id="remember">
+       
+            <div class="">
+                <div class="">
+                    <button type="submit" class="button is-link w-100 has-margin-y-2">
+                        <i class="far fa-lock-open-alt has-margin-right-2"></i> {{ __('Login') }}
                     </button>
-                    <a href="{{ url('/auth/redirect/google') }}" class="btn buttonLogin"><i class="fa fa-google"></i> Google</a>
+                    <a href="{{ url('/auth/redirect/google') }}" class="button is-danger w-100 has-margin-y-2"><i class="fa fa-google has-margin-right-2"></i> Google</a>
                     <div class="d-flex align-items-center">
                         @if (Route::has('register'))
                             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                         @endif
-                        <i class="fal fa-ellipsis-v pt-1"></i>
+                        <i class="fal fa-ellipsis-v has-margin-top-1 has-margin-x-2"></i>
                         @if (Route::has('password.request'))
                             <a class="nav-link" href="{{ route('password.request') }}">
                                 {{ __('Forgot Your Password?') }}
