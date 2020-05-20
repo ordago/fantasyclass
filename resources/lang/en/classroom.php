@@ -23,7 +23,7 @@ return [
     "goal_type_example" => "would you like to conquer cities, or fight dragons or monsters?",
     "cards_text" => "The game already comes with a pack of cards available, but between all of us we can share cards. Do you want to import into your game any other card created by other teachers? It's not manadatory, if you don't want to import cards, just go to the next step.",
     "levels_text" => "Choose a level pack for your game. You can modify the levels as you like once imported and once defined, you can share them with other teachers. We can't wait to see your contributions!",
-    "theme_text" => "What theme do you want for this class?",
+    "theme_text" => "Which theme do you want for this class?",
     "char_theme_info" => "If you've already created groups in this class, you'll need to assign the new subclasses manually.",
     "custom_theme" => "To create any gamification independent of the character theme, you can use this option. The information of the subclasses and also the part of the shop dedicated to the equipment will disappear.",
     "finish_title" => "You're about to do wonderful things!",

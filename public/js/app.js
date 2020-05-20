@@ -2585,11 +2585,82 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {};
+  props: ['goals', 'themes'],
+  mounted: function mounted() {
+    this.goalsJson = JSON.parse(this.goals);
+    this.themesJson = JSON.parse(this.themes);
   },
-  methods: {}
+  data: function data() {
+    return {
+      activeTab: 0,
+      goalsJson: [],
+      themesJson: [],
+      goalSelected: 1
+    };
+  },
+  methods: {
+    selectGoal: function selectGoal(id) {
+      this.goalSelected = id;
+    }
+  }
 });
 
 /***/ }),
@@ -41880,7 +41951,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "m-2" }, [
+  return _c("div", { staticClass: "has-margin-2" }, [
     _c(
       "div",
       {
@@ -42019,7 +42090,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "btn btn-secondary",
+              staticClass: "button is-light",
               attrs: {
                 href: "/classroom/" + _vm.code + "/cards/" + _vm.card.id,
                 type: "submit"
@@ -42031,7 +42102,7 @@ var render = function() {
           _c(
             "button",
             {
-              staticClass: "btn btn-danger",
+              staticClass: "button is-danger",
               attrs: { type: "submit" },
               on: { click: _vm.deleteCard }
             },
@@ -42051,7 +42122,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-success",
+        staticClass: "button is-primary",
         attrs: { type: "submit", disabled: "" }
       },
       [_c("i", { staticClass: "fas fa-share-alt" })]
@@ -42081,7 +42152,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "p-2 d-flex flex-wrap justify-content-center" },
+    { staticClass: "has-padding-2 is-flex flex-wrap justify-content-center" },
     _vm._l(this.orderedCards, function(card) {
       return _c("show-card", {
         key: card.id,
@@ -42133,7 +42204,8 @@ var render = function() {
             {
               attrs: {
                 label: _vm.trans.get("classroom.name_and_goals"),
-                icon: ""
+                icon: "scroll",
+                "icon-pack": "far"
               }
             },
             [
@@ -42167,7 +42239,7 @@ var render = function() {
                 _vm._v(" "),
                 _c("input", {
                   staticClass: "input has-margin-y-2",
-                  attrs: { type: "text", name: "name" }
+                  attrs: { type: "text", name: "name", required: "" }
                 }),
                 _vm._v(" "),
                 _c(
@@ -42175,9 +42247,9 @@ var render = function() {
                   { staticClass: "help is-danger", attrs: { role: "alert" } },
                   [
                     _vm._v(
-                      "\n                        " +
+                      "\n                    " +
                         _vm._s(_vm.trans.get("Error")) +
-                        "\n                    "
+                        "\n                "
                     )
                   ]
                 )
@@ -42210,6 +42282,7 @@ var render = function() {
                   staticClass: "input has-margin-y-2",
                   attrs: {
                     type: "text",
+                    required: "",
                     value: "FantasyClass",
                     name: "adventureName",
                     id: "adventureName"
@@ -42221,9 +42294,9 @@ var render = function() {
                   { staticClass: "help is-danger", attrs: { role: "alert" } },
                   [
                     _vm._v(
-                      "\n                        " +
+                      "\n                    " +
                         _vm._s(_vm.trans.get("Error")) +
-                        "\n                    "
+                        "\n                "
                     )
                   ]
                 )
@@ -42231,7 +42304,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "has-margin-y-4" }, [
                 _vm._v(
-                  "\n                    " +
+                  "\n                " +
                     _vm._s(_vm.trans.get("classroom.goal_type")) +
                     " "
                 ),
@@ -42240,23 +42313,351 @@ var render = function() {
                     _vm._v(_vm._s(_vm.trans.get("classroom.goal_type_example")))
                   ])
                 ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "field has-addons",
+                  staticStyle: { width: "100%", "overflow-x": "auto" },
+                  attrs: { "data-toggle": "buttons" }
+                },
+                _vm._l(_vm.goalsJson, function(goal, index) {
+                  return _c("p", { key: goal.id, staticClass: "control" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "button",
+                        class: {
+                          "is-success is-selected": goal.id == _vm.goalSelected
+                        },
+                        on: {
+                          click: function($event) {
+                            return _vm.selectGoal(goal.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("input", {
+                          staticClass: "hide-radios",
+                          attrs: {
+                            type: "radio",
+                            name: "goalType",
+                            autocomplete: "off"
+                          },
+                          domProps: { checked: index === 0, value: goal.id }
+                        }),
+                        _c("i", {
+                          class: goal.icon + " colored",
+                          style: "color: " + goal.color
+                        })
+                      ]
+                    )
+                  ])
+                }),
+                0
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-tab-item",
+            {
+              attrs: {
+                label: _vm.trans.get("menu.levels"),
+                icon: "trophy",
+                "icon-pack": "far"
+              }
+            },
+            [
+              _c("h1", { staticClass: "is-size-2" }, [
+                _vm._v(_vm._s(_vm.trans.get("menu.levels")))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "has-margin-top-4" }, [
+                _vm._v(_vm._s(_vm.trans.get("classroom.levels_text")) + " "),
+                _c("i", { staticClass: "fas fa-smile-beam colored" })
+              ]),
+              _vm._v(" "),
+              _c(
+                "h1",
+                { staticClass: "has-margin-top-4 notification is-danger" },
+                [_vm._v("WIP. First create levels")]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-tab-item",
+            {
+              attrs: {
+                label: _vm.trans.get("classroom.theme"),
+                icon: "palette",
+                "icon-pack": "far"
+              }
+            },
+            [
+              _c("h1", { staticClass: "is-size-2" }, [
+                _vm._v(_vm._s(_vm.trans.get("classroom.theme")))
+              ]),
+              _vm._v(" "),
+              _c("h6", { staticClass: "has-margin-y-3" }, [
+                _vm._v(_vm._s(_vm.trans.get("classroom.theme_text")))
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "themes" },
+                _vm._l(_vm.themesJson, function(theme, index) {
+                  return _c("label", { key: theme.id }, [
+                    _c("input", {
+                      staticClass: "hide-radios",
+                      attrs: { type: "radio", name: "bgtheme" },
+                      domProps: { checked: index === 0, value: theme.id }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "theme bg_color_theme",
+                        style: "background-color:" + theme.color
+                      },
+                      [
+                        theme.type == 1
+                          ? _c("img", {
+                              attrs: { src: "/img/bg/" + theme.name }
+                            })
+                          : _c("img", { attrs: { src: "/img/bg/empty.png" } })
+                      ]
+                    )
+                  ])
+                }),
+                0
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-tab-item",
+            {
+              attrs: {
+                label: _vm.trans.get("classroom.char_theme"),
+                icon: "mask",
+                "icon-pack": "far"
+              }
+            },
+            [
+              _c("h1", { staticClass: "is-size-2" }, [
+                _c("i", { staticClass: "fal fa-ghost faa-float animated" }),
+                _vm._v(" " + _vm._s(_vm.trans.get("classroom.char_theme")))
+              ]),
+              _vm._v(" "),
+              _c("label", [
+                _c("input", {
+                  staticClass: "hide-radios",
+                  attrs: {
+                    type: "radio",
+                    name: "charTheme",
+                    checked: "",
+                    value: "1"
+                  }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "themePreview",
+                  attrs: {
+                    src: "/img/character/themes-preview/medieval-fantasy.png"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("label", [
+                _c("input", {
+                  staticClass: "hide-radios",
+                  attrs: { type: "radio", name: "charTheme", value: "2" }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  directives: [
+                    {
+                      name: "tippy",
+                      rawName: "v-tippy",
+                      value: { interactive: true },
+                      expression: "{interactive: true}"
+                    }
+                  ],
+                  staticClass: "themePreview",
+                  attrs: {
+                    src: "/img/character/themes-preview/robots.png",
+                    content:
+                      "<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("label", [
+                _c("input", {
+                  staticClass: "hide-radios",
+                  attrs: { type: "radio", name: "charTheme", value: "3" }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  staticClass: "themePreview",
+                  attrs: { src: "/img/character/themes-preview/superheros.png" }
+                })
+              ]),
+              _vm._v(" "),
+              _c("label", [
+                _c("input", {
+                  staticClass: "hide-radios",
+                  attrs: { type: "radio", name: "charTheme", value: "4" }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  directives: [
+                    {
+                      name: "tippy",
+                      rawName: "v-tippy",
+                      value: { interactive: true },
+                      expression: "{interactive: true}"
+                    }
+                  ],
+                  staticClass: "themePreview",
+                  attrs: {
+                    src: "/img/character/themes-preview/pirateanimals.png",
+                    content:
+                      "<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("label", [
+                _c("input", {
+                  staticClass: "hide-radios",
+                  attrs: { type: "radio", name: "charTheme", value: "0" }
+                }),
+                _vm._v(" "),
+                _c("img", {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "themePreview",
+                  attrs: {
+                    src: "/img/character/themes-preview/custom.png",
+                    content: _vm.trans.get("classroom.custom_theme")
+                  }
+                })
               ])
             ]
           ),
           _vm._v(" "),
-          _c("b-tab-item", { attrs: { label: _vm.trans.get("menu.levels") } }),
-          _vm._v(" "),
-          _c("b-tab-item", {
-            attrs: { label: _vm.trans.get("classroom.theme") }
-          }),
-          _vm._v(" "),
-          _c("b-tab-item", {
-            attrs: { label: _vm.trans.get("classroom.char_theme") }
-          }),
-          _vm._v(" "),
-          _c("b-tab-item", { attrs: { label: "+ Info" } })
+          _c(
+            "b-tab-item",
+            { attrs: { label: "+ Info", icon: "info", "icon-pack": "far" } },
+            [
+              _c("div", [
+                _c("h1", { staticClass: "is-size-2 has-text-centered" }, [
+                  _c("i", {
+                    staticClass: "fal fa-laugh-beam  faa-wrench animated"
+                  }),
+                  _vm._v(" " + _vm._s(_vm.trans.get("classroom.finish_title")))
+                ]),
+                _vm._v(" "),
+                _c(
+                  "h4",
+                  { staticClass: "is-size-4 has-margin-y-3 has-text-centered" },
+                  [_vm._v(_vm._s(_vm.trans.get("classroom.info_wizard_0")))]
+                ),
+                _vm._v(" "),
+                _c("ol", { staticClass: "has-margin-6 has-margin-left-8" }, [
+                  _c("li", { staticClass: "is-size-5 has-margin-3" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans.get("classroom.info_wizard_1")) + " "
+                    ),
+                    _c("i", { staticClass: "fal fa-users" })
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "is-size-5 has-margin-3" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans.get("classroom.info_wizard_2")) + " "
+                    ),
+                    _c("i", { staticClass: "fal fa-tasks" })
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "is-size-5 has-margin-3" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans.get("classroom.info_wizard_3")) + " "
+                    ),
+                    _c("i", { staticClass: "fal fa-treasure-chest" })
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "is-size-5 has-margin-3" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans.get("classroom.info_wizard_4")) + " "
+                    ),
+                    _c("i", { staticClass: "fal fa-hands-helping" })
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "is-size-5 has-margin-3" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans.get("classroom.info_wizard_5")) + " "
+                    ),
+                    _c("i", { staticClass: "fal fa-swords" })
+                  ])
+                ])
+              ])
+            ]
+          )
         ],
         1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "is-flex has-padding-x-4",
+          staticStyle: {
+            position: "fixed",
+            bottom: "0",
+            left: "0",
+            width: "100%"
+          }
+        },
+        [
+          _c("div", { staticClass: "buttons has-addons" }, [
+            _vm.activeTab > 0
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    on: {
+                      click: function($event) {
+                        _vm.activeTab--
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-chevron-left" })]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.activeTab < 4
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "button is-info is-selected",
+                    on: {
+                      click: function($event) {
+                        _vm.activeTab++
+                      }
+                    }
+                  },
+                  [_c("i", { staticClass: "fas fa-chevron-right" })]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("button", { staticClass: "button is-success" }, [
+            _vm._v(_vm._s(_vm.trans.get("classroom.end_wizard")))
+          ])
+        ]
       )
     ],
     1
@@ -42807,7 +43208,8 @@ var render = function() {
                                     _c(
                                       "button",
                                       {
-                                        staticClass: "button is-primary",
+                                        staticClass:
+                                          "button is-primary has-padding-x-3",
                                         attrs: { type: "submit" }
                                       },
                                       [
@@ -43009,7 +43411,8 @@ var render = function() {
                                         _c(
                                           "button",
                                           {
-                                            staticClass: "button is-primary",
+                                            staticClass:
+                                              "button is-primary has-padding-x-3",
                                             attrs: { type: "submit" }
                                           },
                                           [

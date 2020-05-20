@@ -1,5 +1,5 @@
 <template>
-<div class="p-2 d-flex flex-wrap justify-content-center">
+<div class="has-padding-2 is-flex flex-wrap justify-content-center">
   <show-card v-for="card in this.orderedCards" :code="code" :admin="'1'" :card="card" v-bind:key="card.id"></show-card>
 </div>
 </template>

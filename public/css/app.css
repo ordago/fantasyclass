@@ -11402,6 +11402,14 @@ label.panel-block:hover {
   align-items: center;
 }
 
+.justify-content-center {
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
 @font-face {
   font-family: logo;
   src: url(/fonts/wizzta.otf);
@@ -12687,8 +12695,11 @@ input[type=color].form-control {
   padding: 0px;
 }
 
-p {
-  min-width: 250px;
+.selected {
+  box-shadow: 0 0 5px #51cbee;
+  padding: 3px 0px 3px 3px;
+  margin: 5px 1px 3px 0px;
+  border: 1px solid #51cbee;
 }
 
 .modifiers {
@@ -12885,19 +12896,19 @@ textPath {
 
 /****************************/
 /****Wizard********/
-.wizard, .hide-radios {
-  /* IMAGE STYLES */
-}
-.wizard [type=radio], .hide-radios [type=radio] {
+.hide-radios {
   position: absolute;
   opacity: 0;
   width: 0;
   height: 0;
 }
-.wizard [type=radio] + img, .wizard [type=radio] + div, .hide-radios [type=radio] + img, .hide-radios [type=radio] + div {
+
+/* IMAGE STYLES */
+[type=radio] + img, [type=radio] + div {
   cursor: pointer;
 }
-.wizard [type=radio]:checked + img, .wizard [type=radio]:checked + div, .hide-radios [type=radio]:checked + img, .hide-radios [type=radio]:checked + div {
+
+[type=radio]:checked + img, [type=radio]:checked + div, .selected2 {
   box-shadow: 0 0 3pt 2pt #4fc3f7;
 }
 
@@ -15096,11 +15107,6 @@ details.card > summary::-webkit-details-marker {
     grid-template-columns: 100% !important;
   }
 
-  @supports (-webkit-overflow-scrolling: touch) {
-    section {
-      margin-top: 60px !important;
-    }
-  }
   .menu-labels {
     height: 60px;
   }
@@ -15187,11 +15193,6 @@ details.card > summary::-webkit-details-marker {
     display: none;
   }
 
-  section {
-    margin-top: 55px;
-    border-top: none;
-  }
-
   label[for=tab9] > span {
     display: none;
   }
@@ -15263,10 +15264,6 @@ details.card > summary::-webkit-details-marker {
     padding-top: 10px;
     text-align: center;
     width: initial !important;
-  }
-
-  section {
-    border-radius: 0;
   }
 
   .hideMobile {
@@ -15408,10 +15405,6 @@ details.card > summary::-webkit-details-marker {
   .container-fluid {
     padding-left: 5px;
     padding-right: 5px;
-  }
-
-  section {
-    padding: 10px 5px 10px 5px;
   }
 
   .cards {

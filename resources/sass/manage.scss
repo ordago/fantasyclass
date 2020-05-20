@@ -39,24 +39,21 @@
 /****************************/
 /****Wizard********/
 
-.wizard, .hide-radios {
-  [type=radio] { 
+.hide-radios {
     position: absolute;
     opacity: 0;
     width: 0;
     height: 0;
-  }
-  
-  /* IMAGE STYLES */
-  [type=radio] + img, [type=radio] + div {
-    cursor: pointer;
-  }
-  
-  [type=radio]:checked + img, [type=radio]:checked + div {
-    box-shadow: 0 0 3pt 2pt #4fc3f7;
-  }
 }
 
+/* IMAGE STYLES */
+[type=radio] + img, [type=radio] + div {
+  cursor: pointer;
+}
+
+[type=radio]:checked + img, [type=radio]:checked + div, .selected2 {
+  box-shadow: 0 0 3pt 2pt #4fc3f7;
+}
 
 
 .connecting-line {

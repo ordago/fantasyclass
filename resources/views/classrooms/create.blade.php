@@ -2,10 +2,11 @@
 
 @section('content')
 
-  <create-classroom goals="{{ $goals }}"></create-classroom>
-<!--
 <form action="/classroom" method="post">
 @csrf
+  <create-classroom goals="{{ $goals }}" themes="{{ $themes }}"></create-classroom>
+</form>
+  <!--
 
 <div class="modal-dialog full-screen modal-lg my-3 pt-3 mx-3" id="newClassroom">
     <div class="modal-content " style="min-height: calc(100vh - 95px);">

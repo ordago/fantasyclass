@@ -77,7 +77,7 @@
                                 style="display:inline-block"
                                 arrow>
                             <template v-slot:trigger>
-                                <button type="submit" class="button is-primary"><i class="fas fa-hashtag"></i></button>
+                                <button type="submit" class="button is-primary has-padding-x-3"><i class="fas fa-hashtag"></i></button>
                             </template>
                             <span>
                                 <div class="is-flex">
@@ -108,7 +108,7 @@
                                     style="display:inline-block"
                                     arrow>
                                 <template v-slot:trigger>
-                                    <button type="submit" class="button is-primary"><i class="fas fa-hashtag"></i></button>
+                                    <button type="submit" class="button is-primary has-padding-x-3"><i class="fas fa-hashtag"></i></button>
                                 </template>
 
                                 <span>

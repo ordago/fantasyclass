@@ -1,16 +1,5 @@
 @extends('layouts.app')
 
-@section('bg')
-    @php
-        $theme = $class->theme;
-    @endphp
-    @if($theme->type == 0) 
-        style="background-color: {{ $theme->color }}" 
-    @else 
-        style="background: url('/img/bg/{{ $theme->name }}');background-size: cover"
-    @endif
-@endsection
-
 @section('title')
 <span style="display:initial" class="pointer" title="{{ $class->name }}">
     <i class="fal fa-chalkboard"></i> {{ Str::limit($class->name, 8, $end='...') }}

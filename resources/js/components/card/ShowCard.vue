@@ -1,5 +1,5 @@
 <template>
-  <div class="m-2">
+  <div class="has-margin-2">
     <div class="cardContainer cardFunction " data-id="1" group-id="" :style="'background-color:'+ card.background + ';'">
       <div class="lvlTopLeft" v-if="card.min_lvl">
           <img src="/img/cardgen/lvl.png" class="levelCard">
@@ -40,9 +40,9 @@
       </div>
     </div>
     <div style="text-align:center;" v-if="this.admin==1">
-        <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="btn btn-secondary"><i class="fas fa-edit"></i></a>
-        <button type="submit" @click="deleteCard" class="btn btn-danger"><i class="fas fa-trash-alt"></i></button>
-        <button type="submit" disabled class="btn btn-success"><i class="fas fa-share-alt"></i></button>
+        <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-light"><i class="fas fa-edit"></i></a>
+        <button type="submit" @click="deleteCard" class="button is-danger"><i class="fas fa-trash-alt"></i></button>
+        <button type="submit" disabled class="button is-primary"><i class="fas fa-share-alt"></i></button>
       </div>
   </div>
 </template>

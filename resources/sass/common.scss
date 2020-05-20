@@ -13,6 +13,12 @@
   .align-items-center {
     align-items: center;
   }
+  .justify-content-center {
+    justify-content: center;
+  }
+  .flex-wrap {
+    flex-wrap: wrap;
+  }
 
   @font-face {
     font-family: logo;
@@ -1399,9 +1405,13 @@
   input[type=color].form-control {
     padding: 0px;
   }
-  
-  p {
-    min-width: 250px;
+
+  .selected {
+      box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+      padding: 3px 0px 3px 3px;
+      margin: 5px 1px 3px 0px;
+      border: 1px solid rgba(81, 203, 238, 1);
+    
   }
   
   .modifiers {

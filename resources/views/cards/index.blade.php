@@ -1,13 +1,13 @@
 @extends('layouts.menu')
 
 @section('content')
-<div class="bg-light p-2 h-100">  
-  <div class="m-2">
-    <a href="/classroom/{{ $class->code }}/cards/create" class="btn btn-success">
+<div>  
+  <div class="has-margin-2">
+    <a href="/classroom/{{ $class->code }}/cards/create" class="button is-success">
       {{ __('cards.create_card') }}
     </a>
     @if(count($cards) < 10)
-    <a href="/classroom/{{ $class->code }}/cards/import/default" class="btn btn-primary">
+    <a href="/classroom/{{ $class->code }}/cards/import/default" class="button is-info">
       {{ __('cards.import_default') }}
     </a>
     @endif
