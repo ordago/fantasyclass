@@ -35,8 +35,8 @@ class CardsController extends Controller
         return view('cards.create', compact('class', 'card'));
     }
 
-    public function store($code) {
-        $data = request()->validate([
+    public function validateFormat($request) {
+        return $request->validate([
             'width' => ['required', 'numeric'],
             'marginTop' => ['required', 'numeric'],
             'marginLeft' => ['required', 'numeric'],
@@ -55,6 +55,10 @@ class CardsController extends Controller
             'fullscreen' => ['numeric'],
             'background' => ['string'],
             ]);
+    }
+
+    public function store($code) {
+        $data = $this->validateFormat(request());
             
             if(!isset($data['image']) || !$data['image']) {
                 $image = "/img/cards/card_bg.png";

@@ -36,7 +36,7 @@ class BehaviourController extends Controller
     public function update($code, $behaviour) {
         try {
             $behaviour = Behaviour::findOrFail($behaviour);
-            $behaviour->update(request()->all());
+            $behaviour->update($this->validateFormat(request()));
             return [
                     "message" => __('success_error.update_success'),
                     "type" => "success",
@@ -57,7 +57,16 @@ class BehaviourController extends Controller
     public function store($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         
-        $data = request()->validate([
+        $data = $this->validateFormat(request());
+
+        $behaviour = Behaviour::create($data);
+        $class->behaviours()->save($behaviour);
+        return redirect('/classroom/'.$code.'/behaviours');
+        
+    }
+
+    public function validateFormat($request) {
+        return $request->validate([
             'icon' => ['required', 'string'],
             'name' => ['required', 'string'],
             'custom_text' => ['nullable', 'string'],
@@ -65,11 +74,6 @@ class BehaviourController extends Controller
             'hp' => ['required', 'numeric'],
             'gold' => ['required', 'numeric'],
         ]);
-
-        $behaviour = Behaviour::create($data);
-        $class->behaviours()->save($behaviour);
-        return redirect('/classroom/'.$code.'/behaviours');
-        
     }
 
     public function destroy($id) {
