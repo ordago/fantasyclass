@@ -43267,7 +43267,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "utilities rounded cardShadowS",
+        staticClass: "utilities rounded card-shadow-s",
         attrs: { id: "utilities" }
       },
       [
@@ -43356,10 +43356,10 @@ var render = function() {
             {
               key: student.id,
               staticClass:
-                "column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd "
+                "column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd "
             },
             [
-              _c("div", { staticClass: "card rounded" }, [
+              _c("div", { staticClass: "card rounded card-shadow-s" }, [
                 _c(
                   "div",
                   { staticClass: "card-image rounded-top has-background-dark" },
@@ -43992,13 +43992,19 @@ var render = function() {
           "div",
           { staticClass: "column is-12-mobile is-4-tablet is-3-desktop" },
           [
-            _c("div", { staticClass: "box is-flex is-all-centered" }, [
-              _c(
-                "a",
-                { attrs: { href: "/classroom/" + _vm.code + "/students/add" } },
-                [_vm._v("Add students (afegir imatge)")]
-              )
-            ])
+            _c(
+              "div",
+              { staticClass: "box card-shadow-s is-flex is-all-centered" },
+              [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "/classroom/" + _vm.code + "/students/add" }
+                  },
+                  [_vm._v("Add students (afegir imatge)")]
+                )
+              ]
+            )
           ]
         )
       ],
@@ -44050,10 +44056,8 @@ var staticRenderFns = [
     return _c("div", { staticClass: "media-left" }, [
       _c("figure", { staticClass: "image is-48x48" }, [
         _c("img", {
-          attrs: {
-            src: "https://bulma.io/images/placeholders/96x96.png",
-            alt: "Placeholder image"
-          }
+          staticClass: "rounded",
+          attrs: { src: "/img/no_avatar.png", alt: "" }
         })
       ])
     ])

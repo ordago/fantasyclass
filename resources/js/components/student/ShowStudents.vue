@@ -1,6 +1,6 @@
 <template>
 <div>
-    <div class="utilities rounded cardShadowS" id="utilities">
+    <div class="utilities rounded card-shadow-s" id="utilities">
         <div class="tools rounded-left">
             <i class="fal fa-tools"></i>
         </div>
@@ -30,8 +30,8 @@
         </div>
     </div>
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
-        <div class="column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
-            <div class="card rounded">
+        <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
+            <div class="card rounded card-shadow-s">
                 <div class="card-image rounded-top has-background-dark">
                             <img :src="'/img/bg/' + bg" alt="" class="rounded-top">
                 </div>
@@ -39,7 +39,7 @@
                     <div class="media">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                            <img src="/img/no_avatar.png" class="rounded" alt="">
                         </figure>
                     </div>
                     <div class="media-content">
@@ -142,7 +142,7 @@
 
         </div>
         <div class="column is-12-mobile is-4-tablet is-3-desktop">
-            <div class="box is-flex is-all-centered">
+            <div class="box card-shadow-s is-flex is-all-centered">
                 <a :href="'/classroom/' + code + '/students/add'">Add students (afegir imatge)</a>
             </div>
             </div>
