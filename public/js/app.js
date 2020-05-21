@@ -3177,11 +3177,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['students', 'code', 'behaviours'],
+  props: ['students', 'code', 'behaviours', 'bg'],
   mounted: function mounted() {
     var _$cookies$get, _$cookies$get2;
 
@@ -43360,11 +43358,15 @@ var render = function() {
             },
             [
               _c("div", { staticClass: "card rounded" }, [
-                _vm._m(3, true),
+                _c(
+                  "div",
+                  { staticClass: "card-image rounded-top has-background-dark" },
+                  [_c("img", { attrs: { src: "/img/bg/" + _vm.bg, alt: "" } })]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [
                   _c("div", { staticClass: "media" }, [
-                    _vm._m(4, true),
+                    _vm._m(3, true),
                     _vm._v(" "),
                     _c("div", { staticClass: "media-content" }, [
                       _c("p", { staticClass: "title is-4" }, [
@@ -43394,7 +43396,7 @@ var render = function() {
                               staticStyle: { width: "100%" }
                             },
                             [
-                              _vm._m(5, true),
+                              _vm._m(4, true),
                               _vm._v(" "),
                               student.hp < 20
                                 ? _c(
@@ -43537,7 +43539,7 @@ var render = function() {
                         "div",
                         { staticClass: "score has-padding-3 has-margin-1" },
                         [
-                          _vm._m(6, true),
+                          _vm._m(5, true),
                           _vm._v(
                             " " +
                               _vm._s(student.xp) +
@@ -44033,16 +44035,6 @@ var staticRenderFns = [
         staticClass: "fal fa-sort-numeric-down-alt has-margin-right-3"
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "card-image rounded has-background-info" },
-      [_c("figure", { staticClass: "image is-3by2 " })]
-    )
   },
   function() {
     var _vm = this

@@ -14,6 +14,14 @@
     border-bottom-right-radius: .25rem!important;
     border-top-right-radius: .25rem!important;
   }
+  .rounded-top {
+    border-top-right-radius: .25rem!important;
+    border-top-left-radius: .25rem!important;
+  }
+  .rounded-bottom {
+    border-bottom-right-radius: .25rem!important;
+    border-bottom-left-radius: .25rem!important;
+  }
 
   .is-all-centered {
     align-items: center;

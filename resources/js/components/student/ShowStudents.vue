@@ -32,10 +32,8 @@
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded">
-                <div class="card-image rounded has-background-info">
-                    <figure class="image is-3by2 ">
-
-                    </figure>
+                <div class="card-image rounded-top has-background-dark">
+                            <img :src="'/img/bg/' + bg" alt="">
                 </div>
                 <div class="card-content">
                     <div class="media">
@@ -156,7 +154,7 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['students', 'code', 'behaviours'],
+        props: ['students', 'code', 'behaviours', 'bg'],
         mounted() {
             this.studentsJson = JSON.parse(this.students)
             this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems)

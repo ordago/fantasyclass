@@ -27,7 +27,7 @@
     <script src="/js/pace.min.js"></script>
 
 </head>
-    <body @yield('bg') class="has-background-white-bis">
+    <body class="has-background-white-bis">
     <div id="app">
         @auth
             <nav class="navbar card-shadow-s" role="navigation" aria-label="main navigation">

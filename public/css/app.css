@@ -11400,6 +11400,16 @@ label.panel-block:hover {
   border-top-right-radius: 0.25rem !important;
 }
 
+.rounded-top {
+  border-top-right-radius: 0.25rem !important;
+  border-top-left-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
 .is-all-centered {
   align-items: center;
   justify-content: center;
