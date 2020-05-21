@@ -43013,6 +43013,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "button",
+                    attrs: { type: "button" },
                     on: {
                       click: function($event) {
                         _vm.activeTab--
@@ -43028,6 +43029,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "button is-info is-selected",
+                    attrs: { type: "button" },
                     on: {
                       click: function($event) {
                         _vm.activeTab++
@@ -43361,7 +43363,12 @@ var render = function() {
                 _c(
                   "div",
                   { staticClass: "card-image rounded-top has-background-dark" },
-                  [_c("img", { attrs: { src: "/img/bg/" + _vm.bg, alt: "" } })]
+                  [
+                    _c("img", {
+                      staticClass: "rounded-top",
+                      attrs: { src: "/img/bg/" + _vm.bg, alt: "" }
+                    })
+                  ]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [

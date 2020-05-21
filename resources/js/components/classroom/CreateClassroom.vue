@@ -91,8 +91,8 @@
         </b-tabs>
         <div class="is-flex has-padding-x-4" style="position: fixed; bottom: 0; left: 0;width: 100%">
             <div class="buttons has-addons">
-                <button class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
-                <button class="button is-info is-selected" @click="activeTab++" v-if="activeTab<4"><i class="fas fa-chevron-right"></i></button>
+                <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<4"><i class="fas fa-chevron-right"></i></button>
             </div>
             <button class="button is-success">{{ trans.get('classroom.end_wizard') }}</button>
         </div>

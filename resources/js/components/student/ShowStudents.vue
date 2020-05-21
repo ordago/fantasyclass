@@ -33,7 +33,7 @@
         <div class="column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded">
                 <div class="card-image rounded-top has-background-dark">
-                            <img :src="'/img/bg/' + bg" alt="">
+                            <img :src="'/img/bg/' + bg" alt="" class="rounded-top">
                 </div>
                 <div class="card-content">
                     <div class="media">
