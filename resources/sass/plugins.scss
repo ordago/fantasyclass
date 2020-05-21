@@ -6,6 +6,9 @@
 .is-static {
   pointer-events: initial!important;
 }
+.is-flex-column {
+  flex-direction: column;
+}
 
 /* LOADER                                       */
 .pace {

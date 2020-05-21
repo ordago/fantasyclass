@@ -1,13 +1,22 @@
 <template>
       <section class="has-padding-2" v-if="data.length">
-        <div class="has-text-right">
-          <download-excel style="display:inline"
-              :data   = "data"
-              :fields   = "json_fields"              
-              >
-              <b-button type="is-success has-margin-2"><i class="fas fa-file-spreadsheet"></i></b-button>
-          </download-excel>
+
+        <div class="columns has-margin-bottom-0">
+            <div class="column is-narrow">
+                <a :href="'/classroom/' + this.code + '/behaviours/create'" class="button is-link">{{ trans.get('behaviours.add') }}</a>
+            </div>
+            <div class="column is-hidden-mobile">
+            </div>
+            <div class="column is-narrow">
+                <download-excel style="display:inline"
+                    :data   = "data"
+                    :fields   = "json_fields"              
+                    >
+                    <b-button type="is-success has-margin-2"><i class="fas fa-file-spreadsheet"></i></b-button>
+                </download-excel>
+            </div>
         </div>
+
         <b-table
             :data="data"
             :default-sort="['hp', 'desc']"
@@ -59,9 +68,9 @@
 <script>
 
   export default {
-        props: ['behaviours'],
+        props: ['behaviours', 'code'],
         created() {
-          this.data = JSON.parse(this.behaviours)
+                this.data = JSON.parse(this.behaviours)
         },
         data: function() {
             return {

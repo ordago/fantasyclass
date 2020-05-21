@@ -29,31 +29,44 @@
             <span><i class="fas fa-user ml-2 outer_glow"></i></span> -->
         </div>
     </div>
-        <div class="columns is-multiline is-variable is-1 has-margin-y-2">
+    <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
-            <div class="box">
-                <div class="card-header has-text-centered">
-                    <div class="card-header-title">
-                        <img src="/img/no_avatar.png" class="rounded" width="20%">
-                        <h3 class="has-margin-2 has-margin-bottom-0">{{ student.name }}</h3>
-                    </div>
+            <div class="card rounded">
+                <div class="card-image rounded has-background-info">
+                    <figure class="image is-3by2 ">
+
+                    </figure>
                 </div>
-                <div class="card-body">
-                    <div>
+                <div class="card-content">
+                    <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img src="https://bulma.io/images/placeholders/96x96.png" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">{{ student.name }}</p>
+                        <p class="subtitle is-6">@johnsmith</p>
+                    </div>
+                    </div>
+
+                    <div class="content">
+                       <div>
                         <div class="centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3">
-                            <span class="attribute has-padding-y-2 bg-light rounded" style="width:100%;">10</span>
-                            <span class="attribute bg-light has-padding-y-2 rounded" style="width:100%;"><span> </span><span v-if="student.hp<20">{{ student.hp }}</span></span>
-                            <span class="attribute has-background-danger has-padding-y-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
+                            <span class="attribute has-background-white-ter	 has-padding-y-2 rounded" style="width:100%;"><span><i class="fas fa-heart has-text-grey-light"></i></span> <span class="has-text-grey-light" v-if="student.hp<20">{{ student.hp }}</span></span>
+                            <span class="attribute has-background-danger has-padding-y-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart" v-bind:class="{ 'has-text-danger': student.hp<52 }"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
                         </div>
                         <div class="my-1 has-text-centered">
-                            <button v-for="behaviour in mainBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
-                                 class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
-                                    <i :class="behaviour.icon"></i>
-                            </button>
-                            <div class="button is-link is-light has-margin-1" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
+                            <div class="w-100 is-flex is-all-centered">
+                                <button v-for="behaviour in mainBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                                    class="button has-margin-1 has-padding-x-4 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
+                                        <i :class="behaviour.icon"></i>
+                                </button>
+                                <div class="button is-link is-light has-margin-1 has-padding-x-4" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
+                            </div>
                             <div v-if="show2l">
                                 <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" 
-                                    class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']" v-bind:key="behaviour.id">
+                                    class="button has-margin-1 is-light has-padding-x-4" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']" v-bind:key="behaviour.id">
                                     <i :class="behaviour.icon"></i>
                                 </button>
                             </div>
@@ -124,15 +137,18 @@
                             </div>
                         </div>
                     </div>
+                    </div>
                 </div>
             </div>
+
+
         </div>
         <div class="column is-12-mobile is-4-tablet is-3-desktop">
             <div class="box is-flex is-all-centered">
                 <a :href="'/classroom/' + code + '/students/add'">Add students (afegir imatge)</a>
             </div>
             </div>
-        </div>
+    </div>
 </div>
 </template>
 

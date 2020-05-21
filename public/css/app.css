@@ -11390,6 +11390,16 @@ label.panel-block:hover {
   border-radius: 0.25rem !important;
 }
 
+.rounded-left {
+  border-bottom-left-radius: 0.25rem !important;
+  border-top-left-radius: 0.25rem !important;
+}
+
+.rounded-right {
+  border-bottom-right-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
+
 .is-all-centered {
   align-items: center;
   justify-content: center;
@@ -12587,7 +12597,7 @@ h5 {
   text-align: left;
 }
 
-.title {
+.titleClass {
   z-index: 10;
   position: absolute;
   font-size: 2.3em;
@@ -12609,7 +12619,7 @@ h5 {
   top: 74px;
 }
 
-.content {
+.cardContent {
   z-index: 9;
   font-size: 0.95em;
   position: absolute;
@@ -15023,6 +15033,10 @@ details.card > summary::-webkit-details-marker {
 
 .is-static {
   pointer-events: initial !important;
+}
+
+.is-flex-column {
+  flex-direction: column;
 }
 
 /* LOADER                                       */
