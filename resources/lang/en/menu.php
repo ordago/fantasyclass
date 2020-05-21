@@ -10,11 +10,15 @@ return [
     |
     */
     'user_groups' => 'Users and groups',
+    'users' => 'Users',
     'groups' => 'Groups',
+    'map' => 'Map',
     'cards' => 'Cards',
     'levels' => 'Levels',
-    'story' => 'Story',
+    'stories' => 'Stories',
     'goals' => 'Goals',
+    'rules' => 'Rules',
+    'log' => 'Log',
     'shop' => "Shop",
     'settings' => 'Settings',
     'profile' => 'Profile',

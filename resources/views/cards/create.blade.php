@@ -1,7 +1,7 @@
 @extends('layouts.menu')
 
 @section('content')
-<div class="w-100 bg-light">
+<div class="w-100">
   <create-card code="{{ $class->code }}" card="{{ $card ?? '' }}"></create-card>
 </div>
 @endsection

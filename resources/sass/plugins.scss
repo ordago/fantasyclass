@@ -3,6 +3,10 @@
     margin: 0!important;
 }
 
+.is-static {
+  pointer-events: initial!important;
+}
+
 /* LOADER                                       */
 .pace {
     -webkit-pointer-events: none;

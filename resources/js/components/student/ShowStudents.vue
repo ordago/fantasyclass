@@ -29,8 +29,8 @@
             <span><i class="fas fa-user ml-2 outer_glow"></i></span>
         </div>
     </div>
-        <div class="grid has-margin-y-3" v-bind:class="[ this.viewGrid == 0 ? 'grid4g' : '', this.viewGrid == 1 ? 'grid3g' : '', this.viewGrid == 2 ? 'grid2g' : '']">
-        <div v-for="student in orderedStudents" v-bind:key="student.id">
+        <div class="columns is-multiline is-variable is-1 has-margin-y-2">
+        <div class="column is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="box">
                 <div class="card-header has-text-centered">
                     <div class="card-header-title">
@@ -127,8 +127,8 @@
                 </div>
             </div>
         </div>
-        <div class="box is-flex is-all-centered">
-            <div class="p-4">
+        <div class="column is-12-mobile is-4-tablet is-3-desktop">
+            <div class="box is-flex is-all-centered">
                 <a :href="'/classroom/' + code + '/students/add'">Add students (afegir imatge)</a>
             </div>
             </div>

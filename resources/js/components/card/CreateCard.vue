@@ -1,14 +1,14 @@
 <template>
-    <div class="container bg-light h-100 w-100">
+    <div class="container w-100">
         <form method="post" @submit="formSubmit" :action="'/classroom/' + this.code + '/cards'" enctype="multipart/form-data">
             <input :value="csrfToken" type="hidden" name="_token"/>
             <input v-model="width" name="width" type="hidden"/>
             <input v-model="margin_top" name="marginTop" type="hidden"/>
             <input v-model="margin_left" name="marginLeft" type="hidden"/>
 
-            <div class="d-flex pt-3">
+            <div class="columns">
               <!-- CARD -->
-              <div class="flex1">
+              <div class="column">
               <div class="cardContainer" id="customCard" name="card" :style="'background-color: '+ background +';'">
                 <div class="lvlTopLeft" id="lvl" v-if="min_lvl>0">
                   <img src="/img/cardgen/lvl.png" class="levelCard">
@@ -59,127 +59,200 @@
             </div>
               <!-- END CARD -->
 
-              <div class="properties" id="propertiesCard">
-                  <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary" @click="width=width+5"><i class="fas fa-search-plus"></i></button>
-                    <button type="button" class="btn btn-primary" @click="width=width-5"><i class="fas fa-search-minus"></i></button>
+              <div class="column" id="propertiesCard">
+                  <div class="is-inline" role="group">
+                    <button type="button" class="button is-link" @click="width=width+5"><i class="fas fa-search-plus"></i></button>
+                    <button type="button" class="button is-link" @click="width=width-5"><i class="fas fa-search-minus"></i></button>
                   </div>
-                  <div class="btn-group" role="group">
-                    <button type="button" class="btn btn-primary" @click="margin_top=margin_top+5"><i class="fas fa-arrow-down"></i></button>
-                    <button type="button" class="btn btn-primary" @click="margin_top=margin_top-5"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="btn btn-primary" @click="margin_left=margin_left-5"><i class="fas fa-arrow-left"></i></button>
-                    <button type="button" class="btn btn-primary" @click="margin_left=margin_left+5"><i class="fas fa-arrow-right"></i></button>
-                    <button type="button" class="btn btn-primary" @click="margin_top=0;margin_left=0;width=250;"><i class="fas fa-undo"></i></button>
+                  <div class="is-inline has-margin-left-4" role="group">
+                    <button type="button" class="button is-link" @click="margin_top=margin_top+5"><i class="fas fa-arrow-down"></i></button>
+                    <button type="button" class="button is-link" @click="margin_top=margin_top-5"><i class="fas fa-arrow-up"></i></button>
+                    <button type="button" class="button is-link" @click="margin_left=margin_left-5"><i class="fas fa-arrow-left"></i></button>
+                    <button type="button" class="button is-link" @click="margin_left=margin_left+5"><i class="fas fa-arrow-right"></i></button>
+                    <button type="button" class="button is-link" @click="margin_top=0;margin_left=0;width=250;"><i class="fas fa-undo"></i></button>
                   </div>
-                  <br>
-                  <label v-if="!card" for="file-upload" style="display: block;" class="btn btn-primary mt-2">
+                  <label v-if="!card" for="file-upload" style="display: block;" class="button is-link has-margin-top-3">
                     <i class="fa fa-cloud-upload"></i> {{ trans.get('cards.custom_image') }}
                   </label>
                   <input v-if="!card" type="file" accept="image/*" id="file-upload" name="image" style="display:none" class="my-2 p-3 border border-secondary rounded" @change="getImage">
+                  
                   <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="title">{{ trans.get('cards.title') }}</label>
-                    </div>
-                    <input type="text" v-model="title" name="title" id="title" :placeholder="trans.get('cards.title')" class="form-control">
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="description">{{ trans.get('cards.description') }}</label>
-                    </div>
-                    <input type="text" v-model="description" name="description" id="description" :placeholder="trans.get('cards.description')" class="form-control">
-                  </div>
-                  <div class="input-group mb-3 hide-radios">
                         <label>
-                            <input type="radio" v-model="type_bg" checked name="bgType" value="0">
+                            <input type="radio" class="hide-radios" v-model="type_bg" checked name="bgType" value="0">
                             <img src="/img/cardgen/only_back_0_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
-                        <label class="ml-1">
-                            <input type="radio" v-model="type_bg" name="bgType" value="1">
+                        <label class="has-margin-left-2">
+                            <input type="radio" class="hide-radios" v-model="type_bg" name="bgType" value="1">
                             <img src="/img/cardgen/only_back_1_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
-                        <label class="ml-1">
-                            <input type="radio" v-model="type_bg" name="bgType" value="2">
+                        <label class="has-margin-left-2">
+                            <input type="radio" class="hide-radios" v-model="type_bg" name="bgType" value="2">
                             <img src="/img/cardgen/only_back_2_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
-                        <label class="ml-1">
-                            <input type="radio" v-model="type_bg" name="bgType" value="3">
+                        <label class="has-margin-left-2">
+                            <input type="radio" class="hide-radios" v-model="type_bg" name="bgType" value="3">
                             <img src="/img/cardgen/only_back_3_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
-                        <label class="ml-1">
-                            <input type="radio" v-model="type_bg" name="bgType" value="4">
+                        <label class="has-margin-left-2">
+                            <input type="radio" class="hide-radios" v-model="type_bg" name="bgType" value="4">
                             <img src="/img/cardgen/only_back_4_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
                         </label>
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="colorText">{{ trans.get('cards.background_color') }}</label>
+                  
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static">
+                              <label for="title">{{ trans.get('cards.title') }}</label>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="text" v-model="title" name="title" id="title" class="input">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <input type="color" name="background" v-model="background" class="form-control">
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="radiusImg">Radius <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.radius_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static">
+                              {{ trans.get('cards.description') }}
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="text" v-model="description" name="description" id="description" class="input">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <input type="number" required name="radius" v-model="radius" id="radiusImg" min="0" value="0" max="100" class="form-control">
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="minLvl">{{ trans.get('cards.min_lvl') }} <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.min_lvl_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static">
+                              {{ trans.get('cards.background_color') }}
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="color" name="background" v-model="background" class="input has-padding-1">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <input type="number" v-model="min_lvl" name="minLvl" required min="0" value="0" class="form-control">
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="typeSelect">{{ trans.get('cards.type') }} <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.type_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.radius_help')">
+                              Radius <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" required name="radius" v-model="radius" id="radiusImg" min="0" value="0" max="100" class="input">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <select v-model="type" class="form-control col-9" name="type">
-                      <option value="1">{{ trans.get('settings.common') }}</option>
-                      <option value="2">{{ trans.get('settings.rare') }}</option>
-                      <option value="3">{{ trans.get('settings.epic') }}</option>
-                      <option value="4">{{ trans.get('settings.legendary') }}</option>
-                    </select>
                   </div>
-                  <div class="input-group mb-3">
-                     <input type="checkbox" v-model="special" value="1" id="checkspecial" class="cbx" name="special" style="display:none">
-                     <label style="width: 40px" for="checkspecial" class="toggle"><span></span></label>
-                   <label for="checkspecial" class="col-9 col-form-label">{{ trans.get('cards.special') }} <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.special_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.min_lvl_help')">
+                              {{ trans.get('cards.min_lvl') }} <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" v-model="min_lvl" name="minLvl" required min="0" value="0" class="input">
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div class="input-group mb-3">
-                    <input type="checkbox" name="fullscreen" value="1" v-model="fullscreen" id="fullscreenCard" class="cbx" style="display:none">
-                    <label style="width: 40px" for="fullscreenCard" class="toggle"><span></span></label>
-                    <label for="fullscreenCard" class="col-9 col-form-label"><i class="fas fa-expand"></i> Fullscreen <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.fullscreen_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.type_help')">
+                              {{ trans.get('cards.type') }} <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control select is-fullwidth">
+                            <select v-model="type" class=" " name="type">
+                              <option value="1">{{ trans.get('settings.common') }}</option>
+                              <option value="2">{{ trans.get('settings.rare') }}</option>
+                              <option value="3">{{ trans.get('settings.epic') }}</option>
+                              <option value="4">{{ trans.get('settings.legendary') }}</option>
+                            </select>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="field">
+                          <b-switch 
+                          v-model="special"
+                          value="1"
+                          name="special"
+                          id="checkspecial"
+                          class="has-margin-3"
+                          type="is-info">
+                            <label for="checkspecial" v-tippy :content="trans.get('cards.special_help')">{{ trans.get('cards.special') }} <i class="fas fa-question-circle has-margin-left-2"></i></label>
+                          </b-switch>
+                  </div>
+                  <div class="field">
+                          <b-switch 
+                          v-model="fullscreen"
+                          value="1"
+                          name="fullscreen"
+                          id="fullscreenCard"
+                          class="has-margin-left-3"
+                          type="is-info">
+                            <label for="fullscreenCard" v-tippy :content="trans.get('cards.fullscreen_help')">Fullscreen <i class="fas fa-question-circle has-margin-left-2"></i></label>
+                          </b-switch>
                   </div>
               </div>
-              <div class="properties2" id="properties2Card">
+              <div class="column" id="properties2Card">
                 <div class="form-group">
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" for="xp_modify"><i class="fas fa-fist-raised colored"></i> <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.xp_help')"></i></label>
+                      <label class="input-group-text" for="xp_modify"><i class="fas fa-fist-raised colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.xp_help')"></i></label>
                     </div>
                     <input type="number" required v-model="xp" name="xp"  value="0" class="form-control">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" for="gold_modify"><i class="fas fa-coins colored"></i> <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.gold_help')"></i></label>
+                      <label class="input-group-text" for="gold_modify"><i class="fas fa-coins colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.gold_help')"></i></label>
                     </div>
                     <input type="number" required v-model="gold" name="gold" class="form-control">
                   </div>
 
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" for="hp_modify"><i class="fas fa-heart colored"></i> <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.hp_help')"></i></label>
+                      <label class="input-group-text" for="hp_modify"><i class="fas fa-heart colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.hp_help')"></i></label>
                     </div>
                     <input type="number" required v-model="hp" name="hp" class="form-control col-11">
                   </div>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" for="slot_modify"><i class="fas fa-club colored"></i> <i class="fas fa-question-circle ml-2" v-tippy :content="trans.get('cards.slot_help')"></i></label>
+                      <label class="input-group-text" for="slot_modify"><i class="fas fa-club colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.slot_help')"></i></label>
                     </div>
                     <input type="number" required id="slot_modify" v-model="slot" name="slot" value="0" class="form-control">
                   </div>
                 </div>
         
-                    <button class="btn btn-primary" @click="updateCard" v-if="card" type="button">{{ trans.get('cards.edit_card') }}</button>
+                    <button class="button is-link" @click="updateCard" v-if="card" type="button">{{ trans.get('cards.edit_card') }}</button>
                     <button class="btn btn-success" v-if="!card">{{ trans.get('cards.create_card') }}</button>
 
             </div>

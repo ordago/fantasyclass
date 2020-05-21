@@ -61,4 +61,7 @@ Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.
 
 const app = new Vue({
     el: '#app',
+    data: {
+        showNav: false
+    }
 });

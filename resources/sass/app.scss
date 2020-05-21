@@ -7,56 +7,20 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
-// @import "tailwindcss/base";
-// @import "tailwindcss/components";
-// @import "tailwindcss/utilities";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/elements/_all";
+@import "~bulma/sass/components/_all";
 
-@import "~bulma/bulma.sass";
-@import "~bulma-helper-spacing/spacing";
+//@import "~bulma/bulma.sass";
 @import "~buefy/dist/buefy.min.css";
+@import "~bulma-helper-spacing/spacing";
 
 // Fontawesome animation
 @import '~font-awesome-animation/dist/font-awesome-animation.min.css';
 
-/* Buefy                               */
-
-// Import Bulma's core
-//@import "~bulma/sass/utilities/_all";
-
-// Set your colors
-// $primary: #8c67ef;
-// $primary-invert: findColorInvert($primary);
-// $twitter: #4099FF;
-// $twitter-invert: findColorInvert($twitter);
-
-// // Setup $colors to use as bulma classes (e.g. 'is-twitter')
-// $colors: (
-//     "white": ($white, $black),
-//     "black": ($black, $white),
-//     "light": ($light, $light-invert),
-//     "dark": ($dark, $dark-invert),
-//     "primary": ($primary, $primary-invert),
-//     "info": ($info, $info-invert),
-//     "success": ($success, $success-invert),
-//     "warning": ($warning, $warning-invert),
-//     "danger": ($danger, $danger-invert),
-//     "twitter": ($twitter, $twitter-invert)
-// );
-
-// // Links
-// $link: $primary;
-// $link-invert: $primary-invert;
-// $link-focus-border: $primary;
-
-// Import Bulma and Buefy styles
-//@import "~bulma";
-//@import "~buefy/src/scss/buefy";
-
-/* /Buefy                              */
-
 // FantasyClass
 @import 'common';
 @import 'manage';
-@import 'manage-mobile';
+//@import 'manage-mobile';
 
 @import 'plugins';

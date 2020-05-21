@@ -12,6 +12,7 @@
         <b-table
             :data="data"
             :default-sort="['hp', 'desc']"
+            icon-pack="fas"
             sort-icon="arrow-up"
             >
 

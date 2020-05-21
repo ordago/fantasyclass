@@ -2090,6 +2090,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['behaviours'],
   created: function created() {
@@ -2125,6 +2126,79 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40522,6 +40596,7 @@ var render = function() {
             attrs: {
               data: _vm.data,
               "default-sort": ["hp", "desc"],
+              "icon-pack": "fas",
               "sort-icon": "arrow-up"
             },
             scopedSlots: _vm._u(
@@ -40708,7 +40783,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container bg-light h-100 w-100" }, [
+  return _c("div", { staticClass: "container w-100" }, [
     _c(
       "form",
       {
@@ -40788,8 +40863,8 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "d-flex pt-3" }, [
-          _c("div", { staticClass: "flex1" }, [
+        _c("div", { staticClass: "columns" }, [
+          _c("div", { staticClass: "column" }, [
             _c(
               "div",
               {
@@ -40958,16 +41033,16 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "properties", attrs: { id: "propertiesCard" } },
+            { staticClass: "column", attrs: { id: "propertiesCard" } },
             [
               _c(
                 "div",
-                { staticClass: "btn-group", attrs: { role: "group" } },
+                { staticClass: "is-inline", attrs: { role: "group" } },
                 [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -40981,7 +41056,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -40996,12 +41071,15 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "btn-group", attrs: { role: "group" } },
+                {
+                  staticClass: "is-inline has-margin-left-4",
+                  attrs: { role: "group" }
+                },
                 [
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -41015,7 +41093,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -41029,7 +41107,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -41043,7 +41121,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -41057,7 +41135,7 @@ var render = function() {
                   _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: {
                         click: function($event) {
@@ -41072,13 +41150,11 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
               !_vm.card
                 ? _c(
                     "label",
                     {
-                      staticClass: "btn btn-primary mt-2",
+                      staticClass: "button is-link has-margin-top-3",
                       staticStyle: { display: "block" },
                       attrs: { for: "file-upload" }
                     },
@@ -41108,86 +41184,6 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "title" }
-                    },
-                    [_vm._v(_vm._s(_vm.trans.get("cards.title")))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.title,
-                      expression: "title"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "title",
-                    id: "title",
-                    placeholder: _vm.trans.get("cards.title")
-                  },
-                  domProps: { value: _vm.title },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.title = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "description" }
-                    },
-                    [_vm._v(_vm._s(_vm.trans.get("cards.description")))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.description,
-                      expression: "description"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    name: "description",
-                    id: "description",
-                    placeholder: _vm.trans.get("cards.description")
-                  },
-                  domProps: { value: _vm.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.description = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3 hide-radios" }, [
                 _c("label", [
                   _c("input", {
                     directives: [
@@ -41198,6 +41194,7 @@ var render = function() {
                         expression: "type_bg"
                       }
                     ],
+                    staticClass: "hide-radios",
                     attrs: {
                       type: "radio",
                       checked: "",
@@ -41222,7 +41219,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("label", { staticClass: "ml-1" }, [
+                _c("label", { staticClass: "has-margin-left-2" }, [
                   _c("input", {
                     directives: [
                       {
@@ -41232,6 +41229,7 @@ var render = function() {
                         expression: "type_bg"
                       }
                     ],
+                    staticClass: "hide-radios",
                     attrs: { type: "radio", name: "bgType", value: "1" },
                     domProps: { checked: _vm._q(_vm.type_bg, "1") },
                     on: {
@@ -41251,7 +41249,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("label", { staticClass: "ml-1" }, [
+                _c("label", { staticClass: "has-margin-left-2" }, [
                   _c("input", {
                     directives: [
                       {
@@ -41261,6 +41259,7 @@ var render = function() {
                         expression: "type_bg"
                       }
                     ],
+                    staticClass: "hide-radios",
                     attrs: { type: "radio", name: "bgType", value: "2" },
                     domProps: { checked: _vm._q(_vm.type_bg, "2") },
                     on: {
@@ -41280,7 +41279,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("label", { staticClass: "ml-1" }, [
+                _c("label", { staticClass: "has-margin-left-2" }, [
                   _c("input", {
                     directives: [
                       {
@@ -41290,6 +41289,7 @@ var render = function() {
                         expression: "type_bg"
                       }
                     ],
+                    staticClass: "hide-radios",
                     attrs: { type: "radio", name: "bgType", value: "3" },
                     domProps: { checked: _vm._q(_vm.type_bg, "3") },
                     on: {
@@ -41309,7 +41309,7 @@ var render = function() {
                   })
                 ]),
                 _vm._v(" "),
-                _c("label", { staticClass: "ml-1" }, [
+                _c("label", { staticClass: "has-margin-left-2" }, [
                   _c("input", {
                     directives: [
                       {
@@ -41319,6 +41319,7 @@ var render = function() {
                         expression: "type_bg"
                       }
                     ],
+                    staticClass: "hide-radios",
                     attrs: { type: "radio", name: "bgType", value: "4" },
                     domProps: { checked: _vm._q(_vm.type_bg, "4") },
                     on: {
@@ -41339,343 +41340,435 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "colorText" }
-                    },
-                    [_vm._v(_vm._s(_vm.trans.get("cards.background_color")))]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.background,
-                      expression: "background"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "color", name: "background" },
-                  domProps: { value: _vm.background },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.background = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "radiusImg" }
-                    },
-                    [
-                      _vm._v("Radius "),
-                      _c("i", {
-                        directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "fas fa-question-circle ml-2",
-                        attrs: { content: _vm.trans.get("cards.radius_help") }
-                      })
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.radius,
-                      expression: "radius"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    required: "",
-                    name: "radius",
-                    id: "radiusImg",
-                    min: "0",
-                    value: "0",
-                    max: "100"
-                  },
-                  domProps: { value: _vm.radius },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.radius = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "minLvl" }
-                    },
-                    [
-                      _vm._v(_vm._s(_vm.trans.get("cards.min_lvl")) + " "),
-                      _c("i", {
-                        directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "fas fa-question-circle ml-2",
-                        attrs: { content: _vm.trans.get("cards.min_lvl_help") }
-                      })
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.min_lvl,
-                      expression: "min_lvl"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "number",
-                    name: "minLvl",
-                    required: "",
-                    min: "0",
-                    value: "0"
-                  },
-                  domProps: { value: _vm.min_lvl },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.min_lvl = $event.target.value
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("div", { staticClass: "input-group-prepend" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "input-group-text",
-                      attrs: { for: "typeSelect" }
-                    },
-                    [
-                      _vm._v(_vm._s(_vm.trans.get("cards.type")) + " "),
-                      _c("i", {
-                        directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "fas fa-question-circle ml-2",
-                        attrs: { content: _vm.trans.get("cards.type_help") }
-                      })
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.type,
-                        expression: "type"
-                      }
-                    ],
-                    staticClass: "form-control col-9",
-                    attrs: { name: "type" },
-                    on: {
-                      change: function($event) {
-                        var $$selectedVal = Array.prototype.filter
-                          .call($event.target.options, function(o) {
-                            return o.selected
-                          })
-                          .map(function(o) {
-                            var val = "_value" in o ? o._value : o.value
-                            return val
-                          })
-                        _vm.type = $event.target.multiple
-                          ? $$selectedVal
-                          : $$selectedVal[0]
-                      }
-                    }
-                  },
-                  [
-                    _c("option", { attrs: { value: "1" } }, [
-                      _vm._v(_vm._s(_vm.trans.get("settings.common")))
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "2" } }, [
-                      _vm._v(_vm._s(_vm.trans.get("settings.rare")))
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "3" } }, [
-                      _vm._v(_vm._s(_vm.trans.get("settings.epic")))
-                    ]),
-                    _vm._v(" "),
-                    _c("option", { attrs: { value: "4" } }, [
-                      _vm._v(_vm._s(_vm.trans.get("settings.legendary")))
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c("a", { staticClass: "button is-static" }, [
+                          _c("label", { attrs: { for: "title" } }, [
+                            _vm._v(_vm._s(_vm.trans.get("cards.title")))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.title,
+                              expression: "title"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: { type: "text", name: "title", id: "title" },
+                          domProps: { value: _vm.title },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.title = $event.target.value
+                            }
+                          }
+                        })
+                      ])
                     ])
-                  ]
-                )
+                  ])
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.special,
-                      expression: "special"
-                    }
-                  ],
-                  staticClass: "cbx",
-                  staticStyle: { display: "none" },
-                  attrs: {
-                    type: "checkbox",
-                    value: "1",
-                    id: "checkspecial",
-                    name: "special"
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.special)
-                      ? _vm._i(_vm.special, "1") > -1
-                      : _vm.special
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.special,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = "1",
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.special = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.special = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.special = $$c
-                      }
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-9 col-form-label",
-                    attrs: { for: "checkspecial" }
-                  },
-                  [
-                    _vm._v(_vm._s(_vm.trans.get("cards.special")) + " "),
-                    _c("i", {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "fas fa-question-circle ml-2",
-                      attrs: { content: _vm.trans.get("cards.special_help") }
-                    })
-                  ]
-                )
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c("a", { staticClass: "button is-static" }, [
+                          _vm._v(
+                            "\n                          " +
+                              _vm._s(_vm.trans.get("cards.description")) +
+                              "\n                        "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.description,
+                              expression: "description"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: {
+                            type: "text",
+                            name: "description",
+                            id: "description"
+                          },
+                          domProps: { value: _vm.description },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.description = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
-                _c("input", {
-                  directives: [
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c("a", { staticClass: "button is-static" }, [
+                          _vm._v(
+                            "\n                          " +
+                              _vm._s(_vm.trans.get("cards.background_color")) +
+                              "\n                        "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.background,
+                              expression: "background"
+                            }
+                          ],
+                          staticClass: "input has-padding-1",
+                          attrs: { type: "color", name: "background" },
+                          domProps: { value: _vm.background },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.background = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: {
+                              content: _vm.trans.get("cards.radius_help")
+                            }
+                          },
+                          [
+                            _vm._v("\n                          Radius "),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.radius,
+                              expression: "radius"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: {
+                            type: "number",
+                            required: "",
+                            name: "radius",
+                            id: "radiusImg",
+                            min: "0",
+                            value: "0",
+                            max: "100"
+                          },
+                          domProps: { value: _vm.radius },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.radius = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: {
+                              content: _vm.trans.get("cards.min_lvl_help")
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                          " +
+                                _vm._s(_vm.trans.get("cards.min_lvl")) +
+                                " "
+                            ),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.min_lvl,
+                              expression: "min_lvl"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: {
+                            type: "number",
+                            name: "minLvl",
+                            required: "",
+                            min: "0",
+                            value: "0"
+                          },
+                          domProps: { value: _vm.min_lvl },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.min_lvl = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: { content: _vm.trans.get("cards.type_help") }
+                          },
+                          [
+                            _vm._v(
+                              "\n                          " +
+                                _vm._s(_vm.trans.get("cards.type")) +
+                                " "
+                            ),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control select is-fullwidth" }, [
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.type,
+                                expression: "type"
+                              }
+                            ],
+                            staticClass: " ",
+                            attrs: { name: "type" },
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.type = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "1" } }, [
+                              _vm._v(_vm._s(_vm.trans.get("settings.common")))
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "2" } }, [
+                              _vm._v(_vm._s(_vm.trans.get("settings.rare")))
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "3" } }, [
+                              _vm._v(_vm._s(_vm.trans.get("settings.epic")))
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "4" } }, [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("settings.legendary"))
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "field" },
+                [
+                  _c(
+                    "b-switch",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.fullscreen,
-                      expression: "fullscreen"
-                    }
-                  ],
-                  staticClass: "cbx",
-                  staticStyle: { display: "none" },
-                  attrs: {
-                    type: "checkbox",
-                    name: "fullscreen",
-                    value: "1",
-                    id: "fullscreenCard"
-                  },
-                  domProps: {
-                    checked: Array.isArray(_vm.fullscreen)
-                      ? _vm._i(_vm.fullscreen, "1") > -1
-                      : _vm.fullscreen
-                  },
-                  on: {
-                    change: function($event) {
-                      var $$a = _vm.fullscreen,
-                        $$el = $event.target,
-                        $$c = $$el.checked ? true : false
-                      if (Array.isArray($$a)) {
-                        var $$v = "1",
-                          $$i = _vm._i($$a, $$v)
-                        if ($$el.checked) {
-                          $$i < 0 && (_vm.fullscreen = $$a.concat([$$v]))
-                        } else {
-                          $$i > -1 &&
-                            (_vm.fullscreen = $$a
-                              .slice(0, $$i)
-                              .concat($$a.slice($$i + 1)))
-                        }
-                      } else {
-                        _vm.fullscreen = $$c
+                      staticClass: "has-margin-3",
+                      attrs: {
+                        value: "1",
+                        name: "special",
+                        id: "checkspecial",
+                        type: "is-info"
+                      },
+                      model: {
+                        value: _vm.special,
+                        callback: function($$v) {
+                          _vm.special = $$v
+                        },
+                        expression: "special"
                       }
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "col-9 col-form-label",
-                    attrs: { for: "fullscreenCard" }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-expand" }),
-                    _vm._v(" Fullscreen "),
-                    _c("i", {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "fas fa-question-circle ml-2",
-                      attrs: { content: _vm.trans.get("cards.fullscreen_help") }
-                    })
-                  ]
-                )
-              ])
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          attrs: {
+                            for: "checkspecial",
+                            content: _vm.trans.get("cards.special_help")
+                          }
+                        },
+                        [
+                          _vm._v(_vm._s(_vm.trans.get("cards.special")) + " "),
+                          _c("i", {
+                            staticClass:
+                              "fas fa-question-circle has-margin-left-2"
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "field" },
+                [
+                  _c(
+                    "b-switch",
+                    {
+                      staticClass: "has-margin-left-3",
+                      attrs: {
+                        value: "1",
+                        name: "fullscreen",
+                        id: "fullscreenCard",
+                        type: "is-info"
+                      },
+                      model: {
+                        value: _vm.fullscreen,
+                        callback: function($$v) {
+                          _vm.fullscreen = $$v
+                        },
+                        expression: "fullscreen"
+                      }
+                    },
+                    [
+                      _c(
+                        "label",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          attrs: {
+                            for: "fullscreenCard",
+                            content: _vm.trans.get("cards.fullscreen_help")
+                          }
+                        },
+                        [
+                          _vm._v("Fullscreen "),
+                          _c("i", {
+                            staticClass:
+                              "fas fa-question-circle has-margin-left-2"
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ],
+                1
+              )
             ]
           ),
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "properties2", attrs: { id: "properties2Card" } },
+            { staticClass: "column", attrs: { id: "properties2Card" } },
             [
               _c("div", { staticClass: "form-group" }, [
                 _c("div", { staticClass: "input-group mb-3" }, [
@@ -41691,7 +41784,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("i", {
                           directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass: "fas fa-question-circle ml-2",
+                          staticClass:
+                            "fas fa-question-circle has-margin-left-2",
                           attrs: { content: _vm.trans.get("cards.xp_help") }
                         })
                       ]
@@ -41739,7 +41833,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("i", {
                           directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass: "fas fa-question-circle ml-2",
+                          staticClass:
+                            "fas fa-question-circle has-margin-left-2",
                           attrs: { content: _vm.trans.get("cards.gold_help") }
                         })
                       ]
@@ -41782,7 +41877,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("i", {
                           directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass: "fas fa-question-circle ml-2",
+                          staticClass:
+                            "fas fa-question-circle has-margin-left-2",
                           attrs: { content: _vm.trans.get("cards.hp_help") }
                         })
                       ]
@@ -41825,7 +41921,8 @@ var render = function() {
                         _vm._v(" "),
                         _c("i", {
                           directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass: "fas fa-question-circle ml-2",
+                          staticClass:
+                            "fas fa-question-circle has-margin-left-2",
                           attrs: { content: _vm.trans.get("cards.slot_help") }
                         })
                       ]
@@ -41866,7 +41963,7 @@ var render = function() {
                 ? _c(
                     "button",
                     {
-                      staticClass: "btn btn-primary",
+                      staticClass: "button is-link",
                       attrs: { type: "button" },
                       on: { click: _vm.updateCard }
                     },
@@ -41900,34 +41997,6 @@ var staticRenderFns = [
       _c("u", [_vm._v("Underline")]),
       _vm._v(" _ // [BR]\n          ")
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "toggle",
-        staticStyle: { width: "40px" },
-        attrs: { for: "checkspecial" }
-      },
-      [_c("span")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "toggle",
-        staticStyle: { width: "40px" },
-        attrs: { for: "fullscreenCard" }
-      },
-      [_c("span")]
-    )
   }
 ]
 render._withStripped = true
@@ -42956,602 +43025,635 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      {
-        staticClass: "grid has-margin-y-3",
-        class: [
-          this.viewGrid == 0 ? "grid4g" : "",
-          this.viewGrid == 1 ? "grid3g" : "",
-          this.viewGrid == 2 ? "grid2g" : ""
-        ]
-      },
+      { staticClass: "columns is-multiline is-variable is-1 has-margin-y-2" },
       [
         _vm._l(_vm.orderedStudents, function(student) {
-          return _c("div", { key: student.id }, [
-            _c("div", { staticClass: "box" }, [
-              _c("div", { staticClass: "card-header has-text-centered" }, [
-                _c("div", { staticClass: "card-header-title" }, [
-                  _c("img", {
-                    staticClass: "rounded",
-                    attrs: { src: "/img/no_avatar.png", width: "20%" }
-                  }),
-                  _vm._v(" "),
-                  _c(
-                    "h3",
-                    { staticClass: "has-margin-2 has-margin-bottom-0" },
-                    [_vm._v(_vm._s(student.name))]
-                  )
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3"
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "attribute has-padding-y-2 bg-light rounded",
-                          staticStyle: { width: "100%" }
-                        },
-                        [_vm._v("10")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          staticClass:
-                            "attribute bg-light has-padding-y-2 rounded",
-                          staticStyle: { width: "100%" }
-                        },
-                        [
-                          _c("span"),
-                          student.hp < 20
-                            ? _c("span", [_vm._v(_vm._s(student.hp))])
-                            : _vm._e()
-                        ]
-                      ),
-                      _vm._v(" "),
-                      student.hp > 0
-                        ? _c(
-                            "span",
+          return _c(
+            "div",
+            {
+              key: student.id,
+              staticClass:
+                "column is-6-tablet is-12-mobile is-4-desktop is-3-fullhd "
+            },
+            [
+              _c("div", { staticClass: "box" }, [
+                _c("div", { staticClass: "card-header has-text-centered" }, [
+                  _c("div", { staticClass: "card-header-title" }, [
+                    _c("img", {
+                      staticClass: "rounded",
+                      attrs: { src: "/img/no_avatar.png", width: "20%" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "h3",
+                      { staticClass: "has-margin-2 has-margin-bottom-0" },
+                      [_vm._v(_vm._s(student.name))]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", [
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3"
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "attribute has-padding-y-2 bg-light rounded",
+                            staticStyle: { width: "100%" }
+                          },
+                          [_vm._v("10")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "attribute bg-light has-padding-y-2 rounded",
+                            staticStyle: { width: "100%" }
+                          },
+                          [
+                            _c("span"),
+                            student.hp < 20
+                              ? _c("span", [_vm._v(_vm._s(student.hp))])
+                              : _vm._e()
+                          ]
+                        ),
+                        _vm._v(" "),
+                        student.hp > 0
+                          ? _c(
+                              "span",
+                              {
+                                staticClass:
+                                  "attribute has-background-danger has-padding-y-2 rounded-left",
+                                class: { rounded: student.hp == 100 },
+                                style: "width: " + student.hp + "%"
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-heart" }),
+                                _vm._v(" "),
+                                student.hp >= 20
+                                  ? _c("span", [_vm._v(_vm._s(student.hp))])
+                                  : _vm._e()
+                              ]
+                            )
+                          : _vm._e()
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "my-1 has-text-centered" },
+                      [
+                        _vm._l(_vm.mainBehavioursJson, function(behaviour) {
+                          return _c(
+                            "button",
                             {
-                              staticClass:
-                                "attribute has-background-danger has-padding-y-2 rounded-left",
-                              class: { rounded: student.hp == 100 },
-                              style: "width: " + student.hp + "%"
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              key: behaviour.id,
+                              staticClass: "button has-margin-1 is-light",
+                              class: [
+                                behaviour.xp + behaviour.hp + behaviour.gold >=
+                                0
+                                  ? "is-success"
+                                  : "is-danger"
+                              ],
+                              attrs: {
+                                content:
+                                  behaviour.name +
+                                  " <small>(<i class='fas fa-heart colored'></i> " +
+                                  behaviour.hp +
+                                  " <i class='fas fa-fist-raised colored'></i> " +
+                                  behaviour.xp +
+                                  " <i class='fas fa-coins colored'></i> " +
+                                  behaviour.gold +
+                                  ")</small>"
+                              }
                             },
-                            [
-                              _c("i", { staticClass: "fas fa-heart" }),
-                              _vm._v(" "),
-                              student.hp >= 20
-                                ? _c("span", [_vm._v(_vm._s(student.hp))])
-                                : _vm._e()
-                            ]
+                            [_c("i", { class: behaviour.icon })]
                           )
-                        : _vm._e()
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "my-1 has-text-centered" },
-                    [
-                      _vm._l(_vm.mainBehavioursJson, function(behaviour) {
-                        return _c(
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "button is-link is-light has-margin-1",
+                            on: {
+                              click: function($event) {
+                                _vm.show2l = !_vm.show2l
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "fas fa-plus" })]
+                        ),
+                        _vm._v(" "),
+                        _vm.show2l
+                          ? _c(
+                              "div",
+                              _vm._l(_vm.otherBehavioursJson, function(
+                                behaviour
+                              ) {
+                                return _c(
+                                  "button",
+                                  {
+                                    directives: [
+                                      { name: "tippy", rawName: "v-tippy" }
+                                    ],
+                                    key: behaviour.id,
+                                    staticClass: "button has-margin-1 is-light",
+                                    class: [
+                                      behaviour.xp +
+                                        behaviour.hp +
+                                        behaviour.gold >=
+                                      0
+                                        ? "is-success"
+                                        : "is-danger"
+                                    ],
+                                    attrs: {
+                                      content:
+                                        behaviour.name +
+                                        " <small>(<i class='fas fa-heart colored'></i> " +
+                                        behaviour.hp +
+                                        " <i class='fas fa-fist-raised colored'></i> " +
+                                        behaviour.xp +
+                                        " <i class='fas fa-coins colored'></i> " +
+                                        behaviour.gold +
+                                        ")</small>"
+                                    }
+                                  },
+                                  [_c("i", { class: behaviour.icon })]
+                                )
+                              }),
+                              0
+                            )
+                          : _vm._e()
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "score has-padding-3 has-margin-1" },
+                      [
+                        _vm._m(5, true),
+                        _vm._v(
+                          " " +
+                            _vm._s(student.xp) +
+                            "\r\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "has-margin-y-2 has-text-centered" },
+                      [
+                        _c(
                           "button",
                           {
-                            directives: [{ name: "tippy", rawName: "v-tippy" }],
-                            key: behaviour.id,
-                            staticClass: "button has-margin-1 is-light",
-                            class: [
-                              behaviour.xp + behaviour.hp + behaviour.gold >= 0
-                                ? "is-success"
-                                : "is-danger"
-                            ],
+                            staticClass: "button is-dark has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", 100)
+                              }
+                            }
+                          },
+                          [_vm._v("+100")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-dark has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", 50)
+                              }
+                            }
+                          },
+                          [_vm._v("+50")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-dark has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", 10)
+                              }
+                            }
+                          },
+                          [_vm._v("+10")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "tippy",
+                          {
+                            staticStyle: { display: "inline-block" },
                             attrs: {
-                              content:
-                                behaviour.name +
-                                " <small>(<i class='fas fa-heart colored'></i> " +
-                                behaviour.hp +
-                                " <i class='fas fa-fist-raised colored'></i> " +
-                                behaviour.xp +
-                                " <i class='fas fa-coins colored'></i> " +
-                                behaviour.gold +
-                                ")</small>"
-                            }
-                          },
-                          [_c("i", { class: behaviour.icon })]
-                        )
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass: "button is-link is-light has-margin-1",
-                          on: {
-                            click: function($event) {
-                              _vm.show2l = !_vm.show2l
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fas fa-plus" })]
-                      ),
-                      _vm._v(" "),
-                      _vm.show2l
-                        ? _c(
-                            "div",
-                            _vm._l(_vm.otherBehavioursJson, function(
-                              behaviour
-                            ) {
-                              return _c(
-                                "button",
+                              interactive: "",
+                              "animate-fill": false,
+                              theme: "light",
+                              placement: "bottom",
+                              animation: "fade",
+                              trigger: "click",
+                              arrow: ""
+                            },
+                            scopedSlots: _vm._u(
+                              [
                                 {
-                                  directives: [
-                                    { name: "tippy", rawName: "v-tippy" }
-                                  ],
-                                  key: behaviour.id,
-                                  staticClass: "button has-margin-1 is-light",
-                                  class: [
-                                    behaviour.xp +
-                                      behaviour.hp +
-                                      behaviour.gold >=
-                                    0
-                                      ? "is-success"
-                                      : "is-danger"
-                                  ],
-                                  attrs: {
-                                    content:
-                                      behaviour.name +
-                                      " <small>(<i class='fas fa-heart colored'></i> " +
-                                      behaviour.hp +
-                                      " <i class='fas fa-fist-raised colored'></i> " +
-                                      behaviour.xp +
-                                      " <i class='fas fa-coins colored'></i> " +
-                                      behaviour.gold +
-                                      ")</small>"
-                                  }
-                                },
-                                [_c("i", { class: behaviour.icon })]
-                              )
-                            }),
-                            0
-                          )
-                        : _vm._e()
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "score has-padding-3 has-margin-1" },
-                    [
-                      _vm._m(5, true),
-                      _vm._v(
-                        " " +
-                          _vm._s(student.xp) +
-                          "\r\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "has-margin-y-2 has-text-centered" },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-dark has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", 100)
-                            }
-                          }
-                        },
-                        [_vm._v("+100")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-dark has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", 50)
-                            }
-                          }
-                        },
-                        [_vm._v("+50")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-dark has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", 10)
-                            }
-                          }
-                        },
-                        [_vm._v("+10")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "tippy",
-                        {
-                          staticStyle: { display: "inline-block" },
-                          attrs: {
-                            interactive: "",
-                            "animate-fill": false,
-                            theme: "light",
-                            placement: "bottom",
-                            animation: "fade",
-                            trigger: "click",
-                            arrow: ""
+                                  key: "trigger",
+                                  fn: function() {
+                                    return [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "button is-primary has-padding-x-3",
+                                          attrs: { type: "submit" }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-hashtag"
+                                          })
+                                        ]
+                                      )
+                                    ]
+                                  },
+                                  proxy: true
+                                }
+                              ],
+                              null,
+                              true
+                            )
                           },
-                          scopedSlots: _vm._u(
-                            [
+                          [
+                            _vm._v(" "),
+                            _c("span", [
+                              _c("div", { staticClass: "is-flex" }, [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.custom,
+                                      expression: "custom"
+                                    }
+                                  ],
+                                  staticClass: "input has-margin-right-1",
+                                  attrs: { type: "number" },
+                                  domProps: { value: _vm.custom },
+                                  on: {
+                                    input: function($event) {
+                                      if ($event.target.composing) {
+                                        return
+                                      }
+                                      _vm.custom = $event.target.value
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "button is-primary is-inline",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          _vm.custom
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans.get("users_groups.apply")
+                                      )
+                                    )
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "button is-dark is-outlined has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", -10)
+                              }
+                            }
+                          },
+                          [_vm._v("-10")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "button is-dark is-outlined has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", -50)
+                              }
+                            }
+                          },
+                          [_vm._v("-50")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "button is-dark is-outlined has-padding-x-2",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.updateProp(student.id, "xp", -100)
+                              }
+                            }
+                          },
+                          [_vm._v("-100")]
+                        )
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "gold has-padding-3 has-margin-y-1" },
+                      [
+                        _c("i", { staticClass: "fas fa-coins colored" }),
+                        _vm._v(
+                          " " +
+                            _vm._s(student.gold) +
+                            "\r\n                        "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "has-margin-y-2 has-text-centered" },
+                      [
+                        _c(
+                          "div",
+                          {},
+                          [
+                            _c(
+                              "button",
                               {
-                                key: "trigger",
-                                fn: function() {
-                                  return [
+                                staticClass:
+                                  "button is-warning has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      100
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("+100")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button is-warning has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      50
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("+50")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button is-warning has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      10
+                                    )
+                                  }
+                                }
+                              },
+                              [_vm._v("+10")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "tippy",
+                              {
+                                staticStyle: { display: "inline-block" },
+                                attrs: {
+                                  interactive: "",
+                                  "animate-fill": false,
+                                  theme: "light",
+                                  placement: "bottom",
+                                  animation: "fade",
+                                  trigger: "click",
+                                  arrow: ""
+                                },
+                                scopedSlots: _vm._u(
+                                  [
+                                    {
+                                      key: "trigger",
+                                      fn: function() {
+                                        return [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "button is-primary has-padding-x-3",
+                                              attrs: { type: "submit" }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-hashtag"
+                                              })
+                                            ]
+                                          )
+                                        ]
+                                      },
+                                      proxy: true
+                                    }
+                                  ],
+                                  null,
+                                  true
+                                )
+                              },
+                              [
+                                _vm._v(" "),
+                                _c("span", [
+                                  _c("div", { staticClass: "is-flex" }, [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.custom,
+                                          expression: "custom"
+                                        }
+                                      ],
+                                      staticClass: "input has-margin-right-1",
+                                      attrs: { type: "number" },
+                                      domProps: { value: _vm.custom },
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.custom = $event.target.value
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
                                     _c(
                                       "button",
                                       {
                                         staticClass:
-                                          "button is-primary has-padding-x-3",
-                                        attrs: { type: "submit" }
+                                          "button is-primary col-4 pl-1",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              _vm.custom
+                                            )
+                                          }
+                                        }
                                       },
                                       [
-                                        _c("i", {
-                                          staticClass: "fas fa-hashtag"
-                                        })
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.trans.get("users_groups.apply")
+                                          )
+                                        )
                                       ]
                                     )
-                                  ]
-                                },
-                                proxy: true
-                              }
-                            ],
-                            null,
-                            true
-                          )
-                        },
-                        [
-                          _vm._v(" "),
-                          _c("span", [
-                            _c("div", { staticClass: "is-flex" }, [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.custom,
-                                    expression: "custom"
-                                  }
-                                ],
-                                staticClass: "input has-margin-right-1",
-                                attrs: { type: "number" },
-                                domProps: { value: _vm.custom },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.custom = $event.target.value
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button is-primary is-inline",
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        _vm.custom
-                                      )
-                                    }
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    _vm._s(_vm.trans.get("users_groups.apply"))
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "button is-dark is-outlined has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", -10)
-                            }
-                          }
-                        },
-                        [_vm._v("-10")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "button is-dark is-outlined has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", -50)
-                            }
-                          }
-                        },
-                        [_vm._v("-50")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "button is-dark is-outlined has-padding-x-2",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.updateProp(student.id, "xp", -100)
-                            }
-                          }
-                        },
-                        [_vm._v("-100")]
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "gold has-padding-3 has-margin-y-1" },
-                    [
-                      _c("i", { staticClass: "fas fa-coins colored" }),
-                      _vm._v(
-                        " " +
-                          _vm._s(student.gold) +
-                          "\r\n                        "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "has-margin-y-2 has-text-centered" },
-                    [
-                      _c(
-                        "div",
-                        {},
-                        [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "button is-warning has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(student.id, "gold", 100)
-                                }
-                              }
-                            },
-                            [_vm._v("+100")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "button is-warning has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(student.id, "gold", 50)
-                                }
-                              }
-                            },
-                            [_vm._v("+50")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "button is-warning has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(student.id, "gold", 10)
-                                }
-                              }
-                            },
-                            [_vm._v("+10")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "tippy",
-                            {
-                              staticStyle: { display: "inline-block" },
-                              attrs: {
-                                interactive: "",
-                                "animate-fill": false,
-                                theme: "light",
-                                placement: "bottom",
-                                animation: "fade",
-                                trigger: "click",
-                                arrow: ""
-                              },
-                              scopedSlots: _vm._u(
-                                [
-                                  {
-                                    key: "trigger",
-                                    fn: function() {
-                                      return [
-                                        _c(
-                                          "button",
-                                          {
-                                            staticClass:
-                                              "button is-primary has-padding-x-3",
-                                            attrs: { type: "submit" }
-                                          },
-                                          [
-                                            _c("i", {
-                                              staticClass: "fas fa-hashtag"
-                                            })
-                                          ]
-                                        )
-                                      ]
-                                    },
-                                    proxy: true
-                                  }
-                                ],
-                                null,
-                                true
-                              )
-                            },
-                            [
-                              _vm._v(" "),
-                              _c("span", [
-                                _c("div", { staticClass: "is-flex" }, [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.custom,
-                                        expression: "custom"
-                                      }
-                                    ],
-                                    staticClass: "input has-margin-right-1",
-                                    attrs: { type: "number" },
-                                    domProps: { value: _vm.custom },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
-                                        }
-                                        _vm.custom = $event.target.value
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-primary col-4 pl-1",
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            _vm.custom
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm.trans.get("users_groups.apply")
-                                        )
-                                      )
-                                    ]
-                                  )
+                                  ])
                                 ])
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "button is-dark is-outlined has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(student.id, "gold", -10)
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button is-dark is-outlined has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      -10
+                                    )
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("-10")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "button is-dark is-outlined has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(student.id, "gold", -50)
+                              },
+                              [_vm._v("-10")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button is-dark is-outlined has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      -50
+                                    )
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("-50")]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "button is-dark is-outlined has-padding-x-2",
-                              attrs: { type: "submit" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateProp(
-                                    student.id,
-                                    "gold",
-                                    -100
-                                  )
+                              },
+                              [_vm._v("-50")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button is-dark is-outlined has-padding-x-2",
+                                attrs: { type: "submit" },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateProp(
+                                      student.id,
+                                      "gold",
+                                      -100
+                                    )
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("-100")]
-                          )
-                        ],
-                        1
-                      )
-                    ]
-                  )
+                              },
+                              [_vm._v("-100")]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
-            ])
-          ])
+            ]
+          )
         }),
         _vm._v(" "),
-        _c("div", { staticClass: "box is-flex is-all-centered" }, [
-          _c("div", { staticClass: "p-4" }, [
-            _c(
-              "a",
-              { attrs: { href: "/classroom/" + _vm.code + "/students/add" } },
-              [_vm._v("Add students (afegir imatge)")]
-            )
-          ])
-        ])
+        _c(
+          "div",
+          { staticClass: "column is-12-mobile is-4-tablet is-3-desktop" },
+          [
+            _c("div", { staticClass: "box is-flex is-all-centered" }, [
+              _c(
+                "a",
+                { attrs: { href: "/classroom/" + _vm.code + "/students/add" } },
+                [_vm._v("Add students (afegir imatge)")]
+              )
+            ])
+          ]
+        )
       ],
       2
     )
@@ -61473,7 +61575,10 @@ vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-behaviours', __webpac
  */
 
 var app = new vue__WEBPACK_IMPORTED_MODULE_5___default.a({
-  el: '#app'
+  el: '#app',
+  data: {
+    showNav: false
+  }
 });
 
 /***/ }),
