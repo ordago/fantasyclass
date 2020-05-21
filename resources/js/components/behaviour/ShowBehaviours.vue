@@ -1,5 +1,5 @@
 <template>
-      <section class="has-padding-2" v-if="data.length">
+      <section class="has-padding-2">
 
         <div class="columns has-margin-bottom-0">
             <div class="column is-narrow">
@@ -7,7 +7,7 @@
             </div>
             <div class="column is-hidden-mobile">
             </div>
-            <div class="column is-narrow">
+            <div class="column is-narrow" v-if="data.length">
                 <download-excel style="display:inline"
                     :data   = "data"
                     :fields   = "json_fields"              
@@ -17,7 +17,7 @@
             </div>
         </div>
 
-        <b-table
+        <b-table v-if="data.length"
             :data="data"
             :default-sort="['hp', 'desc']"
             icon-pack="fas"
@@ -56,8 +56,8 @@
                 </b-table-column>
 
                 <b-table-column field="name" label="Settings" centered>
-                        <b-button type="is-info is-small"><i class="fas fa-edit"></i></b-button>
-                        <b-button type="is-danger is-small"><i class="fas fa-trash-alt"></i></b-button>
+                        <a :href="'/classroom/' + code + '/behaviours/' + props.row.id" class="button is-info is-small"><i class="fas fa-edit"></i></a>
+                        <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
                 </b-table-column>
                 
             </template>
@@ -88,7 +88,31 @@
             }
         },
         methods: {
-
+confirmDelete(behaviourId) {
+                this.$buefy.dialog.confirm({
+                    title: this.trans.get('general.delete'),
+                    message: this.trans.get('general.confirm_delete'),
+                    confirmText: this.trans.get('general.delete'),
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true,
+                    onConfirm: () => {
+                        var index = this.data.findIndex(
+                            function(item, i){
+                                            return item.id === behaviourId
+                            });
+                          axios.delete('/classroom/behaviour/' + behaviourId)
+                            .then(response => {
+                                  if(response.data === 1) {
+                                    this.data.splice(index, 1);
+                              }
+                          })
+                    }
+                }) 
         },
       }
+    }
 </script>

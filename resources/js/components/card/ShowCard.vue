@@ -7,7 +7,7 @@
         </div>
       <img :src="'/img/cardgen/type_' + card.type + '.png'"  v-if="!card.fullscreen" class="typeCard">
       <div>
-        <h3 class="title textShadow">
+        <h3 class="title-cards textShadow">
           <svg viewBox="0 0 500 500">
               <path id="curve" d="m 3.2938789,150.87387 c 5.55773,-3.11588 91.0078161,-49.44517 248.1526411,-48.83221 154.64384,0.61296 237.31506,46.12499 243.28962,49.54732"></path>
               <text width="250px">
@@ -21,7 +21,7 @@
       <img :src="'/img/cardgen/only_back_'+ card.type_bg +'.png'" class="background" v-if="!card.special && !card.fullscreen">
       <img :src="'/img/cardgen/only_back_'+ card.type_bg +'_gold.png'" class="background" v-if="card.special  && !card.fullscreen">
 
-      <div class="content text_shadow">{{ card.description }}</div>
+      <div class="content-cards text_shadow">{{ card.description }}</div>
     
       <div class="hiding-parent">
         <img :src="card.src" :style="'margin-left: '+ card.margin_left + 'px;margin-top:'+ card.margin_top +'px;width:'+card.width+'px;border-radius:'+ card.radius +'px'" class="back">

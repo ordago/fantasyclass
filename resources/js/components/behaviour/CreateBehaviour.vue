@@ -30,11 +30,11 @@
 
         <div class="has-margin-top-4">
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('behaviours.name') }} <small class="font-italic">({{ trans.get('behaviours.name_info') }})</small></label>
-          <input type="text" id="name" name="name" required class="input has-margin-y-3">
+          <input type="text" id="name" v-model="name" name="name" required class="input has-margin-y-3">
         </div>
         <div class="has-margin-top-2">
           <label for="custom_text">{{ trans.get('behaviours.custom_text') }} <small class="font-italic">({{ trans.get('behaviours.custom_text_info') }})</small></label>
-          <input type="text" id="custom_text" name="custom_text" class="input" placeholder="">
+          <input type="text" id="custom_text" v-model="custom_text" name="custom_text" class="input" placeholder="">
         </div>
         <div class="has-margin-top-3">
           <label>{{ trans.get('behaviours.attributes') }} <small class="font-italic">({{ trans.get('behaviours.attributes_info') }})</small></label>
@@ -42,7 +42,7 @@
             <div class="column">
               <div class="field has-addons">
                 <p class="control">
-                    <span class="button is-static" v-bind:class="{ 'hp_up': hp>0, 'hp_down': hp<0 }"><i class="fas fa-heart colored"></i></span>
+                    <span class="button is-static" v-bind:class="{ 'has-background-success': hp>0, 'has-background-danger': hp<0 }"><i class="fas fa-heart colored"></i></span>
                 </p>
                 <p class="control is-expanded">
                     <input type="number" name="hp" class="input" v-model="hp" required>
@@ -52,7 +52,7 @@
             <div class="column">
               <div class="field has-addons">
                 <p class="control">
-                    <span class="button is-static" v-bind:class="{ 'hp_up': xp>0, 'hp_down': xp<0 }"><i class="fas fa-fist-raised colored"></i></span>
+                    <span class="button is-static" v-bind:class="{ 'has-background-success': xp>0, 'has-background-danger': xp<0 }"><i class="fas fa-fist-raised colored"></i></span>
                 </p>
                 <p class="control is-expanded">
                     <input type="number" name="xp" class="input" v-model="xp" required>
@@ -62,7 +62,7 @@
             <div class="column">
               <div class="field has-addons">
                 <p class="control">
-                    <span class="button is-static"  v-bind:class="{ 'hp_up': gold>0, 'hp_down': gold<0 }"><i class="fas fa-coins colored"></i></span>
+                    <span class="button is-static"  v-bind:class="{ 'has-background-success': gold>0, 'has-background-danger': gold<0 }"><i class="fas fa-coins colored"></i></span>
                 </p>
                 <p class="control is-expanded">
                     <input type="number" name="gold" class="input" v-model="gold" required>
@@ -72,7 +72,9 @@
           </div>
         </div>            
         <div>
-          <button class="button is-success" type="submit">{{ trans.get('behaviours.create') }}</button>
+
+          <button class="button is-link" @click="update" v-if="behaviour" type="button">{{ trans.get('behaviours.edit') }}</button>
+          <button class="button is-success" type="submit" v-if="!behaviour">{{ trans.get('behaviours.create') }}</button>
         </div>
       </form>
   </div>
@@ -84,27 +86,40 @@ import VueFontAwesomePicker from "vfa-picker";
 Vue.use(VueFontAwesomePicker);
 
   export default {
-        props: ['code'],
+        props: ['code', 'behaviour'],
         created() {
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+
+           if(this.behaviour) {
+            let behaviourJson = JSON.parse(this.behaviour);
+            this.name = behaviourJson.name
+            this.custom_text = behaviourJson.custom_text
+            this.hp = behaviourJson.hp
+            this.xp = behaviourJson.xp
+            this.gold = behaviourJson.gold
+            this.fullIcon = behaviourJson.icon
+            this.id = behaviourJson.id
+          }
         },
         data: function() {
             return {
                 icon: null,
-                    category: {
+                category: {
                     class: undefined,
                     unicode: undefined
                 },
                 csrfToken: null,
                 fullIcon: null,
+                name: null,
+                custom_text: null,
                 xp: 0,
                 hp: 0,
                 gold: 0,
+                id: null,
             }
         },
         methods: {
             formSubmit: function(e) {  
-              console.log('send')
               e.preventDefault()
             },
              parent(icon) {
@@ -116,7 +131,22 @@ Vue.use(VueFontAwesomePicker);
                   return "fab";
                 }
                 return "";
-              }
+              },
+              update: function() {
+                  this.icon = this.fullIcon
+                  axios.patch('/classroom/'+ this.code + '/behaviours/' + this.id, this.$data)
+                  .then(response => {
+                              this.$toasted.show(response.data.message, { 
+                                            position: "top-center",
+                                            duration: 3000, 
+                                            iconPack: 'fontawesome',
+                                            icon: response.data.icon,
+                                            type: response.data.type,
+                                          
+                                })
+                    });
+
+            }
         },
       }
 </script>

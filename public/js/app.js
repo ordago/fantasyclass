@@ -1990,12 +1990,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['code'],
+  props: ['code', 'behaviour'],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+    if (this.behaviour) {
+      var behaviourJson = JSON.parse(this.behaviour);
+      this.name = behaviourJson.name;
+      this.custom_text = behaviourJson.custom_text;
+      this.hp = behaviourJson.hp;
+      this.xp = behaviourJson.xp;
+      this.gold = behaviourJson.gold;
+      this.fullIcon = behaviourJson.icon;
+      this.id = behaviourJson.id;
+    }
   },
   data: function data() {
     return {
@@ -2006,14 +2019,16 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       },
       csrfToken: null,
       fullIcon: null,
+      name: null,
+      custom_text: null,
       xp: 0,
       hp: 0,
-      gold: 0
+      gold: 0,
+      id: null
     };
   },
   methods: {
     formSubmit: function formSubmit(e) {
-      console.log('send');
       e.preventDefault();
     },
     parent: function parent(icon) {
@@ -2026,6 +2041,20 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       }
 
       return "";
+    },
+    update: function update() {
+      var _this = this;
+
+      this.icon = this.fullIcon;
+      axios.patch('/classroom/' + this.code + '/behaviours/' + this.id, this.$data).then(function (response) {
+        _this.$toasted.show(response.data.message, {
+          position: "top-center",
+          duration: 3000,
+          iconPack: 'fontawesome',
+          icon: response.data.icon,
+          type: response.data.type
+        });
+      });
     }
   }
 });
@@ -2128,7 +2157,34 @@ __webpack_require__.r(__webpack_exports__);
       sortIconSize: 'is-small'
     };
   },
-  methods: {}
+  methods: {
+    confirmDelete: function confirmDelete(behaviourId) {
+      var _this = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get('general.delete'),
+        message: this.trans.get('general.confirm_delete'),
+        confirmText: this.trans.get('general.delete'),
+        type: 'is-danger',
+        hasIcon: true,
+        icon: 'times-circle',
+        iconPack: 'fa',
+        ariaRole: 'alertdialog',
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          var index = _this.data.findIndex(function (item, i) {
+            return item.id === behaviourId;
+          });
+
+          axios["delete"]('/classroom/behaviour/' + behaviourId).then(function (response) {
+            if (response.data === 1) {
+              _this.data.splice(index, 1);
+            }
+          });
+        }
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -2928,7 +2984,6 @@ __webpack_require__.r(__webpack_exports__);
           students: this.students
         }).then(function (response) {
           if (response.data) {
-            console.log();
             response.data.forEach(function (element) {
               _this2.$toasted.show(element, {
                 position: "top-right",
@@ -40494,8 +40549,25 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.name,
+                expression: "name"
+              }
+            ],
             staticClass: "input has-margin-y-3",
-            attrs: { type: "text", id: "name", name: "name", required: "" }
+            attrs: { type: "text", id: "name", name: "name", required: "" },
+            domProps: { value: _vm.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.name = $event.target.value
+              }
+            }
           })
         ]),
         _vm._v(" "),
@@ -40510,12 +40582,29 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.custom_text,
+                expression: "custom_text"
+              }
+            ],
             staticClass: "input",
             attrs: {
               type: "text",
               id: "custom_text",
               name: "custom_text",
               placeholder: ""
+            },
+            domProps: { value: _vm.custom_text },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.custom_text = $event.target.value
+              }
             }
           })
         ]),
@@ -40538,7 +40627,10 @@ var render = function() {
                     "span",
                     {
                       staticClass: "button is-static",
-                      class: { hp_up: _vm.hp > 0, hp_down: _vm.hp < 0 }
+                      class: {
+                        "has-background-success": _vm.hp > 0,
+                        "has-background-danger": _vm.hp < 0
+                      }
                     },
                     [_c("i", { staticClass: "fas fa-heart colored" })]
                   )
@@ -40577,7 +40669,10 @@ var render = function() {
                     "span",
                     {
                       staticClass: "button is-static",
-                      class: { hp_up: _vm.xp > 0, hp_down: _vm.xp < 0 }
+                      class: {
+                        "has-background-success": _vm.xp > 0,
+                        "has-background-danger": _vm.xp < 0
+                      }
                     },
                     [_c("i", { staticClass: "fas fa-fist-raised colored" })]
                   )
@@ -40616,7 +40711,10 @@ var render = function() {
                     "span",
                     {
                       staticClass: "button is-static",
-                      class: { hp_up: _vm.gold > 0, hp_down: _vm.gold < 0 }
+                      class: {
+                        "has-background-success": _vm.gold > 0,
+                        "has-background-danger": _vm.gold < 0
+                      }
                     },
                     [_c("i", { staticClass: "fas fa-coins colored" })]
                   )
@@ -40651,11 +40749,25 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", [
-          _c(
-            "button",
-            { staticClass: "button is-success", attrs: { type: "submit" } },
-            [_vm._v(_vm._s(_vm.trans.get("behaviours.create")))]
-          )
+          _vm.behaviour
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-link",
+                  attrs: { type: "button" },
+                  on: { click: _vm.update }
+                },
+                [_vm._v(_vm._s(_vm.trans.get("behaviours.edit")))]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.behaviour
+            ? _c(
+                "button",
+                { staticClass: "button is-success", attrs: { type: "submit" } },
+                [_vm._v(_vm._s(_vm.trans.get("behaviours.create")))]
+              )
+            : _vm._e()
         ])
       ]
     )
@@ -40683,28 +40795,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.data.length
-    ? _c(
-        "section",
-        { staticClass: "has-padding-2" },
-        [
-          _c("div", { staticClass: "columns has-margin-bottom-0" }, [
-            _c("div", { staticClass: "column is-narrow" }, [
-              _c(
-                "a",
-                {
-                  staticClass: "button is-link",
-                  attrs: {
-                    href: "/classroom/" + this.code + "/behaviours/create"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("behaviours.add")))]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column is-hidden-mobile" }),
-            _vm._v(" "),
-            _c(
+  return _c(
+    "section",
+    { staticClass: "has-padding-2" },
+    [
+      _c("div", { staticClass: "columns has-margin-bottom-0" }, [
+        _c("div", { staticClass: "column is-narrow" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button is-link",
+              attrs: { href: "/classroom/" + this.code + "/behaviours/create" }
+            },
+            [_vm._v(_vm._s(_vm.trans.get("behaviours.add")))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column is-hidden-mobile" }),
+        _vm._v(" "),
+        _vm.data.length
+          ? _c(
               "div",
               { staticClass: "column is-narrow" },
               [
@@ -40726,9 +40836,11 @@ var render = function() {
               ],
               1
             )
-          ]),
-          _vm._v(" "),
-          _c("b-table", {
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.data.length
+        ? _c("b-table", {
             attrs: {
               data: _vm.data,
               "default-sort": ["hp", "desc"],
@@ -40870,14 +40982,30 @@ var render = function() {
                         },
                         [
                           _c(
-                            "b-button",
-                            { attrs: { type: "is-info is-small" } },
+                            "a",
+                            {
+                              staticClass: "button is-info is-small",
+                              attrs: {
+                                href:
+                                  "/classroom/" +
+                                  _vm.code +
+                                  "/behaviours/" +
+                                  props.row.id
+                              }
+                            },
                             [_c("i", { staticClass: "fas fa-edit" })]
                           ),
                           _vm._v(" "),
                           _c(
                             "b-button",
-                            { attrs: { type: "is-danger is-small" } },
+                            {
+                              attrs: { type: "is-danger is-small" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.confirmDelete(props.row.id)
+                                }
+                              }
+                            },
                             [_c("i", { staticClass: "fas fa-trash-alt" })]
                           )
                         ],
@@ -40889,13 +41017,13 @@ var render = function() {
               ],
               null,
               false,
-              4239583941
+              1515352415
             )
           })
-        ],
-        1
-      )
-    : _vm._e()
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41037,7 +41165,7 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _c("div", [
-                  _c("h3", { staticClass: "title editable_card" }, [
+                  _c("h3", { staticClass: "title-cards editable_card" }, [
                     _c("svg", { attrs: { viewBox: "0 0 500 150" } }, [
                       _c("path", {
                         attrs: {
@@ -41099,13 +41227,17 @@ var render = function() {
                     })
                   : _vm._e(),
                 _vm._v(" "),
-                _c("p", { staticClass: "content text_shadow editable_card" }, [
-                  _vm._v(
-                    "\n                " +
-                      _vm._s(this.description) +
-                      "\n                "
-                  )
-                ]),
+                _c(
+                  "p",
+                  { staticClass: "content-cards text_shadow editable_card" },
+                  [
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(this.description) +
+                        "\n                "
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _c("div", { staticClass: "hiding-parent" }, [
                   _c("img", {
@@ -42236,7 +42368,7 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("div", [
-          _c("h3", { staticClass: "title textShadow" }, [
+          _c("h3", { staticClass: "title-cards textShadow" }, [
             _c("svg", { attrs: { viewBox: "0 0 500 500" } }, [
               _c("path", {
                 attrs: {
@@ -42293,7 +42425,7 @@ var render = function() {
             })
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "content text_shadow" }, [
+        _c("div", { staticClass: "content-cards text_shadow" }, [
           _vm._v(_vm._s(_vm.card.description))
         ]),
         _vm._v(" "),
@@ -61368,6 +61500,7 @@ __webpack_require__.r(__webpack_exports__);
   "en.behaviours": {
     "add": "Add behaviour",
     "create": "Create behaviour",
+    "edit": "Edit behaviour",
     "icon_select": "Select icon",
     "icon": "Icon",
     "fontawesome": "Do you want more icons? Visit: ",
@@ -62458,9 +62591,7 @@ __webpack_require__.r(__webpack_exports__);
       icon: ficon
     });
   },
-  sendBehaviour: function sendBehaviour(id) {
-    console.log(id);
-  },
+  sendBehaviour: function sendBehaviour(id) {},
   validEmail: function validEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);

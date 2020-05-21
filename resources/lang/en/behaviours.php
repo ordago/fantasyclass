@@ -4,6 +4,7 @@ return [
 
     'add' => 'Add behaviour',
     'create' => 'Create behaviour',
+    'edit' => 'Edit behaviour',
     'icon_select' => 'Select icon',
     'icon' => 'Icon',
     'fontawesome' => 'Do you want more icons? Visit: ',

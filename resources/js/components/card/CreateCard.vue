@@ -16,7 +16,7 @@
                 </div>
                 <img :src="'/img/cardgen/type_'+type+'.png'" v-if="!fullscreen" class="typeCard" id="circleType">
                 <div>
-                  <h3 class="title editable_card">
+                  <h3 class="title-cards editable_card">
                     <svg viewBox="0 0 500 150">
                         <path id="curve" d="m 3.2938789,150.87387 c 5.55773,-3.11588 91.0078161,-49.44517 248.1526411,-48.83221 154.64384,0.61296 237.31506,46.12499 243.28962,49.54732"></path>
                         <text width="250px">
@@ -31,7 +31,7 @@
                 <img :src="'/img/cardgen/only_back_'+ type_bg +'.png'" class="background" v-if="!special && !fullscreen">
                 <img :src="'/img/cardgen/only_back_'+ type_bg +'_gold.png'" class="background" v-if="special && !fullscreen">
                 <!-- Text -->
-                <p class="content text_shadow editable_card">
+                <p class="content-cards text_shadow editable_card">
                     {{ this.description }}
                     </p>
                 <!-- back image -->
