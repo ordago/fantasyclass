@@ -1,12 +1,11 @@
 <template>
-      <section class="m-2" v-if="data.length">
-
-        <div class="text-right">
+      <section class="has-padding-2" v-if="data.length">
+        <div class="has-text-right">
           <download-excel style="display:inline"
               :data   = "data"
               :fields   = "json_fields"              
               >
-              <b-button type="is-success"><i class="fas fa-file-spreadsheet"></i></b-button>
+              <b-button type="is-success has-margin-2"><i class="fas fa-file-spreadsheet"></i></b-button>
           </download-excel>
         </div>
         <b-table

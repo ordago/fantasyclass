@@ -1,16 +1,39 @@
 <template>
-    <div class="container py-2">
-        <!--{{trans.get('success-error.insertSuccessVuePlural')}}-->
-        <div class="row">
-            <span class="mr-2 py-3"><i class="far fa-user-plus"></i></span>
-            <input type="text" v-model="stdName" placeholder="Name and surname" class="form-control col-5 mr-1">
-            <input type="email" v-model="stdEmail" placeholder="Email (optional)" class="form-control col-5 mr-1">
-            <button class="btn btn-success" @click="addStudent">+ Add</button>
+    <div class="has-padding-4">
+        <div class="field is-horizontal">
+            <form @submit.prevent="addStudent">
+                <div class="field-body">
+                    <div class="field is-expanded">
+                    <div class="field has-addons">
+                        <p class="control">
+                        <a class="button is-static">
+                            <i class="far fa-user-plus"></i>
+                        </a>
+                        </p>
+                        <p class="control is-expanded">
+                            <input class="input" v-model="stdName" required type="text" placeholder="Name and surname">
+                        </p>
+                        <p class="control is-expanded">
+                            <input class="input" v-model="stdEmail" type="email" placeholder="Email (optional)">
+                        </p>
+                        <p class="control">
+                            <button class="button is-primary">
+                                +
+                            </button>
+                        </p>
+                    </div>
+                    </div>
+                </div>
+            </form>
         </div>
-        <button v-if="students.length" @click="sendStudents" class="btn btn-success mt-2 mb-1 ml-0">Create students</button>
+        
+        <button v-if="students.length" @click="sendStudents" class="button is-link">Create students</button>
+        
         <div v-for="(student, index) in students" v-bind:key="student.name">
-            <div class="row p-3 mt-2 bg-secondary rounded text-light relative">
-                <span class="badge badge-secondary p-2 m-1 mr-2">{{ index + 1 }}</span> {{ student.name }} <i class="fal fa-at pl-2" v-if="student.email.length"></i> <span class="px-1 font-italic"> {{ student.email }}</span> <span class="badge badge-success p-2 ml-2" v-if="student.username.length" v-tippy content="User already exists in FantasyClass, it'll be registered in the classroom"><i class="fal fa-user pr-2"></i> {{ student.username }}</span> <button class="ml-2 btn btn-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
+            <div class=" has-margin-y-2 has-padding-4 has-background-dark has-text-light rounded text-light relative">
+                <span class="has-padding-right-3">{{ index + 1 }}</span> {{ student.name }} <i class="fal fa-at pl-2" v-if="student.email.length"></i>
+                 <span class="is-italic"> {{ student.email }}</span> <span class="tag is-warning has-margin-left-2" v-if="student.username.length" v-tippy content="User already exists in FantasyClass, it'll be registered in the classroom"><i class="fal fa-user pr-2"></i> {{ student.username }}</span> 
+                <button class="button is-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
     </div>

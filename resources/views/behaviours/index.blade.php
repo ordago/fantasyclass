@@ -1,8 +1,8 @@
 @extends('layouts.menu')
 
 @section('content')
-<div class="bg-light p-2 h-100">
-  <a href="/classroom/{{ $class->code }}/behaviours/create" class="btn btn-primary">{{ __('behaviours.add') }}</a>
+<div>
+  <a href="/classroom/{{ $class->code }}/behaviours/create" class="button is-link">{{ __('behaviours.add') }}</a>
   <!--<div class="d-flex flex-wrap">  
     @foreach($behaviours as $behaviour)
       @php

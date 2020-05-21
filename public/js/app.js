@@ -1981,6 +1981,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2090,7 +2099,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['behaviours'],
   created: function created() {
@@ -2126,6 +2134,61 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2553,12 +2616,25 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   methods: {
-    deleteCard: function deleteCard() {
+    confirmDelete: function confirmDelete() {
       var _this = this;
 
-      axios["delete"]('/classroom/card/' + this.card.id).then(function (response) {
-        if (response.data === 1) {
-          _this.$el.parentNode.removeChild(_this.$el);
+      this.$buefy.dialog.confirm({
+        title: this.trans.get('general.delete'),
+        message: this.trans.get('general.confirm_delete'),
+        confirmText: this.trans.get('general.delete'),
+        type: 'is-danger',
+        hasIcon: true,
+        icon: 'times-circle',
+        iconPack: 'fa',
+        ariaRole: 'alertdialog',
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios["delete"]('/classroom/card/' + _this.card.id).then(function (response) {
+            if (response.data === 1) {
+              _this.$el.parentNode.removeChild(_this.$el);
+            }
+          });
         }
       });
     }
@@ -2749,6 +2825,29 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -40206,7 +40305,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container bg-light h-100 w-100" }, [
+  return _c("div", { staticClass: "container has-padding-3" }, [
     _c(
       "form",
       {
@@ -40222,31 +40321,26 @@ var render = function() {
           domProps: { value: _vm.csrfToken }
         }),
         _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group mt-2" },
-          [
-            _c("label", { attrs: { for: "inputAddress" } }, [
-              _c("span", { staticClass: "text-danger" }, [_vm._v("* ")]),
-              _vm._v(" " + _vm._s(_vm.trans.get("behaviours.icon")))
-            ]),
-            _vm._v(" "),
-            _c(
-              "vfa-picker",
-              _vm._b(
-                {
-                  attrs: { "is-both": "false" },
-                  scopedSlots: _vm._u([
-                    {
-                      key: "activator",
-                      fn: function(ref) {
-                        var on = ref.on
-                        return [
-                          _c("div", { staticClass: "row ml-1" }, [
+        _c("div", { staticClass: "field has-addons" }, [
+          _c(
+            "p",
+            { staticClass: "control" },
+            [
+              _c(
+                "vfa-picker",
+                _vm._b(
+                  {
+                    attrs: { "is-both": "false" },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "activator",
+                        fn: function(ref) {
+                          var on = ref.on
+                          return [
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-secondary",
+                                staticClass: "button is-link",
                                 attrs: { type: "button" },
                                 on: { click: on }
                               },
@@ -40263,83 +40357,83 @@ var render = function() {
                                   staticClass: "fas fa-caret-down ml-1"
                                 })
                               ]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.fullIcon,
-                                  expression: "fullIcon"
-                                }
-                              ],
-                              staticClass: "form-control col-4 mx-2",
-                              attrs: {
-                                name: "icon",
-                                required: "",
-                                placeholder: _vm.trans.get(
-                                  "behaviours.icon_select"
-                                ),
-                                type: "text"
-                              },
-                              domProps: { value: _vm.fullIcon },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                            )
+                          ]
+                        }
+                      },
+                      {
+                        key: "icon",
+                        fn: function(ref) {
+                          var icon = ref.icon
+                          var picked = ref.picked
+                          return [
+                            _c(
+                              "div",
+                              {
+                                attrs: { title: icon.label },
+                                on: {
+                                  click: function($event) {
+                                    _vm.parent(icon)
+                                    picked(icon)
+                                    _vm.fullIcon =
+                                      _vm.parent(icon) + " fa-" + icon.class
                                   }
-                                  _vm.fullIcon = $event.target.value
                                 }
-                              }
-                            })
-                          ])
-                        ]
+                              },
+                              [
+                                _c("span", {
+                                  class: [
+                                    _vm.parent(icon),
+                                    "fa-" + icon.class,
+                                    "vfa-icon-preview"
+                                  ]
+                                })
+                              ]
+                            )
+                          ]
+                        }
                       }
-                    },
-                    {
-                      key: "icon",
-                      fn: function(ref) {
-                        var icon = ref.icon
-                        var picked = ref.picked
-                        return [
-                          _c(
-                            "div",
-                            {
-                              attrs: { title: icon.label },
-                              on: {
-                                click: function($event) {
-                                  _vm.parent(icon)
-                                  picked(icon)
-                                  _vm.fullIcon =
-                                    _vm.parent(icon) + " fa-" + icon.class
-                                }
-                              }
-                            },
-                            [
-                              _c("span", {
-                                class: [
-                                  _vm.parent(icon),
-                                  "fa-" + icon.class,
-                                  "vfa-icon-preview"
-                                ]
-                              })
-                            ]
-                          )
-                        ]
-                      }
-                    }
-                  ])
-                },
-                "vfa-picker",
-                _vm.category,
-                false,
-                true
+                    ])
+                  },
+                  "vfa-picker",
+                  _vm.category,
+                  false,
+                  true
+                )
               )
-            )
-          ],
-          1
-        ),
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "control" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.fullIcon,
+                  expression: "fullIcon"
+                }
+              ],
+              staticClass: "input",
+              attrs: {
+                name: "icon",
+                required: "",
+                placeholder: _vm.trans.get("behaviours.icon_select"),
+                type: "text"
+              },
+              domProps: { value: _vm.fullIcon },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.fullIcon = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -40363,28 +40457,24 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "has-margin-top-4" }, [
           _c("label", { attrs: { for: "name" } }, [
-            _c("span", { staticClass: "text-danger" }, [_vm._v("* ")]),
-            _vm._v(_vm._s(_vm.trans.get("behaviours.name")) + " "),
+            _c("span", { staticClass: "help is-danger is-inline" }, [
+              _vm._v("* ")
+            ]),
+            _vm._v(" " + _vm._s(_vm.trans.get("behaviours.name")) + " "),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v("(" + _vm._s(_vm.trans.get("behaviours.name_info")) + ")")
             ])
           ]),
           _vm._v(" "),
           _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              id: "name",
-              name: "name",
-              required: "",
-              placeholder: ""
-            }
+            staticClass: "input has-margin-y-3",
+            attrs: { type: "text", id: "name", name: "name", required: "" }
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
+        _c("div", { staticClass: "has-margin-top-2" }, [
           _c("label", { attrs: { for: "custom_text" } }, [
             _vm._v(_vm._s(_vm.trans.get("behaviours.custom_text")) + " "),
             _c("small", { staticClass: "font-italic" }, [
@@ -40395,7 +40485,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("input", {
-            staticClass: "form-control",
+            staticClass: "input",
             attrs: {
               type: "text",
               id: "custom_text",
@@ -40405,138 +40495,140 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("label", [
-          _vm._v(_vm._s(_vm.trans.get("behaviours.attributes")) + " "),
-          _c("small", { staticClass: "font-italic" }, [
-            _vm._v(
-              "(" + _vm._s(_vm.trans.get("behaviours.attributes_info")) + ")"
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "form-row" }, [
-          _c("div", { staticClass: "col-md-4 mb-3" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("div", { staticClass: "input-group-prepend" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-text",
-                    class: {
-                      hp_up: _vm.hp + _vm.xp + _vm.gold >= 0,
-                      hp_down: _vm.hp + _vm.xp + _vm.gold < 0
-                    }
-                  },
-                  [_c("i", { staticClass: "fas fa-heart colored" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.hp,
-                    expression: "hp"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", name: "hp", required: "" },
-                domProps: { value: _vm.hp },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.hp = $event.target.value
-                  }
-                }
-              })
+        _c("div", { staticClass: "has-margin-top-3" }, [
+          _c("label", [
+            _vm._v(_vm._s(_vm.trans.get("behaviours.attributes")) + " "),
+            _c("small", { staticClass: "font-italic" }, [
+              _vm._v(
+                "(" + _vm._s(_vm.trans.get("behaviours.attributes_info")) + ")"
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-4 mb-3" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("div", { staticClass: "input-group-prepend" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-text",
-                    class: { hp_up: _vm.xp > 0, hp_down: _vm.xp < 0 }
-                  },
-                  [_c("i", { staticClass: "fas fa-fist-raised colored" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.xp,
-                    expression: "xp"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", name: "xp", required: "" },
-                domProps: { value: _vm.xp },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+          _c("div", { staticClass: "columns has-margin-y-1" }, [
+            _c("div", { staticClass: "column" }, [
+              _c("div", { staticClass: "field has-addons" }, [
+                _c("p", { staticClass: "control" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "button is-static",
+                      class: { hp_up: _vm.hp > 0, hp_down: _vm.hp < 0 }
+                    },
+                    [_c("i", { staticClass: "fas fa-heart colored" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "control is-expanded" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.hp,
+                        expression: "hp"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: { type: "number", name: "hp", required: "" },
+                    domProps: { value: _vm.hp },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.hp = $event.target.value
+                      }
                     }
-                    _vm.xp = $event.target.value
-                  }
-                }
-              })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-4 mb-3" }, [
-            _c("div", { staticClass: "input-group" }, [
-              _c("div", { staticClass: "input-group-prepend" }, [
-                _c(
-                  "span",
-                  {
-                    staticClass: "input-group-text",
-                    class: {
-                      "bg-success": _vm.gold > 0,
-                      "bg-danger": _vm.gold < 0
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column" }, [
+              _c("div", { staticClass: "field has-addons" }, [
+                _c("p", { staticClass: "control" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "button is-static",
+                      class: { hp_up: _vm.xp > 0, hp_down: _vm.xp < 0 }
+                    },
+                    [_c("i", { staticClass: "fas fa-fist-raised colored" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "control is-expanded" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.xp,
+                        expression: "xp"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: { type: "number", name: "xp", required: "" },
+                    domProps: { value: _vm.xp },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.xp = $event.target.value
+                      }
                     }
-                  },
-                  [_c("i", { staticClass: "fas fa-coins colored" })]
-                )
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.gold,
-                    expression: "gold"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { type: "number", name: "gold", required: "" },
-                domProps: { value: _vm.gold },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column" }, [
+              _c("div", { staticClass: "field has-addons" }, [
+                _c("p", { staticClass: "control" }, [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "button is-static",
+                      class: { hp_up: _vm.gold > 0, hp_down: _vm.gold < 0 }
+                    },
+                    [_c("i", { staticClass: "fas fa-coins colored" })]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("p", { staticClass: "control is-expanded" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.gold,
+                        expression: "gold"
+                      }
+                    ],
+                    staticClass: "input",
+                    attrs: { type: "number", name: "gold", required: "" },
+                    domProps: { value: _vm.gold },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.gold = $event.target.value
+                      }
                     }
-                    _vm.gold = $event.target.value
-                  }
-                }
-              })
+                  })
+                ])
+              ])
             ])
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "form-group" }, [
+        _c("div", [
           _c(
             "button",
-            { staticClass: "btn btn-success", attrs: { type: "submit" } },
+            { staticClass: "button is-success", attrs: { type: "submit" } },
             [_vm._v(_vm._s(_vm.trans.get("behaviours.create")))]
           )
         ])
@@ -40569,11 +40661,11 @@ var render = function() {
   return _vm.data.length
     ? _c(
         "section",
-        { staticClass: "m-2" },
+        { staticClass: "has-padding-2" },
         [
           _c(
             "div",
-            { staticClass: "text-right" },
+            { staticClass: "has-text-right" },
             [
               _c(
                 "download-excel",
@@ -40582,9 +40674,11 @@ var render = function() {
                   attrs: { data: _vm.data, fields: _vm.json_fields }
                 },
                 [
-                  _c("b-button", { attrs: { type: "is-success" } }, [
-                    _c("i", { staticClass: "fas fa-file-spreadsheet" })
-                  ])
+                  _c(
+                    "b-button",
+                    { attrs: { type: "is-success has-margin-2" } },
+                    [_c("i", { staticClass: "fas fa-file-spreadsheet" })]
+                  )
                 ],
                 1
               )
@@ -40783,7 +40877,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container w-100" }, [
+  return _c("div", { staticClass: "container w-100 has-padding-3" }, [
     _c(
       "form",
       {
@@ -40864,7 +40958,7 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("div", { staticClass: "columns" }, [
-          _c("div", { staticClass: "column" }, [
+          _c("div", { staticClass: "column is-narrow" }, [
             _c(
               "div",
               {
@@ -41035,126 +41129,142 @@ var render = function() {
             "div",
             { staticClass: "column", attrs: { id: "propertiesCard" } },
             [
-              _c(
-                "div",
-                { staticClass: "is-inline", attrs: { role: "group" } },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.width = _vm.width + 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-search-plus" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.width = _vm.width - 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-search-minus" })]
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "is-inline has-margin-left-4",
-                  attrs: { role: "group" }
-                },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.margin_top = _vm.margin_top + 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-arrow-down" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.margin_top = _vm.margin_top - 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-arrow-up" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.margin_left = _vm.margin_left - 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-arrow-left" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.margin_left = _vm.margin_left + 5
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-arrow-right" })]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "button is-link",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          _vm.margin_top = 0
-                          _vm.margin_left = 0
-                          _vm.width = 250
-                        }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-undo" })]
-                  )
-                ]
-              ),
+              _c("div", { staticClass: "is-flex" }, [
+                _c(
+                  "div",
+                  { staticClass: "field has-addons has-margin-bottom-1" },
+                  [
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.width = _vm.width + 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-search-plus" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.width = _vm.width - 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-search-minus" })]
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "field has-addons has-margin-left-2 has-margin-bottom-1"
+                  },
+                  [
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.margin_top = _vm.margin_top + 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-arrow-down" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.margin_top = _vm.margin_top - 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-arrow-up" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.margin_left = _vm.margin_left - 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-arrow-left" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.margin_left = _vm.margin_left + 5
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-arrow-right" })]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "control" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.margin_top = 0
+                              _vm.margin_left = 0
+                              _vm.width = 250
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-undo" })]
+                      )
+                    ])
+                  ]
+                )
+              ]),
               _vm._v(" "),
               !_vm.card
                 ? _c(
                     "label",
                     {
-                      staticClass: "button is-link has-margin-top-3",
+                      staticClass: "button is-link has-margin-top-1",
                       staticStyle: { display: "block" },
                       attrs: { for: "file-upload" }
                     },
@@ -41770,192 +41880,226 @@ var render = function() {
             "div",
             { staticClass: "column", attrs: { id: "properties2Card" } },
             [
-              _c("div", { staticClass: "form-group" }, [
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("div", { staticClass: "input-group-prepend" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "input-group-text",
-                        attrs: { for: "xp_modify" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-fist-raised colored" }),
+              _c(
+                "div",
+                { staticClass: "field is-horizontal has-margin-bottom-3" },
+                [
+                  _c("div", { staticClass: "field-body" }, [
+                    _c("div", { staticClass: "field is-expanded" }, [
+                      _c("div", { staticClass: "field has-addons" }, [
+                        _c("p", { staticClass: "control" }, [
+                          _c(
+                            "a",
+                            {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              staticClass: "button is-static",
+                              attrs: { content: _vm.trans.get("cards.xp_help") }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-fist-raised colored"
+                              }),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass:
+                                  "fas fa-question-circle has-margin-left-2"
+                              })
+                            ]
+                          )
+                        ]),
                         _vm._v(" "),
-                        _c("i", {
-                          directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass:
-                            "fas fa-question-circle has-margin-left-2",
-                          attrs: { content: _vm.trans.get("cards.xp_help") }
+                        _c("p", { staticClass: "control is-expanded" }, [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.xp,
+                                expression: "xp"
+                              }
+                            ],
+                            staticClass: "input",
+                            attrs: {
+                              type: "number",
+                              required: "",
+                              name: "xp",
+                              value: "0"
+                            },
+                            domProps: { value: _vm.xp },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.xp = $event.target.value
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ])
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: { content: _vm.trans.get("cards.gold_help") }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-coins colored" }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.gold,
+                              expression: "gold"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: { type: "number", required: "", name: "gold" },
+                          domProps: { value: _vm.gold },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.gold = $event.target.value
+                            }
+                          }
                         })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.xp,
-                        expression: "xp"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "number",
-                      required: "",
-                      name: "xp",
-                      value: "0"
-                    },
-                    domProps: { value: _vm.xp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.xp = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("div", { staticClass: "input-group-prepend" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "input-group-text",
-                        attrs: { for: "gold_modify" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-coins colored" }),
-                        _vm._v(" "),
-                        _c("i", {
-                          directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass:
-                            "fas fa-question-circle has-margin-left-2",
-                          attrs: { content: _vm.trans.get("cards.gold_help") }
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: { content: _vm.trans.get("cards.hp_help") }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-heart colored" }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.hp,
+                              expression: "hp"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: { type: "number", required: "", name: "hp" },
+                          domProps: { value: _vm.hp },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.hp = $event.target.value
+                            }
+                          }
                         })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.gold,
-                        expression: "gold"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { type: "number", required: "", name: "gold" },
-                    domProps: { value: _vm.gold },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.gold = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("div", { staticClass: "input-group-prepend" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "input-group-text",
-                        attrs: { for: "hp_modify" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-heart colored" }),
-                        _vm._v(" "),
-                        _c("i", {
-                          directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass:
-                            "fas fa-question-circle has-margin-left-2",
-                          attrs: { content: _vm.trans.get("cards.hp_help") }
+                      ])
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "field is-horizontal has-margin-y-3" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _c("p", { staticClass: "control" }, [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button is-static",
+                            attrs: { content: _vm.trans.get("cards.slot_help") }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-club colored" }),
+                            _vm._v(" "),
+                            _c("i", {
+                              staticClass:
+                                "fas fa-question-circle has-margin-left-2"
+                            })
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.slot,
+                              expression: "slot"
+                            }
+                          ],
+                          staticClass: "input",
+                          attrs: {
+                            type: "number",
+                            required: "",
+                            id: "slot_modify",
+                            name: "slot",
+                            value: "0"
+                          },
+                          domProps: { value: _vm.slot },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.slot = $event.target.value
+                            }
+                          }
                         })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.hp,
-                        expression: "hp"
-                      }
-                    ],
-                    staticClass: "form-control col-11",
-                    attrs: { type: "number", required: "", name: "hp" },
-                    domProps: { value: _vm.hp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.hp = $event.target.value
-                      }
-                    }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("div", { staticClass: "input-group-prepend" }, [
-                    _c(
-                      "label",
-                      {
-                        staticClass: "input-group-text",
-                        attrs: { for: "slot_modify" }
-                      },
-                      [
-                        _c("i", { staticClass: "fas fa-club colored" }),
-                        _vm._v(" "),
-                        _c("i", {
-                          directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass:
-                            "fas fa-question-circle has-margin-left-2",
-                          attrs: { content: _vm.trans.get("cards.slot_help") }
-                        })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.slot,
-                        expression: "slot"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "number",
-                      required: "",
-                      id: "slot_modify",
-                      name: "slot",
-                      value: "0"
-                    },
-                    domProps: { value: _vm.slot },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.slot = $event.target.value
-                      }
-                    }
-                  })
+                      ])
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -41972,7 +42116,7 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               !_vm.card
-                ? _c("button", { staticClass: "btn btn-success" }, [
+                ? _c("button", { staticClass: "button is-success" }, [
                     _vm._v(_vm._s(_vm.trans.get("cards.create_card")))
                   ])
                 : _vm._e()
@@ -42159,7 +42303,7 @@ var render = function() {
           _c(
             "a",
             {
-              staticClass: "button is-light",
+              staticClass: "button is-dark",
               attrs: {
                 href: "/classroom/" + _vm.code + "/cards/" + _vm.card.id,
                 type: "submit"
@@ -42173,7 +42317,7 @@ var render = function() {
             {
               staticClass: "button is-danger",
               attrs: { type: "submit" },
-              on: { click: _vm.deleteCard }
+              on: { click: _vm.confirmDelete }
             },
             [_c("i", { staticClass: "fas fa-trash-alt" })]
           ),
@@ -42756,69 +42900,89 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "container py-2" },
+    { staticClass: "has-padding-4" },
     [
-      _c("div", { staticClass: "row" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.stdName,
-              expression: "stdName"
-            }
-          ],
-          staticClass: "form-control col-5 mr-1",
-          attrs: { type: "text", placeholder: "Name and surname" },
-          domProps: { value: _vm.stdName },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.stdName = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.stdEmail,
-              expression: "stdEmail"
-            }
-          ],
-          staticClass: "form-control col-5 mr-1",
-          attrs: { type: "email", placeholder: "Email (optional)" },
-          domProps: { value: _vm.stdEmail },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.stdEmail = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
+      _c("div", { staticClass: "field is-horizontal" }, [
         _c(
-          "button",
-          { staticClass: "btn btn-success", on: { click: _vm.addStudent } },
-          [_vm._v("+ Add")]
+          "form",
+          {
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.addStudent($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "field-body" }, [
+              _c("div", { staticClass: "field is-expanded" }, [
+                _c("div", { staticClass: "field has-addons" }, [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "control is-expanded" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.stdName,
+                          expression: "stdName"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: {
+                        required: "",
+                        type: "text",
+                        placeholder: "Name and surname"
+                      },
+                      domProps: { value: _vm.stdName },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.stdName = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "control is-expanded" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.stdEmail,
+                          expression: "stdEmail"
+                        }
+                      ],
+                      staticClass: "input",
+                      attrs: { type: "email", placeholder: "Email (optional)" },
+                      domProps: { value: _vm.stdEmail },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.stdEmail = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(1)
+                ])
+              ])
+            ])
+          ]
         )
       ]),
       _vm._v(" "),
       _vm.students.length
         ? _c(
             "button",
-            {
-              staticClass: "btn btn-success mt-2 mb-1 ml-0",
-              on: { click: _vm.sendStudents }
-            },
+            { staticClass: "button is-link", on: { click: _vm.sendStudents } },
             [_vm._v("Create students")]
           )
         : _vm._e(),
@@ -42829,20 +42993,18 @@ var render = function() {
             "div",
             {
               staticClass:
-                "row p-3 mt-2 bg-secondary rounded text-light relative"
+                " has-margin-y-2 has-padding-4 has-background-dark has-text-light rounded text-light relative"
             },
             [
-              _c(
-                "span",
-                { staticClass: "badge badge-secondary p-2 m-1 mr-2" },
-                [_vm._v(_vm._s(index + 1))]
-              ),
+              _c("span", { staticClass: "has-padding-right-3" }, [
+                _vm._v(_vm._s(index + 1))
+              ]),
               _vm._v(" " + _vm._s(student.name) + " "),
               student.email.length
                 ? _c("i", { staticClass: "fal fa-at pl-2" })
                 : _vm._e(),
               _vm._v(" "),
-              _c("span", { staticClass: "px-1 font-italic" }, [
+              _c("span", { staticClass: "is-italic" }, [
                 _vm._v(" " + _vm._s(student.email))
               ]),
               _vm._v(" "),
@@ -42851,7 +43013,7 @@ var render = function() {
                     "span",
                     {
                       directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "badge badge-success p-2 ml-2",
+                      staticClass: "tag is-warning has-margin-left-2",
                       attrs: {
                         content:
                           "User already exists in FantasyClass, it'll be registered in the classroom"
@@ -42867,7 +43029,7 @@ var render = function() {
               _c(
                 "button",
                 {
-                  staticClass: "ml-2 btn btn-danger delete-button-right",
+                  staticClass: "button is-danger delete-button-right",
                   on: {
                     click: function($event) {
                       return _vm.deleteStudent(index)
@@ -42889,8 +43051,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2 py-3" }, [
-      _c("i", { staticClass: "far fa-user-plus" })
+    return _c("p", { staticClass: "control" }, [
+      _c("a", { staticClass: "button is-static" }, [
+        _c("i", { staticClass: "far fa-user-plus" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control" }, [
+      _c("button", { staticClass: "button is-primary" }, [
+        _vm._v("\n                            +\n                        ")
+      ])
     ])
   }
 ]
@@ -42929,30 +43103,12 @@ var render = function() {
         _vm._v(" "),
         _vm.studentsJson.length > 0
           ? _c("div", { staticClass: "flex-center floatR" }, [
-              _c(
-                "span",
-                {
-                  directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "mr-1 hideGrid pointer",
-                  attrs: {
-                    content: _vm.trans.get("users_groups.change_layout")
-                  },
-                  on: { click: _vm.changeView }
-                },
-                [
-                  _c("i", {
-                    staticClass: "fas fa-th fs-1 colored",
-                    staticStyle: { color: "white" }
-                  })
-                ]
-              ),
-              _vm._v(" "),
               _vm._m(2),
               _vm._v(" "),
               _c("span", [
                 _c("i", {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "fas fa-user colored pointer mr-2",
+                  staticClass: "fas fa-user colored pointer has-margin-right-3",
                   class: { coloredGray: _vm.sortKey != "name" },
                   staticStyle: { color: "#eee" },
                   attrs: {
@@ -42970,7 +43126,8 @@ var render = function() {
               _c("span", [
                 _c("i", {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "fas fa-heart colored pointer mr-2",
+                  staticClass:
+                    "fas fa-heart colored pointer has-margin-right-3",
                   class: { coloredGray: _vm.sortKey != "hp" },
                   attrs: { content: _vm.trans.get("users_groups.order_hp") },
                   on: {
@@ -42984,7 +43141,8 @@ var render = function() {
               _c("span", [
                 _c("i", {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "fas fa-fist-raised colored pointer mr-2",
+                  staticClass:
+                    "fas fa-fist-raised colored pointer has-margin-right-3",
                   class: { coloredGray: _vm.sortKey != "xp" },
                   attrs: { content: _vm.trans.get("users_groups.order_xp") },
                   on: {
@@ -42998,7 +43156,8 @@ var render = function() {
               _c("span", [
                 _c("i", {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "fas fa-coins colored pointer mr-2",
+                  staticClass:
+                    "fas fa-coins colored pointer has-margin-right-3",
                   class: { coloredGray: _vm.sortKey != "gold" },
                   attrs: { content: _vm.trans.get("users_groups.order_gold") },
                   on: {
@@ -43007,17 +43166,7 @@ var render = function() {
                     }
                   }
                 })
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "cbx",
-                staticStyle: { display: "none" },
-                attrs: { type: "checkbox", id: "toggleStdView" }
-              }),
-              _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _vm._m(4)
+              ])
             ])
           : _vm._e()
       ]
@@ -43033,7 +43182,7 @@ var render = function() {
             {
               key: student.id,
               staticClass:
-                "column is-6-tablet is-12-mobile is-4-desktop is-3-fullhd "
+                "column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd "
             },
             [
               _c("div", { staticClass: "box" }, [
@@ -43142,18 +43291,21 @@ var render = function() {
                           )
                         }),
                         _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "button is-link is-light has-margin-1",
-                            on: {
-                              click: function($event) {
-                                _vm.show2l = !_vm.show2l
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "fas fa-plus" })]
-                        ),
+                        _vm.otherBehavioursJson.length
+                          ? _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "button is-link is-light has-margin-1",
+                                on: {
+                                  click: function($event) {
+                                    _vm.show2l = !_vm.show2l
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-plus" })]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         _vm.show2l
                           ? _c(
@@ -43203,7 +43355,7 @@ var render = function() {
                       "div",
                       { staticClass: "score has-padding-3 has-margin-1" },
                       [
-                        _vm._m(5, true),
+                        _vm._m(3, true),
                         _vm._v(
                           " " +
                             _vm._s(student.xp) +
@@ -43691,28 +43843,10 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [
-      _c("i", { staticClass: "fal fa-sort-numeric-down-alt mr-2" })
+      _c("i", {
+        staticClass: "fal fa-sort-numeric-down-alt has-margin-right-3"
+      })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      {
-        staticClass: "toggle",
-        staticStyle: { width: "40px" },
-        attrs: { for: "toggleStdView" }
-      },
-      [_c("span")]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [_c("i", { staticClass: "fas fa-user ml-2 outer_glow" })])
   },
   function() {
     var _vm = this
@@ -61200,7 +61334,7 @@ __webpack_require__.r(__webpack_exports__);
     "goal_type_example": "would you like to conquer cities, or fight dragons or monsters?",
     "cards_text": "The game already comes with a pack of cards available, but between all of us we can share cards. Do you want to import into your game any other card created by other teachers? It's not manadatory, if you don't want to import cards, just go to the next step.",
     "levels_text": "Choose a level pack for your game. You can modify the levels as you like once imported and once defined, you can share them with other teachers. We can't wait to see your contributions!",
-    "theme_text": "What theme do you want for this class?",
+    "theme_text": "Which theme do you want for this class?",
     "char_theme_info": "If you've already created groups in this class, you'll need to assign the new subclasses manually.",
     "custom_theme": "To create any gamification independent of the character theme, you can use this option. The information of the subclasses and also the part of the shop dedicated to the equipment will disappear.",
     "finish_title": "You're about to do wonderful things!",
@@ -61217,19 +61351,26 @@ __webpack_require__.r(__webpack_exports__);
     "update": "Update",
     "edit": "Edit",
     "delete": "Delete",
-    "close": "Close"
+    "close": "Close",
+    "no": "No",
+    "confirm_delete": "Are you sure you want to delete this element? This action can't be undone."
   },
   "en.menu": {
     "user_groups": "Users and groups",
+    "users": "Users",
     "groups": "Groups",
+    "map": "Map",
     "cards": "Cards",
     "levels": "Levels",
-    "story": "Story",
+    "stories": "Stories",
     "goals": "Goals",
+    "rules": "Rules",
+    "log": "Log",
     "shop": "Shop",
     "settings": "Settings",
     "profile": "Profile",
-    "behaviours": "Behaviours"
+    "behaviours": "Behaviours",
+    "rewards": "Rewards"
   },
   "en.pagination": {
     "previous": "&laquo; Previous",

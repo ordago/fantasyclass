@@ -1,5 +1,5 @@
 <template>
-    <div class="container w-100">
+    <div class="container w-100 has-padding-3">
         <form method="post" @submit="formSubmit" :action="'/classroom/' + this.code + '/cards'" enctype="multipart/form-data">
             <input :value="csrfToken" type="hidden" name="_token"/>
             <input v-model="width" name="width" type="hidden"/>
@@ -8,7 +8,7 @@
 
             <div class="columns">
               <!-- CARD -->
-              <div class="column">
+              <div class="column is-narrow">
               <div class="cardContainer" id="customCard" name="card" :style="'background-color: '+ background +';'">
                 <div class="lvlTopLeft" id="lvl" v-if="min_lvl>0">
                   <img src="/img/cardgen/lvl.png" class="levelCard">
@@ -60,18 +60,35 @@
               <!-- END CARD -->
 
               <div class="column" id="propertiesCard">
-                  <div class="is-inline" role="group">
-                    <button type="button" class="button is-link" @click="width=width+5"><i class="fas fa-search-plus"></i></button>
-                    <button type="button" class="button is-link" @click="width=width-5"><i class="fas fa-search-minus"></i></button>
+
+                <div class="is-flex">
+                  <div class="field has-addons has-margin-bottom-1">
+                    <p class="control">
+                        <button type="button" class="button is-link" @click="width=width+5"><i class="fas fa-search-plus"></i></button>
+                    </p>
+                    <p class="control">
+                        <button type="button" class="button is-link" @click="width=width-5"><i class="fas fa-search-minus"></i></button>
+                    </p>
                   </div>
-                  <div class="is-inline has-margin-left-4" role="group">
-                    <button type="button" class="button is-link" @click="margin_top=margin_top+5"><i class="fas fa-arrow-down"></i></button>
-                    <button type="button" class="button is-link" @click="margin_top=margin_top-5"><i class="fas fa-arrow-up"></i></button>
-                    <button type="button" class="button is-link" @click="margin_left=margin_left-5"><i class="fas fa-arrow-left"></i></button>
-                    <button type="button" class="button is-link" @click="margin_left=margin_left+5"><i class="fas fa-arrow-right"></i></button>
-                    <button type="button" class="button is-link" @click="margin_top=0;margin_left=0;width=250;"><i class="fas fa-undo"></i></button>
+                  <div class="field has-addons has-margin-left-2 has-margin-bottom-1">
+                    <p class="control">
+                      <button type="button" class="button is-link" @click="margin_top=margin_top+5"><i class="fas fa-arrow-down"></i></button>
+                    </p>
+                    <p class="control">
+                      <button type="button" class="button is-link" @click="margin_top=margin_top-5"><i class="fas fa-arrow-up"></i></button>
+                    </p>
+                    <p class="control">
+                      <button type="button" class="button is-link" @click="margin_left=margin_left-5"><i class="fas fa-arrow-left"></i></button>
+                    </p>
+                    <p class="control">
+                      <button type="button" class="button is-link" @click="margin_left=margin_left+5"><i class="fas fa-arrow-right"></i></button>
+                    </p>
+                    <p class="control">
+                      <button type="button" class="button is-link" @click="margin_top=0;margin_left=0;width=250;"><i class="fas fa-undo"></i></button>
+                    </p>
                   </div>
-                  <label v-if="!card" for="file-upload" style="display: block;" class="button is-link has-margin-top-3">
+                </div>
+                  <label v-if="!card" for="file-upload" style="display: block;" class="button is-link has-margin-top-1">
                     <i class="fa fa-cloud-upload"></i> {{ trans.get('cards.custom_image') }}
                   </label>
                   <input v-if="!card" type="file" accept="image/*" id="file-upload" name="image" style="display:none" class="my-2 p-3 border border-secondary rounded" @change="getImage">
@@ -223,37 +240,75 @@
                           </b-switch>
                   </div>
               </div>
+
               <div class="column" id="properties2Card">
-                <div class="form-group">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="xp_modify"><i class="fas fa-fist-raised colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.xp_help')"></i></label>
+                  <div class="field is-horizontal has-margin-bottom-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.xp_help')">
+                              <i class="fas fa-fist-raised colored"></i> <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" required v-model="xp" name="xp"  value="0" class="input">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <input type="number" required v-model="xp" name="xp"  value="0" class="form-control">
                   </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="gold_modify"><i class="fas fa-coins colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.gold_help')"></i></label>
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.gold_help')">
+                              <i class="fas fa-coins colored"></i> <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" required v-model="gold" name="gold" class="input">
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <input type="number" required v-model="gold" name="gold" class="form-control">
+                  </div>                  
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.hp_help')">
+                              <i class="fas fa-heart colored"></i> <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" required v-model="hp" name="hp" class="input">
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>                  
+                  <div class="field is-horizontal has-margin-y-3">
+                    <div class="field-body">
+                      <div class="field is-expanded">
+                        <div class="field has-addons">
+                          <p class="control">
+                            <a class="button is-static" v-tippy :content="trans.get('cards.slot_help')">
+                              <i class="fas fa-club colored"></i> <i class="fas fa-question-circle has-margin-left-2"></i>
+                            </a>
+                          </p>
+                          <p class="control is-expanded">
+                            <input type="number" required id="slot_modify" v-model="slot" name="slot" value="0" class="input">
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="hp_modify"><i class="fas fa-heart colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.hp_help')"></i></label>
-                    </div>
-                    <input type="number" required v-model="hp" name="hp" class="form-control col-11">
-                  </div>
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <label class="input-group-text" for="slot_modify"><i class="fas fa-club colored"></i> <i class="fas fa-question-circle has-margin-left-2" v-tippy :content="trans.get('cards.slot_help')"></i></label>
-                    </div>
-                    <input type="number" required id="slot_modify" v-model="slot" name="slot" value="0" class="form-control">
-                  </div>
-                </div>
-        
-                    <button class="button is-link" @click="updateCard" v-if="card" type="button">{{ trans.get('cards.edit_card') }}</button>
-                    <button class="btn btn-success" v-if="!card">{{ trans.get('cards.create_card') }}</button>
+                  <button class="button is-link" @click="updateCard" v-if="card" type="button">{{ trans.get('cards.edit_card') }}</button>
+                  <button class="button is-success" v-if="!card">{{ trans.get('cards.create_card') }}</button>
 
             </div>
           </div>

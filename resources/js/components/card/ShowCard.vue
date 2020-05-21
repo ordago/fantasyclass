@@ -40,8 +40,8 @@
       </div>
     </div>
     <div style="text-align:center;" v-if="this.admin==1">
-        <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-light"><i class="fas fa-edit"></i></a>
-        <button type="submit" @click="deleteCard" class="button is-danger"><i class="fas fa-trash-alt"></i></button>
+        <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-dark"><i class="fas fa-edit"></i></a>
+        <button type="submit" @click="confirmDelete" class="button is-danger"><i class="fas fa-trash-alt"></i></button>
         <button type="submit" disabled class="button is-primary"><i class="fas fa-share-alt"></i></button>
       </div>
   </div>
@@ -58,13 +58,26 @@
             }
         },
         methods: {
-          deleteCard: function() {
-            axios.delete('/classroom/card/' + this.card.id)
-                .then(response => {
-                  if(response.data === 1) {
-                      this.$el.parentNode.removeChild(this.$el);
+          confirmDelete() {
+                this.$buefy.dialog.confirm({
+                    title: this.trans.get('general.delete'),
+                    message: this.trans.get('general.confirm_delete'),
+                    confirmText: this.trans.get('general.delete'),
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true,
+                    onConfirm: () => {
+                          axios.delete('/classroom/card/' + this.card.id)
+                            .then(response => {
+                              if(response.data === 1) {
+                                this.$el.parentNode.removeChild(this.$el);
+                              }
+                          })
                     }
-                })
+                }) 
           }
 
         },

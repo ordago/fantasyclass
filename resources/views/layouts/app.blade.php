@@ -38,14 +38,14 @@
                             @yield('title','FantasyClass')
                         </label>
                     </a>
-                <a role="button" class="navbar-burger burger" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+                <a role="button" class="navbar-burger burger" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 <span aria-hidden="true"></span>
                 </a>
             </div>
 
-            <div id="navbarBasicExample" class="navbar-menu" :class="{ 'is-active': showNav }">
+            <div id="navbar" class="navbar-menu" :class="{ 'is-active': showNav }">
                 @if(isset($class))
                 <div class="navbar-start">
                         <a href="/classroom/{{ $class->code }}" class="navbar-item">
@@ -97,7 +97,7 @@
                 </div>
                 @endif
 
-                <div class="navbar-end">
+                <div class="navbar-end has-text-right">
                     <div class="navbar-item">
                         <div class="dropdown is-right is-hoverable">
                             <div class="dropdown-trigger">
@@ -113,7 +113,7 @@
                                 </span>
                                 </button>
                             </div>
-                            <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
                                     <span href="#" class="dropdown-item">
                                         {{ Auth::user()->username }}

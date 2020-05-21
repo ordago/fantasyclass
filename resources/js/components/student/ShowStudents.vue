@@ -18,19 +18,19 @@
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
         -->
         <div class="flex-center floatR" v-if="studentsJson.length>0">
-            <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span>
-            <span><i class="fal fa-sort-numeric-down-alt mr-2"></i></span>
-            <span ><i class="fas fa-user colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_name')" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
-            <span ><i class="fas fa-heart colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_hp')" v-bind:class="{ coloredGray: sortKey != 'hp' }" @click="orderBy('hp');"></i></span>
-            <span ><i class="fas fa-fist-raised colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_xp')" v-bind:class="{ coloredGray: sortKey != 'xp' }" @click="orderBy('xp');"></i></span>
-            <span ><i class="fas fa-coins colored pointer mr-2" v-tippy :content="trans.get('users_groups.order_gold')" v-bind:class="{ coloredGray: sortKey != 'gold' }" @click="orderBy('gold');"></i></span>
-            <input type="checkbox" id="toggleStdView" class="cbx" style="display:none"/>
+            <!-- <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span> -->
+            <span><i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i></span>
+            <span ><i class="fas fa-user colored pointer has-margin-right-3" v-tippy :content="trans.get('users_groups.order_name')" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0"></i></span>
+            <span ><i class="fas fa-heart colored pointer has-margin-right-3" v-tippy :content="trans.get('users_groups.order_hp')" v-bind:class="{ coloredGray: sortKey != 'hp' }" @click="orderBy('hp');"></i></span>
+            <span ><i class="fas fa-fist-raised colored pointer has-margin-right-3" v-tippy :content="trans.get('users_groups.order_xp')" v-bind:class="{ coloredGray: sortKey != 'xp' }" @click="orderBy('xp');"></i></span>
+            <span ><i class="fas fa-coins colored pointer has-margin-right-3" v-tippy :content="trans.get('users_groups.order_gold')" v-bind:class="{ coloredGray: sortKey != 'gold' }" @click="orderBy('gold');"></i></span>
+            <!-- <input type="checkbox" id="toggleStdView" class="cbx" style="display:none"/>
             <label  style="width: 40px" for="toggleStdView" class="toggle"><span></span></label>
-            <span><i class="fas fa-user ml-2 outer_glow"></i></span>
+            <span><i class="fas fa-user ml-2 outer_glow"></i></span> -->
         </div>
     </div>
         <div class="columns is-multiline is-variable is-1 has-margin-y-2">
-        <div class="column is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
+        <div class="column has-padding-y-1 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="box">
                 <div class="card-header has-text-centered">
                     <div class="card-header-title">
@@ -50,7 +50,7 @@
                                  class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
                                     <i :class="behaviour.icon"></i>
                             </button>
-                            <div class="button is-link is-light has-margin-1" @click="show2l=!show2l"><i class="fas fa-plus"></i></div>
+                            <div class="button is-link is-light has-margin-1" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
                             <div v-if="show2l">
                                 <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" 
                                     class="button has-margin-1 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']" v-bind:key="behaviour.id">
