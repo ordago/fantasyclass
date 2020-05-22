@@ -3181,7 +3181,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['students', 'code', 'behaviours', 'bg'],
+  props: ['students', 'code', 'behaviours', 'bgc', 'bg'],
   mounted: function mounted() {
     var _$cookies$get, _$cookies$get2;
 
@@ -42861,7 +42861,12 @@ var render = function() {
               _c("label", [
                 _c("input", {
                   staticClass: "hide-radios",
-                  attrs: { type: "radio", name: "charTheme", value: "2" }
+                  attrs: {
+                    type: "radio",
+                    disabled: "",
+                    name: "charTheme",
+                    value: "2"
+                  }
                 }),
                 _vm._v(" "),
                 _c("img", {
@@ -42873,7 +42878,7 @@ var render = function() {
                       expression: "{interactive: true}"
                     }
                   ],
-                  staticClass: "themePreview",
+                  staticClass: "themePreview disabled",
                   attrs: {
                     src: "/img/character/themes-preview/robots.png",
                     content:
@@ -42885,11 +42890,16 @@ var render = function() {
               _c("label", [
                 _c("input", {
                   staticClass: "hide-radios",
-                  attrs: { type: "radio", name: "charTheme", value: "3" }
+                  attrs: {
+                    type: "radio",
+                    disabled: "",
+                    name: "charTheme",
+                    value: "3"
+                  }
                 }),
                 _vm._v(" "),
                 _c("img", {
-                  staticClass: "themePreview",
+                  staticClass: "themePreview disabled",
                   attrs: { src: "/img/character/themes-preview/superheros.png" }
                 })
               ]),
@@ -42897,7 +42907,12 @@ var render = function() {
               _c("label", [
                 _c("input", {
                   staticClass: "hide-radios",
-                  attrs: { type: "radio", name: "charTheme", value: "4" }
+                  attrs: {
+                    type: "radio",
+                    disabled: "",
+                    name: "charTheme",
+                    value: "4"
+                  }
                 }),
                 _vm._v(" "),
                 _c("img", {
@@ -42909,7 +42924,7 @@ var render = function() {
                       expression: "{interactive: true}"
                     }
                   ],
-                  staticClass: "themePreview",
+                  staticClass: "themePreview disabled",
                   attrs: {
                     src: "/img/character/themes-preview/pirateanimals.png",
                     content:
@@ -42921,12 +42936,17 @@ var render = function() {
               _c("label", [
                 _c("input", {
                   staticClass: "hide-radios",
-                  attrs: { type: "radio", name: "charTheme", value: "0" }
+                  attrs: {
+                    type: "radio",
+                    disabled: "",
+                    name: "charTheme",
+                    value: "0"
+                  }
                 }),
                 _vm._v(" "),
                 _c("img", {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "themePreview",
+                  staticClass: "themePreview disabled",
                   attrs: {
                     src: "/img/character/themes-preview/custom.png",
                     content: _vm.trans.get("classroom.custom_theme")
@@ -43365,10 +43385,13 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass:
-                      "card-image rounded-top has-background-dark char-bg",
+                    staticClass: "card-image rounded-top char-bg",
                     style:
-                      "background-image: url(/img/bg/thumb_" + _vm.bg + ");"
+                      "background-color:" +
+                      _vm.bgc +
+                      ";background-image: url(/img/bg/thumb_" +
+                      _vm.bg +
+                      ");"
                   },
                   [
                     _c(

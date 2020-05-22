@@ -32,7 +32,7 @@
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded card-shadow-s">
-                <div class="card-image rounded-top has-background-dark char-bg" :style="'background-image: url(/img/bg/thumb_' + bg + ');'">
+                <div class="card-image rounded-top char-bg" :style="'background-color:' + bgc + ';background-image: url(/img/bg/thumb_' + bg + ');'">
                     <div class="character-container character character-small" style="position:relative;">
                         <img :src="'/img/character/' + element.src" :class="element.classes" v-for="element in student.equipment" v-bind:key="element.id">
                     </div>
@@ -156,7 +156,7 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['students', 'code', 'behaviours', 'bg'],
+        props: ['students', 'code', 'behaviours', 'bgc', 'bg'],
         mounted() {
             this.studentsJson = JSON.parse(this.students)
             this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems)
