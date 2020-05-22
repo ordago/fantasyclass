@@ -15,10 +15,17 @@ class Student extends Model
                             'character_id', 
                             'password_plain' ];
 
+    protected $appends = ['username'];
+
+    public function getUsernameAttribute() 
+    {  
+        return $this->classroom->user->username;  
+    }
 
     public function classroom() {
         return $this->belongsTo(ClassroomUser::class, 'classroom_user_id');
     }
+
 
     public function equipment() {
         return $this->belongsToMany(Equipment::class);

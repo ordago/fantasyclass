@@ -7,17 +7,16 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
-@import "~bulma/bulma.sass";
-@import "~buefy/dist/buefy.min.css";
-@import "~bulma-helper-spacing/spacing";
+ @import "~bulma/bulma.sass";
+ @import "~buefy/dist/buefy.min.css";
+ @import "~bulma-helper-spacing/spacing";
 
 // Fontawesome animation
 @import '~font-awesome-animation/dist/font-awesome-animation.min.css';
 
 // FantasyClass
 @import 'common';
-@import 'manage';
+@import 'main';
 @import 'characters';
-//@import 'manage-mobile';
 
 @import 'plugins';

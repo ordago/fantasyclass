@@ -2032,6 +2032,14 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       e.preventDefault();
     },
     parent: function parent(icon) {
+      var removeElements = function removeElements(elms) {
+        return elms.forEach(function (el) {
+          return el.remove();
+        });
+      };
+
+      removeElements(document.querySelectorAll(".main-content svg"));
+
       if (icon.styles.indexOf("regular") > -1) {
         return "fa";
       } else if (icon.styles.indexOf("solid") > -1) {
@@ -40426,7 +40434,9 @@ var render = function() {
                               },
                               [
                                 !_vm.fullIcon
-                                  ? _c("i", { class: "fas fa-image" })
+                                  ? _c("span", [
+                                      _c("i", { class: "fas fa-image" })
+                                    ])
                                   : _vm._e(),
                                 _vm._v(" "),
                                 _vm.fullIcon
@@ -42812,7 +42822,7 @@ var render = function() {
                       [
                         theme.type == 1
                           ? _c("img", {
-                              attrs: { src: "/img/bg/" + theme.name }
+                              attrs: { src: "/img/bg/thumb_" + theme.name }
                             })
                           : _c("img", { attrs: { src: "/img/bg/empty.png" } })
                       ]
@@ -42834,7 +42844,7 @@ var render = function() {
               }
             },
             [
-              _c("h1", { staticClass: "is-size-2" }, [
+              _c("h1", { staticClass: "is-size-2 has-margin-bottom-4" }, [
                 _c("i", { staticClass: "fal fa-ghost faa-float animated" }),
                 _vm._v(" " + _vm._s(_vm.trans.get("classroom.char_theme")))
               ]),
@@ -43298,13 +43308,14 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _vm.studentsJson.length > 0
-          ? _c("div", { staticClass: "flex-center floatR" }, [
+          ? _c("div", { staticClass: "flex-center float-right" }, [
               _vm._m(2),
               _vm._v(" "),
-              _c("span", [
-                _c("i", {
+              _c(
+                "span",
+                {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "fas fa-user colored pointer has-margin-right-3",
+                  staticClass: "colored",
                   class: { coloredGray: _vm.sortKey != "name" },
                   staticStyle: { color: "#eee" },
                   attrs: {
@@ -43316,14 +43327,19 @@ var render = function() {
                       return _vm.orderBy("name")
                     }
                   }
-                })
-              ]),
+                },
+                [
+                  _c("i", {
+                    staticClass: "fas fa-user pointer has-margin-right-3"
+                  })
+                ]
+              ),
               _vm._v(" "),
-              _c("span", [
-                _c("i", {
+              _c(
+                "span",
+                {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass:
-                    "fas fa-heart colored pointer has-margin-right-3",
+                  staticClass: "colored",
                   class: { coloredGray: _vm.sortKey != "hp" },
                   attrs: { content: _vm.trans.get("users_groups.order_hp") },
                   on: {
@@ -43331,14 +43347,19 @@ var render = function() {
                       return _vm.orderBy("hp")
                     }
                   }
-                })
-              ]),
+                },
+                [
+                  _c("i", {
+                    staticClass: "fas fa-heart pointer has-margin-right-3"
+                  })
+                ]
+              ),
               _vm._v(" "),
-              _c("span", [
-                _c("i", {
+              _c(
+                "span",
+                {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass:
-                    "fas fa-fist-raised colored pointer has-margin-right-3",
+                  staticClass: "colored",
                   class: { coloredGray: _vm.sortKey != "xp" },
                   attrs: { content: _vm.trans.get("users_groups.order_xp") },
                   on: {
@@ -43346,14 +43367,19 @@ var render = function() {
                       return _vm.orderBy("xp")
                     }
                   }
-                })
-              ]),
+                },
+                [
+                  _c("i", {
+                    staticClass: "fas fa-fist-raised pointer has-margin-right-3"
+                  })
+                ]
+              ),
               _vm._v(" "),
-              _c("span", [
-                _c("i", {
+              _c(
+                "span",
+                {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass:
-                    "fas fa-coins colored pointer has-margin-right-3",
+                  staticClass: "colored",
                   class: { coloredGray: _vm.sortKey != "gold" },
                   attrs: { content: _vm.trans.get("users_groups.order_gold") },
                   on: {
@@ -43361,8 +43387,13 @@ var render = function() {
                       return _vm.orderBy("gold")
                     }
                   }
-                })
-              ])
+                },
+                [
+                  _c("i", {
+                    staticClass: "fas fa-coins pointer has-margin-right-3"
+                  })
+                ]
+              )
             ])
           : _vm._e()
       ]
@@ -43385,7 +43416,7 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "card-image rounded-top char-bg",
+                    staticClass: "card-image card-shadow-s rounded-top char-bg",
                     style:
                       "background-color:" +
                       _vm.bgc +
@@ -43398,8 +43429,7 @@ var render = function() {
                       "div",
                       {
                         staticClass:
-                          "character-container character character-small",
-                        staticStyle: { position: "relative" }
+                          "character-container character character-small is-relative"
                       },
                       _vm._l(student.equipment, function(element) {
                         return _c("img", {
@@ -43422,7 +43452,9 @@ var render = function() {
                         _vm._v(_vm._s(student.name))
                       ]),
                       _vm._v(" "),
-                      _vm._m(4, true)
+                      _c("p", { staticClass: "subtitle is-6" }, [
+                        _c("small", [_vm._v("@" + _vm._s(student.username))])
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
@@ -43443,7 +43475,7 @@ var render = function() {
                               staticStyle: { width: "100%" }
                             },
                             [
-                              _vm._m(5, true),
+                              _vm._m(4, true),
                               _vm._v(" "),
                               student.hp < 20
                                 ? _c(
@@ -43534,6 +43566,29 @@ var render = function() {
                                   },
                                   [_c("i", { staticClass: "fas fa-plus" })]
                                 )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.mainBehavioursJson.length == 0
+                              ? _c(
+                                  "a",
+                                  {
+                                    directives: [
+                                      { name: "tippy", rawName: "v-tippy" }
+                                    ],
+                                    staticClass:
+                                      "button is-link is-light has-margin-1 has-padding-x-4",
+                                    attrs: {
+                                      href:
+                                        "/classroom/" +
+                                        _vm.code +
+                                        "/behaviours/create",
+                                      content: _vm.trans.get(
+                                        "users_groups.add_behaviours"
+                                      )
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "fas fa-plus" })]
+                                )
                               : _vm._e()
                           ],
                           2
@@ -43586,7 +43641,7 @@ var render = function() {
                         "div",
                         { staticClass: "score has-padding-3 has-margin-1" },
                         [
-                          _vm._m(6, true),
+                          _vm._m(5, true),
                           _vm._v(
                             " " +
                               _vm._s(student.xp) +
@@ -44100,21 +44155,6 @@ var staticRenderFns = [
           attrs: { src: "/img/no_avatar.png", alt: "" }
         })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "subtitle is-6" }, [
-      _c("small", [_vm._v("0 "), _c("i", { staticClass: "fas fa-heart" })]),
-      _vm._v(" "),
-      _c("small", [
-        _vm._v("0 "),
-        _c("i", { staticClass: "fas fa-fist-raised" })
-      ]),
-      _vm._v(" "),
-      _c("small", [_vm._v("0 "), _c("i", { staticClass: "fas fa-coins   " })])
     ])
   },
   function() {
@@ -61678,7 +61718,8 @@ __webpack_require__.r(__webpack_exports__);
     "order_hp": "Order by health points",
     "order_xp": "Order by experience",
     "order_gold": "Order by gold",
-    "apply": "Apply"
+    "apply": "Apply",
+    "add_behaviours": "Add new behaviours to interact with students"
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",

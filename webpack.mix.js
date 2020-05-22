@@ -19,4 +19,6 @@ mix.js([
 
 mix.sass('resources/sass/app.scss', 'public/css').options({
     processCssUrls: mix.inProduction()
-});
+}).purgeCss({
+    enabled: true,
+});;

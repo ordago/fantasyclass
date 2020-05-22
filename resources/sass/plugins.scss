@@ -1,6 +1,14 @@
+.fa-heart {
+  stroke: black;
+  stroke-width: 10;
+}
+
 .vfa-icon {
     height: auto!important;
     margin: 0!important;
+}
+.vfa-icon .vfa-icon-preview {
+  display: initial!important;
 }
 
 .is-static {

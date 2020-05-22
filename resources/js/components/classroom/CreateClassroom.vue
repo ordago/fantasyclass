@@ -43,7 +43,7 @@
                 <label v-for="(theme, index) in themesJson" v-bind:key="theme.id">
                       <input type="radio" name="bgtheme" class="hide-radios" :checked="index === 0" :value="theme.id">
                         <div class="theme bg_color_theme" :style="'background-color:' + theme.color">
-                          <img :src="'/img/bg/' + theme.name" v-if="theme.type == 1">                      
+                          <img :src="'/img/bg/thumb_' + theme.name" v-if="theme.type == 1">                      
                           <img src="/img/bg/empty.png" v-else> 
                         </div>
                 </label>                  
@@ -51,7 +51,7 @@
             </b-tab-item>
 
             <b-tab-item :label="trans.get('classroom.char_theme')" icon="mask" icon-pack="far">
-                <h1 class="is-size-2"><i class="fal fa-ghost faa-float animated"></i> {{ trans.get('classroom.char_theme') }}</h1>
+                <h1 class="is-size-2 has-margin-bottom-4"><i class="fal fa-ghost faa-float animated"></i> {{ trans.get('classroom.char_theme') }}</h1>
                 <label>
                     <input type="radio" name="charTheme" class="hide-radios" checked value="1">
                     <img  src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">

@@ -17,5 +17,7 @@ return [
     'order_gold' => 'Order by gold',
     
     'apply' => 'Apply',
+    
+    'add_behaviours' => 'Add new behaviours to interact with students',
 
 ];

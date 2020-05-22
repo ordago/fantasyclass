@@ -8,7 +8,7 @@
                 <vfa-picker is-both="false" v-bind.sync="category">
                       <template v-slot:activator="{ on }">
                         <button class="button is-link" type="button" @click="on">
-                          <i :class="'fas fa-image'" v-if="!fullIcon"></i>
+                          <span v-if="!fullIcon"><i :class="'fas fa-image'"></i></span>
                           <i :class="fullIcon" v-if="fullIcon"></i>
                           <i class="fas fa-caret-down ml-1"></i>
                         </button>
@@ -123,6 +123,10 @@ Vue.use(VueFontAwesomePicker);
               e.preventDefault()
             },
              parent(icon) {
+
+                const removeElements = (elms) => elms.forEach(el => el.remove());
+                removeElements( document.querySelectorAll(".main-content svg") );
+
                 if (icon.styles.indexOf("regular") > -1) {
                   return "fa";
                 } else if (icon.styles.indexOf("solid") > -1) {
