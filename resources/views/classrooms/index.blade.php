@@ -15,10 +15,11 @@
     </div>
 
   @foreach ($user->classrooms as $classroom)
+
   @php 
     $theme = $classroom->theme;
   @endphp
-  <div class="box d-flex is-relative rounded classroom-round text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/{{ $theme->name }}');background-size: cover" @endif>
+  <div class="box d-flex is-relative rounded classroom-round text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/thumb_{{ $theme->name }}');background-size: cover" @endif>
     <h3 class="is-size-4 has-text-light">
       @if($classroom->pivot->role == 2)
         <i class="far fa-user-crown admin" {{ Popper::pop(__('classroom.admin')) }}></i>

@@ -30,7 +30,7 @@
     <body class="has-background-white-bis">
     <div id="app">
         @auth
-            <nav class="navbar card-shadow-s" role="navigation" aria-label="main navigation">
+            <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
                     <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                         <img src="/img/logo.png" width="36px" height="38px" class="has-margin-left-3">

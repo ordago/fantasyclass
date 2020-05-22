@@ -9,6 +9,10 @@
 .is-flex-column {
   flex-direction: column;
 }
+.is-sticky {
+  position: sticky;
+  top: 0;
+}
 
 /* LOADER                                       */
 .pace {

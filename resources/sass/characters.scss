@@ -1,0 +1,261 @@
+.character-student {
+    position: absolute!important;
+    width: 150px;
+    min-height: 150px;
+    left: 20px;
+    top: 25px;
+    margin: 0!important;
+  }
+  .char-bg {
+    max-height: 160px;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .character-small {
+    transform: scale(0.55)!important;
+    top: -40px;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+  }
+
+  .character-container {
+    text-align: center;
+    margin: 0 auto 0 auto;
+}
+
+.character {
+    width: 140px;
+    height: 245px;
+    position: relative;
+    padding: 0;
+    margin: 0 auto;
+    transform: scale(0.8);
+    margin: 0 auto 0 auto;
+}
+
+/* Fantasy / medieval */
+
+.helmet,
+.helmet-mage {
+    position: absolute;
+    top: -2px;
+    transform: scale(0.9, 0.9);
+    left: 28px;
+    transition: .3s ease-in-out
+}
+
+.helmet-mage {
+    top: -42px
+}
+
+.armor {
+    position: absolute;
+    top: 86px;
+    left: 22.5px;
+    transition: .3s ease-in-out
+}
+
+.boots {
+    transform: scale(0.8, 0.8);
+    position: absolute;
+    left: 8px;
+    top: 150px;
+    z-index: -1;
+    transition: .3s ease-in-out
+}
+
+@keyframes movement {
+    0% {
+        transform: translateY(0px)
+    }
+    20% {
+        transform: translateY(4px)
+    }
+    40% {
+        transform: translateY(-4px)
+    }
+    60% {
+        transform: translateY(4px)
+    }
+    100% {
+        transform: translateY(-4px)
+    }
+}
+
+@keyframes movementGauntlet {
+    0% {
+        transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(0px)
+    }
+    20% {
+        transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(-8.5px)
+    }
+    40% {
+        transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(8.5px)
+    }
+    60% {
+        transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(-8.5px)
+    }
+    100% {
+        transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(8.5px)
+    }
+}
+
+@keyframes movementGauntlet2 {
+    0% {
+        transform: scale(0.4, 0.4) scaleX(-1) translateY(0px)
+    }
+    20% {
+        transform: scale(0.4, 0.4) scaleX(-1) translateY(6.5px)
+    }
+    40% {
+        transform: scale(0.4, 0.4) scaleX(-1) translateY(-6.5px)
+    }
+    60% {
+        transform: scale(0.4, 0.4) scaleX(-1) translateY(6.5px)
+    }
+    100% {
+        transform: scale(0.4, 0.4) scaleX(-1) translateY(-6.5px)
+    }
+}
+
+.gauntlet2 {
+    position: absolute;
+    top: 90px;
+    right: -30px;
+    animation-name: movementGauntlet2;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    transform: scale(0.4, 0.4) scaleX(-1)
+}
+
+.gauntlet1 {
+    position: absolute;
+    top: 70px;
+    transform: scale(0.4, 0.4);
+    animation-name: movementGauntlet;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    z-index: 4;
+    left: -30px;
+    transform: scale(0.4, 0.4) scaleY(-1) rotateY(0)
+}
+
+.shield {
+    position: absolute;
+    right: -30px;
+    top: 80px;
+    z-index: 2;
+    animation-name: movement;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    transition: .3s ease-in-out
+}
+
+.sword,
+.bow,
+.staff {
+    position: absolute;
+    left: -30px;
+    top: -14px;
+    z-index: 2;
+    animation-name: movement;
+    animation-duration: 1.5s;
+  animation-iteration-count: infinite;
+}
+
+.bow {
+    top: 35px;
+    left: -20px;
+    z-index: 5
+}
+
+.staff {
+    top: 40px;
+    z-index: 5
+}
+
+.bag {
+    bottom: 5px;
+    position: absolute;
+    right: 0
+}
+
+.necklace {
+    position: absolute;
+    width: 70px;
+    top: 85px;
+    left: 37px;
+    z-index: 10
+}
+
+.character:hover .sword {
+    animation: none;
+    top: -44px
+}
+
+.group_undead {
+    background-color: #888;
+    color: #fff
+}
+
+.undead:hover .armor {
+    top: 150px;
+    z-index: 9
+}
+
+.undead:hover .helmet {
+    top: 130px;
+    z-index: 10;
+    left: -10px
+}
+
+.undead:hover .shield {
+    height: 5px;
+    width: 76.8px;
+    top: 220px
+}
+
+.undead:hover .sword {
+    transform: rotate(-90deg) translateX(-180px) translateY(15px);
+    z-index: -1
+}
+
+.undead:hover .boots {
+    display: none
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg)
+    }
+}
+
+.character:hover .staff {
+    animation: spin 1.2s ease infinite;
+    top: 0;
+}
+
+.character:hover .bow {
+    animation: none;
+    top: -14px;
+    transform: rotate(35deg)
+}
+
+.character:hover .gauntlet1 {
+    animation: none;
+    top: 30px
+}
+
+.character:hover .gauntlet2 {
+    animation: none
+}
+
+.character:hover .shield {
+    animation: none
+}
+
+/*****************************/

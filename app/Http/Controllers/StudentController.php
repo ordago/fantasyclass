@@ -30,7 +30,7 @@ class StudentController extends Controller
         $classId = session()->pull('classroom');
         if(!$classId)
             return false;
-            foreach ($request->students as $student) {
+        foreach ($request->students as $student) {
             $pass = '';
             if($student['email'] && $student['username']) {
                 $id = User::select('id')
@@ -71,13 +71,17 @@ class StudentController extends Controller
             ->where('role', '=', 0)
             ->get()
             ->first();                 
-            
+
             // Create the student properties
-            Student::create([
+            $student = Student::create([
                 'classroom_user_id' => $cuid->id,
                 'name' => $student['name'],
+                'character_id' => Classroom::find($classId)->characterTheme->characters->random(1)->first()->id,
                 'password_plain' => $pass,
-            ]);                
+            ]);
+            
+            // Assign basic equipment        
+            $student->setBasicEquipment();        
         }
         if(isset($error) && count($error))
             return $error;

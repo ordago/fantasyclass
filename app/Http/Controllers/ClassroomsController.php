@@ -6,6 +6,7 @@ use App\Classroom;
 use App\GoalThemes;
 use App\Theme;
 use App\Http\Classes\Queries;
+use App\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -82,6 +83,7 @@ class ClassroomsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $bg = Theme::getBg($class->theme->id);
-        return view('classrooms.show', compact('class', 'bg'));
+        $students = $class->students()->with('equipment')->get();
+        return view('classrooms.show', compact('class', 'students'));
     }
 }

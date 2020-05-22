@@ -32,11 +32,13 @@
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded card-shadow-s">
-                <div class="card-image rounded-top has-background-dark">
-                            <img :src="'/img/bg/' + bg" alt="" class="rounded-top">
+                <div class="card-image rounded-top has-background-dark char-bg" :style="'background-image: url(/img/bg/thumb_' + bg + ');'">
+                    <div class="character-container character character-small" style="position:relative;">
+                        <img :src="'/img/character/' + element.src" :class="element.classes" v-for="element in student.equipment" v-bind:key="element.id">
+                    </div>
                 </div>
                 <div class="card-content">
-                    <div class="media">
+                    <div class="media has-margin-bottom-0">
                     <div class="media-left">
                         <figure class="image is-48x48">
                             <img src="/img/no_avatar.png" class="rounded" alt="">
@@ -44,7 +46,7 @@
                     </div>
                     <div class="media-content">
                         <p class="title is-4">{{ student.name }}</p>
-                        <p class="subtitle is-6">@johnsmith</p>
+                        <p class="subtitle is-6"><small>0 <i class="fas fa-heart"></i></small> <small>0 <i class="fas fa-fist-raised"></i></small> <small>0 <i class="fas fa-coins   "></i></small></p>
                     </div>
                     </div>
 
@@ -75,9 +77,9 @@
                             </span> {{ student.xp }}
                         </div>
                         <div class="has-margin-y-2 has-text-centered">
-                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="button is-dark has-padding-x-2">+100</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="button is-dark has-padding-x-2">+50</button>
-                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="button is-dark has-padding-x-2">+10</button>                            
+                            <button type="submit" @click="updateProp(student.id, 'xp', 100)" class="button is-dark has-padding-x-3">100</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 50)" class="button is-dark has-padding-x-3">50</button>
+                            <button type="submit" @click="updateProp(student.id, 'xp', 10)" class="button is-dark has-padding-x-3">10</button>                            
                             <tippy 
                                 interactive 
                                 :animate-fill="false" 
@@ -106,9 +108,9 @@
                         </div>
                         <div class="has-margin-y-2 has-text-centered">
                             <div class="">
-                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="button is-warning has-padding-x-2">+100</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="button is-warning has-padding-x-2">+50</button>
-                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="button is-warning has-padding-x-2">+10</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 100)" class="button is-warning has-padding-x-3">100</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 50)" class="button is-warning has-padding-x-3">50</button>
+                                <button type="submit" @click="updateProp(student.id, 'gold', 10)" class="button is-warning has-padding-x-3">10</button>
                                 <tippy 
                                     interactive 
                                     :animate-fill="false" 

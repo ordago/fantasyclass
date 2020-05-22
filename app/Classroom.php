@@ -13,7 +13,7 @@ class Classroom extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'adventure_name', 'goal_type', 'theme_id', 'char_theme', 'code',
+        'name', 'adventure_name', 'goal_type', 'theme_id', 'code',
         'enrollment_code', 'user_id', 'character_theme' 
     ];
 
@@ -27,6 +27,10 @@ class Classroom extends Model
 
     public function theme() {
         return $this->hasOne(Theme::class, 'id', 'theme_id');
+    }
+
+    public function characterTheme() {
+        return $this->hasOne(CharacterTheme::class, 'id', 'character_theme');
     }
 
     public function cards() {

@@ -20,6 +20,7 @@ class CreateStudentsTable extends Migration
             $table->float('xp')->default(0);
             $table->float('gold')->default(0);
             $table->float('hp')->default(100);
+            $table->smallInteger('character_id');
             $table->string('password_plain')->nullable();
             $table->timestamps();
         });

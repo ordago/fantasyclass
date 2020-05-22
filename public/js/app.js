@@ -3177,6 +3177,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['students', 'code', 'behaviours', 'bg'],
@@ -43362,17 +43364,34 @@ var render = function() {
               _c("div", { staticClass: "card rounded card-shadow-s" }, [
                 _c(
                   "div",
-                  { staticClass: "card-image rounded-top has-background-dark" },
+                  {
+                    staticClass:
+                      "card-image rounded-top has-background-dark char-bg",
+                    style:
+                      "background-image: url(/img/bg/thumb_" + _vm.bg + ");"
+                  },
                   [
-                    _c("img", {
-                      staticClass: "rounded-top",
-                      attrs: { src: "/img/bg/" + _vm.bg, alt: "" }
-                    })
+                    _c(
+                      "div",
+                      {
+                        staticClass:
+                          "character-container character character-small",
+                        staticStyle: { position: "relative" }
+                      },
+                      _vm._l(student.equipment, function(element) {
+                        return _c("img", {
+                          key: element.id,
+                          class: element.classes,
+                          attrs: { src: "/img/character/" + element.src }
+                        })
+                      }),
+                      0
+                    )
                   ]
                 ),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-content" }, [
-                  _c("div", { staticClass: "media" }, [
+                  _c("div", { staticClass: "media has-margin-bottom-0" }, [
                     _vm._m(3, true),
                     _vm._v(" "),
                     _c("div", { staticClass: "media-content" }, [
@@ -43380,9 +43399,7 @@ var render = function() {
                         _vm._v(_vm._s(student.name))
                       ]),
                       _vm._v(" "),
-                      _c("p", { staticClass: "subtitle is-6" }, [
-                        _vm._v("@johnsmith")
-                      ])
+                      _vm._m(4, true)
                     ])
                   ]),
                   _vm._v(" "),
@@ -43403,7 +43420,7 @@ var render = function() {
                               staticStyle: { width: "100%" }
                             },
                             [
-                              _vm._m(4, true),
+                              _vm._m(5, true),
                               _vm._v(" "),
                               student.hp < 20
                                 ? _c(
@@ -43546,7 +43563,7 @@ var render = function() {
                         "div",
                         { staticClass: "score has-padding-3 has-margin-1" },
                         [
-                          _vm._m(5, true),
+                          _vm._m(6, true),
                           _vm._v(
                             " " +
                               _vm._s(student.xp) +
@@ -43562,7 +43579,7 @@ var render = function() {
                           _c(
                             "button",
                             {
-                              staticClass: "button is-dark has-padding-x-2",
+                              staticClass: "button is-dark has-padding-x-3",
                               attrs: { type: "submit" },
                               on: {
                                 click: function($event) {
@@ -43570,13 +43587,13 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("+100")]
+                            [_vm._v("100")]
                           ),
                           _vm._v(" "),
                           _c(
                             "button",
                             {
-                              staticClass: "button is-dark has-padding-x-2",
+                              staticClass: "button is-dark has-padding-x-3",
                               attrs: { type: "submit" },
                               on: {
                                 click: function($event) {
@@ -43584,13 +43601,13 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("+50")]
+                            [_vm._v("50")]
                           ),
                           _vm._v(" "),
                           _c(
                             "button",
                             {
-                              staticClass: "button is-dark has-padding-x-2",
+                              staticClass: "button is-dark has-padding-x-3",
                               attrs: { type: "submit" },
                               on: {
                                 click: function($event) {
@@ -43598,7 +43615,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v("+10")]
+                            [_vm._v("10")]
                           ),
                           _vm._v(" "),
                           _c(
@@ -43769,7 +43786,7 @@ var render = function() {
                                 "button",
                                 {
                                   staticClass:
-                                    "button is-warning has-padding-x-2",
+                                    "button is-warning has-padding-x-3",
                                   attrs: { type: "submit" },
                                   on: {
                                     click: function($event) {
@@ -43781,14 +43798,14 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("+100")]
+                                [_vm._v("100")]
                               ),
                               _vm._v(" "),
                               _c(
                                 "button",
                                 {
                                   staticClass:
-                                    "button is-warning has-padding-x-2",
+                                    "button is-warning has-padding-x-3",
                                   attrs: { type: "submit" },
                                   on: {
                                     click: function($event) {
@@ -43800,14 +43817,14 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("+50")]
+                                [_vm._v("50")]
                               ),
                               _vm._v(" "),
                               _c(
                                 "button",
                                 {
                                   staticClass:
-                                    "button is-warning has-padding-x-2",
+                                    "button is-warning has-padding-x-3",
                                   attrs: { type: "submit" },
                                   on: {
                                     click: function($event) {
@@ -43819,7 +43836,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("+10")]
+                                [_vm._v("10")]
                               ),
                               _vm._v(" "),
                               _c(
@@ -44060,6 +44077,21 @@ var staticRenderFns = [
           attrs: { src: "/img/no_avatar.png", alt: "" }
         })
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "subtitle is-6" }, [
+      _c("small", [_vm._v("0 "), _c("i", { staticClass: "fas fa-heart" })]),
+      _vm._v(" "),
+      _c("small", [
+        _vm._v("0 "),
+        _c("i", { staticClass: "fas fa-fist-raised" })
+      ]),
+      _vm._v(" "),
+      _c("small", [_vm._v("0 "), _c("i", { staticClass: "fas fa-coins   " })])
     ])
   },
   function() {
