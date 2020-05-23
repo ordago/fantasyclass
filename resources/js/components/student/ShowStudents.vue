@@ -208,7 +208,10 @@
                     let options = {'id': id, 'behaviour': behaviour}
                     axios.post('/classroom/students/behaviour', options)
                         .then(response => {                          
-                                this.studentsJson.find(el => el.id === id).hp = response.data
+                                let student = this.studentsJson.find(el => el.id === id)
+                                        student.hp = response.data.hp
+                                        student.xp = response.data.xp
+                                        student.gold = response.data.gold
                         })
                 }
             },

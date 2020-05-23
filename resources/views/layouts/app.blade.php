@@ -57,6 +57,9 @@
                             </a>
 
                             <div class="navbar-dropdown">
+                                <a href="/classroom/{{ $class->code }}/levels" class="navbar-item">
+                                    <i class="fad fa-trophy has-margin-right-2"></i> {{ __('menu.levels') }}
+                                </a>
                                 <a href="/classroom/{{ $class->code }}/cards" class="navbar-item">
                                     <i class="fad fa-club has-margin-right-2"></i> {{ __('menu.cards') }}
                                 </a>

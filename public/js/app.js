@@ -3249,9 +3249,13 @@ __webpack_require__.r(__webpack_exports__);
         'behaviour': behaviour
       };
       axios.post('/classroom/students/behaviour', options).then(function (response) {
-        _this2.studentsJson.find(function (el) {
+        var student = _this2.studentsJson.find(function (el) {
           return el.id === id;
-        }).hp = response.data;
+        });
+
+        student.hp = response.data.hp;
+        student.xp = response.data.xp;
+        student.gold = response.data.gold;
       });
     }
   },

@@ -101,16 +101,17 @@ class StudentController extends Controller
     public function addBehaviour() {
         $data = request()->all();
         $student = Student::where('id', '=', $data['id'])->first();
-        dump($student);
+    
         $behaviour = Behaviour::findOrFail($data['behaviour']);
         $student->behaviours()->attach($data['behaviour']);
-        $student->setProperty('hp', $behaviour->hp);
-        $student->setProperty('xp', $behaviour->xp);
-        $student->setProperty('gold', $behaviour->gold);
+        $valHp = $student->setProperty('hp', $behaviour->hp);
+        $valXp = $student->setProperty('xp', $behaviour->xp);
+        $valGold = $student->setProperty('gold', $behaviour->gold);
+
         return[
-            'hp' => $behaviour->hp,
-            'xp' => $behaviour->xp,
-            'gold' => $behaviour->gold,
+            'hp' => $valHp,
+            'xp' => $valXp,
+            'gold' => $valGold,
         ];
         
     }

@@ -16,7 +16,7 @@ class Theme extends Model
         if($theme->type == 0)
           return " style='background-color:".$theme->color.";'";
         
-          return " style='background: url(/img/bg/".$theme->name    ."); background-color:".$theme->color."; background-position: left bottom; background-size: cover; background-attachment: fixed;background-repeat: no-repeat;'";
+          return " style='background: url(/img/bg/thumb_".$theme->name    ."); background-color:".$theme->color."; background-position: left bottom; background-size: cover; background-attachment: fixed;background-repeat: no-repeat;'";
     }
 
 }
