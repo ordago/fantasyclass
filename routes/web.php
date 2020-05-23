@@ -54,6 +54,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show'); // Policy protect
         Route::patch('/{code}/behaviours/{id}', 'BehaviourController@update'); // Policy protect
         
+        // Levels
+        Route::get('/{code}/levels', 'LevelsController@index'); // Policy protect
+        Route::post('/{code}/levels', 'LevelsController@store'); // Policy protect
+        Route::patch('/{code}/levels/{level}', 'LevelsController@update'); // Policy protect
+        Route::delete('/level/{id}', 'LevelsController@destroy'); // Policy protect
+        
     });
         
     // Socialite

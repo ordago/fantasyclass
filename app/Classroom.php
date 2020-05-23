@@ -40,4 +40,8 @@ class Classroom extends Model
     public function behaviours() {
         return $this->hasMany(Behaviour::class);
     }
+
+    public function levels() {
+        return $this->hasMany(Level::class);
+    }
 }

@@ -69,7 +69,7 @@ class CardsController extends Controller
             $classId = $class = Classroom::where('code', '=', $code)->firstOrFail()->id;
             
             if(!$classId)
-            return false;
+                return false;
             
             $card = Card::create([
                 'src' => $image,
@@ -111,6 +111,29 @@ class CardsController extends Controller
         return redirect('/classroom/'.$code.'/cards');
         
     }
+
+    public function rules()
+        {
+            return [
+                'width' => ['required', 'numeric'],
+                'marginTop' => ['required', 'numeric'],
+                'marginLeft' => ['required', 'numeric'],
+                'title' => ['string', 'nullable'],
+                'description' => ['string', 'nullable'],
+                'bgType' => ['required', 'numeric'],
+                'radius' => ['required', 'numeric'],
+                'minLvl' => ['required', 'numeric'],
+                'type' => ['required', 'numeric'],
+                'xp' => ['required', 'numeric'],
+                'gold' => ['required', 'numeric'],
+                'hp' => ['required', 'numeric'],
+                'slot' => ['required', 'numeric'],
+                'image' => ['image', 'max:10240'],
+                'special' => ['numeric'],
+                'fullscreen' => ['numeric'],
+                'background' => ['string'],
+                ];
+        }
 
     public function update($code, $card) {
         try {

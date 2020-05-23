@@ -45,13 +45,19 @@ Vue.component('downloadExcel', JsonExcel)
 Vue.use(Buefy)
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
+
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
+
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', require('./components/card/ShowCards.vue').default);
 Vue.component('create-card', require('./components/card/CreateCard.vue').default);
+
 Vue.component('create-behaviour', require('./components/behaviour/CreateBehaviour.vue').default);
 Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
+
+Vue.component('create-levels', require('./components/level/CreateLevels.vue').default);
+Vue.component('show-level', require('./components/level/ShowLevel.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

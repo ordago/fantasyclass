@@ -17,8 +17,8 @@ class CreateLevelsTable extends Migration
             $table->id();
             $table->smallInteger('number');
             $table->integer('xp');
-            $table->integer('title')->nullable();
-            $table->integer('description')->nullable();
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
             $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });
