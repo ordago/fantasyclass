@@ -1,6 +1,6 @@
 <template>
        <section>
-         <b-tabs v-model="activeTab" >
+         <b-tabs v-model="activeTab" size="is-small">
             <b-tab-item :label="trans.get('classroom.name_and_goals')" icon="scroll" icon-pack="far">         
                 <h1 class="is-size-2"><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ trans.get('classroom.prepare') }}</h1>
                 <div class="has-margin-y-4">
@@ -89,7 +89,7 @@
                 </div>
             </b-tab-item>
         </b-tabs>
-        <div class="is-flex has-padding-x-4" style="position: fixed; bottom: 0; left: 0;width: 100%">
+        <div class="is-flex has-padding-x-4" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
             <div class="buttons has-addons">
                 <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
                 <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<4"><i class="fas fa-chevron-right"></i></button>

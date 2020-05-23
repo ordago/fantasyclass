@@ -61,8 +61,8 @@
 
               <div class="column" id="propertiesCard">
 
-                <div class="is-flex">
-                  <div class="field has-addons has-margin-bottom-1">
+                <div class="is-flex has-margin-bottom-0">
+                  <div class="field has-addons">
                     <p class="control">
                         <button type="button" class="button is-link" @click="width=width+5"><i class="fas fa-search-plus"></i></button>
                     </p>
@@ -70,7 +70,7 @@
                         <button type="button" class="button is-link" @click="width=width-5"><i class="fas fa-search-minus"></i></button>
                     </p>
                   </div>
-                  <div class="field has-addons has-margin-left-2 has-margin-bottom-1">
+                  <div class="field has-addons has-margin-left-2">
                     <p class="control">
                       <button type="button" class="button is-link" @click="margin_top=margin_top+5"><i class="fas fa-arrow-down"></i></button>
                     </p>
@@ -88,12 +88,12 @@
                     </p>
                   </div>
                 </div>
-                  <label v-if="!card" for="file-upload" style="display: block;" class="button is-link has-margin-top-1">
+                  <label v-if="!card" for="file-upload" style="display: block;" class="button is-link has-margin-bottom-2 has-margin-top-0">
                     <i class="fa fa-cloud-upload"></i> {{ trans.get('cards.custom_image') }}
                   </label>
                   <input v-if="!card" type="file" accept="image/*" id="file-upload" name="image" style="display:none" class="my-2 p-3 border border-secondary rounded" @change="getImage">
                   
-                  <div class="input-group mb-3">
+                  <div class="has-margin-top-3">
                         <label>
                             <input type="radio" class="hide-radios" v-model="type_bg" checked name="bgType" value="0">
                             <img src="/img/cardgen/only_back_0_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">

@@ -30,6 +30,10 @@ class Student extends Model
     public function equipment() {
         return $this->belongsToMany(Equipment::class);
     }
+    
+    public function behaviours() {
+        return $this->belongsToMany(Behaviour::class);
+    }
 
     public function setProperty($prop, $value) {
         $value = max($this->$prop + $value, 0);

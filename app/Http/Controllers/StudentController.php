@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
@@ -94,6 +96,23 @@ class StudentController extends Controller
         $countUser = count($userRows) + 1;
 
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
+    }
+
+    public function addBehaviour() {
+        $data = request()->all();
+        $student = Student::where('id', '=', $data['id'])->first();
+        dump($student);
+        $behaviour = Behaviour::findOrFail($data['behaviour']);
+        $student->behaviours()->attach($data['behaviour']);
+        $student->setProperty('hp', $behaviour->hp);
+        $student->setProperty('xp', $behaviour->xp);
+        $student->setProperty('gold', $behaviour->gold);
+        return[
+            'hp' => $behaviour->hp,
+            'xp' => $behaviour->xp,
+            'gold' => $behaviour->gold,
+        ];
+        
     }
 
     public function update(Request $request) {

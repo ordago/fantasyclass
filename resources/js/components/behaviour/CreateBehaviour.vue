@@ -7,14 +7,16 @@
           <p class="control">
                 <vfa-picker is-both="false" v-bind.sync="category">
                       <template v-slot:activator="{ on }">
-                        <button class="button is-link" type="button" @click="on">
-                          <span v-if="!fullIcon"><i :class="'fas fa-image'"></i></span>
-                          <i :class="fullIcon" v-if="fullIcon"></i>
+                        <button class="button is-link fullIcon" type="button" @click="on">
+                          <span id="iconPreview">
+                            <i :class="'fas fa-image'" v-show="!fullIcon"></i>
+                            <i :class="fullIcon" v-if="fullIcon"></i>
+                          </span>
                           <i class="fas fa-caret-down ml-1"></i>
                         </button>
                       </template>
                         <template v-slot:icon="{ icon, picked }">
-                          <div @click="parent(icon); picked(icon);fullIcon = parent(icon) + ' fa-' + icon.class" :title="icon.label">
+                          <div @click="parent(icon); picked(icon);fullIcon = parent(icon) + ' fa-' + icon.class;updateIcon(icon);" :title="icon.label">
                             <span :class="[parent(icon), `fa-${icon.class}`, 'vfa-icon-preview']" />
                           </div>
                         </template>
@@ -124,9 +126,6 @@ Vue.use(VueFontAwesomePicker);
             },
              parent(icon) {
 
-                const removeElements = (elms) => elms.forEach(el => el.remove());
-                removeElements( document.querySelectorAll(".main-content svg") );
-
                 if (icon.styles.indexOf("regular") > -1) {
                   return "fa";
                 } else if (icon.styles.indexOf("solid") > -1) {
@@ -135,6 +134,9 @@ Vue.use(VueFontAwesomePicker);
                   return "fab";
                 }
                 return "";
+              },
+              updateIcon: function(icon) {
+                  document.getElementById('iconPreview').innerHTML = "<i class='"+this.fullIcon+"'></i>"
               },
               update: function() {
                   this.icon = this.fullIcon

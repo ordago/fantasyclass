@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Theme;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
@@ -61,7 +62,7 @@ class LoginController extends Controller
         } else {
 
             $errors = new MessageBag();
-            // add your error messages:
+
             $errors->add('username', __('auth.failed'));
 
             return view('auth.login')->withErrors($errors);

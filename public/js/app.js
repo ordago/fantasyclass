@@ -1992,6 +1992,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2032,14 +2034,6 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       e.preventDefault();
     },
     parent: function parent(icon) {
-      var removeElements = function removeElements(elms) {
-        return elms.forEach(function (el) {
-          return el.remove();
-        });
-      };
-
-      removeElements(document.querySelectorAll(".main-content svg"));
-
       if (icon.styles.indexOf("regular") > -1) {
         return "fa";
       } else if (icon.styles.indexOf("solid") > -1) {
@@ -2049,6 +2043,9 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       }
 
       return "";
+    },
+    updateIcon: function updateIcon(icon) {
+      document.getElementById('iconPreview').innerHTML = "<i class='" + this.fullIcon + "'></i>";
     },
     update: function update() {
       var _this = this;
@@ -3242,6 +3239,19 @@ __webpack_require__.r(__webpack_exports__);
           return el.id === id;
         }).gold = response.data;
         _this.custom = 0;
+      });
+    },
+    addBehaviour: function addBehaviour(id, behaviour) {
+      var _this2 = this;
+
+      var options = {
+        'id': id,
+        'behaviour': behaviour
+      };
+      axios.post('/classroom/students/behaviour', options).then(function (response) {
+        _this2.studentsJson.find(function (el) {
+          return el.id === id;
+        }).hp = response.data;
       });
     }
   },
@@ -40428,20 +40438,28 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "button is-link",
+                                staticClass: "button is-link fullIcon",
                                 attrs: { type: "button" },
                                 on: { click: on }
                               },
                               [
-                                !_vm.fullIcon
-                                  ? _c("span", [
-                                      _c("i", { class: "fas fa-image" })
-                                    ])
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.fullIcon
-                                  ? _c("i", { class: _vm.fullIcon })
-                                  : _vm._e(),
+                                _c("span", { attrs: { id: "iconPreview" } }, [
+                                  _c("i", {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: !_vm.fullIcon,
+                                        expression: "!fullIcon"
+                                      }
+                                    ],
+                                    class: "fas fa-image"
+                                  }),
+                                  _vm._v(" "),
+                                  _vm.fullIcon
+                                    ? _c("i", { class: _vm.fullIcon })
+                                    : _vm._e()
+                                ]),
                                 _vm._v(" "),
                                 _c("i", {
                                   staticClass: "fas fa-caret-down ml-1"
@@ -40467,6 +40485,7 @@ var render = function() {
                                     picked(icon)
                                     _vm.fullIcon =
                                       _vm.parent(icon) + " fa-" + icon.class
+                                    _vm.updateIcon(icon)
                                   }
                                 }
                               },
@@ -41313,51 +41332,44 @@ var render = function() {
             "div",
             { staticClass: "column", attrs: { id: "propertiesCard" } },
             [
-              _c("div", { staticClass: "is-flex" }, [
-                _c(
-                  "div",
-                  { staticClass: "field has-addons has-margin-bottom-1" },
-                  [
-                    _c("p", { staticClass: "control" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-link",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.width = _vm.width + 5
-                            }
+              _c("div", { staticClass: "is-flex has-margin-bottom-0" }, [
+                _c("div", { staticClass: "field has-addons" }, [
+                  _c("p", { staticClass: "control" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-link",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.width = _vm.width + 5
                           }
-                        },
-                        [_c("i", { staticClass: "fas fa-search-plus" })]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "control" }, [
-                      _c(
-                        "button",
-                        {
-                          staticClass: "button is-link",
-                          attrs: { type: "button" },
-                          on: {
-                            click: function($event) {
-                              _vm.width = _vm.width - 5
-                            }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-search-plus" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "control" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button is-link",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.width = _vm.width - 5
                           }
-                        },
-                        [_c("i", { staticClass: "fas fa-search-minus" })]
-                      )
-                    ])
-                  ]
-                ),
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-search-minus" })]
+                    )
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass:
-                      "field has-addons has-margin-left-2 has-margin-bottom-1"
-                  },
+                  { staticClass: "field has-addons has-margin-left-2" },
                   [
                     _c("p", { staticClass: "control" }, [
                       _c(
@@ -41448,7 +41460,8 @@ var render = function() {
                 ? _c(
                     "label",
                     {
-                      staticClass: "button is-link has-margin-top-1",
+                      staticClass:
+                        "button is-link has-margin-bottom-2 has-margin-top-0",
                       staticStyle: { display: "block" },
                       attrs: { for: "file-upload" }
                     },
@@ -41477,7 +41490,7 @@ var render = function() {
                   })
                 : _vm._e(),
               _vm._v(" "),
-              _c("div", { staticClass: "input-group mb-3" }, [
+              _c("div", { staticClass: "has-margin-top-3" }, [
                 _c("label", [
                   _c("input", {
                     directives: [
@@ -42587,6 +42600,7 @@ var render = function() {
       _c(
         "b-tabs",
         {
+          attrs: { size: "is-small" },
           model: {
             value: _vm.activeTab,
             callback: function($$v) {
@@ -43032,6 +43046,7 @@ var render = function() {
         {
           staticClass: "is-flex has-padding-x-4",
           staticStyle: {
+            "justify-content": "space-between",
             position: "fixed",
             bottom: "0",
             left: "0",
@@ -43546,6 +43561,14 @@ var render = function() {
                                       " <i class='fas fa-coins colored'></i> " +
                                       behaviour.gold +
                                       ")</small>"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.addBehaviour(
+                                        student.id,
+                                        behaviour.id
+                                      )
+                                    }
                                   }
                                 },
                                 [_c("i", { class: behaviour.icon })]

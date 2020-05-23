@@ -1,9 +1,11 @@
 @extends('layouts.app')
 
+@section('bg', $bg ?? '')
+
 @section('content')
 <h1 class="fantasyTitle has-margin-top-4 has-margin-bottom-3">FantasyClass</h1>
 <div class="box form has-padding-5">
-  <div class="thumbnail"><img src="img/logo.svg" width="200px"/></div>
+  <div class="thumbnail has-padding-3"><img src="img/logo.svg" width="200px"/></div>
   <form method="POST" action="{{ route('login') }}">
             @csrf
 

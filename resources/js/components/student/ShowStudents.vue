@@ -60,7 +60,7 @@
                         <div class="my-1 has-text-centered">
                             <div class="w-100 is-flex is-all-centered">
                                 <button v-for="behaviour in mainBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
-                                    class="button has-margin-1 has-padding-x-4 is-light" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
+                                    class="button has-margin-1 has-padding-x-4 is-light" @click="addBehaviour(student.id, behaviour.id)" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
                                         <i :class="behaviour.icon"></i>
                                 </button>
                                 <div class="button is-link is-light has-margin-1 has-padding-x-4" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
@@ -202,6 +202,13 @@
                             else if(prop == 'gold')
                                 this.studentsJson.find(el => el.id === id).gold = response.data
                             this.custom = 0
+                        })
+                },
+                addBehaviour: function(id, behaviour) {
+                    let options = {'id': id, 'behaviour': behaviour}
+                    axios.post('/classroom/students/behaviour', options)
+                        .then(response => {                          
+                                this.studentsJson.find(el => el.id === id).hp = response.data
                         })
                 }
             },

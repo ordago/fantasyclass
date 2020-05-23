@@ -44,6 +44,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update'); // Policty protect
         
+        Route::post('/students/behaviour', 'StudentController@addBehaviour'); // Policty protect
+        
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index'); // Policy protect
         Route::get('/{code}/behaviours/create', 'BehaviourController@create'); // Policy protect
@@ -53,14 +55,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/behaviours/{id}', 'BehaviourController@update'); // Policy protect
         
     });
-    
-    
+        
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
 
-
-
-
-    
 });
