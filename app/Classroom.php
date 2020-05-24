@@ -46,6 +46,6 @@ class Classroom extends Model
     }
 
     public function challenges() {
-        return $this->hasMany(Challenge::class);
+        return $this->hasMany(ChallengesGroup::class);
     }
 }

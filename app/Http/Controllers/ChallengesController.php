@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Challenge;
+use App\ChallengesGroup;
 use App\Classroom;
 use Illuminate\Support\Facades\DB;
 
@@ -15,8 +15,7 @@ class ChallengesController extends Controller
 
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstorFail();
-        $challenges = Challenge::where('classroom_id', $class->id)->whereNull('challenge_id')->with('children')->get();
-        dump($challenges);
+        $challenges = ChallengesGroup::where('classroom_id', $class->id)->whereNull('challenge_id')->with('children')->get();
         return view('challenges.index', compact('class', 'challenges'));
 
     }
@@ -30,7 +29,7 @@ class ChallengesController extends Controller
                     'challenge_id' => ['numeric', 'nullable'],
                 ]);
 
-                $challenge = Challenge::create([
+                $challenge = ChallengesGroup::create([
                     'name' => $data['name'],
                     'icon' => $data['icon'],
                     'challenge_id' => $data['challenge_id'],

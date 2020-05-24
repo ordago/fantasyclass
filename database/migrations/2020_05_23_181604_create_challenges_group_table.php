@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChallengesTable extends Migration
+class CreateChallengesGroupTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateChallengesTable extends Migration
      */
     public function up()
     {
-        Schema::create('challenges', function (Blueprint $table) {
+        Schema::create('challenges_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name', 100);
             $table->string('icon', 100);
@@ -30,6 +30,6 @@ class CreateChallengesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('challenges');
+        Schema::dropIfExists('challenges_groups');
     }
 }

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Challenge extends Model
+class ChallengesGroup extends Model
 {
 
     protected $fillable = [
@@ -16,7 +16,7 @@ class Challenge extends Model
                         ];
 
     public function children() {
-        return $this->hasMany(Challenge::class, 'challenge_id', 'id');   
+        return $this->hasMany(ChallengesGroup::class, 'challenge_id', 'id');   
     }
     
     public function allChildren() {
@@ -24,6 +24,6 @@ class Challenge extends Model
     }
     
     public function parent() {
-        return $this->belongsTo(Challenge::class);   
+        return $this->belongsTo(ChallengesGroup::class);   
     }
 }

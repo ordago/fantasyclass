@@ -37,8 +37,8 @@
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('challenges.name') }}</label>
           <input type="text" id="name" v-model="challengeInfo.name" name="name" required class="input has-margin-y-3">
         </div>         
-        <div class="has-margin-top-3">
-            <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('challenges.parent') }}</label>
+        <div class="has-margin-top-3" v-if="$parent.challenges.length">
+            <label for="name">{{ trans.get('challenges.parent') }}</label>
             <div class="field">
               <div class="control">
                 <div class="select is-fullwidth">
@@ -95,6 +95,8 @@ Vue.use(VueFontAwesomePicker);
                           this.$parent.refresh(response.data.challenge)
                         }
                     });
+                    this.$parent.activeAddGroup = false
+                    this.$parent.$forceUpdate()
             },
              parentIcon(iconSelected) {
 
