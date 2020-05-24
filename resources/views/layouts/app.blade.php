@@ -68,7 +68,7 @@
                                 </a>
                             </div>
                         </div>
-                        <a class="navbar-item">
+                        <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
                         </a>
                         <a class="navbar-item">
@@ -136,6 +136,5 @@
             @yield('content')
         </main>
     </div>
-    @include('popper::assets')
 </body>
 </html>

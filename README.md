@@ -71,7 +71,6 @@ Toasts:
 https://github.com/shakee93/vue-toasted
 
 Popper tippy:
- - Blade: https://github.com/andcarpi/laravel-popper
  - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
 
 ## License

@@ -2002,23 +2002,18 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
     if (this.behaviour) {
-      var behaviourJson = JSON.parse(this.behaviour);
-      this.name = behaviourJson.name;
-      this.custom_text = behaviourJson.custom_text;
-      this.hp = behaviourJson.hp;
-      this.xp = behaviourJson.xp;
-      this.gold = behaviourJson.gold;
-      this.fullIcon = behaviourJson.icon;
-      this.id = behaviourJson.id;
+      this.name = this.behaviour.name;
+      this.custom_text = this.behaviour.custom_text;
+      this.hp = this.behaviour.hp;
+      this.xp = this.behaviour.xp;
+      this.gold = this.behaviour.gold;
+      this.fullIcon = this.behaviour.icon;
+      this.id = this.behaviour.id;
     }
   },
   data: function data() {
     return {
       icon: null,
-      category: {
-        "class": undefined,
-        unicode: undefined
-      },
       csrfToken: null,
       fullIcon: null,
       name: null,
@@ -2747,6 +2742,211 @@ __webpack_require__.r(__webpack_exports__);
     orderedCards: function orderedCards() {
       return _.orderBy(this.cardsJson, this.sortKey, 'asc');
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vfa_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vfa-picker */ "./node_modules/vfa-picker/dist/vfa-picker.common.js");
+/* harmony import */ var vfa_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vfa_picker__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['code', 'challenge'],
+  created: function created() {
+    this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+  },
+  data: function data() {
+    return {
+      csrfToken: null,
+      challengeInfo: {
+        challenge_id: null,
+        id: null,
+        icon: null,
+        name: null
+      }
+    };
+  },
+  methods: {
+    formSubmit: function formSubmit(e) {
+      var _this = this;
+
+      axios.post('/classroom/' + this.code + '/challenges', this.$data.challengeInfo).then(function (response) {
+        _this.$toasted.show(response.data.message, {
+          position: "top-center",
+          duration: 3000,
+          iconPack: 'fontawesome',
+          icon: response.data.icon,
+          type: response.data.type
+        });
+
+        if (response.data.challenge) {
+          _this.$parent.refresh(response.data.challenge);
+        }
+      });
+    },
+    parentIcon: function parentIcon(iconSelected) {
+      if (iconSelected.styles.indexOf("regular") > -1) {
+        return "fa";
+      } else if (iconSelected.styles.indexOf("solid") > -1) {
+        return "fas";
+      } else if (iconSelected.styles.indexOf("brands") > -1) {
+        return "fab";
+      }
+
+      return "";
+    },
+    updateIcon: function updateIcon() {
+      document.getElementById('iconPreview').innerHTML = "<i class='" + this.challengeInfo.icon + "'></i>";
+    },
+    update: function update() {}
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateChallenge_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallenge.vue */ "./resources/js/components/challenges/CreateChallenge.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['code', 'challenges'],
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      activeAddGroup: false
+    };
+  },
+  methods: {
+    refresh: function refresh(elem) {
+      if (elem.challenge_id) {
+        var challenge = this.challenges.filter(function (data) {
+          return data.id == elem.challenge_id;
+        });
+        challenge[0].children.push(elem);
+      } else this.challenges.push(elem);
+
+      this.$forceUpdate();
+    }
+  },
+  components: {
+    createChallenge: _CreateChallenge_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -40588,92 +40788,81 @@ var render = function() {
             "p",
             { staticClass: "control" },
             [
-              _c(
-                "vfa-picker",
-                _vm._b(
+              _c("vfa-picker", {
+                attrs: { "is-both": "false" },
+                scopedSlots: _vm._u([
                   {
-                    attrs: { "is-both": "false" },
-                    scopedSlots: _vm._u([
-                      {
-                        key: "activator",
-                        fn: function(ref) {
-                          var on = ref.on
-                          return [
-                            _c(
-                              "button",
-                              {
-                                staticClass: "button is-link fullIcon",
-                                attrs: { type: "button" },
-                                on: { click: on }
-                              },
-                              [
-                                _c("span", { attrs: { id: "iconPreview" } }, [
-                                  _c("i", {
-                                    directives: [
-                                      {
-                                        name: "show",
-                                        rawName: "v-show",
-                                        value: !_vm.fullIcon,
-                                        expression: "!fullIcon"
-                                      }
-                                    ],
-                                    class: "fas fa-image"
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.fullIcon
-                                    ? _c("i", { class: _vm.fullIcon })
-                                    : _vm._e()
-                                ]),
-                                _vm._v(" "),
-                                _c("i", {
-                                  staticClass: "fas fa-caret-down ml-1"
-                                })
-                              ]
-                            )
-                          ]
-                        }
-                      },
-                      {
-                        key: "icon",
-                        fn: function(ref) {
-                          var icon = ref.icon
-                          var picked = ref.picked
-                          return [
-                            _c(
-                              "div",
-                              {
-                                attrs: { title: icon.label },
-                                on: {
-                                  click: function($event) {
-                                    _vm.parent(icon)
-                                    picked(icon)
-                                    _vm.fullIcon =
-                                      _vm.parent(icon) + " fa-" + icon.class
-                                    _vm.updateIcon(icon)
+                    key: "activator",
+                    fn: function(ref) {
+                      var on = ref.on
+                      return [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-link fullIcon",
+                            attrs: { type: "button" },
+                            on: { click: on }
+                          },
+                          [
+                            _c("span", { attrs: { id: "iconPreview" } }, [
+                              _c("i", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.fullIcon,
+                                    expression: "!fullIcon"
                                   }
-                                }
-                              },
-                              [
-                                _c("span", {
-                                  class: [
-                                    _vm.parent(icon),
-                                    "fa-" + icon.class,
-                                    "vfa-icon-preview"
-                                  ]
-                                })
-                              ]
-                            )
+                                ],
+                                class: "fas fa-image"
+                              }),
+                              _vm._v(" "),
+                              _vm.fullIcon
+                                ? _c("i", { class: _vm.fullIcon })
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("i", { staticClass: "fas fa-caret-down ml-1" })
                           ]
-                        }
-                      }
-                    ])
+                        )
+                      ]
+                    }
                   },
-                  "vfa-picker",
-                  _vm.category,
-                  false,
-                  true
-                )
-              )
+                  {
+                    key: "icon",
+                    fn: function(ref) {
+                      var icon = ref.icon
+                      var picked = ref.picked
+                      return [
+                        _c(
+                          "div",
+                          {
+                            attrs: { title: icon.label },
+                            on: {
+                              click: function($event) {
+                                _vm.parent(icon)
+                                picked(icon)
+                                _vm.fullIcon =
+                                  _vm.parent(icon) + " fa-" + icon.class
+                                _vm.updateIcon(icon)
+                              }
+                            }
+                          },
+                          [
+                            _c("span", {
+                              class: [
+                                _vm.parent(icon),
+                                "fa-" + icon.class,
+                                "vfa-icon-preview"
+                              ]
+                            })
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
             ],
             1
           ),
@@ -42735,6 +42924,451 @@ var render = function() {
     }),
     1
   )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&":
+/*!*****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193& ***!
+  \*****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container has-padding-3" }, [
+    _c(
+      "form",
+      {
+        attrs: {
+          method: "post",
+          action: "/classroom/" + this.code + "/challenge"
+        },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.formSubmit($event)
+          }
+        }
+      },
+      [
+        _c("input", {
+          attrs: { type: "hidden", name: "_token" },
+          domProps: { value: _vm.csrfToken }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "has-margin-y-3" }, [
+          _c("label", { attrs: { for: "name" } }, [
+            _c("span", { staticClass: "help is-danger is-inline" }, [
+              _vm._v("* ")
+            ]),
+            _vm._v(" " + _vm._s(_vm.trans.get("challenges.icon")))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "field has-addons" }, [
+          _c(
+            "p",
+            { staticClass: "control" },
+            [
+              _c("vfa-picker", {
+                attrs: { "is-both": "false" },
+                scopedSlots: _vm._u([
+                  {
+                    key: "activator",
+                    fn: function(ref) {
+                      var on = ref.on
+                      return [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button is-link fullIcon",
+                            attrs: { type: "button" },
+                            on: { click: on }
+                          },
+                          [
+                            _c("span", { attrs: { id: "iconPreview" } }, [
+                              _c("i", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: !_vm.challengeInfo.icon,
+                                    expression: "!challengeInfo.icon"
+                                  }
+                                ],
+                                class: "fas fa-image"
+                              }),
+                              _vm._v(" "),
+                              _vm.challengeInfo.icon
+                                ? _c("i", { class: _vm.challengeInfo.icon })
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("i", { staticClass: "fas fa-caret-down ml-1" })
+                          ]
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "icon",
+                    fn: function(ref) {
+                      var icon = ref.icon
+                      var picked = ref.picked
+                      return [
+                        _c(
+                          "div",
+                          {
+                            attrs: { title: icon.label },
+                            on: {
+                              click: function($event) {
+                                _vm.parentIcon(icon)
+                                picked(icon)
+                                _vm.challengeInfo.icon =
+                                  _vm.parentIcon(icon) + " fa-" + icon.class
+                                _vm.updateIcon()
+                              }
+                            }
+                          },
+                          [
+                            _c("span", {
+                              class: [
+                                _vm.parentIcon(icon),
+                                "fa-" + icon.class,
+                                "vfa-icon-preview"
+                              ]
+                            })
+                          ]
+                        )
+                      ]
+                    }
+                  }
+                ])
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "control is-expanded" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.challengeInfo.icon,
+                  expression: "challengeInfo.icon"
+                }
+              ],
+              staticClass: "input",
+              attrs: {
+                name: "icon",
+                required: "",
+                placeholder: _vm.trans.get("behaviours.icon_select"),
+                type: "text"
+              },
+              domProps: { value: _vm.challengeInfo.icon },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.challengeInfo, "icon", $event.target.value)
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "form-group", staticStyle: { "margin-top": "-10px" } },
+          [
+            _c("label", [
+              _c("small", [
+                _vm._v(_vm._s(_vm.trans.get("behaviours.fontawesome")) + " "),
+                _c(
+                  "a",
+                  {
+                    attrs: {
+                      href: "https://fontawesome.com/icons?d=gallery",
+                      target: "_blank"
+                    }
+                  },
+                  [_vm._v("FontAwesome")]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "has-margin-top-3" }, [
+          _c("label", { attrs: { for: "name" } }, [
+            _c("span", { staticClass: "help is-danger is-inline" }, [
+              _vm._v("* ")
+            ]),
+            _vm._v(" " + _vm._s(_vm.trans.get("challenges.name")))
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.challengeInfo.name,
+                expression: "challengeInfo.name"
+              }
+            ],
+            staticClass: "input has-margin-y-3",
+            attrs: { type: "text", id: "name", name: "name", required: "" },
+            domProps: { value: _vm.challengeInfo.name },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.challengeInfo, "name", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "has-margin-top-3" }, [
+          _c("label", { attrs: { for: "name" } }, [
+            _c("span", { staticClass: "help is-danger is-inline" }, [
+              _vm._v("* ")
+            ]),
+            _vm._v(" " + _vm._s(_vm.trans.get("challenges.parent")))
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "field" }, [
+            _c("div", { staticClass: "control" }, [
+              _c("div", { staticClass: "select is-fullwidth" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.challengeInfo.challenge_id,
+                        expression: "challengeInfo.challenge_id"
+                      }
+                    ],
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.challengeInfo,
+                          "challenge_id",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }),
+                    _vm._v(" "),
+                    _vm._l(_vm.$parent.challenges, function(challenge) {
+                      return _c(
+                        "option",
+                        {
+                          key: challenge.id,
+                          domProps: { value: challenge.id }
+                        },
+                        [_vm._v(_vm._s(challenge.name))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "has-margin-top-3" }, [
+          _vm.challenge
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-link",
+                  attrs: { type: "button" },
+                  on: { click: _vm.update }
+                },
+                [_vm._v(_vm._s(_vm.trans.get("challenges.edit")))]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          !_vm.challenge
+            ? _c(
+                "button",
+                { staticClass: "button is-success", attrs: { type: "submit" } },
+                [_vm._v(_vm._s(_vm.trans.get("challenges.create")))]
+              )
+            : _vm._e()
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e& ***!
+  \****************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "columns" }, [
+    _c(
+      "div",
+      { staticClass: "column is-narrow", staticStyle: { "min-width": "25%" } },
+      [
+        _c(
+          "article",
+          { staticClass: "panel is-info has-padding-bottom-4" },
+          [
+            _c("p", { staticClass: "panel-heading has-text-centered" }, [
+              _vm._v(
+                "\r\n                " +
+                  _vm._s(_vm.trans.get("menu.challenges")) +
+                  "\r\n            "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "p",
+              { staticClass: "has-padding-2 has-text-centered has-margin-2" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    on: {
+                      click: function($event) {
+                        _vm.activeAddGroup = !_vm.activeAddGroup
+                      }
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "far fa-plus has-padding-right-2" }),
+                    _vm._v(" Add group")
+                  ]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.challenges, function(challenge) {
+              return _c(
+                "div",
+                {
+                  key: challenge.id,
+                  staticClass: "panel-block is-flex is-flex-column",
+                  staticStyle: { "align-items": "flex-start" }
+                },
+                [
+                  _c("a", { staticStyle: {} }, [
+                    _c("span", { staticClass: "panel-icon" }, [
+                      _c("i", {
+                        class: challenge.icon,
+                        attrs: { "aria-hidden": "true" }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("span", { attrs: { title: challenge.name } }, [
+                      _vm._v(
+                        _vm._s(
+                          challenge.name.length > 30
+                            ? challenge.name.substring(0, 30) + "..."
+                            : challenge.name
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(challenge.children, function(challengeChild) {
+                    return _c(
+                      "a",
+                      {
+                        key: challengeChild.id,
+                        staticClass: "has-padding-left-4 has-padding-top-3"
+                      },
+                      [
+                        _c("span", { staticClass: "panel-icon" }, [
+                          _c("i", {
+                            class: challengeChild.icon,
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { attrs: { title: challengeChild.name } }, [
+                          _vm._v(
+                            _vm._s(
+                              challengeChild.name.length > 30
+                                ? challengeChild.name.substring(0, 30) + "..."
+                                : challengeChild.name
+                            )
+                          )
+                        ])
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            })
+          ],
+          2
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "column" },
+      [
+        _vm.activeAddGroup
+          ? _c("create-challenge", { attrs: { code: _vm.code } })
+          : _vm._e()
+      ],
+      1
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62087,6 +62721,14 @@ __webpack_require__.r(__webpack_exports__);
     "party_title": "El rey de la fiesta",
     "party_description": "Te permite pedir m\xFAsica al profesor mientras realiz\xE1is un ejercicio"
   },
+  "en.challenges": {
+    "add": "Add challenge",
+    "create": "Create challenge",
+    "edit": "Edit challenge",
+    "name": "Name",
+    "icon": "Icon",
+    "parent": "Parent challenge (optional)"
+  },
   "en.classroom": {
     "add": "Add classroom",
     "join": "Join classroom",
@@ -62136,6 +62778,7 @@ __webpack_require__.r(__webpack_exports__);
     "levels": "Levels",
     "stories": "Stories",
     "goals": "Goals",
+    "challenges": "Challenges",
     "rules": "Rules",
     "log": "Log",
     "shop": "Shop",
@@ -62434,10 +63077,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_tippy__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-tippy */ "./node_modules/vue-tippy/dist/vue-tippy.esm.js");
 /* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
 /* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var buefy__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! buefy */ "./node_modules/buefy/dist/esm/index.js");
-/* harmony import */ var vue_json_excel__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-json-excel */ "./node_modules/vue-json-excel/JsonExcel.vue");
+/* harmony import */ var buefy__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! buefy */ "./node_modules/buefy/dist/esm/index.js");
+/* harmony import */ var vue_json_excel__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-json-excel */ "./node_modules/vue-json-excel/JsonExcel.vue");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -62452,45 +63093,46 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 
 var default_locale = window.default_locale;
 var fallback_locale = window.fallback_locale;
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
+Vue.prototype.trans = new lang_js__WEBPACK_IMPORTED_MODULE_0___default.a({
   messages: _assets_js_ll_messages__WEBPACK_IMPORTED_MODULE_1__["default"],
   locale: default_locale,
   fallback: fallback_locale
 }); // Toast management
 
 
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(vue_toasted__WEBPACK_IMPORTED_MODULE_2___default.a); // Tippy poppover
+Vue.use(vue_toasted__WEBPACK_IMPORTED_MODULE_2___default.a); // Tippy poppover
 
 
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(vue_tippy__WEBPACK_IMPORTED_MODULE_3__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component("tippy", vue_tippy__WEBPACK_IMPORTED_MODULE_3__["TippyComponent"]); // Cookies
+Vue.use(vue_tippy__WEBPACK_IMPORTED_MODULE_3__["default"]);
+Vue.component("tippy", vue_tippy__WEBPACK_IMPORTED_MODULE_3__["TippyComponent"]); // Cookies
 
 
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(vue_cookies__WEBPACK_IMPORTED_MODULE_4___default.a); // Buefy
-
+Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_4___default.a); // Buefy
 
  // Download excel
 
 
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('downloadExcel', vue_json_excel__WEBPACK_IMPORTED_MODULE_7__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.use(buefy__WEBPACK_IMPORTED_MODULE_6__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('create-classroom', __webpack_require__(/*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('add-students', __webpack_require__(/*! ./components/student/AddStudents.vue */ "./resources/js/components/student/AddStudents.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-students', __webpack_require__(/*! ./components/student/ShowStudents.vue */ "./resources/js/components/student/ShowStudents.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-card', __webpack_require__(/*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-cards', __webpack_require__(/*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('create-card', __webpack_require__(/*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('create-behaviour', __webpack_require__(/*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_5___default.a.component('show-level', __webpack_require__(/*! ./components/level/ShowLevel.vue */ "./resources/js/components/level/ShowLevel.vue")["default"]);
+Vue.component('downloadExcel', vue_json_excel__WEBPACK_IMPORTED_MODULE_6__["default"]);
+Vue.use(buefy__WEBPACK_IMPORTED_MODULE_5__["default"]);
+Vue.component('create-classroom', __webpack_require__(/*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue")["default"]);
+Vue.component('add-students', __webpack_require__(/*! ./components/student/AddStudents.vue */ "./resources/js/components/student/AddStudents.vue")["default"]);
+Vue.component('show-students', __webpack_require__(/*! ./components/student/ShowStudents.vue */ "./resources/js/components/student/ShowStudents.vue")["default"]);
+Vue.component('show-card', __webpack_require__(/*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue")["default"]);
+Vue.component('show-cards', __webpack_require__(/*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue")["default"]);
+Vue.component('create-card', __webpack_require__(/*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue")["default"]);
+Vue.component('create-behaviour', __webpack_require__(/*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue")["default"]);
+Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
+Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
+Vue.component('show-level', __webpack_require__(/*! ./components/level/ShowLevel.vue */ "./resources/js/components/level/ShowLevel.vue")["default"]);
+Vue.component('show-challenges', __webpack_require__(/*! ./components/challenges/ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue")["default"]);
+Vue.component('create-challenges', __webpack_require__(/*! ./components/challenges/CreateChallenge.vue */ "./resources/js/components/challenges/CreateChallenge.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_5___default.a({
+var app = new Vue({
   el: '#app',
   data: {
     showNav: false
@@ -62893,6 +63535,144 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCards_vue_vue_type_template_id_4ddc9192___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCards_vue_vue_type_template_id_4ddc9192___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/CreateChallenge.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallenge.vue ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallenge.vue?vue&type=template&id=23c8d193& */ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&");
+/* harmony import */ var _CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateChallenge.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/challenges/CreateChallenge.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallenge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193& ***!
+  \***********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallenge.vue?vue&type=template&id=23c8d193& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallenges.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallenges.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowChallenges.vue?vue&type=template&id=0c1d2d9e& */ "./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e&");
+/* harmony import */ var _ShowChallenges_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowChallenges.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowChallenges_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/challenges/ShowChallenges.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallenges.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallenges.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e& ***!
+  \**********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallenges.vue?vue&type=template&id=0c1d2d9e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallenges.vue?vue&type=template&id=0c1d2d9e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

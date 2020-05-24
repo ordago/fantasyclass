@@ -60,6 +60,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/levels/{level}', 'LevelsController@update'); // Policy protect
         Route::delete('/level/{id}', 'LevelsController@destroy'); // Policy protect
         
+        // Challenges
+        Route::get('/{code}/challenges', 'ChallengesController@index'); // Policy protect
+        Route::post('/{code}/challenges', 'ChallengesController@store'); // Policy protect
+        
     });
         
     // Socialite

@@ -51,7 +51,6 @@ class LevelsController extends Controller
                 $lvl->addMedia(request()->file('file'))
                 ->toMediaCollection('level');
         
-                   dump($lvl); 
                     $lvlPath = $lvl->getMedia('level')->first();
                     $imgPath = '/'.$lvlPath->id.'/'.$lvlPath->file_name;
                     $path = Storage::disk('public')->path('/').$imgPath;        

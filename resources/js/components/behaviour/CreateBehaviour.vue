@@ -5,7 +5,7 @@
 
         <div class="field has-addons">
           <p class="control">
-                <vfa-picker is-both="false" v-bind.sync="category">
+                <vfa-picker is-both="false">
                       <template v-slot:activator="{ on }">
                         <button class="button is-link fullIcon" type="button" @click="on">
                           <span id="iconPreview">
@@ -93,23 +93,18 @@ Vue.use(VueFontAwesomePicker);
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
 
            if(this.behaviour) {
-            let behaviourJson = JSON.parse(this.behaviour);
-            this.name = behaviourJson.name
-            this.custom_text = behaviourJson.custom_text
-            this.hp = behaviourJson.hp
-            this.xp = behaviourJson.xp
-            this.gold = behaviourJson.gold
-            this.fullIcon = behaviourJson.icon
-            this.id = behaviourJson.id
+            this.name = this.behaviour.name
+            this.custom_text = this.behaviour.custom_text
+            this.hp = this.behaviour.hp
+            this.xp = this.behaviour.xp
+            this.gold = this.behaviour.gold
+            this.fullIcon = this.behaviour.icon
+            this.id = this.behaviour.id
           }
         },
         data: function() {
             return {
                 icon: null,
-                category: {
-                    class: undefined,
-                    unicode: undefined
-                },
                 csrfToken: null,
                 fullIcon: null,
                 name: null,

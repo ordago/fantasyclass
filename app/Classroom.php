@@ -44,4 +44,8 @@ class Classroom extends Model
     public function levels() {
         return $this->hasMany(Level::class);
     }
+
+    public function challenges() {
+        return $this->hasMany(Challenge::class);
+    }
 }

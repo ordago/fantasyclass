@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="bg-light p-2 h-100">
-  <create-behaviour code="{{ $class->code }}" behaviour="{{ $behaviour ?? '' }}"></create-behaviour>
+
+  <create-behaviour code="{{ $class->code }}" @if(isset($behaviour)) :behaviour="{{ $behaviour }}" @endif></create-behaviour>
 </div>
 @endsection
