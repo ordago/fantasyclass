@@ -20,42 +20,6 @@
     height: 100%;
   }
 
-  .rounded {
-    border-radius: .25rem!important;
-  }
-  
-  .rounded-left {
-    border-bottom-left-radius: .25rem!important;
-    border-top-left-radius: .25rem!important;
-  }
-  .rounded-right {
-    border-bottom-right-radius: .25rem!important;
-    border-top-right-radius: .25rem!important;
-  }
-  .rounded-top {
-    border-top-right-radius: .25rem!important;
-    border-top-left-radius: .25rem!important;
-  }
-  .rounded-bottom {
-    border-bottom-right-radius: .25rem!important;
-    border-bottom-left-radius: .25rem!important;
-  }
-
-  .is-all-centered {
-    align-items: center;
-    justify-content: center;
-    align-content: center;
-  }
-  .align-items-center {
-    align-items: center;
-  }
-  .justify-content-center {
-    justify-content: center;
-  }
-  .flex-wrap {
-    flex-wrap: wrap;
-  }
-
   @font-face {
     font-family: logo;
     src: url(/fonts/wizzta.otf);

@@ -2040,7 +2040,7 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       return "";
     },
     updateIcon: function updateIcon(icon) {
-      document.getElementById('iconPreview').innerHTML = "<i class='" + this.fullIcon + "'></i>";
+      this.$refs.iconPreview.innerHTML = "<i class='" + this.fullIcon + "'></i>";
     },
     update: function update() {
       var _this = this;
@@ -2747,10 +2747,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2868,7 +2868,7 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       return "";
     },
     updateIcon: function updateIcon() {
-      document.getElementById('iconPreview').innerHTML = "<i class='" + this.challengeInfo.icon + "'></i>";
+      this.$refs.iconPreview.innerHTML = "<i class='" + this.challengeInfo.icon + "'></i>";
     },
     update: function update() {}
   }
@@ -2885,7 +2885,72 @@ Vue.use(vfa_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateChallenge_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallenge.vue */ "./resources/js/components/challenges/CreateChallenge.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['challengeGroup'],
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      challenges: [],
+      addChallenge: false
+    };
+  },
+  methods: {},
+  components: {},
+  computed: {
+    buttonAddChallege: function buttonAddChallege() {
+      return this.addChallenge ? this.trans.get('general.cancel') : "<i class='far fa-plus has-padding-right-2'></i>" + this.trans.get('challenges.add');
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreateChallengeGroup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallengeGroup.vue */ "./resources/js/components/challenges/CreateChallengeGroup.vue");
+/* harmony import */ var _ShowChallenges_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue");
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2918,12 +2983,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['code', 'challenges'],
   mounted: function mounted() {},
   data: function data() {
     return {
-      activeAddGroup: false
+      activeAddGroup: false,
+      activeGroup: false
     };
   },
   methods: {
@@ -2939,7 +3006,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   components: {
-    createChallenge: _CreateChallenge_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    createChallengeGroup: _CreateChallengeGroup_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    showChallenges: _ShowChallenges_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    buttonAddGroup: function buttonAddGroup() {
+      return this.activeAddGroup ? this.trans.get('general.cancel') : "<i class='far fa-plus has-padding-right-2'></i>" + this.trans.get('challenges.add_group');
+    }
   }
 });
 
@@ -40797,7 +40870,7 @@ var render = function() {
                             on: { click: on }
                           },
                           [
-                            _c("span", { attrs: { id: "iconPreview" } }, [
+                            _c("span", { ref: "iconPreview" }, [
                               _c("i", {
                                 directives: [
                                   {
@@ -42925,10 +42998,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&":
-/*!*****************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193& ***!
-  \*****************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -42991,7 +43064,7 @@ var render = function() {
                             on: { click: on }
                           },
                           [
-                            _c("span", { attrs: { id: "iconPreview" } }, [
+                            _c("span", { ref: "iconPreview" }, [
                               _c("i", {
                                 directives: [
                                   {
@@ -43246,6 +43319,107 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "has-padding-left-0-desktop" }, [
+    _c("div", { staticClass: "panel has-padding-left-0-desktop" }, [
+      _c(
+        "p",
+        {
+          staticClass:
+            "panel-heading is-flex has-space-between align-items-center has-padding-3"
+        },
+        [
+          _c("span", { staticClass: "has-padding-left-3" }, [
+            _vm._v(" " + _vm._s(_vm.challengeGroup.name))
+          ]),
+          _vm._v(" "),
+          _c("button", {
+            staticClass: "button",
+            domProps: { innerHTML: _vm._s(_vm.buttonAddChallege) },
+            on: {
+              click: function($event) {
+                _vm.addChallenge = !_vm.addChallenge
+              }
+            }
+          })
+        ]
+      ),
+      _vm._v(" "),
+      _vm.challenges.length > 0
+        ? _c("div", { staticClass: "panel-block" }, [_vm._m(0)])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.addChallenge
+        ? _c("div", { staticClass: "panel-block" }, [
+            _vm._v("\r\n            Add challenge\r\n        ")
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.challenges.length == 0 && !_vm.addChallenge
+        ? _c("div", { staticClass: "panel-block" }, [
+            _c(
+              "h3",
+              {
+                staticClass: "is-size-3 has-padding-4 w-100 has-text-centered"
+              },
+              [
+                _c("i", { staticClass: "fal fa-smile-wink" }),
+                _vm._v(
+                  " " +
+                    _vm._s(_vm.trans.get("challenges.empty")) +
+                    "\r\n            "
+                )
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.challenges.length > 0 && !_vm.addChallenge
+        ? _c("div", { staticClass: "panel-block" })
+        : _vm._e()
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control has-icons-left" }, [
+      _c("input", {
+        staticClass: "input",
+        attrs: { type: "text", placeholder: "Search", disabled: "" }
+      }),
+      _vm._v(" "),
+      _c("span", { staticClass: "icon is-left" }, [
+        _c("i", {
+          staticClass: "fas fa-search",
+          attrs: { "aria-hidden": "true" }
+        })
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
   return _c("div", { staticClass: "columns" }, [
     _c(
       "div",
@@ -43258,33 +43432,24 @@ var render = function() {
           "article",
           { staticClass: "panel is-info has-padding-bottom-4" },
           [
-            _c("p", { staticClass: "panel-heading has-text-centered" }, [
-              _vm._v(
-                "\r\n                " +
-                  _vm._s(_vm.trans.get("menu.challenges")) +
-                  "\r\n            "
-              )
-            ]),
-            _vm._v(" "),
             _c(
               "p",
-              { staticClass: "has-padding-2 has-text-centered has-margin-2" },
+              {
+                staticClass:
+                  "panel-heading is-flex has-space-between align-items-center has-padding-3"
+              },
               [
-                _c(
-                  "button",
-                  {
-                    staticClass: "button",
-                    on: {
-                      click: function($event) {
-                        _vm.activeAddGroup = !_vm.activeAddGroup
-                      }
+                _c("span", [_vm._v(_vm._s(_vm.trans.get("menu.challenges")))]),
+                _vm._v(" "),
+                _c("button", {
+                  staticClass: "button",
+                  domProps: { innerHTML: _vm._s(_vm.buttonAddGroup) },
+                  on: {
+                    click: function($event) {
+                      _vm.activeAddGroup = !_vm.activeAddGroup
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "far fa-plus has-padding-right-2" }),
-                    _vm._v(" Add group")
-                  ]
-                )
+                  }
+                })
               ]
             ),
             _vm._v(" "),
@@ -43293,53 +43458,85 @@ var render = function() {
                 "div",
                 {
                   key: challenge.id,
-                  staticClass: "panel-block is-flex is-flex-column",
+                  staticClass:
+                    "panel-block has-padding-y-4 is-flex is-flex-column",
                   staticStyle: { "align-items": "flex-start" }
                 },
                 [
-                  _c("a", { staticStyle: {} }, [
-                    _c("span", { staticClass: "panel-icon" }, [
-                      _c("i", {
-                        class: challenge.icon,
-                        attrs: { "aria-hidden": "true" }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("span", { attrs: { title: challenge.name } }, [
-                      _vm._v(
-                        _vm._s(
-                          challenge.name.length > 30
-                            ? challenge.name.substring(0, 30) + "..."
-                            : challenge.name
-                        )
-                      )
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._l(challenge.children, function(challengeChild) {
-                    return _c(
-                      "a",
-                      {
-                        key: challengeChild.id,
-                        staticClass: "has-padding-left-4 has-padding-top-3"
-                      },
-                      [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "w-100 is-fullwidth cursor-pointer is-flex has-space-between",
+                      on: {
+                        click: function($event) {
+                          _vm.activeGroup = challenge
+                        }
+                      }
+                    },
+                    [
+                      _c("span", [
                         _c("span", { staticClass: "panel-icon" }, [
                           _c("i", {
-                            class: challengeChild.icon,
+                            class: challenge.icon,
                             attrs: { "aria-hidden": "true" }
                           })
                         ]),
                         _vm._v(" "),
-                        _c("span", { attrs: { title: challengeChild.name } }, [
+                        _c("span", { attrs: { title: challenge.name } }, [
                           _vm._v(
                             _vm._s(
-                              challengeChild.name.length > 30
-                                ? challengeChild.name.substring(0, 30) + "..."
-                                : challengeChild.name
+                              challenge.name.length > 30
+                                ? challenge.name.substring(0, 30) + "..."
+                                : challenge.name
                             )
                           )
                         ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(0, true)
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(challenge.children, function(challengeChild) {
+                    return _c(
+                      "div",
+                      {
+                        key: challengeChild.id,
+                        staticClass:
+                          "is-flex has-space-between w-100 is-fullwidth cursor-pointer has-padding-left-4 has-padding-top-4",
+                        on: {
+                          click: function($event) {
+                            _vm.activeGroup = challengeChild
+                          }
+                        }
+                      },
+                      [
+                        _c("span", [
+                          _c("span", { staticClass: "panel-icon" }, [
+                            _c("i", {
+                              class: challengeChild.icon,
+                              attrs: { "aria-hidden": "true" }
+                            })
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { attrs: { title: challengeChild.name } },
+                            [
+                              _vm._v(
+                                _vm._s(
+                                  challengeChild.name.length > 30
+                                    ? challengeChild.name.substring(0, 30) +
+                                        "..."
+                                    : challengeChild.name
+                                )
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1, true)
                       ]
                     )
                   })
@@ -43355,17 +43552,36 @@ var render = function() {
     _vm._v(" "),
     _c(
       "div",
-      { staticClass: "column" },
+      { staticClass: "column has-padding-left-0-desktop" },
       [
         _vm.activeAddGroup
-          ? _c("create-challenge", { attrs: { code: _vm.code } })
+          ? _c("create-challenge-group", { attrs: { code: _vm.code } })
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.activeGroup
+          ? _c("show-challenges", {
+              attrs: { challengeGroup: _vm.activeGroup }
+            })
           : _vm._e()
       ],
       1
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fal fa-angle-right" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", [_c("i", { staticClass: "fal fa-angle-right" })])
+  }
+]
 render._withStripped = true
 
 
@@ -62717,12 +62933,14 @@ __webpack_require__.r(__webpack_exports__);
     "party_description": "Te permite pedir m\xFAsica al profesor mientras realiz\xE1is un ejercicio"
   },
   "en.challenges": {
-    "add": "Add challenge",
+    "add": "Add story \/ challenge",
+    "add_group": "Add group",
     "create": "Create challenge",
     "edit": "Edit challenge",
     "name": "Name",
     "icon": "Icon",
-    "parent": "Parent challenge (optional)"
+    "parent": "Parent group    (optional)",
+    "empty": "Let's create some challenges!"
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -62761,6 +62979,7 @@ __webpack_require__.r(__webpack_exports__);
     "edit": "Edit",
     "delete": "Delete",
     "close": "Close",
+    "cancel": "Cancel",
     "no": "No",
     "confirm_delete": "Are you sure you want to delete this element? This action can't be undone."
   },
@@ -62774,6 +62993,7 @@ __webpack_require__.r(__webpack_exports__);
     "stories": "Stories",
     "goals": "Goals",
     "challenges": "Challenges",
+    "evaluation": "Evaluation",
     "rules": "Rules",
     "log": "Log",
     "shop": "Shop",
@@ -63119,8 +63339,9 @@ Vue.component('create-behaviour', __webpack_require__(/*! ./components/behaviour
 Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
 Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
 Vue.component('show-level', __webpack_require__(/*! ./components/level/ShowLevel.vue */ "./resources/js/components/level/ShowLevel.vue")["default"]);
+Vue.component('show-challenges-group', __webpack_require__(/*! ./components/challenges/ShowChallengesGroup.vue */ "./resources/js/components/challenges/ShowChallengesGroup.vue")["default"]);
 Vue.component('show-challenges', __webpack_require__(/*! ./components/challenges/ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue")["default"]);
-Vue.component('create-challenges', __webpack_require__(/*! ./components/challenges/CreateChallenge.vue */ "./resources/js/components/challenges/CreateChallenge.vue")["default"]);
+Vue.component('create-challenges-group', __webpack_require__(/*! ./components/challenges/CreateChallengeGroup.vue */ "./resources/js/components/challenges/CreateChallengeGroup.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -63535,17 +63756,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/challenges/CreateChallenge.vue":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/challenges/CreateChallenge.vue ***!
-  \****************************************************************/
+/***/ "./resources/js/components/challenges/CreateChallengeGroup.vue":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallengeGroup.vue ***!
+  \*********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallenge.vue?vue&type=template&id=23c8d193& */ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&");
-/* harmony import */ var _CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateChallenge.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallengeGroup.vue?vue&type=template&id=583d775c& */ "./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c&");
+/* harmony import */ var _CreateChallengeGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateChallengeGroup.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -63555,9 +63776,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CreateChallengeGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -63567,38 +63788,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/challenges/CreateChallenge.vue"
+component.options.__file = "resources/js/components/challenges/CreateChallengeGroup.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************************!*\
-  !*** ./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************************/
+/***/ "./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallenge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallengeGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallengeGroup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallengeGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193& ***!
-  \***********************************************************************************************/
+/***/ "./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c& ***!
+  \****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallenge.vue?vue&type=template&id=23c8d193& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallenge.vue?vue&type=template&id=23c8d193&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateChallengeGroup.vue?vue&type=template&id=583d775c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/CreateChallengeGroup.vue?vue&type=template&id=583d775c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallenge_vue_vue_type_template_id_23c8d193___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateChallengeGroup_vue_vue_type_template_id_583d775c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -63668,6 +63889,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallenges_vue_vue_type_template_id_0c1d2d9e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowChallengesGroup.vue?vue&type=template&id=570e1b04& */ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&");
+/* harmony import */ var _ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowChallengesGroup.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/challenges/ShowChallengesGroup.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallengesGroup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallengesGroup.vue?vue&type=template&id=570e1b04& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

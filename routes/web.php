@@ -61,8 +61,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/level/{id}', 'LevelsController@destroy'); // Policy protect
         
         // Challenges
-        Route::get('/{code}/challenges', 'ChallengesController@index'); // Policy protect
-        Route::post('/{code}/challenges', 'ChallengesController@store'); // Policy protect
+        Route::get('/{code}/challenges', 'ChallengesGroupController@index'); // Policy protect
+        Route::post('/{code}/challenges', 'ChallengesGroupController@store'); // Policy protect
         
     });
         

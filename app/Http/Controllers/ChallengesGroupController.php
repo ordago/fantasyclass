@@ -6,7 +6,7 @@ use App\ChallengesGroup;
 use App\Classroom;
 use Illuminate\Support\Facades\DB;
 
-class ChallengesController extends Controller
+class ChallengesGroupController extends Controller
 {
     public function __construct()
     {

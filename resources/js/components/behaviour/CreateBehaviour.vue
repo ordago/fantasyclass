@@ -8,7 +8,7 @@
                 <vfa-picker is-both="false">
                       <template v-slot:activator="{ on }">
                         <button class="button is-link fullIcon" type="button" @click="on">
-                          <span id="iconPreview">
+                          <span ref="iconPreview">
                             <i :class="'fas fa-image'" v-show="!fullIcon"></i>
                             <i :class="fullIcon" v-if="fullIcon"></i>
                           </span>
@@ -131,7 +131,7 @@ Vue.use(VueFontAwesomePicker);
                 return "";
               },
               updateIcon: function(icon) {
-                  document.getElementById('iconPreview').innerHTML = "<i class='"+this.fullIcon+"'></i>"
+                  this.$refs.iconPreview.innerHTML = "<i class='"+this.fullIcon+"'></i>"
               },
               update: function() {
                   this.icon = this.fullIcon

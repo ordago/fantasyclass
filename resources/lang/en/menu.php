@@ -18,6 +18,7 @@ return [
     'stories' => 'Stories',
     'goals' => 'Goals',
     'challenges' => 'Challenges',
+    'evaluation' => 'Evaluation',
     'rules' => 'Rules',
     'log' => 'Log',
     'shop' => "Shop",

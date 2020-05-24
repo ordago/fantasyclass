@@ -66,16 +66,19 @@
                                 <a href="/classroom/{{ $class->code }}/behaviours" class="navbar-item">
                                     <i class="fad fa-heart has-margin-right-2"></i> {{ __('menu.behaviours') }}
                                 </a>
+                                <a href="/classroom/{{ $class->code }}/shop" class="navbar-item">
+                                    <i class="fad fa-store has-margin-right-2"></i> {{ __('menu.shop') }}
+                                </a>
                             </div>
                         </div>
                         <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
                         </a>
-                        <a class="navbar-item">
-                            <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
+                        <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
+                            <i class="fas fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
                         </a>
                         <a class="navbar-item">
-                            <i class="fad fa-store has-margin-right-2"></i> {{ __('menu.shop') }}
+                            <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
                         </a>
                         <a class="navbar-item">
                             <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}

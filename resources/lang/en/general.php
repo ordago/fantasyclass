@@ -15,6 +15,7 @@ return [
     'edit' => "Edit",
     'delete' => "Delete",
     'close' => "Close",
+    'cancel' => "Cancel",
     
     'no' => "No",
 

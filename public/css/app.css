@@ -11404,48 +11404,6 @@ body {
   height: 100%;
 }
 
-.rounded {
-  border-radius: 0.25rem !important;
-}
-
-.rounded-left {
-  border-bottom-left-radius: 0.25rem !important;
-  border-top-left-radius: 0.25rem !important;
-}
-
-.rounded-right {
-  border-bottom-right-radius: 0.25rem !important;
-  border-top-right-radius: 0.25rem !important;
-}
-
-.rounded-top {
-  border-top-right-radius: 0.25rem !important;
-  border-top-left-radius: 0.25rem !important;
-}
-
-.rounded-bottom {
-  border-bottom-right-radius: 0.25rem !important;
-  border-bottom-left-radius: 0.25rem !important;
-}
-
-.is-all-centered {
-  align-items: center;
-  justify-content: center;
-  align-content: center;
-}
-
-.align-items-center {
-  align-items: center;
-}
-
-.justify-content-center {
-  justify-content: center;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
-}
-
 @font-face {
   font-family: logo;
   src: url(/fonts/wizzta.otf);
@@ -12557,10 +12515,6 @@ textPath {
   align-content: center;
 }
 
-.relative, .is-relative {
-  position: relative;
-}
-
 .themes {
   display: flex;
   flex-flow: row wrap;
@@ -12955,6 +12909,56 @@ textPath {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+}
+
+.rounded {
+  border-radius: 0.25rem !important;
+}
+
+.rounded-left {
+  border-bottom-left-radius: 0.25rem !important;
+  border-top-left-radius: 0.25rem !important;
+}
+
+.rounded-right {
+  border-bottom-right-radius: 0.25rem !important;
+  border-top-right-radius: 0.25rem !important;
+}
+
+.rounded-top {
+  border-top-right-radius: 0.25rem !important;
+  border-top-left-radius: 0.25rem !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: 0.25rem !important;
+  border-bottom-left-radius: 0.25rem !important;
+}
+
+.is-all-centered {
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.has-space-between {
+  justify-content: space-between;
+}
+
+.relative, .is-relative {
+  position: relative;
 }
 
 /* LOADER                                       */
