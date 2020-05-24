@@ -12953,6 +12953,10 @@ textPath {
   flex-wrap: wrap;
 }
 
+.el-tiptap-editor {
+  overflow: visible !important;
+}
+
 .has-space-between {
   justify-content: space-between;
 }

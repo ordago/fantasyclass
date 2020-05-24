@@ -13,21 +13,26 @@
             </span>
             </p>
         </div>
+        
         <div class="panel-block" v-if="addChallenge">
-            Add challenge
+           <add-challenges :challengeGroup="challengeGroup"></add-challenges>
         </div>
+
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
             <h3 class="is-size-3 has-padding-4 w-100 has-text-centered">
                 <i class="fal fa-smile-wink"></i> {{ trans.get('challenges.empty') }}
             </h3>
         </div>
+        
         <div class="panel-block" v-if="challenges.length > 0 && !addChallenge">
-            
+            // Current challenges
         </div>
     </div>
 </div>
 </template>
 <script>
+
+    import addChallenges from './AddChallenges.vue';
 
     export default {
             props: ['challengeGroup'],
@@ -37,13 +42,17 @@
             data: function() {
                 return {
                     challenges: [],
-                    addChallenge: false,
+                    addChallenge: true, //false!
+                    datetime: new Date(),
                 }
             },
             methods: {
-                
+                dobFormatter(){
+                    return today.toLocaleDateString('es-ES', {  });
+                    },
             },
             components: {
+                addChallenges,
             },
             computed: {
                 buttonAddChallege() {

@@ -42,6 +42,20 @@ Vue.component('downloadExcel', JsonExcel)
 
 Vue.use(Buefy)
 
+import Vue from 'vue';
+import ElementUI from 'element-ui';
+import { ElementTiptapPlugin } from 'element-tiptap';
+// import ElementUI's styles
+import 'element-ui/lib/theme-chalk/index.css';
+// import this package's styles
+import 'element-tiptap/lib/index.css';
+
+// use ElementUI's plugin
+Vue.use(ElementUI);
+// use this package's plugin
+Vue.use(ElementTiptapPlugin, { /* plugin options */ });
+// Now you register `'el-tiptap'` component globally.
+
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
@@ -60,6 +74,7 @@ Vue.component('show-level', require('./components/level/ShowLevel.vue').default)
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
+Vue.component('add-challenges', require('./components/challenges/AddChallenges.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

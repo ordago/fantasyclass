@@ -30,13 +30,19 @@
         "buefy": "^0.8.19",
         "bulma": "^0.8.2",
         "bulma-helper-spacing": "0.0.3",
+        "element-tiptap": "^1.21.0",
+        "element-ui": "^2.13.2",
         "font-awesome-animation": "^0.2.1",
         "lang.js": "^1.1.14",
         "save": "^2.4.0",
-                "vfa-picker": "^5.9.1",
+        "tiptap": "^1.27.1",
+        "tiptap-extensions": "^1.29.1",
+        "tiptap-vuetify": "^2.20.0",
+        "vfa-picker": "^5.9.1",
         "vue-cookies": "^1.7.0",
         "vue-json-excel": "^0.2.98",
         "vue-tippy": "^4.4.0",
-        "vue-toasted": "^1.1.28"
+        "vue-toasted": "^1.1.28",
+        "vuetify": "^2.2.29"
     }
 }
