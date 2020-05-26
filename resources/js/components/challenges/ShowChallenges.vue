@@ -7,7 +7,7 @@
         </p>
         <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
             <p class="control has-icons-left">
-            <input class="input" type="text" placeholder="Search"  disabled>
+            <input class="input" type="text" v-model="search" placeholder="Search" >
             <span class="icon is-left">
                 <i class="fas fa-search" aria-hidden="true"></i>
             </span>
@@ -25,7 +25,7 @@
         </div>
         
         <div class="panel-block is-block has-padding-3" v-if="challenges.length > 0 && !addChallenge">
-            <div v-for="challenge in orderedChallenges" v-bind:key="challenge.id" class="box has-margin-bottom-3">
+            <div v-for="challenge in filteredList" v-bind:key="challenge.id" class="box has-margin-bottom-3">
                 <section class="media">
                     <div class="media-content">
                     <div class="content">
@@ -71,7 +71,8 @@
             },
             data: function() {
                 return {
-                    addChallenge: false, //false!
+                    addChallenge: false,
+                    search: '',
                 }
             },
             methods: {
@@ -82,6 +83,11 @@
             computed: {
                 buttonAddChallege() {
                     return  this.addChallenge ? this.trans.get('general.cancel') : "<i class='far fa-plus has-padding-right-2'></i>" + this.trans.get('challenges.add')  
+                },
+                filteredList: function() {
+                    return this.orderedChallenges.filter(challenge => {
+                        return challenge.title.toLowerCase().includes(this.search.toLowerCase())
+                    })
                 },
                 orderedChallenges: function () {
                     return _.orderBy(this.challenges, 'datetime', 'desc')
