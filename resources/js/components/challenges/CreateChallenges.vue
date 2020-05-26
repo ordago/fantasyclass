@@ -1,9 +1,10 @@
 <template>
-            <div class="w-100">
+    <div class="w-100">
+        <form action="#" method="post" @submit.prevent="createChallenge">
                 <div class="field w-100">
                     <label class="label">Title *</label>
                     <div class="control">
-                        <input class="input" type="text" v-model="challenge.title" placeholder="">
+                        <input class="input" type="text" v-model="challenge.title" required placeholder="">
                     </div>
                 </div>
                 <div class="field w-100">
@@ -129,9 +130,9 @@
                                 Optional</b-switch>
                         </div>
                     </div>
-                    <b-button @click="createChallenge">Click Me</b-button>
-
-        </div>
+                    <button type="submit" class="button is-primary">{{ trans.get('challenges.create_challenge') }}</button>
+        </form>
+    </div>
 </template>
 <script>
     export default {

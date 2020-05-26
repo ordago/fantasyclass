@@ -12468,6 +12468,15 @@ textPath {
   box-shadow: 0 0 3pt 2pt #4fc3f7;
 }
 
+.level {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  z-index: 10;
+  font-size: 1.5em;
+  padding: 10px;
+}
+
 .flexEnd {
   display: flex;
   place-items: flex-end;

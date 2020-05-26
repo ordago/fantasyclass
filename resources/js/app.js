@@ -70,6 +70,7 @@ Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.
 
 Vue.component('create-levels', require('./components/level/CreateLevels.vue').default);
 Vue.component('show-level', require('./components/level/ShowLevel.vue').default);
+Vue.component('show-level-student', require('./components/level/ShowLevelStudent.vue').default);
 
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);

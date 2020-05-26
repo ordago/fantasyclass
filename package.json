@@ -43,6 +43,7 @@
         "vue-json-excel": "^0.2.98",
         "vue-tippy": "^4.4.0",
         "vue-toasted": "^1.1.28",
+        "vue-xlsx": "^0.2.1",
         "vuetify": "^2.2.29"
     }
 }

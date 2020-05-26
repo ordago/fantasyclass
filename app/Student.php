@@ -15,7 +15,14 @@ class Student extends Model
                             'character_id', 
                             'password_plain' ];
 
-    protected $appends = ['username'];
+    protected $appends = ['username', 'level'];
+
+    
+    public function getLevelAttribute() 
+    {  
+        return Level::where('xp', '<=', $this->xp)->orderByDesc('xp')->first();  
+    }
+
 
     public function getUsernameAttribute() 
     {  
@@ -40,7 +47,7 @@ class Student extends Model
         $this->fill([
             $prop => $value,
         ])->save();
-        return $value;
+        return ['value' => $value, 'level' => $this->getLevelAttribute()];
     }
 
     public function setBasicEquipment() {

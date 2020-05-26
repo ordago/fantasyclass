@@ -112,6 +112,7 @@ class StudentController extends Controller
             'hp' => $valHp,
             'xp' => $valXp,
             'gold' => $valGold,
+            'level' => $student->getLevelAttribute(),
         ];
         
     }

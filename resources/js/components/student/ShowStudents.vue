@@ -32,6 +32,10 @@
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded card-shadow-s">
+                <span class="level rounded has-padding-4 has-background-light" v-if="student.level">
+                    {{ student.level.number }}
+                </span>
+
                 <div class="card-image card-shadow-s rounded-top char-bg" :style="'background-color:' + bgc + ';background-image: url(/img/bg/thumb_' + bg + ');'">
                     <div class="character-container character character-small is-relative">
                         <img :src="'/img/character/' + element.src" :class="element.classes" v-for="element in student.equipment" v-bind:key="element.id">
@@ -197,10 +201,14 @@
                     let options = {'id': id, 'prop': prop, 'value': value}
                     axios.post('/classroom/students/update', options)
                         .then(response => {
-                            if(prop == 'xp')
-                                this.studentsJson.find(el => el.id === id).xp = response.data
+                            if(prop == 'xp') {
+                                let student = this.studentsJson.find(el => el.id === id);
+                                student.xp = response.data.value
+                                student.level = response.data.level
+                                
+                            }
                             else if(prop == 'gold')
-                                this.studentsJson.find(el => el.id === id).gold = response.data
+                                this.studentsJson.find(el => el.id === id).gold = response.data.value
                             this.custom = 0
                         })
                 },
@@ -212,6 +220,7 @@
                                         student.hp = response.data.hp
                                         student.xp = response.data.xp
                                         student.gold = response.data.gold
+                                        student.level = response.data.level
                         })
                 }
             },
