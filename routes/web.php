@@ -62,7 +62,9 @@ Route::group(['middleware' => 'language'], function () {
         
         // Challenges
         Route::get('/{code}/challenges', 'ChallengesGroupController@index'); // Policy protect
-        Route::post('/{code}/challenges', 'ChallengesGroupController@store'); // Policy protect
+        Route::post('/{code}/challenges/group', 'ChallengesGroupController@store'); // Policy protect
+        Route::post('/{code}/challenges', 'ChallengesController@store'); // Policy protect
+        Route::post('/{code}/challenges/get', 'ChallengesController@index'); // Policy protect
         
     });
         

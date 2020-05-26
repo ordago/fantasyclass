@@ -15,7 +15,7 @@
         </div>
         
         <div class="panel-block" v-if="addChallenge">
-           <add-challenges :challengeGroup="challengeGroup"></add-challenges>
+           <create-challenges :code="code" :challengeGroup="challengeGroup.id"></create-challenges>
         </div>
 
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
@@ -25,39 +25,40 @@
         </div>
         
         <div class="panel-block" v-if="challenges.length > 0 && !addChallenge">
-            // Current challenges
+            <div v-for="challenge in orderedChallenges" v-bind:key="challenge.id">
+                {{ challenge.title }}
+            </div>
         </div>
     </div>
 </div>
 </template>
 <script>
 
-    import addChallenges from './AddChallenges.vue';
-
     export default {
-            props: ['challengeGroup'],
+            props: ['challengeGroup', 'challenges', 'code'],
             mounted: function() {
-               
+               this.getChallenges()
             },
             data: function() {
                 return {
-                    challenges: [],
-                    addChallenge: true, //false!
-                    datetime: new Date(),
+                    addChallenge: false, //false!
                 }
             },
             methods: {
-                dobFormatter(){
-                    return today.toLocaleDateString('es-ES', {  });
-                    },
+                
             },
             components: {
-                addChallenges,
             },
             computed: {
                 buttonAddChallege() {
                     return  this.addChallenge ? this.trans.get('general.cancel') : "<i class='far fa-plus has-padding-right-2'></i>" + this.trans.get('challenges.add')  
                 },
+                orderedChallenges: function () {
+                    let order = 'desc'
+                    if(this.sortKey == 'datetime')
+                        order = 'desc'
+                    return _.orderBy(this.challenges, this.sortKey, order)
+                }
             },
     }
 </script>

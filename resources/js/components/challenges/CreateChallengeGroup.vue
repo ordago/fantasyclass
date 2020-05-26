@@ -8,25 +8,10 @@
       </div>
         <div class="field has-addons">
           <p class="control">
-                <vfa-picker is-both="false">
-                      <template v-slot:activator="{ on }">
-                        <button class="button is-link fullIcon" type="button" @click="on">
-                          <span ref="iconPreview">
-                            <i :class="'fas fa-image'" v-show="!challengeInfo.icon"></i>
-                            <i :class="challengeInfo.icon" v-if="challengeInfo.icon"></i>
-                          </span>
-                          <i class="fas fa-caret-down ml-1"></i>
-                        </button>
-                      </template>
-                        <template v-slot:icon="{ icon, picked }">
-                          <div @click="parentIcon(icon); picked(icon);challengeInfo.icon = parentIcon(icon) + ' fa-' + icon.class;updateIcon();" :title="icon.label">
-                            <span :class="[parentIcon(icon), `fa-${icon.class}`, 'vfa-icon-preview']" />
-                          </div>
-                        </template>
-              </vfa-picker>
+                <icon-selector></icon-selector>
           </p>
           <p class="control is-expanded">
-                <input v-model="challengeInfo.icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
+                <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
           </p>
         </div>
         <div class="form-group" style="margin-top: -10px;">
@@ -52,22 +37,17 @@
           </div>
           <div class="has-margin-top-3">
           <button class="button is-link" @click="update" v-if="challenge" type="button">{{ trans.get('challenges.edit') }}</button>
-          <button class="button is-success" type="submit" v-if="!challenge">{{ trans.get('challenges.create') }}</button>
+          <button class="button is-success" type="submit" v-if="!challenge">Create category</button>
         </div>
       </form>
   </div>
 </template>
 
 <script>
-import VueFontAwesomePicker from "vfa-picker";
-
-Vue.use(VueFontAwesomePicker);
-
   export default {
         props: ['code', 'challenge'],
         created() {
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
-
         },
         data: function() {
             return {
@@ -75,14 +55,16 @@ Vue.use(VueFontAwesomePicker);
                 challengeInfo: {
                   challenge_id: null,
                   id: null,
-                  icon: null,
+                  icon: this.icon,
                   name: null,
-                }
+                },
+                icon: null,
             }
         },
         methods: {
-            formSubmit: function(e) {  
-              axios.post('/classroom/'+ this.code + '/challenges', this.$data.challengeInfo)
+            formSubmit: function(e) {
+              this.challengeInfo.icon = this.icon
+              axios.post('/classroom/'+ this.code + '/challenges/group', this.$data.challengeInfo)
                   .then(response => {
                               this.$toasted.show(response.data.message, { 
                                             position: "top-center",
@@ -98,20 +80,6 @@ Vue.use(VueFontAwesomePicker);
                     this.$parent.activeAddGroup = false
                     this.$parent.$forceUpdate()
             },
-             parentIcon(iconSelected) {
-
-                if (iconSelected.styles.indexOf("regular") > -1) {
-                  return "fa";
-                } else if (iconSelected.styles.indexOf("solid") > -1) {
-                  return "fas";
-                } else if (iconSelected.styles.indexOf("brands") > -1) {
-                  return "fab";
-                }
-                return "";
-              },
-              updateIcon: function() {
-                  this.$refs.iconPreview.innerHTML = "<i class='"+this.challengeInfo.icon+"'></i>"
-              },
               update: function() {
                   
 

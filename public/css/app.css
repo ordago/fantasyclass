@@ -12953,6 +12953,25 @@ textPath {
   flex-wrap: wrap;
 }
 
+.has-border {
+  border: 1px solid #eee;
+}
+
+.control.has-icons-left .icon,
+.control.has-icons-right .icon {
+  pointer-events: auto !important;
+}
+
+.is-sticky-panel {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 65px;
+}
+
+.el-tiptap-editor.el-tiptap-editor--fullscreen {
+  margin-top: 53px !important;
+}
+
 .el-tiptap-editor {
   overflow: visible !important;
 }

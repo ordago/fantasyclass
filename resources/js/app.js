@@ -74,7 +74,15 @@ Vue.component('show-level', require('./components/level/ShowLevel.vue').default)
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
-Vue.component('add-challenges', require('./components/challenges/AddChallenges.vue').default);
+Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
+
+// Utils
+
+// For use this component the parent component should have a data attibute called "icon", where the icon will be stored
+Vue.component('icon-selector', require('./components/utils/IconSelector.vue').default);
+
+// For use this component the parent component should have a data attibute called "content", where the html will be stored
+Vue.component('editor', require('./components/utils/Editor.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

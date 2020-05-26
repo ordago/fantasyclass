@@ -5,7 +5,8 @@
 
         <div class="field has-addons">
           <p class="control">
-                <vfa-picker is-both="false">
+                <icon-selector></icon-selector>
+                <!-- <vfa-picker is-both="false">
                       <template v-slot:activator="{ on }">
                         <button class="button is-link fullIcon" type="button" @click="on">
                           <span ref="iconPreview">
@@ -20,10 +21,10 @@
                             <span :class="[parent(icon), `fa-${icon.class}`, 'vfa-icon-preview']" />
                           </div>
                         </template>
-              </vfa-picker>
+              </vfa-picker> -->
           </p>
           <p class="control">
-                <input v-model="fullIcon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
+                <input v-model="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
           </p>
         </div>
         <div class="form-group" style="margin-top: -10px;">
@@ -83,9 +84,6 @@
 </template>
 
 <script>
-import VueFontAwesomePicker from "vfa-picker";
-
-Vue.use(VueFontAwesomePicker);
 
   export default {
         props: ['code', 'behaviour'],
@@ -98,7 +96,7 @@ Vue.use(VueFontAwesomePicker);
             this.hp = this.behaviour.hp
             this.xp = this.behaviour.xp
             this.gold = this.behaviour.gold
-            this.fullIcon = this.behaviour.icon
+            this.icon = this.behaviour.icon
             this.id = this.behaviour.id
           }
         },
@@ -106,7 +104,6 @@ Vue.use(VueFontAwesomePicker);
             return {
                 icon: null,
                 csrfToken: null,
-                fullIcon: null,
                 name: null,
                 custom_text: null,
                 xp: 0,
@@ -119,20 +116,7 @@ Vue.use(VueFontAwesomePicker);
             formSubmit: function(e) {  
               e.preventDefault()
             },
-             parent(icon) {
-
-                if (icon.styles.indexOf("regular") > -1) {
-                  return "fa";
-                } else if (icon.styles.indexOf("solid") > -1) {
-                  return "fas";
-                } else if (icon.styles.indexOf("brands") > -1) {
-                  return "fab";
-                }
-                return "";
-              },
-              updateIcon: function(icon) {
-                  this.$refs.iconPreview.innerHTML = "<i class='"+this.fullIcon+"'></i>"
-              },
+            
               update: function() {
                   this.icon = this.fullIcon
                   axios.patch('/classroom/'+ this.code + '/behaviours/' + this.id, this.$data)

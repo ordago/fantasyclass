@@ -20,9 +20,9 @@ class CreateChallengesTable extends Migration
             $table->tinyInteger('type')->default(0);
             $table->string('title');
             $table->string('description', 250)->nullable();
-            $table->json('content')->nullable();
+            $table->longText('content')->nullable();
             $table->dateTime('datetime');
-            $table->string('icon', 100);
+            $table->string('icon', 100)->nullable();
             $table->smallInteger('xp')->default(0);
             $table->smallInteger('hp')->default(0);
             $table->smallInteger('gold')->default(0);
@@ -31,7 +31,8 @@ class CreateChallengesTable extends Migration
             // $table->json('requirements_visibility')->nullable();
             // $table->json('requirements_success')->nullable();
             // $table->json('targets')->nullable();
-            $table->boolean('auto_asign')->default(1);
+            $table->boolean('is_conquer')->default(0);
+            $table->boolean('auto_assign')->default(1);
             $table->boolean('optional')->default(0);
             $table->string('password')->nullable();
             $table->timestamps();
