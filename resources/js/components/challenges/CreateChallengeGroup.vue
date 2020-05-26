@@ -22,14 +22,14 @@
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('challenges.name') }}</label>
           <input type="text" id="name" v-model="challengeInfo.name" name="name" required class="input has-margin-y-3">
         </div>         
-        <div class="has-margin-top-3" v-if="$parent.challenges.length">
+        <div class="has-margin-top-3" v-if="$parent.challengesgroup.length">
             <label for="name">{{ trans.get('challenges.parent') }}</label>
             <div class="field">
               <div class="control">
                 <div class="select is-fullwidth">
-                  <select v-model="challengeInfo.challenge_id">
+                  <select v-model="challengeInfo.challenge_group_id">
                       <option value="0"></option>
-                      <option :value="challenge.id" v-for="challenge in $parent.challenges" v-bind:key="challenge.id">{{ challenge.name }}</option>
+                      <option :value="challenge.id" v-for="challenge in $parent.challengesgroup" v-bind:key="challenge.id">{{ challenge.name }}</option>
                   </select>  
                 </div>
               </div>
@@ -53,7 +53,7 @@
             return {
                 csrfToken: null,
                 challengeInfo: {
-                  challenge_id: null,
+                  challenge_group_id: null,
                   id: null,
                   icon: this.icon,
                   name: null,

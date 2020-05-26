@@ -15,7 +15,7 @@ class ChallengesGroupController extends Controller
 
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstorFail();
-        $challenges = ChallengesGroup::where('classroom_id', $class->id)->whereNull('challenge_id')->with('children')->get();
+        $challenges = ChallengesGroup::where('classroom_id', $class->id)->whereNull('challenge_group_id')->with('children')->get();
         return view('challenges.index', compact('class', 'challenges'));
 
     }
@@ -26,16 +26,16 @@ class ChallengesGroupController extends Controller
                     'name' => ['string'],
                     'icon' => ['string'],
                     'id' => ['numeric', 'nullable'],
-                    'challenge_id' => ['numeric', 'nullable'],
+                    'challenge_group_id' => ['numeric', 'nullable'],
                 ]);
 
                 $challenge = ChallengesGroup::create([
                     'name' => $data['name'],
                     'icon' => $data['icon'],
-                    'challenge_id' => $data['challenge_id'],
+                    'challenge_group_id' => $data['challenge_group_id'],
                     'classroom_id' => $class,
                 ]);
-
+                $challenge['children'] = [];
                 return [
                         "message" => __('success_error.add_success'),
                         "type" => "success",

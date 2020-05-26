@@ -11,12 +11,12 @@ class ChallengesGroup extends Model
                             'name', 
                             'icon', 
                             'classroom_id', 
-                            'challenge_id',
+                            'challenge_group_id',
                             'parent',  
                         ];
 
     public function children() {
-        return $this->hasMany(ChallengesGroup::class, 'challenge_id', 'id');   
+        return $this->hasMany(ChallengesGroup::class, 'challenge_group_id', 'id');   
     }
     
     public function allChildren() {

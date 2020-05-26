@@ -24,7 +24,7 @@
                         <!-- :date-formatter="(date) =>  moment(date).locale(lang).format('YYYY-MM-DD')" -->
                 <div class="w-100">
                     <b-field label="When it will be visible?">
-                    <b-datetimepicker v-model="challenge.datetime"
+                    <b-datetimepicker v-model="datepicker"
                         placeholder="Click to select..."
                         icon-pack="fa"
                         >
@@ -134,7 +134,7 @@
 </template>
 <script>
     export default {
-            props: ['challengeGroup', 'code'],
+            props: ['challengegroup', 'code'],
             mounted: function() {
                 
             },
@@ -142,6 +142,7 @@
                 return {
                     icon: null,
                     content: ``,
+                    datepicker: new Date(),
                     challenge: {
                         icon: null,
                         datetime: new Date(),
@@ -156,7 +157,7 @@
                         auto_assign: 0,
                         optional: false,
                         password: null,
-                        challenges_groups_id: null,
+                        challenge_group_id: null,
                         lang: "es"
 
                     },
@@ -166,14 +167,9 @@
                 createChallenge() {
                     this.challenge.icon = this.icon
                     this.challenge.content = this.content
-                    this.challenge.challenges_groups_id = this.challengeGroup
-                    let options = {
-                        year: 'numeric', month: 'numeric', day: 'numeric',
-                        hour: 'numeric', minute: 'numeric', second: 'numeric',
-                        hour12: false,
-                    };
-                    let date = this.challenge.datetime
-                    this.challenge.datetime = date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay() + " " + date.getHours() + ":" + date.getMinutes()
+                    this.challenge.challenge_group_id = this.challengegroup
+                    let date = this.datepicker
+                    this.challenge.datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
                     axios.post('/classroom/'+ this.code + '/challenges', this.challenge)
                             .then(response => {
                               this.$toasted.show(response.data.message, { 

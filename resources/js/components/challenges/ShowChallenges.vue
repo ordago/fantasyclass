@@ -2,7 +2,7 @@
 <div class="has-padding-left-0-desktop">
     <div class="panel has-padding-left-0-desktop">
         <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
-                <span class="has-padding-left-3"> {{ challengeGroup.name }}</span>
+                <span class="has-padding-left-3"> {{ challengegroup.name }}</span>
                 <button class="button" @click="addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
         </p>
         <div class="panel-block" v-if="challenges.length > 0">
@@ -15,7 +15,7 @@
         </div>
         
         <div class="panel-block" v-if="addChallenge">
-           <create-challenges :code="code" :challengeGroup="challengeGroup.id"></create-challenges>
+           <create-challenges :code="code" :challengegroup="challengegroup.id"></create-challenges>
         </div>
 
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
@@ -26,7 +26,7 @@
         
         <div class="panel-block" v-if="challenges.length > 0 && !addChallenge">
             <div v-for="challenge in orderedChallenges" v-bind:key="challenge.id">
-                {{ challenge.title }}
+                {{ challenge.title }} - {{ challenge.challenge_group_id }}
             </div>
         </div>
     </div>
@@ -35,9 +35,9 @@
 <script>
 
     export default {
-            props: ['challengeGroup', 'challenges', 'code'],
-            mounted: function() {
-               this.getChallenges()
+            props: ['challengegroup', 'challenges', 'code'],
+            created: function() {
+                
             },
             data: function() {
                 return {

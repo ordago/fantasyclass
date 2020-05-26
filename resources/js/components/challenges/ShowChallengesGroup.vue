@@ -1,5 +1,6 @@
 <template>
 <div class="columns">
+    
     <div class="column is-narrow" style="min-width: 400px">
         <article class="panel is-sticky-panel is-info has-padding-bottom-4">
         <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
@@ -8,7 +9,7 @@
             </p>
             
             <div class="panel-block has-padding-y-4 is-flex is-flex-column" style="align-items: flex-start;" v-for="challenge in challengesgroup" v-bind:key="challenge.id">
-                <div @click="getChallenges" class="w-100 is-fullwidth cursor-pointer is-flex has-space-between"  @click="activeGroup=challenge">
+                <div @click="getChallenges(challenge.id);activeGroup=challenge" class="w-100 is-fullwidth cursor-pointer is-flex has-space-between">
                     <span>
                         <span class="panel-icon">
                         <i :class="challenge.icon" aria-hidden="true"></i>
@@ -17,7 +18,7 @@
                     </span>
                     <span><i class="fal fa-angle-right"></i></span>
                 </div>
-                <div @click="activeGroup=challengeChild" class="is-flex has-space-between w-100 is-fullwidth cursor-pointer has-padding-left-4 has-padding-top-4" v-for="challengeChild in challenge.children" v-bind:key="challengeChild.id">
+                <div @click="activeGroup=challengeChild; getChallenges(challengeChild.id)" class="is-flex has-space-between w-100 is-fullwidth cursor-pointer has-padding-left-4 has-padding-top-4" v-for="challengeChild in challenge.children" v-bind:key="challengeChild.id">
                     <span>
                         <span class="panel-icon">
                         <i :class="challengeChild.icon" aria-hidden="true"></i>
@@ -30,8 +31,10 @@
         </article>
     </div>
     <div class="column has-padding-left-0-desktop">
+              <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
+            </b-loading>
         <create-challenge-group :code="code" v-if="activeAddGroup"></create-challenge-group>
-        <show-challenges :code="code" :challengegroup="activeGroup" :challenges="challenges" v-if="activeGroup"></show-challenges>
+        <show-challenges :code="code" :challengegroup="activeGroup" :challenges="challenges" v-if="activeGroup&&!isLoading"></show-challenges>
     </div>
 </div>
 </template>
@@ -42,32 +45,35 @@ import showChallenges from './ShowChallenges.vue';
 
     export default {
             props: ['code', 'challengesgroup'],
-            created: function() {
-               console.log(this.challengesgroup)
-               console.log(this.code)
+            mounted: function() {
             },
             data: function() {
                 return {
                    activeAddGroup: false,
                    activeGroup: false,
+                   updated: false,
                    challenges: [],
+                   isLoading: false,
+                   isFullPage: true
                 }
             },
             methods: {
                 refresh: function(elem){
-                    if(elem.challenge_id) {
-                        let challenge = this.challengesGroup.filter(
-                            function(data){ return data.id == elem.challenge_id }
+                    if(elem.challenge_group_id) {
+                        let challenge = this.challengesgroup.filter(
+                            function(data){ return data.id == elem.challenge_group_id }
                         );
                         challenge[0].children.push(elem)
-                    } else this.challengesGroup.push(elem)
+                    } else this.challengesgroup.push(elem)
                     this.$forceUpdate()
                 },
-                getChallenges() {
-                     axios.post('/classroom/'+ this.code + '/challenges/get', {'id':this.challengesgroup.id})
+                getChallenges(id) {
+                    this.isLoading = true
+                     axios.post('/classroom/'+ this.code + '/challenges/get', {'id': id})
                             .then(response => {
                                 this.challenges = response.data
-                                console.log(response.data)
+                                this.$forceUpdate
+                                this.isLoading = false
                     })
                 }
             },

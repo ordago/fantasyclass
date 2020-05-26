@@ -20,6 +20,6 @@ class Challenge extends Model
         'auto_assign',
         'optional',
         'password',
-        'challenges_groups_id',
+        'challenge_group_id',
     ];
 }
