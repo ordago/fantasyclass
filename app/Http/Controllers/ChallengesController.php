@@ -4,14 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Challenge;
 use App\ChallengesGroup;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Intervention\Image\Facades\Image;
 
 class ChallengesController extends Controller
 {
     public function __construct()
     {
         $this->middleware('verified');
+    }
+
+    public function uploadImage() {
+        
+       $path = request('file')->store('challenges', 'public');
+       
+        $image = Image::make(public_path("storage/{$path}"));
+        if($image->width() > 700) {
+            $image->resize(700 , null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save();
+        }
+       return '/storage/'.$path;
+    
     }
 
     public function index($code) {
@@ -22,17 +36,12 @@ class ChallengesController extends Controller
 
         $group = ChallengesGroup::findOrFail($data['id']);
         $children = ChallengesGroup::where('challenge_group_id' , $data['id'])->pluck('id')->toArray();
-    
-        
         return Challenge::where('challenge_group_id', $group->id)->orWhereIn('challenge_group_id', $children)->get();
     }
 
     public function store($code) {
 
         $class = DB::table('classrooms')->where('code', '=', $code)->pluck('id')->first();
-
-
-
         try {
                 $data = request()->validate([
                     'title' => ['string'],

@@ -49,6 +49,7 @@ import {
 
 
   export default {
+        props: ['code'],
         created() {
 
         },
@@ -68,7 +69,17 @@ import {
                         new BulletList(),
                         new OrderedList(),
                         new Link(),
-                        new Image(),
+                        new Image({
+                              uploadRequest (file) {
+                              let formData = new FormData();
+                              formData.append('file', file)
+                                const request = axios.post('/classroom/challenges/image', formData)
+                                return request
+                                    .then(result => { return result.data; })
+                                  
+                              
+                              },
+                            }),
                         new CodeBlock(),
                         new Blockquote(),
                         new TextAlign(),
@@ -92,7 +103,9 @@ import {
             }
         },
         methods: {
-            
+            sendImage() {
+              console.log('hit')
+            }
         },
       }
 </script>

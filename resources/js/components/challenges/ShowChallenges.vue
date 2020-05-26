@@ -84,10 +84,7 @@
                     return  this.addChallenge ? this.trans.get('general.cancel') : "<i class='far fa-plus has-padding-right-2'></i>" + this.trans.get('challenges.add')  
                 },
                 orderedChallenges: function () {
-                    let order = 'desc'
-                    if(this.sortKey == 'datetime')
-                        order = 'desc'
-                    return _.orderBy(this.challenges, this.sortKey, order)
+                    return _.orderBy(this.challenges, 'datetime', 'desc')
                 }
             },
     }
