@@ -15,7 +15,7 @@
         </div>
         
         <div class="panel-block" v-if="addChallenge">
-           <create-challenges :code="code" :challengegroup="challengegroup.id"></create-challenges>
+           <create-challenges :icon="icon" :code="code" :challengegroup="challengegroup.id"></create-challenges>
         </div>
 
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
@@ -29,8 +29,17 @@
                 <section class="media">
                     <div class="media-content">
                     <div class="content">
+                        <h1><i v-if="challenge.is_conquer&&challenge.icon" class="is-size-4" :style="'color:' + challenge.color" :class="challenge.icon + ' colored'"></i>{{ challenge.title }} <span class="tag is-light">{{ challenge.datetime }}</span></h1>
                         <p>
-                            <strong>{{ challenge.title }}</strong> <span class="tag is-light">{{ challenge.datetime }}</span>
+                            <small>
+                                {{ challenge.description }}
+                            </small>
+                        </p>
+                        <p>
+                            <small v-if="challenge.xp!=0"><i class="fas fa-fist-raised colored"></i> {{ challenge.xp }} </small>
+                            <small v-if="challenge.hp!=0"><i class="fas fa-heart colored"></i> {{ challenge.hp }} </small>
+                            <small v-if="challenge.gold!=0"><i class="fas fa-coins colored"></i> {{ challenge.gold }} </small>
+                            <small v-if="challenge.cards!=0"><i class="fas fa-club colored"></i> {{ challenge.cards }} </small>
                         </p>
                         <div v-html="challenge.content">
                         </div>
@@ -64,9 +73,12 @@
 <script>
 
     export default {
-            props: ['challengegroup', 'challenges', 'code'],
+            props: ['challengegroup', 'challenges', 'code', 'icon'],
             created: function() {
-                
+                axios.get('/classroom/' + this.code + '/')
+                    .then(response => function() {
+
+                    })
             },
             data: function() {
                 return {

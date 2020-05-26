@@ -38,7 +38,7 @@
               <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true">
             </b-loading>
         <create-challenge-group :code="code" v-if="activeAddGroup"></create-challenge-group>
-        <show-challenges :code="code" :challengegroup="activeGroup" :challenges="challenges" v-if="!activeAddGroup&&activeGroup&&!isLoading"></show-challenges>
+        <show-challenges :icon="icon" :code="code" :challengegroup="activeGroup" :challenges="challenges" v-if="!activeAddGroup&&activeGroup&&!isLoading"></show-challenges>
     </div>
 </div>
 </template>
@@ -48,7 +48,7 @@ import createChallengeGroup from './CreateChallengeGroup.vue';
 import showChallenges from './ShowChallenges.vue';
 
     export default {
-            props: ['code', 'challengesgroup'],
+            props: ['code', 'challengesgroup', 'icon'],
             mounted: function() {
             },
             data: function() {

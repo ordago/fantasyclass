@@ -23,6 +23,7 @@ class CreateChallengesTable extends Migration
             $table->longText('content')->nullable();
             $table->dateTime('datetime');
             $table->string('icon', 100)->nullable();
+            $table->string('color', 7)->nullable();
             $table->smallInteger('xp')->default(0);
             $table->smallInteger('hp')->default(0);
             $table->smallInteger('gold')->default(0);

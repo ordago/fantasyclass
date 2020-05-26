@@ -21,8 +21,6 @@
                         password-reveal>
                     </b-input>
                 </b-field>
-                
-                        <!-- :date-formatter="(date) =>  moment(date).locale(lang).format('YYYY-MM-DD')" -->
                 <div class="w-100">
                     <b-field label="When it will be visible?">
                     <b-datetimepicker v-model="datepicker"
@@ -67,7 +65,10 @@
                                 <icon-selector></icon-selector>
                             </p>
                             <p class="control is-expanded">
-                                <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
+                                <input v-model="challenge.icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
+                            </p>
+                            <p class="control">
+                                <input v-model="challenge.color"  name="color" class="input" type="color" style="padding:0;min-width: 50px;" />
                             </p>
                         </div>
                     </div>
@@ -136,17 +137,18 @@
 </template>
 <script>
     export default {
-            props: ['challengegroup', 'code'],
+            props: ['challengegroup', 'code', 'icon'],
             mounted: function() {
-                
+                    this.challenge.icon = this.icon.icon
+                    this.challenge.color = this.icon.color
             },
             data: function() {
                 return {
-                    icon: null,
                     content: ``,
                     datepicker: new Date(),
                     challenge: {
                         icon: null,
+                        color: null,
                         datetime: new Date(),
                         description: null,
                         title: null,
@@ -167,7 +169,7 @@
             },
             methods: {
                 createChallenge() {
-                    this.challenge.icon = this.icon
+               
                     this.challenge.content = this.content
                     this.challenge.challenges_group_id = this.challengegroup
                     let date = this.datepicker

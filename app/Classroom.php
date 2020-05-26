@@ -17,8 +17,14 @@ class Classroom extends Model
         'enrollment_code', 'user_id', 'character_theme' 
     ];
 
+
+
     public function users() {
         return $this->belongsToMany(User::class)->using(ClassroomUser::class)->withPivot('role', 'id');
+    }
+
+    public function goal() {
+        return $this->hasOne(GoalThemes::class, 'id', 'goal_type');
     }
 
     public function students() {

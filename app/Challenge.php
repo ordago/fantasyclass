@@ -8,11 +8,12 @@ class Challenge extends Model
 {
     protected $fillable = [
         'icon',
+        'color',
         'datetime',
         'description',
         'title',
         'content',
-        'isConquer',
+        'is_conquer',
         'xp',
         'hp',
         'gold',

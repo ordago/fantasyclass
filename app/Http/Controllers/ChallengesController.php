@@ -46,6 +46,7 @@ class ChallengesController extends Controller
                 $data = request()->validate([
                     'title' => ['string'],
                     'icon' => ['string', 'nullable'],
+                    'color' => ['string', 'nullable'],
                     'description' => ['string', 'nullable' ],
                     'content' => ['string', 'nullable'],
                     'is_conquer' => ['boolean'],
