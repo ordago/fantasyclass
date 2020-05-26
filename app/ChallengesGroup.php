@@ -11,11 +11,28 @@ class ChallengesGroup extends Model
                             'name', 
                             'icon', 
                             'classroom_id', 
-                            'challenge_group_id',
+                            'challenges_group_id',
                         ];
 
+    protected $appends = ['numChallenges'];
+
+    public function getnumChallengesAttribute() 
+    {  
+        $total = $this->challenges->count();
+        foreach ($this->children as $collection) {
+            $total += $collection->challenges->count();
+        }
+
+        return $total;  
+    }
+
+    public function challenges() {
+        return $this->hasMany(Challenge::class);   
+    }
+    
+
     public function children() {
-        return $this->hasMany(ChallengesGroup::class, 'challenge_group_id', 'id');   
+        return $this->hasMany(ChallengesGroup::class, 'challenges_group_id', 'id');   
     }
     
     public function allChildren() {

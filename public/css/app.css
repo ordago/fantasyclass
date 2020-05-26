@@ -12893,6 +12893,10 @@ textPath {
   display: initial !important;
 }
 
+.tag.has-small-font {
+  font-size: 0.55em !important;
+}
+
 .highlight-arrow:hover .arrow {
   background-color: #6cb2eb;
   color: white;

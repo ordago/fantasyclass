@@ -10,7 +10,9 @@
 .vfa-icon .vfa-icon-preview {
   display: initial!important;
 }
-
+.tag.has-small-font {
+  font-size: 0.55em!important;
+}
 .highlight-arrow:hover .arrow {
   background-color: $cyan;
   color: white;

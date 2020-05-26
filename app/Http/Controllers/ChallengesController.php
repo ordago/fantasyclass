@@ -35,8 +35,8 @@ class ChallengesController extends Controller
         ]);
 
         $group = ChallengesGroup::findOrFail($data['id']);
-        $children = ChallengesGroup::where('challenge_group_id' , $data['id'])->pluck('id')->toArray();
-        return Challenge::where('challenge_group_id', $group->id)->orWhereIn('challenge_group_id', $children)->get();
+        $children = ChallengesGroup::where('challenges_group_id' , $data['id'])->pluck('id')->toArray();
+        return Challenge::where('challenges_group_id', $group->id)->orWhereIn('challenges_group_id', $children)->get();
     }
 
     public function store($code) {
@@ -56,7 +56,7 @@ class ChallengesController extends Controller
                     'auto_assign' => ['boolean'],
                     'optional' => ['boolean'],
                     'password' => ['string', 'nullable'],
-                    'challenge_group_id' => ['numeric'],
+                    'challenges_group_id' => ['numeric'],
                     'datetime' => ['string'],
                 ]);
 

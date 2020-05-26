@@ -32,7 +32,7 @@
             <div class="field">
               <div class="control">
                 <div class="select is-fullwidth">
-                  <select v-model="challengeInfo.challenge_group_id">
+                  <select v-model="challengeInfo.challenges_group_id">
                       <option value="0"></option>
                       <option :value="challenge.id" v-for="challenge in $parent.challengesgroup" v-bind:key="challenge.id">{{ challenge.name }}</option>
                   </select>  
@@ -60,7 +60,7 @@
             return {
                 csrfToken: null,
                 challengeInfo: {
-                  challenge_group_id: null,
+                  challenges_group_id: null,
                   id: null,
                   icon: this.icon,
                   name: null,

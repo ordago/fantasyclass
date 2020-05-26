@@ -14,7 +14,9 @@
                         <span class="panel-icon">
                         <i :class="challenge.icon" aria-hidden="true"></i>
                         </span>
-                        <span :title="challenge.name">{{ challenge.name.length > 30 ? challenge.name.substring(0, 30) + "..." : challenge.name }}</span>
+                        <span :title="challenge.name">{{ challenge.name.length > 30 ? challenge.name.substring(0, 30) + "..." : challenge.name }} 
+                            <b-tag type="is-info is-light" class="has-small-font">{{ challenge.numChallenges }}</b-tag>
+                        </span>
                     </span>
                     <span class="has-padding-2 arrow rounded-right"><i class="fal fa-angle-right"></i></span>
                 </div>
@@ -23,7 +25,9 @@
                         <span class="panel-icon">
                             <i :class="challengeChild.icon" aria-hidden="true"></i>
                         </span>
-                        <span :title="challengeChild.name">{{ challengeChild.name.length > 30 ? challengeChild.name.substring(0, 30) + "..." : challengeChild.name }}</span>
+                        <span :title="challengeChild.name">{{ challengeChild.name.length > 30 ? challengeChild.name.substring(0, 30) + "..." : challengeChild.name }}
+                                    <small><b-tag type="is-info is-light" class="has-small-font">{{ challengeChild.numChallenges }}</b-tag></small>
+                        </span>
                     </span>
                     <span class="has-padding-2 arrow rounded-right"><i class="fal fa-angle-right"></i></span>
                 </div>
@@ -59,9 +63,9 @@ import showChallenges from './ShowChallenges.vue';
             },
             methods: {
                 refresh: function(elem){
-                    if(elem.challenge_group_id) {
+                    if(elem.challenges_group_id) {
                         let challenge = this.challengesgroup.filter(
-                            function(data){ return data.id == elem.challenge_group_id }
+                            function(data){ return data.id == elem.challenges_group_id }
                         );
                         challenge[0].children.push(elem)
                     } else this.challengesgroup.push(elem)

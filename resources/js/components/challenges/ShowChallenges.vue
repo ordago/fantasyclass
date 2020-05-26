@@ -30,7 +30,7 @@
                     <div class="media-content">
                     <div class="content">
                         <p>
-                            <strong>{{ challenge.title }} - {{ challenge.challenge_group_id }}</strong> <span class="tag is-light">{{ challenge.datetime }}</span>
+                            <strong>{{ challenge.title }} - {{ challenge.challenges_group_id }}</strong> <span class="tag is-light">{{ challenge.datetime }}</span>
                         </p>
                         <div v-html="challenge.content">
                             

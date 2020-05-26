@@ -158,7 +158,7 @@
                         auto_assign: 0,
                         optional: false,
                         password: null,
-                        challenge_group_id: null,
+                        challenges_group_id: null,
                         lang: "es"
 
                     },
@@ -168,7 +168,7 @@
                 createChallenge() {
                     this.challenge.icon = this.icon
                     this.challenge.content = this.content
-                    this.challenge.challenge_group_id = this.challengegroup
+                    this.challenge.challenges_group_id = this.challengegroup
                     let date = this.datepicker
                     this.challenge.datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
                     axios.post('/classroom/'+ this.code + '/challenges', this.challenge)
