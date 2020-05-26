@@ -11,6 +11,11 @@
   display: initial!important;
 }
 
+.highlight-arrow:hover .arrow {
+  background-color: $cyan;
+  color: white;
+} 
+
 .is-full-rounded {
   border-radius: 50%;
 }

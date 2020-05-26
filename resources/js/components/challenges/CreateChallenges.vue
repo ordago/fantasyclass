@@ -27,6 +27,7 @@
                     <b-datetimepicker v-model="datepicker"
                         placeholder="Click to select..."
                         icon-pack="fa"
+                        horizontal-time-picker
                         >
                         <template slot="left">
                             <button class="button is-primary"
@@ -179,10 +180,10 @@
                                             icon: response.data.icon,
                                             type: response.data.type,
                                 })
-                            if(response.data.type == 'success') {
-                                this.$parent.$parent.challenges.push(response.data.challenge)
-                                this.$parent.addChallenge = false
-                            }
+                                if(response.data.type == 'success') {
+                                    this.$parent.$parent.challenges.push(response.data.challenge)
+                                    this.$parent.addChallenge = false
+                                }
                     });
                     this.$parent.$parent.$forceUpdate()
                 },

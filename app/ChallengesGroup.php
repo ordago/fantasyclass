@@ -12,7 +12,6 @@ class ChallengesGroup extends Model
                             'icon', 
                             'classroom_id', 
                             'challenge_group_id',
-                            'parent',  
                         ];
 
     public function children() {

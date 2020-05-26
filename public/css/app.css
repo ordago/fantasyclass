@@ -12893,6 +12893,11 @@ textPath {
   display: initial !important;
 }
 
+.highlight-arrow:hover .arrow {
+  background-color: #6cb2eb;
+  color: white;
+}
+
 .is-full-rounded {
   border-radius: 50%;
 }

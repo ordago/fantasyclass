@@ -50,7 +50,7 @@ class ChallengesController extends Controller
                     'challenge_group_id' => ['numeric'],
                     'datetime' => ['string'],
                 ]);
-                dump($data);
+
                 $challenge = Challenge::create($data);
 
                 return [

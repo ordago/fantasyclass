@@ -1,6 +1,11 @@
 <template>
-    <div class="container has-padding-3">
-      <form method="post" @submit.prevent="formSubmit" :action="'/classroom/' + this.code + '/challenge'">
+<div class="has-padding-left-0-desktop">
+    <div class="panel has-padding-left-0">
+        <p class="panel-heading is-flex has-space-between align-items-center has-padding-4">
+                <span class="has-padding-left-3">Create </span>
+        </p>
+        <div class="has-padding-4 panel-block">
+      <form method="post" @submit.prevent="formSubmit" class="w-100" :action="'/classroom/' + this.code + '/challenge'">
         <input :value="csrfToken" type="hidden" name="_token"/>
 
       <div class="has-margin-y-3">
@@ -40,7 +45,9 @@
           <button class="button is-success" type="submit" v-if="!challenge">Create category</button>
         </div>
       </form>
+      </div>
   </div>
+</div>
 </template>
 
 <script>

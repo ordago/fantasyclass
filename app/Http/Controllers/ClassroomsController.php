@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\ChallengesGroup;
 use App\Classroom;
 use App\GoalThemes;
 use App\Theme;
@@ -56,6 +57,12 @@ class ClassroomsController extends Controller
             'character_theme' => $data['charTheme'],
             'theme_id' => $data['bgtheme'],
             'goal_type' => $data['goalType'],
+        ]);
+
+        ChallengesGroup::create([
+            'name' => 'General', 
+            'icon' => 'fas fa-home', 
+            'classroom_id' => $classroom->id, 
         ]);
 
         auth()->user()->classrooms()->attach([

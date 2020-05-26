@@ -5,7 +5,7 @@
                 <span class="has-padding-left-3"> {{ challengegroup.name }}</span>
                 <button class="button" @click="addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
         </p>
-        <div class="panel-block" v-if="challenges.length > 0">
+        <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
             <p class="control has-icons-left">
             <input class="input" type="text" placeholder="Search"  disabled>
             <span class="icon is-left">
@@ -24,9 +24,39 @@
             </h3>
         </div>
         
-        <div class="panel-block" v-if="challenges.length > 0 && !addChallenge">
-            <div v-for="challenge in orderedChallenges" v-bind:key="challenge.id">
-                {{ challenge.title }} - {{ challenge.challenge_group_id }}
+        <div class="panel-block is-block has-padding-3" v-if="challenges.length > 0 && !addChallenge">
+            <div v-for="challenge in orderedChallenges" v-bind:key="challenge.id" class="box has-margin-bottom-3">
+                <section class="media">
+                    <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{ challenge.title }} - {{ challenge.challenge_group_id }}</strong> <span class="tag is-light">{{ challenge.datetime }}</span>
+                        </p>
+                        <div v-html="challenge.content">
+                            
+                        </div>
+                    </div>
+                    <nav class="level is-mobile">
+                        <div class="level-left">
+                        <a class="level-item" aria-label="reply">
+                            <span class="icon is-small">
+                            <i class="fas fa-reply" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                        <a class="level-item" aria-label="retweet">
+                            <span class="icon is-small">
+                            <i class="fas fa-retweet" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                        <a class="level-item" aria-label="like">
+                            <span class="icon is-small">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                            </span>
+                        </a>
+                        </div>
+                    </nav>
+                    </div>
+                </section>
             </div>
         </div>
     </div>
