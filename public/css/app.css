@@ -12971,6 +12971,11 @@ textPath {
   flex-wrap: wrap;
 }
 
+.is-large svg {
+  height: 3rem;
+  width: 3rem;
+}
+
 .has-border {
   border: 1px solid #eee;
 }

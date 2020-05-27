@@ -39,28 +39,52 @@ class ChallengesController extends Controller
         return Challenge::where('challenges_group_id', $group->id)->orWhereIn('challenges_group_id', $children)->get();
     }
 
+    public function destroy($code, $id) {
+        try {
+            Challenge::destroy($id);
+        } catch (\Throwable $th) {
+            return [ 'error' => $th];
+        }
+        return 1;
+    }
+
+    public function update($code, $id) {
+        $challenge = Challenge::findOrFail($id)->first();
+        $challenge->update($this->validateInput());
+        dump($challenge);
+        return [
+            "message" => __('success_error.add_success'),
+            "type" => "success",
+            "icon" => "check",
+            "challenge" => $challenge,
+    ];
+    }
+
+    public function validateInput() {
+        return request()->validate([
+            'title' => ['string'],
+            'icon' => ['string', 'nullable'],
+            'color' => ['string', 'nullable'],
+            'description' => ['string', 'nullable' ],
+            'content' => ['string', 'nullable'],
+            'is_conquer' => ['boolean'],
+            'xp' => ['numeric'],
+            'hp' => ['numeric'],
+            'gold' => ['numeric'],
+            'cards' => ['numeric'],
+            'auto_assign' => ['boolean'],
+            'optional' => ['boolean'],
+            'password' => ['string', 'nullable'],
+            'challenges_group_id' => ['numeric'],
+            'datetime' => ['string'],
+        ]);
+    }
+
     public function store($code) {
 
         $class = DB::table('classrooms')->where('code', '=', $code)->pluck('id')->first();
         try {
-                $data = request()->validate([
-                    'title' => ['string'],
-                    'icon' => ['string', 'nullable'],
-                    'color' => ['string', 'nullable'],
-                    'description' => ['string', 'nullable' ],
-                    'content' => ['string', 'nullable'],
-                    'is_conquer' => ['boolean'],
-                    'xp' => ['numeric'],
-                    'hp' => ['numeric'],
-                    'gold' => ['numeric'],
-                    'cards' => ['numeric'],
-                    'auto_assign' => ['boolean'],
-                    'optional' => ['boolean'],
-                    'password' => ['string', 'nullable'],
-                    'challenges_group_id' => ['numeric'],
-                    'datetime' => ['string'],
-                ]);
-
+                $data = $this->validateInput();
                 $challenge = Challenge::create($data);
 
                 return [

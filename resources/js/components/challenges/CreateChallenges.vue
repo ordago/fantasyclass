@@ -1,6 +1,7 @@
 <template>
     <div class="w-100">
         <form action="#" method="post" @submit.prevent="createChallenge">
+
                 <div class="field w-100">
                     <label class="label">Title *</label>
                     <div class="control">
@@ -54,10 +55,13 @@
                 <div class="field">
                     <b-switch 
                         type="is-info"
-                        v-model="challenge.is_conquer">
+                        v-model="challenge.is_conquer"
+                        true-value="1"
+                        false-value="0"
+                        >
                         Is a conquer challenge?</b-switch>
                 </div>
-                <div v-if="challenge.is_conquer" class="has-padding-4 has-border rounded">
+                <div v-if="challenge.is_conquer==1" class="has-padding-4 has-border rounded">
                     <div class="field w-100 has-padding-top-3">
                         <label class="label">Icon</label>
                         <div class="field has-addons">
@@ -127,20 +131,28 @@
                         <div class="field">
                             <b-switch 
                                 type="is-info"
-                                v-model="challenge.optional">
+                                v-model="challenge.optional"
+                                true-value="1"
+                                false-value="0"
+                                >
                                 Optional</b-switch>
                         </div>
                     </div>
-                    <button type="submit" class="button is-primary">{{ trans.get('challenges.create_challenge') }}</button>
+                    <button type="submit" v-if="!edit" class="button is-primary">{{ trans.get('challenges.create_challenge') }}</button>
+                    <button type="submit" v-else class="button is-info">{{ trans.get('challenges.edit_challenge') }}</button>
         </form>
     </div>
 </template>
 <script>
     export default {
-            props: ['challengegroup', 'code', 'icon'],
+            props: ['challengegroup', 'code', 'icon', 'edit'],
             mounted: function() {
                     this.challenge.icon = this.icon.icon
                     this.challenge.color = this.icon.color
+                    if(this.edit) {
+                        this.challenge = this.edit
+                        this.content = this.edit.content
+                    }
             },
             data: function() {
                 return {
@@ -153,17 +165,16 @@
                         description: null,
                         title: null,
                         content: ``,
-                        is_conquer: false,
+                        is_conquer: 0,
                         xp: 0,
                         hp: 0,
                         gold: 0,
                         cards: 0,
                         auto_assign: 0,
-                        optional: false,
+                        optional: 0,
                         password: null,
                         challenges_group_id: null,
-                        lang: "es"
-
+                        _method: 'post',
                     },
                 }
             },
@@ -174,7 +185,16 @@
                     this.challenge.challenges_group_id = this.challengegroup
                     let date = this.datepicker
                     this.challenge.datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()
-                    axios.post('/classroom/'+ this.code + '/challenges', this.challenge)
+                    let route;
+
+                    if(this.edit) {
+                        this.challenge._method = 'patch'
+                        route = '/classroom/'+ this.code + '/challenges/' + this.challenge.id
+                    } else {
+                        route = '/classroom/'+ this.code + '/challenges';
+                    }
+                    
+                    axios.post(route, this.challenge)
                             .then(response => {
                               this.$toasted.show(response.data.message, { 
                                             position: "top-center",
@@ -184,8 +204,8 @@
                                             type: response.data.type,
                                 })
                                 if(response.data.type == 'success') {
-                                    this.$parent.$parent.challenges.push(response.data.challenge)
                                     this.$parent.addChallenge = false
+                                    this.$parent.$parent.getChallenges(this.challenge.challenges_group_id)
                                 }
                     });
                     this.$parent.$parent.$forceUpdate()

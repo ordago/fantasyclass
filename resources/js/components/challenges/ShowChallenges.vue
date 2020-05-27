@@ -15,7 +15,7 @@
         </div>
         
         <div class="panel-block" v-if="addChallenge">
-           <create-challenges :icon="icon" :code="code" :challengegroup="challengegroup.id"></create-challenges>
+           <create-challenges :edit="challengeEdit" :icon="icon" :code="code" :challengegroup="challengegroup.id"></create-challenges>
         </div>
 
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
@@ -43,27 +43,22 @@
                         </p>
                         <div v-html="challenge.content">
                         </div>
-                    </div>
-                    <nav class="level is-mobile">
-                        <div class="level-left">
-                        <a class="level-item" aria-label="reply">
-                            <span class="icon is-small">
-                            <i class="fas fa-reply" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a class="level-item" aria-label="retweet">
-                            <span class="icon is-small">
-                            <i class="fas fa-retweet" aria-hidden="true"></i>
-                            </span>
-                        </a>
-                        <a class="level-item" aria-label="like">
-                            <span class="icon is-small">
-                            <i class="fas fa-heart" aria-hidden="true"></i>
-                            </span>
-                        </a>
+                        <div class="has-padding-3 has-text-right">
+                            <button class="button is-dark is-outlined" @click="challengeEdit=challenge;addChallenge=true">
+                                <span class="icon is-small">
+                                <i class="fas fa-edit"></i>
+                                </span>
+                                <span>Edit</span>
+                            </button>
+                              <button class="button is-danger is-outlined" @click="confirmDelete(challenge.id)">
+                                <span class="icon is-small">
+                                <i class="fas fa-trash-alt"></i>
+                                </span>
+                                <span>Delete</span>
+                            </button>
                         </div>
-                    </nav>
                     </div>
+                </div>
                 </section>
             </div>
         </div>
@@ -75,19 +70,38 @@
     export default {
             props: ['challengegroup', 'challenges', 'code', 'icon'],
             created: function() {
-                axios.get('/classroom/' + this.code + '/')
-                    .then(response => function() {
-
-                    })
+                
             },
             data: function() {
                 return {
                     addChallenge: false,
                     search: '',
+                    challengeEdit: null,
                 }
             },
             methods: {
-                
+
+                confirmDelete(id) {
+                this.$buefy.dialog.confirm({
+                    title: this.trans.get('general.delete'),
+                    message: this.trans.get('general.confirm_delete'),
+                    confirmText: this.trans.get('general.delete'),
+                    type: 'is-danger',
+                    hasIcon: true,
+                    icon: 'times-circle',
+                    iconPack: 'fa',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true,
+                    onConfirm: () => {
+                            axios.delete('/classroom/' + this.code + '/challenges/' + id)
+                            .then(response => {
+                              if(response.data === 1) {
+                                this.$parent.getChallenges(this.challengegroup.id)
+                              }
+                          })
+                        }
+                    })
+                }
             },
             components: {
             },
