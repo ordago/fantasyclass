@@ -12468,7 +12468,7 @@ textPath {
   box-shadow: 0 0 3pt 2pt #4fc3f7;
 }
 
-.level {
+.level-top {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -12978,6 +12978,11 @@ textPath {
 
 .has-border {
   border: 1px solid #eee;
+}
+
+.field-label {
+  align-self: center;
+  flex-grow: 0 !important;
 }
 
 .control.has-icons-left .icon,

@@ -17,7 +17,7 @@
         <a href="random.php?class=" target="_blank"><i class="fad fa-random outer_glow" style="font-size:2em;"></i></a>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
         -->
-        <div class="flex-center float-right" v-if="studentsJson.length>0">
+        <div class="flex-center float-right" v-if="students.length>0">
             <!-- <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span> -->
             <span><i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i></span>
             <span v-tippy :content="trans.get('users_groups.order_name')" v-bind:class="{ coloredGray: sortKey != 'name' }" @click="orderBy('name');" style="color: #eee;"  data-id="0" class="colored"><i class="fas fa-user pointer has-margin-right-3" ></i></span>
@@ -32,11 +32,11 @@
     <div class="columns is-multiline is-variable is-1 has-margin-y-2">
         <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd " v-for="student in orderedStudents" v-bind:key="student.id">
             <div class="card rounded card-shadow-s">
-                <span class="level rounded has-padding-4 has-background-light" v-if="student.level">
+                <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
                     {{ student.level.number }}
                 </span>
 
-                <div class="card-image card-shadow-s rounded-top char-bg" :style="'background-color:' + bgc + ';background-image: url(/img/bg/thumb_' + bg + ');'">
+                <div class="card-image card-shadow-s rounded-top char-bg" :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'">
                     <div class="character-container character character-small is-relative">
                         <img :src="'/img/character/' + element.src" :class="element.classes" v-for="element in student.equipment" v-bind:key="element.id">
                     </div>
@@ -48,7 +48,7 @@
                             <img src="/img/no_avatar.png" class="rounded" alt="">
                         </figure>
                     </div>
-                    <div class="media-content">
+                    <div class="media-content cursor-pointer" @click="redirect(student.id)">
                         <p class="title is-4">{{ student.name }}</p>
                         <!-- <p class="subtitle is-6"><small>0 <i class="fas fa-heart"></i></small> <small>0 <i class="fas fa-fist-raised"></i></small> <small>0 <i class="fas fa-coins   "></i></small></p> -->
                         <p class="subtitle is-6"><small>@{{ student.username }}</small></p>
@@ -68,7 +68,7 @@
                                         <i :class="behaviour.icon"></i>
                                 </button>
                                 <div class="button is-link is-light has-margin-1 has-padding-x-4" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
-                                <a :href="'/classroom/' + code + '/behaviours/create'" class="button is-link is-light has-margin-1 has-padding-x-4" v-tippy :content="trans.get('users_groups.add_behaviours')" v-if="mainBehavioursJson.length == 0"><i class="fas fa-plus"></i></a>
+                                <a :href="'/classroom/' + classroom.code + '/behaviours/create'" class="button is-link is-light has-margin-1 has-padding-x-4" v-tippy :content="trans.get('users_groups.add_behaviours')" v-if="mainBehavioursJson.length == 0"><i class="fas fa-plus"></i></a>
                             </div>
                             <div v-if="show2l">
                                 <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" 
@@ -149,7 +149,7 @@
         </div>
         <div class="column is-12-mobile is-4-tablet is-3-desktop">
             <div class="box card-shadow-s is-flex is-all-centered">
-                <a :href="'/classroom/' + code + '/students/add'">Add students (afegir imatge)</a>
+                <a :href="'/classroom/' + classroom.code + '/students/add'">Add students (afegir imatge)</a>
             </div>
             </div>
     </div>
@@ -160,18 +160,15 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['students', 'code', 'behaviours', 'bgc', 'bg'],
+        props: ['students', 'classroom'],
         mounted() {
-            this.studentsJson = JSON.parse(this.students)
-            this.mainBehavioursJson = JSON.parse(this.behaviours).slice(0, this.numItems)
-            this.otherBehavioursJson = JSON.parse(this.behaviours).slice(this.numItems)
+            this.mainBehavioursJson = this.classroom.behaviours.slice(0, this.numItems)
+            this.otherBehavioursJson = this.classroom.behaviours.slice(this.numItems)
             this.sortKey = $cookies.get('order') ?? 'name'
             this.viewGrid = $cookies.get('viewGrid') ?? 0
         },
         data: function() {
             return {
-                    studentsJson: [],
-                    behavioursJson: [],
                     mainBehavioursJson: [],
                     otherBehavioursJson: [],
                     sortKey: '',
@@ -202,26 +199,31 @@
                     axios.post('/classroom/students/update', options)
                         .then(response => {
                             if(prop == 'xp') {
-                                let student = this.studentsJson.find(el => el.id === id);
-                                student.xp = response.data.value
+                                let student = this.students.find(el => el.id === id);
+                                student.xp = response.data
                                 student.level = response.data.level
                                 
                             }
                             else if(prop == 'gold')
-                                this.studentsJson.find(el => el.id === id).gold = response.data.value
+                                this.students.find(el => el.id === id).gold = response.data
                             this.custom = 0
+                            this.$forceUpdate()
                         })
                 },
                 addBehaviour: function(id, behaviour) {
                     let options = {'id': id, 'behaviour': behaviour}
                     axios.post('/classroom/students/behaviour', options)
-                        .then(response => {                          
-                                let student = this.studentsJson.find(el => el.id === id)
-                                        student.hp = response.data.hp
-                                        student.xp = response.data.xp
-                                        student.gold = response.data.gold
-                                        student.level = response.data.level
+                        .then(response => {              
+                                let student = this.students.find(el => el.id === id)
+                                student.hp = response.data.hp
+                                student.xp = response.data.xp
+                                student.gold = response.data.gold
+                                student.level = response.data.level
+                                this.$forceUpdate();
                         })
+                },
+                redirect(id) {
+                    window.location.href = '/classroom/' + this.classroom.code + '/student/' + id
                 }
             },
             computed: {
@@ -229,7 +231,7 @@
                     let order = 'desc'
                     if(this.sortKey == 'name')
                         order = 'asc'
-                    return _.orderBy(this.studentsJson, this.sortKey, order)
+                    return _.orderBy(this.students, this.sortKey, order)
                 }
 }     
         }

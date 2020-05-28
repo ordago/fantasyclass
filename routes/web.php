@@ -43,6 +43,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/', 'StudentController@store'); // Policy protect (?)
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update'); // Policty protect
+        Route::get('/{code}/student/{id}', 'StudentController@index'); // Policy protect
         
         Route::post('/students/behaviour', 'StudentController@addBehaviour'); // Policty protect
         

@@ -6,7 +6,7 @@
 @endphp
 <div class="">
   <!-- Utilities -->
-  <show-students bg="{{ $theme->name }}"  students="{{ json_encode($students) }}" behaviours="{{ json_encode($class->behaviours) }}" code="{{ $class->code }}"></show-students>
+  <show-students  :students="{{ $students }}" :classroom="{{ $class }}"></show-students>
  
 </div>
 @endsection

@@ -27,7 +27,6 @@
                     <b-datetimepicker v-model="datepicker"
                         placeholder="Click to select..."
                         icon-pack="fa"
-                        horizontal-time-picker
                         >
                         <template slot="left">
                             <button class="button is-primary"
@@ -125,7 +124,11 @@
                         <div class="field">
                             <b-switch 
                                 type="is-info"
-                                v-model="challenge.auto_assign">
+                                v-model="challenge.auto_assign"
+                                true-value="1"
+                                false-value="0"
+                                v-if="challenge.cards>0"
+                                >
                                 Auto-assign cards?</b-switch>
                         </div>
                         <div class="field">
@@ -152,16 +155,17 @@
                     if(this.edit) {
                         this.challenge = this.edit
                         this.content = this.edit.content
-                    }
+                        this.datepicker = new Date(this.edit.datetime)
+                    } else this.datepicker = new Date()
             },
             data: function() {
                 return {
                     content: ``,
-                    datepicker: new Date(),
+                    datepicker: null,
                     challenge: {
                         icon: null,
                         color: null,
-                        datetime: new Date(),
+                        datetime: null,
                         description: null,
                         title: null,
                         content: ``,

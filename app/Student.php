@@ -47,7 +47,7 @@ class Student extends Model
         $this->fill([
             $prop => $value,
         ])->save();
-        return ['value' => $value, 'level' => $this->getLevelAttribute()];
+        return $value;
     }
 
     public function setBasicEquipment() {

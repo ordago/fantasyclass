@@ -117,6 +117,16 @@ class StudentController extends Controller
         
     }
 
+    public function index($code, $id) {
+        $student = Student::where('id', $id)->with('equipment', 'classroom')->first();
+        
+        if($student->classroom->classroom->code != $code)
+            abort(404);
+            
+        $class = Classroom::where('code', $code)->with('theme')->firstOrFail();
+        return view('students.show', compact('student', 'class'));
+    }
+
     public function update(Request $request) {
         $student = Student::findOrFail($request->id);
         return $student->setProperty($request->prop, $request->value);

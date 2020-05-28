@@ -60,6 +60,7 @@ Vue.component('create-classroom', require('./components/classroom/CreateClassroo
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
+Vue.component('show-student-teacher', require('./components/student/ShowStudentTeacher.vue').default);
 
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', require('./components/card/ShowCards.vue').default);

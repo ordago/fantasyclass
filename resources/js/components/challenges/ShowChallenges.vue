@@ -41,7 +41,7 @@
                             <small v-if="challenge.gold!=0"><i class="fas fa-coins colored"></i> {{ challenge.gold }} </small>
                             <small v-if="challenge.cards!=0"><i class="fas fa-club colored"></i> {{ challenge.cards }} </small>
                         </p>
-                        <div v-html="challenge.content">
+                        <div v-html="challenge.content" class="el-tiptap-editor__content">
                         </div>
                         <div class="has-padding-3 has-text-right">
                             <button class="button is-dark is-outlined" @click="challengeEdit=challenge;addChallenge=true">
