@@ -91,17 +91,126 @@
                
             </b-tab-item>
 
-            <b-tab-item label="Behaviours">
-               
+            <b-tab-item label="Behaviours" v-if="student.behaviours.length">
+                <!-- <div v-for="behaviour in student.behaviours" v-bind:key="behaviour.id">
+
+                </div> -->
+                <div class="columns">
+                    <div class="column">
+                        <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateStart">
+                    </div>
+                    <div class="column">
+                        <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateEnd">
+                    </div>
+                </div>
+            <b-table v-if="student.behaviours.length"
+                :data="filteredEntries"
+                default-sort="created_at"
+                default-sort-direction="desc"
+                icon-pack="fas"
+                sort-icon="arrow-up"
+                >
+
+            <template slot-scope="props">
+
+                <b-table-column field="icon" label="Icon" centered>
+                    <span class="tag" v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']">
+                      <i :class="props.row.icon"></i>
+                    </span>
+                </b-table-column>
+
+                <b-table-column field="name" label="Name" sortable>
+                    {{ props.row.name }}
+                </b-table-column>
+                
+                <b-table-column field="created_at" label="Created at" sortable>
+                    {{ new Date(props.row.pivot.created_at).toLocaleDateString() }}
+                </b-table-column>
+
+                <b-table-column field="hp" label="Health Points" sortable centered>
+                    <i class="fas fa-heart"></i>
+                    {{ props.row.hp }}
+                </b-table-column>
+
+                <b-table-column field="name" label="Experience" sortable centered>
+                    <i class="fas fa-fist-raised"></i>
+                    {{ props.row.xp }}
+                </b-table-column>
+
+                <b-table-column field="name" label="Gold" sortable centered>
+                    <i class="fas fa-coins"></i>
+                    {{ props.row.gold }}
+                </b-table-column>
+
+                <b-table-column field="name" label="Settings" centered>
+                        <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
+                </b-table-column>
+                
+            </template>
+        </b-table>
             </b-tab-item>
+
 
             <b-tab-item label="Challenges">
                
             </b-tab-item>
             
-            <b-tab-item label="Log">
+            <b-tab-item label="Inventory">
                
             </b-tab-item>
+
+            <b-tab-item label="Log" v-if="student.log_entries.length">
+                <!-- <div v-for="behaviour in student.behaviours" v-bind:key="behaviour.id">
+
+                </div> -->
+                <div class="columns">
+                    <div class="column">
+                        <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateStart">
+                    </div>
+                    <div class="column">
+                        <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateEnd">
+                    </div>
+                </div>
+                <b-table v-if="student.log_entries.length"
+                :data="filteredLogEntries"
+                    default-sort="created_at"
+                    default-sort-direction="desc"
+                    icon-pack="fas"
+                    sort-icon="arrow-up"
+                    >
+
+                <template slot-scope="props">
+
+                    <b-table-column field="type" label="Type" centered>
+                        <span class="tag" v-bind:class="[ props.row.value >= 0 ? 'is-success' : 'is-danger']">
+
+                        <span v-if="props.row.type=='xp'">
+                            ✊
+                        </span>
+                        <span v-if="props.row.type=='gold'">
+                            💰
+                        </span>
+                        <span v-if="props.row.type=='heart'">
+                            ❤️
+                        </span>
+                        </span>
+                    </b-table-column>
+
+                    <b-table-column field="value" label="value" sortable>
+                        {{ props.row.value }}
+                    </b-table-column>
+                    
+                    <b-table-column field="created_at" label="Created at" sortable>
+                        {{ new Date(props.row.created_at).toLocaleDateString() }}
+                    </b-table-column>
+
+                    <b-table-column field="name" label="Settings" centered>
+                            <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
+                    </b-table-column>
+                    
+                </template>
+            </b-table>
+            </b-tab-item> 
 
         </b-tabs>
     </div>
@@ -119,13 +228,24 @@
         data: function() {
             return {
                 activeTab: 0,
+                dateStart: null,
+                dateEnd: null,
             }
         },
         methods: {
              
             },
-            computed: {
-            
+        computed: {
+            filteredEntries(){
+                return this.student.behaviours.filter(entry => {
+                    return (entry.pivot.created_at >= this.dateStart || !this.dateStart) && (entry.pivot.created_at <= this.dateEnd || !this.dateEnd) 
+                });
+            },
+            filteredLogEntries(){
+                return this.student.log_entries.filter(entry => {
+                    return (entry.created_at >= this.dateStart || !this.dateStart) && (entry.created_at <= this.dateEnd || !this.dateEnd) 
+                });
             }
         }
+  }
 </script>

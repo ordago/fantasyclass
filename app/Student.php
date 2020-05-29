@@ -37,9 +37,13 @@ class Student extends Model
     public function equipment() {
         return $this->belongsToMany(Equipment::class);
     }
+
+    public function logEntries() {
+        return $this->hasMany(LogEntry::class);
+    }
     
     public function behaviours() {
-        return $this->belongsToMany(Behaviour::class);
+        return $this->belongsToMany(Behaviour::class)->withTimestamps();
     }
 
     public function setProperty($prop, $value) {
@@ -47,6 +51,12 @@ class Student extends Model
         $this->fill([
             $prop => $value,
         ])->save();
+        if($prop == "xp") {
+            return[
+                'xp' => $value,
+                'level' => $this->getLevelAttribute(),
+            ];
+        }
         return $value;
     }
 

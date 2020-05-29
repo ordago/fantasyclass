@@ -200,15 +200,14 @@
                         .then(response => {
                             if(prop == 'xp') {
                                 let student = this.students.find(el => el.id === id);
-                                student.xp = response.data
+                                student.xp = response.data.xp
                                 student.level = response.data.level
-                                
                             }
                             else if(prop == 'gold')
                                 this.students.find(el => el.id === id).gold = response.data
                             this.custom = 0
                             this.$forceUpdate()
-                        })
+                            })
                 },
                 addBehaviour: function(id, behaviour) {
                     let options = {'id': id, 'behaviour': behaviour}
@@ -216,10 +215,10 @@
                         .then(response => {              
                                 let student = this.students.find(el => el.id === id)
                                 student.hp = response.data.hp
-                                student.xp = response.data.xp
+                                student.xp = response.data.xp.xp
                                 student.gold = response.data.gold
-                                student.level = response.data.level
-                                this.$forceUpdate();
+                                student.level = response.data.xp.level
+                                this.$forceUpdate()
                         })
                 },
                 redirect(id) {

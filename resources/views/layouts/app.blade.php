@@ -84,9 +84,6 @@
                             <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}
                         </a>
                         <a class="navbar-item">
-                            <i class="fad fa-file-alt has-margin-right-2"></i> {{ __('menu.log') }}
-                        </a>
-                        <a class="navbar-item">
                             <i class="fad fa-sliders-v-square has-margin-right-2"></i> {{ __('menu.settings') }}
                         </a>
                 </div>

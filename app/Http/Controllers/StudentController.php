@@ -6,6 +6,7 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
+use App\LogEntry;
 use App\Student;
 use App\User;
 use Illuminate\Support\Facades\Hash;
@@ -118,17 +119,22 @@ class StudentController extends Controller
     }
 
     public function index($code, $id) {
-        $student = Student::where('id', $id)->with('equipment', 'classroom')->first();
+        $student = Student::where('id', $id)->with(['equipment', 'classroom', 'behaviours', 'logEntries'])->first();
         
         if($student->classroom->classroom->code != $code)
             abort(404);
-            
+
         $class = Classroom::where('code', $code)->with('theme')->firstOrFail();
         return view('students.show', compact('student', 'class'));
     }
 
     public function update(Request $request) {
         $student = Student::findOrFail($request->id);
+        LogEntry::create([
+            'type' => $request->prop,
+            'value' => $request->value,
+            'student_id' => $student->id,
+        ]);
         return $student->setProperty($request->prop, $request->value);
     }
 
