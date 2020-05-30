@@ -95,6 +95,11 @@
                 <!-- <div v-for="behaviour in student.behaviours" v-bind:key="behaviour.id">
 
                 </div> -->
+                <apexchart width="300" type="donut" :options="{
+                    labels: labels,  colors: colors
+                    }" :series="series">
+                </apexchart>
+
                 <div class="columns">
                     <div class="column">
                         <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateStart">
@@ -221,8 +226,22 @@
   import Utils from "../../utils.js";
 
   export default {
-        props: ['student', 'classroom'],
+        props: ['student', 'classroom', 'chart'],
         mounted() {
+            let colorsOK = ['#c8e6c9', '#a5d6a7', '#81c784', '#66bb6a', '#4caf50', '#43a047', '#388e3c', '#2e7d32', '#1b5e20', '#003300', '#002200', '#001100', '#000000', '#000000', '#000000', '#000000', '#000000', '#000000', '#000000'];
+            let colorsKO = ['#ffccbc', '#ffab91', '#ff8a65', '#ff7043', '#ff5722', '#f4511e', '#e64a19', '#d84315', '#bf360c', '#570000', '#370000', '#170000', '#000000', '#000000', '#000000', '#000000', '#000000', '#000000', '#000000'];
+            
+            this.chart.forEach(element => {
+                this.series.push(element.count)
+                this.labels.push("" + element.name)
+                if(element.total >=0){
+                    this.colors.push(colorsOK[0])
+                    colorsOK.shift()
+                } else {
+                    this.colors.push(colorsKO[0])
+                    colorsKO.shift()
+                }
+            });
            
         },
         data: function() {
@@ -230,6 +249,9 @@
                 activeTab: 0,
                 dateStart: null,
                 dateEnd: null,
+                series: [],
+                labels: [],
+                colors: [],
             }
         },
         methods: {
@@ -237,8 +259,14 @@
             },
         computed: {
             filteredEntries(){
+                this.series = []
                 return this.student.behaviours.filter(entry => {
-                    return (entry.pivot.created_at >= this.dateStart || !this.dateStart) && (entry.pivot.created_at <= this.dateEnd || !this.dateEnd) 
+                    if((entry.pivot.created_at >= this.dateStart || !this.dateStart) && (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)) {
+                        // this.series.push(entry.name)
+                        // this.series.push(entry.name)
+                        return true 
+                    }
+                    return false
                 });
             },
             filteredLogEntries(){

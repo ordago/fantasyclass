@@ -9,6 +9,7 @@ use App\ClassroomUser;
 use App\LogEntry;
 use App\Student;
 use App\User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use TaylorNetwork\UsernameGenerator\Generator;
 use Illuminate\Support\Str;
@@ -125,7 +126,17 @@ class StudentController extends Controller
             abort(404);
 
         $class = Classroom::where('code', $code)->with('theme')->firstOrFail();
-        return view('students.show', compact('student', 'class'));
+
+        $chart = DB::table('behaviour_student')
+            ->join('behaviours', 'behaviours.id', '=', 'behaviour_student.behaviour_id')
+            ->join('students', 'students.id', '=', 'behaviour_student.student_id')
+            ->selectRaw('CONCAT("<i class=\"", behaviours.icon, "\"></i> - ", behaviours.name) as name, COUNT(*) as count, (behaviours.xp + behaviours.hp + behaviours.gold) as total')
+            ->where('behaviour_student.student_id', '=', $student->id)
+            ->orderBy('total')
+            ->groupBy('behaviours.id', 'behaviours.name', 'behaviours.icon', 'total')
+            ->get();
+
+        return view('students.show', compact('student', 'chart', 'class'));
     }
 
     public function update(Request $request) {

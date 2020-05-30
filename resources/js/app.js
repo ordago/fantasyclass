@@ -50,6 +50,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 // import this package's styles
 import 'element-tiptap/lib/index.css';
 
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+
+Vue.component('apexchart', VueApexCharts)
+
 // use ElementUI's plugin
 Vue.use(ElementUI);
 // use this package's plugin
