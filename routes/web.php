@@ -41,6 +41,7 @@ Route::group(['middleware' => 'language'], function () {
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index'); // Policy protect
         Route::post('/{code}/groups/create', 'GroupsController@store'); // Policy protect
+        Route::patch('/{code}/groups', 'GroupsController@update'); // Policy protect
 
         // Students
         Route::get('/{code}/students/add', 'StudentController@create'); // Policy protect

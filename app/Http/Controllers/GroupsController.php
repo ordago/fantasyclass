@@ -15,12 +15,23 @@ class GroupsController extends Controller
 
     public function index($code){
        
-        $class = Classroom::where('code', '=', $code)->with('grouping.groups')->firstorFail();
+        $class = Classroom::where('code', '=', $code)->with('grouping.groups', 'students.groups')->firstorFail();
         return view('groups.index', compact('class'));
         
     }
+
+    public function update($code) {
+        foreach (request()->dropGroups as $group) {
+            $groupObj = Group::findOrFail($group['id']);
+            $groupObj->students()->detach($groupObj->students);
+            foreach ($group['children'] as $std) {
+                $groupObj->students()->attach($std['id']);
+            }
+        }
+    }
     
     public function store($code) {
+        $class = Classroom::where('code', '=', $code)->firstorFail();
         $data = request()->validate([
             'groupsNumber' => ['numeric'],
         ]);
@@ -32,7 +43,7 @@ class GroupsController extends Controller
 
             $groups[] = Group::create([
                 'name' => $generator->getName(),
-                'grouping_id' => 1,
+                'grouping_id' => $class->grouping->first()->id,
             ]);
 
         }

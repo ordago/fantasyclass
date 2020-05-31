@@ -5,7 +5,7 @@
             <i class="fal fa-tools"></i>
         </div>
         <a class="link outer_glow" v-tippy :content="trans.get('menu.groups')" :href="'/classroom/' + classroom.code + '/groups'"><i class="fad fa-users outer_glow" style="font-size:2em;"></i></a>
-        <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span>
+        <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
         <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="link outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <span class="link outer_glow"><i class="fad fa-poll-people" style="font-size: 2em;"></i></span>
@@ -69,7 +69,7 @@
                                         <i :class="behaviour.icon"></i>
                                 </button>
                                 <div class="button is-link is-light has-margin-1 has-padding-x-4" @click="show2l=!show2l" v-if="otherBehavioursJson.length"><i class="fas fa-plus"></i></div>
-                                <a :href="'/classroom/' + classroom.code + '/behaviours/create'" class="button is-link is-light has-margin-1 has-padding-x-4" v-tippy :content="trans.get('users_groups.add_behaviours')" v-if="mainBehavioursJson.length == 0"><i class="fas fa-plus"></i></a>
+                                <a :href="'/classroom/' + classroom.code + '/behaviours/'" class="button is-link is-light has-margin-1 has-padding-x-4" v-tippy :content="trans.get('users_groups.add_behaviours')" v-if="mainBehavioursJson.length == 0"><i class="fas fa-plus"></i></a>
                             </div>
                             <div v-if="show2l">
                                 <button v-for="behaviour in otherBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'" 

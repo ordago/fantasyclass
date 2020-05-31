@@ -2,6 +2,6 @@
 
 @section('content')
 
-<create-group code="{{ $class->code }}" :groups="{{ $class->grouping->first()->groups }}"></create-group>
+<create-group code="{{ $class->code }}" :students="{{ $class->students }}" :groups="{{ $class->grouping->first()->groups }}"></create-group>
 
 @endsection
