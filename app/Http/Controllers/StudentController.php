@@ -125,7 +125,7 @@ class StudentController extends Controller
         if($student->classroom->classroom->code != $code)
             abort(404);
 
-        $class = Classroom::where('code', $code)->with('theme')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
 
         $chart = DB::table('behaviour_student')
             ->join('behaviours', 'behaviours.id', '=', 'behaviour_student.behaviour_id')
@@ -147,6 +147,12 @@ class StudentController extends Controller
             'student_id' => $student->id,
         ]);
         return $student->setProperty($request->prop, $request->value);
+    }
+
+    public function changeCharacter($code) {
+        $student = Student::findOrFail(request()->id);
+        $student->update(['character_id' => request()->character_id]);
+        $student->setBasicEquipment();
     }
 
     public function getUsername(Request $request) 

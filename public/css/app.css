@@ -12985,6 +12985,10 @@ textPath {
   flex-grow: 0 !important;
 }
 
+.media-content p {
+  font: 16px/1 "Oxygen", sans-serif !important;
+}
+
 .control.has-icons-left .icon,
 .control.has-icons-right .icon {
   pointer-events: auto !important;

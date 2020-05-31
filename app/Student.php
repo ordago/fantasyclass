@@ -46,8 +46,11 @@ class Student extends Model
         return $this->belongsToMany(Behaviour::class)->withTimestamps();
     }
 
-    public function setProperty($prop, $value) {
+    public function setProperty($prop, $value, $log = true) {
         $value = max($this->$prop + $value, 0);
+        if($prop == "hp") {
+            $value = min($value, 100);
+        }
         $this->fill([
             $prop => $value,
         ])->save();
@@ -61,6 +64,8 @@ class Student extends Model
     }
 
     public function setBasicEquipment() {
+
+        $this->equipment()->detach($this->equipment);
         switch ($this->character_id) {
             case '1':
                 $ids = [1, 5, 9, 13, 17, 21];
