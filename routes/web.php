@@ -38,6 +38,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards/{card}', 'CardsController@show'); // Policy protect
         Route::patch('/{code}/cards/{card}', 'CardsController@update'); // Policy protect
         
+        // Groups
+        Route::get('/{code}/groups', 'GroupsController@index'); // Policy protect
+        Route::post('/{code}/groups/create', 'GroupsController@store'); // Policy protect
+
         // Students
         Route::get('/{code}/students/add', 'StudentController@create'); // Policy protect
         Route::post('/students/', 'StudentController@store'); // Policy protect (?)

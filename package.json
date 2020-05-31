@@ -42,6 +42,7 @@
         "vfa-picker": "^5.9.1",
         "vue-apexcharts": "^1.5.3",
         "vue-cookies": "^1.7.0",
+        "vue-drag-n-drop": "^1.2.0",
         "vue-json-excel": "^0.2.98",
         "vue-tippy": "^4.4.0",
         "vue-toasted": "^1.1.28",

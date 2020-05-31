@@ -23,6 +23,9 @@ class Student extends Model
         return Level::where('xp', '<=', $this->xp)->orderByDesc('xp')->first();  
     }
 
+    public function groups() {
+        return $this->belongsToMany(Group::class);
+    }
 
     public function getUsernameAttribute() 
     {  

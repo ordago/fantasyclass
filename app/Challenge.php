@@ -18,6 +18,7 @@ class Challenge extends Model
         'hp',
         'gold',
         'cards',
+        'completion',
         'auto_assign',
         'optional',
         'password',

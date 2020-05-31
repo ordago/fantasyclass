@@ -44,6 +44,12 @@
                         <div v-html="challenge.content" class="el-tiptap-editor__content">
                         </div>
                         <div class="has-padding-3 has-text-right">
+                            <button v-if="challenge.is_conquer" class="button is-success is-outlined" @click="showModal(challenge.id)">
+                                <span class="icon is-small">
+                                <i class="fas fa-edit"></i>
+                                </span>
+                                <span>Mark</span>
+                            </button>
                             <button class="button is-dark is-outlined" @click="challengeEdit=challenge;addChallenge=true">
                                 <span class="icon is-small">
                                 <i class="fas fa-edit"></i>
@@ -63,6 +69,11 @@
             </div>
         </div>
     </div>
+      <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
+            <div class="has-padding-5 has-background-light">
+                <h1 class="is-size-1">Fill with students or groups</H1>
+            </div>
+        </b-modal>
 </div>
 </template>
 <script>
@@ -77,6 +88,7 @@
                     addChallenge: false,
                     search: '',
                     challengeEdit: null,
+                    isModalActive: false,
                 }
             },
             methods: {
@@ -101,7 +113,12 @@
                           })
                         }
                     })
-                }
+                },
+                showModal(challenge) {
+                    console.log(challenge)
+                    this.isModalActive = true
+                },
+
             },
             components: {
             },

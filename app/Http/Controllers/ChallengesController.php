@@ -51,7 +51,6 @@ class ChallengesController extends Controller
     public function update($code, $id) {
         $challenge = Challenge::findOrFail($id)->first();
         $challenge->update($this->validateInput());
-        dump($challenge);
         return [
             "message" => __('success_error.add_success'),
             "type" => "success",
@@ -66,6 +65,7 @@ class ChallengesController extends Controller
             'icon' => ['string', 'nullable'],
             'color' => ['string', 'nullable'],
             'description' => ['string', 'nullable' ],
+            'completion' => ['numeric'],
             'content' => ['string', 'nullable'],
             'is_conquer' => ['boolean'],
             'xp' => ['numeric'],

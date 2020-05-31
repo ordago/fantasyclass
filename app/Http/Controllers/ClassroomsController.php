@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\ChallengesGroup;
 use App\Classroom;
 use App\GoalThemes;
+use App\Grouping;
 use App\Theme;
 use App\Http\Classes\Queries;
 use App\Student;
@@ -63,6 +64,11 @@ class ClassroomsController extends Controller
             'name' => 'General', 
             'icon' => 'fas fa-home', 
             'classroom_id' => $classroom->id, 
+        ]);
+
+        Grouping::create([
+            'name' => 'General',
+            'classroom_id' => $classroom->id,
         ]);
 
         auth()->user()->classrooms()->attach([

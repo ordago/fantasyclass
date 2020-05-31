@@ -28,10 +28,10 @@ class CreateChallengesTable extends Migration
             $table->smallInteger('hp')->default(0);
             $table->smallInteger('gold')->default(0);
             $table->smallInteger('cards')->default(0);
-            // $table->json('items')->nullable();
-            // $table->json('requirements_visibility')->nullable();
-            // $table->json('requirements_success')->nullable();
-            // $table->json('targets')->nullable();
+
+            // 0 -> Teacher mark as done // 1 -> Studen mark as done // 2 -> Both mark as done
+            $table->smallInteger('completion')->default(0);
+            
             $table->boolean('is_conquer')->default(0);
             $table->boolean('auto_assign')->default(1);
             $table->boolean('optional')->default(0);

@@ -105,51 +105,52 @@
                         <i class="fal fa-calendar-day"></i> <input type="date" class="input is-rounded " v-model="dateEnd">
                     </div>
                 </div>
-            <b-table v-if="student.behaviours.length"
-                :data="filteredEntries"
-                default-sort="created_at"
-                default-sort-direction="desc"
-                icon-pack="fas"
-                sort-icon="arrow-up"
-                >
 
-            <template slot-scope="props">
+                    <b-table v-if="student.behaviours.length"
+                        :data="filteredEntries"
+                        default-sort="created_at"
+                        default-sort-direction="desc"
+                        icon-pack="fas"
+                        sort-icon="arrow-up"
+                        >
 
-                <b-table-column field="icon" label="Icon" centered>
-                    <span class="tag" v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']">
-                      <i :class="props.row.icon"></i>
-                    </span>
-                </b-table-column>
+                    <template slot-scope="props">
 
-                <b-table-column field="name" label="Name" sortable>
-                    {{ props.row.name }}
-                </b-table-column>
-                
-                <b-table-column field="created_at" label="Created at" sortable>
-                    {{ new Date(props.row.pivot.created_at).toLocaleDateString() }}
-                </b-table-column>
+                        <b-table-column field="icon" label="Icon" centered>
+                            <span class="tag" v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']">
+                            <i :class="props.row.icon"></i>
+                            </span>
+                        </b-table-column>
 
-                <b-table-column field="hp" label="Health Points" sortable centered>
-                    <i class="fas fa-heart"></i>
-                    {{ props.row.hp }}
-                </b-table-column>
+                        <b-table-column field="name" label="Name" sortable>
+                            {{ props.row.name }}
+                        </b-table-column>
+                        
+                        <b-table-column field="created_at" label="Created at" sortable>
+                            {{ new Date(props.row.pivot.created_at).toLocaleDateString() }}
+                        </b-table-column>
 
-                <b-table-column field="name" label="Experience" sortable centered>
-                    <i class="fas fa-fist-raised"></i>
-                    {{ props.row.xp }}
-                </b-table-column>
+                        <b-table-column field="hp" label="Health Points" sortable centered>
+                            <i class="fas fa-heart"></i>
+                            {{ props.row.hp }}
+                        </b-table-column>
 
-                <b-table-column field="name" label="Gold" sortable centered>
-                    <i class="fas fa-coins"></i>
-                    {{ props.row.gold }}
-                </b-table-column>
+                        <b-table-column field="name" label="Experience" sortable centered>
+                            <i class="fas fa-fist-raised"></i>
+                            {{ props.row.xp }}
+                        </b-table-column>
 
-                <b-table-column field="name" label="Settings" centered>
-                        <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
-                </b-table-column>
-                
-            </template>
-        </b-table>
+                        <b-table-column field="name" label="Gold" sortable centered>
+                            <i class="fas fa-coins"></i>
+                            {{ props.row.gold }}
+                        </b-table-column>
+
+                        <b-table-column field="name" label="Settings" centered>
+                                <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
+                        </b-table-column>
+                        
+                    </template>
+                </b-table>
             </b-tab-item>
 
 
@@ -210,7 +211,7 @@
             </b-tab-item> 
 
         </b-tabs>
-    </div>
+          </div>
 </div>
 </template>
 
@@ -249,9 +250,9 @@
                     }
                 })
             },
-               forceRerender() {
-                 this.update += 1;  
-                }
+            forceRerender() {
+                this.update += 1;  
+            },
              
             },
         computed: {

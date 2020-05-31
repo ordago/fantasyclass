@@ -121,6 +121,20 @@
                             </div>
                         </div>
                         </div>
+                        <div class="has-margin-top-3">
+                            <label for="name">{{ trans.get('challenges.completion') }}</label>
+                            <div class="field has-margin-top-3" >
+                            <div class="control">
+                                <div class="select is-fullwidth">
+                                <select v-model="challenge.completion">
+                                    <option value="0">{{ trans.get('challenges.completion_teacher') }}</option>
+                                    <option value="1">{{ trans.get('challenges.completion_student') }}</option>
+                                    <option value="2">{{ trans.get('challenges.completion_both') }}</option>
+                                </select>  
+                                </div>
+                            </div>
+                            </div>
+                        </div>
                         <div class="field">
                             <b-switch 
                                 type="is-info"
@@ -170,6 +184,7 @@
                         title: null,
                         content: ``,
                         is_conquer: 0,
+                        completion: 0,
                         xp: 0,
                         hp: 0,
                         gold: 0,

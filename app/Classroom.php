@@ -17,8 +17,6 @@ class Classroom extends Model
         'enrollment_code', 'user_id', 'character_theme' 
     ];
 
-
-
     public function users() {
         return $this->belongsToMany(User::class)->using(ClassroomUser::class)->withPivot('role', 'id');
     }
@@ -37,6 +35,10 @@ class Classroom extends Model
 
     public function characterTheme() {
         return $this->hasOne(CharacterTheme::class, 'id', 'character_theme');
+    }
+
+    public function grouping() {
+        return $this->hasMany(Grouping::class);
     }
 
     public function cards() {
