@@ -84,6 +84,7 @@ Vue.component('create-challenges-group', require('./components/challenges/Create
 Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
 
 Vue.component('create-group', require('./components/group/CreateGroups.vue').default);
+Vue.component('edit-group', require('./components/group/EditGroup.vue').default);
 // Utils
 
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored

@@ -12,6 +12,7 @@
             <button class="button is-primary has-margin-top-3">Create</button>
         </div>
     </form>
+    <button class="button is-link has-margin-3">Create Group</button>
     <div v-if="groups.length">
             <button class="button is-primary" @click="editGroups=!editGroups">Edit Groups</button>
             <drag-drop
@@ -25,13 +26,21 @@
                 ref="dnditems"
                 @save="save"
                 @cancel="cancel"
-            >
+                >
                 <template #dd-card="{ cardData }">
                     <custom-card
                     :data="cardData"
                     />
                 </template>
             </drag-drop>
+
+            <div v-else>
+                <div class="columns has-margin-3">
+                    <div v-for="group in dropGroups" v-bind:key="group.id">
+                        <edit-group :group="group"></edit-group>
+                    </div>
+                </div>
+            </div>
     </div>
 </div>
 </template>
@@ -39,7 +48,6 @@
 <script>
 import DragDrop from 'vue-drag-n-drop'
 import CustomCard from './CustomCard.vue'
-
 
   export default {
         props: ['groups', 'code', 'students'],
