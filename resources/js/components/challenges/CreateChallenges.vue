@@ -68,7 +68,7 @@
                                 <icon-selector></icon-selector>
                             </p>
                             <p class="control is-expanded">
-                                <input v-model="challenge.icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
+                                <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
                             </p>
                             <p class="control">
                                 <input v-model="challenge.color"  name="color" class="input" type="color" style="padding:0;min-width: 50px;" />
@@ -162,20 +162,25 @@
 </template>
 <script>
     export default {
-            props: ['challengegroup', 'code', 'icon', 'edit'],
+            props: ['challengegroup', 'code', 'iconPrev', 'edit'],
             mounted: function() {
-                    this.challenge.icon = this.icon.icon
-                    this.challenge.color = this.icon.color
-                    if(this.edit) {
-                        this.challenge = this.edit
+                    
+                if(this.edit) {
+                    this.challenge = this.edit
+                        this.icon = this.challenge.icon
                         this.content = this.edit.content
                         this.datepicker = new Date(this.edit.datetime)
-                    } else this.datepicker = new Date()
+                    } else {
+                        this.icon = this.iconPrev.icon
+                        this.challenge.color = this.iconPrev.color
+                        this.datepicker = new Date()
+                    }
             },
             data: function() {
                 return {
                     content: ``,
                     datepicker: null,
+                    icon: null,
                     challenge: {
                         icon: null,
                         color: null,
@@ -201,6 +206,7 @@
                 createChallenge() {
                
                     this.challenge.content = this.content
+                    this.challenge.icon = this.icon
                     this.challenge.challenges_group_id = this.challengegroup
                     let date = this.datepicker
                     this.challenge.datetime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes()

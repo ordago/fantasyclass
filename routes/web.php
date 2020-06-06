@@ -28,7 +28,7 @@ Route::group(['middleware' => 'language'], function () {
         
         Route::get('create', 'ClassroomsController@create');
         Route::get('{code}', 'ClassroomsController@show'); // Policy protect
-
+        
         // Cards
         Route::delete('/card/{id}', 'CardsController@destroy'); // Policy protect
         Route::get('/{code}/cards', 'CardsController@index'); // Policy protect
@@ -42,7 +42,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/groups', 'GroupsController@index'); // Policy protect
         Route::post('/{code}/groups/create', 'GroupsController@store'); // Policy protect
         Route::patch('/{code}/groups', 'GroupsController@update'); // Policy protect
-
+        
         // Students
         Route::get('/{code}/students/add', 'StudentController@create'); // Policy protect
         Route::post('/students/', 'StudentController@store'); // Policy protect (?)
@@ -52,6 +52,9 @@ Route::group(['middleware' => 'language'], function () {
         
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter'); // Policy protect
         Route::post('/students/behaviour', 'StudentController@addBehaviour'); // Policty protect
+        
+        // Student View
+        Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index'); // Policy protect

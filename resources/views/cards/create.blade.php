@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('layouts.teacher')
 
 @section('content')
 <div class="w-100">

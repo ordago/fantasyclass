@@ -11383,7 +11383,22 @@ label.panel-block:hover {
   }
 }
 #app {
-  height: 100vh;
+  height: 100%;
+  overflow: auto;
+  overflow-x: auto;
+}
+
+body, html {
+  height: 100%;
+  overflow: hidden;
+}
+
+.invisible {
+  visibility: hidden;
+}
+
+.display-none {
+  display: none;
 }
 
 body {
@@ -11422,6 +11437,118 @@ body {
 
 .cursor-default {
   cursor: default;
+}
+
+.has-bg-student {
+  background-color: wheat;
+}
+
+.has-bg-student .card-content {
+  background-color: #cebf8f;
+}
+
+.inventory_item {
+  box-sizing: border-box;
+  padding: 10px;
+  width: 16.666666666%;
+  height: 100px;
+  margin: 0;
+  background-image: url("/img/inv_item.png");
+  background-size: cover;
+  background-size: 100% 100%;
+  position: relative;
+  float: left;
+  justify-content: center;
+  align-items: center;
+  -ms-align-items: center;
+  display: -ms-flex;
+  display: flex;
+  cursor: url("/img/cursor.png"), auto;
+}
+
+.offset0 {
+  background-image: url("/img/inv_item_armor.png");
+}
+
+.inv_item_armor_blue {
+  background-image: url("/img/inv_item_armor_blue.png");
+}
+
+.inv_item_armor_bronce {
+  background-image: url("/img/inv_item_armor_bronce.png");
+  -webkit-filter: brightness(1.2);
+          filter: brightness(1.2);
+}
+
+.inv_item_armor_silver {
+  background-image: url("/img/inv_item_armor_silver.png");
+  -webkit-filter: brightness(1.2);
+          filter: brightness(1.2);
+}
+
+.inv_item_armor_gold {
+  background-image: url("/img/inv_item_armor_gold.png");
+  -webkit-filter: brightness(1.1);
+          filter: brightness(1.1);
+}
+
+.offset1 {
+  background-color: #ebaa78 !important;
+}
+
+.offset2 {
+  background-color: #d3dadc !important;
+}
+
+.offset3 {
+  background-color: #faeab7 !important;
+}
+
+.inventory_item .icon_class {
+  opacity: 0.5;
+  top: 5px;
+  left: 5px;
+  position: absolute;
+  width: 30px;
+}
+
+.inventory_item:hover {
+  background-image: url("/img/inv_item_hover.png");
+}
+
+.number_items {
+  position: absolute;
+  padding: 10px;
+  bottom: 3px;
+  right: 4px;
+  font-size: 1em;
+  text-align: center;
+  border-top-left-radius: 10px;
+  background-color: #91714d;
+  background-color: rgba(145, 113, 77, 0.5);
+  border-bottom: none;
+  color: white;
+  font-weight: bold;
+}
+
+.over {
+  border-radius: 10px;
+  margin: 10px;
+  padding: 20px !important;
+  padding-top: 25px !important;
+  padding-bottom: 25px !important;
+  background-image: url(/img/redball.gif);
+  color: white;
+  opacity: 0.7;
+}
+
+.lvlInfo {
+  background-image: url("/img/cardgen/lvl.png");
+  background-size: cover;
+  padding: 12px;
+  width: 32px;
+  height: 32px;
+  text-align: center;
 }
 
 .noselect {
@@ -11731,7 +11858,7 @@ summary {
 }
 
 .personalBadge {
-  background-image: url("/management/img/medal2.png");
+  background-image: url("/img/medal2.png");
   width: 80px;
   height: 80px;
   background-size: cover;
@@ -11842,7 +11969,7 @@ summary {
 
 /* Icons of habilities */
 .colored, .coloredGray {
-  font-size: 1.5em;
+  font-size: 1.25em;
   margin: 2px;
   -webkit-filter: drop-shadow(1px 1px 1px black);
           filter: drop-shadow(1px 1px 1px black);
@@ -11931,7 +12058,6 @@ summary {
 .gold, .score {
   position: relative;
   color: white;
-  border: 1px solid #555;
   border-radius: 3px;
   text-align: center;
   font-size: 1.25em;
@@ -12891,6 +13017,10 @@ textPath {
 .fa-heart {
   stroke: black;
   stroke-width: 10;
+}
+
+.b-tabs .tab-content {
+  padding: 0;
 }
 
 .vfa-icon {

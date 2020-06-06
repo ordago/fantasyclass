@@ -36,6 +36,9 @@ class Student extends Model
         return $this->belongsTo(ClassroomUser::class, 'classroom_user_id');
     }
 
+    public function items() {
+        return $this->belongsToMany(Item::class)->withPivot('count');
+    }
 
     public function equipment() {
         return $this->belongsToMany(Equipment::class);

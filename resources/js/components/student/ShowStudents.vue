@@ -51,7 +51,6 @@
                     </div>
                     <div class="media-content cursor-pointer" @click="redirect(student.id)">
                         <p class="title is-4">{{ student.name }}</p>
-                        <!-- <p class="subtitle is-6"><small>0 <i class="fas fa-heart"></i></small> <small>0 <i class="fas fa-fist-raised"></i></small> <small>0 <i class="fas fa-coins   "></i></small></p> -->
                         <p class="subtitle is-6"><small>@{{ student.username }}</small></p>
                     </div>
                     </div>
@@ -207,6 +206,7 @@
                             else if(prop == 'gold')
                                 this.students.find(el => el.id === id).gold = response.data
                             this.custom = 0
+                            this.$emit("students", this.students)
                             this.$forceUpdate()
                             })
                 },

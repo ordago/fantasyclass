@@ -29,6 +29,10 @@ class Classroom extends Model
         return $this->hasManyThrough('App\Student', 'App\ClassroomUser', 'classroom_id', 'classroom_user_id', 'id');
     }
 
+    public function items() {
+        return $this->hasMany(Item::class);
+    }
+
     public function theme() {
         return $this->hasOne(Theme::class, 'id', 'theme_id');
     }

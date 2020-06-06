@@ -1,5 +1,5 @@
-@extends('layouts.menu')
+@extends('layouts.teacher')
 
 @section('content')
-       <show-student-teacher :student="{{ $student }}" :chart=" {{ $chart }}" :classroom="{{ $class }}"></show-student-teacher>
+       <show-student :admin="true" :items="{{ $items }}" :student="{{ $student }}" :classroom="{{ $class }}"></show-student>
 @endsection

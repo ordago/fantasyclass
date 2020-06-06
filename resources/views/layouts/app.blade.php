@@ -28,7 +28,7 @@
 
 </head>
     <body class="has-background-white-bis" @yield('bg', '')>
-    <div id="app">
+    <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
             <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
@@ -47,46 +47,9 @@
 
             <div id="navbar" class="navbar-menu" :class="{ 'is-active': showNav }">
                 @if(isset($class))
-                <div class="navbar-start">
-                        <a href="/classroom/{{ $class->code }}" class="navbar-item">
-                            <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.users') }}
-                        </a>
-                        <div class="navbar-item has-dropdown is-hoverable">
-                            <a class="navbar-link">
-                                <i class="fad fa-treasure-chest has-margin-right-2"></i> {{ __('menu.rewards') }}
-                            </a>
 
-                            <div class="navbar-dropdown">
-                                <a href="/classroom/{{ $class->code }}/levels" class="navbar-item">
-                                    <i class="fad fa-trophy has-margin-right-2"></i> {{ __('menu.levels') }}
-                                </a>
-                                <a href="/classroom/{{ $class->code }}/cards" class="navbar-item">
-                                    <i class="fad fa-club has-margin-right-2"></i> {{ __('menu.cards') }}
-                                </a>
-                                <a href="/classroom/{{ $class->code }}/behaviours" class="navbar-item">
-                                    <i class="fad fa-heart has-margin-right-2"></i> {{ __('menu.behaviours') }}
-                                </a>
-                                <a href="/classroom/{{ $class->code }}/shop" class="navbar-item">
-                                    <i class="fad fa-store has-margin-right-2"></i> {{ __('menu.shop') }}
-                                </a>
-                            </div>
-                        </div>
-                        <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
-                            <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
-                        </a>
-                        <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
-                            <i class="fas fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
-                        </a>
-                        <a class="navbar-item">
-                            <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
-                        </a>
-                        <a class="navbar-item">
-                            <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}
-                        </a>
-                        <a class="navbar-item">
-                            <i class="fad fa-sliders-v-square has-margin-right-2"></i> {{ __('menu.settings') }}
-                        </a>
-                </div>
+                @yield('menu')
+                
                 @endif
 
                 <div class="navbar-end has-text-right">

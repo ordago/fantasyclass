@@ -15,7 +15,7 @@
         </div>
         
         <div class="panel-block" v-if="addChallenge">
-           <create-challenges :edit="challengeEdit" :icon="icon" :code="code" :challengegroup="challengegroup.id"></create-challenges>
+           <create-challenges :edit="challengeEdit" :iconPrev="icon" :code="code" :challengegroup="challengegroup.id"></create-challenges>
         </div>
 
         <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">

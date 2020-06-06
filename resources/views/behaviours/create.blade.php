@@ -1,4 +1,4 @@
-@extends('layouts.menu')
+@extends('layouts.teacher')
 
 @section('content')
 <div class="bg-light p-2 h-100">

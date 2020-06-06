@@ -7,8 +7,7 @@ use App\Classroom;
 use App\GoalThemes;
 use App\Grouping;
 use App\Theme;
-use App\Http\Classes\Queries;
-use App\Student;
+use App\Item;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
@@ -60,12 +59,20 @@ class ClassroomsController extends Controller
             'goal_type' => $data['goalType'],
         ]);
 
+        // Assign basic items
+        foreach (Item::whereNull('classroom_id')->get() as $item) {
+            $newItem = $item->replicate();
+            $classroom->cards()->save($newItem);
+        }
+
+        // Create default challenges group
         ChallengesGroup::create([
             'name' => 'General', 
             'icon' => 'fas fa-home', 
             'classroom_id' => $classroom->id, 
         ]);
 
+        // Create default grouping
         Grouping::create([
             'name' => 'General',
             'classroom_id' => $classroom->id,

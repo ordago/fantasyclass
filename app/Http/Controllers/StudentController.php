@@ -120,23 +120,25 @@ class StudentController extends Controller
     }
 
     public function index($code, $id) {
-        $student = Student::where('id', $id)->with(['equipment', 'classroom', 'behaviours', 'logEntries'])->first();
+        $student = Student::where('id', $id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
         
         if($student->classroom->classroom->code != $code)
             abort(404);
-
+        $admin = true;  
         $class = Classroom::where('code', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
 
-        $chart = DB::table('behaviour_student')
-            ->join('behaviours', 'behaviours.id', '=', 'behaviour_student.behaviour_id')
-            ->join('students', 'students.id', '=', 'behaviour_student.student_id')
-            ->selectRaw('CONCAT("<i class=\"", behaviours.icon, "\"></i> - ", behaviours.name) as name, COUNT(*) as count, (behaviours.xp + behaviours.hp + behaviours.gold) as total')
-            ->where('behaviour_student.student_id', '=', $student->id)
-            ->orderBy('total')
-            ->groupBy('behaviours.id', 'behaviours.name', 'behaviours.icon', 'total')
+        $items = DB::table('students')
+            ->join('item_student', 'item_student.student_id', '=', 'students.id')
+            ->rightJoin('items', 'items.id', '=', 'item_student.item_id')
+            ->selectRaw('items.id, icon, IFNULL(item_student.count, 0) as count')
+            ->where('classroom_id', '=', $class->id)
+            ->where(function($query) use ($student){
+                $query->where('student_id', '=', $student->id);
+                $query->orWhereNull('student_id');
+            })
             ->get();
 
-        return view('students.show', compact('student', 'chart', 'class'));
+        return view('students.show', compact('student', 'class', 'admin', 'items'));
     }
 
     public function update(Request $request) {

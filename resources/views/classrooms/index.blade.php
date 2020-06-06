@@ -31,18 +31,24 @@
           <span class="admin" {{ Popper::pop(__('classroom.admin')) }}>
             <i class="far fa-user-crown"></i>
           </span>
-        @elseif($classroom->pivot->role == 1)
+          <a href="/classroom/{{ $classroom->code }}" class="has-text-light">
+            {{ $classroom->name }}
+          </a>
+          @elseif($classroom->pivot->role == 1)
           <span class="admin" {{ Popper::pop(__('classroom.teacher')) }}>
             <i class="far fa-user-graduate" ></i>
           </span>
-        @else
+          <a href="/classroom/{{ $classroom->code }}" class="has-text-light">
+            {{ $classroom->name }}
+          </a>
+          @else
           <span class="admin" {{ Popper::pop(__('classroom.student')) }}>
             <i class="far fa-user" ></i>
           </span>
+          <a href="/classroom/show/{{ $classroom->code }}" class="has-text-light">
+            {{ $classroom->adventure_name }}
+          </a>
         @endif
-        <a href="/classroom/{{ $classroom->code }}" class="has-text-light">
-          {{ $classroom->name }}
-        </a>
       </h3>
     </div>
   </div>
