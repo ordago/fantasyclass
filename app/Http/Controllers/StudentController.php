@@ -128,15 +128,16 @@ class StudentController extends Controller
         $class = Classroom::where('code', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
 
         $items = DB::table('students')
-            ->join('item_student', 'item_student.student_id', '=', 'students.id')
-            ->rightJoin('items', 'items.id', '=', 'item_student.item_id')
-            ->selectRaw('items.id, icon, IFNULL(item_student.count, 0) as count')
-            ->where('classroom_id', '=', $class->id)
-            ->where(function($query) use ($student){
-                $query->where('student_id', '=', $student->id);
-                $query->orWhereNull('student_id');
-            })
-            ->get();
+        ->crossJoin('items')
+        ->where('items.classroom_id', '=', $class->id)
+        ->where('students.id', '=', $student->id)
+        ->select('*')
+        ->leftJoin('item_student', function($join) use ($student) {
+            $join->on('items.id', '=', 'item_student.item_id')
+                    ->where('item_student.student_id', '=', $student->id);
+        })
+        ->selectRaw('students.id, items.id, icon, IFNULL(item_student.count, 0) as count')
+        ->get();
 
         return view('students.show', compact('student', 'class', 'admin', 'items'));
     }

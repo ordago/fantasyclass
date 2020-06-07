@@ -52,6 +52,7 @@ Route::group(['middleware' => 'language'], function () {
         
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter'); // Policy protect
         Route::post('/students/behaviour', 'StudentController@addBehaviour'); // Policty protect
+        Route::patch('/{code}/student/inventory', 'InventoryController@update'); // Policty protect
         
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect

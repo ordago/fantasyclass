@@ -2,14 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Student;
 
 class InventoryController extends Controller
 {
     
-    public function update() {
-        
-        //$p->employees()->sync([$request->am_id, $request->pm_id]);
+    public function update($code) {
+        // $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $request = request();
+        $student = Student::findOrFail($request->id);
+        if($request->count == 0) {
+            $student->items()->detach($request->item_id);
+        } else {
+            $student->items()->sync([$request->item_id => ['count' => $request->count]], false);
+        } 
 
     }
 

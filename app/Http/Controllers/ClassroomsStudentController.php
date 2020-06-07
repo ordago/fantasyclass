@@ -22,7 +22,7 @@ class ClassroomsStudentController extends Controller
         ->where('pivot.role', '=', 0)
         ->first()
         ->pivot
-        ->student->id)->with(['equipment', 'classroom', 'behaviours', 'logEntries'])->first();
+        ->student->id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
         return view('studentsview.show', compact('student', 'class', 'admin'));
         
 
