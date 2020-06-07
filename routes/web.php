@@ -80,6 +80,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/{code}/challenges/{id}', 'ChallengesController@destroy'); // Policy protect
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update'); // Policy protect
         
+        // Challenges
+        Route::get('/{code}/shop', 'ShopController@index'); // Policy protect
+        
     });
         
     // Socialite

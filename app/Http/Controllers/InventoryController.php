@@ -6,6 +6,11 @@ use App\Student;
 
 class InventoryController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('verified');
+    }
     
     public function update($code) {
         // $class = Classroom::where('code', '=', $code)->firstOrFail();
