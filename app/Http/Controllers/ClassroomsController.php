@@ -105,4 +105,14 @@ class ClassroomsController extends Controller
         $students = $class->students()->with('equipment')->get();
         return view('classrooms.show', compact('class', 'students'));
     }
+    
+    public function updateSetting($code) {
+        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
+        settings()->setExtraColumns(['user_id' => $class->id]);
+        if(request()->action == 'toggle'){
+            $value = !settings()->get(request()->prop);
+            settings()->set(request()->prop, $value);
+        }
+        return $value ? true: false;
+    }
 }

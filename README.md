@@ -73,6 +73,9 @@ https://github.com/shakee93/vue-toasted
 Popper tippy:
  - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
 
+ LaravelSettings:
+ https://github.com/ARCANEDEV/LaravelSettings/blob/master/_docs/3-Usage.md
+
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).

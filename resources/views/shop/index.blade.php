@@ -1,7 +1,5 @@
 @extends('layouts.teacher')
 
 @section('content')
-<div>
-  Shop
-</div>
+  <show-shop code="{{ $class->code }}" :items="{{ $items }}" :config="{{ $config }}"></show-shop>
 @endsection

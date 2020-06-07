@@ -147,9 +147,11 @@
                 </div>
             </div>
         </div>
-        <div class="column is-12-mobile is-4-tablet is-3-desktop">
-            <div class="box card-shadow-s is-flex is-all-centered">
-                <a :href="'/classroom/' + classroom.code + '/students/add'">Add students (afegir imatge)</a>
+            <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
+            <div class="box card-shadow-s is-flex has-background-link is-all-centered">
+                <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
+                <img src="/img/new_std.svg" class="has-margin-left-1"><strong>Add students</strong>
+                </a>
             </div>
             </div>
     </div>

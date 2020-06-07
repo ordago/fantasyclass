@@ -83,6 +83,10 @@ Route::group(['middleware' => 'language'], function () {
         // Challenges
         Route::get('/{code}/shop', 'ShopController@index'); // Policy protect
         
+        // Settings
+        Route::patch('/{code}/setting', 'ClassroomsController@updateSetting'); // Policy protect
+
+        
     });
         
     // Socialite
