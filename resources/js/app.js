@@ -35,25 +35,29 @@ Vue.use(VueCookies)
 
 // Buefy
 import Buefy from 'buefy'
+Vue.use(Buefy)
 
 // Download excel
 import JsonExcel from 'vue-json-excel'
 Vue.component('downloadExcel', JsonExcel)
 
-Vue.use(Buefy)
-
-import Vue from 'vue';
 import ElementUI from 'element-ui';
 import { ElementTiptapPlugin } from 'element-tiptap';
+
 // import ElementUI's styles
 import 'element-ui/lib/theme-chalk/index.css';
 // import this package's styles
 import 'element-tiptap/lib/index.css';
 
+// Charts
 import VueApexCharts from 'vue-apexcharts'
 Vue.use(VueApexCharts)
-
 Vue.component('apexchart', VueApexCharts)
+
+// Crop plugin
+import Croppa from 'vue-croppa'
+import 'vue-croppa/dist/vue-croppa.css'
+Vue.use(Croppa)    
 
 // use ElementUI's plugin
 Vue.use(ElementUI);
@@ -87,6 +91,7 @@ Vue.component('create-group', require('./components/group/CreateGroups.vue').def
 Vue.component('edit-group', require('./components/group/EditGroup.vue').default);
 
 Vue.component('show-shop', require('./components/shop/ShowShop.vue').default);
+Vue.component('shop-create', require('./components/shop/ShopCreate.vue').default);
 
 
 // Utils

@@ -28,7 +28,7 @@ class StudentController extends Controller
         session()->put('classroom', $class->id);
         return view('students.create', compact('class'));
     }
-
+    
     public function store(Request $request) 
     {
         $classId = session()->pull('classroom');
@@ -75,6 +75,7 @@ class StudentController extends Controller
             ->where('role', '=', 0)
             ->get()
             ->first();                 
+
 
             // Create the student properties
             $student = Student::create([

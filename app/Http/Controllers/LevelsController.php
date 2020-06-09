@@ -69,7 +69,6 @@ class LevelsController extends Controller
                     "type" => "times",
                     "type" => "error"
             ];
-            return $th;
         }
         
     }

@@ -1,9 +1,6 @@
-## Utilities
-
 ### To import the project
 
 [Laravel Installation](https://laravel.com/docs/7.x/installation)
-
 
 ### Requirements
 
@@ -61,6 +58,17 @@ https://github.com/kg-bot/laravel-localization-to-vue
  php artisan export:messages-flat
 ```
 
+### Classroom settings management vie VUE
+
+ axios
+    .patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: [ property name ],
+        action: "toggle"
+    })
+
+For now it's only implemented toggle.
+
 ### Plugin documentation
 
 Translation in vue:
@@ -75,6 +83,9 @@ Popper tippy:
 
  LaravelSettings:
  https://github.com/ARCANEDEV/LaravelSettings/blob/master/_docs/3-Usage.md
+
+ Vue Croppa:
+ https://github.com/zhanziyang/vue-croppa
 
 ## License
 
