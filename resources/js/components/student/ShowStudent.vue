@@ -1,6 +1,6 @@
 <template>
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
-    <div class="column is-narrow">
+    <div class="column is-narrow has-padding-right-0">
       <div class="card rounded card-shadow-s" style="min-width: 275px">
         <span
           class="level-top rounded has-padding-4 has-background-light"
@@ -75,7 +75,7 @@
         </div>
       </div>
     </div>
-    <div class="column">
+    <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item label="Information">
           <div class="field is-horizontal">
@@ -174,9 +174,9 @@
             <div>
               <div v-for="index in inventoryRemaining" class="inventory-item" v-bind:key="index"></div>
             </div>
-            <div>
+            <div :key="forceReload">
               <div
-                v-for="gear in student.equipment"
+                v-for="gear in orderedEquipment"
                 v-bind:key="gear.id"
                 v-tippy
                 :content="propertiesMessage(gear)"
@@ -185,6 +185,9 @@
                 v-bind:class="{ 'inv-item-armor-bronce': gear.offset == 1, 'inv-item-armor-silver': gear.offset == 2, 'inv-item-armor-gold': gear.offset == 3 }"
               >
                 <img :src="'/img/character/' + gear.src" :alt="gear.id" class="item" />
+                <div class="price-buy rounded not-hover" v-if="eq1Json || eq2Json || eq3Json">
+                  <i class="fas fa-plus"></i>
+                </div>
                 <div class="w-100 shop-sub-item" style="position:absolute; top: 100px; left: 0">
                   <div v-for="(i, index) in [eq1Json, eq2Json, eq3Json]" :key="index">
                     <div
@@ -200,13 +203,35 @@
                         :alt="itemStore.id"
                         class="item"
                       />
-                      <div class="price-buy rounded" @click="buy(gear, itemStore)">
+                      <div class="price-buy rounded" @click="buyEquipment(gear, itemStore)">
                         {{ itemStore.price }}
                         <i class="fas fa-coins colored"></i>
                       </div>
                     </div>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div class style="clear:both"></div>
+          </div>
+          <div class="shop has-padding-top-3" v-if="itemsJson">
+            <h2 class="is-size-2">
+              <i class="fas fa-store"></i> Shop
+            </h2>
+            <div
+              class="columns has-padding-4 has-margin-2 rounded"
+              v-for="item in itemsJson"
+              :key="item.id"
+            >
+              <div class="column is-flex is-all-centered is-narrow">
+                <img :src="item.icon" />
+              </div>
+              <div class="column is-flex is-all-centered rounded wheat" v-html="message(item)"></div>
+              <div class="column is-flex is-all-centered is-narrow item-price">
+                <button class="button is-success" @click="buyItem(item)">
+                  Buy {{ item.price }}
+                  <i class="fas fa-coins colored" style="z-index: 0"></i>
+                </button>
               </div>
             </div>
           </div>
@@ -344,11 +369,8 @@ export default {
   mounted() {
     if (!this.admin) {
       this.activeTab = 1;
-      let line = 6;
-      if (this.student.items.length >= 6) {
-        line = 12;
-      }
-      this.inventoryRemaining = line - this.student.items.length;
+
+      this.updateEmpty();
 
       this.itemsJson = JSON.parse(this.shop.items);
       this.eq1Json = JSON.parse(this.shop.eq1);
@@ -369,10 +391,18 @@ export default {
       itemsJson: null,
       eq1Json: null,
       eq2Json: null,
-      eq3Json: null
+      eq3Json: null,
+      forceReload: 0,
     };
   },
   methods: {
+    updateEmpty() {
+      let line = 6;
+      if (this.student.items.length >= 6) {
+        line = 12;
+      }
+      this.inventoryRemaining = line - this.student.items.length;
+    },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({
         title: "Class change",
@@ -453,23 +483,90 @@ export default {
         "% <i class='fas fa-coins colored'></i>"
       );
     },
-    buy(oldItem, newItem) {
-        oldItem.src = newItem.src
-        let reference = 'item' + oldItem.id
-        let newClass = 'inv-item-armor-bronce'
-        switch(newItem.offset) {
-            case 2:
-                console.log(2)
-                newClass = 'inv-item-armor-silver'
-                break;
-            case 3:
-                console.log(3)
-                newClass = 'inv-item-armor-gold'
-                break;
+    buyItem(item) {
+      this.$buefy.dialog.confirm({
+        title: "Buy item",
+        message: "Do you want to buy the item?",
+        confirmText: "Buy",
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/student/buyitem", {
+              item: item.id
+            })
+            .then(response => {
+              this.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type
+              });
+              if (response.data.type == "success") {
+                this.student.items = response.data.items;
+                this.updateEmpty()
+                this.student.gold = this.student.gold - item.price;
+                this.$forceUpdate()
+              }
+            });
         }
-        console.log(this.$refs[reference][0])
-        this.$refs[reference][0].classList.add(newClass)
-        this.$forceUpdate()
+      });
+    },
+    buyEquipment(oldItem, newItem) {
+      this.$buefy.dialog.confirm({
+        title: "Buy item",
+        message:
+          "Do you want to buy the item " +
+          newItem.price +
+          "<i class='fas fa-coins colored'></i>? (" +
+          newItem.hp +
+          "% <i class='fas fa-heart colored'></i> | " +
+          newItem.xp +
+          "% <i class='fas fa-fist-raised colored'></i> | " +
+          newItem.gold +
+          "% <i class='fas fa-coins colored'></i>)",
+        confirmText: "Buy",
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post(
+              "/classroom/" + this.classroom.code + "/student/buyequipment",
+              {
+                new: newItem
+              }
+            )
+            .then(response => {
+              this.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type
+              });
+              if (response.data.type == "success") {
+                this.student.equipment = response.data.equipment;
+                this.student.gold = this.student.gold - newItem.price;
+                oldItem.src = newItem.src;
+                let reference = "item" + oldItem.id;
+                let newClass = "inv-item-armor-bronce"
+                switch (newItem.offset) {
+                  case 2:
+                    newClass = "inv-item-armor-silver"
+                    break;
+                  case 3:
+                    newClass = "inv-item-armor-gold"
+                    break;
+                }
+                this.$refs[reference][0].classList.add(newClass)
+                this.$forceUpdate()
+              }
+            });
+        }
+      });
     },
     filterEquipment(equipment, type) {
       if (equipment) {
@@ -499,6 +596,9 @@ export default {
     groupedData() {
       let array = _.groupBy(this.filteredEntries, "id");
       return array;
+    },
+    orderedEquipment: function() {
+      return _.orderBy(this.student.equipment, "type");
     }
   },
   watch: {

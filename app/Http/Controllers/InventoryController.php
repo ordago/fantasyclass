@@ -16,7 +16,7 @@ class InventoryController extends Controller
         // $class = Classroom::where('code', '=', $code)->firstOrFail();
         $request = request();
         $student = Student::findOrFail($request->id);
-        if($request->count == 0) {
+        if($request->count <= 0) {
             $student->items()->detach($request->item_id);
         } else {
             $student->items()->sync([$request->item_id => ['count' => $request->count]], false);

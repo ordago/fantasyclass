@@ -8,6 +8,7 @@ use App\Equipment;
 use App\Item;
 use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ClassroomsStudentController extends Controller
 {
@@ -59,6 +60,84 @@ class ClassroomsStudentController extends Controller
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop'));
     }
 
+    public function buyItem($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $student = $this->getCurrentStudent($class);
+
+        $data = request()->validate([
+            'item' => 'numeric',
+        ]);
+
+        $item = Item::where('id', '=', $data['item'])->where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->firstOrFail();
+        $studentItem = $student->items->where('id', $item->id)->first();
+
+        if ($item->price > $student->gold) {
+            return [
+                "message" => " " . __('shop.equipment_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        if ($studentItem)
+            $count = $studentItem->pivot->count + 1;
+        else $count = 1;
+        
+
+        $student->items()->sync([$item->id => ['count' => $count]], false);
+        $student->update(['gold' => ($student->gold - $item->price)]);
+
+        dump($student->items);
+        return [
+            "message" => " " . __('shop.equipment_succes'),
+            "icon" => "check",
+            "type" => "success",
+            "items" => $student->fresh()->items,
+        ];
+    }
+    public function buyEquipment($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $student = $this->getCurrentStudent($class);
+
+        $new = Equipment::where('id', '=', request()->new)->firstOrFail();
+
+        // $old = Equipment::where('id', '=', request()->old)->firstOrFail();
+        $old = DB::table('equipment_student')
+            ->join('equipment', 'equipment.id', 'equipment_student.equipment_id')
+            ->where('equipment_student.student_id', '=', $student->id)
+            ->where('equipment.type', '=', $new->type)
+            ->select('*')
+            ->first();
+
+        // Avoid user mistakes
+        if ($old->type != $new->type || $old->offset >= $new->offset || $new->character_id != $student->character_id || $student->equipment->contains($new->id)) {
+            return [
+                "message" => " " . __('shop.equipment_failed_exists'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+        if ($new->price > $student->gold) {
+            return [
+                "message" => " " . __('shop.equipment_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+        $gold = $student->gold - $new->price;
+        $student->update(['gold' => $gold]);
+        $student->equipment()->detach($old->id);
+        $student->equipment()->attach($new->id);
+        return [
+            "message" => " " . __('shop.equipment_succes'),
+            "icon" => "check",
+            "type" => "success",
+            "equipment" => $student->fresh()->equipment,
+        ];
+    }
+
     public function useItem($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
@@ -73,7 +152,11 @@ class ClassroomsStudentController extends Controller
         if (!$item->pivot->count > 0)
             return false;
 
-        $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
+        if ($item->pivot->count == 1) {
+            $student->items()->detach($item->id);
+        } else
+            $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
+
         if ($item->hp > 0) {
             $student->setProperty('hp', $item->hp);
         }

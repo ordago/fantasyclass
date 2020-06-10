@@ -11388,7 +11388,8 @@ label.panel-block:hover {
   overflow-x: auto;
 }
 
-body, html {
+body,
+html {
   height: 100%;
   overflow: hidden;
 }
@@ -11468,6 +11469,19 @@ body {
 
 .shop-sub-item {
   display: none;
+  z-index: 2;
+}
+
+.shop .columns {
+  background-color: #cebf8f;
+}
+
+.wheat {
+  background-color: wheat;
+}
+
+.item-price .button {
+  cursor: url("/img/cursor.png"), auto;
 }
 
 .inventory-item:hover .shop-sub-item {
@@ -11518,7 +11532,8 @@ body {
   background-image: url("/img/inv_item_hover.png");
 }
 
-.number-items, .price-buy {
+.number-items,
+.price-buy {
   position: absolute;
   padding: 10px;
   bottom: 3px;
@@ -11553,7 +11568,7 @@ body {
   text-align: center;
 }
 
-.price-buy:hover {
+.price-buy:hover:not(.not-hover) {
   background-color: #38c172;
 }
 
@@ -11569,7 +11584,7 @@ body {
   /* Internet Explorer/Edge */
   user-select: none;
   /* Non-prefixed version, currently
-     supported by Chrome, Opera and Firefox */
+   supported by Chrome, Opera and Firefox */
 }
 
 /* Form */
@@ -11942,19 +11957,23 @@ summary {
   visibility: visible;
 }
 
-.storyConquer .fa-smile, .coloredEmoji .fa-smile {
+.storyConquer .fa-smile,
+.coloredEmoji .fa-smile {
   color: darkgreen;
 }
 
-.storyConquer .fa-frown, .coloredEmoji .fa-frown {
+.storyConquer .fa-frown,
+.coloredEmoji .fa-frown {
   color: red;
 }
 
-.storyConquer .fa-frown-open, .coloredEmoji .fa-frown-open {
+.storyConquer .fa-frown-open,
+.coloredEmoji .fa-frown-open {
   color: #af4448;
 }
 
-.storyConquer .fa-meh, .coloredEmoji .fa-meh {
+.storyConquer .fa-meh,
+.coloredEmoji .fa-meh {
   color: yellow;
 }
 
@@ -11974,7 +11993,8 @@ summary {
 }
 
 /* Icons of habilities */
-.colored, .coloredGray {
+.colored,
+.coloredGray {
   font-size: 1.25em;
   margin: 2px;
   -webkit-filter: drop-shadow(1px 1px 1px black);
@@ -11983,14 +12003,18 @@ summary {
   outline: 0;
 }
 
-.rules .fa-fist-raised, .rules .fa-heart, .rules .fa-coins {
+.rules .fa-fist-raised,
+.rules .fa-heart,
+.rules .fa-coins {
   font-size: 1.4em;
   text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
   margin: 2px;
   margin-right: 5px;
 }
 
-.gemInfo .colored, .gold .colored, .score .colored {
+.gemInfo .colored,
+.gold .colored,
+.score .colored {
   font-size: 1em;
 }
 
@@ -11999,26 +12023,36 @@ summary {
   opacity: 0.3;
 }
 
-.colored .fa-heart, .colored.fa-heart, .coloredGray .fa-heart, .rules .fa-heart {
+.colored .fa-heart,
+.colored.fa-heart,
+.coloredGray .fa-heart,
+.rules .fa-heart {
   color: red;
   -webkit-text-stroke: 1px #000;
   stroke: black;
   stroke-width: 10;
 }
 
-.colored .fa-fist-raised, .colored.fa-fist-raised, .coloredGray .fa-fist-raised, .rules .fa-fist-raised {
+.colored .fa-fist-raised,
+.colored.fa-fist-raised,
+.coloredGray .fa-fist-raised,
+.rules .fa-fist-raised {
   color: #ffe0bd;
   stroke: black;
   stroke-width: 10;
 }
 
-.colored .fa-coins, .colored.fa-coins, .coloredGray .fa-coins, .rules .fa-coins {
+.colored .fa-coins,
+.colored.fa-coins,
+.coloredGray .fa-coins,
+.rules .fa-coins {
   color: #FFD700;
   stroke: black;
   stroke-width: 10;
 }
 
-.colored.fa-fort-awesome, .rules .fa-fort-awesome {
+.colored.fa-fort-awesome,
+.rules .fa-fort-awesome {
   color: #999;
 }
 
@@ -12029,7 +12063,8 @@ summary {
   color: #bbdefb;
 }
 
-.coloredGray.fa-gem, .rules .fa-gem {
+.coloredGray.fa-gem,
+.rules .fa-gem {
   color: #bbdefb;
 }
 
@@ -12061,7 +12096,8 @@ summary {
   z-index: 1;
 }
 
-.gold, .score {
+.gold,
+.score {
   position: relative;
   color: white;
   border-radius: 3px;
@@ -12088,7 +12124,8 @@ summary {
   display: inline-block;
 }
 
-.gemInfo, .extraCards {
+.gemInfo,
+.extraCards {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#1e5799+0,2989d8+50,207cca+51,2b94e5+100 */
   background: #1e5799;
   /* Old browsers */
@@ -12096,7 +12133,7 @@ summary {
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #1e5799 0%, #2989d8 50%, #207cca 51%, #2b94e5 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#1e5799", endColorstr="#2b94e5",GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#1e5799", endColorstr="#2b94e5", GradientType=0);
   /* IE6-9 */
 }
 
@@ -12105,7 +12142,8 @@ summary {
   background: #4d4d4d;
 }
 
-.gold, .goldCards {
+.gold,
+.goldCards {
   /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#d8ad00+0,edb017+48,d6a700+52,c98a24+100 */
   background: #d8ad00;
 }
@@ -12118,11 +12156,13 @@ summary {
   /* Chrome10-25,Safari5.1-6 */
   background: linear-gradient(to bottom, #c4c4c4 0%, #969696 48%, #515151 52%, #474747 100%);
   /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#c4c4c4", endColorstr="#474747",GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#c4c4c4", endColorstr="#474747", GradientType=0);
   /* IE6-9 */
 }
 
-.goldCards, .extraCards, .regularCards {
+.goldCards,
+.extraCards,
+.regularCards {
   border-radius: 10px;
   margin: 2px;
   margin-bottom: 5px;
@@ -12130,7 +12170,9 @@ summary {
   overflow: auto;
 }
 
-.gemInfo > i, .gold > i, .score i.fa-fist-raised {
+.gemInfo > i,
+.gold > i,
+.score i.fa-fist-raised {
   position: absolute;
   top: 5px;
   left: 5px;
@@ -12239,7 +12281,8 @@ h5 {
   color: white;
 }
 
-.charRestrict, .charRestrictType {
+.charRestrict,
+.charRestrictType {
   position: absolute;
   top: 0;
   right: 0;
@@ -12260,7 +12303,8 @@ h5 {
 }
 
 /**** CUSTOM CARD ****/
-.cardContainer, .cardContainerLvl {
+.cardContainer,
+.cardContainerLvl {
   width: 252px;
   text-align: center;
   position: relative;
