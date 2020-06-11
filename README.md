@@ -7,6 +7,8 @@
 Requirement: php 7.4+
 https://docs.spatie.be/laravel-medialibrary/v8/installation-setup/
 
+MariaDB +10.2.7 (or mysql with json support)
+
 Register in [mailtrap.io](https://mailtrap.io)
 Configure .env:
 
