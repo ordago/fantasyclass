@@ -3,9 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Student extends Model
+class Student extends Model implements HasMedia
 {
+    use InteractsWithMedia;
     protected $fillable = [ 
                             'classroom_user_id', 
                             'name', 
@@ -15,12 +18,28 @@ class Student extends Model
                             'character_id', 
                             'password_plain' ];
 
-    protected $appends = ['username', 'level'];
+    protected $appends = ['username', 'level', 'avatar'];
+
+    public function getAvatarAttribute() 
+    {  
+        $media = $this->getMedia('avatar')->first();
+        if($media){
+            return $media->getUrl();
+        }
+        return "/img/no_avatar.png";  
+    }
 
     
     public function getLevelAttribute() 
     {  
         return Level::where('xp', '<=', $this->xp)->orderByDesc('xp')->first();  
+    }
+
+    public function registerMediaCollections() : void 
+    {
+        $this
+            ->addMediaCollection('avatar')
+            ->singleFile();
     }
 
     public function groups() {

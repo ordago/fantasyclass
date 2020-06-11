@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
-use App\ClassroomUser;
 use App\Equipment;
 use App\Item;
 use App\Student;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Facades\Image;
+
 
 class ClassroomsStudentController extends Controller
 {
@@ -25,6 +26,26 @@ class ClassroomsStudentController extends Controller
             ->first()
             ->pivot
             ->student->id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
+    }
+
+    public function updateavatar($code) {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+ 
+        $data = request()->validate([
+            'avatar' => ['image'],
+        ]);
+
+        $student = $this->getCurrentStudent($class);
+
+        $student->addMedia(request()->file('avatar'))
+                ->toMediaCollection('avatar');
+
+        $avatarPath = $student->getMedia('avatar')->first();
+        $imgPath = '/' . $avatarPath->id . '/' . $avatarPath->file_name;
+        $path = Storage::disk('public')->path('/') . $imgPath;
+        Image::make($path)->resize(128, 128)->save();
+
     }
 
     public function show($code)

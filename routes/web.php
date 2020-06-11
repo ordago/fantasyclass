@@ -66,7 +66,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/behaviour/{id}', 'BehaviourController@destroy'); // Policy protect
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show'); // Policy protect
         Route::patch('/{code}/behaviours/{id}', 'BehaviourController@update'); // Policy protect
-
+        
         // Levels
         Route::get('/{code}/levels', 'LevelsController@index'); // Policy protect
         Route::post('/{code}/levels', 'LevelsController@store'); // Policy protect
@@ -81,7 +81,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/challenges/image', 'ChallengesController@uploadImage'); // Policy protect
         Route::delete('/{code}/challenges/{id}', 'ChallengesController@destroy'); // Policy protect
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update'); // Policy protect
-
+        
         // Shop
         Route::get('/{code}/shop', 'ShopController@index'); // Policy protect
         Route::get('/{code}/shop/create', 'ShopController@create'); // Policy protect
@@ -90,12 +90,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/shop/forsale', 'ShopController@updateForSale'); // Policy protect
         Route::delete('/{code}/shop/{id}', 'ShopController@destroy'); // Policy protect
         Route::get('/{code}/shop/{id}', 'ShopController@show'); // Policy protect
-
+        
         // Settings
         Route::patch('/{code}/setting', 'ClassroomsController@updateSetting'); // Policy protect
-
+        Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+        
     });
-
+    
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');

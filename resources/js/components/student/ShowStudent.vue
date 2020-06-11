@@ -23,7 +23,7 @@
           <div class="media has-margin-bottom-0 is-all-centered">
             <div class="media-left">
               <figure class="image is-48x48">
-                <img src="/img/no_avatar.png" class="rounded" alt />
+                <img :src="student.avatar" class="rounded" alt />
               </figure>
             </div>
             <div class="media-content">
@@ -78,6 +78,30 @@
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item label="Information">
+          <div class="has-text-centered">
+            <div class="has-margin-3">
+              <croppa
+                v-model="image"
+                :width="128"
+                :height="128"
+                accept="image/*"
+                placeholder="Avatar"
+                :placeholder-font-size="16"
+                canvas-color="transparent"
+                :show-remove-button="true"
+                remove-button-color="black"
+                :show-loading="true"
+                :loading-size="50"
+              ></croppa>
+            </div>
+            <div class="has-margin-3">
+              <button
+                class="button is-link"
+                v-if="image && image.chosenFile"
+                @click="updateAvatar()"
+              >Update avatar</button>
+            </div>
+          </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label">Name</label>
@@ -393,6 +417,8 @@ export default {
       eq2Json: null,
       eq3Json: null,
       forceReload: 0,
+      prevImage: null,
+      image: null
     };
   },
   methods: {
@@ -506,9 +532,9 @@ export default {
               });
               if (response.data.type == "success") {
                 this.student.items = response.data.items;
-                this.updateEmpty()
+                this.updateEmpty();
                 this.student.gold = this.student.gold - item.price;
-                this.$forceUpdate()
+                this.$forceUpdate();
               }
             });
         }
@@ -552,17 +578,17 @@ export default {
                 this.student.gold = this.student.gold - newItem.price;
                 oldItem.src = newItem.src;
                 let reference = "item" + oldItem.id;
-                let newClass = "inv-item-armor-bronce"
+                let newClass = "inv-item-armor-bronce";
                 switch (newItem.offset) {
                   case 2:
-                    newClass = "inv-item-armor-silver"
+                    newClass = "inv-item-armor-silver";
                     break;
                   case 3:
-                    newClass = "inv-item-armor-gold"
+                    newClass = "inv-item-armor-gold";
                     break;
                 }
-                this.$refs[reference][0].classList.add(newClass)
-                this.$forceUpdate()
+                this.$refs[reference][0].classList.add(newClass);
+                this.$forceUpdate();
               }
             });
         }
@@ -574,6 +600,33 @@ export default {
           return gear.type == type;
         });
       }
+    },
+    updateAvatar() {
+      this.image.generateBlob(
+        blob => {
+          if (blob != null) {
+            let formData = new FormData();
+            formData.append("avatar", blob, "avatar.png");
+            axios
+              .post("/classroom/" + this.classroom.code + "/setting/updateavatar", formData, {
+                headers: {
+                  "content-type": "multipart/form-data"
+                }
+              })
+              .then(response => {
+                this.$toasted.show(response.data.message, {
+                  position: "top-center",
+                  duration: 3000,
+                  iconPack: "fontawesome",
+                  icon: response.data.icon,
+                  type: response.data.type
+                });
+              });
+          }
+        },
+        "image/png",
+        0.8
+      );
     }
   },
   computed: {

@@ -46,7 +46,7 @@
                     <div class="media has-margin-bottom-0">
                     <div class="media-left">
                         <figure class="image is-48x48">
-                            <img src="/img/no_avatar.png" class="rounded" alt="">
+                            <img :src="student.avatar" class="rounded" alt="">
                         </figure>
                     </div>
                     <div class="media-content cursor-pointer" @click="redirect(student.id)">
