@@ -38,15 +38,15 @@ class ClassroomsStudentController extends Controller
             'avatar' => ['image'],
             'student_id' => ['numeric', 'nullable'],
         ]);
-
+        
         if (request()->student_id) {
             $user = auth()->user();
-
+            
             if (!$user->classrooms->where('id', $class->id)->where('pivot.role', '>', 0)->first()) {
                 return false;
             }
-            $student = Student::find($data['student_id'])->firstOrFail();
-            if ($student->classroom->id != $class->id) {
+            $student = Student::where('id', $data['student_id'])->firstOrFail();
+            if ($student->classroom->classroom_id != $class->id) {
                 return false;
             }
         } else {
@@ -57,8 +57,7 @@ class ClassroomsStudentController extends Controller
                 ->toMediaCollection('avatar');
 
         $avatarPath = $student->getMedia('avatar')->first();
-        dump($avatarPath);
-        $imgPath = '/avatar/' . $avatarPath->id . '/' . $avatarPath->file_name;
+        $imgPath = $avatarPath->collection_name . "/" . $avatarPath->id . '/' . $avatarPath->file_name;
         $path = Storage::disk('public')->path('/') . $imgPath;
         Image::make($path)->resize(128, 128)->save();
 

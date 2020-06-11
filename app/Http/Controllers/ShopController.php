@@ -101,13 +101,13 @@ class ShopController extends Controller
                 ->toMediaCollection('item');
 
             $itemPath = $item->getMedia('item')->first();
-            $imgPath = '/' . $itemPath->id . '/' . $itemPath->file_name;
+            $imgPath = $itemPath->collection_name . "/" . $itemPath->id . '/' . $itemPath->file_name;
             $path = Storage::disk('public')->path('/') . $imgPath;
             if ($itemPath->mime_type != "image/gif" || $itemPath->size >= 500000) {
                 Image::make($path)->resize(60, 60)->save();
             }
 
-            $item->update(['icon' => '/storage' . $imgPath]);
+            $item->update(['icon' => '/storage/' . $imgPath]);
             $message = __('success_error.add_success');
             if($action == 'update') 
                 $message = __('success_error.update_success');

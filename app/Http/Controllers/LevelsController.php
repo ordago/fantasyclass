@@ -52,7 +52,7 @@ class LevelsController extends Controller
                 ->toMediaCollection('level');
         
                     $lvlPath = $lvl->getMedia('level')->first();
-                    $imgPath = '/'.$lvlPath->id.'/'.$lvlPath->file_name;
+                    $imgPath = $lvlPath->collection_name . "/" . $lvlPath->id . '/' . $lvlPath->file_name;
                     $path = Storage::disk('public')->path('/').$imgPath;        
                     Image::make($path)->resize(128, 128)->save();
                 }
