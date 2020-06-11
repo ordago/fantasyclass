@@ -179,7 +179,6 @@
                     custom: 0,
                     numItems: 5,
                     show2l: false,
-
             }
         },
         methods: {

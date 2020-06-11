@@ -607,6 +607,9 @@ export default {
           if (blob != null) {
             let formData = new FormData();
             formData.append("avatar", blob, "avatar.png");
+            if(this.admin) {
+                formData.append("student_id", this.student.id);
+            }
             axios
               .post("/classroom/" + this.classroom.code + "/setting/updateavatar", formData, {
                 headers: {

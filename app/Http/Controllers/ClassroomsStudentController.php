@@ -6,6 +6,7 @@ use App\Classroom;
 use App\Equipment;
 use App\Item;
 use App\Student;
+use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -28,21 +29,36 @@ class ClassroomsStudentController extends Controller
             ->student->id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
     }
 
-    public function updateavatar($code) {
+    public function updateavatar($code)
+    {
 
         $class = Classroom::where('code', '=', $code)->firstOrFail();
- 
+
         $data = request()->validate([
             'avatar' => ['image'],
+            'student_id' => ['numeric', 'nullable'],
         ]);
 
-        $student = $this->getCurrentStudent($class);
+        if (request()->student_id) {
+            $user = auth()->user();
+
+            if (!$user->classrooms->where('id', $class->id)->where('pivot.role', '>', 0)->first()) {
+                return false;
+            }
+            $student = Student::find($data['student_id'])->firstOrFail();
+            if ($student->classroom->id != $class->id) {
+                return false;
+            }
+        } else {
+            $student = $this->getCurrentStudent($class);
+        }
 
         $student->addMedia(request()->file('avatar'))
                 ->toMediaCollection('avatar');
 
         $avatarPath = $student->getMedia('avatar')->first();
-        $imgPath = '/' . $avatarPath->id . '/' . $avatarPath->file_name;
+        dump($avatarPath);
+        $imgPath = '/avatar/' . $avatarPath->id . '/' . $avatarPath->file_name;
         $path = Storage::disk('public')->path('/') . $imgPath;
         Image::make($path)->resize(128, 128)->save();
 
@@ -104,7 +120,7 @@ class ClassroomsStudentController extends Controller
         if ($studentItem)
             $count = $studentItem->pivot->count + 1;
         else $count = 1;
-        
+
 
         $student->items()->sync([$item->id => ['count' => $count]], false);
         $student->update(['gold' => ($student->gold - $item->price)]);
