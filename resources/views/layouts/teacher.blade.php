@@ -38,8 +38,8 @@
                         <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
                             <i class="fas fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
                         </a>
-                        <a class="navbar-item">
-                            <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
+                        <a href="/classroom/{{ $class->code }}/maps"  class="navbar-item">
+                                <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
                         </a>
                         <a class="navbar-item">
                             <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}

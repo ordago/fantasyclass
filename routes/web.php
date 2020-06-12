@@ -47,7 +47,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/', 'StudentController@store'); // Policy protect (?)
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update'); // Policty protect
-        Route::get('/{code}/student/{id}', 'StudentController@index'); // Policy protect
+        Route::get('/{code}/student/{id}', 'StudentController@show'); // Policy protect
 
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter'); // Policy protect
         Route::post('/students/behaviour', 'StudentController@addBehaviour'); // Policty protect
@@ -94,6 +94,11 @@ Route::group(['middleware' => 'language'], function () {
         // Settings
         Route::patch('/{code}/setting', 'ClassroomsController@updateSetting'); // Policy protect
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+
+        // Maps
+        Route::get('/{code}/maps', 'MapsController@index'); // Policy protect
+        Route::get('/{code}/maps/{id}', 'MapsController@show'); // Policy protect
+        Route::get('/{code}/maps/create', 'MapsController@create'); // Policy protect
         
     });
     

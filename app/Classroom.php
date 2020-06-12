@@ -60,4 +60,8 @@ class Classroom extends Model
     public function challenges() {
         return $this->hasMany(ChallengesGroup::class);
     }
+    
+    public function maps() {
+        return $this->hasMany(Map::class);
+    }
 }
