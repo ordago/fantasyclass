@@ -36,7 +36,7 @@ class ClassroomsController extends Controller
         $data = request()->all();
         
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
             'adventureName' => ['required', 'string', 'min:3', 'max:255'],
             'goalType' => ['required', 'integer'],
             'bgtheme' => ['required', 'integer'],
