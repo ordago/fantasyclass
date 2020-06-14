@@ -165,7 +165,7 @@
             v-if="challenge.cards>0"
           >Auto-assign cards?</b-switch>
         </div>
-        <div class="field" v-if="groups">
+        <div class="field">
           <b-switch
             type="is-info"
             v-model="challenge.type"

@@ -96,6 +96,7 @@ class ClassroomsStudentController extends Controller
         $challenges = DB::table('students')
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
+            ->where('challenges.type', '=', 0)
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
                     ->from('challenges')
@@ -108,15 +109,36 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.type, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
+            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
             ->get();
+
+            $groups = $student->groups->pluck('id');
+
+            $groupChallenges = DB::table('groups')
+            ->crossJoin('challenges')
+            ->where('challenges.is_conquer', '=', 1)
+            ->where('challenges.type', '=', 1)
+            ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
+                $query->select('challenges_groups.id')
+                    ->from('challenges_groups')
+                    ->where('challenges_groups.classroom_id', '=', $class->id)
+                    ->get();
+            })
+            ->whereIn('groups.id', $groups)
+            ->leftJoin('challenge_group', function ($join) use ($groups) {
+                $join->on('challenges.id', '=', 'challenge_group.challenge_id')
+                    ->whereIn('challenge_group.group_id', $groups);
+            })
+            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count')
+            ->get()->all();
+
+            $challenges = $challenges->merge($groupChallenges);
 
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges'));
     }
 
     public function markChallenge($code)
     {
-        dump('hit');
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $student = $this->getCurrentStudent($class);
 

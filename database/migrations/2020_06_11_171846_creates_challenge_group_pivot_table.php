@@ -17,7 +17,7 @@ class CreatesChallengeGroupPivotTable extends Migration
             $table->id();
             $table->unsignedBigInteger('challenge_id');
             $table->unsignedBigInteger('group_id');
-            $table->tinyInteger('count');
+            $table->tinyInteger('count')->default(1);
             $table->timestamps();
         });
     }

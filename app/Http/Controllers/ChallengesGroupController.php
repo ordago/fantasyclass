@@ -21,7 +21,7 @@ class ChallengesGroupController extends Controller
 
     }
     public function store($code) {
-        $class = DB::table('classrooms')->where('code', '=', $code)->first();
+        $class = Classroom::where('code', '=', $code)->first();
         $this->authorize('update', $class);
         try {
                 $data = request()->validate([

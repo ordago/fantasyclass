@@ -5,7 +5,7 @@
         <div class="content">
           <h1>
             <i
-              v-if="challengeReactive.is_conquer&&challengeReactive.icon"
+              v-if="challengeReactive.is_conquer && challengeReactive.icon"
               class="is-size-4"
               :style="'color:' + challengeReactive.color"
               :class="challengeReactive.icon + ' colored'"

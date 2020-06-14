@@ -16,7 +16,7 @@ class CreateLevelsTable extends Migration
         Schema::create('levels', function (Blueprint $table) {
             $table->id();
             $table->smallInteger('number');
-            $table->smallInteger('xp');
+            $table->integer('xp');
             $table->string('title')->nullable();
             $table->string('description')->nullable();
             $table->unsignedBigInteger('classroom_id');

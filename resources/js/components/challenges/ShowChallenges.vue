@@ -37,23 +37,38 @@
       </div>
     </div>
     <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
-      <div class="has-padding-5 rounded has-background-light">
-        <h1
-          class="is-size-1 has-margin-bottom-3"
-          v-if="currentChallenge"
-        >{{ currentChallenge.title }}</h1>
-        <div v-for="student in students" class="has-padding-3" :key="student.id">
-          <div class="columns">
-            <div class="column is-flex has-all-centered is-narrow">{{ student.name }}</div>
-            <div class="column">
-              <div class="field">
-                <b-switch
-                  :value="student.challenges.length ? 1 : 0"
-                  true-value="1"
-                  false-value="0"
-                  @input="toggleChallenge(student.id)"
-                  type="is-info"
-                ></b-switch>
+      <div v-if="currentChallenge" class="has-padding-5 rounded has-background-light">
+        <h1 class="is-size-1 has-margin-bottom-3">{{ currentChallenge.title }}</h1>
+        <div v-if="currentChallenge.type == 0">
+          <div v-for="student in students" class="has-padding-3" :key="student.id">
+            <div class="columns">
+              <div class="column is-narrow is-flex has-all-centered">
+                <div class="field">
+                  <b-switch
+                    :value="student.challenges.length ? 1 : 0"
+                    true-value="1"
+                    false-value="0"
+                    @input="toggleChallenge(student.id)"
+                    type="is-info"
+                  >{{ student.name }}</b-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-if="currentChallenge.type == 1">
+          <div v-for="group in groups" class="has-padding-3" :key="group.id">
+            <div class="columns">
+              <div class="column is-narrow is-flex has-all-centered">
+                <div class="field">
+                  <b-switch
+                    :value="group.challenges.length ? 1 : 0"
+                    true-value="1"
+                    false-value="0"
+                    @input="toggleChallenge(group.id)"
+                    type="is-info"
+                  >{{ group.name }}</b-switch>
+                </div>
               </div>
             </div>
           </div>
@@ -74,7 +89,8 @@ export default {
       isModalActive: false,
       students: null,
       groups: null,
-      currentChallenge: null
+      currentChallenge: null,
+      mark: null
     };
   },
   methods: {
@@ -106,16 +122,14 @@ export default {
           challenge: challenge.id
         })
         .then(response => {
-          if(type == 0)
-            this.students = response.data;
-          else
-            this.groups = response.data;
+          if (challenge.type == 0) this.students = response.data;
+          else this.groups = response.data;
           this.isModalActive = true;
         });
     },
-    toggleChallenge($studentId) {
+    toggleChallenge($id) {
       axios.post("/classroom/" + this.code + "/challenges/toggle", {
-        student: $studentId,
+        id: $id,
         challenge: this.currentChallenge.id
       });
     }

@@ -24,9 +24,9 @@ class CreateChallengesTable extends Migration
             $table->dateTime('datetime');
             $table->string('icon', 100)->nullable();
             $table->string('color', 7)->nullable();
-            $table->smallInteger('xp')->default(0);
-            $table->smallInteger('hp')->default(0);
-            $table->smallInteger('gold')->default(0);
+            $table->integer('xp')->default(0);
+            $table->integer('hp')->default(0);
+            $table->integer('gold')->default(0);
             $table->smallInteger('cards')->default(0);
 
             // 0 -> Teacher mark as done // 1 -> Studen mark as done // 2 -> Both mark as done

@@ -26,9 +26,9 @@ class CreateCardsTable extends Migration
              $table->smallInteger('margin_left')->default(0);
              $table->string('background', 7);
              $table->smallInteger('radius')->default(0);
-             $table->smallInteger('xp')->default(0);
-             $table->smallInteger('hp')->default(0);
-             $table->smallInteger('gold')->default(0);
+             $table->integer('xp')->default(0);
+             $table->integer('hp')->default(0);
+             $table->integer('gold')->default(0);
              $table->smallInteger('slot')->default(0);
              $table->smallInteger('fullscreen')->default(0);
              $table->smallInteger('type_bg')->default(0);
