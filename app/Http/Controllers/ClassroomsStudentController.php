@@ -165,7 +165,12 @@ class ClassroomsStudentController extends Controller
             $student->setProperty('xp', $challenge->xp);
             $student->setProperty('gold', $challenge->gold);
         }
-        return $update;
+        return [
+            'success' => true,
+            'hp' => $student->hp,
+            'xp' => $student->xp,
+            'gold' => $student->gold,
+        ];
     }
 
     public function buyItem($code)

@@ -111,13 +111,17 @@ export default {
               challenge: this.challengeReactive.id
             })
             .then(response => {
-              if(response.data == true) {
+              if(response.data.success == true) {
                 confetti({
                   particleCount: 200,
                   spread: 100,
                   origin: { y: 1.0 }
                 });
                 this.challengeReactive.count++
+                this.$parent.$parent.$parent.student.hp = response.data.hp
+                this.$parent.$parent.$parent.student.xp = response.data.xp
+                this.$parent.$parent.$parent.student.gold = response.data.gold
+                this.$parent.$parent.$parent.forceReload++
               }
                 
             });
