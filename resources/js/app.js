@@ -57,7 +57,7 @@ Vue.component('apexchart', VueApexCharts)
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
-Vue.use(Croppa)    
+Vue.use(Croppa)
 
 // use ElementUI's plugin
 Vue.use(ElementUI);
@@ -84,6 +84,7 @@ Vue.component('show-level-student', require('./components/level/ShowLevelStudent
 
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
+Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
 Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
 

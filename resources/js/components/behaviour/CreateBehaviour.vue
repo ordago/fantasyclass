@@ -119,7 +119,7 @@
             
               update: function() {
                   this.icon = this.fullIcon
-                  axios.patch('/classroom/'+ this.code + '/behaviours/' + this.id, this.$data)
+                  axios.patch('/classroom/behaviours/' + this.id, this.$data)
                   .then(response => {
                               this.$toasted.show(response.data.message, { 
                                             position: "top-center",

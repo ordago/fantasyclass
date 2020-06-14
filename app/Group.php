@@ -20,4 +20,8 @@ class Group extends Model
     public function students() {
         return $this->belongsToMany(Student::class);
     }
+
+    public function challenges() {
+        return $this->belongsToMany(Challenge::class)->withPivot('count');
+    }
 }

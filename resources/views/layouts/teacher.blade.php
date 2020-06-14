@@ -10,7 +10,7 @@
 
 <div class="navbar-start">
                         <a href="/classroom/{{ $class->code }}" class="navbar-item">
-                            <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.users') }}
+                            <i class="fad fa-user has-margin-right-2"></i> {{ __('menu.students') }}
                         </a>
                         <div class="navbar-item has-dropdown is-hoverable">
                             <a class="navbar-link">

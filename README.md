@@ -89,6 +89,13 @@ Popper tippy:
  Vue Croppa:
  https://github.com/zhanziyang/vue-croppa
 
+ Confetti:
+ https://github.com/catdad/canvas-confetti
+ 
+ ```
+ import confetti from 'canvas-confetti'
+ ```
+ 
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).

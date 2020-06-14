@@ -15,12 +15,14 @@ class ChallengesGroupController extends Controller
 
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstorFail();
+        $this->authorize('view', $class);
         $challenges = ChallengesGroup::where('classroom_id', $class->id)->whereNull('challenges_group_id')->with('children')->get();
         return view('challenges.index', compact('class', 'challenges'));
 
     }
     public function store($code) {
-        $class = DB::table('classrooms')->where('code', '=', $code)->pluck('id')->first();
+        $class = DB::table('classrooms')->where('code', '=', $code)->first();
+        $this->authorize('update', $class);
         try {
                 $data = request()->validate([
                     'name' => ['string'],
@@ -33,7 +35,7 @@ class ChallengesGroupController extends Controller
                     'name' => $data['name'],
                     'icon' => $data['icon'],
                     'challenges_group_id' => $data['challenges_group_id'],
-                    'classroom_id' => $class,
+                    'classroom_id' => $class->id,
                 ]);
                 $challenge['children'] = [];
                 return [

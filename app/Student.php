@@ -71,6 +71,10 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Behaviour::class)->withTimestamps();
     }
 
+    public function challenges() {
+        return $this->belongsToMany(Challenge::class)->withPivot('count');
+    }
+
     public function setProperty($prop, $value, $log = true) {
         $value = max($this->$prop + $value, 0);
         if($prop == "hp") {

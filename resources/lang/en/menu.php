@@ -11,6 +11,7 @@ return [
     */
     'user_groups' => 'Users and groups',
     'users' => 'Users',
+    'students' => 'Students',
     'groups' => 'Groups',
     'map' => 'Map',
     'cards' => 'Cards',

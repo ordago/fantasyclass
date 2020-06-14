@@ -1,6 +1,6 @@
 <template>
   <div
-    class="column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex is-all-centered"
+    class="column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered"
   >
     <input :value="levelJson.id" type="hidden" name="id" />
     <input :id="'file' + levelJson.id" type="file" style="display: none" @change="getImage" />
@@ -96,7 +96,7 @@ export default {
       formData.append("_method", "patch");
       axios
         .post(
-          "/classroom/" + this.code + "/levels/" + this.levelJson.id,
+          "/classroom/levels/" + this.levelJson.id,
           formData,
           config
         )

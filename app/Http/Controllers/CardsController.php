@@ -18,17 +18,20 @@ class CardsController extends Controller
     
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $cards = $class->cards->sortBy('type');
         return view('cards.index', compact('class', 'cards'));
     }
 
     public function create($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
         return view('cards.create', compact('class'));
     }
 
     public function show($code, $id) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $card = Card::where('id', '=', $id)
                     ->where('classroom_id', "=", $class->id)
                     ->firstOrFail();
@@ -58,6 +61,9 @@ class CardsController extends Controller
     }
 
     public function store($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $classId = $class->id;
         $data = $this->validateFormat(request());
             
             if(!isset($data['image']) || !$data['image']) {
@@ -66,10 +72,8 @@ class CardsController extends Controller
                 $image = null;   
             }
             
-            $classId = $class = Classroom::where('code', '=', $code)->firstOrFail()->id;
-            
             if(!$classId)
-                return false;
+            return false;
             
             $card = Card::create([
                 'src' => $image,
@@ -103,48 +107,52 @@ class CardsController extends Controller
                         $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
                             $constraint->aspectRatio();
                         })->save();
-
+                        
                     }
                     $card->update(['src' => '/storage/'.$imgPath]);  
                 }
-
-        return redirect('/classroom/'.$code.'/cards');
+                
+                return redirect('/classroom/'.$code.'/cards');
         
-    }
-
-    public function rules()
-        {
-            return [
-                'width' => ['required', 'numeric'],
-                'marginTop' => ['required', 'numeric'],
-                'marginLeft' => ['required', 'numeric'],
-                'title' => ['string', 'nullable'],
-                'description' => ['string', 'nullable'],
-                'bgType' => ['required', 'numeric'],
-                'radius' => ['required', 'numeric'],
-                'minLvl' => ['required', 'numeric'],
-                'type' => ['required', 'numeric'],
-                'xp' => ['required', 'numeric'],
-                'gold' => ['required', 'numeric'],
+            }
+            
+            public function rules()
+            {
+                return [
+                    'width' => ['required', 'numeric'],
+                    'marginTop' => ['required', 'numeric'],
+                    'marginLeft' => ['required', 'numeric'],
+                    'title' => ['string', 'nullable'],
+                    'description' => ['string', 'nullable'],
+                    'bgType' => ['required', 'numeric'],
+                    'radius' => ['required', 'numeric'],
+                    'minLvl' => ['required', 'numeric'],
+                    'type' => ['required', 'numeric'],
+                    'xp' => ['required', 'numeric'],
+                    'gold' => ['required', 'numeric'],
                 'hp' => ['required', 'numeric'],
                 'slot' => ['required', 'numeric'],
                 'image' => ['image', 'max:10240'],
                 'special' => ['numeric'],
                 'fullscreen' => ['numeric'],
                 'background' => ['string'],
-                ];
+            ];
         }
 
-    public function update($code, $card) {
-        try {
+        public function update($card) {
+            
             $card = Card::findOrFail($card);
-            $card->update(request()->all());
-            return [
+            $class = Classroom::findOrFail($card->classroom_id);
+            $this->authorize('update', $class);
+            
+            try {
+                $card->update(request()->all());
+                return [
                     "message" => __('success_error.update_success'),
                     "type" => "success",
                     "icon" => "check"
-            ];
-            
+                ];
+                
         } catch (\Throwable $th) {
             return [
                     "message" => __('success_error.error'),
@@ -159,17 +167,21 @@ class CardsController extends Controller
     // Add default cards
     public function importDefault($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
         foreach (Card::whereNull('classroom_id')->get() as $card) {
-
+            
             $newCard = $card->replicate();
             $class->cards()->save($newCard);
         }
         return redirect('/classroom/'.$code.'/cards');
     }
-
-    public function destroy($id) {
+    
+    public function destroy ($id) {
+        $card = Card::findOrFail($id);
+        $class = Classroom::findOrFail($card->classroom_id);
+        $this->authorize('update', $class);
         try {
-            Card::destroy($id);
+            $card->delete();
         } catch (\Throwable $th) {
             return [ 'error' => $th];
         }

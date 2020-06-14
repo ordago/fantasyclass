@@ -17,6 +17,7 @@ class ShopController extends Controller
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('items')->firstOrFail();
+        $this->authorize('view', $class);
         settings()->setExtraColumns(['user_id' => $class->id]);
         $config = json_encode([
             'items_visibility' => settings()->get('items_visibility', false) ? true : false,
@@ -31,22 +32,24 @@ class ShopController extends Controller
     public function create($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         return view('shop.create', compact('code', 'class'));
     }
     public function show($code, $id)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $item = Item::where('id', '=', $id)->where('classroom_id', '=', $class->id)->firstOrFail();
         return view('shop.create', compact('code', 'class', 'item'));
     }
 
-    public function destroy($code, $id)
+    public function destroy($id)
     {
+        $item = Item::where('id', '=', $id)->first();
+        $class = Classroom::where('id', '=', $item->classroom_id)->first();
+        $this->authorize('update', $class);
         try {
-
-            Item::destroy($id);
-
-            return 1;
+            $item->delete();
         } catch (\Throwable $th) {
             return ['error' => $th];
         }
@@ -55,6 +58,7 @@ class ShopController extends Controller
 
     public function updateForSale($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
 
         $data = request()->validate([
             'id' => 'numeric',
@@ -73,6 +77,7 @@ class ShopController extends Controller
     public function store($code, $action = 'store')
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
 
         try {
 

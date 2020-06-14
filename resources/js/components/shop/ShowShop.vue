@@ -16,7 +16,7 @@
 
         <div
           v-for="item in items"
-          class="columns is-multiline is-variable is-1 is-all-centered has-padding-3"
+          class="columns is-multiline is-variable is-1 has-all-centered has-padding-3"
           style="border-bottom: 1px dashed #999"
           v-bind:key="item.id"
         >
@@ -34,7 +34,13 @@
                       </a>
                     </p>
                     <p class="control is-expanded">
-                      <input type="number" disabled class="input" style="border: 1px solid" v-model="item.hp" />
+                      <input
+                        type="number"
+                        disabled
+                        class="input"
+                        style="border: 1px solid"
+                        v-model="item.hp"
+                      />
                     </p>
                   </div>
                 </div>
@@ -52,7 +58,13 @@
                       </a>
                     </p>
                     <p class="control is-expanded">
-                      <input type="number" class="input" disabled style="border: 1px solid" v-model="item.xp" />
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid"
+                        v-model="item.xp"
+                      />
                     </p>
                   </div>
                 </div>
@@ -71,7 +83,13 @@
                       </a>
                     </p>
                     <p class="control is-expanded">
-                      <input type="number" class="input" disabled style="border: 1px solid" v-model="item.price" />
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid"
+                        v-model="item.price"
+                      />
                     </p>
                   </div>
                 </div>
@@ -81,11 +99,22 @@
 
           <div class="column is-narrow">
             <div class="field">
-              <b-switch v-model="item.for_sale" @input="updateForSale(item)" true-value="1" false-value="0">For sale?</b-switch>
+              <b-switch
+                v-model="item.for_sale"
+                @input="updateForSale(item)"
+                true-value="1"
+                false-value="0"
+              >For sale?</b-switch>
             </div>
           </div>
           <div class="column is-narrow">
-            <textarea class="input" placeholder="Description" disabled style="border: 1px solid" v-model="item.description"></textarea>
+            <textarea
+              class="input"
+              placeholder="Description"
+              disabled
+              style="border: 1px solid"
+              v-model="item.description"
+            ></textarea>
           </div>
           <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
             <i class="fas fa-edit"></i>
@@ -146,7 +175,9 @@ export default {
       equipment_1_visibility: this.config.equipment_1_visibility ? true : false,
       equipment_2_visibility: this.config.equipment_2_visibility ? true : false,
       equipment_3_visibility: this.config.equipment_3_visibility ? true : false,
-      forceUpdate: 0
+      forceUpdate: 0,
+      nom: "",
+      visible: false
     };
   },
   methods: {
@@ -184,7 +215,7 @@ export default {
             return item.id === id;
           });
           axios
-            .delete("/classroom/" + this.code + "/shop/" + id)
+            .delete("/classroom/shop/" + id)
             .then(response => {
               if (response.data === 1) {
                 this.items.splice(index, 1);

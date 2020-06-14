@@ -62,7 +62,7 @@
                             <span class="attribute has-background-danger has-padding-y-2 rounded-left" v-bind:class="{ rounded: student.hp==100 }" :style="'width: ' + student.hp + '%'" v-if="student.hp>0"><i class="fas fa-heart" v-bind:class="{ 'has-text-danger': student.hp<52 }"></i> <span v-if="student.hp>=20">{{ student.hp }}</span></span>
                         </div>
                         <div class="my-1 has-text-centered">
-                            <div class="w-100 is-flex is-all-centered">
+                            <div class="w-100 is-flex has-all-centered">
                                 <button v-for="behaviour in mainBehavioursJson" v-tippy :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                                     class="button has-margin-1 has-padding-x-4 is-light" @click="addBehaviour(student.id, behaviour.id)" v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"  v-bind:key="behaviour.id">
                                         <i :class="behaviour.icon"></i>
@@ -148,7 +148,7 @@
             </div>
         </div>
             <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
-            <div class="box card-shadow-s is-flex has-background-link is-all-centered">
+            <div class="box card-shadow-s is-flex has-background-link has-all-centered">
                 <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
                 <img src="/img/new_std.svg" class="has-margin-left-1"><strong>Add students</strong>
                 </a>
@@ -213,7 +213,7 @@
                 },
                 addBehaviour: function(id, behaviour) {
                     let options = {'id': id, 'behaviour': behaviour}
-                    axios.post('/classroom/students/behaviour', options)
+                    axios.post('/classroom/student/behaviour', options)
                         .then(response => {              
                                 let student = this.students.find(el => el.id === id)
                                 student.hp = response.data.hp

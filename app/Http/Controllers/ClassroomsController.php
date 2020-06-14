@@ -47,7 +47,7 @@ class ClassroomsController extends Controller
             return redirect('/classroom/create')
                         ->withErrors($validator)
                         ->withInput();
-                    }
+            }
                     
         $classroom = Classroom::create([
             'name' => $data['name'],
@@ -102,12 +102,14 @@ class ClassroomsController extends Controller
     public function show($code) 
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
+        $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
         return view('classrooms.show', compact('class', 'students'));
     }
     
     public function updateSetting($code) {
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
+        $this->authorize('update', $class);
         settings()->setExtraColumns(['user_id' => $class->id]);
         if(request()->action == 'toggle'){
             $value = !settings()->get(request()->prop);

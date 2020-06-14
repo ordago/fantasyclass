@@ -16,26 +16,31 @@ class BehaviourController extends Controller
     
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $behaviours = $class->behaviours;
         return view('behaviours.index', compact('behaviours', 'class'));
     }
 
     public function create($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
         return view('behaviours.create', compact('class'));
     }
 
     public function show($code, $id) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $behaviour = Behaviour::where('id', '=', $id)
-                    ->where('classroom_id', "=", $class->id)
-                    ->firstOrFail();
+        ->where('classroom_id', "=", $class->id)
+        ->firstOrFail();
         return view('behaviours.create', compact('class', 'behaviour'));
     }
-
-    public function update($code, $behaviour) {
+    
+    public function update($behaviour) {
+        $behaviour = Behaviour::findOrFail($behaviour);
+        $class = Classroom::where('id', '=', $behaviour->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
         try {
-            $behaviour = Behaviour::findOrFail($behaviour);
             $behaviour->update($this->validateFormat(request()));
             return [
                     "message" => __('success_error.update_success'),
@@ -56,15 +61,15 @@ class BehaviourController extends Controller
     
     public function store($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        
+        $this->authorize('update', $class);
         $data = $this->validateFormat(request());
-
+        
         $behaviour = Behaviour::create($data);
         $class->behaviours()->save($behaviour);
         return redirect('/classroom/'.$code.'/behaviours');
         
     }
-
+    
     public function validateFormat($request) {
         return $request->validate([
             'icon' => ['required', 'string'],
@@ -73,12 +78,15 @@ class BehaviourController extends Controller
             'xp' => ['required', 'numeric'],
             'hp' => ['required', 'numeric'],
             'gold' => ['required', 'numeric'],
-        ]);
-    }
+            ]);
+        }
 
-    public function destroy($id) {
-        try {
-            Behaviour::destroy($id);
+        public function destroy($id) {
+            $behaviour = Behaviour::where('id', '=', $id)->first();
+            $class = Classroom::where('id', $behaviour->classroom_id)->firstOrFail();
+            $this->authorize('update', $class);
+            try {
+            $behaviour->delete();
         } catch (\Throwable $th) {
             return [ 'error' => $th];
         }

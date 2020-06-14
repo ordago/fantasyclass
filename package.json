@@ -31,6 +31,7 @@
         "buefy": "^0.8.19",
         "bulma": "^0.8.2",
         "bulma-helper-spacing": "0.0.3",
+        "canvas-confetti": "^1.2.0",
         "element-tiptap": "^1.21.0",
         "element-ui": "^2.13.2",
         "font-awesome-animation": "^0.2.1",

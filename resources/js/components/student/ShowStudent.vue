@@ -20,7 +20,7 @@
           </div>
         </div>
         <div class="card-content">
-          <div class="media has-margin-bottom-0 is-all-centered">
+          <div class="media has-margin-bottom-0 has-all-centered">
             <div class="media-left">
               <figure class="image is-48x48">
                 <img :src="student.avatar" class="rounded" alt />
@@ -35,7 +35,7 @@
           </div>
 
           <div
-            class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 is-all-centered"
+            class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
             style="border: none"
           >
             <span
@@ -78,20 +78,21 @@
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item label="Information">
-          <div class="has-text-centered">
+          <div class="">
             <div class="has-margin-3">
               <croppa
                 v-model="image"
                 :width="128"
                 :height="128"
                 accept="image/*"
-                placeholder="Avatar"
+                placeholder="📷 Avatar"
                 :placeholder-font-size="16"
                 canvas-color="transparent"
                 :show-remove-button="true"
                 remove-button-color="black"
                 :show-loading="true"
                 :loading-size="50"
+                class="rounded"
               ></croppa>
             </div>
             <div class="has-margin-3">
@@ -109,7 +110,7 @@
             <div class="field-body">
               <div class="field">
                 <p class="control">
-                  <input class="input" type="text" v-model="student.name" />
+                  <input class="input" v-bind="{ disabled: !admin }" v-bind:class="{ 'is-static': !admin }" type="text" v-model="student.name" />
                 </p>
               </div>
             </div>
@@ -247,11 +248,11 @@
               v-for="item in itemsJson"
               :key="item.id"
             >
-              <div class="column is-flex is-all-centered is-narrow">
+              <div class="column is-flex has-all-centered is-narrow">
                 <img :src="item.icon" />
               </div>
-              <div class="column is-flex is-all-centered rounded wheat" v-html="message(item)"></div>
-              <div class="column is-flex is-all-centered is-narrow item-price">
+              <div class="column is-flex has-all-centered rounded wheat" v-html="message(item)"></div>
+              <div class="column is-flex has-all-centered is-narrow item-price">
                 <button class="button is-success" @click="buyItem(item)">
                   Buy {{ item.price }}
                   <i class="fas fa-coins colored" style="z-index: 0"></i>
@@ -333,7 +334,11 @@
           </b-table>
         </b-tab-item>
 
-        <b-tab-item label="Challenges"></b-tab-item>
+        <b-tab-item label="Challenges" v-if="challenges && challenges.length">
+          <div v-for="challenge in orderedChallenges" :key="challenge.id">
+            <show-challenge :challenge="challenge" :code="classroom.code" :admin="admin" :edit="false"></show-challenge>
+          </div>
+        </b-tab-item>
 
         <b-tab-item label="Log" v-if="student.log_entries.length">
           <div class="columns">
@@ -389,7 +394,7 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["student", "classroom", "chart", "admin", "items", "shop"],
+  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges"],
   mounted() {
     if (!this.admin) {
       this.activeTab = 1;
@@ -476,7 +481,7 @@ export default {
       this.update += 1;
     },
     updateInventory(item, count) {
-      axios.patch("/classroom/" + this.classroom.code + "/student/inventory", {
+      axios.patch("/classroom/student/inventory", {
         id: this.student.id,
         item_id: item,
         count: count,
@@ -655,6 +660,9 @@ export default {
     },
     orderedEquipment: function() {
       return _.orderBy(this.student.equipment, "type");
+    },
+    orderedChallenges: function() {
+      return _.orderBy(this.challenges, "datetime", "desc");
     }
   },
   watch: {

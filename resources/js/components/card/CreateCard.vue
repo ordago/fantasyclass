@@ -398,7 +398,7 @@
                 }
             },
             updateCard: function() {
-              axios.patch('/classroom/'+ this.code + '/cards/' + this.id, this.$data)
+              axios.patch('/classroom/cards/' + this.id, this.$data)
                .then(response => {
                            this.$toasted.show(response.data.message, { 
                                         position: "top-center",

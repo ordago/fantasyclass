@@ -21,9 +21,20 @@ class Challenge extends Model
         'completion',
         'auto_assign',
         'optional',
+        'type',
         'password',
         'challenges_group_id',
     ];
+
+    public function students() {
+        return $this->belongsToMany(Student::class)->withPivot('count');
+    }
+    public function groups() {
+        return $this->belongsToMany(Group::class)->withPivot('count');
+    }
+    public function group() {
+        return $this->belongsTo(ChallengesGroup::class, 'challenges_group_id', 'id');
+    }
 
 
 }

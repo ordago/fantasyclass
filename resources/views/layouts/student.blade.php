@@ -10,9 +10,11 @@
 
 <div class="navbar-start">
                         <a href="/classroom/show/{{ $class->code }}" class="navbar-item">
-                            <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.users') }}
+                            <img src="{{ $student->avatar }}"> <span class="has-margin-left-2">{{ Str::limit($student->name, 8, $end='...') }}</span>
                         </a>
-                        
+                        <a href="/classroom/show/{{ $class->code }}" class="navbar-item">
+                            <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.students') }}
+                        </a> 
                         <a href="/classroom/show/{{ $class->code }}/challenges" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.stories') }}
                         </a>

@@ -1,5 +1,5 @@
 <template>
-    <div class="column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex is-all-centered">                    
+    <div class="column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered">                    
         <div class="columns w-100 is-variable is-0 has-padding-y-2">
             <div class="column is-narrow has-padding-y-0 card-shadow-s rounded-left">
             <figure class="image is-128x128">

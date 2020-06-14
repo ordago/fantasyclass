@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Challenge;
 use App\Classroom;
 use App\Equipment;
 use App\Item;
@@ -38,10 +39,10 @@ class ClassroomsStudentController extends Controller
             'avatar' => ['image'],
             'student_id' => ['numeric', 'nullable'],
         ]);
-        
+
         if (request()->student_id) {
             $user = auth()->user();
-            
+
             if (!$user->classrooms->where('id', $class->id)->where('pivot.role', '>', 0)->first()) {
                 return false;
             }
@@ -54,13 +55,12 @@ class ClassroomsStudentController extends Controller
         }
 
         $student->addMedia(request()->file('avatar'))
-                ->toMediaCollection('avatar');
+            ->toMediaCollection('avatar');
 
         $avatarPath = $student->getMedia('avatar')->first();
         $imgPath = $avatarPath->collection_name . "/" . $avatarPath->id . '/' . $avatarPath->file_name;
         $path = Storage::disk('public')->path('/') . $imgPath;
         Image::make($path)->resize(128, 128)->save();
-
     }
 
     public function show($code)
@@ -93,7 +93,57 @@ class ClassroomsStudentController extends Controller
             'eq3' => json_encode($eq3),
         ];
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop'));
+        $challenges = DB::table('students')
+            ->crossJoin('challenges')
+            ->where('challenges.is_conquer', '=', 1)
+            ->whereIn('challenges.id', function ($query) use ($class) {
+                $query->select('challenges.id')
+                    ->from('challenges')
+                    ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
+                    ->where('challenges_groups.classroom_id', '=', $class->id)
+                    ->get();
+            })
+            ->where('students.id', '=', $student->id)
+            ->leftJoin('challenge_student', function ($join) use ($student) {
+                $join->on('challenges.id', '=', 'challenge_student.challenge_id')
+                    ->where('challenge_student.student_id', '=', $student->id);
+            })
+            ->selectRaw('challenges.id, challenges.type, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
+            ->get();
+
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges'));
+    }
+
+    public function markChallenge($code)
+    {
+        dump('hit');
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $student = $this->getCurrentStudent($class);
+
+        $data = request()->validate([
+            'challenge' => ['numeric'],
+        ]);
+        $update = false;
+
+        $challenge = Challenge::findOrFail($data['challenge']);
+        $challengeStudent = $student->challenges->where('id', $challenge->id)->first();
+        $update = false;
+        if ($challenge->completion == 1) {
+            if (!$challengeStudent) {
+                $student->challenges()->attach($challenge->id);
+                $update = true;
+            }
+        } else if ($challenge->completion == 2) {
+            if ($student->challenges->where('id', $challenge->id)->first()->count == 2) {
+                $update = true;
+            }
+        }
+        if($update) {
+            $student->setProperty('hp', $challenge->hp);
+            $student->setProperty('xp', $challenge->xp);
+            $student->setProperty('gold', $challenge->gold);
+        }
+        return $update;
     }
 
     public function buyItem($code)
