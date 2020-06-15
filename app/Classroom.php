@@ -67,7 +67,7 @@ class Classroom extends Model
         return $this->hasMany(Level::class);
     }
 
-    public function challenges()
+    public function challengeGroups()
     {
         return $this->hasMany(ChallengesGroup::class);
     }

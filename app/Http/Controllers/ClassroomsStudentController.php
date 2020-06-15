@@ -64,9 +64,10 @@ class ClassroomsStudentController extends Controller
         Image::make($path)->resize(128, 128)->save();
     }
 
-    public function index($code) {
+    public function index($code)
+    {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'theme')->firstOrFail();
-        
+
         $student = $this->getCurrentStudent($class);
 
         $students = $class->students->map(function ($user) {
@@ -74,10 +75,37 @@ class ClassroomsStudentController extends Controller
                 ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level'])
                 ->all();
         });
-        
-        return view('studentsview.index', compact('class', 'student', 'students'));
 
+        return view('studentsview.index', compact('class', 'student', 'students'));
     }
+
+    public function stories($code)
+    {
+        $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
+
+        $student = $this->getCurrentStudent($class);
+        $stories = null;
+
+        foreach ($class->challengeGroups as $group) {
+
+            // TODO Avoid duplicate code
+            if (!$stories) {
+                $stories = $group->challenges->where('datetime', '<=', Carbon::now()->toDateTimeString())->map(function ($challenge) {
+                    return collect($challenge->toArray())
+                        ->only(['title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards'])
+                        ->all();
+                });
+            } else {
+                $stories = $stories->merge($group->challenges->where('datetime', '<=', Carbon::now()->toDateTimeString())->map(function ($challenge) {
+                    return collect($challenge->toArray())
+                        ->only(['title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards'])
+                        ->all();
+                }));
+            }
+        }
+        return view('studentsview.stories', compact('class', 'student', 'stories'));
+    }
+
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -128,9 +156,9 @@ class ClassroomsStudentController extends Controller
             ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
             ->get();
 
-            $groups = $student->groups->pluck('id');
+        $groups = $student->groups->pluck('id');
 
-            $groupChallenges = DB::table('groups')
+        $groupChallenges = DB::table('groups')
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
@@ -149,7 +177,7 @@ class ClassroomsStudentController extends Controller
             ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count')
             ->get()->all();
 
-            $challenges = $challenges->merge($groupChallenges);
+        $challenges = $challenges->merge($groupChallenges);
 
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges'));
     }
@@ -177,7 +205,7 @@ class ClassroomsStudentController extends Controller
                 $update = true;
             }
         }
-        if($update) {
+        if ($update) {
             $student->setProperty('hp', $challenge->hp);
             $student->setProperty('xp', $challenge->xp);
             $student->setProperty('gold', $challenge->gold);

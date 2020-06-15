@@ -15,7 +15,7 @@
                         <a href="/classroom/show/{{ $class->code }}/users" class="navbar-item">
                             <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.students') }}
                         </a> 
-                        <a href="/classroom/show/{{ $class->code }}/challenges" class="navbar-item">
+                        <a href="/classroom/show/{{ $class->code }}/stories" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.stories') }}
                         </a>
                         <a class="navbar-item">

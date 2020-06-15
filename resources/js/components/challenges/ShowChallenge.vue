@@ -35,7 +35,8 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <div v-if="edit" v-html="challengeReactive.content" class="el-tiptap-editor__content"></div>
+          <!-- class="el-tiptap-editor__content" -->
+          <div v-if="edit || full" v-html="challengeReactive.content" ></div>
           <div class="has-padding-3 has-text-right" v-if="edit && admin || !admin">
             <button
               v-if="!admin && (challengeReactive.completion == 2 ||challengeReactive.completion == 1) && !checkCompletion"
@@ -86,7 +87,7 @@
 <script>
 import confetti from 'canvas-confetti'
 export default {
-  props: ["challenge", "edit", "admin", "code"],
+  props: ["challenge", "edit", "admin", "code", "full"],
   created: function() {
     this.challengeReactive = this.challenge
   },
@@ -136,7 +137,13 @@ export default {
       if (this.challengeReactive.completion == 2) return this.challengeReactive.count == 2;
     },
     getBackground() {
-      if (this.edit) {
+      if (this.full) {
+        if(this.challengeReactive.is_conquer == 1) {
+          return "has-background-conquer";
+        } else {
+          return "has-background-story";
+        }
+      } else if(this.edit) {
         return "";
       } else {
         switch (this.challengeReactive.completion) {

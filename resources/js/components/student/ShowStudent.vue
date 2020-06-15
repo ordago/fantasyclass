@@ -42,9 +42,9 @@
               >
                 <span
                   class="attribute has-background-white-ter has-padding-y-3 rounded"
-                  style="width:100%;"
+                  style="width:100%;border: 1px solid black"
                 >
-                  <span class="has-text-grey-light" v-show="student.hp<30">{{ student.hp }}</span>
+                  <span class="has-text-grey-light" :class="{ 'has-text-white-ter' : student.hp>=30 }">{{ student.hp }}</span>
                 </span>
                 <span
                   class="attribute has-background-danger has-padding-y-3 rounded-left"
@@ -68,7 +68,7 @@
               >
                 <span
                   class="attribute has-background-dark has-padding-y-3 rounded"
-                  style="width:100%;"
+                  style="width:100%;border: 1px solid black"
                 >
                   <span class="has-text-light">{{ student.xp }}</span>
                 </span>
@@ -83,11 +83,11 @@
                 </div>
               <div
                 class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
-                style="border: none"
+                
               >
                 <span
                   class="attribute has-background-warning has-padding-y-3 rounded"
-                  style="width:100%;"
+                  style="width:100%;border: 1px solid black"
                 >
                   <span class="has-text-dark">{{ student.gold }}</span>
                 </span>
@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import Utils from "../../utils.js";
 
 export default {
   props: ["student", "theme"],

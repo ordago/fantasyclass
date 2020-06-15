@@ -55,6 +55,7 @@ Route::group(['middleware' => 'language'], function () {
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
+        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // Policy protect
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // Policy protect
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
