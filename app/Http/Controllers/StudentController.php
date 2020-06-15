@@ -46,16 +46,22 @@ class StudentController extends Controller
                     ->where('username', $student['username'])
                     ->first()['id'];
             } else {
+                $verified = null;
+                if(!$student['email']) {
+                    $verified = now();
+                }
                 $pass = strtolower(Str::random(5));
                 $user = User::create([
                     'name' => $student['name'],
                     'username' => $this->generateUsername($student['name']),
                     'email' => $student['email'],
-                    'email_verified_at' => now(),
+                    'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
                     'is_student' => 1,
                 ]);
                 $id = $user->id;
+                if($student['email'])
+                    $user->sendEmailVerificationNotification();
             }
             try {
                 $tmp = ClassroomUser::create([
