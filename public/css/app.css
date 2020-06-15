@@ -11774,6 +11774,14 @@ body {
   transition: all 0.5s ease;
 }
 
+.attribute-info {
+  position: absolute;
+  display: flex;
+  top: 3px;
+  left: 10px;
+  z-index: 2;
+}
+
 .firstRowChar .attribute {
   left: 20px;
 }
@@ -13194,6 +13202,10 @@ textPath {
 
 .relative, .is-relative {
   position: relative;
+}
+
+.is-absolute {
+  position: absolute;
 }
 
 /* LOADER                                       */

@@ -26,7 +26,7 @@ class LevelsController extends Controller
     
     public function store($code) {
         
-        $class = DB::table('classrooms')->where('code', '=', $code)->first();
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         
         $data = request()->validate([
@@ -48,7 +48,7 @@ class LevelsController extends Controller
     
     public function update($level) {
         $lvl = Level::findOrFail($level);
-        $class = DB::table('classrooms')->where('id', '=', $lvl->classroom_id)->first();
+        $class = Classroom::where('id', '=', $lvl->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
         try {
             if(request()->file('file')) {

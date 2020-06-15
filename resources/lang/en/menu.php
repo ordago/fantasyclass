@@ -27,5 +27,6 @@ return [
     'profile' => 'Profile',
     'behaviours' => 'Behaviours',
     'rewards' => 'Rewards',
+    'licenses' => 'Licenses',
 
 ];

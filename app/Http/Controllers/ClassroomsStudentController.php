@@ -8,6 +8,7 @@ use App\Equipment;
 use App\Item;
 use App\Student;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -63,6 +64,20 @@ class ClassroomsStudentController extends Controller
         Image::make($path)->resize(128, 128)->save();
     }
 
+    public function index($code) {
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'theme')->firstOrFail();
+        
+        $student = $this->getCurrentStudent($class);
+
+        $students = $class->students->map(function ($user) {
+            return collect($user->toArray())
+                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level'])
+                ->all();
+        });
+        
+        return view('studentsview.index', compact('class', 'student', 'students'));
+
+    }
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -97,6 +112,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
+            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
                     ->from('challenges')
@@ -118,6 +134,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
+            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
             ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
                 $query->select('challenges_groups.id')
                     ->from('challenges_groups')
@@ -201,7 +218,6 @@ class ClassroomsStudentController extends Controller
         $student->items()->sync([$item->id => ['count' => $count]], false);
         $student->update(['gold' => ($student->gold - $item->price)]);
 
-        dump($student->items);
         return [
             "message" => " " . __('shop.equipment_succes'),
             "icon" => "check",
