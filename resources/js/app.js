@@ -66,6 +66,7 @@ Vue.use(ElementTiptapPlugin, { /* plugin options */ });
 // Now you register `'el-tiptap'` component globally.
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
+Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);

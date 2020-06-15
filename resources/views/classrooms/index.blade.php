@@ -12,9 +12,7 @@
             <i class="fal fa-chalkboard-teacher mr-2"></i> {{ __('classroom.add') }}
           </a>
           <hr>
-          <a href="/classroom/create" class="is-rounded text-center pointer">
-            <i class="fal fa-user mr-2"></i> {{ __('classroom.join') }}
-          </a>
+          <join-classroom></join-classroom>
         </h3>
       </div>
     </div>

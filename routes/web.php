@@ -26,6 +26,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/', 'ClassroomsController@index')->name('classrooms');
         Route::post('/', 'ClassroomsController@store');
         Route::get('create', 'ClassroomsController@create');
+        Route::get('join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
 
         // Cards
