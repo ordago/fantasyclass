@@ -75,6 +75,10 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Challenge::class)->withPivot('count');
     }
 
+    public function cards() {
+        return $this->belongsToMany(Card::class);
+    }
+
     public function setProperty($prop, $value, $log = true) {
         $value = max($this->$prop + $value, 0);
         if($prop == "hp") {

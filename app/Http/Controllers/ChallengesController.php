@@ -120,7 +120,6 @@ class ChallengesController extends Controller
 
     public function toggle()
     {
-
         $challenge = Challenge::where('id', '=', request()->challenge)->first();
         
         $data = request()->validate([
@@ -135,6 +134,11 @@ class ChallengesController extends Controller
             $mult = 1;
             if ($result['detached']) {
                 $mult = -1;
+            } else {
+                if($challenge->auto_assign == 1) {
+                    $card = CardsController::getRandomCard($class->code);
+                    $student->cards()->attach($card);
+                }
             }
             $student->setProperty('hp', $mult * $challenge->hp);
             $student->setProperty('xp', $mult * $challenge->xp);
@@ -145,13 +149,19 @@ class ChallengesController extends Controller
             $this->authorize('update', $class);
             $result = $group->challenges()->toggle($challenge->id);
             $mult = 1;
+            $cards = true;
             if ($result['detached']) {
                 $mult = -1;
+                $card = false;
             }
             foreach ($group->students as $student) {
                 $student->setProperty('hp', $mult * $challenge->hp);
                 $student->setProperty('xp', $mult * $challenge->xp);
                 $student->setProperty('gold', $mult * $challenge->gold);
+                if($cards && $challenge->auto_assign == 1) {
+                    $card = CardsController::getRandomCard($class->code);
+                    $student->cards()->attach($card);
+                }
             }
         }
     }
