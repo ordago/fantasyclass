@@ -50,8 +50,8 @@
             </a>
           </div>
         </div>
-        <span class="link outer_glow" @click="rollTheDice">
-          <i class="fad fa-dice" style="font-size:2em;" onclick="rollTheDice()"></i>
+        <span class="link outer_glow cursor-pointer" @click="rollTheDice" >
+          <i class="fad fa-dice" style="font-size:2em;"></i>
         </span>
       </div>
       <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
