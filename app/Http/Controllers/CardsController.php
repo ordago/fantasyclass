@@ -177,6 +177,12 @@ class CardsController extends Controller
         return redirect('/classroom/'.$code.'/cards');
     }
     
+    public function random($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        return CardsController::getRandomCard($code);
+    }
+    
     public static function getRandomCard($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         

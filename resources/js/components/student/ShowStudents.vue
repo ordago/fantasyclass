@@ -16,26 +16,17 @@
         >
           <i class="fad fa-users outer_glow" style="font-size:2em;"></i>
         </a>
-        <a
-          class="link outer_glow has-text-dark has-padding-x-2"
-          v-tippy
-          :content="trans.get('menu.classcode')"
-          @click="showClassCode"
-        >
-          <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
-        </a>
-
         <div class="dropdown is-hoverable" style="display:inline-block">
-          <a
+          <span
             class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-right-2 has-padding-left-3"
           >
             <i class="fad fa-random outer_glow" style="font-size:2em;"></i>
             <span class="icon is-small">
               <i class="fas fa-angle-down" aria-hidden="true"></i>
             </span>
-          </a>
+          </span>
 
-          <div class="dropdown-menu has-background-white">
+          <div class="dropdown-menu has-background-white rounded has-padding-3">
             <a class="dropdown-item" @click="randomStudents">
               <i class="fad fa-user has-margin-right-2"></i>
               Random {{ trans.get('menu.students') }}
@@ -44,25 +35,40 @@
               <i class="fad fa-users has-margin-right-2"></i>
               Random {{ trans.get('menu.groups') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" @click="getRandomCard">
               <i class="fad fa-club has-margin-right-2"></i>
               Random {{ trans.get('menu.card') }}
             </a>
           </div>
         </div>
-        <span class="link outer_glow cursor-pointer" @click="rollTheDice" >
+        <a
+          class="link outer_glow has-text-dark has-padding-x-2"
+          v-tippy
+          :content="trans.get('menu.classcode')"
+          @click="showClassCode"
+        >
+          <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
+        </a>
+        <span class="link outer_glow cursor-pointer" @click="rollTheDice">
           <i class="fad fa-dice" style="font-size:2em;"></i>
+        </span>
+        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+          <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
+        </span>
+        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+          <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
+        </span>
+        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+          <i class="fad fa-poll-people" style="font-size: 2em;"></i>
         </span>
       </div>
       <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
-        <span class="link outer_glow"><i class="fad fa-poll-people" style="font-size: 2em;"></i></span>
         <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
         <span class="link outer_glow" data-action='randomStudent'><i class="fad fa-user outer_glow" style="font-size:2em;" ></i></span>
         <span class="link outer_glow" data-action='randomGroup'><i class="fad fa-users outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow" data-action='music'><i class="fad fa-music outer_glow" style="font-size:2em;"></i></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
@@ -359,8 +365,7 @@
         </div>
       </div>
     </div>
-
-    <b-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
+    <b-modal :active.sync="isQrModalActive" :width="640" scroll="keep">
       <div class="card rounded">
         <div class="card-image has-padding-4">
           <figure class="image is-4by3">
@@ -401,11 +406,21 @@
         <iframe :src="diceUrl" width="100%" style="height: 100vh"></iframe>
       </div>
     </b-modal>
-    <!-- function rollTheDice() {
-                
-                $('#dice').css('display', 'block');
-                $('#dice').find('iframe').attr('src', 'libraries/dice/dice?notation=1d6&roll');
-    }-->
+    <b-modal :active.sync="isCardModalActive" has-modal-card full-screen :can-cancel="false">
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Random card</p>
+        </header>
+        <section class="modal-card-body">
+          <show-card :card="randomCard" :admin="false" :code="classroom.code"> </show-card>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="isCardModalActive=false">Close</button>
+          <button class="button is-link" @click="getRandomCard"><i class="far fa-redo-alt"></i></button>
+          <button class="button is-primary">Login</button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -430,18 +445,20 @@ export default {
       custom: 0,
       numItems: 5,
       show2l: false,
-      isCardModalActive: false,
+      isQrModalActive: false,
       isRandomStudentActive: false,
+      isCardModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,
       shuffledStudents: null,
-      diceUrl: ""
+      diceUrl: "",
+      randomCard: null,
     };
   },
   methods: {
     rollTheDice() {
-      var audio = new Audio('/sound/dice.mp3');
+      var audio = new Audio("/sound/dice.mp3");
       audio.play();
       this.diceUrl = "/dice/dice?notation=1d6&roll";
       this.dice = true;
@@ -451,6 +468,13 @@ export default {
       this.currentStudent = this.shuffledStudents.shift();
       this.isRandomStudentActive = true;
     },
+    getRandomCard() {
+      axios.get('/classroom/' + this.classroom.code + '/card/random')
+        .then(response => {
+          this.randomCard = response.data
+          this.isCardModalActive = true;
+        })
+    },
     showClassCode() {
       let link =
         "https://fantasyclass.app/classroom/join/" +
@@ -459,7 +483,7 @@ export default {
         "https://api.qrserver.com/v1/create-qr-code/?data=" +
         link +
         "&amp;size=400x400";
-      this.isCardModalActive = true;
+      this.isQrModalActive = true;
     },
     orderBy: function(sorKey) {
       this.$cookies.set("order", sorKey, Infinity);
