@@ -105,6 +105,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
         
     });
+
+    Route::get('/utils/music', 'UtilsController@music');
     
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');

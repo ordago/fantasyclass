@@ -27,7 +27,7 @@
     <script src="/js/pace.min.js"></script>
 
 </head>
-    <body class="has-background-white-bis" @yield('bg', '')>
+    <body @if(!isset($class)) class="has-background-info" @else class="has-background-white-ter" @endif @yield('bg', '')>
     <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
             <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">

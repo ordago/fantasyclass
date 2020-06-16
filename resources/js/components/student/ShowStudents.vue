@@ -52,9 +52,9 @@
         <span class="link outer_glow cursor-pointer" @click="rollTheDice">
           <i class="fad fa-dice" style="font-size:2em;"></i>
         </span>
-        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+        <a href="/utils/music" target="_blank" class="link outer_glow has-margin-x-2 cursor-pointer has-text-dark">
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
-        </span>
+        </a>
         <span class="link outer_glow has-margin-x-2 cursor-pointer">
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
