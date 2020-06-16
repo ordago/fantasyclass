@@ -55,7 +55,7 @@
         <a href="/utils/music" target="_blank" class="link outer_glow has-margin-x-2 cursor-pointer has-text-dark">
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
         </a>
-        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+        <span class="link outer_glow has-margin-x-2 cursor-pointer" @click="isCountDownModalActive=true">
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
         <span class="link outer_glow has-margin-x-2 cursor-pointer">
@@ -411,13 +411,40 @@
         <header class="modal-card-head">
           <p class="modal-card-title">Random card</p>
         </header>
-        <section class="modal-card-body">
-          <show-card :card="randomCard" :admin="false" :code="classroom.code"> </show-card>
+        <section class="modal-card-body is-relative" id="confetti-bg">
+          <img id="deck" src="/img/deck.png" class="deck" v-if="!showCard" @click="revealCard">
+          <show-card :card="randomCard" class="deck" :admin="false" v-if="showCard" :code="classroom.code"></show-card>
+        </section>
+        <footer class="modal-card-foot" style="overflow-x: auto">
+          <button class="button" type="button" @click="isCardModalActive=false">Close</button>
+          <button class="button is-link" @click="getRandomCard();showCard=false"><i class="far fa-redo-alt"></i></button>
+          <div class="select">
+            <select>
+              <option>Student</option>
+              <option>With options</option>
+            </select>
+          </div>
+          <button class="button is-primary"><i class="fas fa-user"></i></button>
+          <div class="select">
+            <select>
+              <option>Groups</option>
+              <option>With options</option>
+            </select>
+          </div>
+          <button class="button is-primary"><i class="fas fa-users"></i></button>
+        </footer>
+      </div>
+    </b-modal>
+    <b-modal :active.sync="isCountDownModalActive" has-modal-card full-screen :can-cancel="false">
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Countdown</p>
+        </header>
+        <section class="modal-card-body is-flex has-all-centered" style="align-items: flex-start;">
+          <count-down></count-down>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="isCardModalActive=false">Close</button>
-          <button class="button is-link" @click="getRandomCard"><i class="far fa-redo-alt"></i></button>
-          <button class="button is-primary">Login</button>
+          <button class="button" type="button" @click="isCountDownModalActive=false">Close</button>
         </footer>
       </div>
     </b-modal>
@@ -426,6 +453,8 @@
 
 <script>
 import Utils from "../../utils.js";
+import confetti from 'canvas-confetti'
+
 
 export default {
   props: ["students", "classroom"],
@@ -448,15 +477,49 @@ export default {
       isQrModalActive: false,
       isRandomStudentActive: false,
       isCardModalActive: false,
+      isCountDownModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,
       shuffledStudents: null,
       diceUrl: "",
       randomCard: null,
+      showCard: false,
     };
   },
   methods: {
+    revealCard() {
+      var audio = new Audio("/sound/victory.mp3");
+      audio.play();
+
+      var end = Date.now() + (15 * 150);
+
+      // go Buckeyes!
+      var colors = ['#bb0000', '#00bb00', '#0000bb', '#bbbb00'];
+
+      (function frame() {
+        confetti({
+          particleCount: 4,
+          angle: 60,
+          spread: 105,
+          origin: { x: 0 },
+          colors: colors
+        });
+        confetti({
+          particleCount: 4,
+          angle: 120,
+          spread: 105,
+          origin: { x: 1 },
+          colors: colors
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+
+      this.showCard = true
+    },
     rollTheDice() {
       var audio = new Audio("/sound/dice.mp3");
       audio.play();

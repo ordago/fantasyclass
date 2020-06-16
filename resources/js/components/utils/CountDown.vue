@@ -2,7 +2,7 @@
   <div class="base-timer">
     <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
       <g class="base-timer__circle">
-        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45"></circle>
+        <circle class="base-timer__path-elapsed" cx="50" cy="50" r="45" />
         <path
           :stroke-dasharray="circleDasharray"
           class="base-timer__path-remaining"
@@ -13,10 +13,16 @@
             a 45,45 0 1,0 90,0
             a 45,45 0 1,0 -90,0
           "
-        ></path>
+        />
       </g>
     </svg>
     <span class="base-timer__label">{{ formattedTimeLeft }}</span>
+    <div class="has-text-centered">
+      <b-timepicker enable-seconds v-model="timeConfigured" inline :input="calculateSeconds()"></b-timepicker>
+      <button class="button has-margin-top-2 is-success" v-if="pause" @click="startTimer">Start</button>
+      <button class="button has-margin-top-2 is-success" v-if="pause" @click="resetTimer">Reset</button>
+      <button class="button has-margin-top-2 is-info" v-if="!pause" @click="pauseTimer">Pause</button>
+    </div>
   </div>
 </template>
 
@@ -39,13 +45,14 @@ const COLOR_CODES = {
   }
 };
 
-const TIME_LIMIT = 20;
-
 export default {
   data() {
     return {
+      timeConfigured: new Date(1,1,1, 0, 0, 0),
       timePassed: 0,
-      timerInterval: null
+      timerInterval: null,
+      time: 20,
+      pause: true,
     };
   },
 
@@ -67,12 +74,12 @@ export default {
     },
 
     timeLeft() {
-      return TIME_LIMIT - this.timePassed;
+      return this.time - this.timePassed;
     },
 
     timeFraction() {
-      const rawTimeFraction = this.timeLeft / TIME_LIMIT;
-      return rawTimeFraction - (1 / TIME_LIMIT) * (1 - rawTimeFraction);
+      const rawTimeFraction = this.timeLeft / this.time;
+      return rawTimeFraction - (1 / this.time) * (1 - rawTimeFraction);
     },
 
     remainingPathColor() {
@@ -97,15 +104,29 @@ export default {
   },
 
   mounted() {
-    this.startTimer();
   },
 
   methods: {
+    calculateSeconds(info) {
+        console.log(info)
+        let seconds = 0
+        if(this.timeConfigured)
+            seconds = this.timeConfigured.getHours() * 60 * 60 + this.timeConfigured.getMinutes() * 60 + this.timeConfigured.getSeconds()
+        this.time = seconds
+    },
     onTimesUp() {
       clearInterval(this.timerInterval);
     },
-
+    pauseTimer() {
+      this.pause=!this.pause
+      clearInterval(this.timerInterval);
+    },
+    resetTimer() {
+      this.timePassed = 0
+      clearInterval(this.timerInterval);
+    },
     startTimer() {
+      this.pause=!this.pause
       this.timerInterval = setInterval(() => (this.timePassed += 1), 1000);
     }
   }

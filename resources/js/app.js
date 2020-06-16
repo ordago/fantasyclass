@@ -106,6 +106,9 @@ Vue.component('icon-selector', require('./components/utils/IconSelector.vue').de
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
 Vue.component('editor', require('./components/utils/Editor.vue').default);
 
+Vue.component('count-down', require('./components/utils/CountDown.vue').default);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
