@@ -1,7 +1,7 @@
 <template>
   <div class="has-margin-2">
     <div class="cardContainer cardFunction " data-id="1" group-id="" :style="'background-color:'+ card.background + ';'">
-      <div class="lvlTopLeft" v-if="card.min_lvl">
+      <div class="lvl-top-left" v-if="card.min_lvl">
           <img src="/img/cardgen/lvl.png" class="levelCard">
           <span class="numberLvl">{{ card.min_lvl }}</span>
         </div>

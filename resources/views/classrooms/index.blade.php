@@ -26,8 +26,12 @@
     <div class="box w-100 h-100 d-flex is-relative rounded classroom-round text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/thumb_{{ $theme->name }}');background-size: cover" @endif>
       <h3 class="is-size-4 has-text-light">
         @if($classroom->pivot->role == 2)
-          <span class="admin" {{ Popper::pop(__('classroom.admin')) }}>
-            <i class="far fa-user-crown"></i>
+
+          <span class="admin">
+            <a href="/classroom/{{ $classroom->code }}/edit" class="has-text-white"><i class="far fa-cog"></i></a>
+            <span {{ Popper::pop(__('classroom.admin')) }}>
+              <i class="far fa-user-crown"></i>
+            </span>
           </span>
           <a href="/classroom/{{ $classroom->code }}" class="has-text-light">
             {{ $classroom->name }}

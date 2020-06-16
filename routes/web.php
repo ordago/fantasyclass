@@ -25,7 +25,9 @@ Route::group(['middleware' => 'language'], function () {
     Route::prefix('classroom')->group(function () {
         Route::get('/', 'ClassroomsController@index')->name('classrooms');
         Route::post('/', 'ClassroomsController@store');
+        Route::patch('/{code}', 'ClassroomsController@update');
         Route::get('create', 'ClassroomsController@create');
+        Route::get('/{code}/edit', 'ClassroomsController@edit');
         Route::get('join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
 

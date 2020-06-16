@@ -243,6 +243,13 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
+        if($item->min_lvl > $student->level->number) {
+            return [
+                "message" => " " . __('shop.equipment_failed_level'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
 
         if ($studentItem)
             $count = $studentItem->pivot->count + 1;

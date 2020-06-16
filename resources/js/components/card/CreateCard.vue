@@ -10,7 +10,7 @@
               <!-- CARD -->
               <div class="column is-narrow">
               <div class="cardContainer" id="customCard" name="card" :style="'background-color: '+ background +';'">
-                <div class="lvlTopLeft" id="lvl" v-if="min_lvl>0">
+                <div class="lvl-top-left" id="lvl" v-if="min_lvl>0">
                   <img src="/img/cardgen/lvl.png" class="levelCard">
                   <span class="numberLvl">{{ this.min_lvl }}</span>
                 </div>

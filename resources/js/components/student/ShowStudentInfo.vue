@@ -78,7 +78,7 @@
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item label="Information">
-          <div class="">
+          <div class>
             <div class="has-margin-3">
               <croppa
                 v-model="image"
@@ -110,7 +110,13 @@
             <div class="field-body">
               <div class="field">
                 <p class="control">
-                  <input class="input" v-bind="{ disabled: !admin }" v-bind:class="{ 'is-static': !admin }" type="text" v-model="student.name" />
+                  <input
+                    class="input"
+                    v-bind="{ disabled: !admin }"
+                    v-bind:class="{ 'is-static': !admin }"
+                    type="text"
+                    v-model="student.name"
+                  />
                 </p>
               </div>
             </div>
@@ -248,7 +254,11 @@
               v-for="item in itemsJson"
               :key="item.id"
             >
-              <div class="column is-flex has-all-centered is-narrow">
+              <div class="column is-relative is-flex has-all-centered is-narrow">
+                <div class="lvl-item-top-left" v-if="item.min_lvl">
+                  <img src="/img/cardgen/lvl.png" class="levelCard" />
+                  <span class="is-flex has-all-centered">{{ item.min_lvl }}</span>
+                </div>
                 <img :src="item.icon" />
               </div>
               <div class="column is-flex has-all-centered rounded wheat" v-html="message(item)"></div>
@@ -336,7 +346,12 @@
 
         <b-tab-item label="Challenges" v-if="challenges && challenges.length">
           <div v-for="challenge in orderedChallenges" :key="challenge.id">
-            <show-challenge :challenge="challenge" :code="classroom.code" :admin="admin" :edit="false"></show-challenge>
+            <show-challenge
+              :challenge="challenge"
+              :code="classroom.code"
+              :admin="admin"
+              :edit="false"
+            ></show-challenge>
           </div>
         </b-tab-item>
 
@@ -394,7 +409,15 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges"],
+  props: [
+    "student",
+    "classroom",
+    "chart",
+    "admin",
+    "items",
+    "shop",
+    "challenges"
+  ],
   mounted() {
     if (!this.admin) {
       this.activeTab = 1;
@@ -612,15 +635,19 @@ export default {
           if (blob != null) {
             let formData = new FormData();
             formData.append("avatar", blob, "avatar.png");
-            if(this.admin) {
-                formData.append("student_id", this.student.id);
+            if (this.admin) {
+              formData.append("student_id", this.student.id);
             }
             axios
-              .post("/classroom/" + this.classroom.code + "/setting/updateavatar", formData, {
-                headers: {
-                  "content-type": "multipart/form-data"
+              .post(
+                "/classroom/" + this.classroom.code + "/setting/updateavatar",
+                formData,
+                {
+                  headers: {
+                    "content-type": "multipart/form-data"
+                  }
                 }
-              })
+              )
               .then(response => {
                 this.$toasted.show(response.data.message, {
                   position: "top-center",

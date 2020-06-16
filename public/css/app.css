@@ -12516,11 +12516,30 @@ input[type=color].form-control {
   right: -5px;
 }
 
-.lvlTopLeft {
+.lvl-top-left {
   position: absolute;
   z-index: 9;
   top: -35px;
   left: -15px;
+}
+
+.lvl-item-top-left {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  z-index: 9;
+  top: -4px;
+  left: 0;
+}
+
+.lvl-item-top-left span {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 25px;
+  height: 25px;
+  color: white;
+  font-weight: bold;
 }
 
 #curve {

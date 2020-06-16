@@ -20,7 +20,11 @@
           style="border-bottom: 1px dashed #999"
           v-bind:key="item.id"
         >
-          <div class="column is-narrow">
+          <div class="column is-narrow is-relative">
+            <div class="lvl-item-top-left" v-if="item.min_lvl">
+              <img src="/img/cardgen/lvl.png" class="levelCard" />
+              <span class="is-flex has-all-centered">{{ item.min_lvl }}</span>
+            </div>
             <img :src="item.icon" width="48px" />
           </div>
           <div class="column is-narrow">
@@ -214,14 +218,12 @@ export default {
           var index = this.items.findIndex(function(item, i) {
             return item.id === id;
           });
-          axios
-            .delete("/classroom/shop/" + id)
-            .then(response => {
-              if (response.data === 1) {
-                this.items.splice(index, 1);
-                this.$forceUpdate();
-              }
-            });
+          axios.delete("/classroom/shop/" + id).then(response => {
+            if (response.data === 1) {
+              this.items.splice(index, 1);
+              this.$forceUpdate();
+            }
+          });
         }
       });
     }

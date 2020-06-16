@@ -32,13 +32,38 @@ class ClassroomsController extends Controller
         return $unique;
     }
 
+    public function update($code)
+    {
+     
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'name' => ['required', 'string', 'min:2', 'max:255'],
+            'adventureName' => ['required', 'string', 'min:3', 'max:255'],
+            'goalType' => ['required', 'integer'],
+            'bgtheme' => ['required', 'integer'],
+            'charTheme' => ['required', 'integer'],
+        ]);
+
+        $class->update([
+            'name' => $data['name'],
+            'adventure_name' => $data['adventureName'],
+            'enrollment_code' => $this->reference(5),
+            'character_theme' => $data['charTheme'],
+            'theme_id' => $data['bgtheme'],
+            'goal_type' => $data['goalType'],
+        ]);
+
+        return redirect('/classroom/'.$code);
+
+    }
     public function store()
     {
-
         $data = request()->all();
 
         $validator = Validator::make($data, [
-            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'name' => ['required', 'string', 'min:2', 'max:255'],
             'adventureName' => ['required', 'string', 'min:3', 'max:255'],
             'goalType' => ['required', 'integer'],
             'bgtheme' => ['required', 'integer'],
@@ -97,11 +122,11 @@ class ClassroomsController extends Controller
                 'user_id' => $id,
                 'classroom_id' => $classId,
                 'role' => 0,
-                ]);
-            } catch (\Throwable $th) {
-                return false;
-            }
-            
+            ]);
+        } catch (\Throwable $th) {
+            return false;
+        }
+
         // Get the new insertion id (another way? :/)
         $cuid = ClassroomUser::select('id')
             ->where('user_id', '=', $id)
@@ -121,6 +146,14 @@ class ClassroomsController extends Controller
         $student->setBasicEquipment();
     }
 
+    public function edit($code)
+    {
+        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
+        $this->authorize('view', $class);
+        $goals = GoalThemes::All();
+        $themes = Theme::All();
+        return view('classrooms.create', compact('goals', 'themes', 'class'));
+    }
     public function create()
     {
         $goals = GoalThemes::All();

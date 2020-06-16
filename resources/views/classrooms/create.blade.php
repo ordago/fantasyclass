@@ -2,8 +2,11 @@
 
 @section('content')
 
-<form action="/classroom" method="post">
+<form @if(isset($class)) action="/classroom/{{ $class->code }}" @else action="/classroom" @endif method="post">
 @csrf
-  <create-classroom goals="{{ $goals }}" themes="{{ $themes }}"></create-classroom>
+  @if(isset($class))
+    @method('patch')
+  @endif
+  <create-classroom goals="{{ $goals }}" themes="{{ $themes }}" :classroom="{{ $class ?? 'null' }}"></create-classroom>
 </form>
 @endsection
