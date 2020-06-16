@@ -1,38 +1,71 @@
 <template>
   <div>
-    <div class="utilities rounded card-shadow-s" id="utilities">
+    <div
+      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2"
+      id="utilities"
+    >
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
       </div>
-      <a
-        class="link outer_glow"
-        v-tippy
-        :content="trans.get('menu.groups')"
-        :href="'/classroom/' + classroom.code + '/groups'"
-      >
-        <i class="fad fa-users outer_glow" style="font-size:2em;"></i>
-      </a>
-      <a
-        class="link outer_glow"
-        v-tippy
-        :content="trans.get('menu.classcode')"
-        @click="showClassCode"
-      >
-        <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
-      </a>
+      <div class="column is-flex">
+        <a
+          class="link outer_glow has-text-dark has-padding-x-2"
+          v-tippy
+          :content="trans.get('menu.groups')"
+          :href="'/classroom/' + classroom.code + '/groups'"
+        >
+          <i class="fad fa-users outer_glow" style="font-size:2em;"></i>
+        </a>
+        <a
+          class="link outer_glow has-text-dark has-padding-x-2"
+          v-tippy
+          :content="trans.get('menu.classcode')"
+          @click="showClassCode"
+        >
+          <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
+        </a>
+
+        <div class="dropdown is-hoverable" style="display:inline-block">
+          <a
+            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-right-2 has-padding-left-3"
+          >
+            <i class="fad fa-random outer_glow" style="font-size:2em;"></i>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </a>
+
+          <div class="dropdown-menu has-background-white">
+            <a class="dropdown-item" @click="randomStudents">
+              <i class="fad fa-user has-margin-right-2"></i>
+              Random {{ trans.get('menu.students') }}
+            </a>
+            <a class="dropdown-item" @click="randomStudents">
+              <i class="fad fa-users has-margin-right-2"></i>
+              Random {{ trans.get('menu.groups') }}
+            </a>
+            <a class="dropdown-item" @click="randomStudents">
+              <i class="fad fa-club has-margin-right-2"></i>
+              Random {{ trans.get('menu.card') }}
+            </a>
+          </div>
+        </div>
+        <span class="link outer_glow" @click="rollTheDice">
+          <i class="fad fa-dice" style="font-size:2em;" onclick="rollTheDice()"></i>
+        </span>
+      </div>
       <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
-        <span class="link outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
+        <span class="lin
+        k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <span class="link outer_glow"><i class="fad fa-poll-people" style="font-size: 2em;"></i></span>
         <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow"><i class="fad fa-dice" style="font-size:2em;" onclick="rollTheDice()"></i></span>
         <span class="link outer_glow" data-action='randomStudent'><i class="fad fa-user outer_glow" style="font-size:2em;" ></i></span>
         <span class="link outer_glow" data-action='randomGroup'><i class="fad fa-users outer_glow" style="font-size:2em;"></i></span>
         <span class="link outer_glow" data-action='music'><i class="fad fa-music outer_glow" style="font-size:2em;"></i></span>
-        <a href="random.php?class=" target="_blank"><i class="fad fa-random outer_glow" style="font-size:2em;"></i></a>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
-      <div class="flex-center float-right" v-if="students.length>0">
+      <div class="column has-text-right is-center-vertically" v-if="students.length>0">
         <!-- <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span> -->
         <span>
           <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
@@ -44,7 +77,7 @@
           @click="orderBy('name');"
           style="color: #eee;"
           data-id="0"
-          class="colored"
+          class="colored pointer"
         >
           <i class="fas fa-user pointer has-margin-right-3"></i>
         </span>
@@ -327,26 +360,52 @@
       </div>
     </div>
 
-  <b-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
-            <div class="card rounded">
-                <div class="card-image has-padding-4">
-                    <figure class="image is-4by3">
-                        <img :src="image" alt="Image">
-                    </figure>
-                </div>
-                <div class="card-content">
-                    <div class="media is-flex has-all-centered">
-                        <div class="media-left">
-                            <i class="fad fa-chalkboard fa-3x"></i>
-                        </div>
-                        <div class="media-content">
-                            <h3 class="title is-1 has-text-centered">Classroom code</h3>
-                            <h3 class="subtitle is-1 has-text-centered">{{ classroom.enrollment_code }}</h3>
-                        </div>
-                    </div>
-                </div>
+    <b-modal :active.sync="isCardModalActive" :width="640" scroll="keep">
+      <div class="card rounded">
+        <div class="card-image has-padding-4">
+          <figure class="image is-4by3">
+            <img :src="image" alt="Image" />
+          </figure>
+        </div>
+        <div class="card-content">
+          <div class="media is-flex has-all-centered">
+            <div class="media-left">
+              <i class="fad fa-chalkboard fa-3x"></i>
             </div>
-        </b-modal>
+            <div class="media-content">
+              <h3 class="title is-1 has-text-centered">Classroom code</h3>
+              <h3 class="subtitle is-1 has-text-centered">{{ classroom.enrollment_code }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </b-modal>
+    <b-modal
+      :active.sync="isRandomStudentActive"
+      :width="640"
+      scroll="keep"
+      class="has-text-centered"
+    >
+      <show-student :student="currentStudent" :theme="classroom.theme"></show-student>
+      <button
+        class="button is-link has-margin-2"
+        v-if="shuffledStudents && shuffledStudents.length"
+        @click="currentStudent = shuffledStudents.shift()"
+      >
+        <i class="fad fa-random"></i>
+      </button>
+    </b-modal>
+    <b-modal :active.sync="dice" has-modal-card full-screen :can-cancel="false">
+      <div class="modal-card" style="width: auto">
+        <button class="button" type="button" @click="dice=false">Close</button>
+        <iframe :src="diceUrl" width="100%" style="height: 100vh"></iframe>
+      </div>
+    </b-modal>
+    <!-- function rollTheDice() {
+                
+                $('#dice').css('display', 'block');
+                $('#dice').find('iframe').attr('src', 'libraries/dice/dice?notation=1d6&roll');
+    }-->
   </div>
 </template>
 
@@ -372,14 +431,35 @@ export default {
       numItems: 5,
       show2l: false,
       isCardModalActive: false,
+      isRandomStudentActive: false,
+      dice: false,
       image: null,
+      currentStudent: null,
+      shuffledStudents: null,
+      diceUrl: ""
     };
   },
   methods: {
+    rollTheDice() {
+      var audio = new Audio('/sound/dice.mp3');
+      audio.play();
+      this.diceUrl = "/dice/dice?notation=1d6&roll";
+      this.dice = true;
+    },
+    randomStudents() {
+      this.shuffledStudents = _.shuffle(this.students);
+      this.currentStudent = this.shuffledStudents.shift();
+      this.isRandomStudentActive = true;
+    },
     showClassCode() {
-        let link = "https://fantasyclass.app/classroom/join/" + this.classroom.enrollmen_code
-        this.image = 'https://api.qrserver.com/v1/create-qr-code/?data=' + link + '&amp;size=400x400'
-        this.isCardModalActive = true
+      let link =
+        "https://fantasyclass.app/classroom/join/" +
+        this.classroom.enrollmen_code;
+      this.image =
+        "https://api.qrserver.com/v1/create-qr-code/?data=" +
+        link +
+        "&amp;size=400x400";
+      this.isCardModalActive = true;
     },
     orderBy: function(sorKey) {
       this.$cookies.set("order", sorKey, Infinity);

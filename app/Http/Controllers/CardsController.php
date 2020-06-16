@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Card;
 use App\Classroom;
+use App\Http\Classes\Functions;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,6 +21,7 @@ class CardsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $cards = $class->cards->sortBy('type');
+        $this->getRandomCard($code);
         return view('cards.index', compact('class', 'cards'));
     }
 
@@ -174,6 +176,24 @@ class CardsController extends Controller
             $class->cards()->save($newCard);
         }
         return redirect('/classroom/'.$code.'/cards');
+    }
+    
+    public function getRandomCard($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        
+        settings()->setExtraColumns(['user_id' => $class->id]);
+        $probabilites[0] = settings()->get('cards_common', 55);
+        $probabilites[1] = settings()->get('cards_rare', 30);
+        $probabilites[2] = settings()->get('cards_epic', 10);
+        $probabilites[3] = settings()->get('cards_legendary', 5);
+
+        do {
+            $typeValue = Functions::getRandomWeightedElement(array(1=>$probabilites[0], 2=>$probabilites[1], 3=>$probabilites[2], 4=>$probabilites[3]));
+            $card = Card::where('type', $typeValue)->inRandomOrder()->first();
+        } while($card == null);
+        
+        return $card;
     }
     
     public function destroy ($id) {

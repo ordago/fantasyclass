@@ -41,7 +41,8 @@ Route::group(['middleware' => 'language'], function () {
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');
         Route::post('/{code}/groups/create', 'GroupsController@store');
-        Route::patch('/{code}/groups', 'GroupsController@update');
+        Route::patch('/{code}/groups/{action}', 'GroupsController@update');
+        Route::delete('/groups/{id}', 'GroupsController@destroy');
 
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');

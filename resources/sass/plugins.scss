@@ -22,7 +22,7 @@
   color: white;
 } 
 
-.is-full-rounded {
+.is-full-rounded, .is-full-rounded canvas {
   border-radius: 50%;
 }
 
@@ -116,6 +116,10 @@
 }
 .is-absolute {
   position: absolute;
+}
+.is-center-vertically {
+  // display: flex;
+  align-items: center;
 }
 
 .has-background-conquer {

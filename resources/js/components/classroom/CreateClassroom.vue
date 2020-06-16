@@ -29,12 +29,12 @@
             </div>
            </b-tab-item>
 
-            <b-tab-item :label="trans.get('menu.levels')" icon="trophy" icon-pack="far">
+            <!-- <b-tab-item :label="trans.get('menu.levels')" icon="trophy" icon-pack="far">
                 <h1 class="is-size-2">{{ trans.get('menu.levels') }}</h1>
                 <h6 class="has-margin-top-4">{{ trans.get('classroom.levels_text') }} <i class="fas fa-smile-beam colored"></i></h6>
                 <h1 class="has-margin-top-4 notification is-danger">WIP. First create levels</h1>
-                <!--<iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>-->
-            </b-tab-item>
+                <iframe src="utils/lvlBank.php" style="width:100%; height: 50vh;"></iframe>
+            </b-tab-item> -->
 
             <b-tab-item :label="trans.get('classroom.theme')" icon="palette" icon-pack="far">
             <h1 class="is-size-2">{{ trans.get('classroom.theme') }}</h1>
@@ -92,7 +92,7 @@
         <div class="is-flex has-padding-x-4" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
             <div class="buttons has-addons">
                 <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<4"><i class="fas fa-chevron-right"></i></button>
+                <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<3"><i class="fas fa-chevron-right"></i></button>
             </div>
             <button class="button is-success">{{ trans.get('classroom.end_wizard') }}</button>
         </div>

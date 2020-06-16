@@ -98,7 +98,6 @@ class ClassroomsController extends Controller
                 'classroom_id' => $classId,
                 'role' => 0,
                 ]);
-                dump('hit');
             } catch (\Throwable $th) {
                 return false;
             }

@@ -12688,7 +12688,7 @@ textPath {
   border: 1px solid rgba(0, 0, 0, 0.4);
   display: inline-block;
   position: relative;
-  padding-left: 85px;
+  padding-left: 75px;
   padding-bottom: 19px;
   width: 100%;
 }
@@ -13099,7 +13099,7 @@ textPath {
   color: white;
 }
 
-.is-full-rounded {
+.is-full-rounded, .is-full-rounded canvas {
   border-radius: 50%;
 }
 
@@ -13206,6 +13206,10 @@ textPath {
 
 .is-absolute {
   position: absolute;
+}
+
+.is-center-vertically {
+  align-items: center;
 }
 
 .has-background-conquer {

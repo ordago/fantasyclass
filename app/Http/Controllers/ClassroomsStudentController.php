@@ -8,6 +8,7 @@ use App\Equipment;
 use App\Item;
 use App\Student;
 use App\User;
+use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -103,6 +104,11 @@ class ClassroomsStudentController extends Controller
                 }));
             }
         }
+        $stories = Arr::sort($stories, function($story)
+        {
+            // Sort the student's scores by their name.
+            return $story['datetime'];
+        });
         return view('studentsview.stories', compact('class', 'student', 'stories'));
     }
 
