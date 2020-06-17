@@ -169,9 +169,10 @@ class ClassroomsController extends Controller
 
     public function show($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
+
         return view('classrooms.show', compact('class', 'students'));
     }
 

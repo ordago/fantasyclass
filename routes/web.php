@@ -35,6 +35,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/card/{id}', 'CardsController@destroy');
         Route::get('/{code}/cards', 'CardsController@index');
         Route::get('/{code}/card/random', 'CardsController@random');
+        Route::post('/{code}/card/assign', 'CardsController@assign');
         Route::get('/{code}/cards/import/default', 'CardsController@importDefault');
         Route::get('/{code}/cards/create', 'CardsController@create');
         Route::post('/{code}/cards', 'CardsController@store');

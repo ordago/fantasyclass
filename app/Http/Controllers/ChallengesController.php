@@ -154,12 +154,14 @@ class ChallengesController extends Controller
                 $mult = -1;
                 $card = false;
             }
+            if($cards && $challenge->auto_assign == 1) {
+                $card = CardsController::getRandomCard($class->code);
+            }
             foreach ($group->students as $student) {
                 $student->setProperty('hp', $mult * $challenge->hp);
                 $student->setProperty('xp', $mult * $challenge->xp);
                 $student->setProperty('gold', $mult * $challenge->gold);
                 if($cards && $challenge->auto_assign == 1) {
-                    $card = CardsController::getRandomCard($class->code);
                     $student->cards()->attach($card);
                 }
             }

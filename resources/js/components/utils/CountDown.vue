@@ -20,7 +20,7 @@
     <div class="has-text-centered">
       <b-timepicker enable-seconds v-model="timeConfigured" inline :input="calculateSeconds()"></b-timepicker>
       <button class="button has-margin-top-2 is-success" v-if="pause" @click="startTimer">Start</button>
-      <button class="button has-margin-top-2 is-success" v-if="pause" @click="resetTimer">Reset</button>
+      <button class="button has-margin-top-2 is-danger" v-if="pause && timePassed" @click="resetTimer">Reset</button>
       <button class="button has-margin-top-2 is-info" v-if="!pause" @click="pauseTimer">Pause</button>
     </div>
   </div>
@@ -48,7 +48,7 @@ const COLOR_CODES = {
 export default {
   data() {
     return {
-      timeConfigured: new Date(1,1,1, 0, 0, 0),
+      timeConfigured: new Date(1,1,1, 0, 10, 0),
       timePassed: 0,
       timerInterval: null,
       time: 20,
