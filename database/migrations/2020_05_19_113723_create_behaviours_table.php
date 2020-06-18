@@ -20,6 +20,7 @@ class CreateBehavioursTable extends Migration
             $table->string('custom_text', 255)->nullable();
             $table->integer('hp')->default(0);
             $table->integer('xp')->default(0);
+            $table->integer('gems')->default(0);
             $table->integer('gold')->default(0);
             $table->unsignedBigInteger('classroom_id')->nullable();
             $table->integer('count_number')->default(0);
