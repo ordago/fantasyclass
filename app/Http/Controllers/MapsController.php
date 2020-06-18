@@ -14,12 +14,11 @@ class MapsController extends Controller
         $this->middleware('verified');
     }
 
-    public function index($code) {
-        
-        
+    public function index($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $maps = $class->maps;
-        dump($maps);
+        
         return view('maps.index', compact('maps', 'class'));
     }
 
