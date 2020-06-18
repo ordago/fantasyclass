@@ -76,7 +76,7 @@ class Student extends Model implements HasMedia
     }
 
     public function cards() {
-        return $this->belongsToMany(Card::class);
+        return $this->belongsToMany(Card::class)->using(CardStudent::class)->withPivot('marked');
     }
 
     public function setProperty($prop, $value, $log = true) {

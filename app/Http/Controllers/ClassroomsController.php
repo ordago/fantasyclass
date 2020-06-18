@@ -173,7 +173,12 @@ class ClassroomsController extends Controller
         $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
 
-        return view('classrooms.show', compact('class', 'students'));
+        $pending = collect();
+        foreach ($class->students as $student) {
+            $pending->add(['student' => $student, 'cards' => $student->cards->where('pivot.marked', ">" , 0)]);
+        }
+
+        return view('classrooms.show', compact('class', 'students', 'pending'));
     }
 
     public function updateSetting($code)

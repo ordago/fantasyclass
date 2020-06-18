@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Card;
+use App\CardStudent;
 use App\Classroom;
 use App\Group;
 use App\Http\Classes\Functions;
 use App\Student;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class CardsController extends Controller
@@ -210,6 +212,77 @@ class CardsController extends Controller
             }
         }
         return true;
+    }
+
+    public function useDelete($id) {
+        $card = Card::find($id);
+        $class = Classroom::find($card->classroom_id);
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'student' => ['numeric', 'required'],
+            'action' => ['boolean'],
+            'type' => ['numeric'],
+        ]);
+
+        $student = Student::find($data['student']);
+        if($student->classroom->classroom_id != $class->id)
+            return false;
+        
+
+        $cardLine = CardStudent::where('card_id', $card->id)
+        ->where('student_id', $student->id)
+        ->where('marked', $data['type'])
+        ->first();
+
+        if($data['action']) {
+            if($card->min_lvl > $student->level->number){
+                return [
+                    "message" => " " . __('success_error.shop_failed_level'),
+                    "icon" => "times",
+                    "type" => "error",
+                ];
+                // dump('hit');
+            }    
+            settings()->setExtraColumns(['user_id' => $class->id]);
+            if($data['type'] == 1) {
+                $cost = settings()->get('card_use', 200);
+                if($card->gold == 0 && $student->gold < $cost) {
+                    return [
+                        "message" => " " . __('success_error.shop_failed_money'),
+                        "icon" => "times",
+                        "type" => "error",
+                    ];
+                }
+                if($card->gold) {
+                    $student->setProperty('gold', $student->gold);
+                } else $student->setProperty('gold', $cost*-1); 
+                if($card->xp) $student->setProperty('xp', $student->xp);
+                if($card->hp) $student->setProperty('gold', $student->hp);
+            } else {
+                $cost = settings()->get('card_delete', 50);
+                if($student->gold < $cost) {
+                    return [
+                        "message" => " " . __('success_error.shop_failed_money'),
+                        "icon" => "times",
+                        "type" => "error",
+                    ];
+                }
+                $student->setProperty('gold', $cost*-1);
+            }
+            $cardLine->delete();
+            return [
+                "message" => " " . __('update_success'),
+                "icon" => "check",
+                "type" => "success",
+            ];
+
+        } else {
+            $cardLine->update(['marked' => 0]);
+        }
+
+
+
     }
 
     public function random($code)

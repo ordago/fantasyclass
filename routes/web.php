@@ -39,8 +39,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards/import/default', 'CardsController@importDefault');
         Route::get('/{code}/cards/create', 'CardsController@create');
         Route::post('/{code}/cards', 'CardsController@store');
-        Route::get('/{code}/cards/{card}', 'CardsController@show');
-        Route::patch('/cards/{card}', 'CardsController@update');
+        Route::get('/{code}/cards/{id}', 'CardsController@show');
+        Route::patch('/cards/{id}', 'CardsController@update');
+        Route::post('/card/usedelete/{id}', 'CardsController@useDelete');
 
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');

@@ -174,7 +174,9 @@ class StudentController extends Controller
             ->select('*')
             ->get();
 
-        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges'));
+            $cards = $student->cards;
+
+        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards'));
     }
 
     public function update(Request $request)

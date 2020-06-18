@@ -17,6 +17,7 @@ class CreatesCardStudentPivotTable extends Migration
             $table->id();
             $table->unsignedBigInteger('card_id');
             $table->unsignedBigInteger('student_id');
+            $table->tinyInteger('marked')->default(0);
             $table->timestamps();
         });
     }

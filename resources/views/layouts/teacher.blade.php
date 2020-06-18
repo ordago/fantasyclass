@@ -6,6 +6,12 @@
                 </span>
 @endsection
 
+@section('notifications')
+  @if(isset($pending) && count($pending) > 0)
+    <notifications :pending="{{ $pending }}"></notifications>
+  @endif
+@endsection
+
 @section('menu')
 
 <div class="navbar-start">
@@ -36,7 +42,7 @@
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
                         </a>
                         <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
-                            <i class="fas fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
+                            <i class="fad fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
                         </a>
                         <a class="navbar-item">
                             <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}

@@ -13113,6 +13113,16 @@ textPath {
 }
 
 /*****************************/
+.sidebar-content {
+  min-width: 50%;
+}
+
+.close-button {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+}
+
 .fa-heart {
   stroke: black;
   stroke-width: 10;

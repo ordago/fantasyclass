@@ -271,7 +271,17 @@
             </div>
           </div>
         </b-tab-item>
-
+        <b-tab-item label="Cards" v-if="cards.length">
+          <div class="columns is-multiline is-variable">
+            <div
+              v-for="(card, index) in cards"
+              :key="index"
+              class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
+            >
+              <show-card class="has-margin-4" :card="card" :use="true" :admin="false"></show-card>
+            </div>
+          </div>
+        </b-tab-item>
         <b-tab-item label="Behaviours" v-if="student.behaviours.length">
           <div class="is-flex justify-content-center">
             <apexchart
@@ -408,6 +418,15 @@
 <script>
 import Utils from "../../utils.js";
 
+// Download excel
+import JsonExcel from 'vue-json-excel'
+Vue.component('downloadExcel', JsonExcel)
+
+// Charts
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
+
 export default {
   props: [
     "student",
@@ -416,7 +435,8 @@ export default {
     "admin",
     "items",
     "shop",
-    "challenges"
+    "challenges",
+    "cards"
   ],
   mounted() {
     if (!this.admin) {

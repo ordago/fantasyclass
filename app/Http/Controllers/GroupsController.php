@@ -49,7 +49,6 @@ class GroupsController extends Controller
             if (request()->logo) {
                 $media = $group->addMedia(request()->file('logo'))
                     ->toMediaCollection('logo');
-                dump($media->getUrl());
                 $group->update(['logo' => $media->getUrl()]);
             } 
             $group->update(['name' => $data['name']]);
@@ -58,7 +57,6 @@ class GroupsController extends Controller
 
     public function destroy($id) {
         $group = Group::find($id);
-        dump($id);
         $this->authorize('update', Classroom::where('id', $group->grouping->classroom_id)->firstOrFail());
         try {
             $group->delete();

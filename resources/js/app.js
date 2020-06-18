@@ -35,11 +35,9 @@ Vue.use(VueCookies)
 
 // Buefy
 import Buefy from 'buefy'
-Vue.use(Buefy)
-
-// Download excel
-import JsonExcel from 'vue-json-excel'
-Vue.component('downloadExcel', JsonExcel)
+Vue.use(Buefy, {
+    defaultIconPack: 'fas',
+})
 
 import ElementUI from 'element-ui';
 import { ElementTiptapPlugin } from 'element-tiptap';
@@ -48,11 +46,6 @@ import { ElementTiptapPlugin } from 'element-tiptap';
 import 'element-ui/lib/theme-chalk/index.css';
 // import this package's styles
 import 'element-tiptap/lib/index.css';
-
-// Charts
-import VueApexCharts from 'vue-apexcharts'
-Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
 
 // Crop plugin
 import Croppa from 'vue-croppa'
@@ -97,7 +90,6 @@ Vue.component('edit-group', require('./components/group/EditGroup.vue').default)
 Vue.component('show-shop', require('./components/shop/ShowShop.vue').default);
 Vue.component('shop-create', require('./components/shop/ShopCreate.vue').default);
 
-
 // Utils
 
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
@@ -108,6 +100,7 @@ Vue.component('editor', require('./components/utils/Editor.vue').default);
 
 Vue.component('count-down', require('./components/utils/CountDown.vue').default);
 
+Vue.component('notifications', require('./components/utils/Notifications.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

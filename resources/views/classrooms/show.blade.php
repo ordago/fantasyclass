@@ -2,11 +2,11 @@
 
 @section('content')
 @php
-    $theme = $class->theme;
+$theme = $class->theme;
 @endphp
 <div class="">
   <!-- Utilities -->
-  <show-students  :students="{{ $students }}" :classroom="{{ $class }}"></show-students>
- 
+  <show-students :students="{{ $students }}" :classroom="{{ $class }}"></show-students>
+
 </div>
 @endsection
