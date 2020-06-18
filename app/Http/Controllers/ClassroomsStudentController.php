@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Card;
+use App\CardStudent;
 use App\Challenge;
 use App\Classroom;
 use App\Equipment;
@@ -226,6 +228,28 @@ class ClassroomsStudentController extends Controller
         ];
     }
 
+    public function markCard($code, $id) {
+
+        $data = request()->validate([
+            'type' => ['numeric'],
+        ]);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $student = $this->getCurrentStudent($class);
+        $card = Card::where('id', '=', $id)->where('classroom_id', '=', $class->id)->first();
+
+        $cardLine = CardStudent::where('card_id', $card->id)
+            ->where('student_id', $student->id)
+            ->orderBy('marked')
+            ->first();
+
+        $cardLine->update(['marked' => $data['type']]);
+        return [
+            "message" => " " . __('success_error.update_success'),
+            "icon" => "check",
+            "type" => "success",
+           ];
+
+    }
     public function buyItem($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

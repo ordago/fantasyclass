@@ -42,13 +42,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards/{id}', 'CardsController@show');
         Route::patch('/cards/{id}', 'CardsController@update');
         Route::post('/card/usedelete/{id}', 'CardsController@useDelete');
-
+        
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');
         Route::post('/{code}/groups/create', 'GroupsController@store');
         Route::patch('/{code}/groups/{action}', 'GroupsController@update');
         Route::delete('/groups/{id}', 'GroupsController@destroy');
-
+        
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
         Route::post('/students/', 'StudentController@store');
@@ -58,7 +58,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter');
         Route::post('/student/behaviour', 'StudentController@addBehaviour');
         Route::patch('/student/inventory', 'InventoryController@update');
-
+        
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
@@ -67,6 +67,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // Policy protect
+        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // Policy protect
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');

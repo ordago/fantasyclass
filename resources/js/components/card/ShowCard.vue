@@ -1,11 +1,16 @@
 <template>
   <div class="has-margin-2">
     <div style="text-align:center;" v-if="this.use">
-      <button type="submit" class="button is-danger">
-        <i class="fas fa-trash-alt"></i> Delete
-      </button>
-      <button type="submit" class="button is-success" v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level.number }">
+      <button
+        type="submit"
+        class="button is-success"
+        @click="markCard(1)"
+        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level.number }"
+      >
         <i class="fas fa-check"></i> Use
+      </button>
+      <button type="submit" @click="markCard(2)" class="button is-danger">
+        <i class="fas fa-trash-alt"></i> Delete
       </button>
     </div>
     <div
@@ -100,6 +105,34 @@ export default {
     return {};
   },
   methods: {
+    markCard(type) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("cards.use_title"),
+        message: this.trans.get("cards.use_text"),
+        confirmText: this.trans.get("cards.use_confirm"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.code + "/card/mark/" + this.card.id, {
+              type: type
+            })
+            .then(response => {
+              this.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type
+              });
+            });
+        }
+      });
+    },
     confirmDelete() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),

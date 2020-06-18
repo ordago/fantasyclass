@@ -77,6 +77,8 @@ export default {
             icon: response.data.icon,
             type: response.data.type
           });
+          if(action)
+            location.reload()
         });
     }
   },
