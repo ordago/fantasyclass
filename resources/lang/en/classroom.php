@@ -2,6 +2,7 @@
 
 return [
     "add" => "Add classroom",
+    "edit" => "Edit classroom",
     "join" => "Join classroom",
 
     /* Roles */

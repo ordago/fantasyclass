@@ -22,36 +22,46 @@ class StudentController extends Controller
         $this->middleware('verified');
     }
 
-    public function create($code) 
+    public function create($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
         session()->put('classroom', $class->id);
         return view('students.create', compact('class'));
     }
-    
-    public function store(Request $request) 
+
+    public function store(Request $request)
     {
-        $classId = session()->pull('classroom');
-        if(!$classId)
+        $class = Classroom::where('id', '=', session()->pull('classroom'))->firstOrFail();
+        $this->authorize('update', $class);
+
+        $classId = $class->id;
+        if (!$classId)
             return false;
         foreach ($request->students as $student) {
             $pass = '';
-            if($student['email'] && $student['username']) {
+            if ($student['email'] && $student['username']) {
                 $id = User::select('id')
-                        ->where('email', $student['email'])
-                        ->where('username', $student['username'])
-                        ->first()['id'];
+                    ->where('email', $student['email'])
+                    ->where('username', $student['username'])
+                    ->first()['id'];
             } else {
+                $verified = null;
+                if(!$student['email']) {
+                    $verified = now();
+                }
                 $pass = strtolower(Str::random(5));
                 $user = User::create([
                     'name' => $student['name'],
                     'username' => $this->generateUsername($student['name']),
                     'email' => $student['email'],
-                    'email_verified_at' => now(),
+                    'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
                     'is_student' => 1,
                 ]);
                 $id = $user->id;
+                if($student['email'])
+                    $user->sendEmailVerificationNotification();
             }
             try {
                 $tmp = ClassroomUser::create([
@@ -61,38 +71,38 @@ class StudentController extends Controller
                 ]);
             } catch (\Throwable $th) {
                 session()->put('classroom', $classId);
-                if(!isset($error))
+                if (!isset($error))
                     $error = [];
-                array_push($error, $student['name']." can't be created");
+                array_push($error, $student['name'] . " can't be created");
                 continue;
             }
-            // Attach user to classroom as student
 
             // Get the new insertion id (another way? :/)
             $cuid = ClassroomUser::select('id')
-            ->where('user_id', '=', $id)
-            ->where('classroom_id', '=', $classId)
-            ->where('role', '=', 0)
-            ->get()
-            ->first();                 
+                ->where('user_id', '=', $id)
+                ->where('classroom_id', '=', $classId)
+                ->where('role', '=', 0)
+                ->get()
+                ->first();
 
 
             // Create the student properties
             $student = Student::create([
                 'classroom_user_id' => $cuid->id,
                 'name' => $student['name'],
-                'character_id' => Classroom::find($classId)->characterTheme->characters->random(1)->first()->id,
+                'character_id' => Classroom::findOrFail($classId)->characterTheme->characters->random(1)->first()->id,
                 'password_plain' => $pass,
             ]);
-            
+
             // Assign basic equipment        
-            $student->setBasicEquipment();        
+            $student->setBasicEquipment();
         }
-        if(isset($error) && count($error))
+        if (isset($error) && count($error))
             return $error;
     }
 
-    public function generateUsername($name) {
+    public function generateUsername($name)
+    {
         $generator = new Generator();
         $username = $generator->generate($name);
         $userRows  = User::whereRaw("username REGEXP '^{$username}([0-9]*)?$'")->get();
@@ -101,50 +111,79 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
-    public function addBehaviour() {
+    public function addBehaviour()
+    {
         $data = request()->all();
         $student = Student::where('id', '=', $data['id'])->first();
-    
+        
+        $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+
         $behaviour = Behaviour::findOrFail($data['behaviour']);
         $student->behaviours()->attach($data['behaviour']);
         $valHp = $student->setProperty('hp', $behaviour->hp);
         $valXp = $student->setProperty('xp', $behaviour->xp);
         $valGold = $student->setProperty('gold', $behaviour->gold);
 
-        return[
+        return [
             'hp' => $valHp,
             'xp' => $valXp,
             'gold' => $valGold,
             'level' => $student->getLevelAttribute(),
         ];
-        
     }
 
-    public function index($code, $id) {
+    public function show($code, $id)
+    {
         $student = Student::where('id', $id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
-        
-        if($student->classroom->classroom->code != $code)
+
+        if ($student->classroom->classroom->code != $code)
             abort(404);
-        $admin = true;  
+        $admin = true;
         $class = Classroom::where('code', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
+        $this->authorize('view', $class);
 
         $items = DB::table('students')
-        ->crossJoin('items')
-        ->where('items.classroom_id', '=', $class->id)
-        ->where('students.id', '=', $student->id)
-        ->select('*')
-        ->leftJoin('item_student', function($join) use ($student) {
-            $join->on('items.id', '=', 'item_student.item_id')
+            ->crossJoin('items')
+            ->where('items.classroom_id', '=', $class->id)
+            ->where('students.id', '=', $student->id)
+            ->select('*')
+            ->leftJoin('item_student', function ($join) use ($student) {
+                $join->on('items.id', '=', 'item_student.item_id')
                     ->where('item_student.student_id', '=', $student->id);
-        })
-        ->selectRaw('students.id, items.id, icon, IFNULL(item_student.count, 0) as count')
-        ->get();
+            })
+            ->selectRaw('students.id, items.id, icon, IFNULL(item_student.count, 0) as count')
+            ->get();
+        
+        $challenges = DB::table('students')
+            ->crossJoin('challenges')
+            ->where('challenges.is_conquer', '=', 1)
+            ->whereIn('challenges.id', function($query) use ($class){
+                $query->select('challenges.id')
+                ->from('challenges')
+                ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
+                ->where('challenges_groups.classroom_id', '=', $class->id)
+                ->get();
+            })
+            ->where('students.id', '=', $student->id)
+            ->select('*')
+            ->leftJoin('challenge_student', function ($join) use ($student) {
+                $join->on('challenges.id', '=', 'challenge_student.challenge_id')
+                    ->where('challenge_student.student_id', '=', $student->id);
+            })
+            ->select('*')
+            ->get();
 
-        return view('students.show', compact('student', 'class', 'admin', 'items'));
+            $cards = $student->cards;
+
+        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards'));
     }
 
-    public function update(Request $request) {
+    public function update(Request $request)
+    {
         $student = Student::findOrFail($request->id);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
         LogEntry::create([
             'type' => $request->prop,
             'value' => $request->value,
@@ -153,27 +192,26 @@ class StudentController extends Controller
         return $student->setProperty($request->prop, $request->value);
     }
 
-    public function changeCharacter($code) {
+    public function changeCharacter($code)
+    {
         $student = Student::findOrFail(request()->id);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
         $student->update(['character_id' => request()->character_id]);
         $student->setBasicEquipment();
     }
 
-    public function getUsername(Request $request) 
+    public function getUsername(Request $request)
     {
-        
+
         $email = $request->email;
-        if(!$email)
+        if (!$email)
             return false;
 
         // If the user is registered, return their username
         $username = User::select('username')->where('email', $email)->first();
-        if($username) {
+        if ($username) {
             return $username->username;
-        } 
-        
-        else return false;
-       
+        } else return false;
     }
-
 }

@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,21 +28,22 @@
     <script src="/js/pace.min.js"></script>
 
 </head>
-    <body class="has-background-white-bis" @yield('bg', '')>
+
+<body @if(!isset($class) && !isset($themes)) class="has-background-info" @else class="has-background-white-ter" @endif @yield('bg', '' )>
     <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
-            <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">
+        <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                    <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
-                        <img src="/img/logo.png" width="36px" height="38px" class="has-margin-x-3">
-                        <label class="label-title has-padding-x-2 cursor-pointer">
-                            @yield('title','FantasyClass')
-                        </label>
-                    </a>
+                <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
+                    <img src="/img/logo.png" width="36px" height="38px" class="has-margin-x-3">
+                    <label class="label-title has-padding-x-2 cursor-pointer">
+                        @yield('title','FantasyClass')
+                    </label>
+                </a>
                 <a role="button" class="navbar-burger burger" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
-                <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
                 </a>
             </div>
 
@@ -49,23 +51,24 @@
                 @if(isset($class))
 
                 @yield('menu')
-                
+
                 @endif
 
                 <div class="navbar-end has-text-right">
                     <div class="navbar-item">
+                        @yield('notifications')
                         <div class="dropdown is-right is-hoverable">
                             <div class="dropdown-trigger">
                                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                                <span>
-                                    <i class="fas fa-user-graduate"></i> 
-                                    <span class="pl-2 text-light cursor-default">
-                                        {{ Str::limit(Auth::user()->username, 8, $end='...') }}
+                                    <span>
+                                        <i class="fas fa-user-graduate"></i>
+                                        <span class="pl-2 text-light cursor-default">
+                                            {{ Str::limit(Auth::user()->username, 8, $end='...') }}
+                                        </span>
                                     </span>
-                                </span>
-                                <span class="icon is-small">
-                                    <i class="fas fa-angle-down" aria-hidden="true"></i>
-                                </span>
+                                    <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                    </span>
                                 </button>
                             </div>
                             <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
@@ -77,8 +80,7 @@
                                     <a class="dropdown-item" href="/preferences/edit">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fal fa-sign-out"></i> {{ __('Logout') }}
                                     </a>
@@ -88,11 +90,11 @@
                                     </form>
                                 </div>
                             </div>
-                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            </nav>
+        </nav>
         @endauth
 
         <main class="main-content has-padding-3">
@@ -100,4 +102,5 @@
         </main>
     </div>
 </body>
+
 </html>

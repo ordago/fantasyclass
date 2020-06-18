@@ -11,6 +11,7 @@
         canvas-color="transparent"
         :show-remove-button="true"
         remove-button-color="black"
+        class="rounded"
         :show-loading="true"
         :loading-size="50"
         :initial-image="prevImage"

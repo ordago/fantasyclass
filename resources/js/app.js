@@ -35,11 +35,9 @@ Vue.use(VueCookies)
 
 // Buefy
 import Buefy from 'buefy'
-Vue.use(Buefy)
-
-// Download excel
-import JsonExcel from 'vue-json-excel'
-Vue.component('downloadExcel', JsonExcel)
+Vue.use(Buefy, {
+    defaultIconPack: 'fas',
+})
 
 import ElementUI from 'element-ui';
 import { ElementTiptapPlugin } from 'element-tiptap';
@@ -49,15 +47,10 @@ import 'element-ui/lib/theme-chalk/index.css';
 // import this package's styles
 import 'element-tiptap/lib/index.css';
 
-// Charts
-import VueApexCharts from 'vue-apexcharts'
-Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
-
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
-Vue.use(Croppa)    
+Vue.use(Croppa)
 
 // use ElementUI's plugin
 Vue.use(ElementUI);
@@ -66,9 +59,12 @@ Vue.use(ElementTiptapPlugin, { /* plugin options */ });
 // Now you register `'el-tiptap'` component globally.
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
+Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
+Vue.component('show-students-student', require('./components/student/ShowStudentsStudent.vue').default);
+Vue.component('show-student-info', require('./components/student/ShowStudentInfo.vue').default);
 Vue.component('show-student', require('./components/student/ShowStudent.vue').default);
 
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);
@@ -84,6 +80,7 @@ Vue.component('show-level-student', require('./components/level/ShowLevelStudent
 
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
+Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
 Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
 
@@ -103,6 +100,10 @@ Vue.component('icon-selector', require('./components/utils/IconSelector.vue').de
 
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
 Vue.component('editor', require('./components/utils/Editor.vue').default);
+
+Vue.component('count-down', require('./components/utils/CountDown.vue').default);
+
+Vue.component('notifications', require('./components/utils/Notifications.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

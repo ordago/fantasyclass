@@ -36,4 +36,8 @@ class Card extends Model implements HasMedia
                 ->singleFile();
         }
 
+        public function students() {
+            return $this->hasMany(Student::class)->using(CardStudent::class);
+        }
+
 }

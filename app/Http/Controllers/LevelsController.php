@@ -18,35 +18,39 @@ class LevelsController extends Controller
 
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
         $levels = $class->levels;
         
         return view('levels.index', compact('levels', 'class'));
     }
-
-    public function store($code) {
     
-        $class = DB::table('classrooms')->where('code', '=', $code)->pluck('id')->first();
-
+    public function store($code) {
+        
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        
         $data = request()->validate([
             'levels' => ['numeric'],
             'increment' => ['numeric'],
-        ]);
-        
+            ]);
+            
         $exp = 0;
         for ($i=0; $i <= $data['levels']; $i++) { 
             Level::create([
                 'number' => $i,
                 'xp' => $exp,
-                'classroom_id' => $class,
-            ]);
+                'classroom_id' => $class->id,
+                ]);
             $exp += $data['increment'];
         }
         return back();
     }
-
-    public function update($code, $level) {
+    
+    public function update($level) {
+        $lvl = Level::findOrFail($level);
+        $class = Classroom::where('id', '=', $lvl->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
         try {
-            $lvl = Level::findOrFail($level);
             if(request()->file('file')) {
                 $lvl->addMedia(request()->file('file'))
                 ->toMediaCollection('level');
@@ -74,8 +78,10 @@ class LevelsController extends Controller
     }
 
     public function destroy($id) {
+        $lvl = Level::where('id', '=', $id)->first();
+        $this->authorize('update', Classroom::where('id', $lvl->classroom_id)->firstOrFail());
         try {
-            Level::destroy($id);
+            $lvl->delete();
         } catch (\Throwable $th) {
             return [ 'error' => $th];
         }

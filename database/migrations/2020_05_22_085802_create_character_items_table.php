@@ -18,10 +18,10 @@ class CreateCharacterItemsTable extends Migration
             $table->unsignedBigInteger('character_id');
             $table->string('src', 100);
             $table->smallInteger('type');
-            $table->smallInteger('hp');
-            $table->smallInteger('xp');
-            $table->smallInteger('gold');
-            $table->smallInteger('price');
+            $table->integer('hp');
+            $table->integer('xp');
+            $table->integer('gold');
+            $table->integer('price');
             $table->smallInteger('offset');
             $table->string('classes');
         });
