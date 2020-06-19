@@ -13185,6 +13185,10 @@ textPath {
   flex-direction: column;
 }
 
+.columns {
+  margin-right: 0 !important;
+}
+
 .is-sticky {
   position: -webkit-sticky;
   position: sticky;

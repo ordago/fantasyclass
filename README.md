@@ -61,7 +61,7 @@ https://github.com/kg-bot/laravel-localization-to-vue
  php artisan export:messages-flat
 ```
 
-### Classroom settings management vie VUE
+### Classroom settings management via VUE
 
  axios
     .patch("/classroom/" + this.code + "/setting", {

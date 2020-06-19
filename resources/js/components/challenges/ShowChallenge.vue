@@ -1,5 +1,5 @@
 <template>
-  <div class="box has-margin-bottom-3" v-bind:class="getBackground">
+  <div class="box card-shadow-s has-margin-bottom-3" v-bind:class="getBackground">
     <section class="media">
       <div class="media-content">
         <div class="content">
@@ -101,6 +101,28 @@
                 <button class="button is-danger" @click="confirmDelete(attachment.id, index)">
                   <i class="fas fa-trash"></i>
                 </button>
+              </div>
+            </div>
+          </div>
+              <input-emoji></input-emoji>
+          <div class="has-margin-top-3">
+            <div class="comment has-margin-0" v-for="(comment, index) in challenge.comments" :key="index">
+              <div class="flexCenter imgTeacher">
+
+                <img v-if="comment.info.type == 'student'" width="32px" height="32px" :src="comment.info.avatar">
+                <i v-if="comment.info.type == 'teacher'" class="fas fa-user-graduate text-light textshadow"></i>
+              </div>
+              <div class="commentInfo has-padding-2">
+                <div>
+                  <span class="tag is-info has-padding-2">{{ comment.info.name }}</span>
+                  <span class="tag is-link has-padding-2">{{ comment.info.datetime }}</span>
+                  <button
+                    class="button tag is-danger has-text-light has-padding-2" @click="removeComment(comment.id)" v-if="admin"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+                <div class="flexVertical has-padding-2">{{ comment.text }}</div>
               </div>
             </div>
           </div>
@@ -237,11 +259,28 @@ export default {
         type: null,
         name: "",
         url: "",
-        challenge_id: null
-      }
+        challenge_id: null,
+      },
+      comment: '',
+
     };
   },
   methods: {
+    removeComment(id) {
+      axios.delete('/classroom/challenge/comment/' + id)
+        .then(response => {
+
+        })
+    },
+    sendComment() {
+      this.comment = this.comment.replace("&nbsp;", " ");
+      console.log(this.comment)
+
+      axios.post('/classroom/challenge/comment', {'challenge_id': this.challenge.id, 'text': this.comment})
+        .then(response => {
+            
+        })
+    },
     confirmDelete(id, index) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -316,7 +355,6 @@ export default {
       });
     }
   },
-  components: {},
   computed: {
     checkCompletion() {
       if (this.challengeReactive.completion == 1)

@@ -42,6 +42,9 @@
 .is-flex-column {
   flex-direction: column;
 }
+.columns {
+  margin-right: 0!important;
+}
 .is-sticky {
   position: sticky;
   top: 0;

@@ -26,6 +26,7 @@
     },
     "dependencies": {
         "-": "0.0.1",
+        "@zaichaopan/emoji-picker": "^0.1.7",
         "apexcharts": "^3.19.2",
         "bootstrap-vue": "^2.13.1",
         "buefy": "^0.8.19",

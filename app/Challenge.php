@@ -38,5 +38,8 @@ class Challenge extends Model
     public function attachments() {
         return $this->hasMany(Attachment::class);
     }
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
 
 }

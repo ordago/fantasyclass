@@ -97,6 +97,10 @@ Route::group(['middleware' => 'language'], function () {
         // Attachment
         Route::post('/challenge/attachment', 'AttachmentController@store');
         Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
+        
+        // Comment
+        Route::post('/challenge/comment', 'CommentController@store');
+        Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
 
         // Shop
         Route::get('/{code}/shop', 'ShopController@index');

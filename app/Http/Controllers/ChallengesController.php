@@ -42,7 +42,7 @@ class ChallengesController extends Controller
         $this->authorize('view', $class);
 
         $children = ChallengesGroup::where('challenges_group_id', $data['id'])->pluck('id')->toArray();
-        return Challenge::where('challenges_group_id', $group->id)->orWhereIn('challenges_group_id', $children)->with('attachments')->get();
+        return Challenge::where('challenges_group_id', $group->id)->orWhereIn('challenges_group_id', $children)->with('attachments', 'comments')->get();
     }
 
     public function destroy($id)

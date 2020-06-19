@@ -105,6 +105,8 @@ Vue.component('count-down', require('./components/utils/CountDown.vue').default)
 
 Vue.component('notifications', require('./components/utils/Notifications.vue').default);
 
+Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
