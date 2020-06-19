@@ -435,31 +435,45 @@
               <i class="far fa-redo-alt"></i>
             </button>
           </div>
-          <div v-if="showCard" class="column is-narrow">
-            <div class="select">
-              <select v-model="studentSelected" style="height: 40px!important">
-                <option value="0">Student</option>
-                <option
-                  :value="student.id"
-                  v-for="student in students"
-                  :key="student.id"
-                >{{ student.name }}</option>
-              </select>
+          <div v-if="showCard" class="column is-narrow is-flex has-all-centered">
+            <div class="field has-margin-0">
+              <p class="control has-icons-left">
+                <span class="select">
+                  <select v-model="studentSelected">
+                    <option value="0">Student</option>
+                    <option
+                      :value="student.id"
+                      v-for="student in students"
+                      :key="student.id"
+                    >{{ student.name }}</option>
+                  </select>
+                </span>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
             </div>
             <button class="button is-primary" @click="assignCard('student')">
               <i class="fas fa-user"></i>
             </button>
           </div>
-          <div v-if="showCard" class="column is-narrow">
-            <div class="select">
-              <select v-model="groupSelected" style="height: 40px!important">
-                <option value="0">Groups</option>
-                <option
-                  v-for="group in classroom.grouping[0].groups"
-                  :value="group.id"
-                  :key="group.id"
-                >{{ group.name }}</option>
-              </select>
+          <div v-if="showCard" class="column is-narrow is-flex has-all-centered">
+            <div class="field has-margin-0">
+              <p class="control has-icons-left">
+                <span class="select">
+                  <select v-model="groupSelected">
+                    <option value="0">Groups</option>
+                    <option
+                      v-for="group in classroom.grouping[0].groups"
+                      :value="group.id"
+                      :key="group.id"
+                    >{{ group.name }}</option>
+                  </select>
+                </span>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
             </div>
             <button class="button is-primary" @click="assignCard('group')">
               <i class="fas fa-users"></i>

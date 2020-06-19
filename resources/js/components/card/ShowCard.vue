@@ -9,7 +9,7 @@
       >
         <i class="fas fa-check"></i> Use
       </button>
-      <button type="submit" @click="markCard(card, 2)" class="button is-danger" v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }">
+      <button type="submit" v-if="card.xp >= 0 && card.gold >= 0 && card.hp >= 0 " @click="markCard(card, 2)" class="button is-danger" v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }">
         <i class="fas fa-trash-alt"></i> Delete
       </button>
     </div>
