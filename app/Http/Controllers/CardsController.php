@@ -294,6 +294,8 @@ class CardsController extends Controller
     public static function getRandomCard($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        if(!$class->cards->count())
+            return false;
 
         settings()->setExtraColumns(['user_id' => $class->id]);
         $probabilites[0] = settings()->get('cards_common', 55);

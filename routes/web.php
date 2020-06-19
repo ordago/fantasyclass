@@ -94,6 +94,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
         
+        // Attachment
+        Route::post('/challenge/attachment', 'AttachmentController@store');
+        Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
+
         // Shop
         Route::get('/{code}/shop', 'ShopController@index');
         Route::get('/{code}/shop/create', 'ShopController@create');

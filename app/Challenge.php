@@ -35,6 +35,8 @@ class Challenge extends Model
     public function group() {
         return $this->belongsTo(ChallengesGroup::class, 'challenges_group_id', 'id');
     }
-
+    public function attachments() {
+        return $this->hasMany(Attachment::class);
+    }
 
 }

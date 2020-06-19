@@ -77,7 +77,7 @@
     </div>
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
-        <b-tab-item label="Information" icon="info" icon-pack="fad">
+        <b-tab-item label="Information" icon="info-circle" icon-pack="fad">
           <div class>
             <div class="has-margin-3">
               <croppa

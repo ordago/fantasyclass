@@ -94,9 +94,9 @@ class ClassroomsStudentController extends Controller
             
             // TODO Avoid duplicate code
             if (!$stories) {
-                $stories = $group->challenges->where('datetime', '<=', Carbon::now()->toDateTimeString())->map(function ($challenge) {
+                $stories = $group->challenges()->with('attachments')->where('datetime', '<=', Carbon::now()->toDateTimeString())->get()->map(function ($challenge) {
                     return collect($challenge->toArray())
-                        ->only(['title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards'])
+                        ->only(['title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments'])
                         ->all();
                 });
             } else {
