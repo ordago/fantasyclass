@@ -203,7 +203,7 @@
                 <span>Embedded</span>
               </b-radio-button>
             </div>
-            <b-field>
+            <b-field class="has-margin-top-3">
               <b-input v-model="attachment.name" placeholder="Name (Optional)"></b-input>
             </b-field>
             <b-field>
@@ -243,7 +243,7 @@ export default {
   },
   methods: {
     confirmDelete(id, index) {
-          this.$buefy.dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
@@ -254,20 +254,25 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/challenge/attachment/" + id).then(response => {
-            console.log(response.data)
-            if (response.data === 1) {
-              this.challenge.attachments.splice(index, 1);
-              this.$forceUpdate();
-            }
-          });
+          axios
+            .delete("/classroom/challenge/attachment/" + id)
+            .then(response => {
+              console.log(response.data);
+              if (response.data === 1) {
+                this.challenge.attachments.splice(index, 1);
+                this.$forceUpdate();
+              }
+            });
         }
       });
     },
     getYoutube(url) {
-      return Utils.getYoutube(url)
+      return Utils.getYoutube(url);
     },
     addAttachment() {
+      let type = this.attachment.type;
+      if (type == 3 || type == 4 || type == 6 || type == 7 || type == 8)
+        this.attachment.mode = 0;
       this.attachment.challenge_id = this.challenge.id;
       axios
         .post("/classroom/challenge/attachment", {

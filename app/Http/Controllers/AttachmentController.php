@@ -22,8 +22,9 @@ class AttachmentController extends Controller
             'attachment.url' => ['url', 'required'],
             'attachment.mode' => ['numeric', 'required'],
         ]);
+        
+        $class = Classroom::findOrFail(Challenge::find($data['attachment']['challenge_id'])->group->classroom_id);
 
-        $class = Classroom::findOrFail(Challenge::find('challenge_id')->pluck('classroom_id'));
         $this->authorize('update', $class);
         
         return Attachment::create($data['attachment']);
