@@ -175,7 +175,9 @@ class ClassroomsController extends Controller
 
         $pending = collect();
         foreach ($class->students as $student) {
-            $pending->add(['student' => $student, 'cards' => $student->cards->where('pivot.marked', ">" , 0)]);
+            $cards = $student->cards->where('pivot.marked', ">" , 0);
+            if($cards->count())
+                $pending->add(['student' => $student, 'cards' => $cards]);
         }
 
         return view('classrooms.show', compact('class', 'students', 'pending'));

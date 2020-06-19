@@ -4,12 +4,12 @@
       <button
         type="submit"
         class="button is-success"
-        @click="markCard(1)"
-        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level.number }"
+        @click="markCard(card, 1)"
+        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level.number, 'has-background-dark' : card.pivot.marked == 1 }"
       >
         <i class="fas fa-check"></i> Use
       </button>
-      <button type="submit" @click="markCard(2)" class="button is-danger">
+      <button type="submit" @click="markCard(card, 2)" class="button is-danger" v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }">
         <i class="fas fa-trash-alt"></i> Delete
       </button>
     </div>
@@ -105,7 +105,7 @@ export default {
     return {};
   },
   methods: {
-    markCard(type) {
+    markCard(card, type) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("cards.use_title"),
         message: this.trans.get("cards.use_text"),
@@ -129,6 +129,8 @@ export default {
                 icon: response.data.icon,
                 type: response.data.type
               });
+              card.pivot.marked = type
+              this.$forceUpdate()
             });
         }
       });

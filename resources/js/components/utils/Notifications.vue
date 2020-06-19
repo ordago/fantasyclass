@@ -1,7 +1,7 @@
 <template>
-  <div class="has-margin-3 cursor-pointer" @click="open=true" v-if="countCards">
+  <div class="has-margin-3 cursor-pointer" @click="open=true" v-if="countCards()">
     <i class="fad fa-bell" style="font-size: 1.25em;"></i>
-    <span class="tag is-danger" style="font-size: 0.7em;" v-html="countCards"></span>
+    <span class="tag is-danger" style="font-size: 0.7em;" v-html="countCards()"></span>
 
     <b-sidebar
       type="is-light"
@@ -18,7 +18,7 @@
       </div>
       <div>
         <div v-for="(line, index) in pending" :key="index">
-          <div class="columns has-all-centered" v-for="(card, index) in line.cards" :key="index">
+          <div class="columns has-all-centered" v-for="(card, indexC) in line.cards" :key="indexC">
             <div class="column is-narrow">
               <show-card style="zoom: .75" :card="card" admin="false"></show-card>
             </div>
@@ -28,12 +28,12 @@
             <div class="column is-flex is-narrow has-all-centered">
               <button
                 class="button is-success"
-                @click="setCard(card.id, line.student.id, card.pivot.marked, true)"
+                @click="setCard(card.id, line, card.pivot.marked, true, index, indexC)"
                 v-text="getText(card.pivot.marked)"
               ></button>
               <button
                 class="button is-danger has-margin-left-2"
-                @click="setCard(card.id, line.student.id, card.pivot.marked, false)"
+                @click="setCard(card.id, line, card.pivot.marked, false, index, indexC)"
               >Cancel</button>
             </div>
           </div>
@@ -62,10 +62,10 @@ export default {
         return "Delete";
       }
     },
-    setCard(id, student, type, action) {
+    setCard(id, line, type, action, index, indexC) {
       axios
         .post("/classroom/card/usedelete/" + id, {
-          student: student,
+          student: line.student.id,
           action: action,
           type: type
         })
@@ -77,12 +77,15 @@ export default {
             icon: response.data.icon,
             type: response.data.type
           });
-          if(action)
-            location.reload()
+          if (action) {
+            if (response.data.type == "success") location.reload();
+          } else {
+            this.pending[index].cards.splice(indexC, 1);
+            if (!this.pending[index].cards.length) this.open = false;
+            this.$forceUpdate();
+          }
         });
-    }
-  },
-  computed: {
+    },
     countCards() {
       let count = 0;
       this.pending.forEach(element => {
@@ -90,6 +93,7 @@ export default {
       });
       return count;
     }
-  }
+  },
+  computed: {}
 };
 </script>
