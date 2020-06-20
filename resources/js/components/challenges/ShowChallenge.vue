@@ -106,7 +106,7 @@
           </div>
               <input-emoji></input-emoji>
           <div class="has-margin-top-3">
-            <div class="comment has-margin-0" v-for="(comment, index) in challenge.comments" :key="index">
+            <div class="comment has-margin-0" v-for="(comment, index) in orderedComments" :key="index">
               <div class="flexCenter imgTeacher">
 
                 <img v-if="comment.info.type == 'student'" width="32px" height="32px" :src="comment.info.avatar">
@@ -117,7 +117,7 @@
                   <span class="tag is-info has-padding-2">{{ comment.info.name }}</span>
                   <span class="tag is-link has-padding-2">{{ comment.info.datetime }}</span>
                   <button
-                    class="button tag is-danger has-text-light has-padding-2" @click="removeComment(comment.id)" v-if="admin"
+                    class="button tag is-danger has-text-light has-padding-2" @click="deleteComment(comment.id, index)" v-if="admin"
                   >
                     <i class="far fa-trash-alt"></i>
                   </button>
@@ -266,19 +266,23 @@ export default {
     };
   },
   methods: {
-    removeComment(id) {
+    deleteComment(id) {
       axios.delete('/classroom/challenge/comment/' + id)
         .then(response => {
-
+            var index = this.challenge.comments.findIndex(
+            function(comment, i){
+                            return comment.id === id
+            });
+            this.challenge.comments.splice(index, 1);
+            this.$forceUpdate();
         })
     },
     sendComment() {
       this.comment = this.comment.replace("&nbsp;", " ");
-      console.log(this.comment)
 
       axios.post('/classroom/challenge/comment', {'challenge_id': this.challenge.id, 'text': this.comment})
         .then(response => {
-            
+            this.challenge.comments.push(response.data)
         })
     },
     confirmDelete(id, index) {
@@ -356,6 +360,9 @@ export default {
     }
   },
   computed: {
+    orderedComments: function() {
+      return _.orderBy(this.challenge.comments, "created_at", "desc");
+    },
     checkCompletion() {
       if (this.challengeReactive.completion == 1)
         return this.challengeReactive.count == 1;

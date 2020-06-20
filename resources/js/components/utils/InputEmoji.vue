@@ -1,5 +1,5 @@
 <template>
-  <div class="message is-flex has-all-centered">
+  <div class="message has-margin-top-4 has-margin-bottom-1 is-flex has-all-centered">
         <div contenteditable="true"
              class="rich-editor-container rounded has-padding-4"
              ref="textarea"
@@ -74,7 +74,7 @@ export default {
   .message-emoji {
     position: absolute;
     right: 50px;
-    top: 0;
+    top: 9px;
   }
   [contenteditable="true"]:empty:before {
     content: attr(placeholder);
