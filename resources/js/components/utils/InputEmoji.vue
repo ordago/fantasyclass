@@ -8,7 +8,7 @@
              @click="handleEditorClick"
              placeholder="Type a message...">
         </div>
-        <button class="button is-link" @click="$parent.sendComment()" v-if="$parent.comment"><i class="fas fa-comment"></i></button>
+        <button class="button is-link" @click="$parent.sendComment()" v-if="$parent.comment.length"><i class="fas fa-comment"></i></button>
         <div class="message-emoji">
             <emoji-picker @emoji:picked="handleEmojiPicked"
                           :data="data" />

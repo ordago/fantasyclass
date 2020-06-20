@@ -61,7 +61,7 @@ class QuestionController extends Controller
         return Question::create([
             'challenge_id' => $data['question']['challenge_id'],
             'name' => $data['question']['question'],
-            'options' => $options,
+            'options' => $options->shuffle(),
         ]);
     }
 
