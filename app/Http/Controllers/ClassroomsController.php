@@ -9,6 +9,7 @@ use App\GoalThemes;
 use App\Grouping;
 use App\Theme;
 use App\Item;
+use App\QuestionBank;
 use App\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;

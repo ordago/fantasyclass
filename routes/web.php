@@ -98,6 +98,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/challenge/attachment', 'AttachmentController@store');
         Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
         
+        // Question
+        Route::post('/challenge/question', 'QuestionController@store');
+        Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
+        
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');

@@ -15,9 +15,9 @@ class CreateQuestionsTable extends Migration
     {
         Schema::create('questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('question_bank_id');
+            $table->unsignedBigInteger('challenge_id');
             $table->string('name');
-            $table->smallInteger('type');
+            $table->smallInteger('type')->default(1);
             $table->json('options');
             $table->timestamps();
         });

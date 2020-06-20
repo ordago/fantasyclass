@@ -41,5 +41,8 @@ class Challenge extends Model
     public function comments() {
         return $this->hasMany(Comment::class);
     }
+    public function questions() {
+        return $this->hasMany(Question::class);
+    }
 
 }

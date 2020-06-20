@@ -104,20 +104,33 @@
               </div>
             </div>
           </div>
-              <input-emoji></input-emoji>
+          <input-emoji></input-emoji>
           <div class="has-margin-top-3">
-            <div class="comment has-margin-0" v-for="(comment, index) in orderedComments" :key="index">
+            <div
+              class="comment has-margin-0"
+              v-for="(comment, index) in orderedComments"
+              :key="index"
+            >
               <div class="flexCenter imgTeacher">
-
-                <img v-if="comment.info.type == 'student'" width="32px" height="32px" :src="comment.info.avatar">
-                <i v-if="comment.info.type == 'teacher'" class="fas fa-user-graduate text-light textshadow"></i>
+                <img
+                  v-if="comment.info.type == 'student'"
+                  width="32px"
+                  height="32px"
+                  :src="comment.info.avatar"
+                />
+                <i
+                  v-if="comment.info.type == 'teacher'"
+                  class="fas fa-user-graduate text-light textshadow"
+                ></i>
               </div>
               <div class="commentInfo has-padding-2">
                 <div>
                   <span class="tag is-info has-padding-2">{{ comment.info.name }}</span>
                   <span class="tag is-link has-padding-2">{{ comment.info.datetime }}</span>
                   <button
-                    class="button tag is-danger has-text-light has-padding-2" @click="deleteComment(comment.id, index)" v-if="admin"
+                    class="button tag is-danger has-text-light has-padding-2"
+                    @click="deleteComment(comment.id, index)"
+                    v-if="admin"
                   >
                     <i class="far fa-trash-alt"></i>
                   </button>
@@ -146,6 +159,16 @@
                 <i class="fas fa-paperclip"></i>
               </span>
               <span>Add attachment</span>
+            </button>
+            <button
+              v-if="admin"
+              class="button is-outlined is-primary"
+              @click="isQuestionModalActive=true"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-question"></i>
+              </span>
+              <span>Add question</span>
             </button>
             <button
               v-if="challengeReactive.is_conquer && admin"
@@ -239,6 +262,104 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isQuestionModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      v-if="admin"
+    >
+      <form @submit.prevent="addQuestion">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add question</p>
+          </header>
+          <section class="modal-card-body">
+               <b-field>
+                  <b-input placeholder="Question" v-model="question.question" type="text" required></b-input>
+              </b-field>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-success">
+                        <i class="fas fa-check colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Correct answer" v-model="question.correctAnswer" type="text" required></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer1" required type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer2" type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer3" type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isAttachmentModalActive=false">Close</button>
+            <button class="button is-primary">Add</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -254,36 +375,46 @@ export default {
     return {
       challengeReactive: null,
       isAttachmentModalActive: false,
+      isQuestionModalActive: false,
       attachment: {
         mode: "0",
         type: null,
         name: "",
         url: "",
-        challenge_id: null,
+        challenge_id: null
       },
-      comment: '',
-
+      question: {
+        challenge_id: null,
+        question: '',
+        correctAnswer: '',
+        incorrectAnswer1: '',
+        incorrectAnswer2: '',
+        incorrectAnswer3: '',
+      },
+      comment: ""
     };
   },
   methods: {
     deleteComment(id) {
-      axios.delete('/classroom/challenge/comment/' + id)
-        .then(response => {
-            var index = this.challenge.comments.findIndex(
-            function(comment, i){
-                            return comment.id === id
-            });
-            this.challenge.comments.splice(index, 1);
-            this.$forceUpdate();
-        })
+      axios.delete("/classroom/challenge/comment/" + id).then(response => {
+        var index = this.challenge.comments.findIndex(function(comment, i) {
+          return comment.id === id;
+        });
+        this.challenge.comments.splice(index, 1);
+        this.$forceUpdate();
+      });
     },
     sendComment() {
       this.comment = this.comment.replace("&nbsp;", " ");
 
-      axios.post('/classroom/challenge/comment', {'challenge_id': this.challenge.id, 'text': this.comment})
-        .then(response => {
-            this.challenge.comments.push(response.data)
+      axios
+        .post("/classroom/challenge/comment", {
+          challenge_id: this.challenge.id,
+          text: this.comment
         })
+        .then(response => {
+          this.challenge.comments.push(response.data);
+        });
     },
     confirmDelete(id, index) {
       this.$buefy.dialog.confirm({
@@ -311,6 +442,18 @@ export default {
     },
     getYoutube(url) {
       return Utils.getYoutube(url);
+    },
+    addQuestion() {
+      this.question.challenge_id = this.challenge.id
+      axios
+        .post("/classroom/challenge/question", {
+          question: this.question
+        })
+        .then(response => {
+          this.isQuestionModalActive = false;
+          // this.challenge.questions.push(response.data);
+          this.$parent().$forceUpdate();
+        });
     },
     addAttachment() {
       let type = this.attachment.type;
