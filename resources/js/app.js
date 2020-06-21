@@ -84,6 +84,8 @@ Vue.component('show-challenge', require('./components/challenges/ShowChallenge.v
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
 Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
 
+Vue.component('show-question', require('./components/challenges/ShowQuestion.vue').default);
+
 Vue.component('create-group', require('./components/group/CreateGroups.vue').default);
 Vue.component('edit-group', require('./components/group/EditGroup.vue').default);
 

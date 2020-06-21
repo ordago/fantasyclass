@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Challenge;
 use App\Classroom;
+use App\Http\Classes\Functions;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -16,7 +17,6 @@ class QuestionController extends Controller
 
     public function store()
     {
-        dump(request()->all());
         $data = request()->validate([
             'question.challenge_id' => ['numeric', 'required'],
             'question.question' => ['string', 'required'],
@@ -31,24 +31,22 @@ class QuestionController extends Controller
 
         $num = 2;
         $ids = collect();
-        
+
         if ($data['question']['incorrectAnswer2'])
-        $num++;
+            $num++;
         if ($data['question']['incorrectAnswer3'])
-        $num++;
+            $num++;
         for ($i = 1; $i <= $num; $i++) {
             $ids->add($i);
         }
-        
+
         $options = collect();
         $ids = $ids->shuffle();
-        
+
         $id = $ids->pop();
-        $options->add(['correctAnswer' => $id]);
         $options->add(['answer' => ['id' => $id, 'text' => $data['question']['correctAnswer']]]);
         $id = $ids->pop();
         $options->add(['answer' => ['id' => $id, 'text' => $data['question']['incorrectAnswer1']]]);
-        dump('hit');
         if ($data['question']['incorrectAnswer2']) {
             $id = $ids->pop();
             $options->add(['answer' => ['id' => $id, 'text' => $data['question']['incorrectAnswer2']]]);
@@ -61,8 +59,23 @@ class QuestionController extends Controller
         return Question::create([
             'challenge_id' => $data['question']['challenge_id'],
             'name' => $data['question']['question'],
-            'options' => $options->shuffle(),
+            'options' => $options,
         ]);
+    }
+
+    public function answer()
+    {
+
+        $question = Question::find(request()->question['id']);
+        $class = Classroom::where('id', $question->challenge->group->classroom_id)->first();
+        $student = Functions::getCurrentStudent($class, []);
+        if ($student->questions->contains($question->id))
+            return false;
+
+        $student->questions()->attach($question->id, [
+            'answer' => request()->answer,
+        ]);
+        return $question->getStudentInfo();
     }
 
     public function destroy($id)

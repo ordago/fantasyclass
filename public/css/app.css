@@ -13140,6 +13140,14 @@ textPath {
   min-width: 50%;
 }
 
+.has-background-success-light {
+  background-color: darkseagreen;
+}
+
+.has-background-danger-light {
+  background-color: tomato;
+}
+
 .close-button {
   position: absolute;
   top: 2px;

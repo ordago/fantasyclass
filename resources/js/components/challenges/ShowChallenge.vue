@@ -39,6 +39,9 @@
           </p>
           <!-- class="el-tiptap-editor__content" -->
           <div v-if="edit || full" v-html="challengeReactive.content"></div>
+          <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
+            <show-question :admin="admin" :question="question"></show-question>
+          </div>
           <div class="has-margin-top-5">
             <div
               class="columns has-padding-4 has-margin-3 card rounded card-shadow-s"

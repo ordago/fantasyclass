@@ -101,6 +101,7 @@ Route::group(['middleware' => 'language'], function () {
         // Question
         Route::post('/challenge/question', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
+        Route::post('/question/answer', 'QuestionController@answer'); // TODO Policy protect
         
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
