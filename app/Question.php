@@ -29,9 +29,31 @@ class Question extends Model
         return $this->belongsToMany(Student::class)->withPivot('answer');
     }
 
+    public function getTeacherInfo() {
+
+        $class = Classroom::where('id', '=', $this->challenge->classroom())->first();
+        $answered = 0;
+        $answeredOK = $answeredKO = $remainning = [];
+        $correct = head(Arr::where($this->options, function ($value, $key) {
+            return isset($value['correctAnswer']);
+        }));
+        $students = $class->students;
+        foreach ($students as $student) {
+            $question = $student->questions->where('id', $this->id)->first();
+            if ($question) {
+                $answered++;
+                if($question->pivot->answer == $correct['correctAnswer']) {
+                    $answeredOK[] = $student->name;
+                } else $answeredKO[]  = $student->name;
+            } else {
+                $remainning[] = $student->name;
+            }
+        }
+        return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remainning' => $remainning];
+    }
+
     public function getStudentInfo()
     {
-        ChallengesGroup::$withoutAppends = true;
         $class = Classroom::where('id', '=', $this->challenge->classroom())->first();
         $student = Functions::getCurrentStudent($class, []);
         $answers = collect();

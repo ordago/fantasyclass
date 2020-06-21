@@ -65,7 +65,6 @@ class QuestionController extends Controller
 
     public function answer()
     {
-
         $question = Question::find(request()->question['id']);
         $class = Classroom::where('id', $question->challenge->group->classroom_id)->first();
         $student = Functions::getCurrentStudent($class, []);

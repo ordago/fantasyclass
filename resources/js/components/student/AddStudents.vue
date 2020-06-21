@@ -27,7 +27,6 @@
             </form>
         </div>
         
-        <button v-if="students.length" @click="sendStudents" class="button is-link">Create students</button>
         
         <div v-for="(student, index) in students" v-bind:key="student.name">
             <div class=" has-margin-y-2 has-padding-4 has-background-dark has-text-light rounded text-light relative">
@@ -36,6 +35,7 @@
                 <button class="button is-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
+        <button v-if="students.length" @click="sendStudents" class="button is-link">Create students</button>
     </div>
 </template>
 

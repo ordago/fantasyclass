@@ -489,9 +489,14 @@
   summary {
       outline: none;
   }
+  
+  .comments {
+    max-height: 200px;
+    overflow: auto;
+  }
 
   .content {
-      overflow-y: auto !important;
+      overflow-y: visible !important;
       z-index: 10 !important;
 
       &::-webkit-scrollbar {

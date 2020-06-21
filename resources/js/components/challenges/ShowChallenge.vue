@@ -42,6 +42,9 @@
           <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
           </div>
+          <div class="" v-for="(question, index) in challenge.stats" :key="index">
+            <show-question :admin="admin" :question="question"></show-question>
+          </div>
           <div class="has-margin-top-5">
             <div
               class="columns has-padding-4 has-margin-3 card rounded card-shadow-s"
@@ -108,7 +111,7 @@
             </div>
           </div>
           <input-emoji></input-emoji>
-          <div class="has-margin-top-3">
+          <div class="has-margin-top-3 comments">
             <div
               class="comment has-margin-0"
               v-for="(comment, index) in orderedComments"
@@ -416,7 +419,8 @@ export default {
           text: this.comment
         })
         .then(response => {
-          this.challenge.comments.push(response.data);
+          this.challenge.comments.push(response.data) 
+          this.comment = ""
         });
     },
     confirmDelete(id, index) {

@@ -28,14 +28,21 @@ class Challenge extends Model
         'challenges_group_id',
     ];
 
-    // protected $appends = ['questioninfo'];
-
     public function getQuestioninfoAttribute()
     {
         ChallengesGroup::$withoutAppends = true;
         $questions = collect();
         foreach ($this->questions as $question) {
             $questions->add($question->getStudentInfo());
+        }
+        return $questions;
+    }
+
+    public function getStatsAttribute()
+    {
+        $questions = collect();
+        foreach ($this->questions as $question) {
+            $questions->add(['question' => $question->name , 'stats' => $question->getTeacherInfo()]);
         }
         return $questions;
     }

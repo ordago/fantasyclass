@@ -11840,8 +11840,13 @@ summary {
   outline: none;
 }
 
+.comments {
+  max-height: 200px;
+  overflow: auto;
+}
+
 .content {
-  overflow-y: auto !important;
+  overflow-y: visible !important;
   z-index: 10 !important;
 }
 .content::-webkit-scrollbar {
@@ -13145,7 +13150,7 @@ textPath {
 }
 
 .has-background-danger-light {
-  background-color: tomato;
+  background-color: salmon;
 }
 
 .close-button {
