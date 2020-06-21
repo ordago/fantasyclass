@@ -240,7 +240,7 @@ class CardsController extends Controller
         if ($data['action']) {
             settings()->setExtraColumns(['user_id' => $class->id]);
             if ($data['type'] == 1) {
-                if ($card->min_lvl > $student->level->number) {
+                if ($student->level && $card->min_lvl > $student->level->number) {
                     return [
                         "message" => " " . __('success_error.shop_failed_level'),
                         "icon" => "times",
@@ -298,11 +298,8 @@ class CardsController extends Controller
             return false;
 
         settings()->setExtraColumns(['user_id' => $class->id]);
-        $probabilites[0] = settings()->get('cards_common', 55);
-        $probabilites[1] = settings()->get('cards_rare', 30);
-        $probabilites[2] = settings()->get('cards_epic', 10);
-        $probabilites[3] = settings()->get('cards_legendary', 5);
-
+        $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
+        
         do {
             $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
             $card = Card::where('type', $typeValue)->where('classroom_id', $class->id)->inRandomOrder()->first();

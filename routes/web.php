@@ -30,6 +30,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/edit', 'ClassroomsController@edit');
         Route::get('join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
+        Route::delete('{code}', 'ClassroomsController@destroy');
 
         // Cards
         Route::delete('/card/{id}', 'CardsController@destroy');
@@ -76,6 +77,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/behaviour/{id}', 'BehaviourController@destroy');
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show');
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
+        Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
         
         // Levels
         Route::get('/{code}/levels', 'LevelsController@index');
@@ -117,8 +119,11 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/shop/{id}', 'ShopController@show');
         
         // Settings
-        Route::patch('/{code}/setting', 'ClassroomsController@updateSetting');
+        Route::get('/{code}/settings', 'SettingsController@index');
+        Route::patch('/{code}/setting', 'SettingsController@updateSetting');
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+        Route::post('/{code}/invite', 'SettingsController@invite'); 
+        Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
 
         // Maps
         Route::get('/{code}/maps', 'MapsController@index'); // Policy protect

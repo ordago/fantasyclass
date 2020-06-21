@@ -70,7 +70,13 @@ https://github.com/kg-bot/laravel-localization-to-vue
         action: "toggle"
     })
 
-For now it's only implemented toggle.
+axios
+    .patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: [ property name ],
+        value: [ property value ],
+        action: "update"
+    })
 
 ### Plugin documentation
 
@@ -96,6 +102,9 @@ Popper tippy:
  ```
  import confetti from 'canvas-confetti'
  ```
+
+ Vue-slider-component:
+ https://github.com/NightCatSama/vue-slider-component
  
 ## License
 

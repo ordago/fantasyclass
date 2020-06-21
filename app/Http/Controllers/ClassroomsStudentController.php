@@ -59,12 +59,18 @@ class ClassroomsStudentController extends Controller
         Image::make($path)->resize(128, 128)->save();
     }
 
+    public function checkVisibility($class) {
+        settings()->setExtraColumns(['user_id' => $class]);
+        settings()->get('state', 0);
+        if(settings()->get('state', 0) == 2)
+            abort(403);
+    }
+
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'theme')->firstOrFail();
-
+        $this->checkVisibility($class->id);        
         $student = Functions::getCurrentStudent($class);
-
         $students = $class->students->map(function ($user) {
             return collect($user->toArray())
                 ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level'])
@@ -78,7 +84,7 @@ class ClassroomsStudentController extends Controller
     public function stories($code)
     {
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
-
+        $this->checkVisibility($class->id);
         $student = Functions::getCurrentStudent($class, []);
         $stories = collect();
 
@@ -99,6 +105,7 @@ class ClassroomsStudentController extends Controller
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
+        $this->checkVisibility($class->id);
         $admin = false;
         $student = Functions::getCurrentStudent($class);
 
@@ -214,16 +221,23 @@ class ClassroomsStudentController extends Controller
 
         $data = request()->validate([
             'type' => ['numeric'],
+            'student' => ['numeric', 'nullable'],
         ]);
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $student = Functions::getCurrentStudent($class, []);
+        
+        if($data['student']) {
+            $student = Student::where('id', $data['student'])->firstOrFail();
+            if($student->classroom->classroom_id != $class->id)
+                return false;
+        } else 
+            $student = Functions::getCurrentStudent($class, []);
+        
         $card = Card::where('id', '=', $id)->where('classroom_id', '=', $class->id)->first();
-
         $cardLine = CardStudent::where('card_id', $card->id)
-            ->where('student_id', $student->id)
-            ->orderBy('marked')
-            ->first();
-
+        ->where('student_id', $student->id)
+        ->orderBy('marked')
+        ->first();
+        
         $cardLine->update(['marked' => $data['type']]);
         return [
             "message" => " " . __('success_error.update_success'),

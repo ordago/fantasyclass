@@ -21,6 +21,19 @@ class BehaviourController extends Controller
         return view('behaviours.index', compact('behaviours', 'class'));
     }
 
+    // Add default cards
+    public function importDefault($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        foreach (Behaviour::whereNull('classroom_id')->get() as $behaviour) {
+
+            $newBehaviour = $behaviour->replicate();
+            $class->cards()->save($newBehaviour);
+        }
+        return redirect('/classroom/' . $code . '/behaviours');
+    }
+
     public function create($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);

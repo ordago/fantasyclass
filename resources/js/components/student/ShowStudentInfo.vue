@@ -278,7 +278,8 @@
               :key="index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
-              <show-card class="has-margin-4" :card="card" :code="classroom.code" :use="true" :admin="false"></show-card>
+              <show-card class="has-margin-4" :student="student" :card="card" :code="classroom.code" :use="true" :admin="false" v-if="admin"></show-card>
+              <show-card class="has-margin-4" :card="card" :code="classroom.code" :use="true" :admin="false" v-if="!admin"></show-card>
             </div>
           </div>
         </b-tab-item>

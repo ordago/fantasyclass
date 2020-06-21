@@ -226,6 +226,7 @@
                       class="button has-margin-1 is-light has-padding-x-4"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
                       v-bind:key="behaviour.id"
+                      @click="addBehaviour(student.id, behaviour.id)"
                     >
                       <i :class="behaviour.icon"></i>
                     </button>
@@ -505,10 +506,11 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom"],
   mounted() {
-    this.mainBehavioursJson = this.classroom.behaviours.slice(0, this.numItems);
-    this.otherBehavioursJson = this.classroom.behaviours.slice(this.numItems);
-    this.sortKey = $cookies.get("order") ?? "name";
-    this.viewGrid = $cookies.get("viewGrid") ?? 0;
+    let orderedBehaviours =  _.orderBy(this.classroom.behaviours, "count_number", "desc")
+    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems)
+    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems)
+    this.sortKey = $cookies.get("order") ?? "name"
+    this.viewGrid = $cookies.get("viewGrid") ?? 0
   },
   data: function() {
     return {

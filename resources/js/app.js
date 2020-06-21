@@ -95,6 +95,8 @@ Vue.component('shop-create', require('./components/shop/ShopCreate.vue').default
 Vue.component('show-map', require('./components/map/ShowMap.vue').default);
 Vue.component('create-map', require('./components/map/CreateMap.vue').default);
 
+Vue.component('settings', require('./components/settings/Settings.vue').default);
+
 // Utils
 
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored

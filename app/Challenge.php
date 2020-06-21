@@ -75,4 +75,18 @@ class Challenge extends Model
     {
         return $this->hasMany(Question::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();    
+    
+        // cause a delete of a product to cascade to children so they are also deleted
+        static::deleted(function($challenge)
+        {
+            $challenge->attachments()->delete();
+            $challenge->comments()->delete();
+            $challenge->questions()->delete();     
+
+        });
+    } 
 }

@@ -17,6 +17,14 @@ class Classroom extends Model
         'enrollment_code', 'user_id', 'character_theme'
     ];
 
+    protected $appends = ['state'];
+
+    public function getStateAttribute() {
+
+        settings()->setExtraColumns(['user_id' => $this->id]);
+        return settings()->get('state', 0);
+    }
+
     public function users()
     {
         return $this->belongsToMany(User::class)->using(ClassroomUser::class)->withPivot('role', 'id');
@@ -75,4 +83,23 @@ class Classroom extends Model
     public function maps() {
         return $this->hasMany(Map::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();    
+    
+        // cause a delete of a product to cascade to children so they are also deleted
+        static::deleted(function($classroom)
+        {
+            $classroom->students()->delete();
+            $classroom->cards()->delete();
+            $classroom->grouping()->delete();
+            $classroom->behaviours()->delete();
+            $classroom->items()->delete();
+            $classroom->levels()->delete();
+            $classroom->challengeGroups()->delete();
+            $classroom->maps()->delete();
+
+        });
+    } 
 }

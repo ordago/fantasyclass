@@ -120,6 +120,7 @@ class StudentController extends Controller
         $this->authorize('update', $class);
 
         $behaviour = Behaviour::findOrFail($data['behaviour']);
+        $behaviour->update(['count_number' => $behaviour->count_number + 1]);
         $student->behaviours()->attach($data['behaviour']);
         $valHp = $student->setProperty('hp', $behaviour->hp);
         $valXp = $student->setProperty('xp', $behaviour->xp);

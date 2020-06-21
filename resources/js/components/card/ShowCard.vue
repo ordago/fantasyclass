@@ -5,7 +5,7 @@
         type="submit"
         class="button is-success"
         @click="markCard(card, 1)"
-        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level.number, 'has-background-dark' : card.pivot.marked == 1 }"
+        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level ? $parent.$parent.$parent.student.level.number : 0 , 'has-background-dark' : card.pivot.marked == 1 }"
       >
         <i class="fas fa-check"></i> Use
       </button>
@@ -99,7 +99,7 @@
 
 <script>
 export default {
-  props: ["card", "admin", "code", "use"],
+  props: ["card", "admin", "code", "use", "student"],
   mounted() {},
   data: function() {
     return {};
@@ -119,7 +119,8 @@ export default {
         onConfirm: () => {
           axios
             .post("/classroom/" + this.code + "/card/mark/" + this.card.id, {
-              type: type
+              type: type,
+              student: this.student.id
             })
             .then(response => {
               this.$toasted.show(response.data.message, {

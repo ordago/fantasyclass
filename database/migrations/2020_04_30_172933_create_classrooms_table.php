@@ -22,8 +22,6 @@ class CreateClassroomsTable extends Migration
             $table->smallInteger('character_theme');
             $table->unsignedBigInteger('goal_type');
             $table->unsignedBigInteger('theme_id');
-            $table->boolean('finished')->default(0);
-            $table->boolean('disabled')->default(0);
             $table->timestamps();
 
             $table->foreign('theme_id')->references('id')->on('themes');
