@@ -68,12 +68,12 @@ class ClassroomsStudentController extends Controller
 
     public function index($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'theme')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.groups', 'theme')->firstOrFail();
         $this->checkVisibility($class->id);        
         $student = Functions::getCurrentStudent($class);
         $students = $class->students->map(function ($user) {
             return collect($user->toArray())
-                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level'])
+                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level', 'groups'])
                 ->all();
         });
 

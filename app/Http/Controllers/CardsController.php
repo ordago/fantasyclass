@@ -179,7 +179,7 @@ class CardsController extends Controller
         foreach (Card::whereNull('classroom_id')->get() as $card) {
 
             $newCard = $card->replicate();
-            $class->cards()->save($newCard);
+            $class->cards()->save($newCard);a
         }
         return redirect('/classroom/' . $code . '/cards');
     }
