@@ -11446,6 +11446,11 @@ body {
   max-width: 100% !important;
 }
 
+.night {
+  -webkit-filter: brightness(50%);
+          filter: brightness(50%);
+}
+
 .cursor-default {
   cursor: default;
 }

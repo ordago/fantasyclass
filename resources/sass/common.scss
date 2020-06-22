@@ -63,6 +63,10 @@
       max-width: 100% !important;
   }
 
+  .night {
+    filter: brightness(50%);
+  }
+
   .cursor-default {
       cursor: default;
   }
