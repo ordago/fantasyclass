@@ -63,6 +63,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
         Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // Policy protect
+        Route::get('/show/{code}/map', 'ClassroomsStudentController@map'); // Policy protect
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // Policy protect
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
@@ -109,7 +110,7 @@ Route::group(['middleware' => 'language'], function () {
         // Maps
         Route::get('/{code}/maps', 'MapsController@index'); // Policy protect
         Route::get('/{code}/maps/{id}', 'MapsController@show'); // Policy protect
-        Route::get('/{code}/maps/create', 'MapsController@create'); // Policy protect
+        Route::post('/{code}/maps/create', 'MapsController@store'); // Policy protect
         
     });
 

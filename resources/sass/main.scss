@@ -126,6 +126,13 @@
   margin: 0!important;
 }
 
+.map-iframe {
+  position: absolute;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  height:calc(100% - 56px);
+}
 
 // @keyframes spin {
 //   0% {

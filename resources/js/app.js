@@ -65,6 +65,7 @@ Vue.component('add-students', require('./components/student/AddStudents.vue').de
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
 Vue.component('show-students-student', require('./components/student/ShowStudentsStudent.vue').default);
 Vue.component('show-student-info', require('./components/student/ShowStudentInfo.vue').default);
+Vue.component('show-student-map', require('./components/student/ShowStudentMap.vue').default);
 Vue.component('show-student', require('./components/student/ShowStudent.vue').default);
 
 Vue.component('show-card', require('./components/card/ShowCard.vue').default);

@@ -338,4 +338,14 @@ class ClassroomsStudentController extends Controller
 
         return ['xp' => $item->xp, 'hp' => $item->hp];
     }
+
+    public function map($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        
+        $map = $class->maps->where('active', '=', true)->first();
+        dump($map);
+        $student = $this->getCurrentStudent($class);
+        return view('studentsview.map', compact('class', 'map', 'student'));
+    }
 }
