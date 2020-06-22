@@ -344,7 +344,7 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         
         $map = $class->maps->where('active', '=', true)->first();
-        dump($map);
+  
         $student = $this->getCurrentStudent($class);
         return view('studentsview.map', compact('class', 'map', 'student'));
     }
