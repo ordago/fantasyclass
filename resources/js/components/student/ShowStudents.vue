@@ -226,6 +226,7 @@
                       class="button has-margin-1 is-light has-padding-x-4"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
                       v-bind:key="behaviour.id"
+                      @click="addBehaviour(student.id, behaviour.id)"
                     >
                       <i :class="behaviour.icon"></i>
                     </button>
@@ -435,31 +436,45 @@
               <i class="far fa-redo-alt"></i>
             </button>
           </div>
-          <div v-if="showCard" class="column is-narrow">
-            <div class="select">
-              <select v-model="studentSelected" style="height: 40px!important">
-                <option value="0">Student</option>
-                <option
-                  :value="student.id"
-                  v-for="student in students"
-                  :key="student.id"
-                >{{ student.name }}</option>
-              </select>
+          <div v-if="showCard" class="column is-narrow is-flex has-all-centered">
+            <div class="field has-margin-0">
+              <p class="control has-icons-left">
+                <span class="select">
+                  <select v-model="studentSelected">
+                    <option value="0">Student</option>
+                    <option
+                      :value="student.id"
+                      v-for="student in students"
+                      :key="student.id"
+                    >{{ student.name }}</option>
+                  </select>
+                </span>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
             </div>
             <button class="button is-primary" @click="assignCard('student')">
               <i class="fas fa-user"></i>
             </button>
           </div>
-          <div v-if="showCard" class="column is-narrow">
-            <div class="select">
-              <select v-model="groupSelected" style="height: 40px!important">
-                <option value="0">Groups</option>
-                <option
-                  v-for="group in classroom.grouping[0].groups"
-                  :value="group.id"
-                  :key="group.id"
-                >{{ group.name }}</option>
-              </select>
+          <div v-if="showCard" class="column is-narrow is-flex has-all-centered">
+            <div class="field has-margin-0">
+              <p class="control has-icons-left">
+                <span class="select">
+                  <select v-model="groupSelected">
+                    <option value="0">Groups</option>
+                    <option
+                      v-for="group in classroom.grouping[0].groups"
+                      :value="group.id"
+                      :key="group.id"
+                    >{{ group.name }}</option>
+                  </select>
+                </span>
+                <span class="icon is-small is-left">
+                  <i class="fas fa-user"></i>
+                </span>
+              </p>
             </div>
             <button class="button is-primary" @click="assignCard('group')">
               <i class="fas fa-users"></i>
@@ -491,10 +506,11 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom"],
   mounted() {
-    this.mainBehavioursJson = this.classroom.behaviours.slice(0, this.numItems);
-    this.otherBehavioursJson = this.classroom.behaviours.slice(this.numItems);
-    this.sortKey = $cookies.get("order") ?? "name";
-    this.viewGrid = $cookies.get("viewGrid") ?? 0;
+    let orderedBehaviours =  _.orderBy(this.classroom.behaviours, "count_number", "desc")
+    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems)
+    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems)
+    this.sortKey = $cookies.get("order") ?? "name"
+    this.viewGrid = $cookies.get("viewGrid") ?? 0
   },
   data: function() {
     return {

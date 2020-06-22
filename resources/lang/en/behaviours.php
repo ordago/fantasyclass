@@ -6,6 +6,7 @@ return [
     'create' => 'Create behaviour',
     'edit' => 'Edit behaviour',
     'icon_select' => 'Select icon',
+    'import_default' => 'Import default behaviours',
     'icon' => 'Icon',
     'fontawesome' => 'Do you want more icons? Visit: ',
     'name' => 'Name',

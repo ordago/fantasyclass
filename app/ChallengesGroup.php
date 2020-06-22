@@ -16,6 +16,24 @@ class ChallengesGroup extends Model
 
     protected $appends = ['numChallenges'];
 
+        /**
+     * @var bool
+     */
+    public static $withoutAppends = false;
+
+    /**
+     * Check if $withoutAppends is enabled.
+     *
+     * @return array
+     */
+    protected function getArrayableAppends()
+    {
+        if(self::$withoutAppends){
+            return [];
+        }
+        return parent::getArrayableAppends();
+    }
+
     public function getnumChallengesAttribute() 
     {  
         $total = $this->challenges->count();
@@ -29,7 +47,6 @@ class ChallengesGroup extends Model
     public function challenges() {
         return $this->hasMany(Challenge::class);   
     }
-    
 
     public function children() {
         return $this->hasMany(ChallengesGroup::class, 'challenges_group_id', 'id');   

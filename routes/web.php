@@ -30,6 +30,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/edit', 'ClassroomsController@edit');
         Route::get('join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
+        Route::delete('{code}', 'ClassroomsController@destroy');
 
         // Cards
         Route::delete('/card/{id}', 'CardsController@destroy');
@@ -42,13 +43,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards/{id}', 'CardsController@show');
         Route::patch('/cards/{id}', 'CardsController@update');
         Route::post('/card/usedelete/{id}', 'CardsController@useDelete');
-
+        
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');
         Route::post('/{code}/groups/create', 'GroupsController@store');
         Route::patch('/{code}/groups/{action}', 'GroupsController@update');
         Route::delete('/groups/{id}', 'GroupsController@destroy');
-
+        
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
         Route::post('/students/', 'StudentController@store');
@@ -58,7 +59,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter');
         Route::post('/student/behaviour', 'StudentController@addBehaviour');
         Route::patch('/student/inventory', 'InventoryController@update');
-
+        
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
@@ -68,6 +69,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // Policy protect
+        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // Policy protect
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -76,6 +78,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/behaviour/{id}', 'BehaviourController@destroy');
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show');
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
+        Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
         
         // Levels
         Route::get('/{code}/levels', 'LevelsController@index');
@@ -94,6 +97,19 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
         
+        // Attachment
+        Route::post('/challenge/attachment', 'AttachmentController@store');
+        Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
+        
+        // Question
+        Route::post('/challenge/question', 'QuestionController@store');
+        Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
+        Route::post('/question/answer', 'QuestionController@answer'); // TODO Policy protect
+        
+        // Comment
+        Route::post('/challenge/comment', 'CommentController@store');
+        Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
+
         // Shop
         Route::get('/{code}/shop', 'ShopController@index');
         Route::get('/{code}/shop/create', 'ShopController@create');
@@ -104,8 +120,11 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/shop/{id}', 'ShopController@show');
         
         // Settings
-        Route::patch('/{code}/setting', 'ClassroomsController@updateSetting');
+        Route::get('/{code}/settings', 'SettingsController@index');
+        Route::patch('/{code}/setting', 'SettingsController@updateSetting');
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+        Route::post('/{code}/invite', 'SettingsController@invite'); 
+        Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
 
         // Maps
         Route::get('/{code}/maps', 'MapsController@index'); // Policy protect

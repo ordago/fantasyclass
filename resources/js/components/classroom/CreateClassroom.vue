@@ -1,5 +1,5 @@
 <template>
-       <section>
+       <section class="has-padding-x-3">
          <b-tabs v-model="activeTab" size="is-small">
             <b-tab-item :label="trans.get('classroom.name_and_goals')" icon="scroll" icon-pack="far">         
                 <h1 class="is-size-2"><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ trans.get('classroom.prepare') }}</h1>

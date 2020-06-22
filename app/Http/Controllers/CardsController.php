@@ -191,20 +191,20 @@ class CardsController extends Controller
             'id' => ['numeric'],
             'card' => ['numeric'],
         ]);
-        if($data['type'] == 'student') {
+        if ($data['type'] == 'student') {
             $student = Student::find($data['id']);
             $classId = $student->classroom->classroom_id;
         } else {
             $group = Group::find($data['id']);
             $classId =  $group->grouping->classroom_id;
         }
-        
+
         $class = Classroom::where('id', $classId)->where('code', '=', $code)->first();
         $this->authorize('update', $class);
 
         $card = Card::where('id', $data['card'])->where('classroom_id', $class->id)->first();
 
-        if($data['type'] == 'student') {
+        if ($data['type'] == 'student') {
             $student->cards()->attach($card->id);
         } else {
             foreach ($group->students as $student) {
@@ -214,7 +214,8 @@ class CardsController extends Controller
         return true;
     }
 
-    public function useDelete($id) {
+    public function useDelete($id)
+    {
         $card = Card::find($id);
         $class = Classroom::find($card->classroom_id);
         $this->authorize('update', $class);
@@ -226,63 +227,61 @@ class CardsController extends Controller
         ]);
 
         $student = Student::find($data['student']);
-        if($student->classroom->classroom_id != $class->id)
+        if ($student->classroom->classroom_id != $class->id)
             return false;
-        
+
 
         $cardLine = CardStudent::where('card_id', $card->id)
-        ->where('student_id', $student->id)
-        ->where('marked', $data['type'])
-        ->first();
+            ->where('student_id', $student->id)
+            ->where('marked', $data['type'])
+            ->first();
 
-        if($data['action']) {
-            if($card->min_lvl > $student->level->number){
-                return [
-                    "message" => " " . __('success_error.shop_failed_level'),
-                    "icon" => "times",
-                    "type" => "error",
-                ];
-                // dump('hit');
-            }    
+
+        if ($data['action']) {
             settings()->setExtraColumns(['user_id' => $class->id]);
-            if($data['type'] == 1) {
+            if ($data['type'] == 1) {
+                if ($student->level && $card->min_lvl > $student->level->number) {
+                    return [
+                        "message" => " " . __('success_error.shop_failed_level'),
+                        "icon" => "times",
+                        "type" => "error",
+                    ];
+                }
                 $cost = settings()->get('card_use', 200);
-                if($card->gold == 0 && $student->gold < $cost) {
+                if ($card->gold == 0 && $student->gold < $cost) {
                     return [
                         "message" => " " . __('success_error.shop_failed_money'),
                         "icon" => "times",
                         "type" => "error",
                     ];
                 }
-                if($card->gold) {
-                    $student->setProperty('gold', $student->gold);
-                } else $student->setProperty('gold', $cost*-1); 
-                if($card->xp) $student->setProperty('xp', $student->xp);
-                if($card->hp) $student->setProperty('gold', $student->hp);
+                if ($card->gold) {
+                    $student->setProperty('gold', $card->gold);
+                } else if (!$card->special) {
+                    $student->setProperty('gold', $cost * -1);
+                }
+                if ($card->xp) $student->setProperty('xp', $card->xp);
+                if ($card->hp) $student->setProperty('hp', $card->hp);
             } else {
                 $cost = settings()->get('card_delete', 50);
-                if($student->gold < $cost) {
+                if ($student->gold < $cost) {
                     return [
                         "message" => " " . __('success_error.shop_failed_money'),
                         "icon" => "times",
                         "type" => "error",
                     ];
                 }
-                $student->setProperty('gold', $cost*-1);
+                $student->setProperty('gold', $cost * -1);
             }
             $cardLine->delete();
             return [
-                "message" => " " . __('update_success'),
+                "message" => " " . __('success_error.update_success'),
                 "icon" => "check",
                 "type" => "success",
             ];
-
         } else {
             $cardLine->update(['marked' => 0]);
         }
-
-
-
     }
 
     public function random($code)
@@ -295,13 +294,12 @@ class CardsController extends Controller
     public static function getRandomCard($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        if(!$class->cards->count())
+            return false;
 
         settings()->setExtraColumns(['user_id' => $class->id]);
-        $probabilites[0] = settings()->get('cards_common', 55);
-        $probabilites[1] = settings()->get('cards_rare', 30);
-        $probabilites[2] = settings()->get('cards_epic', 10);
-        $probabilites[3] = settings()->get('cards_legendary', 5);
-
+        $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
+        
         do {
             $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
             $card = Card::where('type', $typeValue)->where('classroom_id', $class->id)->inRandomOrder()->first();

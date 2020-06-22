@@ -85,6 +85,8 @@ Vue.component('show-challenge', require('./components/challenges/ShowChallenge.v
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
 Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
 
+Vue.component('show-question', require('./components/challenges/ShowQuestion.vue').default);
+
 Vue.component('create-group', require('./components/group/CreateGroups.vue').default);
 Vue.component('edit-group', require('./components/group/EditGroup.vue').default);
 
@@ -93,6 +95,8 @@ Vue.component('shop-create', require('./components/shop/ShopCreate.vue').default
 
 Vue.component('show-map', require('./components/map/ShowMap.vue').default);
 Vue.component('create-map', require('./components/map/CreateMap.vue').default);
+
+Vue.component('settings', require('./components/settings/Settings.vue').default);
 
 // Utils
 
@@ -105,6 +109,8 @@ Vue.component('editor', require('./components/utils/Editor.vue').default);
 Vue.component('count-down', require('./components/utils/CountDown.vue').default);
 
 Vue.component('notifications', require('./components/utils/Notifications.vue').default);
+
+Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

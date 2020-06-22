@@ -35,6 +35,7 @@ GOOGE_REDIRECT=http://localhost:8000/callback/google
 ## After every pull from the server
 ```
  composer update
+ npm install
  php artisan migrate:fresh
  php artisan db:seed
 ```
@@ -60,7 +61,7 @@ https://github.com/kg-bot/laravel-localization-to-vue
  php artisan export:messages-flat
 ```
 
-### Classroom settings management vie VUE
+### Classroom settings management via VUE
 
  axios
     .patch("/classroom/" + this.code + "/setting", {
@@ -69,7 +70,13 @@ https://github.com/kg-bot/laravel-localization-to-vue
         action: "toggle"
     })
 
-For now it's only implemented toggle.
+axios
+    .patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: [ property name ],
+        value: [ property value ],
+        action: "update"
+    })
 
 ### Plugin documentation
 
@@ -95,6 +102,9 @@ Popper tippy:
  ```
  import confetti from 'canvas-confetti'
  ```
+
+ Vue-slider-component:
+ https://github.com/NightCatSama/vue-slider-component
  
 ## License
 

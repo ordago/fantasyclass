@@ -9,6 +9,7 @@ use App\GoalThemes;
 use App\Grouping;
 use App\Theme;
 use App\Item;
+use App\QuestionBank;
 use App\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -167,6 +168,12 @@ class ClassroomsController extends Controller
         return view('classrooms.index', compact('user'));
     }
 
+    public function destroy($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+        $class->delete();
+        return "/classroom";
+    }
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
@@ -175,21 +182,11 @@ class ClassroomsController extends Controller
 
         $pending = collect();
         foreach ($class->students as $student) {
-            $pending->add(['student' => $student, 'cards' => $student->cards->where('pivot.marked', ">" , 0)]);
+            $cards = $student->cards->where('pivot.marked', ">" , 0);
+            if($cards->count())
+                $pending->add(['student' => $student, 'cards' => $cards]);
         }
 
         return view('classrooms.show', compact('class', 'students', 'pending'));
-    }
-
-    public function updateSetting($code)
-    {
-        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours')->firstOrFail();
-        $this->authorize('update', $class);
-        settings()->setExtraColumns(['user_id' => $class->id]);
-        if (request()->action == 'toggle') {
-            $value = !settings()->get(request()->prop);
-            settings()->set(request()->prop, $value);
-        }
-        return $value ? true : false;
     }
 }

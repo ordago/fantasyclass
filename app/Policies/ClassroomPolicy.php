@@ -25,6 +25,14 @@ class ClassroomPolicy
         return $user->classrooms->where('id', $classroom->id)->where('pivot.role', '>', 0)->first() ? true : false;      
     }
 
+    public function isAdmin(User $user, Classroom $classroom) {
+        return $user->classrooms->where('id', $classroom->id)->where('pivot.role', '=', 2)->first() ? true : false;      
+    }
+
+    public function isStudent(User $user, Classroom $classroom) {
+        return $user->classrooms->where('id', $classroom->id)->where('pivot.role', '=', 0)->first() ? true : false;      
+    }
+
     /**
      * Determine whether the user can view the model.
      *
@@ -59,6 +67,18 @@ class ClassroomPolicy
     {
         return $this->isTeacher($user, $classroom);
     }
+
+    /**
+     * Determine whether the user is admin.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Classroom  $classroom
+     * @return mixed
+     */
+    public function admin(User $user, Classroom $classroom)
+    {
+        return $this->isAdmin($user, $classroom);
+    }
     
     /**
      * Determine whether the user can delete the model.
@@ -69,7 +89,7 @@ class ClassroomPolicy
      */
     public function delete(User $user, Classroom $classroom)
     {
-        //
+        return $this->isAdmin($user, $classroom);
     }
 
     /**

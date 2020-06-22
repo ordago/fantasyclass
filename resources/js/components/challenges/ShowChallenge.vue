@@ -1,5 +1,5 @@
 <template>
-  <div class="box has-margin-bottom-3" v-bind:class="getBackground">
+  <div class="box card-shadow-s has-margin-bottom-3" v-bind:class="getBackground">
     <section class="media">
       <div class="media-content">
         <div class="content">
@@ -12,7 +12,9 @@
             ></i>
             <i v-if="challengeReactive.type==1" class="fas fa-users is-size-4 colored"></i>
             {{ challengeReactive.title }}
-            <span class="tag is-light">{{ challengeReactive.datetime }}</span>
+            <span
+              class="tag is-light"
+            >{{ challengeReactive.datetime }}</span>
           </h1>
           <p>
             <small>{{ challengeReactive.description }}</small>
@@ -36,7 +38,113 @@
             </small>
           </p>
           <!-- class="el-tiptap-editor__content" -->
-          <div v-if="edit || full" v-html="challengeReactive.content" ></div>
+          <div v-if="edit || full" v-html="challengeReactive.content"></div>
+          <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
+            <show-question :admin="admin" :question="question"></show-question>
+          </div>
+          <div class="" v-for="(question, index) in challenge.stats" :key="index">
+            <show-question :admin="admin" :question="question"></show-question>
+          </div>
+          <div class="has-margin-top-5">
+            <div
+              class="columns has-padding-4 has-margin-3 card rounded card-shadow-s"
+              v-for="(attachment, index) in challenge.attachments"
+              :key="attachment.id"
+            >
+              <div class="column is-narrow">
+                <i class="fad fa-globe" v-if="attachment.type == 1"></i>
+                <i class="fad fa-icons" v-else-if="attachment.type == 2"></i>
+                <i class="fad fa-graduation-cap" v-else-if="attachment.type == 3"></i>
+                <i class="fab fa-google-drive" v-else-if="attachment.type == 4"></i>
+                <i class="fab fa-youtube" v-else-if="attachment.type == 5"></i>
+                <i class="fab fa-dropbox" v-else-if="attachment.type == 6"></i>
+                <i class="fad fa-file" v-else-if="attachment.type == 7"></i>
+                <i
+                  class="fad has-margin-left-3"
+                  v-bind:class="{ 'fa-link' : attachment.mode == 0, 'fa-expand' : attachment.mode == 1 }"
+                ></i>
+              </div>
+              <div class="column" style="word-break: break-all;">
+                <a
+                  target="_blank"
+                  v-if="attachment.mode == 0"
+                  :href="attachment.url"
+                >{{ attachment.name ? attachment.name : attachment.url }}</a>
+                <div style="width: 100%;" v-if="attachment.mode==1">
+                  <div
+                    style="position: relative; padding-bottom: 46.57%; padding-top: 0; height: 0;"
+                  >
+                    <iframe
+                      v-if="attachment.type == 2"
+                      frameborder="0"
+                      class="rounded"
+                      width="3000px"
+                      height="1397px"
+                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                      :src="attachment.url.slice(0, attachment.url.lastIndexOf('/'))"
+                      type="text/html"
+                      allowscriptaccess="always"
+                      allowfullscreen="true"
+                      scrolling="yes"
+                      allownetworking="all"
+                    ></iframe>
+
+                    <div class="video-wrapper" v-if="attachment.type == 5">
+                      <iframe
+                        width="560"
+                        height="315"
+                        :src="'https://youtube.com/embed/' + getYoutube(attachment.url)"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <!-- <iframe frameborder="0" class="w-100" :src="attachment.url.slice(0, attachment.url.lastIndexOf('/'))" v-if="attachment.mode==1" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> -->
+              </div>
+              <div class="column is-narrow" v-if="admin">
+                <button class="button is-danger" @click="confirmDelete(attachment.id, index)">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          <input-emoji></input-emoji>
+          <div class="has-margin-top-3 comments">
+            <div
+              class="comment has-margin-0"
+              v-for="(comment, index) in orderedComments"
+              :key="index"
+            >
+              <div class="flexCenter imgTeacher">
+                <img
+                  v-if="comment.info.type == 'student'"
+                  width="32px"
+                  height="32px"
+                  :src="comment.info.avatar"
+                />
+                <i
+                  v-if="comment.info.type == 'teacher'"
+                  class="fas fa-user-graduate text-light textshadow"
+                ></i>
+              </div>
+              <div class="commentInfo has-padding-2">
+                <div>
+                  <span class="tag is-info has-padding-2">{{ comment.info.name }}</span>
+                  <span class="tag is-link has-padding-2">{{ comment.info.datetime }}</span>
+                  <button
+                    class="button tag is-danger has-text-light has-padding-2"
+                    @click="deleteComment(comment.id, index)"
+                    v-if="admin"
+                  >
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </div>
+                <div class="flexVertical has-padding-2">{{ comment.text }}</div>
+              </div>
+            </div>
+          </div>
           <div class="has-padding-3 has-text-right" v-if="edit && admin || !admin">
             <button
               v-if="!admin && (challengeReactive.completion == 2 ||challengeReactive.completion == 1) && !checkCompletion"
@@ -49,12 +157,32 @@
               <span>Mark as realised</span>
             </button>
             <button
+              v-if="admin"
+              class="button is-outlined is-link"
+              @click="isAttachmentModalActive=true"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-paperclip"></i>
+              </span>
+              <span>Add attachment</span>
+            </button>
+            <button
+              v-if="admin"
+              class="button is-outlined is-primary"
+              @click="isQuestionModalActive=true"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-question"></i>
+              </span>
+              <span>Add question</span>
+            </button>
+            <button
               v-if="challengeReactive.is_conquer && admin"
               class="button is-success is-outlined"
               @click="$parent.showModal(challenge)"
             >
               <span class="icon is-small">
-                <i class="fas fa-edit"></i>
+                <i class="fas fa-check"></i>
               </span>
               <span>Mark</span>
             </button>
@@ -82,21 +210,273 @@
         </div>
       </div>
     </section>
+    <b-modal
+      :active.sync="isAttachmentModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      v-if="admin"
+    >
+      <form @submit.prevent="addAttachment">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add attachment</p>
+          </header>
+          <section class="modal-card-body">
+            <b-field>
+              <b-select
+                placeholder="Attachment type"
+                icon="paperclip"
+                icon-pack="fas"
+                v-model="attachment.type"
+                required
+                style="font-family:Arial, FontAwesome;"
+              >
+                <option value="1" icon="paperclip" icon-pack="fas">Web page</option>
+                <option value="2">Genial.ly</option>
+                <option value="3">Moodle</option>
+                <option value="4">Google drive</option>
+                <option value="5">Youtube</option>
+                <option value="6">Dropbox</option>
+                <option value="7">File</option>
+              </b-select>
+            </b-field>
+            <div v-if="attachment.type == 1 || attachment.type == 2 || attachment.type == 5">
+              <b-radio-button v-model="attachment.mode" native-value="0" type="is-link">
+                <b-icon icon="link"></b-icon>
+                <span>Link</span>
+              </b-radio-button>
+
+              <b-radio-button v-model="attachment.mode" native-value="1" type="is-link">
+                <b-icon icon="expand"></b-icon>
+                <span>Embedded</span>
+              </b-radio-button>
+            </div>
+            <b-field class="has-margin-top-3">
+              <b-input v-model="attachment.name" placeholder="Name (Optional)"></b-input>
+            </b-field>
+            <b-field>
+              <b-input placeholder="URL" v-model="attachment.url" required type="url"></b-input>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isAttachmentModalActive=false">Close</button>
+            <button class="button is-primary">Add</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+    <b-modal
+      :active.sync="isQuestionModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      v-if="admin"
+    >
+      <form @submit.prevent="addQuestion">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add question</p>
+          </header>
+          <section class="modal-card-body">
+               <b-field>
+                  <b-input placeholder="Question" v-model="question.question" type="text" required></b-input>
+              </b-field>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-success">
+                        <i class="fas fa-check colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Correct answer" v-model="question.correctAnswer" type="text" required></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer1" required type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer2" type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="field is-horizontal has-margin-bottom-3">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-times colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <b-field>
+                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer3" type="text"></b-input>
+                      </b-field>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isAttachmentModalActive=false">Close</button>
+            <button class="button is-primary">Add</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 <script>
-import confetti from 'canvas-confetti'
+import confetti from "canvas-confetti";
+import Utils from "../../utils.js";
+
 export default {
   props: ["challenge", "edit", "admin", "code", "full"],
   created: function() {
-    this.challengeReactive = this.challenge
+    this.challengeReactive = this.challenge;
   },
   data: function() {
     return {
       challengeReactive: null,
+      isAttachmentModalActive: false,
+      isQuestionModalActive: false,
+      attachment: {
+        mode: "0",
+        type: null,
+        name: "",
+        url: "",
+        challenge_id: null
+      },
+      question: {
+        challenge_id: null,
+        question: '',
+        correctAnswer: '',
+        incorrectAnswer1: '',
+        incorrectAnswer2: '',
+        incorrectAnswer3: '',
+      },
+      comment: ""
     };
   },
   methods: {
+    deleteComment(id) {
+      axios.delete("/classroom/challenge/comment/" + id).then(response => {
+        var index = this.challenge.comments.findIndex(function(comment, i) {
+          return comment.id === id;
+        });
+        this.challenge.comments.splice(index, 1);
+        this.$forceUpdate();
+      });
+    },
+    sendComment() {
+      this.comment = this.comment.replace("&nbsp;", " ");
+
+      axios
+        .post("/classroom/challenge/comment", {
+          challenge_id: this.challenge.id,
+          text: this.comment
+        })
+        .then(response => {
+          this.challenge.comments.push(response.data) 
+          this.comment = ""
+        });
+    },
+    confirmDelete(id, index) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/challenge/attachment/" + id)
+            .then(response => {
+              console.log(response.data);
+              if (response.data === 1) {
+                this.challenge.attachments.splice(index, 1);
+                this.$forceUpdate();
+              }
+            });
+        }
+      });
+    },
+    getYoutube(url) {
+      return Utils.getYoutube(url);
+    },
+    addQuestion() {
+      this.question.challenge_id = this.challenge.id
+      axios
+        .post("/classroom/challenge/question", {
+          question: this.question
+        })
+        .then(response => {
+          this.isQuestionModalActive = false;
+          // this.challenge.questions.push(response.data);
+          this.$parent().$forceUpdate();
+        });
+    },
+    addAttachment() {
+      let type = this.attachment.type;
+      if (type == 3 || type == 4 || type == 6 || type == 7 || type == 8)
+        this.attachment.mode = 0;
+      this.attachment.challenge_id = this.challenge.id;
+      axios
+        .post("/classroom/challenge/attachment", {
+          attachment: this.attachment
+        })
+        .then(response => {
+          this.isAttachmentModalActive = false;
+          this.challenge.attachments.push(response.data);
+          this.$parent().$forceUpdate();
+        });
+    },
     markCompleted(challenge) {
       this.$buefy.dialog.confirm({
         title: "Class change",
@@ -112,38 +492,41 @@ export default {
               challenge: this.challengeReactive.id
             })
             .then(response => {
-              if(response.data.success == true) {
+              if (response.data.success == true) {
                 confetti({
                   particleCount: 200,
                   spread: 100,
                   origin: { y: 1.0 }
                 });
-                this.challengeReactive.count++
-                this.$parent.$parent.$parent.student.hp = response.data.hp
-                this.$parent.$parent.$parent.student.xp = response.data.xp
-                this.$parent.$parent.$parent.student.gold = response.data.gold
-                this.$parent.$parent.$parent.forceReload++
+                this.challengeReactive.count++;
+                this.$parent.$parent.$parent.student.hp = response.data.hp;
+                this.$parent.$parent.$parent.student.xp = response.data.xp;
+                this.$parent.$parent.$parent.student.gold = response.data.gold;
+                this.$parent.$parent.$parent.forceReload++;
               }
-                
             });
         }
       });
     }
   },
-  components: {},
   computed: {
+    orderedComments: function() {
+      return _.orderBy(this.challenge.comments, "created_at", "desc");
+    },
     checkCompletion() {
-      if (this.challengeReactive.completion == 1) return this.challengeReactive.count == 1;
-      if (this.challengeReactive.completion == 2) return this.challengeReactive.count == 2;
+      if (this.challengeReactive.completion == 1)
+        return this.challengeReactive.count == 1;
+      if (this.challengeReactive.completion == 2)
+        return this.challengeReactive.count == 2;
     },
     getBackground() {
       if (this.full) {
-        if(this.challengeReactive.is_conquer == 1) {
+        if (this.challengeReactive.is_conquer == 1) {
           return "has-background-conquer";
         } else {
           return "has-background-story";
         }
-      } else if(this.edit) {
+      } else if (this.edit) {
         return "";
       } else {
         switch (this.challengeReactive.completion) {

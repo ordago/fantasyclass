@@ -77,7 +77,7 @@
     </div>
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
-        <b-tab-item label="Information">
+        <b-tab-item label="Information" icon="info-circle" icon-pack="fad">
           <div class>
             <div class="has-margin-3">
               <croppa
@@ -162,7 +162,7 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item label="Inventory" class="has-padding-0">
+        <b-tab-item label="Inventory" class="has-padding-0" icon="backpack" icon-pack="fad">
           <div class="columns is-multiline is-variable" v-if="admin">
             <div
               v-for="item in items"
@@ -271,18 +271,18 @@
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="Cards" v-if="cards.length">
+        <b-tab-item label="Cards" v-if="cards.length" icon="club" icon-pack="fad">
           <div class="columns is-multiline is-variable">
             <div
               v-for="(card, index) in cards"
               :key="index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
-              <show-card class="has-margin-4" :card="card" :use="true" :admin="false"></show-card>
+              <show-card class="has-margin-4" :student="student" :card="card" :code="classroom.code" :use="true" :admin="false"></show-card>
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="Behaviours" v-if="student.behaviours.length">
+        <b-tab-item label="Behaviours" v-if="student.behaviours.length" icon="heart" icon-pack="fad">
           <div class="is-flex justify-content-center">
             <apexchart
               v-if="series.length"
@@ -354,7 +354,7 @@
           </b-table>
         </b-tab-item>
 
-        <b-tab-item label="Challenges" v-if="challenges && challenges.length">
+        <b-tab-item label="Challenges" v-if="challenges && challenges.length" icon="pen-fancy" icon-pack="fad">
           <div v-for="challenge in orderedChallenges" :key="challenge.id">
             <show-challenge
               :challenge="challenge"
@@ -365,7 +365,7 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item label="Log" v-if="student.log_entries.length">
+        <b-tab-item label="Log" v-if="student.log_entries.length" icon="file" icon-pack="fad">
           <div class="columns">
             <div class="column">
               <input type="date" class="input is-rounded" v-model="dateStart" />

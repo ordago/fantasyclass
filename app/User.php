@@ -41,4 +41,8 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->belongsToMany(Classroom::class)->using(ClassroomUser::class)->withPivot('role', 'id');
     }
 
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
 }
