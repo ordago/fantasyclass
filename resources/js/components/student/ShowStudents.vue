@@ -27,6 +27,10 @@
           </span>
 
           <div class="dropdown-menu has-background-white rounded has-padding-3">
+            <a class="dropdown-item" :href="'/classroom/' + classroom.code + '/event/random'">
+              <i class="fad fa-scroll-old has-margin-right-2"></i>
+              Random {{ trans.get('menu.events') }}
+            </a>
             <a class="dropdown-item" @click="randomStudents">
               <i class="fad fa-user has-margin-right-2"></i>
               Random {{ trans.get('menu.students') }}
@@ -69,7 +73,6 @@
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
         </span>
       </div>
-      <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
@@ -534,7 +537,8 @@ export default {
       randomCard: null,
       showCard: false,
       studentSelected: 0,
-      groupSelected: 0
+      groupSelected: 0,
+      event: null,
     };
   },
   methods: {
@@ -622,6 +626,9 @@ export default {
       this.diceUrl = "/dice/dice?notation=1d6&roll";
       this.dice = true;
     },
+    // randomEvent() {
+    //   window.open('/classroom/' + this.classroom.code + '/event/random', "", "width="+screen.availWidth+",height="+screen.availHeight);
+    // },
     randomStudents() {
       this.shuffledStudents = _.shuffle(this.students);
       this.currentStudent = this.shuffledStudents.shift();

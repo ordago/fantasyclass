@@ -111,6 +111,12 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
+    public static function getRandomStudent($class) {
+
+        return $class->students->random(1)->first();
+
+    }
+
     public function addBehaviour()
     {
         $data = request()->all();
@@ -182,15 +188,29 @@ class StudentController extends Controller
 
     public function update(Request $request)
     {
-        $student = Student::findOrFail($request->id);
-        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
-        $this->authorize('update', $class);
-        LogEntry::create([
-            'type' => $request->prop,
-            'value' => $request->value,
-            'student_id' => $student->id,
-        ]);
-        return $student->setProperty($request->prop, $request->value);
+        if($request->id) {
+            $student = Student::findOrFail($request->id);
+            $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+            $this->authorize('update', $class);
+            if($request->card_id) {
+                $student->cards()->attach($request->card_id);
+                return true;
+            } else {
+                LogEntry::create([
+                    'type' => $request->prop,
+                    'value' => $request->value,
+                    'student_id' => $student->id,
+                    ]);
+                    return $student->setProperty($request->prop, $request->value);
+            }
+            } else {
+                $class = Classroom::where('code', $request->code)->first();
+                $this->authorize('update', $class);
+                foreach ($class->students as $student) {
+                    $student->setProperty($request->prop, $request->value);
+                }
+                
+            }
     }
 
     public function changeCharacter($code)

@@ -83,6 +83,10 @@ class Classroom extends Model
     public function maps() {
         return $this->hasMany(Map::class);
     }
+    
+    public function events() {
+        return $this->hasMany(Event::class);
+    }
 
     public static function boot()
     {

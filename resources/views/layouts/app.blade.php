@@ -32,7 +32,7 @@
 <body @if(!isset($class) && !isset($themes)) class="has-background-info" @else class="has-background-white-ter" @endif @yield('bg', '' )>
     <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
-        <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation">
+        <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation" @yield('navbarhide')>
             <div class="navbar-brand">
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <img src="/img/logo.png" width="36px" height="38px" class="has-margin-x-3">
