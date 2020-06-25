@@ -32,7 +32,7 @@ class EventController extends Controller
             } else if ($event->type == 7 && $class->character_theme == 0) {
                 $again = true;
             } else if ($event->type == 13) {
-                // For now event 13 is disabled
+                // TODO For now event 13 is disabled
                 $again = true;
             }
         } while ($again);
