@@ -20,6 +20,12 @@ class GroupsController extends Controller
         return view('groups.index', compact('class'));
     }
 
+    public static function getRandomGroup($class) {
+
+        return $class->grouping->first()->groups->random(1)->first();
+
+    }
+
     public function update($code, $type)
     {
         $class = Classroom::where('code', '=', $code)->firstorFail();

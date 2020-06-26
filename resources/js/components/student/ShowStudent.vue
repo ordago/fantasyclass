@@ -32,9 +32,9 @@
             :v-tippy="student.group"
             v-tippy
             :content="'Proud member 😄 <br><img src=' + student.groups[0].logo + '>'"
-            v-if="student.groups.length"
+            v-if="student.groups && student.groups.length"
           >
-            <small v-if="student.groups.length">
+            <small v-if="student.groups && student.groups.length">
               <i class="fas fa-users"></i>
               {{ student.groups[0].name }}
             </small>

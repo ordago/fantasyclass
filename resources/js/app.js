@@ -60,6 +60,7 @@ Vue.use(ElementTiptapPlugin, { /* plugin options */ });
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
+Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.vue').default);
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
@@ -98,6 +99,8 @@ Vue.component('create-map', require('./components/map/CreateMap.vue').default);
 
 Vue.component('settings', require('./components/settings/Settings.vue').default);
 
+Vue.component('show-event', require('./components/event/ShowEvent.vue').default);
+
 // Utils
 
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
@@ -117,6 +120,7 @@ Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').defaul
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+
 
 const app = new Vue({
     el: '#app',

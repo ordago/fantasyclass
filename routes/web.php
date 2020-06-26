@@ -30,6 +30,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/edit', 'ClassroomsController@edit');
         Route::get('join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
+        Route::get('{code}/clone', 'ClassroomsController@clone');
         Route::delete('{code}', 'ClassroomsController@destroy');
 
         // Cards
@@ -125,6 +126,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
         Route::post('/{code}/invite', 'SettingsController@invite'); 
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
+        
+        // Events
+        Route::get('/{code}/event/random', 'EventController@show');
 
         // Maps
         Route::get('/{code}/maps', 'MapsController@index'); // ToDo: Policy protect

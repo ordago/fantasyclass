@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Behaviour;
+use App\Card;
 use App\ChallengesGroup;
 use App\Classroom;
 use App\ClassroomUser;
+use App\Event;
 use App\GoalThemes;
 use App\Grouping;
 use App\Theme;
@@ -35,7 +38,7 @@ class ClassroomsController extends Controller
 
     public function update($code)
     {
-     
+
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
@@ -56,8 +59,32 @@ class ClassroomsController extends Controller
             'goal_type' => $data['goalType'],
         ]);
 
-        return redirect('/classroom/'.$code);
+        return redirect('/classroom/' . $code);
+    }
 
+    // TODO finish
+    public function clone($code)
+    {
+        // $class = Classroom::where('code', '=', $code)->firstOrFail();
+        // $this->authorize('admin', $class);
+
+        // $new = $class->replicate();
+        // $new->code = $this->reference(8);
+        // $new->enrollment_code = $this->reference(5);
+        // $new->name = $new->name." (copy)";
+
+        // $new->push();
+
+        // $class->relations = [];
+
+        // $class->load('items', 'theme', 'goal', 'characterTheme', 'grouping', 'cards', 'behaviours', 'levels', 'challengeGroups', 'events');
+
+        // foreach ($class->relations as $relationName => $values) {
+            // $new->{$relationName}()->sync($values);
+        // }
+        // auth()->user()->classrooms()->attach([
+        //     $new->id => ['role' => 2],
+        // ]);
     }
     public function store()
     {
@@ -90,7 +117,19 @@ class ClassroomsController extends Controller
         // Assign basic items
         foreach (Item::whereNull('classroom_id')->get() as $item) {
             $newItem = $item->replicate();
-            $classroom->cards()->save($newItem);
+            $classroom->items()->save($newItem);
+        }
+
+        // Assign cards
+        foreach (Card::whereNull('classroom_id')->get() as $card) {
+            $newCard = $card->replicate();
+            $classroom->cards()->save($newCard);
+        }
+
+        // Assign behaviours
+        foreach (Behaviour::whereNull('classroom_id')->get() as $behaviour) {
+            $newBehaviour = $behaviour->replicate();
+            $classroom->cards()->save($newBehaviour);
         }
 
         // Create default challenges group
@@ -168,7 +207,8 @@ class ClassroomsController extends Controller
         return view('classrooms.index', compact('user'));
     }
 
-    public function destroy($code) {
+    public function destroy($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('admin', $class);
         $class->delete();
@@ -182,8 +222,8 @@ class ClassroomsController extends Controller
 
         $pending = collect();
         foreach ($class->students as $student) {
-            $cards = $student->cards->where('pivot.marked', ">" , 0);
-            if($cards->count())
+            $cards = $student->cards->where('pivot.marked', ">", 0);
+            if ($cards->count())
                 $pending->add(['student' => $student, 'cards' => $cards]);
         }
 

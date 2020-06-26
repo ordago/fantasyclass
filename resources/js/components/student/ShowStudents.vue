@@ -18,7 +18,7 @@
         </a>
         <div class="dropdown is-hoverable" style="display:inline-block">
           <span
-            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-right-2 has-padding-left-3"
+            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
           >
             <i class="fad fa-random outer_glow" style="font-size:2em;"></i>
             <span class="icon is-small">
@@ -27,15 +27,19 @@
           </span>
 
           <div class="dropdown-menu has-background-white rounded has-padding-3">
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" :href="'/classroom/' + classroom.code + '/event/random'">
+              <i class="fad fa-scroll-old has-margin-right-2"></i>
+              Random {{ trans.get('menu.events') }}
+            </a>
+            <a class="dropdown-item" @click="randomStudents"  v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
               Random {{ trans.get('menu.students') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" @click="randomGroups" v-if="classroom.grouping[0].groups.length > 0">
               <i class="fad fa-users has-margin-right-2"></i>
               Random {{ trans.get('menu.groups') }}
             </a>
-            <a class="dropdown-item" @click="getRandomCard">
+            <a class="dropdown-item" @click="getRandomCard"  v-if="students.length || classroom.grouping[0].groups.length">
               <i class="fad fa-club has-margin-right-2"></i>
               Random {{ trans.get('menu.card') }}
             </a>
@@ -55,27 +59,24 @@
         <a
           href="/utils/music"
           target="_blank"
-          class="link outer_glow has-margin-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
         >
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
         </a>
         <span
-          class="link outer_glow has-margin-x-2 cursor-pointer"
+          class="link outer_glow has-padding-x-2 cursor-pointer"
           @click="isCountDownModalActive=true"
         >
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
-        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+        <!-- <span class="link outer_glow has-padding-x-2 cursor-pointer">
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
-        </span>
+        </span> -->
       </div>
-      <!-- <span class="link outer_glow" data-action='randomEvent'><i class="fad fa-scroll-old outer_glow" style="font-size:2em;"></i></span> -->
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow" data-action='randomStudent'><i class="fad fa-user outer_glow" style="font-size:2em;" ></i></span>
-        <span class="link outer_glow" data-action='randomGroup'><i class="fad fa-users outer_glow" style="font-size:2em;"></i></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
@@ -524,17 +525,20 @@ export default {
       show2l: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
+      isRandomGroupActive: false,
       isCardModalActive: false,
       isCountDownModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,
       shuffledStudents: null,
+      shuffledGroups: null,
       diceUrl: "",
       randomCard: null,
       showCard: false,
       studentSelected: 0,
-      groupSelected: 0
+      groupSelected: 0,
+      event: null,
     };
   },
   methods: {
@@ -626,6 +630,11 @@ export default {
       this.shuffledStudents = _.shuffle(this.students);
       this.currentStudent = this.shuffledStudents.shift();
       this.isRandomStudentActive = true;
+    },
+    randomGroups() {
+      this.shuffledGroups = _.shuffle(this.classroom.grouping[0].groups);
+      this.currentGroup = this.shuffledGroups.shift();
+      this.isRandomGroupsActive = true;
     },
     getRandomCard() {
       axios

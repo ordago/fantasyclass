@@ -46,6 +46,13 @@ const COLOR_CODES = {
 };
 
 export default {
+  props: ['starttime'],
+  created() {
+    if(this.starttime) {
+      this.timeConfigured = this.starttime
+      this.startTimer()
+    }
+  },
   data() {
     return {
       timeConfigured: new Date(1,1,1, 0, 10, 0),
@@ -108,7 +115,6 @@ export default {
 
   methods: {
     calculateSeconds(info) {
-        console.log(info)
         let seconds = 0
         if(this.timeConfigured)
             seconds = this.timeConfigured.getHours() * 60 * 60 + this.timeConfigured.getMinutes() * 60 + this.timeConfigured.getSeconds()
