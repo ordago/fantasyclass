@@ -31,15 +31,15 @@
               <i class="fad fa-scroll-old has-margin-right-2"></i>
               Random {{ trans.get('menu.events') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" @click="randomStudents"  v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
               Random {{ trans.get('menu.students') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" @click="randomGroups" v-if="classroom.grouping[0].groups.length > 0">
               <i class="fad fa-users has-margin-right-2"></i>
               Random {{ trans.get('menu.groups') }}
             </a>
-            <a class="dropdown-item" @click="getRandomCard">
+            <a class="dropdown-item" @click="getRandomCard"  v-if="students.length || classroom.grouping[0].groups.length">
               <i class="fad fa-club has-margin-right-2"></i>
               Random {{ trans.get('menu.card') }}
             </a>
@@ -525,12 +525,14 @@ export default {
       show2l: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
+      isRandomGroupActive: false,
       isCardModalActive: false,
       isCountDownModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,
       shuffledStudents: null,
+      shuffledGroups: null,
       diceUrl: "",
       randomCard: null,
       showCard: false,
@@ -628,6 +630,11 @@ export default {
       this.shuffledStudents = _.shuffle(this.students);
       this.currentStudent = this.shuffledStudents.shift();
       this.isRandomStudentActive = true;
+    },
+    randomGroups() {
+      this.shuffledGroups = _.shuffle(this.classroom.grouping[0].groups);
+      this.currentGroup = this.shuffledGroups.shift();
+      this.isRandomGroupsActive = true;
     },
     getRandomCard() {
       axios
