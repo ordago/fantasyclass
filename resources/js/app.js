@@ -120,6 +120,7 @@ Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').defaul
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
 const app = new Vue({
     el: '#app',
     data: {

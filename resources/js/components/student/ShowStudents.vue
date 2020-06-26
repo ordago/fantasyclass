@@ -18,7 +18,7 @@
         </a>
         <div class="dropdown is-hoverable" style="display:inline-block">
           <span
-            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-right-2 has-padding-left-3"
+            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
           >
             <i class="fad fa-random outer_glow" style="font-size:2em;"></i>
             <span class="icon is-small">
@@ -59,26 +59,24 @@
         <a
           href="/utils/music"
           target="_blank"
-          class="link outer_glow has-margin-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
         >
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
         </a>
         <span
-          class="link outer_glow has-margin-x-2 cursor-pointer"
+          class="link outer_glow has-padding-x-2 cursor-pointer"
           @click="isCountDownModalActive=true"
         >
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
-        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+        <!-- <span class="link outer_glow has-padding-x-2 cursor-pointer">
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
-        </span>
+        </span> -->
       </div>
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow" data-action='randomStudent'><i class="fad fa-user outer_glow" style="font-size:2em;" ></i></span>
-        <span class="link outer_glow" data-action='randomGroup'><i class="fad fa-users outer_glow" style="font-size:2em;"></i></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
@@ -626,9 +624,6 @@ export default {
       this.diceUrl = "/dice/dice?notation=1d6&roll";
       this.dice = true;
     },
-    // randomEvent() {
-    //   window.open('/classroom/' + this.classroom.code + '/event/random', "", "width="+screen.availWidth+",height="+screen.availHeight);
-    // },
     randomStudents() {
       this.shuffledStudents = _.shuffle(this.students);
       this.currentStudent = this.shuffledStudents.shift();
