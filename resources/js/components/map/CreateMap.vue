@@ -1,44 +1,64 @@
 <template>
-    <div class="has-padding-4">
-        <div class="field is-horizontal">
-            <form @submit.prevent="addMap">
-                <div class="field-body">
-                    <div class="field is-expanded">
-                    <div class="field has-addons">
-                        <p class="control">
-                            <a class="button is-static">
-                                <i class="far fa-user-plus"></i>
-                            </a>
-                        </p>
-                        <p class="control is-expanded">
-                            <input class="input" v-model="mapActive" required type="checkbox">
-                        </p>
-                        <p class="control is-expanded">
-                            <input class="input" v-model="mapUrl" type="text" placeholder="Map url">
-                        </p>
-                        <p class="control">
-                            <button class="button is-primary">
-                                +
-                            </button>
-                        </p>
-                    </div>
-                    </div>
-                </div>
-            </form>
+    <div class="container has-padding-3">
+      <form method="post" :action="'/classroom/' + this.code + '/maps'" enctype="multipart/form-data">
+        <input :value="csrfToken" type="hidden" name="_token"/>
+
+        <div class="has-margin-top-4">
+          <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.name') }} <small class="font-italic">({{ trans.get('maps.name_info') }})</small></label>
+          <input type="text" id="name" v-model="name" name="name" required class="input has-margin-y-3">
         </div>
-    </div>
+        <div class="has-margin-top-2">
+          <label for="url"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.url') }} <small class="font-italic">({{ trans.get('maps.url_info') }})</small></label>
+          <input type="text" id="url" v-model="url" name="url" class="input" placeholder="">
+        </div>
+        <div>
+          <button class="button is-link" @click="update" v-if="map" type="button">{{ trans.get('map.edit') }}</button>
+          <button class="button is-success" type="submit" v-if="!map">{{ trans.get('map.create') }}</button>
+        </div>
+      </form>
+  </div>
 </template>
+
 <script>
+
   export default {
-        mounted() {
-            this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+        props: ['code', 'map'],
+        created() {
+          this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+
+           if(this.map) {
+            this.name = this.map.name
+            this.url = this.map.url
+            this.id = this.map.id
+          }
         },
         data: function() {
             return {
-                map: [
-                ],
                 csrfToken: null,
+                name: null,
+                url: null,
             }
         },
-    }
+        methods: {
+            formSubmit: function(e) {  
+              e.preventDefault()
+            },
+            
+              update: function() {
+                  this.icon = this.fullIcon
+                  axios.patch('/classroom/maps/' + this.id, this.$data)
+                  .then(response => {
+                              this.$toasted.show(response.data.message, { 
+                                            position: "top-center",
+                                            duration: 3000, 
+                                            iconPack: 'fontawesome',
+                                            icon: response.data.icon,
+                                            type: response.data.type,
+                                          
+                                })
+                    });
+
+            }
+        },
+      }
 </script>

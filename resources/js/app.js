@@ -93,7 +93,7 @@ Vue.component('edit-group', require('./components/group/EditGroup.vue').default)
 Vue.component('show-shop', require('./components/shop/ShowShop.vue').default);
 Vue.component('shop-create', require('./components/shop/ShopCreate.vue').default);
 
-Vue.component('show-map', require('./components/map/ShowMap.vue').default);
+Vue.component('show-maps', require('./components/map/ShowMaps.vue').default);
 Vue.component('create-map', require('./components/map/CreateMap.vue').default);
 
 Vue.component('settings', require('./components/settings/Settings.vue').default);

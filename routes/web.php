@@ -127,10 +127,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
 
         // Maps
-        Route::get('/{code}/maps', 'MapsController@index'); // Policy protect
-        Route::get('/{code}/maps/{id}', 'MapsController@show'); // Policy protect
-        Route::post('/{code}/maps/create', 'MapsController@store'); // Policy protect
-        
+        Route::get('/{code}/maps', 'MapsController@index'); // ToDo: Policy protect
+        Route::get('/{code}/maps/create', 'MapsController@create'); // ToDo: Policy protect
+        Route::post('/{code}/maps', 'MapsController@store'); // ToDo: Policy protect
+        Route::delete('/maps/{id}', 'MapsController@destroy'); // ToDo: Policy protect
+        Route::get('/{code}/maps/{id}', 'MapsController@show'); // ToDo: Policy protect
+        Route::patch('/maps/{id}', 'MapsController@update');
     });
 
     Route::get('/utils/music', 'UtilsController@music');

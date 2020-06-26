@@ -39,4 +39,14 @@ export default {
         }
     },
 
+    getURLRefactoring: function (url){
+        var regExp = /genial.ly/;
+        var match = url.match(regExp);
+        
+        if (match) {
+            return url.slice(0, url.lastIndexOf('/'));
+        } else {
+            return url;
+        }
+    },
 }

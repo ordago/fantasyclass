@@ -18,7 +18,7 @@
                         <a href="/classroom/show/{{ $class->code }}/stories" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.stories') }}
                         </a>
-                        <a class="navbar-item">
+                        <a href="/classroom/show/{{ $class->code }}/map"  class="navbar-item">
                             <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
                         </a>
                         <a class="navbar-item">

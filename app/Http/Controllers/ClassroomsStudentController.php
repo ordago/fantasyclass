@@ -11,6 +11,7 @@ use App\Http\Classes\Functions;
 use App\Item;
 use App\Student;
 use App\User;
+use App\Map;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -361,10 +362,12 @@ class ClassroomsStudentController extends Controller
     public function map($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        
-        $map = $class->maps->where('active', '=', true)->first();
+        settings()->setExtraColumns(['user_id' => $class->id]);
+        $activeMap = settings()->get('active_map');
+
+        $map = Map::where('id', '=', $activeMap)->firstOrFail();
   
-        $student = $this->getCurrentStudent($class);
+        $student = Functions::getCurrentStudent($class);
         return view('studentsview.map', compact('class', 'map', 'student'));
     }
 }
