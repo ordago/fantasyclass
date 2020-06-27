@@ -41,7 +41,7 @@
                         <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
                         </a>
-                        <a style="color: gray" {{ Pooper: }} class="navbar-item">
+                        <a style="color: gray" class="navbar-item">
                             <i class="fad fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
                         </a>
                         <a href="/classroom/{{ $class->code }}/maps"  class="navbar-item">
