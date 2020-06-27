@@ -20,3 +20,15 @@ mix.js([
 mix.sass('resources/sass/app.scss', 'public/css').options({
     processCssUrls: mix.inProduction()
 });
+
+require('laravel-mix-bundle-analyzer');
+
+if (mix.isWatching()) {
+    mix.bundleAnalyzer();
+}
+
+mix.webpackConfig({
+    output:{
+        chunkFilename:'js/vuejs_code_split/[name].js',
+    }
+});

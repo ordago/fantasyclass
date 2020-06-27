@@ -31,15 +31,23 @@
               <i class="fad fa-scroll-old has-margin-right-2"></i>
               Random {{ trans.get('menu.events') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents"  v-if="students.length">
+            <a class="dropdown-item" @click="randomStudents" v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
               Random {{ trans.get('menu.students') }}
             </a>
-            <a class="dropdown-item" @click="randomGroups" v-if="classroom.grouping[0].groups.length > 0">
+            <a
+              class="dropdown-item"
+              @click="randomGroups"
+              v-if="classroom.grouping[0].groups.length > 0"
+            >
               <i class="fad fa-users has-margin-right-2"></i>
               Random {{ trans.get('menu.groups') }}
             </a>
-            <a class="dropdown-item" @click="getRandomCard"  v-if="students.length || classroom.grouping[0].groups.length">
+            <a
+              class="dropdown-item"
+              @click="getRandomCard"
+              v-if="students.length || classroom.grouping[0].groups.length"
+            >
               <i class="fad fa-club has-margin-right-2"></i>
               Random {{ trans.get('menu.card') }}
             </a>
@@ -53,25 +61,34 @@
         >
           <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
         </a>
-        <span class="link outer_glow cursor-pointer" @click="rollTheDice">
+        <span
+          class="link outer_glow cursor-pointer"
+          @click="rollTheDice"
+          v-tippy
+          :content="trans.get('menu.dice')"
+        >
           <i class="fad fa-dice" style="font-size:2em;"></i>
         </span>
         <a
           href="/utils/music"
           target="_blank"
+              v-tippy
+          :content="trans.get('menu.music')"
           class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
         >
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
         </a>
         <span
           class="link outer_glow has-padding-x-2 cursor-pointer"
+              v-tippy
+          :content="trans.get('menu.countdown')"
           @click="isCountDownModalActive=true"
         >
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
         <!-- <span class="link outer_glow has-padding-x-2 cursor-pointer">
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
-        </span> -->
+        </span>-->
       </div>
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
@@ -194,7 +211,7 @@
                     <button
                       v-for="behaviour in mainBehavioursJson"
                       v-tippy
-                      :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get('behaviours.' + behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 has-padding-x-4 is-light"
                       @click="addBehaviour(student.id, behaviour.id)"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -223,7 +240,7 @@
                     <button
                       v-for="behaviour in otherBehavioursJson"
                       v-tippy
-                      :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get('behaviours.' + behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 is-light has-padding-x-4"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
                       v-bind:key="behaviour.id"
@@ -409,6 +426,32 @@
         <i class="fad fa-random"></i>
       </button>
     </b-modal>
+    <b-modal
+      :active.sync="isRandomGroupActive"
+      :width="640"
+      scroll="keep"
+      class="has-text-centered has-background-light"
+    >
+      <div class="columns has-background-light rounded has-padding-2">
+        <div class="column is-narrow is-flex has-all-centered">
+          <img :src="currentGroup.logo" v-if="isRandomGroupActive && currentGroup.logo" />
+        </div>
+        <div class="column is-flex has-all-centered">
+          <h1
+            class="is-size-1 has-padding-4 has-margin-3"
+            v-if="isRandomGroupActive"
+          >{{ currentGroup.name }}</h1>
+        </div>
+      </div>
+
+      <button
+        class="button is-link has-margin-2"
+        v-if="shuffledGroups && shuffledGroups.length"
+        @click="currentGroup = shuffledGroups.shift()"
+      >
+        <i class="fad fa-random"></i>
+      </button>
+    </b-modal>
     <b-modal :active.sync="dice" has-modal-card full-screen :can-cancel="false">
       <div class="modal-card" style="width: auto">
         <button class="button" type="button" @click="dice=false">Close</button>
@@ -507,11 +550,15 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom"],
   mounted() {
-    let orderedBehaviours =  _.orderBy(this.classroom.behaviours, "count_number", "desc")
-    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems)
-    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems)
-    this.sortKey = $cookies.get("order") ?? "name"
-    this.viewGrid = $cookies.get("viewGrid") ?? 0
+    let orderedBehaviours = _.orderBy(
+      this.classroom.behaviours,
+      "count_number",
+      "desc"
+    );
+    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems);
+    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems);
+    this.sortKey = $cookies.get("order") ?? "name";
+    this.viewGrid = $cookies.get("viewGrid") ?? 0;
   },
   data: function() {
     return {
@@ -538,7 +585,7 @@ export default {
       showCard: false,
       studentSelected: 0,
       groupSelected: 0,
-      event: null,
+      event: null
     };
   },
   methods: {
@@ -634,7 +681,7 @@ export default {
     randomGroups() {
       this.shuffledGroups = _.shuffle(this.classroom.grouping[0].groups);
       this.currentGroup = this.shuffledGroups.shift();
-      this.isRandomGroupsActive = true;
+      this.isRandomGroupActive = true;
     },
     getRandomCard() {
       axios

@@ -39,24 +39,11 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas',
 })
 
-import ElementUI from 'element-ui';
-import { ElementTiptapPlugin } from 'element-tiptap';
-
-// import ElementUI's styles
-import 'element-ui/lib/theme-chalk/index.css';
-// import this package's styles
-import 'element-tiptap/lib/index.css';
-
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
 Vue.use(Croppa)
 
-// use ElementUI's plugin
-Vue.use(ElementUI);
-// use this package's plugin
-Vue.use(ElementTiptapPlugin, { /* plugin options */ });
-// Now you register `'el-tiptap'` component globally.
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
@@ -84,7 +71,8 @@ Vue.component('show-challenges-group', require('./components/challenges/ShowChal
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
-Vue.component('create-challenges', require('./components/challenges/CreateChallenges.vue').default);
+// Vue.component('jobs', () => import('./pages/employer/jobs/Index.vue'));
+Vue.component('create-challenges', () => import('./components/challenges/CreateChallenges.vue').default);
 
 Vue.component('show-question', require('./components/challenges/ShowQuestion.vue').default);
 
@@ -107,7 +95,7 @@ Vue.component('show-event', require('./components/event/ShowEvent.vue').default)
 Vue.component('icon-selector', require('./components/utils/IconSelector.vue').default);
 
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
-Vue.component('editor', require('./components/utils/Editor.vue').default);
+Vue.component('editor', () => import('./components/utils/Editor.vue').default);
 
 Vue.component('count-down', require('./components/utils/CountDown.vue').default);
 

@@ -18,7 +18,7 @@
                         </p>
                         <p class="control">
                             <button class="button is-primary">
-                                +
+                                {{ trans.get('users_groups.add_student') }}
                             </button>
                         </p>
                     </div>

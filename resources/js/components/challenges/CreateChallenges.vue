@@ -196,6 +196,9 @@
   </div>
 </template>
 <script>
+const Editor =
+        () => import('../utils/Editor.vue');
+
 export default {
   props: ["challengegroup", "code", "iconPrev", "edit", "groups"],
   mounted: function() {
@@ -282,7 +285,9 @@ export default {
       return dt.toLocaleDateString("es-ES", dateoptions);
     }
   },
-  components: {},
+  components: {
+    Editor,
+  },
 
   computed: {}
 };

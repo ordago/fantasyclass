@@ -19,5 +19,7 @@ return [
     'apply' => 'Apply',
     
     'add_behaviours' => 'Add new behaviours to interact with students',
+    
+    'add_student' => 'Add student',
 
 ];

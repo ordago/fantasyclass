@@ -15,12 +15,12 @@
       </div>
 
       <div class="panel-block" v-if="addChallenge">
-        <create-challenges
+        <CreateChallenges
           :edit="challengeEdit"
           :iconPrev="icon"
           :code="code"
           :challengegroup="challengegroup.id"
-        ></create-challenges>
+        ></CreateChallenges>
       </div>
 
       <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
@@ -32,7 +32,7 @@
 
       <div class="panel-block is-block has-padding-3" v-if="challenges.length > 0 && !addChallenge">
         <div v-for="challenge in filteredList" v-bind:key="challenge.id">
-          <show-challenge :challenge="challenge" :admin="true" :edit="true"></show-challenge>
+          <ShowChallenge :challenge="challenge" :admin="true" :edit="true"></ShowChallenge>
         </div>
       </div>
     </div>
@@ -78,6 +78,10 @@
   </div>
 </template>
 <script>
+import CreateChallenges from "./CreateChallenges.vue";
+import ShowChallenge from "./ShowChallenge.vue";
+
+
 export default {
   props: ["challengegroup", "challenges", "code", "icon"],
   created: function() {},
@@ -134,7 +138,10 @@ export default {
       });
     }
   },
-  components: {},
+  components: {
+    CreateChallenges,
+    ShowChallenge,
+  },
   computed: {
     buttonAddChallege() {
       return this.addChallenge
