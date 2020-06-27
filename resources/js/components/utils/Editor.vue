@@ -55,7 +55,6 @@ import {
   FormatClear,
   TextColor,
   TextHighlight,
-  Preview,
   Print,
   Fullscreen,
   FontType,
@@ -108,7 +107,6 @@ export default {
         new FormatClear(),
         new Print(),
         new Fullscreen(),
-        new Preview()
       ]
     };
   },

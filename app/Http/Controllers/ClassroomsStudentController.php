@@ -12,6 +12,7 @@ use App\Item;
 use App\Student;
 use App\User;
 use App\Map;
+use App\Rules;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -179,6 +180,15 @@ class ClassroomsStudentController extends Controller
         $cards = $student->cards;
 
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards'));
+    }
+
+    public function rules($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $rules = Rules::where('classroom_id', $class->id)->first();
+        $rules = Functions::replaceSpecial($rules->content, $class);
+        $student = Functions::getCurrentStudent($class, []);
+
+        return view('studentsview.rules', compact('class', 'rules', 'student'));
     }
 
     public function markChallenge($code)

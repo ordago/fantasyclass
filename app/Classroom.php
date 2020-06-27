@@ -88,6 +88,10 @@ class Classroom extends Model
         return $this->hasMany(Event::class);
     }
 
+    public function rules() {
+        return $this->hasOne(Rules::class);
+    }
+
     public static function boot()
     {
         parent::boot();    

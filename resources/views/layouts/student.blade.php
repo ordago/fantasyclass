@@ -18,10 +18,15 @@
                         <a href="/classroom/show/{{ $class->code }}/stories" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.stories') }}
                         </a>
+                        @php
+                            settings()->setExtraColumns(['user_id' => $class->id]);
+                        @endphp
+                        @if(settings()->get('active_map'))
                         <a href="/classroom/show/{{ $class->code }}/map"  class="navbar-item">
                             <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
                         </a>
-                        <a class="navbar-item">
+                        @endif
+                        <a href="/classroom/show/{{ $class->code }}/rules" class="navbar-item">
                             <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}
                         </a>
                         <a class="navbar-item">

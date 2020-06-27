@@ -48,7 +48,7 @@
       <div class="field w-100 has-padding-top-3">
         <label class="label">Content</label>
         <div class="control content" data-app>
-          <editor :code="code"></editor>
+          <Editor :code="code"></Editor>
         </div>
       </div>
       <div class="field">

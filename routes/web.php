@@ -62,15 +62,16 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/student/inventory', 'InventoryController@update');
         
         // Student View
-        Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
-        Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
-        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // Policy protect
-        Route::get('/show/{code}/map', 'ClassroomsStudentController@map'); // Policy protect
-        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // Policy protect
-        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
-        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
-        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // Policy protect
-        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // Policy protect
+        Route::get('/show/{code}', 'ClassroomsStudentController@show'); // TODO Policy protect
+        Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // TODO Policy protect
+        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // TODO Policy protect
+        Route::get('/show/{code}/map', 'ClassroomsStudentController@map'); // TODO Policy protect
+        Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules'); // TODO Policy protect
+        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // TODO Policy protect
+        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // TODO Policy protect
+        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // TODO Policy protect
+        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // TODO Policy protect
+        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // TODO Policy protect
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -110,6 +111,11 @@ Route::group(['middleware' => 'language'], function () {
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
+
+        // Rules
+        Route::get('/{code}/rules', 'RulesController@show');
+        Route::post('/default/rules', 'RulesController@default');
+        Route::patch('/{code}/rules', 'RulesController@update');
 
         // Shop
         Route::get('/{code}/shop', 'ShopController@index');

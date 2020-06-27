@@ -71,7 +71,6 @@ Vue.component('show-challenges-group', require('./components/challenges/ShowChal
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
-// Vue.component('jobs', () => import('./pages/employer/jobs/Index.vue'));
 Vue.component('create-challenges', () => import('./components/challenges/CreateChallenges.vue').default);
 
 Vue.component('show-question', require('./components/challenges/ShowQuestion.vue').default);
@@ -89,6 +88,7 @@ Vue.component('settings', require('./components/settings/Settings.vue').default)
 
 Vue.component('show-event', require('./components/event/ShowEvent.vue').default);
 
+Vue.component('edit-rules', require('./components/rules/EditRules.vue').default);
 // Utils
 
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored

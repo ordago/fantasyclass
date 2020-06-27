@@ -15,8 +15,9 @@ class CreateRulesTable extends Migration
     {
         Schema::create('rules', function (Blueprint $table) {
             $table->id();
-            $table->smallInteger('type');
+            $table->smallInteger('type')->default(0);
             $table->text('content');
+            $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });
     }

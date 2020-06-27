@@ -47,7 +47,7 @@
                         <a href="/classroom/{{ $class->code }}/maps"  class="navbar-item">
                                 <i class="fad fa-map-marked-alt has-margin-right-2"></i> {{ __('menu.map') }}
                         </a>
-                        <a class="navbar-item">
+                        <a href="/classroom/{{ $class->code }}/rules" class="navbar-item">
                             <i class="fad fa-pencil-ruler has-margin-right-2"></i> {{ __('menu.rules') }}
                         </a>
                         <a href="/classroom/{{ $class->code }}/settings" class="navbar-item">
