@@ -58,6 +58,7 @@ class StudentController extends Controller
                     'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
                     'is_student' => 1,
+                    'locale' => auth()->user()->locale,
                 ]);
                 $id = $user->id;
                 if($student['email'])

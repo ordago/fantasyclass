@@ -145,10 +145,6 @@ class ClassroomsController extends Controller
             'name' => 'General',
             'classroom_id' => $classroom->id,
         ]);
-
-        
-        dump("checking");
-        dump(auth()->user()->locale);
         
         Rules::create([
             'classroom_id' => $classroom->id,

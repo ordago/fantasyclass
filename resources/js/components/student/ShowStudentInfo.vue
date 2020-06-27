@@ -152,6 +152,8 @@
           </div>
           <div class="has-padding-4">
             <img
+              v-tippy
+              :content="'Stands out in <i class=\'' + charclass.property + ' colored\'></i>'"
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="has-padding-2 has-margin-2 rounded"

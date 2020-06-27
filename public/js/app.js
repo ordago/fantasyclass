@@ -12224,6 +12224,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
  // Download excel
 
 
@@ -64560,12 +64562,17 @@ var render = function() {
                       charclass
                     ) {
                       return _c("img", {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
                         key: charclass.id,
                         staticClass: "has-padding-2 has-margin-2 rounded",
                         class: {
                           selected: charclass.id == _vm.student.character_id
                         },
                         attrs: {
+                          content:
+                            "Stands out in <i class='" +
+                            charclass.property +
+                            " colored'></i>",
                           src: "/img/character/" + charclass.id + ".png"
                         },
                         on: {

@@ -107,6 +107,7 @@ class Classroom extends Model
             $classroom->levels()->delete();
             $classroom->challengeGroups()->delete();
             $classroom->maps()->delete();
+            $classroom->rules()->delete();
 
         });
     } 
