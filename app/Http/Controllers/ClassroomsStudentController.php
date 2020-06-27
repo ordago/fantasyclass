@@ -178,6 +178,7 @@ class ClassroomsStudentController extends Controller
 
         $challenges = $challenges->merge($groupChallenges);
         $cards = $student->cards;
+        $student->append('boost');
 
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards'));
     }
@@ -292,7 +293,7 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => ($student->gold - $item->price)]);
 
         return [
-            "message" => " " . __('success_error.equipment_succes'),
+            "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
             "type" => "success",
             "items" => $student->fresh()->items,
@@ -333,10 +334,11 @@ class ClassroomsStudentController extends Controller
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);
         return [
-            "message" => " " . __('success_error.shop_succes'),
+            "message" => " " . __('success_error.shop_success'),
             "icon" => "check",
             "type" => "success",
             "equipment" => $student->fresh()->equipment,
+            "boost" => $student->fresh()->getBoost(),
         ];
     }
 

@@ -11451,6 +11451,18 @@ body {
           filter: brightness(50%);
 }
 
+.level-hidden {
+  z-index: 10;
+  position: absolute;
+  top: 0;
+  left: 25px;
+  display: none;
+}
+
+.level-top:hover .level-hidden {
+  display: initial;
+}
+
 .cursor-default {
   cursor: default;
 }
@@ -12706,11 +12718,14 @@ textPath {
 }
 
 /* IMAGE STYLES */
-[type=radio] + img, [type=radio] + div {
+[type=radio] + img,
+[type=radio] + div {
   cursor: pointer;
 }
 
-[type=radio]:checked + img, [type=radio]:checked + div, .selected2 {
+[type=radio]:checked + img,
+[type=radio]:checked + div,
+.selected2 {
   box-shadow: 0 0 3pt 2pt #4fc3f7;
 }
 
@@ -12718,9 +12733,19 @@ textPath {
   position: absolute;
   top: 5px;
   left: 5px;
-  z-index: 10;
+  z-index: 5;
   font-size: 1.5em;
   padding: 10px;
+}
+
+.boost-right {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  z-index: 5;
+  padding: 5px;
+  color: white;
+  font-size: 1.5em;
 }
 
 .flexEnd {
@@ -13154,6 +13179,469 @@ textPath {
 }
 
 /*****************************/
+/************* ROBOTS *********/
+.armorRobot1 {
+  position: absolute;
+  top: 88px;
+  left: 32.5px;
+}
+
+.bowTieRobot1 {
+  position: absolute;
+  top: 68px;
+  left: 42px;
+}
+
+.bootsRobot1 {
+  position: absolute;
+  left: 37px;
+  top: 155px;
+  z-index: -1;
+}
+
+.helmetRobot1 {
+  left: 40px;
+  z-index: -1;
+}
+
+.gauntletRobot1 {
+  position: absolute;
+  left: 100px;
+  top: 88px;
+  z-index: -1;
+  -webkit-animation: robot1 1.2s ease infinite;
+          animation: robot1 1.2s ease infinite;
+}
+
+.character:hover .gauntletRobot1 {
+  -webkit-animation: robot1 0.5s ease infinite;
+          animation: robot1 0.5s ease infinite;
+}
+
+.character:hover .helmetRobot1 {
+  -webkit-animation: robotHead1 2.2s linear infinite;
+          animation: robotHead1 2.2s linear infinite;
+}
+
+@-webkit-keyframes robotHead1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes robotHead1 {
+  0% {
+    transform: rotate(0deg);
+  }
+  40% {
+    transform: rotate(5deg);
+  }
+  80% {
+    transform: rotate(-5deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+@-webkit-keyframes robot1 {
+  0% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.5);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  60% {
+    transform: scaleY(0.5);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+@keyframes robot1 {
+  0% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.5);
+  }
+  40% {
+    transform: scaleY(0);
+  }
+  60% {
+    transform: scaleY(0.5);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+@-webkit-keyframes robot2 {
+  0% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.75);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+@keyframes robot2 {
+  0% {
+    transform: scaleY(1);
+  }
+  20% {
+    transform: scaleY(0.75);
+  }
+  60% {
+    transform: scaleY(0.75);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+.helmetRobot2 {
+  top: 32px;
+  left: 31px;
+}
+
+.eyesRobot2,
+.eyesRobot3 {
+  position: absolute;
+  top: -10px;
+  left: 32.5px;
+  z-index: -1;
+}
+
+.armorRobot2,
+.armorRobot3 {
+  position: absolute;
+  top: 112px;
+  left: 32.5px;
+}
+
+.gauntletRobot2,
+.gauntletRobot3,
+.gauntletRobot4 {
+  position: absolute;
+  left: 14px;
+  transform-origin: 50% 0%;
+  -webkit-animation: robot2 1.2s ease infinite;
+          animation: robot2 1.2s ease infinite;
+}
+
+.character:hover .gauntletRobot2,
+.character:hover .gauntletRobot3 {
+  -webkit-animation: none;
+          animation: none;
+  transform-origin: 0% 15%;
+  transform: scaleY(-1);
+}
+
+.bootsRobot2,
+.bootsRobot3 {
+  position: absolute;
+  left: 19px;
+  top: 168px;
+  z-index: -1;
+}
+
+.helmetRobot3 {
+  top: 28px;
+  left: 30px;
+}
+
+.helmetRobot4 {
+  top: 25px;
+  left: 23px;
+}
+
+.gauntletRobot4 {
+  z-index: -1;
+  top: 116px;
+}
+
+.bootsRobot4 {
+  left: 17px;
+}
+
+.is-absolute {
+  position: absolute;
+}
+
+/* superh */
+.eqPart {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.legs-sh1 {
+  top: 153.502px;
+  left: 14.209px;
+}
+
+.legs-sh2 {
+  top: 169.78px;
+  left: 12.04px;
+}
+
+.legs-sh3 {
+  top: 170.72px;
+  left: 24.585px;
+}
+
+.body-sh1 {
+  top: 83.776px;
+  left: 0px;
+}
+
+.body-sh2 {
+  top: 54.836px;
+  left: 0;
+}
+
+.body-sh3 {
+  top: 102.838px;
+  left: 10.362px;
+}
+
+.head-sh1 {
+  top: 0;
+  left: 0.901px;
+}
+
+.head-sh2 {
+  top: 26.68px;
+  left: 21px;
+}
+
+.head-sh3 {
+  top: 2.324px;
+  left: 17.718px;
+}
+
+.arms-sh1 {
+  top: 35.72px;
+  left: 2px;
+}
+
+.arms-sh2 {
+  top: 13.059px;
+  left: 22.972px;
+}
+
+.arms-sh3 {
+  top: 103.068px;
+  left: 11.666px;
+}
+
+.backPart {
+  z-index: -1;
+}
+
+.lastPart {
+  z-index: -2;
+}
+
+@-webkit-keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translatey(0px);
+  }
+  50% {
+    transform: translatey(-20px);
+  }
+  100% {
+    transform: translatey(0px);
+  }
+}
+@-webkit-keyframes floathover {
+  0% {
+    transform: translatey(-35px);
+  }
+  50% {
+    transform: translatey(-28px);
+  }
+  100% {
+    transform: translatey(-35px);
+  }
+}
+@keyframes floathover {
+  0% {
+    transform: translatey(-35px);
+  }
+  50% {
+    transform: translatey(-28px);
+  }
+  100% {
+    transform: translatey(-35px);
+  }
+}
+.fly {
+  transform: translatey(0px);
+  -webkit-animation: float 4s ease-in-out infinite;
+          animation: float 4s ease-in-out infinite;
+}
+
+.character:hover .fly {
+  -webkit-animation: floathover 0.5s ease-in-out infinite;
+          animation: floathover 0.5s ease-in-out infinite;
+}
+
+/**************/
+/*** Animals **/
+@-webkit-keyframes movementAnimal {
+  0% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(2px);
+  }
+  40% {
+    transform: translateY(-2px);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(-2px);
+  }
+}
+@keyframes movementAnimal {
+  0% {
+    transform: translateY(0px);
+  }
+  20% {
+    transform: translateY(2px);
+  }
+  40% {
+    transform: translateY(-2px);
+  }
+  60% {
+    transform: translateY(2px);
+  }
+  100% {
+    transform: translateY(-2px);
+  }
+}
+.moveHeadUD {
+  -webkit-animation-name: movementAnimal;
+          animation-name: movementAnimal;
+  -webkit-animation-duration: 2.5s;
+          animation-duration: 2.5s;
+  -webkit-animation-iteration-count: infinite;
+          animation-iteration-count: infinite;
+}
+
+.character-container:hover .moveHeadUD {
+  -webkit-animation-name: robotHead1;
+          animation-name: robotHead1;
+  -webkit-animation-duration: 1.5s;
+          animation-duration: 1.5s;
+}
+
+.tail-1 {
+  top: 146.412px;
+  left: 99.955px;
+}
+
+.body-1 {
+  top: 127.645px;
+  left: 2.147px;
+}
+
+.head-1 {
+  top: 5.138px;
+  left: 1.194px;
+}
+
+.tail-2 {
+  top: 174.529px;
+  left: 99.184px;
+}
+
+.body-2 {
+  top: 147.282px;
+  left: 27.454px;
+}
+
+.head-2 {
+  top: 7.857px;
+  left: 6.119px;
+}
+
+.legs-3 {
+  top: 204.594px;
+  left: 10.215px;
+}
+
+.body-3 {
+  top: 115.341px;
+  left: 12.79px;
+}
+
+.head-3 {
+  top: 40.34px;
+  left: -2px;
+}
+
+.legs-4 {
+  top: 182.804px;
+  left: 45.163px;
+}
+
+.body-4 {
+  top: 110.444px;
+  left: 19.785px;
+}
+
+.head-4 {
+  top: 10px;
+  left: 10.679px;
+}
+
+.legs-5 {
+  top: 186.074px;
+  left: 33.642px;
+}
+
+.body-5 {
+  top: 34.259px;
+  left: 0;
+}
+
+.head-5 {
+  top: 0;
+  left: 35.419px;
+}
+
+/**************/
 .sidebar-content {
   min-width: 50%;
 }

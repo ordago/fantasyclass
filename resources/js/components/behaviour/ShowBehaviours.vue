@@ -41,9 +41,9 @@
           </span>
         </b-table-column>
 
-        <b-table-column field="name" label="First Name" sortable>{{ props.row.name }}</b-table-column>
+        <b-table-column field="name" label="Name" sortable>{{ trans.get(props.row.name) }}</b-table-column>
 
-        <b-table-column field="custom_text" label="Custom text" sortable>{{ props.row.custom_text }}</b-table-column>
+        <b-table-column field="custom_text" label="Custom text" sortable>{{ trans.get(props.row.custom_text) }}</b-table-column>
 
         <b-table-column field="hp" label="Health Points" sortable centered>
           <i class="fas fa-heart"></i>

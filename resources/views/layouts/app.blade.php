@@ -88,7 +88,11 @@
                             <div class="dropdown-trigger">
                                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                                     <span>
-                                        <i class="fas fa-user-graduate"></i>
+                                        @if(Auth::user()->is_student == 0)
+                                            <i class="fas fa-user-graduate"></i>
+                                        @else
+                                            <i class="fas fa-user"></i>
+                                        @endif
                                         <span class="pl-2 text-light cursor-default">
                                             {{ Str::limit(Auth::user()->username, 8, $end='...') }}
                                         </span>

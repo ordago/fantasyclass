@@ -6,7 +6,6 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
-use App\LogEntry;
 use App\Student;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -36,7 +35,7 @@ class StudentController extends Controller
         $this->authorize('update', $class);
 
         $classId = $class->id;
-        if (!$classId)
+        if (!$classId || str_len($student['name']) < 4)
             return false;
         foreach ($request->students as $student) {
             $pass = '';
@@ -183,6 +182,7 @@ class StudentController extends Controller
             ->get();
 
             $cards = $student->cards;
+            $student->append('boost');
 
         return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards'));
     }
@@ -197,12 +197,7 @@ class StudentController extends Controller
                 $student->cards()->attach($request->card_id);
                 return true;
             } else {
-                LogEntry::create([
-                    'type' => $request->prop,
-                    'value' => $request->value,
-                    'student_id' => $student->id,
-                    ]);
-                    return $student->setProperty($request->prop, $request->value);
+                return $student->setProperty($request->prop, $request->value);
             }
             } else {
                 $class = Classroom::where('code', $request->code)->first();

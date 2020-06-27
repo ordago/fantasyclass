@@ -15,7 +15,7 @@
               $last = true;
             @endphp
         @endif
-            <show-level code="{{ $class->code }}" last="{{ $last }}" level="{{ $level }}"></show-level>
+            <show-level code="{{ $class->code }}" :edit="true" last="{{ $last }}" :level="{{ $level }}"></show-level>
     @endforeach
     </div>
 

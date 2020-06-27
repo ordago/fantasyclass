@@ -67,6 +67,18 @@
     filter: brightness(50%);
   }
 
+  .level-hidden {
+      z-index: 10; 
+      position:absolute; 
+      top:0; 
+      left: 25px;
+      display: none;
+  }
+
+  .level-top:hover .level-hidden {
+      display: initial;
+  }
+
   .cursor-default {
       cursor: default;
   }

@@ -91,8 +91,8 @@
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
 
            if(this.behaviour) {
-            this.name = this.behaviour.name
-            this.custom_text = this.behaviour.custom_text
+            this.name = this.trans.get(this.behaviour.name)
+            this.custom_text = this.trans.get(this.behaviour.custom_text)
             this.hp = this.behaviour.hp
             this.xp = this.behaviour.xp
             this.gold = this.behaviour.gold
@@ -118,7 +118,6 @@
             },
             
               update: function() {
-                  this.icon = this.fullIcon
                   axios.patch('/classroom/behaviours/' + this.id, this.$data)
                   .then(response => {
                               this.$toasted.show(response.data.message, { 

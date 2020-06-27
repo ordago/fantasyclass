@@ -151,7 +151,6 @@ class ClassroomsController extends Controller
             'content' => file_get_contents(public_path() . '/rules/' . auth()->user()->locale . '.txt')
         ]);
 
-
         auth()->user()->classrooms()->attach([
             $classroom->id => ['role' => 2],
         ]);

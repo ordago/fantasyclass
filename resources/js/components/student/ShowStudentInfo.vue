@@ -2,14 +2,21 @@
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
     <div class="column is-narrow has-padding-right-0">
       <div class="card rounded card-shadow-s" style="min-width: 275px">
-        <span
-          class="level-top rounded has-padding-4 has-background-light"
-          v-if="student.level"
-        >{{ student.level.number }}</span>
+        <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
+          <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
+          {{ student.level.number }}
+        </span>
         <div
           class="card-image card-shadow-s rounded-top char-bg"
           :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
         >
+          <span
+            class="boost-right outer_glow_dark"
+            v-tippy
+            :content="'<i class=\'fas fa-heart colored\'></i>' + student.boost.hp + '% | <i class=\'fas fa-fist-raised colored\'></i>' + student.boost.xp + '% | <i class=\'fas fa-coins colored\'></i>' + student.boost.gold + '%'"
+          >
+            <i class="fas fa-arrow-alt-square-up"></i>
+          </span>
           <div class="character-container character character-small is-relative">
             <img
               :src="'/img/character/' + element.src"
@@ -153,7 +160,7 @@
           <div class="has-padding-4">
             <img
               v-tippy
-              :content="'Stands out in <i class=\'' + charclass.property + ' colored\'></i>'"
+              :content="'Highlights in <i class=\'' + charclass.property + ' colored\'></i>'"
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="has-padding-2 has-margin-2 rounded"
@@ -218,7 +225,7 @@
                 v-bind:class="{ 'inv-item-armor-bronce': gear.offset == 1, 'inv-item-armor-silver': gear.offset == 2, 'inv-item-armor-gold': gear.offset == 3 }"
               >
                 <img :src="'/img/character/' + gear.src" :alt="gear.id" class="item" />
-                <div class="price-buy rounded not-hover" v-if="eq1Json || eq2Json || eq3Json">
+                <div class="price-buy rounded not-hover" v-if="(eq1Json || eq2Json || eq3Json)">
                   <i class="fas fa-plus"></i>
                 </div>
                 <div class="w-100 shop-sub-item" style="position:absolute; top: 100px; left: 0">
@@ -280,11 +287,23 @@
               :key="index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
-              <show-card class="has-margin-4" :student="student" :card="card" :code="classroom.code" :use="true" :admin="false"></show-card>
+              <show-card
+                class="has-margin-4"
+                :student="student"
+                :card="card"
+                :code="classroom.code"
+                :use="true"
+                :admin="false"
+              ></show-card>
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="Behaviours" v-if="student.behaviours.length" icon="heart" icon-pack="fad">
+        <b-tab-item
+          label="Behaviours"
+          v-if="student.behaviours.length"
+          icon="heart"
+          icon-pack="fad"
+        >
           <div class="is-flex justify-content-center">
             <apexchart
               v-if="series.length"
@@ -324,7 +343,7 @@
                 </span>
               </b-table-column>
 
-              <b-table-column field="name" label="Name" sortable>{{ props.row.name }}</b-table-column>
+              <b-table-column field="name" label="Name" sortable>{{ trans.get(props.row.name) }}</b-table-column>
 
               <b-table-column
                 field="created_at"
@@ -356,7 +375,12 @@
           </b-table>
         </b-tab-item>
 
-        <b-tab-item label="Challenges" v-if="challenges && challenges.length" icon="pen-fancy" icon-pack="fad">
+        <b-tab-item
+          label="Challenges"
+          v-if="challenges && challenges.length"
+          icon="pen-fancy"
+          icon-pack="fad"
+        >
           <div v-for="challenge in orderedChallenges" :key="challenge.id">
             <show-challenge
               :challenge="challenge"
@@ -421,13 +445,13 @@
 import Utils from "../../utils.js";
 
 // Download excel
-import JsonExcel from 'vue-json-excel'
-Vue.component('downloadExcel', JsonExcel)
+import JsonExcel from "vue-json-excel";
+Vue.component("downloadExcel", JsonExcel);
 
 // Charts
-import VueApexCharts from 'vue-apexcharts'
-Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
+import VueApexCharts from "vue-apexcharts";
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
 
 export default {
   props: [
@@ -628,6 +652,7 @@ export default {
                 this.student.gold = this.student.gold - newItem.price;
                 oldItem.src = newItem.src;
                 let reference = "item" + oldItem.id;
+                this.student.boost = response.data.boost;
                 let newClass = "inv-item-armor-bronce";
                 switch (newItem.offset) {
                   case 2:
@@ -773,7 +798,10 @@ export default {
           let behaviour = element[0];
           this.series.push(element.length);
           this.labels.push(
-            "<i class='" + behaviour.icon + "'></i> " + behaviour.name
+            "<i class='" +
+              behaviour.icon +
+              "'></i> " +
+              this.trans.get(behaviour.name)
           );
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
             this.colors.push(colorsOK[0]);

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div
-      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2"
+      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2 has-margin-left-0"
       id="utilities"
     >
       <div class="tools rounded-left">
@@ -211,7 +211,7 @@
                     <button
                       v-for="behaviour in mainBehavioursJson"
                       v-tippy
-                      :content="trans.get('behaviours.' + behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 has-padding-x-4 is-light"
                       @click="addBehaviour(student.id, behaviour.id)"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -240,7 +240,7 @@
                     <button
                       v-for="behaviour in otherBehavioursJson"
                       v-tippy
-                      :content="trans.get('behaviours.' + behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 is-light has-padding-x-4"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
                       v-bind:key="behaviour.id"
@@ -382,8 +382,8 @@
           </div>
         </div>
       </div>
-      <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
-        <div class="box card-shadow-s is-flex has-background-link has-all-centered">
+      <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd" >
+        <div class="box card-shadow-s is-flex has-background-link has-all-centered" style="min-height: 160px">
           <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
             <img src="/img/new_std.svg" class="has-margin-left-1" />
             <strong>Add students</strong>
