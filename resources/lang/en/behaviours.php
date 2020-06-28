@@ -16,6 +16,10 @@ return [
     'attributes' => 'Attributes',
     'attributes_info' => 'positive values for good behaviours and negatives for the bad ones',
 
+    'hp' => 'Health points',
+    'experience' => 'Experience',
+    'gold' => 'Gold',
+
     'hp_participation' => 'Participation',
     'hp_homework' => 'Do the homework',
     'hp_behaviour' => 'Good behaviour',

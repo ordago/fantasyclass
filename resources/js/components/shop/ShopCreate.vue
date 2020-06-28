@@ -25,7 +25,7 @@
               <div
                 class="field has-addons"
                 v-tippy
-                content="Assign a value if this is an item that could be used to restore health."
+                :content="trans.get('shop.item_hp')"
               >
                 <p class="control">
                   <a class="button is-static">
@@ -47,7 +47,7 @@
               <div
                 class="field has-addons"
                 v-tippy
-                content="Assign a value if this is an item that could be used to get experience."
+                :content="trans.get('shop.item_xp')"
               >
                 <p class="control">
                   <a class="button is-static">
@@ -71,7 +71,7 @@
               <div class="field has-addons">
                 <p class="control">
                   <a class="button is-static">
-                    Price
+                    {{ trans.get('shop.price') }}
                     <i class="fas fa-coins colored"></i>
                   </a>
                 </p>
@@ -90,10 +90,10 @@
               <div
                 class="field has-addons"
                 v-tippy
-                content="To protect the item until the student reach the level"
+                :content="trans.get('shop.min_level_info')"
               >
                 <p class="control">
-                  <a class="button is-static">Minimum level</a>
+                  <a class="button is-static">{{ trans.get('shop.min_level') }}</a>
                 </p>
                 <p class="control is-expanded">
                   <input type="number" class="input" v-model="min_lvl" />
@@ -106,11 +106,11 @@
     </div>
     <div class="columns">
       <div class="column">
-        <textarea class="input" placeholder="Description" v-model="description"></textarea>
+        <textarea class="input" :placeholder="trans.get('shop.description')" v-model="description"></textarea>
       </div>
     </div>
-    <button class="button is-primary" v-if="!item" @click="createItem()"><i class="fas fa-plus"></i> Create</button>
-    <button class="button is-link" v-if="item" @click="createItem()"><i class="fas fa-edit"></i> Edit</button>
+    <button class="button is-primary" v-if="!item" @click="createItem()"><i class="fas fa-plus"></i> {{ trans.get('general.create') }}</button>
+    <button class="button is-link" v-if="item" @click="createItem()"><i class="fas fa-edit"></i> {{ trans.get('general.edit') }}</button>
   </div>
 </template>
 

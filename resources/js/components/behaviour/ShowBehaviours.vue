@@ -32,7 +32,7 @@
       sort-icon="arrow-up"
     >
       <template slot-scope="props">
-        <b-table-column field="icon" label="Icon" centered>
+        <b-table-column field="icon" :label="trans.get('behaviours.icon')" centered>
           <span
             class="tag"
             v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -41,26 +41,26 @@
           </span>
         </b-table-column>
 
-        <b-table-column field="name" label="Name" sortable>{{ trans.get(props.row.name) }}</b-table-column>
+        <b-table-column field="name" :label="trans.get('behaviours.name')" sortable>{{ trans.get(props.row.name) }}</b-table-column>
 
-        <b-table-column field="custom_text" label="Custom text" sortable>{{ trans.get(props.row.custom_text) }}</b-table-column>
+        <b-table-column field="custom_text" :label="trans.get('behaviours.custom_text')" sortable>{{ trans.get(props.row.custom_text) }}</b-table-column>
 
-        <b-table-column field="hp" label="Health Points" sortable centered>
+        <b-table-column field="hp" :label="trans.get('behaviours.hp')" sortable centered>
           <i class="fas fa-heart"></i>
           {{ props.row.hp }}
         </b-table-column>
 
-        <b-table-column field="name" label="Experience" sortable centered>
+        <b-table-column field="name" :label="trans.get('behaviours.experience')" sortable centered>
           <i class="fas fa-fist-raised"></i>
           {{ props.row.xp }}
         </b-table-column>
 
-        <b-table-column field="name" label="Gold" sortable centered>
+        <b-table-column field="name" :label="trans.get('behaviours.gold')" sortable centered>
           <i class="fas fa-coins"></i>
           {{ props.row.gold }}
         </b-table-column>
 
-        <b-table-column field="name" label="Settings" centered>
+        <b-table-column field="name" :label="trans.get('menu.settings')" centered>
           <a
             :href="'/classroom/' + code + '/behaviours/' + props.row.id"
             class="button is-info is-small"

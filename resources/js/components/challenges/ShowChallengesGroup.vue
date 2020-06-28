@@ -3,7 +3,7 @@
     <div class="column is-narrow" style="min-width: 400px">
       <article class="panel is-sticky-panel is-info has-padding-bottom-4">
         <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
-          <span>Categories</span>
+          <span>{{ trans.get('challenges.categories') }}</span>
           <button class="button" @click="activeAddGroup=!activeAddGroup" v-html="buttonAddGroup"></button>
         </p>
 

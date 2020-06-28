@@ -4,16 +4,16 @@
         <input :value="csrfToken" type="hidden" name="_token"/>
 
         <div class="has-margin-top-4">
-          <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.name') }} <small class="font-italic">({{ trans.get('maps.name_info') }})</small></label>
+          <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.name') }}</label>
           <input type="text" id="name" v-model="name" name="name" required class="input has-margin-y-3">
         </div>
-        <div class="has-margin-top-2">
+        <div class="has-margin-y-2">
           <label for="url"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.url') }} <small class="font-italic">({{ trans.get('maps.url_info') }})</small></label>
           <input type="url" v-model="url" name="url" class="input" placeholder="">
         </div>
         <div>
-          <button class="button is-link" @click="update" v-if="map" type="button">{{ trans.get('map.edit') }}</button>
-          <button class="button is-success" type="submit" v-if="!map">{{ trans.get('map.create') }}</button>
+          <button class="button is-link" @click="update" v-if="map" type="button">{{ trans.get('general.edit') }}</button>
+          <button class="button is-success" type="submit" v-if="!map">{{ trans.get('maps.create') }}</button>
         </div>
       </form>
   </div>

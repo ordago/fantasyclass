@@ -88,17 +88,22 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
         $this->checkVisibility($class->id);
         $student = Functions::getCurrentStudent($class, []);
-        $stories = collect();
+        $stories = [];
 
         foreach ($class->challengeGroups as $group) {
-            $stories = $group->challenges()->with('attachments', 'comments')->where('datetime', '<=', Carbon::now()->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($stories, $group->challenges()->with('attachments', 'comments')->where('datetime', '<=', Carbon::now()->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
                     ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'questioninfo'])
                     ->all();
-            });
+            }));
         }
-        $stories = Arr::sort($stories, function ($story) {
-            // Sort the student's scores by their name.
+        $all = [];
+        foreach ($stories as $section) {
+            foreach ($section as $value) {
+                array_push($all, $value);
+            }
+        }
+        $stories = Arr::sort($all, function ($story) {
             return $story['datetime'];
         });
         return view('studentsview.stories', compact('class', 'student', 'stories'));

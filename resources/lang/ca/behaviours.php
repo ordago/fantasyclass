@@ -16,6 +16,10 @@ return [
     'attributes' => 'Atributs',
     'attributes_info' => 'valors positius per a bons comportaments i negatius per a dolents',
 
+    'hp' => 'Punts de vida',
+    'experience' => 'Experiència',
+    'gold' => 'Or',
+
     'hp_participation' => 'Participació',
     'hp_homework' => 'Fa els deures',
     'hp_behaviour' => 'Bon comportament',

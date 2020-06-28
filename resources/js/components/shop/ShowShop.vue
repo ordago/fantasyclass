@@ -9,10 +9,10 @@
             v-model="items_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('items_visibility')"
-          >Visibility</b-switch>
+          >{{ trans.get('shop.visibility') }}</b-switch>
         </div>
 
-        <a class="button is-primary" :href="'/classroom/'+ code + '/shop/create'">New item</a>
+        <a class="button is-primary" :href="'/classroom/'+ code + '/shop/create'">{{ trans.get('shop.new_item') }}</a>
 
         <div
           v-for="item in items"
@@ -114,7 +114,7 @@
           <div class="column is-narrow">
             <textarea
               class="input"
-              placeholder="Description"
+              :placeholder="trans.get('shop.description')"
               disabled
               style="border: 1px solid"
               v-model="item.description"
@@ -129,7 +129,7 @@
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" label="Equipment 1" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" :label="trans.get('shop.eq1')" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -137,11 +137,11 @@
             v-model="equipment_1_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_1_visibility')"
-          >Visibility</b-switch>
+          >{{ trans.get('shop.visibility') }}</b-switch>
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" label="Equipment 2" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" :label="trans.get('shop.eq2')" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -149,11 +149,11 @@
             v-model="equipment_2_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_2_visibility')"
-          >Visibility</b-switch>
+          >{{ trans.get('shop.visibility') }}</b-switch>
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" label="Equipment 3" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" :label="trans.get('shop.eq3')" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -161,7 +161,7 @@
             v-model="equipment_3_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_3_visibility')"
-          >Visibility</b-switch>
+          >{{ trans.get('shop.visibility') }}</b-switch>
         </div>
       </b-tab-item>
     </b-tabs>

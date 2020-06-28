@@ -42,7 +42,7 @@
           </div>
           <div class="has-margin-top-3">
           <button class="button is-link" @click="update" v-if="challenge" type="button">{{ trans.get('challenges.edit') }}</button>
-          <button class="button is-success" type="submit" v-if="!challenge">Create category</button>
+          <button class="button is-success" type="submit" v-if="!challenge">{{ trans.get('challenges.create') }}</button>
         </div>
       </form>
       </div>
