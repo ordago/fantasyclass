@@ -72,7 +72,7 @@
         <a
           href="/utils/music"
           target="_blank"
-              v-tippy
+          v-tippy
           :content="trans.get('menu.music')"
           class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
         >
@@ -80,12 +80,21 @@
         </a>
         <span
           class="link outer_glow has-padding-x-2 cursor-pointer"
-              v-tippy
+          v-tippy
           :content="trans.get('menu.countdown')"
           @click="isCountDownModalActive=true"
         >
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
+        <a
+          :href="'/classroom/' + classroom.code + '/utils/meter'"
+          target="_blank"
+          v-tippy
+          :content="trans.get('menu.noise')"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+        >
+          <i class="fad fa-microphone outer_glow" style="font-size:2em;"></i>
+        </a>
         <!-- <span class="link outer_glow has-padding-x-2 cursor-pointer">
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
         </span>-->
@@ -93,7 +102,6 @@
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
-        <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
@@ -160,7 +168,10 @@
             class="card-image card-shadow-s rounded-top char-bg"
             :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
           >
-            <div v-if="classroom.character_theme != 0" class="character-container character character-small is-relative">
+            <div
+              v-if="classroom.character_theme != 0"
+              class="character-container character character-small is-relative"
+            >
               <img
                 :src="'/img/character/' + element.src"
                 :class="element.classes"
@@ -385,8 +396,11 @@
           </div>
         </div>
       </div>
-      <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd" >
-        <div class="box card-shadow-s is-flex has-background-link has-all-centered" style="min-height: 160px">
+      <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
+        <div
+          class="box card-shadow-s is-flex has-background-link has-all-centered"
+          style="min-height: 160px"
+        >
           <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
             <img src="/img/new_std.svg" class="has-margin-left-1" />
             <strong>{{ trans.get('users_groups.add_students') }}</strong>
@@ -420,7 +434,11 @@
       scroll="keep"
       class="has-text-centered"
     >
-      <show-student :character-theme="classroom.character_theme" :student="currentStudent" :theme="classroom.theme"></show-student>
+      <show-student
+        :character-theme="classroom.character_theme"
+        :student="currentStudent"
+        :theme="classroom.theme"
+      ></show-student>
       <button
         class="button is-link has-margin-2"
         v-if="shuffledStudents && shuffledStudents.length"

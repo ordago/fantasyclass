@@ -34,5 +34,6 @@ return [
     'behaviours' => 'Comportaments',
     'rewards' => 'Recompenses',
     'licenses' => 'Llicències',
+    'noise' => 'Medidor de soroll',
 
 ];

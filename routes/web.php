@@ -145,6 +145,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/maps/{id}', 'MapsController@destroy'); // ToDo: Policy protect
         Route::get('/{code}/maps/{id}', 'MapsController@show'); // ToDo: Policy protect
         Route::patch('/maps/{id}', 'MapsController@update');
+        
+        // Utils
+        Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
+        Route::post('/{code}/utils/meter', 'UtilsController@meter');
     });
 
     Route::get('/utils/music', 'UtilsController@music');

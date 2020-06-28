@@ -34,5 +34,6 @@ return [
     'behaviours' => 'Behaviours',
     'rewards' => 'Rewards',
     'licenses' => 'Licenses',
+    'noise' => 'Noise meter',
 
 ];
