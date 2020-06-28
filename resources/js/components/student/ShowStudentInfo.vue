@@ -163,7 +163,7 @@
               </b-field>
             </div>
           </div>
-          <div class="has-padding-4" v-if="classroom.character_theme">
+          <div class="has-padding-4" v-if="classroom.character_theme && student.hp > 0">
             <img
               v-tippy
               :content="'Highlights in <i class=\'' + charclass.property + ' colored\'></i>'"
@@ -542,7 +542,7 @@ export default {
               _method: "delete"
             })
             .then(response => {
-              if (type == "behaviours") {
+              if (type == "behaviour") {
                 this.behaviours = response.data;
                 this.student.updated_at = new Date();
                 this.forceRerender();
@@ -591,14 +591,17 @@ export default {
               itemId: item.id
             })
             .then(response => {
-              item.pivot.count--;
-              if (item.pivot.count == 0) this.inventoryRemaining++;
-              this.student.hp = Math.min(
-                this.student.hp + response.data.hp,
-                100
-              );
-              this.student.xp += response.data.xp;
-              this.forceRerender();
+              if (!response.data) {
+              } else {
+                item.pivot.count--;
+                if (item.pivot.count == 0) this.inventoryRemaining++;
+                this.student.hp = Math.min(
+                  this.student.hp + response.data.hp,
+                  100
+                );
+                this.student.xp += response.data.xp;
+                this.forceRerender();
+              }
             });
         }
       });

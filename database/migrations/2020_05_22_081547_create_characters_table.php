@@ -36,6 +36,7 @@ class CreateCharactersTable extends Migration
                 ['id' => '12','name' => 'Castor', 'character_theme_id' => '4', 'property' => 'fas fa-fist-raised'],
                 ['id' => '13','name' => 'Tiger', 'character_theme_id' => '4', 'property' => 'fas fa-heart'],
                 ['id' => '14','name' => 'Croco', 'character_theme_id' => '4', 'property' => 'fas fa-coins'],
+                ['id' => '15','name' => 'Undead', 'character_theme_id' => '5', 'property' => ''],
             ]);
 
     }

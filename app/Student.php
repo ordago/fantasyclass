@@ -116,6 +116,8 @@ class Student extends Model implements HasMedia
     public function setProperty($prop, $value, $log = false, $byPassBoost = false)
     {
         $boost = $this->getBoost();
+        $isAlive = $this->hp == 0 ? false : true;
+
         $old = $value;
         if ($prop == "hp") {
             if ($value >= 0) {
@@ -138,6 +140,23 @@ class Student extends Model implements HasMedia
         $this->fill([
             $prop => $value,
         ])->save();
+
+        
+        if($prop == 'hp') {
+            $checkAlive = $this->hp == 0 ? false : true;
+            if($isAlive != $checkAlive) {
+                if($isAlive) {
+                    $this->setUndead();
+                    $this->fill([
+                        'xp' => 0,
+                        'gold' => 0,
+                    ])->save();
+                } else {
+                    $this->setBasicEquipment();
+                }
+            }
+        }
+
         if($log && $old != 0) {
             LogEntry::create([
                 'type' => $prop,
@@ -153,7 +172,13 @@ class Student extends Model implements HasMedia
         }
         return $value;
     }
-
+    
+    public function setUndead()
+    {
+        $this->equipment()->detach($this->equipment);
+        $this->equipment()->attach([300, 301, 302, 303, 304, 305]);
+        
+    }
     public function setBasicEquipment()
     {
         $this->equipment()->detach($this->equipment);

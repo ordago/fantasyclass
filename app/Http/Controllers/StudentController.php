@@ -227,7 +227,7 @@ class StudentController extends Controller
         $this->authorize('update', $class);
 
         DB::table($student->behaviours()->getTable())
-            ->where('behaviour_id', $request->row->id)
+            ->where('behaviour_id', $request->row['id'])
             ->where('student_id', '=', $student->id)
             ->where('created_at', '>=', $request->date)
             ->orderBy('created_at')

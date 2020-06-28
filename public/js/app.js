@@ -12390,7 +12390,7 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
             student: _this.student.id,
             _method: "delete"
           }).then(function (response) {
-            if (type == "behaviours") {
+            if (type == "behaviour") {
               _this.behaviours = response.data;
               _this.student.updated_at = new Date();
 
@@ -12441,12 +12441,14 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
             id: _this3.student.id,
             itemId: item.id
           }).then(function (response) {
-            item.pivot.count--;
-            if (item.pivot.count == 0) _this3.inventoryRemaining++;
-            _this3.student.hp = Math.min(_this3.student.hp + response.data.hp, 100);
-            _this3.student.xp += response.data.xp;
+            if (!response.data) {} else {
+              item.pivot.count--;
+              if (item.pivot.count == 0) _this3.inventoryRemaining++;
+              _this3.student.hp = Math.min(_this3.student.hp + response.data.hp, 100);
+              _this3.student.xp += response.data.xp;
 
-            _this3.forceRerender();
+              _this3.forceRerender();
+            }
           });
         }
       });
@@ -13524,7 +13526,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['students', 'theme'],
+  props: ['students', 'theme', 'characterTheme'],
   mounted: function mounted() {},
   data: function data() {
     return {
@@ -64875,7 +64877,7 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.classroom.character_theme
+                  _vm.classroom.character_theme && _vm.student.hp > 0
                     ? _c(
                         "div",
                         { staticClass: "has-padding-4" },
@@ -67662,7 +67664,11 @@ var render = function() {
           },
           [
             _c("show-student", {
-              attrs: { student: student, theme: _vm.theme }
+              attrs: {
+                "character-theme": _vm.characterTheme,
+                student: student,
+                theme: _vm.theme
+              }
             })
           ],
           1
