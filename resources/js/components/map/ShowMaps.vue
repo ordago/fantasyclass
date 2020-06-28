@@ -28,8 +28,8 @@
                 </b-table-column>
                 
                 <b-table-column field="settings" :label="trans.get('menu.settings')" centered class="w-100 is-flex has-all-centered">
-                    <b-button v-tippy :content="trans.get('maps.preview')" type="is-link is-small has-margin-right-3" @click="mapFullScreen(props.row.name, getURLRefactoring(props.row.url))"><i class="fas fa-eye"></i></b-button>
-                    <b-button v-tippy :content="trans.get('maps.set_active')" type="is-primary is-small" v-if="props.row.id != mapSelected" @click="confirmActive(props.row.id)"><i class="fas fa-map-marker-check"></i></b-button>
+                    <b-button v-tippy :content="trans.get('maps.preview')" type="is-dark is-small" @click="mapFullScreen(props.row.name, getURLRefactoring(props.row.url))"><i class="fas fa-eye"></i></b-button>
+                    <b-button v-tippy :content="trans.get('maps.set_active')" type="is-primary is-small has-margin-left-3" v-if="props.row.id != mapSelected" @click="confirmActive(props.row.id)"><i class="fas fa-map-marker-check"></i></b-button>
                     <i class="fal fa-ellipsis-v fas fa-lg has-padding-x-3"></i>
                     <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + code + '/maps/' + props.row.id" class="button is-info is-small has-margin-right-3"><i class="fas fa-edit"></i></a>
                     <b-button v-tippy :content="trans.get('general.delete')" type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
