@@ -20,6 +20,8 @@ return [
     
     'add_behaviours' => 'Add new behaviours to interact with students',
     
+    'create_students' => 'Create students',
     'add_student' => 'Add student',
+    'add_students' => 'Add students',
 
 ];

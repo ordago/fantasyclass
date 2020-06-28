@@ -18,16 +18,16 @@
         </figure>
       </div>
       <div class="column content card has-padding-4 rounded-right card-shadow-s">
-        <p class="is-size-4">Level {{ level.number }}</p>
+        <p class="is-size-4">{{ trans.get('levels.level') }} {{ level.number }}</p>
         <p class="has-margin-y-2" v-if="edit">
-          <i class="fas fa-fist-raised colored"></i> Needed experience
+          <i class="fas fa-fist-raised colored"></i> {{ trans.get('levels.xp') }}
         </p>
         <h2 v-if="!edit">{{ level.title }}</h2>
         <p v-if="!edit">{{ level.description }}</p>
         <input type="number" v-if="edit" v-model="level.xp" class="input w-100" />
-        <p class="has-margin-y-2" v-if="edit">Title (optional)</p>
+        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.title') }}</p>
         <input v-model="level.title" v-if="edit" type="text" class="input w-100" />
-        <p class="has-margin-y-2" v-if="edit">Description (optional)</p>
+        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.description') }}</p>
         <p v-if="edit">
           <textarea style="resize: none;" class="input" v-model="level.description"></textarea>
         </p>

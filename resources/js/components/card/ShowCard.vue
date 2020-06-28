@@ -61,7 +61,7 @@
         v-if="card.special  && !card.fullscreen"
       />
 
-      <div class="content-cards text_shadow">{{ card.description }}</div>
+      <div class="content-cards text_shadow" v-html="description"></div>
 
       <div class="hiding-parent">
         <img
@@ -97,12 +97,21 @@
   </div>
 </template>
 
+
 <script>
+import Utils from "../../utils.js";
+
 export default {
   props: ["card", "admin", "code", "use", "student"],
-  mounted() {},
+  mounted() {
+
+    this.description = Utils.styleText(this.trans.get(this.card.description));
+
+  },
   data: function() {
-    return {};
+    return {
+      description: '',
+    };
   },
   methods: {
     markCard(card, type) {

@@ -29,11 +29,11 @@
           <div class="dropdown-menu has-background-white rounded has-padding-3">
             <a class="dropdown-item" :href="'/classroom/' + classroom.code + '/event/random'">
               <i class="fad fa-scroll-old has-margin-right-2"></i>
-              Random {{ trans.get('menu.events') }}
+              Random: {{ trans.get('menu.events') }}
             </a>
             <a class="dropdown-item" @click="randomStudents" v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
-              Random {{ trans.get('menu.students') }}
+              Random: {{ trans.get('menu.students') }}
             </a>
             <a
               class="dropdown-item"
@@ -41,7 +41,7 @@
               v-if="classroom.grouping[0].groups.length > 0"
             >
               <i class="fad fa-users has-margin-right-2"></i>
-              Random {{ trans.get('menu.groups') }}
+              Random: {{ trans.get('menu.groups') }}
             </a>
             <a
               class="dropdown-item"
@@ -49,7 +49,7 @@
               v-if="students.length || classroom.grouping[0].groups.length"
             >
               <i class="fad fa-club has-margin-right-2"></i>
-              Random {{ trans.get('menu.card') }}
+              Random: {{ trans.get('menu.card') }}
             </a>
           </div>
         </div>
@@ -389,7 +389,7 @@
         <div class="box card-shadow-s is-flex has-background-link has-all-centered" style="min-height: 160px">
           <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
             <img src="/img/new_std.svg" class="has-margin-left-1" />
-            <strong>Add students</strong>
+            <strong>{{ trans.get('users_groups.add_students') }}</strong>
           </a>
         </div>
       </div>
@@ -420,7 +420,7 @@
       scroll="keep"
       class="has-text-centered"
     >
-      <show-student :student="currentStudent" :theme="classroom.theme"></show-student>
+      <show-student :character-theme="classroom.character_theme" :student="currentStudent" :theme="classroom.theme"></show-student>
       <button
         class="button is-link has-margin-2"
         v-if="shuffledStudents && shuffledStudents.length"

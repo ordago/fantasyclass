@@ -262,6 +262,9 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $student = Functions::getCurrentStudent($class, []);
 
+        if($student->hp == 0)
+            return false;
+
         $data = request()->validate([
             'item' => 'numeric',
         ]);

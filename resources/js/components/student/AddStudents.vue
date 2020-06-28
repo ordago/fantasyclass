@@ -35,7 +35,7 @@
                 <button class="button is-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
-        <button v-if="students.length" @click="sendStudents" class="button is-link">Create students</button>
+        <button v-if="students.length" @click="sendStudents" class="button is-link">{{ trans.get('users_groups.create_students') }}</button>
     </div>
 </template>
 

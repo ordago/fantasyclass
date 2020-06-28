@@ -339,8 +339,8 @@
             this.special = cardJson.special
             this.fullscreen = cardJson.fullscreen
             this.slot = cardJson.slot
-            this.title = cardJson.title
-            this.description = cardJson.description
+            this.title = this.trans.get(cardJson.title)
+            this.description = this.trans.get(cardJson.description)
             this.src = cardJson.src
             this.background = cardJson.background
           }
