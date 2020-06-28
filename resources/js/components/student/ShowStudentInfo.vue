@@ -8,7 +8,7 @@
         </span>
         <div
           class="card-image card-shadow-s rounded-top char-bg"
-          :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
+          :style="'min-height: 160px;background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
         >
           <span
             class="boost-right outer_glow_dark"
@@ -17,7 +17,10 @@
           >
             <i class="fas fa-arrow-alt-square-up"></i>
           </span>
-          <div class="character-container character character-small is-relative">
+          <div
+            v-if="classroom.character_theme"
+            class="character-container character character-small is-relative"
+          >
             <img
               :src="'/img/character/' + element.src"
               :class="element.classes"
@@ -25,10 +28,13 @@
               v-bind:key="element.id"
             />
           </div>
+          <div v-else class="is-flex has-all-centered has-padding-y-3">
+            <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
+          </div>
         </div>
         <div class="card-content">
           <div class="media has-margin-bottom-0 has-all-centered">
-            <div class="media-left">
+            <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
                 <img :src="student.avatar" class="rounded" alt />
               </figure>
@@ -157,7 +163,7 @@
               </b-field>
             </div>
           </div>
-          <div class="has-padding-4">
+          <div class="has-padding-4" v-if="classroom.character_theme">
             <img
               v-tippy
               :content="'Highlights in <i class=\'' + charclass.property + ' colored\'></i>'"
@@ -214,7 +220,7 @@
             <div>
               <div v-for="index in inventoryRemaining" class="inventory-item" v-bind:key="index"></div>
             </div>
-            <div :key="forceReload">
+            <div v-if="classroom.character_theme" :key="forceReload">
               <div
                 v-for="gear in orderedEquipment"
                 v-bind:key="gear.id"
@@ -300,7 +306,7 @@
         </b-tab-item>
         <b-tab-item
           label="Behaviours"
-          v-if="student.behaviours.length"
+          v-if="behaviours && behaviours.length"
           icon="heart"
           icon-pack="fad"
         >
@@ -326,7 +332,7 @@
           </div>
 
           <b-table
-            v-if="student.behaviours.length"
+            v-if="behaviours && behaviours.length"
             :data="filteredEntries"
             default-sort="created_at"
             default-sort-direction="desc"
@@ -343,15 +349,23 @@
                 </span>
               </b-table-column>
 
-              <b-table-column field="name" label="Name" sortable>{{ trans.get(props.row.name) }}</b-table-column>
+              <b-table-column
+                field="name"
+                label="Name"
+                centered
+                sortable
+              >{{ trans.get(props.row.name) }}</b-table-column>
 
               <b-table-column
                 field="created_at"
                 label="Created at"
+                default-sort-direction="desc"
+                :custom-sort="sortByDate"
                 sortable
+                centered
               >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
 
-              <b-table-column field="hp" label="Health Points" sortable centered>
+              <b-table-column field="hp" label="Health Points" centered sortable>
                 <i class="fas fa-heart"></i>
                 {{ props.row.hp }}
               </b-table-column>
@@ -367,7 +381,10 @@
               </b-table-column>
 
               <b-table-column field="name" label="Settings" v-if="admin" centered>
-                <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)">
+                <b-button
+                  type="is-danger is-small"
+                  @click="confirmDelete('behaviour', props.row, props.row.pivot.created_at)"
+                >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
               </b-table-column>
@@ -416,7 +433,7 @@
                 >
                   <span v-if="props.row.type=='xp'">✊</span>
                   <span v-if="props.row.type=='gold'">💰</span>
-                  <span v-if="props.row.type=='heart'">❤️</span>
+                  <span v-if="props.row.type=='hp'">❤️</span>
                 </span>
               </b-table-column>
 
@@ -425,11 +442,18 @@
               <b-table-column
                 field="created_at"
                 label="Created at"
+                default-sort-direction="desc"
+                :custom-sort="sortLogByDate"
                 sortable
+                centered
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
 
               <b-table-column field="name" label="Settings" v-if="admin" centered>
-                <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)">
+                <!-- TODO -->
+                <b-button
+                  type="is-danger is-small"
+                  @click="confirmDelete('logentry', props.row, props.row.created_at)"
+                >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
               </b-table-column>
@@ -465,6 +489,7 @@ export default {
     "cards"
   ],
   mounted() {
+    this.behaviours = this.student.behaviours;
     if (!this.admin) {
       this.activeTab = 1;
 
@@ -492,10 +517,42 @@ export default {
       eq3Json: null,
       forceReload: 0,
       prevImage: null,
-      image: null
+      image: null,
+      behaviours: null
     };
   },
   methods: {
+    confirmDelete(type, row, date) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/classroom/student/" + type, {
+              row: row,
+              date: date,
+              student: this.student.id,
+              _method: "delete"
+            })
+            .then(response => {
+              if (type == "behaviours") {
+                this.behaviours = response.data;
+                this.student.updated_at = new Date();
+                this.forceRerender();
+              } else {
+                location.reload();
+              }
+            });
+        }
+      });
+    },
     updateEmpty() {
       let line = 6;
       if (this.student.items.length >= 6) {
@@ -582,6 +639,30 @@ export default {
         itemStore.gold +
         "% <i class='fas fa-coins colored'></i>"
       );
+    },
+    sortByDate(a, b, isAsc = false) {
+      if (isAsc) {
+        return (
+          new Date(b.pivot.created_at).getTime() -
+          new Date(a.pivot.created_at).getTime()
+        );
+      } else {
+        return (
+          new Date(a.pivot.created_at).getTime() -
+          new Date(b.pivot.created_at).getTime()
+        );
+      }
+    },
+    sortLogByDate(a, b, isAsc = false) {
+      if (isAsc) {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      } else {
+        return (
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      }
     },
     buyItem(item) {
       this.$buefy.dialog.confirm({
@@ -696,13 +777,7 @@ export default {
                 }
               )
               .then(response => {
-                this.$toasted.show(response.data.message, {
-                  position: "top-center",
-                  duration: 3000,
-                  iconPack: "fontawesome",
-                  icon: response.data.icon,
-                  type: response.data.type
-                });
+                location.reload();
               });
           }
         },
@@ -713,12 +788,14 @@ export default {
   },
   computed: {
     filteredEntries() {
-      return this.student.behaviours.filter(entry => {
-        return (
-          (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
-          (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
-        );
-      });
+      if (this.behaviours) {
+        return this.behaviours.filter(entry => {
+          return (
+            (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
+            (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
+          );
+        });
+      }
     },
     filteredLogEntries() {
       return this.student.log_entries.filter(entry => {

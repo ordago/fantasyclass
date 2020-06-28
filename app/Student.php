@@ -113,18 +113,23 @@ class Student extends Model implements HasMedia
         ];
     }
 
-    public function setProperty($prop, $value)
+    public function setProperty($prop, $value, $log = false, $byPassBoost = false)
     {
         $boost = $this->getBoost();
+        $old = $value;
         if ($prop == "hp") {
             if ($value >= 0) {
                 $value = min($this->$prop + $value, 100);
             } else {
-                $value = max($this->$prop + ($value - $value * $boost['hp'] / 100), 0);
+                if(!$byPassBoost)
+                    $old = $value - $value * $boost["hp"]/100;
+                $value = max($this->$prop + $old, 0);
             }
         } else {
             if ($value >= 0) {
-                $value = $this->$prop + $value + $value * $boost[$prop] / 100;
+                if(!$byPassBoost)
+                    $old = $value + $value * $boost[$prop]/100;
+                $value = $this->$prop + $old;
             } else {
                 $value = max($this->$prop + $value, 0);
             }
@@ -133,17 +138,19 @@ class Student extends Model implements HasMedia
         $this->fill([
             $prop => $value,
         ])->save();
+        if($log && $old != 0) {
+            LogEntry::create([
+                'type' => $prop,
+                'value' => $old,
+                'student_id' => $this->id,
+            ]);
+        }
         if ($prop == "xp") {
             return [
                 'xp' => $value,
                 'level' => $this->getLevelAttribute(),
             ];
         }
-        LogEntry::create([
-            'type' => $prop,
-            'value' => $value,
-            'student_id' => $this->id,
-        ]);
         return $value;
     }
 

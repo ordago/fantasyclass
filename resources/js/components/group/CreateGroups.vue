@@ -103,7 +103,15 @@ export default {
           _method: "patch",
           dropGroups: this.dropGroups
         })
-        .then(response => {});
+        .then(response => {
+          this.$toasted.show(this.trans.get('success_error.update_success'), {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: "check",
+                type: "success"
+              });
+        });
     },
     cancel() {
       location.reload();

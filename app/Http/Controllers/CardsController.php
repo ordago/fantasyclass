@@ -256,12 +256,12 @@ class CardsController extends Controller
                     ];
                 }
                 if ($card->gold) {
-                    $student->setProperty('gold', $card->gold);
+                    $student->setProperty('gold', $card->gold, true);
                 } else if (!$card->special) {
-                    $student->setProperty('gold', $cost * -1);
+                    $student->setProperty('gold', $cost * -1, true);
                 }
-                if ($card->xp) $student->setProperty('xp', $card->xp);
-                if ($card->hp) $student->setProperty('hp', $card->hp);
+                if ($card->xp) $student->setProperty('xp', $card->xp, true);
+                if ($card->hp) $student->setProperty('hp', $card->hp, true);
             } else {
                 $cost = settings()->get('card_delete', 50);
                 if ($student->gold < $cost) {
@@ -271,7 +271,7 @@ class CardsController extends Controller
                         "type" => "error",
                     ];
                 }
-                $student->setProperty('gold', $cost * -1);
+                $student->setProperty('gold', $cost * -1, true);
             }
             $cardLine->delete();
             return [

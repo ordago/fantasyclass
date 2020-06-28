@@ -216,9 +216,9 @@ class ClassroomsStudentController extends Controller
             }
         }
         if ($update) {
-            $student->setProperty('hp', $challenge->hp);
-            $student->setProperty('xp', $challenge->xp);
-            $student->setProperty('gold', $challenge->gold);
+            $student->setProperty('hp', $challenge->hp, true);
+            $student->setProperty('xp', $challenge->xp, true);
+            $student->setProperty('gold', $challenge->gold, true);
         }
         return [
             'success' => true,
@@ -351,6 +351,10 @@ class ClassroomsStudentController extends Controller
         ]);
 
         $student = Functions::getCurrentStudent($class, []);
+        
+        if($student->hp <= 0)
+            return false;
+            
         $item = $student->items->where('id', '=', $data['itemId'])->first();
 
         if (!$item->pivot->count > 0)
@@ -362,10 +366,10 @@ class ClassroomsStudentController extends Controller
             $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
 
         if ($item->hp > 0) {
-            $student->setProperty('hp', $item->hp);
+            $student->setProperty('hp', $item->hp, true);
         }
         if ($item->xp > 0) {
-            $student->setProperty('xp', $item->xp);
+            $student->setProperty('xp', $item->xp, true);
         }
 
         return ['xp' => $item->xp, 'hp' => $item->hp];

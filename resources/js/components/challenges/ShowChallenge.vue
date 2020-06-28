@@ -39,11 +39,11 @@
           </p>
           <!-- class="el-tiptap-editor__content" -->
           <div v-if="edit || full" v-html="challengeReactive.content"></div>
-          <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
+          <!-- <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
-          </div>
+          </div> -->
           <div class="" v-for="(question, index) in challenge.stats" :key="index">
-            <show-question :admin="admin" :question="question"></show-question>
+            <show-question :admin="admin" :index="index" :question="question"></show-question>
           </div>
           <div class="has-margin-top-5">
             <div
@@ -458,8 +458,7 @@ export default {
         })
         .then(response => {
           this.isQuestionModalActive = false;
-          // this.challenge.questions.push(response.data);
-          this.$parent().$forceUpdate();
+          this.$parent.$parent.getChallenges(this.challenge.challenges_group_id);
         });
     },
     addAttachment() {
@@ -474,7 +473,6 @@ export default {
         .then(response => {
           this.isAttachmentModalActive = false;
           this.challenge.attachments.push(response.data);
-          this.$parent().$forceUpdate();
         });
     },
     markCompleted(challenge) {

@@ -8964,9 +8964,9 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/classroom/challenge/question", {
         question: this.question
       }).then(function (response) {
-        _this4.isQuestionModalActive = false; // this.challenge.questions.push(response.data);
+        _this4.isQuestionModalActive = false;
 
-        _this4.$parent().$forceUpdate();
+        _this4.$parent.$parent.getChallenges(_this4.challenge.challenges_group_id);
       });
     },
     addAttachment: function addAttachment() {
@@ -8981,8 +8981,6 @@ __webpack_require__.r(__webpack_exports__);
         _this5.isAttachmentModalActive = false;
 
         _this5.challenge.attachments.push(response.data);
-
-        _this5.$parent().$forceUpdate();
       });
     },
     markCompleted: function markCompleted(challenge) {
@@ -9421,9 +9419,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["question", "admin"],
+  props: ["question", "admin", "index"],
   created: function created() {
     this.reactiveQuestion = this.question;
   },
@@ -9433,8 +9452,31 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    answerQuestion: function answerQuestion(answer) {
+    confirmDelete: function confirmDelete(id, index) {
       var _this = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios["delete"]("/classroom/challenge/question/" + id).then(function (response) {
+            if (response.data === 1) {
+              _this.$parent.challenge.stats.splice(index, 1); // this.$forceUpdate();
+
+            }
+          });
+        }
+      });
+    },
+    answerQuestion: function answerQuestion(answer) {
+      var _this2 = this;
 
       axios.post("/classroom/question/answer", {
         answer: answer,
@@ -9450,7 +9492,7 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
 
-        _this.reactiveQuestion = response.data;
+        _this2.reactiveQuestion = response.data;
       });
     }
   },
@@ -10051,10 +10093,20 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     save: function save() {
+      var _this2 = this;
+
       axios.patch("/classroom/" + this.code + "/groups/students", {
         _method: "patch",
         dropGroups: this.dropGroups
-      }).then(function (response) {});
+      }).then(function (response) {
+        _this2.$toasted.show(_this2.trans.get('success_error.update_success'), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "check",
+          type: "success"
+        });
+      });
     },
     cancel: function cancel() {
       location.reload();
@@ -11435,7 +11487,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["items", "config", "code"],
+  props: ["items", "config", "code", "character"],
   mounted: function mounted() {},
   data: function data() {
     return {
@@ -11780,8 +11832,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["student", "theme"],
+  props: ["student", "theme", "characterTheme"],
   mounted: function mounted() {},
   data: function data() {
     return {};
@@ -12248,6 +12303,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
  // Download excel
 
 
@@ -12259,6 +12338,8 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges", "cards"],
   mounted: function mounted() {
+    this.behaviours = this.student.behaviours;
+
     if (!this.admin) {
       this.activeTab = 1;
       this.updateEmpty();
@@ -12284,10 +12365,43 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
       eq3Json: null,
       forceReload: 0,
       prevImage: null,
-      image: null
+      image: null,
+      behaviours: null
     };
   },
   methods: {
+    confirmDelete: function confirmDelete(type, row, date) {
+      var _this = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/student/" + type, {
+            row: row,
+            date: date,
+            student: _this.student.id,
+            _method: "delete"
+          }).then(function (response) {
+            if (type == "behaviours") {
+              _this.behaviours = response.data;
+              _this.student.updated_at = new Date();
+
+              _this.forceRerender();
+            } else {
+              location.reload();
+            }
+          });
+        }
+      });
+    },
     updateEmpty: function updateEmpty() {
       var line = 6;
 
@@ -12298,7 +12412,7 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
       this.inventoryRemaining = line - this.student.items.length;
     },
     confirmChangeClass: function confirmChangeClass(subclass) {
-      var _this = this;
+      var _this2 = this;
 
       this.$buefy.dialog.confirm({
         title: "Class change",
@@ -12308,8 +12422,8 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
         iconPack: "fa",
         hasIcon: true,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this.classroom.code + "/student/changecharacter", {
-            id: _this.student.id,
+          axios.post("/classroom/" + _this2.classroom.code + "/student/changecharacter", {
+            id: _this2.student.id,
             character_id: subclass
           }).then(function (response) {
             location.reload();
@@ -12318,21 +12432,21 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
       });
     },
     useItem: function useItem(item, messageItem) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$buefy.dialog.confirm({
         message: messageItem + " <br><br>Would you like to use the item?",
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this2.classroom.code + "/student/useitem", {
-            id: _this2.student.id,
+          axios.post("/classroom/" + _this3.classroom.code + "/student/useitem", {
+            id: _this3.student.id,
             itemId: item.id
           }).then(function (response) {
             item.pivot.count--;
-            if (item.pivot.count == 0) _this2.inventoryRemaining++;
-            _this2.student.hp = Math.min(_this2.student.hp + response.data.hp, 100);
-            _this2.student.xp += response.data.xp;
+            if (item.pivot.count == 0) _this3.inventoryRemaining++;
+            _this3.student.hp = Math.min(_this3.student.hp + response.data.hp, 100);
+            _this3.student.xp += response.data.xp;
 
-            _this2.forceRerender();
+            _this3.forceRerender();
           });
         }
       });
@@ -12359,8 +12473,26 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
     propertiesMessage: function propertiesMessage(itemStore) {
       return itemStore.hp + "% <i class='fas fa-heart colored'></i> " + itemStore.xp + "% <i class='fas fa-fist-raised colored'></i> " + itemStore.gold + "% <i class='fas fa-coins colored'></i>";
     },
+    sortByDate: function sortByDate(a, b) {
+      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (isAsc) {
+        return new Date(b.pivot.created_at).getTime() - new Date(a.pivot.created_at).getTime();
+      } else {
+        return new Date(a.pivot.created_at).getTime() - new Date(b.pivot.created_at).getTime();
+      }
+    },
+    sortLogByDate: function sortLogByDate(a, b) {
+      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+      if (isAsc) {
+        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+      } else {
+        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+      }
+    },
     buyItem: function buyItem(item) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: "Buy item",
@@ -12370,43 +12502,8 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
         iconPack: "fa",
         hasIcon: false,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this3.classroom.code + "/student/buyitem", {
+          axios.post("/classroom/" + _this4.classroom.code + "/student/buyitem", {
             item: item.id
-          }).then(function (response) {
-            _this3.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
-              type: response.data.type
-            });
-
-            if (response.data.type == "success") {
-              _this3.student.items = response.data.items;
-
-              _this3.updateEmpty();
-
-              _this3.student.gold = _this3.student.gold - item.price;
-
-              _this3.$forceUpdate();
-            }
-          });
-        }
-      });
-    },
-    buyEquipment: function buyEquipment(oldItem, newItem) {
-      var _this4 = this;
-
-      this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
-        confirmText: "Buy",
-        type: "is-link",
-        iconPack: "fa",
-        hasIcon: false,
-        onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this4.classroom.code + "/student/buyequipment", {
-            "new": newItem
           }).then(function (response) {
             _this4.$toasted.show(response.data.message, {
               position: "top-center",
@@ -12417,11 +12514,46 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
             });
 
             if (response.data.type == "success") {
-              _this4.student.equipment = response.data.equipment;
-              _this4.student.gold = _this4.student.gold - newItem.price;
+              _this4.student.items = response.data.items;
+
+              _this4.updateEmpty();
+
+              _this4.student.gold = _this4.student.gold - item.price;
+
+              _this4.$forceUpdate();
+            }
+          });
+        }
+      });
+    },
+    buyEquipment: function buyEquipment(oldItem, newItem) {
+      var _this5 = this;
+
+      this.$buefy.dialog.confirm({
+        title: "Buy item",
+        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
+        confirmText: "Buy",
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/" + _this5.classroom.code + "/student/buyequipment", {
+            "new": newItem
+          }).then(function (response) {
+            _this5.$toasted.show(response.data.message, {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: response.data.icon,
+              type: response.data.type
+            });
+
+            if (response.data.type == "success") {
+              _this5.student.equipment = response.data.equipment;
+              _this5.student.gold = _this5.student.gold - newItem.price;
               oldItem.src = newItem.src;
               var reference = "item" + oldItem.id;
-              _this4.student.boost = response.data.boost;
+              _this5.student.boost = response.data.boost;
               var newClass = "inv-item-armor-bronce";
 
               switch (newItem.offset) {
@@ -12434,9 +12566,9 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
                   break;
               }
 
-              _this4.$refs[reference][0].classList.add(newClass);
+              _this5.$refs[reference][0].classList.add(newClass);
 
-              _this4.$forceUpdate();
+              _this5.$forceUpdate();
             }
           });
         }
@@ -12450,29 +12582,23 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
       }
     },
     updateAvatar: function updateAvatar() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.image.generateBlob(function (blob) {
         if (blob != null) {
           var formData = new FormData();
           formData.append("avatar", blob, "avatar.png");
 
-          if (_this5.admin) {
-            formData.append("student_id", _this5.student.id);
+          if (_this6.admin) {
+            formData.append("student_id", _this6.student.id);
           }
 
-          axios.post("/classroom/" + _this5.classroom.code + "/setting/updateavatar", formData, {
+          axios.post("/classroom/" + _this6.classroom.code + "/setting/updateavatar", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
           }).then(function (response) {
-            _this5.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
-              type: response.data.type
-            });
+            location.reload();
           });
         }
       }, "image/png", 0.8);
@@ -12480,17 +12606,19 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
   },
   computed: {
     filteredEntries: function filteredEntries() {
-      var _this6 = this;
-
-      return this.student.behaviours.filter(function (entry) {
-        return (entry.pivot.created_at >= _this6.dateStart || !_this6.dateStart) && (entry.pivot.created_at <= _this6.dateEnd || !_this6.dateEnd);
-      });
-    },
-    filteredLogEntries: function filteredLogEntries() {
       var _this7 = this;
 
+      if (this.behaviours) {
+        return this.behaviours.filter(function (entry) {
+          return (entry.pivot.created_at >= _this7.dateStart || !_this7.dateStart) && (entry.pivot.created_at <= _this7.dateEnd || !_this7.dateEnd);
+        });
+      }
+    },
+    filteredLogEntries: function filteredLogEntries() {
+      var _this8 = this;
+
       return this.student.log_entries.filter(function (entry) {
-        return (entry.created_at >= _this7.dateStart || !_this7.dateStart) && (entry.created_at <= _this7.dateEnd || !_this7.dateEnd);
+        return (entry.created_at >= _this8.dateStart || !_this8.dateStart) && (entry.created_at <= _this8.dateEnd || !_this8.dateEnd);
       });
     },
     groupedData: function groupedData() {
@@ -12509,7 +12637,7 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
     groupedData: {
       immediate: true,
       handler: function handler() {
-        var _this8 = this;
+        var _this9 = this;
 
         var colorsOK = ["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a", "#4caf50", "#43a047", "#388e3c", "#2e7d32", "#1b5e20", "#003300", "#002200", "#001100", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
         var colorsKO = ["#ffccbc", "#ffab91", "#ff8a65", "#ff7043", "#ff5722", "#f4511e", "#e64a19", "#d84315", "#bf360c", "#570000", "#370000", "#170000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
@@ -12527,16 +12655,16 @@ Vue.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a
         propes.forEach(function (element) {
           var behaviour = element[0];
 
-          _this8.series.push(element.length);
+          _this9.series.push(element.length);
 
-          _this8.labels.push("<i class='" + behaviour.icon + "'></i> " + _this8.trans.get(behaviour.name));
+          _this9.labels.push("<i class='" + behaviour.icon + "'></i> " + _this9.trans.get(behaviour.name));
 
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-            _this8.colors.push(colorsOK[0]);
+            _this9.colors.push(colorsOK[0]);
 
             colorsOK.shift();
           } else {
-            _this8.colors.push(colorsKO[0]);
+            _this9.colors.push(colorsKO[0]);
 
             colorsKO.shift();
           }
@@ -12593,6 +12721,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
 /* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
+//
+//
+//
 //
 //
 //
@@ -58348,26 +58479,17 @@ var render = function() {
                   })
                 : _vm._e(),
               _vm._v(" "),
-              _vm._l(_vm.challenge.questioninfo, function(question, index) {
-                return _c(
-                  "div",
-                  { key: index },
-                  [
-                    _c("show-question", {
-                      attrs: { admin: _vm.admin, question: question }
-                    })
-                  ],
-                  1
-                )
-              }),
-              _vm._v(" "),
               _vm._l(_vm.challenge.stats, function(question, index) {
                 return _c(
                   "div",
                   { key: index },
                   [
                     _c("show-question", {
-                      attrs: { admin: _vm.admin, question: question }
+                      attrs: {
+                        admin: _vm.admin,
+                        index: index,
+                        question: question
+                      }
                     })
                   ],
                   1
@@ -59971,73 +60093,105 @@ var render = function() {
     { staticClass: "box card-shadow-s has-padding-3 has-margin-y-3" },
     [
       _vm.admin
-        ? _c("div", [
-            _c("p", { staticClass: "has-padding-4" }, [
-              _c("i", { staticClass: "fas fa-question-circle" }),
-              _vm._v(
-                "\n      " + _vm._s(_vm.reactiveQuestion.question) + "\n      "
-              ),
-              _c(
-                "span",
-                {
-                  directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "tag is-dark",
-                  attrs: { content: _vm.reactiveQuestion.stats.remainning }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-user" }),
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.reactiveQuestion.stats.answered) +
-                      " /\n        "
-                  ),
-                  _c("i", { staticClass: "fas fa-user-slash" }),
-                  _vm._v(
-                    "\n        " +
-                      _vm._s(_vm.reactiveQuestion.stats.remainning.length) +
-                      "\n      "
-                  )
-                ]
-              ),
-              _vm._v(" "),
-              _vm.reactiveQuestion.stats.answeredOK.length
-                ? _c(
-                    "span",
+        ? _c("div", { staticClass: "columns" }, [
+            _c("div", { staticClass: "column" }, [
+              _c("p", { staticClass: "has-padding-4" }, [
+                _c("i", { staticClass: "fas fa-question-circle" }),
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.reactiveQuestion.question) +
+                    "\n        "
+                ),
+                _c(
+                  "span",
+                  {
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    staticClass: "tag is-dark",
+                    attrs: { content: _vm.reactiveQuestion.stats.remainning }
+                  },
+                  [
+                    _c("i", { staticClass: "fas fa-user" }),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.reactiveQuestion.stats.answered) +
+                        " /\n          "
+                    ),
+                    _c("i", { staticClass: "fas fa-user-slash" }),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.reactiveQuestion.stats.remainning.length) +
+                        "\n        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.reactiveQuestion.stats.answeredOK.length
+                  ? _c(
+                      "span",
+                      {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "tag is-success",
+                        attrs: {
+                          content: _vm.reactiveQuestion.stats.answeredOK
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-check" }),
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(
+                              _vm.reactiveQuestion.stats.answeredOK.length
+                            ) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.reactiveQuestion.stats.answeredKO.length
+                  ? _c(
+                      "span",
+                      {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "tag is-danger",
+                        attrs: {
+                          content: _vm.reactiveQuestion.stats.answeredKO
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-times" }),
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(
+                              _vm.reactiveQuestion.stats.answeredKO.length
+                            ) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]),
+            _vm._v(" "),
+            _vm.admin
+              ? _c("div", { staticClass: "column is-narrow" }, [
+                  _c(
+                    "button",
                     {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "tag is-success",
-                      attrs: { content: _vm.reactiveQuestion.stats.answeredOK }
+                      staticClass: "button is-danger",
+                      on: {
+                        click: function($event) {
+                          return _vm.confirmDelete(
+                            _vm.reactiveQuestion.id,
+                            _vm.index
+                          )
+                        }
+                      }
                     },
-                    [
-                      _c("i", { staticClass: "fas fa-check" }),
-                      _vm._v(
-                        "\n        " +
-                          _vm._s(_vm.reactiveQuestion.stats.answeredOK.length) +
-                          "\n      "
-                      )
-                    ]
+                    [_c("i", { staticClass: "fas fa-trash" })]
                   )
-                : _vm._e(),
-              _vm._v(" "),
-              _vm.reactiveQuestion.stats.answeredKO.length
-                ? _c(
-                    "span",
-                    {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "tag is-danger",
-                      attrs: { content: _vm.reactiveQuestion.stats.answeredKO }
-                    },
-                    [
-                      _c("i", { staticClass: "fas fa-times" }),
-                      _vm._v(
-                        "\n        " +
-                          _vm._s(_vm.reactiveQuestion.stats.answeredKO.length) +
-                          "\n      "
-                      )
-                    ]
-                  )
-                : _vm._e()
-            ])
+                ])
+              : _vm._e()
           ])
         : _vm._e(),
       _vm._v(" "),
@@ -62090,7 +62244,7 @@ var render = function() {
               }
             ],
             staticClass: "input",
-            attrs: { type: "text", id: "url", name: "url", placeholder: "" },
+            attrs: { type: "url", name: "url", placeholder: "" },
             domProps: { value: _vm.url },
             on: {
               input: function($event) {
@@ -63643,125 +63797,137 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c(
-            "b-tab-item",
-            {
-              staticClass: "has-padding-x-4",
-              attrs: { label: "Equipment 1", "icon-pack": "fa" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "field" },
+          _vm.character
+            ? _c(
+                "b-tab-item",
+                {
+                  staticClass: "has-padding-x-4",
+                  attrs: { label: "Equipment 1", "icon-pack": "fa" }
+                },
                 [
                   _c(
-                    "b-switch",
-                    {
-                      attrs: {
-                        value: true,
-                        type: "is-success",
-                        "passive-type": "is-danger"
-                      },
-                      on: {
-                        input: function($event) {
-                          return _vm.toggleVisibility("equipment_1_visibility")
-                        }
-                      },
-                      model: {
-                        value: _vm.equipment_1_visibility,
-                        callback: function($$v) {
-                          _vm.equipment_1_visibility = $$v
+                    "div",
+                    { staticClass: "field" },
+                    [
+                      _c(
+                        "b-switch",
+                        {
+                          attrs: {
+                            value: true,
+                            type: "is-success",
+                            "passive-type": "is-danger"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.toggleVisibility(
+                                "equipment_1_visibility"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.equipment_1_visibility,
+                            callback: function($$v) {
+                              _vm.equipment_1_visibility = $$v
+                            },
+                            expression: "equipment_1_visibility"
+                          }
                         },
-                        expression: "equipment_1_visibility"
-                      }
-                    },
-                    [_vm._v("Visibility")]
+                        [_vm._v("Visibility")]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
+                ]
               )
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "b-tab-item",
-            {
-              staticClass: "has-padding-x-4",
-              attrs: { label: "Equipment 2", "icon-pack": "fa" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "field" },
+          _vm.character
+            ? _c(
+                "b-tab-item",
+                {
+                  staticClass: "has-padding-x-4",
+                  attrs: { label: "Equipment 2", "icon-pack": "fa" }
+                },
                 [
                   _c(
-                    "b-switch",
-                    {
-                      attrs: {
-                        value: true,
-                        type: "is-success",
-                        "passive-type": "is-danger"
-                      },
-                      on: {
-                        input: function($event) {
-                          return _vm.toggleVisibility("equipment_2_visibility")
-                        }
-                      },
-                      model: {
-                        value: _vm.equipment_2_visibility,
-                        callback: function($$v) {
-                          _vm.equipment_2_visibility = $$v
+                    "div",
+                    { staticClass: "field" },
+                    [
+                      _c(
+                        "b-switch",
+                        {
+                          attrs: {
+                            value: true,
+                            type: "is-success",
+                            "passive-type": "is-danger"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.toggleVisibility(
+                                "equipment_2_visibility"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.equipment_2_visibility,
+                            callback: function($$v) {
+                              _vm.equipment_2_visibility = $$v
+                            },
+                            expression: "equipment_2_visibility"
+                          }
                         },
-                        expression: "equipment_2_visibility"
-                      }
-                    },
-                    [_vm._v("Visibility")]
+                        [_vm._v("Visibility")]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
+                ]
               )
-            ]
-          ),
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "b-tab-item",
-            {
-              staticClass: "has-padding-x-4",
-              attrs: { label: "Equipment 3", "icon-pack": "fa" }
-            },
-            [
-              _c(
-                "div",
-                { staticClass: "field" },
+          _vm.character
+            ? _c(
+                "b-tab-item",
+                {
+                  staticClass: "has-padding-x-4",
+                  attrs: { label: "Equipment 3", "icon-pack": "fa" }
+                },
                 [
                   _c(
-                    "b-switch",
-                    {
-                      attrs: {
-                        value: true,
-                        type: "is-success",
-                        "passive-type": "is-danger"
-                      },
-                      on: {
-                        input: function($event) {
-                          return _vm.toggleVisibility("equipment_3_visibility")
-                        }
-                      },
-                      model: {
-                        value: _vm.equipment_3_visibility,
-                        callback: function($$v) {
-                          _vm.equipment_3_visibility = $$v
+                    "div",
+                    { staticClass: "field" },
+                    [
+                      _c(
+                        "b-switch",
+                        {
+                          attrs: {
+                            value: true,
+                            type: "is-success",
+                            "passive-type": "is-danger"
+                          },
+                          on: {
+                            input: function($event) {
+                              return _vm.toggleVisibility(
+                                "equipment_3_visibility"
+                              )
+                            }
+                          },
+                          model: {
+                            value: _vm.equipment_3_visibility,
+                            callback: function($$v) {
+                              _vm.equipment_3_visibility = $$v
+                            },
+                            expression: "equipment_3_visibility"
+                          }
                         },
-                        expression: "equipment_3_visibility"
-                      }
-                    },
-                    [_vm._v("Visibility")]
+                        [_vm._v("Visibility")]
+                      )
+                    ],
+                    1
                   )
-                ],
-                1
+                ]
               )
-            ]
-          )
+            : _vm._e()
         ],
         1
       )
@@ -64011,34 +64177,52 @@ var render = function() {
           ");"
       },
       [
-        _c(
-          "div",
-          {
-            staticClass:
-              "character-container character character-small is-relative"
-          },
-          _vm._l(_vm.student.equipment, function(element) {
-            return _c("img", {
-              key: element.id,
-              class: element.classes,
-              attrs: { src: "/img/character/" + element.src }
-            })
-          }),
-          0
-        )
+        _vm.characterTheme
+          ? _c(
+              "div",
+              {
+                staticClass:
+                  "character-container character character-small is-relative"
+              },
+              _vm._l(_vm.student.equipment, function(element) {
+                return _c("img", {
+                  key: element.id,
+                  class: element.classes,
+                  attrs: { src: "/img/character/" + element.src }
+                })
+              }),
+              0
+            )
+          : _c(
+              "div",
+              { staticClass: "is-flex has-all-centered has-padding-y-3" },
+              [
+                _c("img", {
+                  staticClass: "rounded",
+                  attrs: {
+                    src: _vm.student.avatar,
+                    width: "128px",
+                    height: "128px",
+                    alt: ""
+                  }
+                })
+              ]
+            )
       ]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "card-content" }, [
       _c("div", { staticClass: "media has-margin-bottom-0" }, [
-        _c("div", { staticClass: "media-left" }, [
-          _c("figure", { staticClass: "image is-48x48" }, [
-            _c("img", {
-              staticClass: "rounded",
-              attrs: { src: _vm.student.avatar, alt: "" }
-            })
-          ])
-        ]),
+        _vm.characterTheme
+          ? _c("div", { staticClass: "media-left" }, [
+              _c("figure", { staticClass: "image is-48x48" }, [
+                _c("img", {
+                  staticClass: "rounded",
+                  attrs: { src: _vm.student.avatar, alt: "" }
+                })
+              ])
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "media-content cursor-default" }, [
           _c("p", { staticClass: "title is-4" }, [
@@ -64297,7 +64481,7 @@ var render = function() {
               {
                 staticClass: "card-image card-shadow-s rounded-top char-bg",
                 style:
-                  "background-color:" +
+                  "min-height: 160px;background-color:" +
                   _vm.classroom.theme.color +
                   ";background-image: url(/img/bg/thumb_" +
                   _vm.classroom.theme.name +
@@ -64323,21 +64507,39 @@ var render = function() {
                   [_c("i", { staticClass: "fas fa-arrow-alt-square-up" })]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "character-container character character-small is-relative"
-                  },
-                  _vm._l(_vm.student.equipment, function(element) {
-                    return _c("img", {
-                      key: element.id,
-                      class: element.classes,
-                      attrs: { src: "/img/character/" + element.src }
-                    })
-                  }),
-                  0
-                )
+                _vm.classroom.character_theme
+                  ? _c(
+                      "div",
+                      {
+                        staticClass:
+                          "character-container character character-small is-relative"
+                      },
+                      _vm._l(_vm.student.equipment, function(element) {
+                        return _c("img", {
+                          key: element.id,
+                          class: element.classes,
+                          attrs: { src: "/img/character/" + element.src }
+                        })
+                      }),
+                      0
+                    )
+                  : _c(
+                      "div",
+                      {
+                        staticClass: "is-flex has-all-centered has-padding-y-3"
+                      },
+                      [
+                        _c("img", {
+                          staticClass: "rounded",
+                          attrs: {
+                            src: _vm.student.avatar,
+                            width: "128px",
+                            height: "128px",
+                            alt: ""
+                          }
+                        })
+                      ]
+                    )
               ]
             ),
             _vm._v(" "),
@@ -64346,14 +64548,16 @@ var render = function() {
                 "div",
                 { staticClass: "media has-margin-bottom-0 has-all-centered" },
                 [
-                  _c("div", { staticClass: "media-left" }, [
-                    _c("figure", { staticClass: "image is-48x48" }, [
-                      _c("img", {
-                        staticClass: "rounded",
-                        attrs: { src: _vm.student.avatar, alt: "" }
-                      })
-                    ])
-                  ]),
+                  _vm.classroom.character_theme
+                    ? _c("div", { staticClass: "media-left" }, [
+                        _c("figure", { staticClass: "image is-48x48" }, [
+                          _c("img", {
+                            staticClass: "rounded",
+                            attrs: { src: _vm.student.avatar, alt: "" }
+                          })
+                        ])
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "media-content" }, [
                     _c("p", { staticClass: "title is-4" }, [
@@ -64671,35 +64875,41 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "has-padding-4" },
-                    _vm._l(_vm.classroom.character_theme.characters, function(
-                      charclass
-                    ) {
-                      return _c("img", {
-                        directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        key: charclass.id,
-                        staticClass: "has-padding-2 has-margin-2 rounded",
-                        class: {
-                          selected: charclass.id == _vm.student.character_id
-                        },
-                        attrs: {
-                          content:
-                            "Highlights in <i class='" +
-                            charclass.property +
-                            " colored'></i>",
-                          src: "/img/character/" + charclass.id + ".png"
-                        },
-                        on: {
-                          click: function($event) {
-                            return _vm.confirmChangeClass(charclass.id)
+                  _vm.classroom.character_theme
+                    ? _c(
+                        "div",
+                        { staticClass: "has-padding-4" },
+                        _vm._l(
+                          _vm.classroom.character_theme.characters,
+                          function(charclass) {
+                            return _c("img", {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              key: charclass.id,
+                              staticClass: "has-padding-2 has-margin-2 rounded",
+                              class: {
+                                selected:
+                                  charclass.id == _vm.student.character_id
+                              },
+                              attrs: {
+                                content:
+                                  "Highlights in <i class='" +
+                                  charclass.property +
+                                  " colored'></i>",
+                                src: "/img/character/" + charclass.id + ".png"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.confirmChangeClass(charclass.id)
+                                }
+                              }
+                            })
                           }
-                        }
-                      })
-                    }),
-                    0
-                  )
+                        ),
+                        0
+                      )
+                    : _vm._e()
                 ]
               ),
               _vm._v(" "),
@@ -64828,153 +65038,164 @@ var render = function() {
                             0
                           ),
                           _vm._v(" "),
-                          _c(
-                            "div",
-                            { key: _vm.forceReload },
-                            _vm._l(_vm.orderedEquipment, function(gear) {
-                              return _c(
+                          _vm.classroom.character_theme
+                            ? _c(
                                 "div",
-                                {
-                                  directives: [
-                                    { name: "tippy", rawName: "v-tippy" }
-                                  ],
-                                  key: gear.id,
-                                  ref: "item" + gear.id,
-                                  refInFor: true,
-                                  staticClass:
-                                    "inventory-item inv-item-armor relative",
-                                  class: {
-                                    "inv-item-armor-bronce": gear.offset == 1,
-                                    "inv-item-armor-silver": gear.offset == 2,
-                                    "inv-item-armor-gold": gear.offset == 3
-                                  },
-                                  attrs: {
-                                    content: _vm.propertiesMessage(gear)
-                                  }
-                                },
-                                [
-                                  _c("img", {
-                                    staticClass: "item",
-                                    attrs: {
-                                      src: "/img/character/" + gear.src,
-                                      alt: gear.id
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _vm.eq1Json || _vm.eq2Json || _vm.eq3Json
-                                    ? _c(
-                                        "div",
-                                        {
-                                          staticClass:
-                                            "price-buy rounded not-hover"
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fas fa-plus"
-                                          })
-                                        ]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _c(
+                                { key: _vm.forceReload },
+                                _vm._l(_vm.orderedEquipment, function(gear) {
+                                  return _c(
                                     "div",
                                     {
-                                      staticClass: "w-100 shop-sub-item",
-                                      staticStyle: {
-                                        position: "absolute",
-                                        top: "100px",
-                                        left: "0"
+                                      directives: [
+                                        { name: "tippy", rawName: "v-tippy" }
+                                      ],
+                                      key: gear.id,
+                                      ref: "item" + gear.id,
+                                      refInFor: true,
+                                      staticClass:
+                                        "inventory-item inv-item-armor relative",
+                                      class: {
+                                        "inv-item-armor-bronce":
+                                          gear.offset == 1,
+                                        "inv-item-armor-silver":
+                                          gear.offset == 2,
+                                        "inv-item-armor-gold": gear.offset == 3
+                                      },
+                                      attrs: {
+                                        content: _vm.propertiesMessage(gear)
                                       }
                                     },
-                                    _vm._l(
-                                      [_vm.eq1Json, _vm.eq2Json, _vm.eq3Json],
-                                      function(i, index) {
-                                        return _c(
-                                          "div",
-                                          { key: index },
-                                          _vm._l(
-                                            _vm.filterEquipment(i, gear.type),
-                                            function(itemStore) {
-                                              return _c(
-                                                "div",
-                                                {
-                                                  key: itemStore.id,
-                                                  staticClass:
-                                                    "inventory-item inv-item-armor w-100",
-                                                  class: {
-                                                    "inv-item-armor-bronce":
-                                                      index == 0,
-                                                    "inv-item-armor-silver":
-                                                      index == 1,
-                                                    "inv-item-armor-gold":
-                                                      index == 2
-                                                  }
-                                                },
-                                                [
-                                                  _c("img", {
-                                                    directives: [
-                                                      {
-                                                        name: "tippy",
-                                                        rawName: "v-tippy"
-                                                      }
-                                                    ],
-                                                    staticClass: "item",
-                                                    attrs: {
-                                                      content: _vm.propertiesMessage(
-                                                        itemStore
-                                                      ),
-                                                      src:
-                                                        "/img/character/" +
-                                                        itemStore.src,
-                                                      alt: itemStore.id
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c(
+                                    [
+                                      _c("img", {
+                                        staticClass: "item",
+                                        attrs: {
+                                          src: "/img/character/" + gear.src,
+                                          alt: gear.id
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _vm.eq1Json || _vm.eq2Json || _vm.eq3Json
+                                        ? _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "price-buy rounded not-hover"
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-plus"
+                                              })
+                                            ]
+                                          )
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass: "w-100 shop-sub-item",
+                                          staticStyle: {
+                                            position: "absolute",
+                                            top: "100px",
+                                            left: "0"
+                                          }
+                                        },
+                                        _vm._l(
+                                          [
+                                            _vm.eq1Json,
+                                            _vm.eq2Json,
+                                            _vm.eq3Json
+                                          ],
+                                          function(i, index) {
+                                            return _c(
+                                              "div",
+                                              { key: index },
+                                              _vm._l(
+                                                _vm.filterEquipment(
+                                                  i,
+                                                  gear.type
+                                                ),
+                                                function(itemStore) {
+                                                  return _c(
                                                     "div",
                                                     {
+                                                      key: itemStore.id,
                                                       staticClass:
-                                                        "price-buy rounded",
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          return _vm.buyEquipment(
-                                                            gear,
-                                                            itemStore
-                                                          )
-                                                        }
+                                                        "inventory-item inv-item-armor w-100",
+                                                      class: {
+                                                        "inv-item-armor-bronce":
+                                                          index == 0,
+                                                        "inv-item-armor-silver":
+                                                          index == 1,
+                                                        "inv-item-armor-gold":
+                                                          index == 2
                                                       }
                                                     },
                                                     [
-                                                      _vm._v(
-                                                        "\n                      " +
-                                                          _vm._s(
-                                                            itemStore.price
-                                                          ) +
-                                                          "\n                      "
-                                                      ),
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fas fa-coins colored"
-                                                      })
+                                                      _c("img", {
+                                                        directives: [
+                                                          {
+                                                            name: "tippy",
+                                                            rawName: "v-tippy"
+                                                          }
+                                                        ],
+                                                        staticClass: "item",
+                                                        attrs: {
+                                                          content: _vm.propertiesMessage(
+                                                            itemStore
+                                                          ),
+                                                          src:
+                                                            "/img/character/" +
+                                                            itemStore.src,
+                                                          alt: itemStore.id
+                                                        }
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "price-buy rounded",
+                                                          on: {
+                                                            click: function(
+                                                              $event
+                                                            ) {
+                                                              return _vm.buyEquipment(
+                                                                gear,
+                                                                itemStore
+                                                              )
+                                                            }
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                      " +
+                                                              _vm._s(
+                                                                itemStore.price
+                                                              ) +
+                                                              "\n                      "
+                                                          ),
+                                                          _c("i", {
+                                                            staticClass:
+                                                              "fas fa-coins colored"
+                                                          })
+                                                        ]
+                                                      )
                                                     ]
                                                   )
-                                                ]
-                                              )
-                                            }
-                                          ),
-                                          0
-                                        )
-                                      }
-                                    ),
-                                    0
+                                                }
+                                              ),
+                                              0
+                                            )
+                                          }
+                                        ),
+                                        0
+                                      )
+                                    ]
                                   )
-                                ]
+                                }),
+                                0
                               )
-                            }),
-                            0
-                          ),
+                            : _vm._e(),
                           _vm._v(" "),
                           _c("div", { staticStyle: { clear: "both" } })
                         ]
@@ -65127,7 +65348,7 @@ var render = function() {
                   )
                 : _vm._e(),
               _vm._v(" "),
-              _vm.student.behaviours.length
+              _vm.behaviours && _vm.behaviours.length
                 ? _c(
                     "b-tab-item",
                     {
@@ -65209,7 +65430,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _vm.student.behaviours.length
+                      _vm.behaviours && _vm.behaviours.length
                         ? _c("b-table", {
                             attrs: {
                               data: _vm.filteredEntries,
@@ -65258,6 +65479,7 @@ var render = function() {
                                           attrs: {
                                             field: "name",
                                             label: "Name",
+                                            centered: "",
                                             sortable: ""
                                           }
                                         },
@@ -65276,7 +65498,10 @@ var render = function() {
                                           attrs: {
                                             field: "created_at",
                                             label: "Created at",
-                                            sortable: ""
+                                            "default-sort-direction": "desc",
+                                            "custom-sort": _vm.sortByDate,
+                                            sortable: "",
+                                            centered: ""
                                           }
                                         },
                                         [
@@ -65296,8 +65521,8 @@ var render = function() {
                                           attrs: {
                                             field: "hp",
                                             label: "Health Points",
-                                            sortable: "",
-                                            centered: ""
+                                            centered: "",
+                                            sortable: ""
                                           }
                                         },
                                         [
@@ -65376,7 +65601,10 @@ var render = function() {
                                                   on: {
                                                     click: function($event) {
                                                       return _vm.confirmDelete(
-                                                        props.row.id
+                                                        "behaviour",
+                                                        props.row,
+                                                        props.row.pivot
+                                                          .created_at
                                                       )
                                                     }
                                                   }
@@ -65398,7 +65626,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              3126308395
+                              1043174481
                             )
                           })
                         : _vm._e()
@@ -65539,7 +65767,7 @@ var render = function() {
                                                 ? _c("span", [_vm._v("💰")])
                                                 : _vm._e(),
                                               _vm._v(" "),
-                                              props.row.type == "heart"
+                                              props.row.type == "hp"
                                                 ? _c("span", [_vm._v("❤️")])
                                                 : _vm._e()
                                             ]
@@ -65565,7 +65793,10 @@ var render = function() {
                                           attrs: {
                                             field: "created_at",
                                             label: "Created at",
-                                            sortable: ""
+                                            "default-sort-direction": "desc",
+                                            "custom-sort": _vm.sortLogByDate,
+                                            sortable: "",
+                                            centered: ""
                                           }
                                         },
                                         [
@@ -65599,7 +65830,9 @@ var render = function() {
                                                   on: {
                                                     click: function($event) {
                                                       return _vm.confirmDelete(
-                                                        props.row.id
+                                                        "logentry",
+                                                        props.row,
+                                                        props.row.created_at
                                                       )
                                                     }
                                                   }
@@ -65621,7 +65854,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              893644900
+                              3626445575
                             )
                           })
                         : _vm._e()
@@ -66058,34 +66291,55 @@ var render = function() {
                         ");"
                     },
                     [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "character-container character character-small is-relative"
-                        },
-                        _vm._l(student.equipment, function(element) {
-                          return _c("img", {
-                            key: element.id,
-                            class: element.classes,
-                            attrs: { src: "/img/character/" + element.src }
-                          })
-                        }),
-                        0
-                      )
+                      _vm.classroom.character_theme != 0
+                        ? _c(
+                            "div",
+                            {
+                              staticClass:
+                                "character-container character character-small is-relative"
+                            },
+                            _vm._l(student.equipment, function(element) {
+                              return _c("img", {
+                                key: element.id,
+                                class: element.classes,
+                                attrs: { src: "/img/character/" + element.src }
+                              })
+                            }),
+                            0
+                          )
+                        : _c(
+                            "div",
+                            {
+                              staticClass:
+                                "is-flex has-all-centered has-padding-y-3"
+                            },
+                            [
+                              _c("img", {
+                                staticClass: "rounded",
+                                attrs: {
+                                  src: student.avatar,
+                                  width: "128px",
+                                  height: "128px",
+                                  alt: ""
+                                }
+                              })
+                            ]
+                          )
                     ]
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-content" }, [
                     _c("div", { staticClass: "media has-margin-bottom-0" }, [
-                      _c("div", { staticClass: "media-left" }, [
-                        _c("figure", { staticClass: "image is-48x48" }, [
-                          _c("img", {
-                            staticClass: "rounded",
-                            attrs: { src: student.avatar, alt: "" }
-                          })
-                        ])
-                      ]),
+                      _vm.classroom.character_theme != 0
+                        ? _c("div", { staticClass: "media-left" }, [
+                            _c("figure", { staticClass: "image is-48x48" }, [
+                              _c("img", {
+                                staticClass: "rounded",
+                                attrs: { src: student.avatar, alt: "" }
+                              })
+                            ])
+                          ])
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "div",

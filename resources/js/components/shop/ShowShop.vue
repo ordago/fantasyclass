@@ -129,7 +129,7 @@
         </div>
       </b-tab-item>
 
-      <b-tab-item label="Equipment 1" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" label="Equipment 1" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -141,7 +141,7 @@
         </div>
       </b-tab-item>
 
-      <b-tab-item label="Equipment 2" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" label="Equipment 2" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -153,7 +153,7 @@
         </div>
       </b-tab-item>
 
-      <b-tab-item label="Equipment 3" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item v-if="character" label="Equipment 3" icon-pack="fa" class="has-padding-x-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -170,7 +170,7 @@
 
 <script>
 export default {
-  props: ["items", "config", "code"],
+  props: ["items", "config", "code", "character"],
   mounted() {},
   data: function() {
     return {

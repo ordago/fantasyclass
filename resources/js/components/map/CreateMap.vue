@@ -9,7 +9,7 @@
         </div>
         <div class="has-margin-top-2">
           <label for="url"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.url') }} <small class="font-italic">({{ trans.get('maps.url_info') }})</small></label>
-          <input type="text" id="url" v-model="url" name="url" class="input" placeholder="">
+          <input type="url" v-model="url" name="url" class="input" placeholder="">
         </div>
         <div>
           <button class="button is-link" @click="update" v-if="map" type="button">{{ trans.get('map.edit') }}</button>
