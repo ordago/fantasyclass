@@ -84,6 +84,15 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
         Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
         
+        // Badges
+        Route::get('/{code}/badges', 'BadgeController@index');
+        Route::get('/{code}/badges/create', 'BadgeController@create');
+        Route::post('/{code}/badges', 'BadgeController@store');
+        Route::post('/student/badge', 'BadgeController@toggle');
+        Route::delete('/badge/{id}', 'BadgeController@destroy');
+        Route::get('/{code}/badges/{id}', 'BadgeController@show');
+        Route::patch('/badges/{id}', 'BadgeController@update');
+        
         // Levels
         Route::get('/{code}/levels', 'LevelsController@index');
         Route::post('/{code}/levels', 'LevelsController@store');

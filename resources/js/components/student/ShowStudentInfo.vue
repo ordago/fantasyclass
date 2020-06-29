@@ -408,6 +408,28 @@
           </div>
         </b-tab-item>
 
+        <b-tab-item
+          label="Badges"
+          v-if="classroom.badges || student.badges.length"
+          icon="award"
+          icon-pack="fad"
+        >
+          <div v-if="admin" class="has-padding-left-4">
+            <div v-for="badge in classroom.badges" :key="badge.id">
+              <div @click="toggle(badge.id)" class="personalBadge type0" v-tippy :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'" :class="{ notColored: findInStudent(badge.id) }">
+                <i :class="'fal ' + badge.icon"></i>
+              </div>
+            </div>
+          </div>
+          <div v-if="!admin" class="has-padding-left-4">
+            <div v-for="badge in student.badges" :key="badge.id">
+              <div class="personalBadge type0" v-tippy :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'">
+                <i :class="'fal ' + badge.icon"></i>
+              </div>
+            </div>
+          </div>
+        </b-tab-item>
+
         <b-tab-item label="Log" v-if="student.log_entries.length" icon="file" icon-pack="fad">
           <div class="columns">
             <div class="column">
@@ -552,6 +574,24 @@ export default {
             });
         }
       });
+    },
+    toggle(id) {
+      axios.post('/classroom/student/badge', { badge: id, student: this.student.id })
+      .then(response => {
+          this.student.badges = response.data.badges
+          this.student.hp = response.data.hp
+          this.student.xp = response.data.xp
+          this.student.gold = response.data.gold
+          this.$forceUpdate()
+      })
+    },
+    findInStudent(id) {
+      var index = this.student.badges.findIndex(function(badge, i) {
+        return badge.id === id;
+      });
+      if(index >= 0)
+        return false;
+      return true;
     },
     updateEmpty() {
       let line = 6;

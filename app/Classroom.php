@@ -92,6 +92,10 @@ class Classroom extends Model
         return $this->hasOne(Rules::class);
     }
 
+    public function badges() {
+        return $this->hasMany(Badge::class);
+    }
+
     public static function boot()
     {
         parent::boot();    

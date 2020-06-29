@@ -30,6 +30,9 @@
                                 <a href="/classroom/{{ $class->code }}/cards" class="navbar-item">
                                     <i class="fad fa-club has-margin-right-2"></i> {{ __('menu.cards') }}
                                 </a>
+                                <a href="/classroom/{{ $class->code }}/badges" class="navbar-item">
+                                    <i class="fad fa-award has-margin-right-2"></i> {{ __('menu.badges') }}
+                                </a>
                                 <a href="/classroom/{{ $class->code }}/behaviours" class="navbar-item">
                                     <i class="fad fa-heart has-margin-right-2"></i> {{ __('menu.behaviours') }}
                                 </a>

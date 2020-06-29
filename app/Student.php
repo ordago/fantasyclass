@@ -98,6 +98,11 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Question::class)->withPivot('answer');
     }
 
+    public function badges() {
+        return $this->belongsToMany(Badge::class);
+    }
+
+
     public function getBoost()
     {
         $xp = $gold = $hp = 0;
@@ -113,7 +118,7 @@ class Student extends Model implements HasMedia
         ];
     }
 
-    public function setProperty($prop, $value, $log = false, $byPassBoost = false)
+    public function setProperty($prop, $value, $log = true, $byPassBoost = false)
     {
         $boost = $this->getBoost();
         $isAlive = $this->hp == 0 ? false : true;

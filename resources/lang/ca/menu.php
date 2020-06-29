@@ -35,5 +35,6 @@ return [
     'rewards' => 'Recompenses',
     'licenses' => 'Llicències',
     'noise' => 'Medidor de soroll',
+    'badges' => 'Insignies',
 
 ];

@@ -63,6 +63,9 @@ Vue.component('create-card', require('./components/card/CreateCard.vue').default
 Vue.component('create-behaviour', require('./components/behaviour/CreateBehaviour.vue').default);
 Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
 
+Vue.component('create-badge', require('./components/badge/CreateBadge.vue').default);
+Vue.component('show-badges', require('./components/badge/ShowBadges.vue').default);
+
 Vue.component('create-levels', require('./components/level/CreateLevels.vue').default);
 Vue.component('show-level', require('./components/level/ShowLevel.vue').default);
 Vue.component('show-level-student', require('./components/level/ShowLevelStudent.vue').default);

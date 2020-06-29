@@ -35,5 +35,6 @@ return [
     'rewards' => 'Rewards',
     'licenses' => 'Licenses',
     'noise' => 'Noise meter',
+    'badges' => 'Badges',
 
 ];

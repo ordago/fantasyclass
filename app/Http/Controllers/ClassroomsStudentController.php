@@ -184,6 +184,7 @@ class ClassroomsStudentController extends Controller
         $challenges = $challenges->merge($groupChallenges);
         $cards = $student->cards;
         $student->append('boost');
+        $student->load('badges');
 
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards'));
     }
