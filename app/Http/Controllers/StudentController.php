@@ -238,6 +238,18 @@ class StudentController extends Controller
         
             return $student->fresh()->behaviours;
     }
+    public function updateName(Request $request)
+    {
+        $student = Student::findOrFail($request->id);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
+
+        $data = $request->validate([
+            'name' => ['string', 'required', 'min:4']
+        ]);
+        $student->update(['name' => $data['name']]);
+
+    }
     public function update(Request $request)
     {
         if ($request->id) {

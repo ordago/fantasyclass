@@ -21,5 +21,7 @@ return [
     'shop_failed_money' => 'Insuficient or',
     'shop_failed_level' => 'Insuficient nivell',
     'shop_failed_exists' => 'Ja tens aquest objecte o un de millor!',
+    'min_name' => 'El nom ha de ser de com a mínim 4 caràcters',
+    
 
 ];

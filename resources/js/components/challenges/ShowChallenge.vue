@@ -37,11 +37,10 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <!-- class="el-tiptap-editor__content" -->
           <div v-if="edit || full" v-html="challengeReactive.content"></div>
-          <!-- <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
+          <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
-          </div> -->
+          </div>
           <div class="" v-for="(question, index) in challenge.stats" :key="index">
             <show-question :admin="admin" :index="index" :question="question"></show-question>
           </div>
@@ -110,7 +109,7 @@
               </div>
             </div>
           </div>
-          <input-emoji></input-emoji>
+          <input-emoji v-if="edit || full"></input-emoji>
           <div class="has-margin-top-3 comments">
             <div
               class="comment has-margin-0"
@@ -531,13 +530,13 @@ export default {
           case 0:
           case 1:
             return this.challengeReactive.count == 1
-              ? "has-background-success"
-              : "has-background-danger";
+              ? "has-background-success-light"
+              : "has-background-danger-light";
             break;
           case 2:
             return this.challengeReactive.count == 2
-              ? "has-background-success"
-              : "has-background-danger";
+              ? "has-background-success-light"
+              : "has-background-danger-light";
             break;
         }
       }

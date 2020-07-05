@@ -121,8 +121,8 @@
               <label class="label">Name</label>
             </div>
             <div class="field-body">
-              <div class="field">
-                <p class="control">
+              <div class="field has-addons">
+                <div class="control">
                   <input
                     class="input"
                     v-bind="{ disabled: !admin }"
@@ -130,7 +130,12 @@
                     type="text"
                     v-model="student.name"
                   />
-                </p>
+                </div>
+                <div class="control" v-if="admin && student.name.length >= 4">
+                  <a class="button is-info" @click="updateName">
+                    <i class="fas fa-save"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -416,14 +421,24 @@
         >
           <div v-if="admin" class="has-padding-left-4">
             <div v-for="badge in classroom.badges" :key="badge.id">
-              <div @click="toggle(badge.id)" class="personalBadge type0" v-tippy :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'" :class="{ notColored: findInStudent(badge.id) }">
+              <div
+                @click="toggle(badge.id)"
+                class="personalBadge type0"
+                v-tippy
+                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+                :class="{ notColored: findInStudent(badge.id) }"
+              >
                 <i :class="'fal ' + badge.icon"></i>
               </div>
             </div>
           </div>
           <div v-if="!admin" class="has-padding-left-4">
             <div v-for="badge in student.badges" :key="badge.id">
-              <div class="personalBadge type0" v-tippy :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'">
+              <div
+                class="personalBadge type0"
+                v-tippy
+                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+              >
                 <i :class="'fal ' + badge.icon"></i>
               </div>
             </div>
@@ -471,7 +486,6 @@
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
 
               <b-table-column field="name" label="Settings" v-if="admin" centered>
-                <!-- TODO -->
                 <b-button
                   type="is-danger is-small"
                   @click="confirmDelete('logentry', props.row, props.row.created_at)"
@@ -544,6 +558,33 @@ export default {
     };
   },
   methods: {
+    updateName() {
+      if (this.student.name.length >= 4) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/student/name", {
+            id: this.student.id,
+            name: this.student.name
+          })
+          .then(response => {
+            this.$toasted.show(this.trans.get("success_error.update_success"), {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: "check",
+              type: "success"
+            });
+            this.$forceUpdate();
+          });
+      } else {
+        this.$toasted.show(this.trans.get("success_error.min_name"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "times",
+          type: "error"
+        });
+      }
+    },
     confirmDelete(type, row, date) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -576,21 +617,24 @@ export default {
       });
     },
     toggle(id) {
-      axios.post('/classroom/student/badge', { badge: id, student: this.student.id })
-      .then(response => {
-          this.student.badges = response.data.badges
-          this.student.hp = response.data.hp
-          this.student.xp = response.data.xp
-          this.student.gold = response.data.gold
-          this.$forceUpdate()
-      })
+      axios
+        .post("/classroom/student/badge", {
+          badge: id,
+          student: this.student.id
+        })
+        .then(response => {
+          this.student.badges = response.data.badges;
+          this.student.hp = response.data.hp;
+          this.student.xp = response.data.xp;
+          this.student.gold = response.data.gold;
+          this.$forceUpdate();
+        });
     },
     findInStudent(id) {
       var index = this.student.badges.findIndex(function(badge, i) {
         return badge.id === id;
       });
-      if(index >= 0)
-        return false;
+      if (index >= 0) return false;
       return true;
     },
     updateEmpty() {

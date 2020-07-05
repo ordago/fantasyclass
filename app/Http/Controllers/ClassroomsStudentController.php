@@ -97,6 +97,7 @@ class ClassroomsStudentController extends Controller
                     ->all();
             }));
         }
+        
         $all = [];
         foreach ($stories as $section) {
             foreach ($section as $value) {
