@@ -134,19 +134,7 @@ class StudentController extends Controller
         $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
 
-        $behaviour = Behaviour::findOrFail($data['behaviour']);
-        $behaviour->update(['count_number' => $behaviour->count_number + 1]);
-        $student->behaviours()->attach($data['behaviour']);
-        $valHp = $student->setProperty('hp', $behaviour->hp, true);
-        $valXp = $student->setProperty('xp', $behaviour->xp, true);
-        $valGold = $student->setProperty('gold', $behaviour->gold, true);
-
-        return [
-            'hp' => $valHp,
-            'xp' => $valXp,
-            'gold' => $valGold,
-            'level' => $student->getLevelAttribute(),
-        ];
+        return $student->addBehaviour($data['behaviour']);
     }
 
     public function show($code, $id)
@@ -203,7 +191,6 @@ class StudentController extends Controller
         $student = Student::findOrFail($request->student);
         $class = Classroom::where('id', $student->classroom->classroom->id)->first();
         $this->authorize('update', $class);
-        dump($request->row);
 
         $item = DB::table("log_entries")
             ->where('type', $request->row['type'])

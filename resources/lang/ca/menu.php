@@ -36,5 +36,6 @@ return [
     'licenses' => 'Llicències',
     'noise' => 'Medidor de soroll',
     'badges' => 'Insignies',
+    'massive' => 'Accions massives',
 
 ];

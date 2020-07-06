@@ -103,6 +103,21 @@ class Student extends Model implements HasMedia
     }
 
 
+    public function addBehaviour($behaviourId) {
+        $behaviour = Behaviour::findOrFail($behaviourId);
+        $behaviour->update(['count_number' => $behaviour->count_number + 1]);
+        $this->behaviours()->attach($behaviourId);
+        $valHp = $this->setProperty('hp', $behaviour->hp, true);
+        $valXp = $this->setProperty('xp', $behaviour->xp, true);
+        $valGold = $this->setProperty('gold', $behaviour->gold, true);
+
+        return [
+            'hp' => $valHp,
+            'xp' => $valXp,
+            'gold' => $valGold,
+            'level' => $this->getLevelAttribute(),
+        ];
+    }
     public function getBoost()
     {
         $xp = $gold = $hp = 0;

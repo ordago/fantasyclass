@@ -36,5 +36,6 @@ return [
     'licenses' => 'Licenses',
     'noise' => 'Noise meter',
     'badges' => 'Badges',
+    'massive' => 'Massive actions',
 
 ];

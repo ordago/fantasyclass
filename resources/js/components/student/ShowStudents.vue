@@ -95,9 +95,14 @@
         >
           <i class="fad fa-microphone outer_glow" style="font-size:2em;"></i>
         </a>
-        <!-- <span class="link outer_glow has-padding-x-2 cursor-pointer">
+        <a
+          @click="isMassiveModalActive = true"
+          v-tippy
+          :content="trans.get('menu.massive')"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+        >
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
-        </span>-->
+        </a>
       </div>
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
@@ -561,6 +566,9 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal :active.sync="isMassiveModalActive" has-modal-card full-screen>
+      <massive-actions :classroom="classroom"></massive-actions>
+    </b-modal>
   </div>
 </template>
 
@@ -596,6 +604,7 @@ export default {
       isRandomGroupActive: false,
       isCardModalActive: false,
       isCountDownModalActive: false,
+      isMassiveModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,

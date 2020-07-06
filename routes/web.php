@@ -63,6 +63,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/student/behaviour', 'StudentController@addBehaviour');
         Route::delete('/student/logentry', 'StudentController@deleteLog');
         Route::patch('/student/inventory', 'InventoryController@update');
+        Route::delete('/student/{id}', 'StudentController@destroy');
         
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show'); // TODO Policy protect
@@ -159,6 +160,7 @@ Route::group(['middleware' => 'language'], function () {
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');
+        Route::post('/{code}/utils/massive', 'UtilsController@massive');
     });
 
     Route::get('/utils/music', 'UtilsController@music');

@@ -344,7 +344,7 @@ class ClassroomsStudentController extends Controller
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);
         return [
-            "message" => " " . __('success_error.shop_success'),
+            "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
             "type" => "success",
             "equipment" => $student->fresh()->equipment,

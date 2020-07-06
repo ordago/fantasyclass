@@ -107,6 +107,9 @@ Vue.component('notifications', require('./components/utils/Notifications.vue').d
 Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').default);
 
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
+
+Vue.component('massive-actions', require('./components/utils/MassiveActions.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

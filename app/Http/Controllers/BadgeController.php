@@ -65,7 +65,6 @@ class BadgeController extends Controller
     public function toggle()
     {
         $badge = Badge::find(request()->badge);
-        // dump($badge);
         $class = Classroom::where('id', '=', $badge->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
 
