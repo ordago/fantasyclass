@@ -23,7 +23,7 @@
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
     <!-- Mobile -->
-      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
 
     <script src="/js/pace.min.js"></script>
 
@@ -89,9 +89,9 @@
                                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                                     <span>
                                         @if(Auth::user()->is_student == 0)
-                                            <i class="fas fa-user-graduate"></i>
+                                        <i class="fas fa-user-graduate"></i>
                                         @else
-                                            <i class="fas fa-user"></i>
+                                        <i class="fas fa-user"></i>
                                         @endif
                                         <span class="pl-2 text-light cursor-default">
                                             {{ Str::limit(Auth::user()->username, 8, $end='...') }}
@@ -128,6 +128,14 @@
         </nav>
         @endauth
 
+        <div id="prompt" class="prompt  has-background-light border-top" style="display: none;">
+            <div class="font-weight-bold">Add to Home screen</div>
+            <small>This app can be installed in your home screen</small>
+            <div class="text-right">
+                <button id="buttonCancel" type="button" class="font-weight-bold text-muted btn-sm btn btn-link">CANCEL</button>
+                <button id="buttonAdd" type="button" class="font-weight-bold text-primary btn-sm btn btn-link">ADD</button>
+            </div>
+        </div>
         <main class="main-content has-padding-3">
             @yield('content')
         </main>
