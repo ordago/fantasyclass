@@ -11385,13 +11385,11 @@ label.panel-block:hover {
 #app {
   height: 100%;
   overflow: auto;
-  overflow-x: auto;
 }
 
 body,
 html {
   height: 100%;
-  overflow: hidden;
 }
 
 .deck {
