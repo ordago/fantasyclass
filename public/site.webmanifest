@@ -1,7 +1,7 @@
 {
     "name": "FantasyClass - An adventure learning app",
     "short_name": "FantasyClass",
-    "scope": "/",
+    "scope": "./",
     "start_url": "/",
     "icons": [
         {
