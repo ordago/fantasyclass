@@ -38,6 +38,7 @@
     <meta name="application-name" content="FantasyClass">
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <script type="text/javascript">
         // Initialize the service worker
