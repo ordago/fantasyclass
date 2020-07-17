@@ -9,8 +9,8 @@
     <div class="field">
       <label class="label">Name</label>
       <div class="control">
-        <div class="rubric-row m-1">
-          <div class="p-2">
+        <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row has-margin-y-2">
+          <div class="has-padding-2">
             <input
               type="checkbox"
               data-toggle="popover"
@@ -20,7 +20,11 @@
             />
           </div>
           <div class="description">
-            <textarea style="height:100%" placeholder="Descripció general"></textarea>
+            <textarea
+              style="height:100%"
+              v-model="row.description"
+              placeholder="Descripció general"
+            ></textarea>
           </div>
           <div
             class="button is-success addRubricItem"
@@ -28,30 +32,28 @@
             data-placement="right"
             data-trigger="hover"
             data-tippy-content="Afegir element a la fila"
-            onclick="addItem(this)"
+            @click="addColumn(index)"
             tabindex="0"
           >
             <i class="fas fa-plus"></i>
           </div>
           <div class="subItems">
-            <div class="subItem">
-              <div class="message has-margin-top-4 has-margin-bottom-1 is-flex has-all-centered">
+            <div class="subItem" v-for="(column, indexCol) in row.columns" :key="indexCol">
+              <div class="message has-margin-bottom-1 is-flex has-all-centered">
                 <textarea
                   class="rich-editor-container rounded has-padding-4"
-                  ref="textarea1"
+                  :ref="'textarea' + index + indexCol"
                   @keypress.enter.prevent
-                  @click="handleEditorClick('textarea1')"
-                  placeholder="Type a message..."
-                >
-                </textarea>
-                  <emoji-picker @emoji:picked="handleEmojiPicked($event, 'textarea1')" :data="data" />
-            
+                  @click="handleEditorClick('textarea' + index + indexCol)"
+                  v-model="column.description"
+                ></textarea>
+                <emoji-picker @emoji:picked="handleEmojiPicked($event, 'textarea' + index + indexCol)" :data="data" />
               </div>
               <div id="container"></div>
               <div class="pointsItem">
-                <input type="number" value="0" style="width: 4em;" min="0" /> Punts
+                <input type="number" v-model="column.points" value="0" style="width: 4em;" min="0" /> Punts
               </div>
-              <div class="button is-danger delSubItem" onclick="delSubItem(this)">
+              <div class="button is-danger delSubItem" @click="delSubItem(index, indexCol)">
                 <i class="far fa-trash-alt"></i>
               </div>
             </div>
@@ -59,6 +61,7 @@
         </div>
       </div>
     </div>
+    <button class="button is-primary" @click="addRow">Add row</button>
   </form>
 </template>
 
@@ -80,18 +83,35 @@ export default {
     };
   },
   methods: {
+    delSubItem(index, indexCol) {
+
+      console.log(this.rubric.rows[index].columns[indexCol].points)
+      this.rubric.rows[index].columns.splice(indexCol, 1)
+    },
+    addColumn(index) {
+      let row = this.rubric.rows[index];
+      let points = this.rubric.rows[index].columns[this.rubric.rows[index].columns.length - 1].points + 1
+      row.columns.push({ points: points, description: "" })
+      this.$forceUpdate()
+    },
+    addRow() {
+      let row = {
+        description: "",
+        opctional: false,
+        columns: [{ points: 0, description: "" }]
+      };
+      this.rubric.rows.push(row);
+    },
     createRubric() {},
     handleEmojiPicked(emoji, text) {
-      console.log(emoji)
-      console.log(this.$refs[text].value)
-      // this.$refs[text].value = `${this.$refs[text].value} ${emoji}`;
-      this.$refs[text].value += emoji;
+      this.$refs[text][0].value += emoji;
     },
     handleEditorClick(text) {
+      console.log(text)
       this.focusEditor(text);
     },
     focusEditor(text) {
-      this.$refs[text].focus();
+      this.$refs[text][0].focus();
     }
   }
 };
@@ -105,6 +125,7 @@ export default {
   position: relative;
   display: flex;
   width: 100%;
+  z-index: 10;
   .rich-editor-container {
     width: 100%;
     border: 1px solid #ddd;
@@ -117,6 +138,8 @@ export default {
     position: absolute;
     right: 9px;
     top: 9px;
+       z-index: 12;
+
   }
   [contenteditable="true"]:empty:before {
     content: attr(placeholder);
@@ -134,8 +157,7 @@ export default {
 }
 .rubric-row {
   display: flex;
-  overflow-x: auto;
-  overflow-y: visible;
+  overflow: visible;
   width: 100%;
 }
 .addRubricItem {
