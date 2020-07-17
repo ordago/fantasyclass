@@ -7,7 +7,7 @@
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
       </div>
-      <div class="column is-flex">
+      <div class="column has-padding-x-0 is-flex">
         <a
           class="link outer_glow has-text-dark has-padding-x-2"
           v-tippy

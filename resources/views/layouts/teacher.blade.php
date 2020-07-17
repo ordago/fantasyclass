@@ -44,7 +44,7 @@
                         <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
                             <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.challenges') }}
                         </a>
-                        <a v-tippy content="It's coming..." style="color: gray" class="navbar-item">
+                        <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
                             <i class="fad fa-analytics has-margin-right-2"></i> {{ __('menu.evaluation') }}
                         </a>
                         <a href="/classroom/{{ $class->code }}/maps"  class="navbar-item">

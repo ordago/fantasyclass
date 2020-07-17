@@ -150,13 +150,22 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/event/random', 'EventController@show');
 
         // Maps
-        Route::get('/{code}/maps', 'MapsController@index'); // ToDo: Policy protect
-        Route::get('/{code}/maps/create', 'MapsController@create'); // ToDo: Policy protect
-        Route::post('/{code}/maps', 'MapsController@store'); // ToDo: Policy protect
-        Route::delete('/maps/{id}', 'MapsController@destroy'); // ToDo: Policy protect
-        Route::get('/{code}/maps/{id}', 'MapsController@show'); // ToDo: Policy protect
+        Route::get('/{code}/maps', 'MapsController@index');
+        Route::get('/{code}/maps/create', 'MapsController@create');
+        Route::post('/{code}/maps', 'MapsController@store');
+        Route::delete('/maps/{id}', 'MapsController@destroy');
+        Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
         
+        // Evaluation
+        Route::get('/{code}/evaluation', 'EvaluationController@index');
+        Route::post('/{code}/evaline', 'EvaluationController@store');
+        Route::get('/{code}/rubrics', 'RubricController@index');
+        Route::get('/{code}/rubric/create', 'RubricController@create');
+
+        //Tags
+        Route::post('/{code}/tag', 'TagController@store');
+
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');

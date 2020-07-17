@@ -92,8 +92,13 @@ Vue.component('settings', require('./components/settings/Settings.vue').default)
 Vue.component('show-event', require('./components/event/ShowEvent.vue').default);
 
 Vue.component('edit-rules', require('./components/rules/EditRules.vue').default);
-// Utils
 
+Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
+
+Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
+Vue.component('rubric-create', require('./components/evaluation/RubricCreate.vue').default);
+
+// Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 Vue.component('icon-selector', require('./components/utils/IconSelector.vue').default);
 

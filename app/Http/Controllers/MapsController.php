@@ -18,6 +18,7 @@ class MapsController extends Controller
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
 
         settings()->setExtraColumns(['user_id' => $class->id]);
         $activeMap = settings()->get('active_map');
@@ -48,7 +49,7 @@ class MapsController extends Controller
     public function create($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        // $this->authorize('update', $class);
+        $this->authorize('update', $class);
         return view('maps.create', compact('class'));
     }
 
@@ -56,7 +57,7 @@ class MapsController extends Controller
     {
         $map = Map::where('id', '=', $id)->first();
         $class = Classroom::where('id', $map->classroom_id)->firstOrFail();
-        //   $this->authorize('update', $class);
+        $this->authorize('update', $class);
         try {
             $map->delete();
         } catch (\Throwable $th) {
@@ -68,7 +69,7 @@ class MapsController extends Controller
     public function show($code, $id)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        //$this->authorize('view', $class);
+        $this->authorize('view', $class);
         $map = Map::where('id', '=', $id)
             ->where('classroom_id', "=", $class->id)
             ->firstOrFail();
