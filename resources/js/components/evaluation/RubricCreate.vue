@@ -78,11 +78,7 @@
       v-if="rubric.rows.length && !this.rubricEdit"
       type="submit"
     >Create Rubric</button>
-    <button
-      class="button is-info"
-      v-if="this.rubricEdit"
-      type="submit"
-    >Edit rubric</button>
+    <button class="button is-info" v-if="this.rubricEdit" type="submit">Edit rubric</button>
   </form>
 </template>
 
@@ -157,7 +153,9 @@ export default {
       }
     },
     handleEmojiPicked(emoji, text) {
+      const event = new Event('input')
       this.$refs[text][0].value += emoji;
+      this.$refs[text][0].dispatchEvent(event);
     },
     handleEditorClick(text) {
       this.focusEditor(text);
@@ -168,7 +166,7 @@ export default {
   },
 };
 </script>
-<style scoped lang="scss">
+<style lang="scss">
 .emoji-dropdown .emoji-preview,
 .emoji-dropdown .title {
   display: none !important;
@@ -177,7 +175,7 @@ export default {
   position: relative;
   display: flex;
   width: 100%;
-  z-index: 10;
+  // z-index: 10;
   .rich-editor-container {
     width: 100%;
     border: 1px solid #ddd;
@@ -190,12 +188,15 @@ export default {
     position: absolute;
     right: 9px;
     top: 9px;
-    z-index: 12;
+    // z-index: 12;
   }
   [contenteditable="true"]:empty:before {
     content: attr(placeholder);
     color: grey;
   }
+}
+.emoji-dropdown {
+  z-index: 20 !important;
 }
 .rubric-rows {
   display: block;

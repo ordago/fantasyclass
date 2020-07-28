@@ -79,8 +79,6 @@ class RubricController extends Controller
                     }
                 }
             }
-
-            // return view('rubric.edit', compact('class', 'rubric'));
         } else {
             abort(403);
         }
