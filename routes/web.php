@@ -162,10 +162,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/evaline', 'EvaluationController@store');
         Route::get('/{code}/rubrics', 'RubricController@index');
         Route::get('/{code}/rubric/create', 'RubricController@create');
+        Route::post('/{code}/rubric', 'RubricController@store');
+        Route::patch('/{code}/rubric/{id}', 'RubricController@update');
+        Route::get('/{code}/rubric/{id}', 'RubricController@edit');
 
         //Tags
         Route::post('/{code}/tag', 'TagController@store');
-
+        
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');

@@ -201,7 +201,6 @@ class StudentController extends Controller
             ->take(1)
             ->delete();
             // ->get();
-            // dump($item);
 
             $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
         
@@ -221,7 +220,6 @@ class StudentController extends Controller
             ->take(1)
             ->delete();
             // ->get();
-            // dump($item);
         
             return $student->fresh()->behaviours;
     }
