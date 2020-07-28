@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Rubric;
 use App\Tag;
 use Illuminate\Http\Request;
 
@@ -18,7 +19,9 @@ class EvaluationController extends Controller
         $this->authorize('view', $class);
 
         $tags = Tag::where('classroom_id', $class->id)->get();
-        return view('evaluation.index', compact('class', 'tags'));
+        $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
+
+        return view('evaluation.index', compact('class', 'tags', 'rubrics'));
     }
 
     public function store($code)

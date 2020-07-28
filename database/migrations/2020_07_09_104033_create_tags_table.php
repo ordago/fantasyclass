@@ -15,7 +15,7 @@ class CreateTagsTable extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->string('short', 10);
+            $table->string('short', 20);
             $table->text('description');
             $table->float('percent')->default(0);
             $table->unsignedBigInteger('classroom_id');

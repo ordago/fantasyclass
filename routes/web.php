@@ -168,6 +168,7 @@ Route::group(['middleware' => 'language'], function () {
 
         //Tags
         Route::post('/{code}/tag', 'TagController@store');
+        Route::delete('/tag/{id}', 'TagController@destroy');
         
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');

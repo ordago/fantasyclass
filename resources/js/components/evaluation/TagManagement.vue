@@ -9,7 +9,7 @@
     <div class="has-margin-y-3">
       <span
         class="tag is-dark is-medium has-margin-right-2"
-        v-for="tag in tagsReactive"
+        v-for="(tag, index) in tagsReactive"
         :key="tag.id"
         v-tippy
         :content="tag.description"
@@ -21,7 +21,7 @@
             class="fas fa-edit has-background-info rounded pointer has-padding-2 has-margin-left-3"
           ></i>
         </small>
-        <small>
+        <small @click="deleteTag(tag.id, index)">
           <i
             class="fas fa-trash-alt has-background-danger rounded pointer has-padding-2 has-margin-left-3"
           ></i>
@@ -29,7 +29,7 @@
       </span>
     </div>
     <div>
-      <button class="button is-link" @click="isLineModalActive=true">Add evaluation line</button>
+      <button class="button is-link" v-if="tagsReactive.length" @click="isLineModalActive=true">Add evaluation line</button>
     </div>
     <div class="has-margin-3"></div>
 
@@ -48,7 +48,7 @@
           </header>
           <section class="modal-card-body">
             <b-field label="Abbreviation">
-              <b-input v-model="tag.short" maxlength="10" required></b-input>
+              <b-input v-model="tag.short" maxlength="15" required></b-input>
             </b-field>
             <b-field label="Full description">
               <b-input v-model="tag.description" required></b-input>
@@ -113,6 +113,32 @@
             <b-field label="Description">
               <b-input v-model="line.description" required></b-input>
             </b-field>
+            <b-field label="Type">
+               <b-select v-model="line.type" expanded>
+                <option
+                    value="0"
+                    >
+                    Simple
+                </option>
+                <option
+                    value="1"
+                    >
+                    Advanced (rubric)
+                </option>
+            </b-select>
+            </b-field>
+            <b-field  v-if="line.type == 1" label="Rubric">
+               <b-select expanded>
+                <option
+                  v-for="rubric in rubrics"
+                  :key="rubric.id"
+                  :value="rubric.id"
+                  >
+                  {{ rubric.name }}
+                </option>
+                
+            </b-select>
+            </b-field>
             <div v-if="line.tags && line.tags.length">
               <details>
                 <summary class="is-size-6">
@@ -144,7 +170,7 @@
 </template>
 <script>
 export default {
-  props: ["classroom", "tags"],
+  props: ["classroom", "tags", "rubrics"],
   created: function() {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
@@ -163,11 +189,19 @@ export default {
       line: {
         tags: null,
         description: "",
-        weights: {}
+        weights: {},
+        type: 0
       }
     };
   },
   methods: {
+    deleteTag(id, index) {
+       axios
+        .delete("/classroom/tag/" + id)
+        .then(response => {
+            this.tagsReactive.splice(index, 1);
+        });
+    },
     setWeight(elems) {
       elems.forEach(element => {
         this.line.weights[element.id] = 1
@@ -177,7 +211,6 @@ export default {
       axios
         .post("/classroom/" + this.classroom.code + "/evaline", this.line)
         .then(response => {
-          console.log(response);
           this.isLineModalActive = false;
           // this.tagsReactive.push(response.data);
         });
