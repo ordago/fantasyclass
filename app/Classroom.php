@@ -95,6 +95,9 @@ class Classroom extends Model
     public function badges() {
         return $this->hasMany(Badge::class);
     }
+    public function evaluables() {
+        return $this->hasMany(Evaluable::class);
+    }
 
     public static function boot()
     {
@@ -112,7 +115,7 @@ class Classroom extends Model
             $classroom->challengeGroups()->delete();
             $classroom->maps()->delete();
             $classroom->rules()->delete();
-
+            $classroom->evaluables()->delete();
         });
     } 
 }

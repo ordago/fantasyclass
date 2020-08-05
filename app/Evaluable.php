@@ -8,13 +8,17 @@ class Evaluable extends Model
 {
     protected $fillable = [
         'description',
+        'classroom_id',
         'type',
         'rubric_id',
         'challenge_id',
     ];
 
-    public function evaluables() {
+    public function tags() {
         return $this->belongsToMany(Tag::class)->withPivot('weight');
+    }
+    public function classroom() {
+        return $this->belongsTo(Classroom::class);
     }
 
 }

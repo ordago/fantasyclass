@@ -19,6 +19,7 @@ class CreateEvaluablesTable extends Migration
             $table->smallInteger('type')->default(0);
             $table->unsignedBigInteger('rubric_id')->nullable();
             $table->unsignedBigInteger('challenge_id')->nullable()->unique();
+            $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });
     }

@@ -1,10 +1,18 @@
 <template>
   <div class="w-100 content">
     <div>
-      <button class="button is-link" @click="isTagModalActive=true"><i class="has-margin-right-2 fas fa-tag"></i> Add tag</button>
-      <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning"><i class="has-margin-right-2 fas fa-tasks-alt"></i> Rubric management</a>
-      <button class="button is-dark" @click="isTagModalActive=true"><i class="has-margin-right-2 fas fa-cog"></i> Preferences</button>
-      <button class="button is-primary" @click="isTagModalActive=true"><i class="has-margin-right-2 fas fa-file-chart-line"></i> Evaluation report</button>
+      <button class="button is-link" @click="isTagModalActive=true">
+        <i class="has-margin-right-2 fas fa-tag"></i> Add tag
+      </button>
+      <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
+        <i class="has-margin-right-2 fas fa-tasks-alt"></i> Rubric management
+      </a>
+      <button class="button is-dark" @click="isTagModalActive=true">
+        <i class="has-margin-right-2 fas fa-cog"></i> Preferences
+      </button>
+      <button class="button is-primary" @click="isTagModalActive=true">
+        <i class="has-margin-right-2 fas fa-file-chart-line"></i> Evaluation report
+      </button>
     </div>
     <div class="has-margin-y-3">
       <span
@@ -29,9 +37,37 @@
       </span>
     </div>
     <div>
-      <button class="button is-link" v-if="tagsReactive.length" @click="isLineModalActive=true">Add evaluation line</button>
+      <button
+        class="button is-link"
+        v-if="tagsReactive.length"
+        @click="isLineModalActive=true"
+      >Add evaluation line</button>
     </div>
-    <div class="has-margin-3"></div>
+    <div class="has-margin-3">
+      <b-table v-if="linesReactive.length"
+            :data="linesReactive"
+            icon-pack="fas"
+            cell-class="align-right"
+            sort-icon="arrow-up"
+            >
+            <template slot-scope="props">
+                <b-table-column field="Description" :label="trans.get('maps.name')" sortable>
+                    {{ props.row.description }}
+                </b-table-column>
+
+                <b-table-column field="Tags" label="Url" sortable>
+                    <span class="tag is-dark has-margin-right-2" v-for="tag in props.row.tags" :key="tag.id">{{ tag.short }}</span>
+                </b-table-column>
+                
+                <b-table-column field="settings" :label="trans.get('menu.settings')" centered class="w-100 is-flex has-all-centered">
+                    <b-button v-tippy :content="trans.get('maps.preview')" type="is-dark is-small has-margin-right-3">Grade</b-button>
+                    <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + classroom.code + '/maps/' + props.row.id" class="button is-info is-small has-margin-right-3"><i class="fas fa-edit"></i></a>
+                    <b-button v-tippy :content="trans.get('general.delete')" type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
+                </b-table-column>
+                
+            </template>
+        </b-table>
+    </div>
 
     <b-modal
       :active.sync="isTagModalActive"
@@ -114,30 +150,19 @@
               <b-input v-model="line.description" required></b-input>
             </b-field>
             <b-field label="Type">
-               <b-select v-model="line.type" expanded>
-                <option
-                    value="0"
-                    >
-                    Simple
-                </option>
-                <option
-                    value="1"
-                    >
-                    Advanced (rubric)
-                </option>
-            </b-select>
+              <b-select v-model="line.type" expanded>
+                <option value="0">Simple</option>
+                <option value="1">Advanced (rubric)</option>
+              </b-select>
             </b-field>
-            <b-field  v-if="line.type == 1" label="Rubric">
-               <b-select expanded>
+            <b-field v-if="line.type == 1" label="Rubric">
+              <b-select v-model="line.rubric" expanded>
                 <option
                   v-for="rubric in rubrics"
                   :key="rubric.id"
                   :value="rubric.id"
-                  >
-                  {{ rubric.name }}
-                </option>
-                
-            </b-select>
+                >{{ rubric.name }}</option>
+              </b-select>
             </b-field>
             <div v-if="line.tags && line.tags.length">
               <details>
@@ -146,15 +171,12 @@
                 </summary>
                 <h3>Weigth in the tag</h3>
                 <div class="is-block w-100 has-margin-y-2" v-for="tag in line.tags" :key="tag.id">
-                <b-field>
-                  <b-field
-                    grouped
-                    class="is-flex has-all-centered"
-                  >
-                    <p class="control">{{ tag.short }}</p>
-                    <b-numberinput step="0.1" v-model="line.weights[tag.id]" />
+                  <b-field>
+                    <b-field grouped class="is-flex has-all-centered">
+                      <p class="control">{{ tag.short }}</p>
+                      <b-numberinput step="0.1" v-model="line.weights[tag.id]" />
+                    </b-field>
                   </b-field>
-                </b-field>
                 </div>
               </details>
             </div>
@@ -170,73 +192,73 @@
 </template>
 <script>
 export default {
-  props: ["classroom", "tags", "rubrics"],
-  created: function() {
+  props: ["classroom", "tags", "rubrics", "lines"],
+  created: function () {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
+    this.linesReactive = this.lines;
   },
-  data: function() {
+  data: function () {
     return {
       filteredTags: null,
       tagsReactive: null,
       isTagModalActive: false,
       isLineModalActive: false,
+      linesReactive: [],
       tag: {
         short: "",
         description: "",
-        percent: 0
+        percent: 0,
       },
       line: {
         tags: null,
         description: "",
         weights: {},
-        type: 0
-      }
+        type: 0,
+        rubric: null,
+      },
     };
   },
   methods: {
     deleteTag(id, index) {
-       axios
-        .delete("/classroom/tag/" + id)
-        .then(response => {
-            this.tagsReactive.splice(index, 1);
-        });
+      axios.delete("/classroom/tag/" + id).then((response) => {
+        this.tagsReactive.splice(index, 1);
+      });
     },
     setWeight(elems) {
-      elems.forEach(element => {
-        this.line.weights[element.id] = 1
-      });      
+      elems.forEach((element) => {
+        this.line.weights[element.id] = 1;
+      });
     },
     addLine() {
-      axios
-        .post("/classroom/" + this.classroom.code + "/evaline", this.line)
-        .then(response => {
-          this.isLineModalActive = false;
-          // this.tagsReactive.push(response.data);
-        });
+      if (this.line.tags) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/evaline", this.line)
+          .then((response) => {
+            this.isLineModalActive = false;
+            // this.tagsReactive.push(response.data);
+          });
+      }
     },
     addTag() {
       axios
         .post("/classroom/" + this.classroom.code + "/tag", this.tag)
-        .then(response => {
+        .then((response) => {
           console.log(response);
           this.isTagModalActive = false;
           this.tagsReactive.push(response.data);
         });
     },
     getFilteredTags(text) {
-      this.filteredTags = this.tagsReactive.filter(option => {
+      this.filteredTags = this.tagsReactive.filter((option) => {
         return (
-          option.short
-            .toString()
-            .toLowerCase()
-            .indexOf(text.toLowerCase()) >= 0
+          option.short.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
         );
       });
-    }
+    },
   },
   components: {},
 
-  computed: {}
+  computed: {},
 };
 </script>

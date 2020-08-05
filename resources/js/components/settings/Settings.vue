@@ -130,7 +130,7 @@
         {{ trans.get('general.save') }}
       </button>
     </div>
-    <div class="has-padding-left-4">
+    <!-- <div class="has-padding-left-4">
       <h3 class="has-margin-bottom-4">{{ trans.get('settings.weather_management') }}</h3>
       <div class="columns has-padding-2">
         <b-switch
@@ -181,7 +181,7 @@
         >
           <i class="fas fas fa-smog fa-3x"></i>
         </b-switch>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
