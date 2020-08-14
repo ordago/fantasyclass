@@ -77,7 +77,7 @@
                                         {{ Auth::user()->username }}
                                     </span>
                                     <hr class="dropdown-divider">
-                                    <a class="dropdown-item" href="/preferences/edit">
+                                    <a class="dropdown-item" href="/preferences">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();

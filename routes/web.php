@@ -138,6 +138,12 @@ Route::group(['middleware' => 'language'], function () {
 
     Route::get('/utils/music', 'UtilsController@music');
     
+    // Preferences
+    Route::get('/preferences', 'PreferencesController@index');
+    // Route::patch('/preferences/edit', 'PreferencesController@update');
+    Route::patch('/preferences/update', 'PreferencesController@update');
+
+
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
