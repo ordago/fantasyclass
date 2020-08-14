@@ -1,13 +1,12 @@
   #app {
       height: 100%;
       overflow: auto;
-      overflow-x: auto;
   }
 
   body,
   html {
       height: 100%;
-      overflow: hidden;
+      overflow-y: auto!important;
   }
 
   .deck {
@@ -65,6 +64,18 @@
 
   .night {
     filter: brightness(50%);
+  }
+
+  .level-hidden {
+      z-index: 10; 
+      position:absolute; 
+      top:0; 
+      left: 25px;
+      display: none;
+  }
+
+  .level-top:hover .level-hidden {
+      display: initial;
   }
 
   .cursor-default {
@@ -915,7 +926,7 @@
 
   .fantasyTitle {
       text-align: center;
-      color: #ddd;
+      color: #fff;
       text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px #000;
       font-family: logo;
       font-size: 5rem;

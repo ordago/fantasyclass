@@ -2,15 +2,25 @@
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
     <div class="column is-narrow has-padding-right-0">
       <div class="card rounded card-shadow-s" style="min-width: 275px">
-        <span
-          class="level-top rounded has-padding-4 has-background-light"
-          v-if="student.level"
-        >{{ student.level.number }}</span>
+        <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
+          <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
+          {{ student.level.number }}
+        </span>
         <div
           class="card-image card-shadow-s rounded-top char-bg"
-          :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
+          :style="'min-height: 160px;background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
         >
-          <div class="character-container character character-small is-relative">
+          <span
+            class="boost-right outer_glow_dark"
+            v-tippy
+            :content="'<i class=\'fas fa-heart colored\'></i>' + student.boost.hp + '% | <i class=\'fas fa-fist-raised colored\'></i>' + student.boost.xp + '% | <i class=\'fas fa-coins colored\'></i>' + student.boost.gold + '%'"
+          >
+            <i class="fas fa-arrow-alt-square-up"></i>
+          </span>
+          <div
+            v-if="classroom.character_theme"
+            class="character-container character character-small is-relative"
+          >
             <img
               :src="'/img/character/' + element.src"
               :class="element.classes"
@@ -18,10 +28,13 @@
               v-bind:key="element.id"
             />
           </div>
+          <div v-else class="is-flex has-all-centered has-padding-y-3">
+            <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
+          </div>
         </div>
         <div class="card-content">
           <div class="media has-margin-bottom-0 has-all-centered">
-            <div class="media-left">
+            <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
                 <img :src="student.avatar" class="rounded" alt />
               </figure>
@@ -108,8 +121,8 @@
               <label class="label">Name</label>
             </div>
             <div class="field-body">
-              <div class="field">
-                <p class="control">
+              <div class="field has-addons">
+                <div class="control">
                   <input
                     class="input"
                     v-bind="{ disabled: !admin }"
@@ -117,7 +130,12 @@
                     type="text"
                     v-model="student.name"
                   />
-                </p>
+                </div>
+                <div class="control" v-if="admin && student.name.length >= 4">
+                  <a class="button is-info" @click="updateName">
+                    <i class="fas fa-save"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -150,8 +168,10 @@
               </b-field>
             </div>
           </div>
-          <div class="has-padding-4">
+          <div class="has-padding-4" v-if="classroom.character_theme && student.hp > 0">
             <img
+              v-tippy
+              :content="'Highlights in <i class=\'' + charclass.property + ' colored\'></i>'"
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="has-padding-2 has-margin-2 rounded"
@@ -205,7 +225,7 @@
             <div>
               <div v-for="index in inventoryRemaining" class="inventory-item" v-bind:key="index"></div>
             </div>
-            <div :key="forceReload">
+            <div v-if="classroom.character_theme" :key="forceReload">
               <div
                 v-for="gear in orderedEquipment"
                 v-bind:key="gear.id"
@@ -216,7 +236,7 @@
                 v-bind:class="{ 'inv-item-armor-bronce': gear.offset == 1, 'inv-item-armor-silver': gear.offset == 2, 'inv-item-armor-gold': gear.offset == 3 }"
               >
                 <img :src="'/img/character/' + gear.src" :alt="gear.id" class="item" />
-                <div class="price-buy rounded not-hover" v-if="eq1Json || eq2Json || eq3Json">
+                <div class="price-buy rounded not-hover" v-if="(eq1Json || eq2Json || eq3Json)">
                   <i class="fas fa-plus"></i>
                 </div>
                 <div class="w-100 shop-sub-item" style="position:absolute; top: 100px; left: 0">
@@ -278,11 +298,23 @@
               :key="index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
-              <show-card class="has-margin-4" :student="student" :card="card" :code="classroom.code" :use="true" :admin="false"></show-card>
+              <show-card
+                class="has-margin-4"
+                :student="student"
+                :card="card"
+                :code="classroom.code"
+                :use="true"
+                :admin="false"
+              ></show-card>
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="Behaviours" v-if="student.behaviours.length" icon="heart" icon-pack="fad">
+        <b-tab-item
+          label="Behaviours"
+          v-if="behaviours && behaviours.length"
+          icon="heart"
+          icon-pack="fad"
+        >
           <div class="is-flex justify-content-center">
             <apexchart
               v-if="series.length"
@@ -305,7 +337,7 @@
           </div>
 
           <b-table
-            v-if="student.behaviours.length"
+            v-if="behaviours && behaviours.length"
             :data="filteredEntries"
             default-sort="created_at"
             default-sort-direction="desc"
@@ -322,15 +354,23 @@
                 </span>
               </b-table-column>
 
-              <b-table-column field="name" label="Name" sortable>{{ props.row.name }}</b-table-column>
+              <b-table-column
+                field="name"
+                label="Name"
+                centered
+                sortable
+              >{{ trans.get(props.row.name) }}</b-table-column>
 
               <b-table-column
                 field="created_at"
                 label="Created at"
+                default-sort-direction="desc"
+                :custom-sort="sortByDate"
                 sortable
+                centered
               >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
 
-              <b-table-column field="hp" label="Health Points" sortable centered>
+              <b-table-column field="hp" label="Health Points" centered sortable>
                 <i class="fas fa-heart"></i>
                 {{ props.row.hp }}
               </b-table-column>
@@ -346,7 +386,10 @@
               </b-table-column>
 
               <b-table-column field="name" label="Settings" v-if="admin" centered>
-                <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)">
+                <b-button
+                  type="is-danger is-small"
+                  @click="confirmDelete('behaviour', props.row, props.row.pivot.created_at)"
+                >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
               </b-table-column>
@@ -354,7 +397,12 @@
           </b-table>
         </b-tab-item>
 
-        <b-tab-item label="Challenges" v-if="challenges && challenges.length" icon="pen-fancy" icon-pack="fad">
+        <b-tab-item
+          label="Challenges"
+          v-if="challenges && challenges.length"
+          icon="pen-fancy"
+          icon-pack="fad"
+        >
           <div v-for="challenge in orderedChallenges" :key="challenge.id">
             <show-challenge
               :challenge="challenge"
@@ -362,6 +410,38 @@
               :admin="admin"
               :edit="false"
             ></show-challenge>
+          </div>
+        </b-tab-item>
+
+        <b-tab-item
+          label="Badges"
+          v-if="classroom.badges || student.badges.length"
+          icon="award"
+          icon-pack="fad"
+        >
+          <div v-if="admin" class="has-padding-left-4">
+            <div v-for="badge in classroom.badges" :key="badge.id">
+              <div
+                @click="toggle(badge.id)"
+                class="personalBadge type0"
+                v-tippy
+                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+                :class="{ notColored: findInStudent(badge.id) }"
+              >
+                <i :class="'fal ' + badge.icon"></i>
+              </div>
+            </div>
+          </div>
+          <div v-if="!admin" class="has-padding-left-4">
+            <div v-for="badge in student.badges" :key="badge.id">
+              <div
+                class="personalBadge type0"
+                v-tippy
+                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+              >
+                <i :class="'fal ' + badge.icon"></i>
+              </div>
+            </div>
           </div>
         </b-tab-item>
 
@@ -390,7 +470,7 @@
                 >
                   <span v-if="props.row.type=='xp'">✊</span>
                   <span v-if="props.row.type=='gold'">💰</span>
-                  <span v-if="props.row.type=='heart'">❤️</span>
+                  <span v-if="props.row.type=='hp'">❤️</span>
                 </span>
               </b-table-column>
 
@@ -399,11 +479,17 @@
               <b-table-column
                 field="created_at"
                 label="Created at"
+                default-sort-direction="desc"
+                :custom-sort="sortLogByDate"
                 sortable
+                centered
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
 
               <b-table-column field="name" label="Settings" v-if="admin" centered>
-                <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)">
+                <b-button
+                  type="is-danger is-small"
+                  @click="confirmDelete('logentry', props.row, props.row.created_at)"
+                >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
               </b-table-column>
@@ -419,13 +505,13 @@
 import Utils from "../../utils.js";
 
 // Download excel
-import JsonExcel from 'vue-json-excel'
-Vue.component('downloadExcel', JsonExcel)
+import JsonExcel from "vue-json-excel";
+Vue.component("downloadExcel", JsonExcel);
 
 // Charts
-import VueApexCharts from 'vue-apexcharts'
-Vue.use(VueApexCharts)
-Vue.component('apexchart', VueApexCharts)
+import VueApexCharts from "vue-apexcharts";
+Vue.use(VueApexCharts);
+Vue.component("apexchart", VueApexCharts);
 
 export default {
   props: [
@@ -439,6 +525,7 @@ export default {
     "cards"
   ],
   mounted() {
+    this.behaviours = this.student.behaviours;
     if (!this.admin) {
       this.activeTab = 1;
 
@@ -466,10 +553,90 @@ export default {
       eq3Json: null,
       forceReload: 0,
       prevImage: null,
-      image: null
+      image: null,
+      behaviours: null
     };
   },
   methods: {
+    updateName() {
+      if (this.student.name.length >= 4) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/student/name", {
+            id: this.student.id,
+            name: this.student.name
+          })
+          .then(response => {
+            this.$toasted.show(this.trans.get("success_error.update_success"), {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: "check",
+              type: "success"
+            });
+            this.$forceUpdate();
+          });
+      } else {
+        this.$toasted.show(this.trans.get("success_error.min_name"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "times",
+          type: "error"
+        });
+      }
+    },
+    confirmDelete(type, row, date) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/classroom/student/" + type, {
+              row: row,
+              date: date,
+              student: this.student.id,
+              _method: "delete"
+            })
+            .then(response => {
+              if (type == "behaviour") {
+                this.behaviours = response.data;
+                this.student.updated_at = new Date();
+                this.forceRerender();
+              } else {
+                location.reload();
+              }
+            });
+        }
+      });
+    },
+    toggle(id) {
+      axios
+        .post("/classroom/student/badge", {
+          badge: id,
+          student: this.student.id
+        })
+        .then(response => {
+          this.student.badges = response.data.badges;
+          this.student.hp = response.data.hp;
+          this.student.xp = response.data.xp;
+          this.student.gold = response.data.gold;
+          this.$forceUpdate();
+        });
+    },
+    findInStudent(id) {
+      var index = this.student.badges.findIndex(function(badge, i) {
+        return badge.id === id;
+      });
+      if (index >= 0) return false;
+      return true;
+    },
     updateEmpty() {
       let line = 6;
       if (this.student.items.length >= 6) {
@@ -508,14 +675,17 @@ export default {
               itemId: item.id
             })
             .then(response => {
-              item.pivot.count--;
-              if (item.pivot.count == 0) this.inventoryRemaining++;
-              this.student.hp = Math.min(
-                this.student.hp + response.data.hp,
-                100
-              );
-              this.student.xp += response.data.xp;
-              this.forceRerender();
+              if (!response.data) {
+              } else {
+                item.pivot.count--;
+                if (item.pivot.count == 0) this.inventoryRemaining++;
+                this.student.hp = Math.min(
+                  this.student.hp + response.data.hp,
+                  100
+                );
+                this.student.xp += response.data.xp;
+                this.forceRerender();
+              }
             });
         }
       });
@@ -556,6 +726,30 @@ export default {
         itemStore.gold +
         "% <i class='fas fa-coins colored'></i>"
       );
+    },
+    sortByDate(a, b, isAsc = false) {
+      if (isAsc) {
+        return (
+          new Date(b.pivot.created_at).getTime() -
+          new Date(a.pivot.created_at).getTime()
+        );
+      } else {
+        return (
+          new Date(a.pivot.created_at).getTime() -
+          new Date(b.pivot.created_at).getTime()
+        );
+      }
+    },
+    sortLogByDate(a, b, isAsc = false) {
+      if (isAsc) {
+        return (
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+      } else {
+        return (
+          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+        );
+      }
     },
     buyItem(item) {
       this.$buefy.dialog.confirm({
@@ -626,6 +820,7 @@ export default {
                 this.student.gold = this.student.gold - newItem.price;
                 oldItem.src = newItem.src;
                 let reference = "item" + oldItem.id;
+                this.student.boost = response.data.boost;
                 let newClass = "inv-item-armor-bronce";
                 switch (newItem.offset) {
                   case 2:
@@ -669,13 +864,7 @@ export default {
                 }
               )
               .then(response => {
-                this.$toasted.show(response.data.message, {
-                  position: "top-center",
-                  duration: 3000,
-                  iconPack: "fontawesome",
-                  icon: response.data.icon,
-                  type: response.data.type
-                });
+                location.reload();
               });
           }
         },
@@ -686,12 +875,14 @@ export default {
   },
   computed: {
     filteredEntries() {
-      return this.student.behaviours.filter(entry => {
-        return (
-          (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
-          (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
-        );
-      });
+      if (this.behaviours) {
+        return this.behaviours.filter(entry => {
+          return (
+            (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
+            (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
+          );
+        });
+      }
     },
     filteredLogEntries() {
       return this.student.log_entries.filter(entry => {
@@ -771,7 +962,10 @@ export default {
           let behaviour = element[0];
           this.series.push(element.length);
           this.labels.push(
-            "<i class='" + behaviour.icon + "'></i> " + behaviour.name
+            "<i class='" +
+              behaviour.icon +
+              "'></i> " +
+              this.trans.get(behaviour.name)
           );
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
             this.colors.push(colorsOK[0]);

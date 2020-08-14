@@ -1,3 +1,21 @@
+## Contibutions
+
+Coders
+- Joan Climent.
+- José García.
+- Xavi Franch.
+
+Help and sponsors
+- [Xavier Climent.](https://twitter.com/xavier_climent) 
+- [Jesús Manzaneque.](https://twitter.com/manzanequejesus) 
+- Guillermo Guerrero. 
+- [Maria Ghirardi (graphics).](http://leideedimari.com/)  
+- [Jujo (graphics).](https://twitter.com/soyjujo_juanjo) 
+- Nacho.  
+- Carlos.
+- [Ander García.](https://aprendecoreano.com/) 
+
+## Contribute in the project
 ### To import the project
 
 [Laravel Installation](https://laravel.com/docs/7.x/installation)
@@ -32,7 +50,7 @@ GOOGLE_SECRET=
 GOOGE_REDIRECT=http://localhost:8000/callback/google
 ```
 
-## After every pull from the server
+### After every pull from the server
 ```
  composer update
  npm install

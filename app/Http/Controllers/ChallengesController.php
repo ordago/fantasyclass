@@ -142,9 +142,9 @@ class ChallengesController extends Controller
                     $student->cards()->attach($card);
                 }
             }
-            $student->setProperty('hp', $mult * $challenge->hp);
-            $student->setProperty('xp', $mult * $challenge->xp);
-            $student->setProperty('gold', $mult * $challenge->gold);
+            $student->setProperty('hp', $mult * $challenge->hp, true);
+            $student->setProperty('xp', $mult * $challenge->xp, true);
+            $student->setProperty('gold', $mult * $challenge->gold, true);
         } else {
             $group = Group::where('id', $data['id'])->firstOrFail();
             $class = Classroom::where('id', '=', $group->grouping->classroom_id)->firstOrFail();
@@ -160,9 +160,9 @@ class ChallengesController extends Controller
                 $card = CardsController::getRandomCard($class->code);
             }
             foreach ($group->students as $student) {
-                $student->setProperty('hp', $mult * $challenge->hp);
-                $student->setProperty('xp', $mult * $challenge->xp);
-                $student->setProperty('gold', $mult * $challenge->gold);
+                $student->setProperty('hp', $mult * $challenge->hp, true);
+                $student->setProperty('xp', $mult * $challenge->xp, true);
+                $student->setProperty('gold', $mult * $challenge->gold, true);
                 if($cards && $challenge->auto_assign == 1) {
                     $student->cards()->attach($card);
                 }

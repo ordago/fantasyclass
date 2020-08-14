@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Behaviour;
+use App\Classroom;
+use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,6 +15,41 @@ class UtilsController extends Controller
         $this->middleware('verified');
     }
 
+    public function showMeter($code) {
+        return view('utils.meter', compact('code'));
+    }
+    public function meter($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        foreach ($class->students as $student) {
+            if(request()->hp != 0) {
+                $student->setProperty('hp', request()->hp);
+            }
+            if(request()->xp != 0) {
+                $student->setProperty('xp', request()->xp);
+            }
+            if(request()->gold != 0) {
+                $student->setProperty('gold', request()->gold);
+            }
+        }
+    }
+    public function massive($code)
+    {   
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $data = request()->validate([
+            'behaviour' => ['numeric', 'required'],
+            'students' => ['array', 'required'],
+        ]);
+        $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
+        foreach ($data['students'] as $id) {
+            $student = Student::find($id);
+            if($student->classroom->classroom_id != $class->id)
+                return abort('403');
+            $student->addBehaviour($behaviour->id);
+        }
+    }
     public function music()
     {
         $directory = "/music/";

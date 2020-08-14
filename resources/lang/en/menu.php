@@ -14,8 +14,13 @@ return [
     'events' => 'Events',
     'students' => 'Students',
     'groups' => 'Groups',
-    'map' => 'Map',
     'cards' => 'Cards',
+    'card' => 'Card',
+    'classcode' => 'Classroom code for join',
+    'dice' => 'Roll the dice!',
+    'music' => 'Music',
+    'countdown' => 'Count down timer',
+    'map' => 'Map',
     'levels' => 'Levels',
     'stories' => 'Stories',
     'goals' => 'Goals',
@@ -29,5 +34,8 @@ return [
     'behaviours' => 'Behaviours',
     'rewards' => 'Rewards',
     'licenses' => 'Licenses',
+    'noise' => 'Noise meter',
+    'badges' => 'Badges',
+    'massive' => 'Massive actions',
 
 ];

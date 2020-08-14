@@ -4,15 +4,15 @@
       <input :value="csrfToken" type="hidden" name="_token" />
       <div class="has-padding-4">
         <div>
-          <span>How many groups do you want?</span>
-          <input type="number" class="input" v-model="groupsNumber" />
+          <span class="has-margin-y-2">{{ trans.get('groups.number_groups') }}</span>
+          <input type="number" class="input has-margin-top-3" v-model="groupsNumber" />
         </div>
-        <button class="button is-primary has-margin-top-3">Create</button>
+        <button class="button is-primary has-margin-top-3">{{ trans.get('groups.create') }}</button>
       </div>
     </form>
     <div v-if="groups.length">
-      <button class="button is-link" @click="createGroups(1)">Create new Group</button>
-      <button class="button is-primary" @click="editGroups=!editGroups">Edit Groups</button>
+      <button class="button is-link" @click="createGroups(1)">{{ trans.get('groups.new_group') }}</button>
+      <button class="button is-primary" @click="editGroups=!editGroups">{{ trans.get('groups.edit_groups') }}</button>
       <drag-drop
         v-if="!editGroups"
         :dropzones="dropGroups"
@@ -103,7 +103,15 @@ export default {
           _method: "patch",
           dropGroups: this.dropGroups
         })
-        .then(response => {});
+        .then(response => {
+          this.$toasted.show(this.trans.get('success_error.update_success'), {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: "check",
+                type: "success"
+              });
+        });
     },
     cancel() {
       location.reload();

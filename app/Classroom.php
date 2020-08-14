@@ -88,6 +88,17 @@ class Classroom extends Model
         return $this->hasMany(Event::class);
     }
 
+    public function rules() {
+        return $this->hasOne(Rules::class);
+    }
+
+    public function badges() {
+        return $this->hasMany(Badge::class);
+    }
+    public function evaluables() {
+        return $this->hasMany(Evaluable::class);
+    }
+
     public static function boot()
     {
         parent::boot();    
@@ -103,7 +114,8 @@ class Classroom extends Model
             $classroom->levels()->delete();
             $classroom->challengeGroups()->delete();
             $classroom->maps()->delete();
-
+            $classroom->rules()->delete();
+            $classroom->evaluables()->delete();
         });
     } 
 }

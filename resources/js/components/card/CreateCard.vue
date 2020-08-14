@@ -96,7 +96,7 @@
                   <div class="has-margin-top-3">
                         <label>
                             <input type="radio" class="hide-radios" v-model="type_bg" checked name="bgType" value="0">
-                            <img src="/img/cardgen/only_back_0_prev.png" v-tippy content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo">
+                            <img src="/img/cardgen/only_back_0_prev.png">
                         </label>
                         <label class="has-margin-left-2">
                             <input type="radio" class="hide-radios" v-model="type_bg" name="bgType" value="1">
@@ -339,8 +339,8 @@
             this.special = cardJson.special
             this.fullscreen = cardJson.fullscreen
             this.slot = cardJson.slot
-            this.title = cardJson.title
-            this.description = cardJson.description
+            this.title = this.trans.get(cardJson.title)
+            this.description = this.trans.get(cardJson.description)
             this.src = cardJson.src
             this.background = cardJson.background
           }

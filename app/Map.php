@@ -9,6 +9,7 @@ class Map extends Model
     protected $fillable = [
         'url',
         'classroom_id',
+        'name',
     ];
 
     public function classroom() {

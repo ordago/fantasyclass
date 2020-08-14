@@ -1,24 +1,45 @@
 <template>
   <div class="box card-shadow-s has-padding-3 has-margin-y-3">
-    <div v-if="admin">
-      <p class="has-padding-4">
-        <i class="fas fa-question-circle"></i>
-        {{ reactiveQuestion.question }}
-        <span class="tag is-dark" v-tippy :content="reactiveQuestion.stats.remainning">
-          <i class="fas fa-user"></i>
-          {{ reactiveQuestion.stats.answered }} /
-          <i class="fas fa-user-slash"></i>
-          {{ reactiveQuestion.stats.remainning.length }}
-        </span>
-        <span class="tag is-success" v-if="reactiveQuestion.stats.answeredOK.length" v-tippy :content="reactiveQuestion.stats.answeredOK">
-          <i class="fas fa-check"></i>
-          {{ reactiveQuestion.stats.answeredOK.length }}
-        </span>
-        <span class="tag is-danger" v-if="reactiveQuestion.stats.answeredKO.length" v-tippy :content="reactiveQuestion.stats.answeredKO">
-          <i class="fas fa-times"></i>
-          {{ reactiveQuestion.stats.answeredKO.length }}
-        </span>
-      </p>
+    <div v-if="admin" class="columns">
+      <div class="column">
+        <p class="has-padding-4">
+          <i class="fas fa-question-circle"></i>
+          {{ reactiveQuestion.question }}
+          <span
+            class="tag is-dark"
+            v-tippy
+            :content="reactiveQuestion.stats.remainning"
+          >
+            <i class="fas fa-user"></i>
+            {{ reactiveQuestion.stats.answered }} /
+            <i class="fas fa-user-slash"></i>
+            {{ reactiveQuestion.stats.remainning.length }}
+          </span>
+          <span
+            class="tag is-success"
+            v-if="reactiveQuestion.stats.answeredOK.length"
+            v-tippy
+            :content="reactiveQuestion.stats.answeredOK"
+          >
+            <i class="fas fa-check"></i>
+            {{ reactiveQuestion.stats.answeredOK.length }}
+          </span>
+          <span
+            class="tag is-danger"
+            v-if="reactiveQuestion.stats.answeredKO.length"
+            v-tippy
+            :content="reactiveQuestion.stats.answeredKO"
+          >
+            <i class="fas fa-times"></i>
+            {{ reactiveQuestion.stats.answeredKO.length }}
+          </span>
+        </p>
+      </div>
+      <div class="column is-narrow" v-if="admin">
+        <button class="button is-danger" @click="confirmDelete(reactiveQuestion.id, index)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
     </div>
     <div v-if="!admin">
       <h3 class="has-padding-4">
@@ -53,7 +74,7 @@
 import confetti from "canvas-confetti";
 
 export default {
-  props: ["question", "admin"],
+  props: ["question", "admin", "index"],
   created: function() {
     this.reactiveQuestion = this.question;
   },
@@ -63,6 +84,27 @@ export default {
     };
   },
   methods: {
+    confirmDelete(id, index) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/challenge/question/" + id).then(response => {
+            if (response.data === 1) {
+              this.$parent.challenge.stats.splice(index, 1);
+              // this.$forceUpdate();
+            }
+          });
+        }
+      });
+    },
     answerQuestion(answer) {
       axios
         .post("/classroom/question/answer", {

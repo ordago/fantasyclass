@@ -17,6 +17,7 @@ class CreateMapsTable extends Migration
             $table->id();   
             $table->string('url');   
             $table->unsignedBigInteger('classroom_id');   
+            $table->string('name');
             $table->timestamps();
         });
     }

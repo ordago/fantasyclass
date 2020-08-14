@@ -2,23 +2,23 @@
   <div class="w-100">
     <form action="#" method="post" @submit.prevent="createChallenge">
       <div class="field w-100">
-        <label class="label">Title *</label>
+        <label class="label">{{ trans.get('challenges.title') }} *</label>
         <div class="control">
           <input class="input" type="text" v-model="challenge.title" required placeholder />
         </div>
       </div>
       <div class="field w-100">
-        <label class="label">Description</label>
+        <label class="label">{{ trans.get('challenges.description')}}</label>
         <div class="control">
           <input
             class="input"
             v-model="challenge.description"
             type="text"
-            placeholder="This is real world info. E.g. Trigonometry test"
+            :placeholder="trans.get('challenges.description_info')"
           />
         </div>
       </div>
-      <b-field label="Password">
+      <!-- <b-field label="Password">
         <b-input
           type="password"
           icon-pack="fas"
@@ -26,10 +26,10 @@
           v-model="challenge.password"
           password-reveal
         ></b-input>
-      </b-field>
+      </b-field> -->
       <div class="w-100">
         <b-field label="When it will be visible?">
-          <b-datetimepicker v-model="datepicker" placeholder="Click to select..." icon-pack="fa">
+          <b-datetimepicker v-model="datepicker" :placeholder="trans.get('challenges.click_select')" icon-pack="fa">
             <template slot="left">
               <button class="button is-primary" @click="datetime = new Date()">
                 <b-icon icon="clock"></b-icon>
@@ -46,9 +46,9 @@
         </b-field>
       </div>
       <div class="field w-100 has-padding-top-3">
-        <label class="label">Content</label>
+        <label class="label">{{ trans.get('challenges.content') }}</label>
         <div class="control content" data-app>
-          <editor :code="code"></editor>
+          <Editor :code="code"></Editor>
         </div>
       </div>
       <div class="field">
@@ -57,11 +57,11 @@
           v-model="challenge.is_conquer"
           true-value="1"
           false-value="0"
-        >Is a conquer challenge?</b-switch>
+        >{{ trans.get('challenges.conquer') }}</b-switch>
       </div>
       <div v-if="challenge.is_conquer==1" class="has-padding-4 has-border rounded">
         <div class="field w-100 has-padding-top-3">
-          <label class="label">Icon</label>
+          <label class="label">{{ trans.get('challenges.icon') }}</label>
           <div class="field has-addons">
             <p class="control">
               <icon-selector></icon-selector>
@@ -88,7 +88,7 @@
             </p>
           </div>
         </div>
-        <label class="label">Rewards</label>
+        <label class="label">{{ trans.get('challenges.rewards') }}</label>
         <div class="columns">
           <div class="column">
             <div class="field has-addons">
@@ -163,7 +163,7 @@
             true-value="1"
             false-value="0"
             v-if="challenge.cards>0"
-          >Auto-assign cards?</b-switch>
+          >{{ trans.get('challenges.auto_assign') }}</b-switch>
         </div>
         <div class="field">
           <b-switch
@@ -171,16 +171,16 @@
             v-model="challenge.type"
             true-value="1"
             false-value="0"
-          >Group challenge</b-switch>
+          >{{ trans.get('challenges.group') }}</b-switch>
         </div>
-        <div class="field">
+        <!-- <div class="field">
           <b-switch
             type="is-info"
             v-model="challenge.optional"
             true-value="1"
             false-value="0"
-          >Optional</b-switch>
-        </div>
+          >{{ trans.get('challenges.optional') }}</b-switch>
+        </div> -->
       </div>
       <button
         type="submit"
@@ -196,6 +196,9 @@
   </div>
 </template>
 <script>
+const Editor =
+        () => import('../utils/Editor.vue');
+
 export default {
   props: ["challengegroup", "code", "iconPrev", "edit", "groups"],
   mounted: function() {
@@ -282,7 +285,9 @@ export default {
       return dt.toLocaleDateString("es-ES", dateoptions);
     }
   },
-  components: {},
+  components: {
+    Editor,
+  },
 
   computed: {}
 };

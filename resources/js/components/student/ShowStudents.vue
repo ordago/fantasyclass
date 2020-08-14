@@ -1,13 +1,13 @@
 <template>
   <div>
     <div
-      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2"
+      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2 has-margin-left-0"
       id="utilities"
     >
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
       </div>
-      <div class="column is-flex">
+      <div class="column has-padding-x-0 is-flex">
         <a
           class="link outer_glow has-text-dark has-padding-x-2"
           v-tippy
@@ -18,7 +18,7 @@
         </a>
         <div class="dropdown is-hoverable" style="display:inline-block">
           <span
-            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-right-2 has-padding-left-3"
+            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
           >
             <i class="fad fa-random outer_glow" style="font-size:2em;"></i>
             <span class="icon is-small">
@@ -29,19 +29,27 @@
           <div class="dropdown-menu has-background-white rounded has-padding-3">
             <a class="dropdown-item" :href="'/classroom/' + classroom.code + '/event/random'">
               <i class="fad fa-scroll-old has-margin-right-2"></i>
-              Random {{ trans.get('menu.events') }}
+              Random: {{ trans.get('menu.events') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a class="dropdown-item" @click="randomStudents" v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
-              Random {{ trans.get('menu.students') }}
+              Random: {{ trans.get('menu.students') }}
             </a>
-            <a class="dropdown-item" @click="randomStudents">
+            <a
+              class="dropdown-item"
+              @click="randomGroups"
+              v-if="classroom.grouping[0].groups.length > 0"
+            >
               <i class="fad fa-users has-margin-right-2"></i>
-              Random {{ trans.get('menu.groups') }}
+              Random: {{ trans.get('menu.groups') }}
             </a>
-            <a class="dropdown-item" @click="getRandomCard">
+            <a
+              class="dropdown-item"
+              @click="getRandomCard"
+              v-if="students.length || classroom.grouping[0].groups.length"
+            >
               <i class="fad fa-club has-margin-right-2"></i>
-              Random {{ trans.get('menu.card') }}
+              Random: {{ trans.get('menu.card') }}
             </a>
           </div>
         </div>
@@ -53,32 +61,52 @@
         >
           <i class="fad fa-qrcode outer_glow" style="font-size:2em;"></i>
         </a>
-        <span class="link outer_glow cursor-pointer" @click="rollTheDice">
+        <span
+          class="link outer_glow cursor-pointer"
+          @click="rollTheDice"
+          v-tippy
+          :content="trans.get('menu.dice')"
+        >
           <i class="fad fa-dice" style="font-size:2em;"></i>
         </span>
         <a
           href="/utils/music"
           target="_blank"
-          class="link outer_glow has-margin-x-2 cursor-pointer has-text-dark"
+          v-tippy
+          :content="trans.get('menu.music')"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
         >
           <i class="fad fa-music outer_glow" style="font-size:2em;"></i>
         </a>
         <span
-          class="link outer_glow has-margin-x-2 cursor-pointer"
+          class="link outer_glow has-padding-x-2 cursor-pointer"
+          v-tippy
+          :content="trans.get('menu.countdown')"
           @click="isCountDownModalActive=true"
         >
           <i class="fad fa-stopwatch outer_glow" style="font-size:2em;"></i>
         </span>
-        <span class="link outer_glow has-margin-x-2 cursor-pointer">
+        <a
+          :href="'/classroom/' + classroom.code + '/utils/meter'"
+          target="_blank"
+          v-tippy
+          :content="trans.get('menu.noise')"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+        >
+          <i class="fad fa-microphone outer_glow" style="font-size:2em;"></i>
+        </a>
+        <a
+          @click="isMassiveModalActive = true"
+          v-tippy
+          :content="trans.get('menu.massive')"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+        >
           <i class="fad fa-poll-people" style="font-size: 2em;"></i>
-        </span>
+        </a>
       </div>
       <!--<span class="link outer_glow"><i class="fad fa-chart-pie" style="font-size:2em;"></i></span>
         <span class="lin
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
-        <span class="link outer_glow" ><i class="fad fa-microphone outer_glow" style="font-size:2em;"></i></span>
-        <span class="link outer_glow" data-action='randomStudent'><i class="fad fa-user outer_glow" style="font-size:2em;" ></i></span>
-        <span class="link outer_glow" data-action='randomGroup'><i class="fad fa-users outer_glow" style="font-size:2em;"></i></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
@@ -145,7 +173,10 @@
             class="card-image card-shadow-s rounded-top char-bg"
             :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
           >
-            <div class="character-container character character-small is-relative">
+            <div
+              v-if="classroom.character_theme != 0"
+              class="character-container character character-small is-relative"
+            >
               <img
                 :src="'/img/character/' + element.src"
                 :class="element.classes"
@@ -153,10 +184,13 @@
                 v-bind:key="element.id"
               />
             </div>
+            <div v-else class="is-flex has-all-centered has-padding-y-3">
+              <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
+            </div>
           </div>
           <div class="card-content">
             <div class="media has-margin-bottom-0">
-              <div class="media-left">
+              <div class="media-left" v-if="classroom.character_theme != 0">
                 <figure class="image is-48x48">
                   <img :src="student.avatar" class="rounded" alt />
                 </figure>
@@ -196,7 +230,7 @@
                     <button
                       v-for="behaviour in mainBehavioursJson"
                       v-tippy
-                      :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 has-padding-x-4 is-light"
                       @click="addBehaviour(student.id, behaviour.id)"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -225,7 +259,7 @@
                     <button
                       v-for="behaviour in otherBehavioursJson"
                       v-tippy
-                      :content="behaviour.name + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
+                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
                       class="button has-margin-1 is-light has-padding-x-4"
                       v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
                       v-bind:key="behaviour.id"
@@ -368,10 +402,13 @@
         </div>
       </div>
       <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
-        <div class="box card-shadow-s is-flex has-background-link has-all-centered">
+        <div
+          class="box card-shadow-s is-flex has-background-link has-all-centered"
+          style="min-height: 160px"
+        >
           <a :href="'/classroom/' + classroom.code + '/students/add'" style="color: white">
             <img src="/img/new_std.svg" class="has-margin-left-1" />
-            <strong>Add students</strong>
+            <strong>{{ trans.get('users_groups.add_students') }}</strong>
           </a>
         </div>
       </div>
@@ -402,11 +439,41 @@
       scroll="keep"
       class="has-text-centered"
     >
-      <show-student :student="currentStudent" :theme="classroom.theme"></show-student>
+      <show-student
+        :character-theme="classroom.character_theme"
+        :student="currentStudent"
+        :theme="classroom.theme"
+      ></show-student>
       <button
         class="button is-link has-margin-2"
         v-if="shuffledStudents && shuffledStudents.length"
         @click="currentStudent = shuffledStudents.shift()"
+      >
+        <i class="fad fa-random"></i>
+      </button>
+    </b-modal>
+    <b-modal
+      :active.sync="isRandomGroupActive"
+      :width="640"
+      scroll="keep"
+      class="has-text-centered has-background-light"
+    >
+      <div class="columns has-background-light rounded has-padding-2">
+        <div class="column is-narrow is-flex has-all-centered">
+          <img :src="currentGroup.logo" v-if="isRandomGroupActive && currentGroup.logo" />
+        </div>
+        <div class="column is-flex has-all-centered">
+          <h1
+            class="is-size-1 has-padding-4 has-margin-3"
+            v-if="isRandomGroupActive"
+          >{{ currentGroup.name }}</h1>
+        </div>
+      </div>
+
+      <button
+        class="button is-link has-margin-2"
+        v-if="shuffledGroups && shuffledGroups.length"
+        @click="currentGroup = shuffledGroups.shift()"
       >
         <i class="fad fa-random"></i>
       </button>
@@ -499,6 +566,9 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal :active.sync="isMassiveModalActive" has-modal-card full-screen>
+      <massive-actions :classroom="classroom"></massive-actions>
+    </b-modal>
   </div>
 </template>
 
@@ -509,11 +579,15 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom"],
   mounted() {
-    let orderedBehaviours =  _.orderBy(this.classroom.behaviours, "count_number", "desc")
-    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems)
-    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems)
-    this.sortKey = $cookies.get("order") ?? "name"
-    this.viewGrid = $cookies.get("viewGrid") ?? 0
+    let orderedBehaviours = _.orderBy(
+      this.classroom.behaviours,
+      "count_number",
+      "desc"
+    );
+    this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems);
+    this.otherBehavioursJson = orderedBehaviours.slice(this.numItems);
+    this.sortKey = $cookies.get("order") ?? "name";
+    this.viewGrid = $cookies.get("viewGrid") ?? 0;
   },
   data: function() {
     return {
@@ -527,18 +601,21 @@ export default {
       show2l: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
+      isRandomGroupActive: false,
       isCardModalActive: false,
       isCountDownModalActive: false,
+      isMassiveModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,
       shuffledStudents: null,
+      shuffledGroups: null,
       diceUrl: "",
       randomCard: null,
       showCard: false,
       studentSelected: 0,
       groupSelected: 0,
-      event: null,
+      event: null
     };
   },
   methods: {
@@ -626,13 +703,15 @@ export default {
       this.diceUrl = "/dice/dice?notation=1d6&roll";
       this.dice = true;
     },
-    // randomEvent() {
-    //   window.open('/classroom/' + this.classroom.code + '/event/random', "", "width="+screen.availWidth+",height="+screen.availHeight);
-    // },
     randomStudents() {
       this.shuffledStudents = _.shuffle(this.students);
       this.currentStudent = this.shuffledStudents.shift();
       this.isRandomStudentActive = true;
+    },
+    randomGroups() {
+      this.shuffledGroups = _.shuffle(this.classroom.grouping[0].groups);
+      this.currentGroup = this.shuffledGroups.shift();
+      this.isRandomGroupActive = true;
     },
     getRandomCard() {
       axios

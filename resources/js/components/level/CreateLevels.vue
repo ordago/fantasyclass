@@ -4,20 +4,20 @@
         <div class="has-padding-4">
             <div>
                 <span>
-                    How many levels do you want?
+                    {{ trans.get('levels.number_levels') }}
                 </span> 
                 <input type="number" class="input" name="levels" value="10">
             </div>
             <div class="has-margin-top-4">
                 <span>
-                    Increment in XP
+                    {{ trans.get('levels.xp_increment') }}
                 </span> 
                 <input type="number" name="increment" class="input" value="100">
                 <small>
-                    Don't worry, you will be able to change this.
+                    {{ trans.get('levels.increment_info') }}
                 </small>
             </div>
-            <button class="button is-primary has-margin-top-3">Create</button>
+            <button class="button is-primary has-margin-top-3">{{ trans.get('levels.create') }}</button>
         </div>
     </form>
 </template>

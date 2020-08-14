@@ -11,21 +11,49 @@
     <title>{{ config('app.name', 'FantasyClass') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
     <!-- Mobile -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
 
     <script src="/js/pace.min.js"></script>
+
+    <!-- PWA -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="FantasyClass">
+    <meta name="application-name" content="FantasyClass">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <script type="text/javascript">
+        // Initialize the service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/serviceworker.js', {
+                scope: '/'
+            }).then(function(registration) {
+                // Registration was successful
+                console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
 
 </head>
 
@@ -61,7 +89,11 @@
                             <div class="dropdown-trigger">
                                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
                                     <span>
+                                        @if(Auth::user()->is_student == 0)
                                         <i class="fas fa-user-graduate"></i>
+                                        @else
+                                        <i class="fas fa-user"></i>
+                                        @endif
                                         <span class="pl-2 text-light cursor-default">
                                             {{ Str::limit(Auth::user()->username, 8, $end='...') }}
                                         </span>
@@ -97,6 +129,14 @@
         </nav>
         @endauth
 
+        <div id="prompt" class="prompt  has-background-light border-top" style="display: none;">
+            <div class="font-weight-bold">Add to Home screen</div>
+            <small>This app can be installed in your home screen</small>
+            <div class="text-right">
+                <button id="buttonCancel" type="button" class="font-weight-bold text-muted btn-sm btn btn-link">CANCEL</button>
+                <button id="buttonAdd" type="button" class="font-weight-bold text-primary btn-sm btn btn-link">ADD</button>
+            </div>
+        </div>
         <main class="main-content has-padding-3">
             @yield('content')
         </main>

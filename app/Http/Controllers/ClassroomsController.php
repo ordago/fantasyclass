@@ -13,6 +13,7 @@ use App\Grouping;
 use App\Theme;
 use App\Item;
 use App\QuestionBank;
+use App\Rules;
 use App\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -143,6 +144,11 @@ class ClassroomsController extends Controller
         Grouping::create([
             'name' => 'General',
             'classroom_id' => $classroom->id,
+        ]);
+        
+        Rules::create([
+            'classroom_id' => $classroom->id,
+            'content' => file_get_contents(public_path() . '/rules/' . auth()->user()->locale . '.txt')
         ]);
 
         auth()->user()->classrooms()->attach([

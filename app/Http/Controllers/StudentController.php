@@ -6,7 +6,6 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
-use App\LogEntry;
 use App\Student;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -40,6 +39,8 @@ class StudentController extends Controller
             return false;
         foreach ($request->students as $student) {
             $pass = '';
+            if (strlen($student['name']) < 4)
+                return false;
             if ($student['email'] && $student['username']) {
                 $id = User::select('id')
                     ->where('email', $student['email'])
@@ -47,7 +48,7 @@ class StudentController extends Controller
                     ->first()['id'];
             } else {
                 $verified = null;
-                if(!$student['email']) {
+                if (!$student['email']) {
                     $verified = now();
                 }
                 $pass = strtolower(Str::random(5));
@@ -58,9 +59,10 @@ class StudentController extends Controller
                     'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
                     'is_student' => 1,
+                    'locale' => auth()->user()->locale,
                 ]);
                 $id = $user->id;
-                if($student['email'])
+                if ($student['email'])
                     $user->sendEmailVerificationNotification();
             }
             try {
@@ -85,17 +87,24 @@ class StudentController extends Controller
                 ->get()
                 ->first();
 
+            if (!$class->characterTheme) {
+                $charId = 0;
+            } else {
+                $charId = $class->characterTheme->characters->random(1)->first()->id;
+            }
 
             // Create the student properties
             $student = Student::create([
                 'classroom_user_id' => $cuid->id,
                 'name' => $student['name'],
-                'character_id' => Classroom::findOrFail($classId)->characterTheme->characters->random(1)->first()->id,
+                'character_id' => $charId,
                 'password_plain' => $pass,
             ]);
 
-            // Assign basic equipment        
-            $student->setBasicEquipment();
+            if ($class->characterTheme) {
+                // Assign basic equipment        
+                $student->setBasicEquipment();
+            }
         }
         if (isset($error) && count($error))
             return $error;
@@ -111,43 +120,31 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
-    public static function getRandomStudent($class) {
+    public static function getRandomStudent($class)
+    {
 
         return $class->students->random(1)->first();
-
     }
 
     public function addBehaviour()
     {
         $data = request()->all();
         $student = Student::where('id', '=', $data['id'])->first();
-        
+
         $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
 
-        $behaviour = Behaviour::findOrFail($data['behaviour']);
-        $behaviour->update(['count_number' => $behaviour->count_number + 1]);
-        $student->behaviours()->attach($data['behaviour']);
-        $valHp = $student->setProperty('hp', $behaviour->hp);
-        $valXp = $student->setProperty('xp', $behaviour->xp);
-        $valGold = $student->setProperty('gold', $behaviour->gold);
-
-        return [
-            'hp' => $valHp,
-            'xp' => $valXp,
-            'gold' => $valGold,
-            'level' => $student->getLevelAttribute(),
-        ];
+        return $student->addBehaviour($data['behaviour']);
     }
 
     public function show($code, $id)
     {
-        $student = Student::where('id', $id)->with(['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
+        $student = Student::where('id', $id)->with(['equipment', 'badges', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
 
         if ($student->classroom->classroom->code != $code)
             abort(404);
         $admin = true;
-        $class = Classroom::where('code', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('badges', 'theme', 'characterTheme.characters')->firstOrFail();
         $this->authorize('view', $class);
 
         $items = DB::table('students')
@@ -161,16 +158,16 @@ class StudentController extends Controller
             })
             ->selectRaw('students.id, items.id, icon, IFNULL(item_student.count, 0) as count')
             ->get();
-        
+
         $challenges = DB::table('students')
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
-            ->whereIn('challenges.id', function($query) use ($class){
+            ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
-                ->from('challenges')
-                ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
-                ->where('challenges_groups.classroom_id', '=', $class->id)
-                ->get();
+                    ->from('challenges')
+                    ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
+                    ->where('challenges_groups.classroom_id', '=', $class->id)
+                    ->get();
             })
             ->where('students.id', '=', $student->id)
             ->select('*')
@@ -181,36 +178,82 @@ class StudentController extends Controller
             ->select('*')
             ->get();
 
-            $cards = $student->cards;
+        $cards = $student->cards;
+        $student->append('boost');
 
         return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards'));
     }
 
+    public function deleteLog(Request $request)
+    {
+
+        
+        $student = Student::findOrFail($request->student);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
+
+        $item = DB::table("log_entries")
+            ->where('type', $request->row['type'])
+            ->where('student_id', '=', $student->id)
+            ->where('value', '>=', $request->row['value'])
+            ->where('created_at', '>=', $request->date)
+            ->orderBy('created_at')
+            ->take(1)
+            ->delete();
+            // ->get();
+
+            $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
+        
+    }
+    public function deleteBehaviour(Request $request)
+    {
+
+        $student = Student::findOrFail($request->student);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
+
+        DB::table($student->behaviours()->getTable())
+            ->where('behaviour_id', $request->row['id'])
+            ->where('student_id', '=', $student->id)
+            ->where('created_at', '>=', $request->date)
+            ->orderBy('created_at')
+            ->take(1)
+            ->delete();
+            // ->get();
+        
+            return $student->fresh()->behaviours;
+    }
+    public function updateName(Request $request)
+    {
+        $student = Student::findOrFail($request->id);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
+
+        $data = $request->validate([
+            'name' => ['string', 'required', 'min:4']
+        ]);
+        $student->update(['name' => $data['name']]);
+
+    }
     public function update(Request $request)
     {
-        if($request->id) {
+        if ($request->id) {
             $student = Student::findOrFail($request->id);
             $class = Classroom::where('id', $student->classroom->classroom->id)->first();
             $this->authorize('update', $class);
-            if($request->card_id) {
+            if ($request->card_id) {
                 $student->cards()->attach($request->card_id);
                 return true;
             } else {
-                LogEntry::create([
-                    'type' => $request->prop,
-                    'value' => $request->value,
-                    'student_id' => $student->id,
-                    ]);
-                    return $student->setProperty($request->prop, $request->value);
+                return $student->setProperty($request->prop, $request->value, true);
             }
-            } else {
-                $class = Classroom::where('code', $request->code)->first();
-                $this->authorize('update', $class);
-                foreach ($class->students as $student) {
-                    $student->setProperty($request->prop, $request->value);
-                }
-                
+        } else {
+            $class = Classroom::where('code', $request->code)->first();
+            $this->authorize('update', $class);
+            foreach ($class->students as $student) {
+                $student->setProperty($request->prop, $request->value, true);
             }
+        }
     }
 
     public function changeCharacter($code)

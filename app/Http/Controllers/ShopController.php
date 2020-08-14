@@ -25,8 +25,9 @@ class ShopController extends Controller
             'equipment_2_visibility' => settings()->get('equipment_2_visibility', false) ? true : false,
             'equipment_3_visibility' => settings()->get('equipment_3_visibility', false) ? true : false,
         ]);
+        $character = $class->character_theme;
         $items = $class->items;
-        return view('shop.index', compact('class', 'config', 'items'));
+        return view('shop.index', compact('class', 'config', 'items', 'character'));
     }
 
     public function create($code)

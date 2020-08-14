@@ -1,15 +1,15 @@
 <template>
   <div class="card rounded card-shadow-s">
-    <span
-      class="level-top rounded has-padding-4 has-background-light"
-      v-if="student.level"
-    >{{ student.level.number }}</span>
+    <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
+      <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
+      {{ student.level.number }}
+    </span>
 
     <div
       class="card-image card-shadow-s rounded-top char-bg"
       :style="'background-color:' + theme.color + ';background-image: url(/img/bg/thumb_' + theme.name + ');'"
     >
-      <div class="character-container character character-small is-relative">
+      <div v-if="characterTheme" class="character-container character character-small is-relative">
         <img
           :src="'/img/character/' + element.src"
           :class="element.classes"
@@ -17,10 +17,13 @@
           v-bind:key="element.id"
         />
       </div>
+      <div v-else class="is-flex has-all-centered has-padding-y-3">
+        <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
+      </div>
     </div>
     <div class="card-content">
       <div class="media has-margin-bottom-0">
-        <div class="media-left">
+        <div class="media-left" v-if="characterTheme">
           <figure class="image is-48x48">
             <img :src="student.avatar" class="rounded" alt />
           </figure>
@@ -32,9 +35,9 @@
             :v-tippy="student.group"
             v-tippy
             :content="'Proud member 😄 <br><img src=' + student.groups[0].logo + '>'"
-            v-if="student.groups.length"
+            v-if="student.groups && student.groups.length"
           >
-            <small v-if="student.groups.length">
+            <small v-if="student.groups && student.groups.length">
               <i class="fas fa-users"></i>
               {{ student.groups[0].name }}
             </small>
@@ -118,7 +121,7 @@
 
 <script>
 export default {
-  props: ["student", "theme"],
+  props: ["student", "theme", "characterTheme"],
   mounted() {},
   data: function() {
     return {};

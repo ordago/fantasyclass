@@ -28,6 +28,7 @@ em {
 
 body {
     font-family: Georgia;
+    overflow-y: auto!important;
 }
 
 h6 {
