@@ -44,7 +44,6 @@ import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
 Vue.use(Croppa)
 
-
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
 Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.vue').default);
@@ -93,8 +92,9 @@ Vue.component('show-event', require('./components/event/ShowEvent.vue').default)
 
 Vue.component('edit-rules', require('./components/rules/EditRules.vue').default);
 
-Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
+Vue.component('profile', require('./components/profile/Profile.vue').default);
 
+Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
 Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
 Vue.component('rubric-create', require('./components/evaluation/RubricCreate.vue').default);
 

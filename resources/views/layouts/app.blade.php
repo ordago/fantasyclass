@@ -57,7 +57,7 @@
 
 </head>
 
-<body @if(!isset($class) && !isset($themes)) class="has-background-info" @else class="has-background-white-ter" @endif @yield('bg', '' )>
+<body @if(!isset($class) && !isset($themes) && !isset($profile)) class="has-background-info" @else class="has-background-white-ter" @endif @yield('bg', '' )>
     <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
         <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation" @yield('navbarhide')>
@@ -106,10 +106,10 @@
                             <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
                                     <span href="#" class="dropdown-item">
-                                        {{ Auth::user()->username }}
+                                        {{ Auth::user()->name }}
                                     </span>
                                     <hr class="dropdown-divider">
-                                    <a class="dropdown-item" href="/preferences">
+                                    <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
