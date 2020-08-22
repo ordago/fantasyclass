@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Evaluable;
 use App\Rubric;
+use App\Student;
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EvaluationController extends Controller
 {
@@ -26,6 +28,62 @@ class EvaluationController extends Controller
         return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines'));
     }
 
+    public function evaluate($id)
+    {
+        $evaluable = Evaluable::findOrFail($id);
+        $class = Classroom::where('id', $evaluable->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+
+        foreach(request()->grades as $grades) {
+            
+            $student = Student::find($grades['id']);
+            if($student->classroom->classroom_id != $class->id)
+                return false;
+            
+            $student->grades()->syncWithoutDetaching(array($evaluable->id => array('grade' => $grades['grade'], 'feedback' => $grades['feedback'] )));
+        }
+
+    }
+    public function grade($id)
+    {
+        $evaluable = Evaluable::findOrFail($id);
+        $class = Classroom::where('id', $evaluable->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $rubric = null;
+        if($evaluable->type == 1)
+            $rubric = Rubric::where('id', $evaluable->rubric_id)->with('rows', 'rows.items')->first();
+        
+        $students = DB::table('students')
+            ->join('classroom_user', 'students.classroom_user_id', 'classroom_user.id')
+            ->leftJoin('evaluable_student', function ($join) use ($id) {
+                $join->on('students.id', '=', 'evaluable_student.student_id')
+                    ->where('evaluable_student.evaluable_id', '=', $id);
+            })
+            ->leftJoin('evaluables', function ($join) use ($id) {
+                $join->on('evaluables.id', '=', 'evaluable_student.evaluable_id')
+                    ->where('evaluables.id', '=', $id);
+            })
+            ->where('classroom_user.classroom_id', $class->id)
+            ->selectRaw('students.id, students.name, evaluable_student.grade, evaluable_student.feedback')
+            ->get();
+
+        return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric'));
+    }
+    public function getRubric()
+    {
+
+        // $data = request()->validate([
+        //     'student' => ['numeric', 'required'],
+        //     'rubric' => ['numeric', 'required'],
+        // ]);
+
+        // $student = Student::find($data['student']);
+        // $rubric = Rubric::find($data['rubric']);
+
+
+    }
+
     public function store($code)
     {
         $class = Classroom::where('code', $code)->firstOrFail();
@@ -37,7 +95,7 @@ class EvaluationController extends Controller
             'description' => ['required', 'string'],
             'type' => ['required', 'numeric'],
             'rubric' => ['nullable', 'numeric'],
-            ]);
+        ]);
 
         $evaluable = Evaluable::create([
             'description' => $data['description'],

@@ -104,7 +104,7 @@ class RubricController extends Controller
                 'optional' => $row['optional'],
             ]);
 
-            foreach ($row['columns'] as $column) {
+            foreach ($row['items'] as $column) {
                 RubricRowItem::create([
                     'rubric_row_id' => $createdRow->id,
                     'description' => $column['description'],

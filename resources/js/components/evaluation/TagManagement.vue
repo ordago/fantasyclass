@@ -44,29 +44,57 @@
       >Add evaluation line</button>
     </div>
     <div class="has-margin-3">
-      <b-table v-if="linesReactive.length"
-            :data="linesReactive"
-            icon-pack="fas"
-            cell-class="align-right"
-            sort-icon="arrow-up"
-            >
-            <template slot-scope="props">
-                <b-table-column field="Description" :label="trans.get('maps.name')" sortable>
-                    {{ props.row.description }}
-                </b-table-column>
+      <b-table
+        v-if="linesReactive.length"
+        :data="linesReactive"
+        icon-pack="fas"
+        cell-class="align-right"
+        sort-icon="arrow-up"
+      >
+        <template slot-scope="props">
+          <b-table-column
+            field="Description"
+            :label="trans.get('maps.name')"
+            sortable
+          >{{ props.row.description }}</b-table-column>
 
-                <b-table-column field="Tags" label="Url" sortable>
-                    <span class="tag is-dark has-margin-right-2" v-for="tag in props.row.tags" :key="tag.id">{{ tag.short }}</span>
-                </b-table-column>
-                
-                <b-table-column field="settings" :label="trans.get('menu.settings')" centered class="w-100 is-flex has-all-centered">
-                    <b-button v-tippy :content="trans.get('maps.preview')" type="is-dark is-small has-margin-right-3">Grade</b-button>
-                    <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + classroom.code + '/maps/' + props.row.id" class="button is-info is-small has-margin-right-3"><i class="fas fa-edit"></i></a>
-                    <b-button v-tippy :content="trans.get('general.delete')" type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
-                </b-table-column>
-                
-            </template>
-        </b-table>
+          <b-table-column field="Tags" label="Url" sortable>
+            <span
+              class="tag is-dark has-margin-right-2"
+              v-for="tag in props.row.tags"
+              :key="tag.id"
+            >{{ tag.short }}</span>
+          </b-table-column>
+
+          <b-table-column
+            field="settings"
+            :label="trans.get('menu.settings')"
+            centered
+            class="w-100 is-flex has-all-centered"
+          >
+            <a
+              :href="'/classroom/evaluation/' + props.row.id + '/grade'"
+              class="button is-dark is-small has-margin-right-3"
+            >Grade</a>
+            <a
+              v-tippy
+              :content="trans.get('general.edit')"
+              :href="'/classroom/' + classroom.code + '/maps/' + props.row.id"
+              class="button is-info is-small has-margin-right-3"
+            >
+              <i class="fas fa-edit"></i>
+            </a>
+            <b-button
+              v-tippy
+              :content="trans.get('general.delete')"
+              type="is-danger is-small"
+              @click="confirmDelete(props.row.id)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </b-button>
+          </b-table-column>
+        </template>
+      </b-table>
     </div>
 
     <b-modal
@@ -204,6 +232,7 @@ export default {
       tagsReactive: null,
       isTagModalActive: false,
       isLineModalActive: false,
+      isGradeModalActive: false,
       linesReactive: [],
       tag: {
         short: "",

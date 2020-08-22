@@ -14,11 +14,16 @@ class Evaluable extends Model
         'challenge_id',
     ];
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsToMany(Tag::class)->withPivot('weight');
     }
-    public function classroom() {
+    public function classroom()
+    {
         return $this->belongsTo(Classroom::class);
     }
-
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)->withPivot('grade', 'feedback');
+    }
 }

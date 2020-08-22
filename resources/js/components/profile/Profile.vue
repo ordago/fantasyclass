@@ -120,16 +120,17 @@ export default {
       axios
         .patch("/profile/update", this.$data)
         .then((response) => {
-          this.$toasted.show("success", {
+          this.$toasted.show(this.trans.get('profile.update_success'), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",
             icon: "check",
             type: "success",
           });
+          location.reload()
         })
         .catch((error) => {
-          this.$toasted.show("Incorrect password", {
+          this.$toasted.show(this.trans.get('profile.incorrect_password'), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",

@@ -102,6 +102,10 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Badge::class);
     }
 
+    public function grades() {
+        return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback');
+    }
+
 
     public function addBehaviour($behaviourId) {
         $behaviour = Behaviour::findOrFail($behaviourId);

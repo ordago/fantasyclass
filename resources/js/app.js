@@ -95,6 +95,7 @@ Vue.component('edit-rules', require('./components/rules/EditRules.vue').default)
 Vue.component('profile', require('./components/profile/Profile.vue').default);
 
 Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
+Vue.component('grade', require('./components/evaluation/Grade.vue').default);
 Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
 Vue.component('rubric-create', require('./components/evaluation/RubricCreate.vue').default);
 
