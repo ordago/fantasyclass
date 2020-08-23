@@ -20,4 +20,9 @@ class RubricRow extends Model
     {
         return $this->belongsTo(Rubric::class);
     }
+
+    public function students()
+    {
+        return $this->belongsTo(Student::class);
+    }
 }

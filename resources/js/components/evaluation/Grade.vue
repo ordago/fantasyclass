@@ -3,7 +3,7 @@
     <form @submit.prevent="save">
       <div class="columns" v-for="student in students" :key="student.id">
         <div v-if="evaluable.type == 1" class="column is-narrow">
-          <button class="button is-info" @click.prevent="loadRubric">Rubric</button>
+          <button class="button is-info" @click.prevent="loadRubric(student)">Rubric</button>
         </div>
         <div class="column is-narrow">
           <div class="field">
@@ -56,6 +56,9 @@
                 class="rubricSubitem marginRadius"
                 v-for="item in rubricRow.items"
                 :key="item.id"
+                :row="'row' + rubricRow.id"
+                :item="'item' + item.id"
+                @click="selectItem($event.target, rubricRow.id, item)"
               >
                 <div class="rubricDetails">{{ item.description }}</div>
                 <div class="rubricScore">{{ item.points }}</div>
@@ -65,7 +68,12 @@
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="studentActive=null;showRubric=false">Close</button>
-          <input type="number" class="input has-margin-right-3" style="width: 100px;" />
+          <input
+            type="number"
+            v-model="grade"
+            class="input has-margin-right-3"
+            style="width: 100px;"
+          />
           <button class="button is-primary">Grade</button>
         </footer>
       </div>
@@ -80,16 +88,65 @@ export default {
     return {
       showRubric: false,
       studentActive: null,
+      grade: null,
     };
   },
   methods: {
-    loadRubric: function () {
-      showRubric = true;
-      studentActive = student;
-      axios.post('/classroom/student/rubric', {student: student.id, rubric: rubric.id})
-        .then(response => {
-          console.log(response)
-        })
+    selectItem: function (target, row, item) {
+      let element = document.querySelector("[item=item" + item.id + "]");
+      document
+        .querySelectorAll("[row=row" + row + "]")
+        .forEach(function (rowItem) {
+          rowItem.classList.remove("selectedSubItem");
+        });
+
+      element.classList.add("selectedSubItem");
+      this.recalculate();
+    },
+    recalculate: function () {
+      let total = 0;
+      let totalSelected = 0;
+      let totalOptional = 0;
+
+      document
+        .querySelectorAll(
+          ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
+        )
+        .forEach(function (rowItem) {
+          totalSelected += parseFloat(
+            rowItem.querySelector(".rubricScore").innerHTML
+          );
+        });
+
+      document
+        .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
+        .forEach(function (row) {
+          var max = 0;
+          row.querySelectorAll(".rubricSubitem").forEach((item) => {
+            let score = parseFloat(
+              item.querySelector(".rubricScore").innerHTML
+            );
+            if (score > max) max = score;
+          });
+          total += max
+        });
+
+        // TODO optional rows
+        // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
+        //     totalOptional += parseFloat($(this).find('.rubricScore').html());
+        // });
+
+        this.grade = Math.min(10, Math.round((totalSelected/total*10 + totalOptional) * 100) / 100)
+
+    },
+    loadRubric: function (student) {
+      this.grade = null;
+      this.showRubric = true;
+      this.studentActive = student;
+      // axios.post('/classroom/student/rubric', {student: student.id, rubric: this.rubric.id})
+      //   .then(response => {
+      //     console.log(response)
+      //   })
     },
     save: function () {
       axios
