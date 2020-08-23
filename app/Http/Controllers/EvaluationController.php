@@ -25,7 +25,14 @@ class EvaluationController extends Controller
         $tags = Tag::where('classroom_id', $class->id)->get();
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $lines = Evaluable::where('classroom_id', $class->id)->with('tags')->get();
-        return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines'));
+        
+        $settings = [];
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $settings['eval_type'] = settings()->get('eval_type', 0);
+        $settings['eval_max'] = settings()->get('eval_max', 10);
+        $settings['eval_visible'] = settings()->get('eval_visible', true);
+        
+        return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines', 'settings'));
     }
 
     public function evaluate($id)

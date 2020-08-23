@@ -7,7 +7,7 @@
       <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
         <i class="has-margin-right-2 fas fa-tasks-alt"></i> Rubric management
       </a>
-      <button class="button is-dark" @click="isTagModalActive=true">
+      <button class="button is-dark" @click="isPrefsModalActive=true">
         <i class="has-margin-right-2 fas fa-cog"></i> Preferences
       </button>
       <button class="button is-primary" @click="isTagModalActive=true">
@@ -129,6 +129,29 @@
       </form>
     </b-modal>
     <b-modal
+      :active.sync="isPrefsModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="updatePrefs">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Prefs</p>
+          </header>
+          <section class="modal-card-body">
+            
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isPrefsModalActive=false">Close</button>
+            <button class="button is-primary">Update</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+    <b-modal
       :active.sync="isLineModalActive"
       has-modal-card
       trap-focus
@@ -233,6 +256,7 @@ export default {
       isTagModalActive: false,
       isLineModalActive: false,
       isGradeModalActive: false,
+      isPrefsModalActive: false,
       linesReactive: [],
       tag: {
         short: "",
