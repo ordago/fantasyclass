@@ -23,6 +23,6 @@ class RubricRow extends Model
 
     public function students()
     {
-        return $this->belongsTo(Student::class);
+        return $this->belongsToMany(Student::class)->withPivot('rubric_row_item_id');
     }
 }

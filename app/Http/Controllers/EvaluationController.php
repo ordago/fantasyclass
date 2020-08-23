@@ -34,15 +34,14 @@ class EvaluationController extends Controller
         $class = Classroom::where('id', $evaluable->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
 
-        foreach(request()->grades as $grades) {
-            
-            $student = Student::find($grades['id']);
-            if($student->classroom->classroom_id != $class->id)
-                return false;
-            
-            $student->grades()->syncWithoutDetaching(array($evaluable->id => array('grade' => $grades['grade'], 'feedback' => $grades['feedback'] )));
-        }
+        foreach (request()->grades as $grades) {
 
+            $student = Student::find($grades['id']);
+            if ($student->classroom->classroom_id != $class->id)
+                return false;
+
+            $student->grades()->syncWithoutDetaching(array($evaluable->id => array('grade' => $grades['grade'], 'feedback' => $grades['feedback'])));
+        }
     }
     public function grade($id)
     {
@@ -51,9 +50,9 @@ class EvaluationController extends Controller
         $this->authorize('update', $class);
 
         $rubric = null;
-        if($evaluable->type == 1)
+        if ($evaluable->type == 1)
             $rubric = Rubric::where('id', $evaluable->rubric_id)->with('rows', 'rows.items')->first();
-        
+
         $students = DB::table('students')
             ->join('classroom_user', 'students.classroom_user_id', 'classroom_user.id')
             ->leftJoin('evaluable_student', function ($join) use ($id) {
@@ -70,18 +69,44 @@ class EvaluationController extends Controller
 
         return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric'));
     }
+    public function evaluateRubric()
+    {
+        $data = request()->validate([
+            'student' => ['numeric', 'required'],
+            'rows' => ['array', 'required'],
+        ]);
+
+        $student = Student::findOrFail($data['student']);
+        $class = Classroom::find($student->classroom->classroom_id);
+        $this->authorize('update', $class);
+
+        foreach ($data['rows'] as $row) {
+            $student->rows()->syncWithoutDetaching(array($row['0'] => array('rubric_row_item_id' => $row['1'])));
+        }
+    }
     public function getRubric()
     {
 
-        // $data = request()->validate([
-        //     'student' => ['numeric', 'required'],
-        //     'rubric' => ['numeric', 'required'],
-        // ]);
+        $data = request()->validate([
+            'student' => ['numeric', 'required'],
+            'rubric' => ['numeric', 'required'],
+        ]);
 
-        // $student = Student::find($data['student']);
-        // $rubric = Rubric::find($data['rubric']);
+        $student = Student::find($data['student']);
+        $class = Classroom::find($student->classroom->classroom_id);
+        $this->authorize('update', $class);
+        $rubric = Rubric::find($data['rubric']);
 
+        $rows = [];
 
+        foreach ($rubric->rows as $row) {
+            $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->first();
+            if ($rowQuery) {
+                $pivot = $rowQuery->pivot;
+                $rows[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id];
+            }
+        }
+        return $rows;
     }
 
     public function store($code)

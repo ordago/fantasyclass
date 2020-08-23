@@ -108,7 +108,7 @@ class Student extends Model implements HasMedia
 
     public function rows()
     {
-        return $this->belongsTo(RubricRow::class, 'rubric_row_id', 'id')->withPivot('item');
+        return $this->belongsToMany(RubricRow::class, 'rubric_row_student', 'student_id', 'rubric_row_id')->withPivot('rubric_row_item_id');
     }
 
     public function addBehaviour($behaviourId) {

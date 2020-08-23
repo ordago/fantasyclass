@@ -11,7 +11,7 @@
               <input
                 v-model="student.grade"
                 class="input"
-                step="0.1"
+                step="0.01"
                 type="number"
                 placeholder="Grade"
               />
@@ -29,6 +29,7 @@
         {{ trans.get('general.save') }}
       </button>
     </form>
+    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="true"></b-loading>
 
     <b-modal
       :active.sync="showRubric"
@@ -74,7 +75,7 @@
             class="input has-margin-right-3"
             style="width: 100px;"
           />
-          <button class="button is-primary">Grade</button>
+          <button class="button is-primary" @click="gradeRubric">Grade</button>
         </footer>
       </div>
     </b-modal>
@@ -89,6 +90,8 @@ export default {
       showRubric: false,
       studentActive: null,
       grade: null,
+      rowsSelected: [],
+      isLoading: false,
     };
   },
   methods: {
@@ -128,34 +131,69 @@ export default {
             );
             if (score > max) max = score;
           });
-          total += max
+          total += max;
         });
 
-        // TODO optional rows
-        // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
-        //     totalOptional += parseFloat($(this).find('.rubricScore').html());
-        // });
+      // TODO optional rows
+      // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
+      //     totalOptional += parseFloat($(this).find('.rubricScore').html());
+      // });
 
-        this.grade = Math.min(10, Math.round((totalSelected/total*10 + totalOptional) * 100) / 100)
-
+      this.grade = Math.min(
+        10,
+        Math.round(((totalSelected / total) * 10 + totalOptional) * 100) / 100
+      );
     },
     loadRubric: function (student) {
+      this.isLoading = true;
       this.grade = null;
       this.showRubric = true;
       this.studentActive = student;
-      // axios.post('/classroom/student/rubric', {student: student.id, rubric: this.rubric.id})
-      //   .then(response => {
-      //     console.log(response)
-      //   })
+
+      axios
+        .post("/classroom/evaluation/student/rubric", {
+          student: student.id,
+          rubric: this.rubric.id,
+        })
+        .then((response) => {
+          this.isLoading = false;
+          response.data.forEach((row) => {
+            document
+              .querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]")
+              .classList.add("selectedSubItem");
+            this.recalculate();
+          });
+        });
+    },
+    gradeRubric: function () {
+      var elem = this;
+      document.querySelectorAll(".selectedSubItem").forEach(function (item) {
+        elem.rowsSelected.push([
+          item.getAttribute("row").replace("row", ""),
+          item.getAttribute("item").replace("item", ""),
+        ]);
+      });
+      axios
+        .post(
+          "/classroom/evaluation/" + this.evaluable.id + "/evaluate/rubric",
+          {
+            student: this.studentActive.id,
+            rows: this.rowsSelected,
+          }
+        )
+        .then((response) => {
+          this.studentActive.grade = this.grade;
+          this.studentActive = null;
+          this.showRubric = false;
+          this.rowsSelected = [];
+        });
     },
     save: function () {
       axios
         .post("/classroom/evaluation/" + this.evaluable.id + "/evaluate", {
           grades: this.students,
         })
-        .then((response) => {
-          console.log(response);
-        });
+        .then((response) => {});
     },
   },
   components: {},
