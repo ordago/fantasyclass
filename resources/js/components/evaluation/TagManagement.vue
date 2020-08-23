@@ -142,11 +142,40 @@
             <p class="modal-card-title">Prefs</p>
           </header>
           <section class="modal-card-body">
-            
+            <div class="field">
+              <label class="label">Type</label>
+              <div class="control">
+                <div class="select">
+                  <select v-model="settings.eval_type" @input="$forceUpdate()">
+                    <option value="0">Number grade</option>
+                    <option value="1">Emoji grade</option>
+                    <option value="2">Pass / Fail</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field" v-if="settings.eval_type != '1'">
+              <label class="label">Max grade</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="number"
+                  v-model="settings.eval_max"
+                  placeholder="Text input"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <b-switch
+                true-value="1"
+                false-value="0"
+                v-model="settings.eval_visible"
+              >Evaluation visible by students</b-switch>
+            </div>
           </section>
           <footer class="modal-card-foot">
             <button class="button" type="button" @click="isPrefsModalActive=false">Close</button>
-            <button class="button is-primary">Update</button>
+            <button class="button is-primary" @click="updatePrefs">Update</button>
           </footer>
         </div>
       </form>
@@ -243,7 +272,7 @@
 </template>
 <script>
 export default {
-  props: ["classroom", "tags", "rubrics", "lines"],
+  props: ["classroom", "tags", "rubrics", "lines", "settings"],
   created: function () {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
@@ -273,6 +302,29 @@ export default {
     };
   },
   methods: {
+    updatePrefs() {
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_visible",
+        value: this.settings.eval_visible,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_type",
+        value: this.settings.eval_type,
+        action: "update",
+      });
+      if (this.settings.eval_type != 1) {
+        axios.patch("/classroom/" + this.classroom.code + "/setting", {
+          _method: "patch",
+          prop: "eval_max",
+          value: this.settings.eval_max,
+          action: "update",
+        });
+      }
+      this.isPrefsModalActive = false;
+    },
     deleteTag(id, index) {
       axios.delete("/classroom/tag/" + id).then((response) => {
         this.tagsReactive.splice(index, 1);

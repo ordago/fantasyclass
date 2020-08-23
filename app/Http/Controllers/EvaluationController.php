@@ -29,7 +29,12 @@ class EvaluationController extends Controller
         $settings = [];
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $settings['eval_type'] = settings()->get('eval_type', 0);
-        $settings['eval_max'] = settings()->get('eval_max', 10);
+        if($settings['eval_type'] != 1) {
+            $settings['eval_max'] = settings()->get('eval_max', 10);
+        } else {
+            $settings['eval_max'] = 5;
+        }
+            
         $settings['eval_visible'] = settings()->get('eval_visible', true);
         
         return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines', 'settings'));

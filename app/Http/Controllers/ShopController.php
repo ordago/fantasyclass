@@ -18,7 +18,7 @@ class ShopController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('items')->firstOrFail();
         $this->authorize('view', $class);
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $config = json_encode([
             'items_visibility' => settings()->get('items_visibility', false) ? true : false,
             'equipment_1_visibility' => settings()->get('equipment_1_visibility', false) ? true : false,

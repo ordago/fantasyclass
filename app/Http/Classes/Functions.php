@@ -23,7 +23,7 @@ class Functions
     </svg>", $text);
     
     if($class) {
-      settings()->setExtraColumns(['user_id' => $class->id]);
+      settings()->setExtraColumns(['classroom_id' => $class->id]);
 
       $text = str_replace('%GAME_NAME%', $class->adventure_name, $text);
       $text = str_replace('%GOLD_USE%', settings()->get('card_use', 200), $text);

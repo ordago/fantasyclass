@@ -62,7 +62,7 @@ class ClassroomsStudentController extends Controller
     }
 
     public function checkVisibility($class) {
-        settings()->setExtraColumns(['user_id' => $class]);
+        settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
         if(settings()->get('state', 0) == 2)
             abort(403);
@@ -118,7 +118,7 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class);
 
         // Shop information
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $items = $eq1 = $eq2 = $eq3 = null;
         if (settings()->get('items_visibility', false) ? true : false) {
@@ -388,7 +388,7 @@ class ClassroomsStudentController extends Controller
     public function map($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $activeMap = settings()->get('active_map');
 
         $map = Map::where('id', '=', $activeMap)->firstOrFail();

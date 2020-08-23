@@ -238,7 +238,7 @@ class CardsController extends Controller
 
 
         if ($data['action']) {
-            settings()->setExtraColumns(['user_id' => $class->id]);
+            settings()->setExtraColumns(['classroom_id' => $class->id]);
             if ($data['type'] == 1) {
                 if ($student->level && $card->min_lvl > $student->level->number) {
                     return [
@@ -297,7 +297,7 @@ class CardsController extends Controller
         if(!$class->cards->count())
             return false;
 
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
         
         do {

@@ -21,7 +21,7 @@ class Classroom extends Model
 
     public function getStateAttribute() {
 
-        settings()->setExtraColumns(['user_id' => $this->id]);
+        settings()->setExtraColumns(['classroom_id' => $this->id]);
         return settings()->get('state', 0);
     }
 

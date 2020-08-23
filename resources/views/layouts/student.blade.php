@@ -19,7 +19,7 @@
         <i class="fad fa-pen-fancy has-margin-right-2"></i> {{ __('menu.stories') }}
     </a>
     @php
-    settings()->setExtraColumns(['user_id' => $class->id]);
+    settings()->setExtraColumns(['classroom_id' => $class->id]);
     @endphp
     @if(settings()->get('active_map'))
     <a href="/classroom/show/{{ $class->code }}/map" class="navbar-item">

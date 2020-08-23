@@ -20,7 +20,7 @@ class MapsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
 
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $activeMap = settings()->get('active_map');
         $maps = $class->maps;
 
@@ -39,7 +39,7 @@ class MapsController extends Controller
             'name' => $data['name']
         ]);
         if (count($class->maps) == 1) {
-            settings()->setExtraColumns(['user_id' => $class->id]);
+            settings()->setExtraColumns(['classroom_id' => $class->id]);
             settings()->set('active_map', $map->id);
         }
         $class->maps()->save($map);
