@@ -20,6 +20,9 @@ Vue.prototype.trans = new Lang( {
     fallback: fallback_locale
 });
 
+Vue.prototype.print = window.print;
+
+
 // Toast management
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
@@ -96,6 +99,7 @@ Vue.component('profile', require('./components/profile/Profile.vue').default);
 
 Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
 Vue.component('grade', require('./components/evaluation/Grade.vue').default);
+Vue.component('report', require('./components/evaluation/Report.vue').default);
 Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
 Vue.component('rubric-create', require('./components/evaluation/RubricCreate.vue').default);
 

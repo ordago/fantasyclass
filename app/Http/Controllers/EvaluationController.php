@@ -17,6 +17,55 @@ class EvaluationController extends Controller
         $this->middleware('verified');
     }
 
+    public function getSettings($classId)
+    {
+        $settings = [];
+        settings()->setExtraColumns(['classroom_id' => $classId]);
+        $settings['eval_type'] = settings()->get('eval_type', 0);
+        if ($settings['eval_type'] != 1) {
+            $settings['eval_max'] = settings()->get('eval_max', 10);
+        } else {
+            $settings['eval_max'] = 5;
+        }
+        $settings['eval_visible'] = settings()->get('eval_visible', true);
+        return $settings;
+    }
+
+    public function report($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('view', $class);
+
+        $grades = collect();
+        $students = $class->students;
+        foreach ($students as $student) {
+            // $grades->push(['student' => $student, 'tags' => $tags]);
+            $tags = collect();
+            foreach ($class->tags as $tag) {
+                $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0]);
+            }
+
+            foreach ($student->grades as $grade) {
+                if ($grade->pivot->grade) {
+                    $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
+                    foreach ($evaluable->tags as $evalTag) {
+                        
+                        $tags->transform(function ($item, $key) use ($evalTag, $grade) {
+                            if ($item['id'] == $evalTag->id) {
+                                $gradeCalc = $item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade;
+                            } else $gradeCalc = $item['grade'];
+                            return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc];
+                        });
+                    }
+                }
+            }
+            $grades->push(['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags]);
+        }
+        $settings = $this->getSettings($class->id);
+        
+        return view('evaluation.report', compact('grades', 'class', 'settings'));
+    }
+
     public function index($code)
     {
         $class = Classroom::where('code', $code)->firstOrFail();
@@ -25,18 +74,9 @@ class EvaluationController extends Controller
         $tags = Tag::where('classroom_id', $class->id)->get();
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $lines = Evaluable::where('classroom_id', $class->id)->with('tags')->get();
-        
-        $settings = [];
-        settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $settings['eval_type'] = settings()->get('eval_type', 0);
-        if($settings['eval_type'] != 1) {
-            $settings['eval_max'] = settings()->get('eval_max', 10);
-        } else {
-            $settings['eval_max'] = 5;
-        }
-            
-        $settings['eval_visible'] = settings()->get('eval_visible', true);
-        
+
+        $settings = $this->getSettings($class->id);
+
         return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines', 'settings'));
     }
 
@@ -79,7 +119,9 @@ class EvaluationController extends Controller
             ->selectRaw('students.id, students.name, evaluable_student.grade, evaluable_student.feedback')
             ->get();
 
-        return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric'));
+        $settings = $this->getSettings($class->id);
+
+        return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric', 'settings'));
     }
     public function evaluateRubric()
     {

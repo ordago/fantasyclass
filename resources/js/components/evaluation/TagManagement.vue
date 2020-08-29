@@ -10,9 +10,9 @@
       <button class="button is-dark" @click="isPrefsModalActive=true">
         <i class="has-margin-right-2 fas fa-cog"></i> Preferences
       </button>
-      <button class="button is-primary" @click="isTagModalActive=true">
+      <a :href="'/classroom/' + classroom.code + '/evaluation/report'" class="button is-primary">
         <i class="has-margin-right-2 fas fa-file-chart-line"></i> Evaluation report
-      </button>
+      </a>
     </div>
     <div class="has-margin-y-3">
       <span

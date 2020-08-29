@@ -657,7 +657,7 @@ export default {
           axios
             .post(
               "/classroom/" + this.classroom.code + "/student/changecharacter",
-              { id: this.student.id, character_id: subclass }
+              { id: this.student.id, character_id: subclass, mode: 'student' }
             )
             .then(response => {
               location.reload();

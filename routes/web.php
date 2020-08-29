@@ -158,6 +158,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/maps/{id}', 'MapsController@update');
         
         // Evaluation
+        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
         Route::get('/{code}/evaluation', 'EvaluationController@index');
         Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');
         Route::post('/evaluation/student/rubric', 'EvaluationController@getRubric');

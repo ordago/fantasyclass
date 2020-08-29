@@ -260,7 +260,13 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail(request()->id);
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('update', $class);
+        if(isset(request()->mode) && isset(request()->mode) == 'student') {
+            if($student->classroom->user->user_id != auth()->user()->user_id) {
+                abort(403);
+            }
+        } else {
+            $this->authorize('update', $class);
+        }
         $student->update(['character_id' => request()->character_id]);
         $student->setBasicEquipment();
     }

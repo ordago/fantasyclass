@@ -13,7 +13,7 @@ class Tag extends Model
         'classroom_id',
     ];
 
-    public function classrroom() {
+    public function classroom() {
         return $this->belongsTo(Classroom::class);
     }
 

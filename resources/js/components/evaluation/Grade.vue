@@ -83,7 +83,7 @@
 </template>
 <script>
 export default {
-  props: ["classroom", "evaluable", "students", "rubric"],
+  props: ["classroom", "evaluable", "students", "rubric", "settings"],
   created: function () {},
   data: function () {
     return {
@@ -140,8 +140,8 @@ export default {
       // });
 
       this.grade = Math.min(
-        10,
-        Math.round(((totalSelected / total) * 10 + totalOptional) * 100) / 100
+        this.settings.eval_max,
+        Math.round(((totalSelected / total) * this.settings.eval_max + totalOptional) * 100) / 100
       );
     },
     loadRubric: function (student) {

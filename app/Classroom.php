@@ -44,6 +44,10 @@ class Classroom extends Model
     {
         return $this->hasMany(Item::class);
     }
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     public function theme()
     {
