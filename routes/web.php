@@ -165,6 +165,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/evaluation/{id}/evaluate/rubric', 'EvaluationController@evaluateRubric');
         Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
         Route::post('/{code}/evaline', 'EvaluationController@store');
+        Route::delete('/evaline/{id}', 'EvaluationController@destroy');
         Route::get('/{code}/rubrics', 'RubricController@index');
         Route::get('/{code}/rubric/create', 'RubricController@create');
         Route::post('/{code}/rubric', 'RubricController@store');

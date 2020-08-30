@@ -63,9 +63,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(element_tiptap__WEBPACK_IMPORTED_
     };
   },
   methods: {
-    sendImage: function sendImage() {
-      console.log("hit");
-    }
+    sendImage: function sendImage() {}
   },
   components: {
     ElementUI: element_ui__WEBPACK_IMPORTED_MODULE_1___default.a,

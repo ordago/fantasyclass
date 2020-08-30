@@ -103,7 +103,6 @@ export default {
   },
   methods: {
     delSubItem(index, indexCol) {
-      console.log(this.rubric.rows[index].items[indexCol].points);
       this.rubric.rows[index].items.splice(indexCol, 1);
       if (this.rubric.rows[index].items.length == 0)
         this.rubric.rows.splice(index, 1);

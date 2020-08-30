@@ -27,7 +27,6 @@ export default {
   methods: {
     finalGrade: function (student) {
       let finalGrade = 0;
-      console.log(student);
       student.grades.forEach((grade) => {
         finalGrade += (grade.grade * grade.percent) / 100;
       });

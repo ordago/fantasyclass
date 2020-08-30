@@ -76,20 +76,22 @@
             <a
               :href="'/classroom/evaluation/' + props.row.id + '/grade'"
               class="button is-dark is-small has-margin-right-3"
-            >Grade</a>
-            <a
+            >
+              <i class="fad fa-pencil"></i> Grade
+            </a>
+            <!-- <b-button
               v-tippy
               :content="trans.get('general.edit')"
-              :href="'/classroom/' + classroom.code + '/maps/' + props.row.id"
-              class="button is-info is-small has-margin-right-3"
+              type="is-info is-small"
+              @click="showEditLine(props.row)"
             >
               <i class="fas fa-edit"></i>
-            </a>
+            </b-button> -->
             <b-button
               v-tippy
               :content="trans.get('general.delete')"
               type="is-danger is-small"
-              @click="confirmDelete(props.row.id)"
+              @click="deleteLine(props.row.id)"
             >
               <i class="fas fa-trash-alt"></i>
             </b-button>
@@ -300,7 +302,8 @@ export default {
         percent: 0,
       },
       line: {
-        tags: null,
+        id: null,
+        tags: [],
         description: "",
         weights: {},
         type: 0,
@@ -337,12 +340,46 @@ export default {
         .patch("/classroom/" + this.classroom.code + "/tag", this.tag)
         .then((response) => {
           this.isTagModalActive = false;
-          // this.tagsReactive.push(response.data);
         });
     },
     showEditTag(tag) {
       this.tag = tag;
       this.isTagModalActive = true;
+    },
+    showEditLine(line) {
+      // this.line.id = line.id;
+      // this.line.description = line.description;
+      // this.line.weights = line.weights;
+      // this.line.type = line.type;
+      // this.line.rubric = line.rubric;
+      // // line.tags.forEach((element) => {
+      // //   let tag = this.tagsReactive.find(function (item, i) {
+      // //     return item.id === element.id;
+      // //   });
+      // //   this.line.tags.push(tag);
+      // // });
+      // this.isLineModalActive = true;
+    },
+    deleteLine(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/evaline/" + id).then((response) => {
+            var index = this.linesReactive.findIndex(function (item, i) {
+              return item.id === id;
+            });
+            this.linesReactive.splice(index, 1);
+          });
+        },
+      });
     },
     deleteTag(id, index) {
       this.$buefy.dialog.confirm({
@@ -373,7 +410,7 @@ export default {
           .post("/classroom/" + this.classroom.code + "/evaline", this.line)
           .then((response) => {
             this.isLineModalActive = false;
-            // this.tagsReactive.push(response.data);
+            this.linesReactive.push(response.data);
           });
       }
     },

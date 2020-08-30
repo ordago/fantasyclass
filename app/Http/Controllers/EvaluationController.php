@@ -49,7 +49,7 @@ class EvaluationController extends Controller
                 if ($grade->pivot->grade) {
                     $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
                     foreach ($evaluable->tags as $evalTag) {
-                        
+
                         $tags->transform(function ($item, $key) use ($evalTag, $grade) {
                             if ($item['id'] == $evalTag->id) {
                                 $gradeCalc = $item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade;
@@ -62,7 +62,7 @@ class EvaluationController extends Controller
             $grades->push(['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags]);
         }
         $settings = $this->getSettings($class->id);
-        
+
         return view('evaluation.report', compact('grades', 'class', 'settings'));
     }
 
@@ -163,6 +163,16 @@ class EvaluationController extends Controller
         return $rows;
     }
 
+    public function destroy($id)
+    {
+        $line = Evaluable::findOrFail($id);
+
+        $class = Classroom::find($line->classroom->id);
+        $this->authorize('update', $class);
+
+        $line->delete();
+    }
+
     public function store($code)
     {
         $class = Classroom::where('code', $code)->firstOrFail();
@@ -188,5 +198,7 @@ class EvaluationController extends Controller
                 $tag['id'] => ['weight' => $data['weights'][$tag['id']]],
             ]);
         }
+        $evaluable->load('tags');
+        return $evaluable;
     }
 }

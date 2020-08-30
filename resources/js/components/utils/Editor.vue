@@ -112,7 +112,6 @@ export default {
   },
   methods: {
     sendImage() {
-      console.log("hit");
     }
   },
   components: {

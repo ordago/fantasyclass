@@ -437,7 +437,6 @@ export default {
           axios
             .delete("/classroom/challenge/attachment/" + id)
             .then(response => {
-              console.log(response.data);
               if (response.data === 1) {
                 this.challenge.attachments.splice(index, 1);
                 this.$forceUpdate();

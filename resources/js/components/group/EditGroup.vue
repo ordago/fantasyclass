@@ -32,7 +32,6 @@ export default {
   props: ["group", "code"],
   created() {
     this.prevImage = this.group.logo;
-    console.log(this.group.logo);
   },
   data: function() {
     return {
