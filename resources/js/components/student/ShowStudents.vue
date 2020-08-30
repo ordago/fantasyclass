@@ -724,7 +724,7 @@ export default {
     showClassCode() {
       let link =
         "https://fantasyclass.app/classroom/join/" +
-        this.classroom.enrollmen_code;
+        this.classroom.enrollment_code;
       this.image =
         "https://api.qrserver.com/v1/create-qr-code/?data=" +
         link +

@@ -27,6 +27,7 @@
         <small>
           <i
             class="fas fa-edit has-background-info rounded pointer has-padding-2 has-margin-left-3"
+            @click="showEditTag(tag)"
           ></i>
         </small>
         <small @click="deleteTag(tag.id, index)">
@@ -108,7 +109,8 @@
       <form @submit.prevent="addTag">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">Add tag</p>
+            <p class="modal-card-title" v-if="!tag.classroom_id">Add tag</p>
+            <p class="modal-card-title" v-if="tag.classroom_id">Edit tag</p>
           </header>
           <section class="modal-card-body">
             <b-field label="Abbreviation">
@@ -122,8 +124,13 @@
             </b-field>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isTagModalActive=false">Close</button>
-            <button class="button is-primary">Add</button>
+            <button
+              class="button"
+              type="button"
+              @click="tag={short: '', description: '', percent: 0,},isTagModalActive=false"
+            >Close</button>
+            <button class="button is-primary" v-if="!tag.classroom_id">Add</button>
+            <button class="button is-primary" v-if="tag.classroom_id" @click.prevent="editTag">Edit</button>
           </footer>
         </div>
       </form>
@@ -325,9 +332,34 @@ export default {
       }
       this.isPrefsModalActive = false;
     },
+    editTag() {
+      axios
+        .patch("/classroom/" + this.classroom.code + "/tag", this.tag)
+        .then((response) => {
+          this.isTagModalActive = false;
+          // this.tagsReactive.push(response.data);
+        });
+    },
+    showEditTag(tag) {
+      this.tag = tag;
+      this.isTagModalActive = true;
+    },
     deleteTag(id, index) {
-      axios.delete("/classroom/tag/" + id).then((response) => {
-        this.tagsReactive.splice(index, 1);
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/tag/" + id).then((response) => {
+            this.tagsReactive.splice(index, 1);
+          });
+        },
       });
     },
     setWeight(elems) {
@@ -349,7 +381,6 @@ export default {
       axios
         .post("/classroom/" + this.classroom.code + "/tag", this.tag)
         .then((response) => {
-          console.log(response);
           this.isTagModalActive = false;
           this.tagsReactive.push(response.data);
         });

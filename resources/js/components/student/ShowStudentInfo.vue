@@ -159,7 +159,7 @@
               <b-field class="is-static">
                 <b-input
                   type="password"
-                  placeholder
+                  style="width: 200px"
                   icon-pack="fas"
                   disabled
                   v-model="student.password_plain"

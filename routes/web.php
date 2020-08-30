@@ -28,7 +28,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}', 'ClassroomsController@update');
         Route::get('create', 'ClassroomsController@create');
         Route::get('/{code}/edit', 'ClassroomsController@edit');
-        Route::get('join/{code}', 'ClassroomsController@join');
+        Route::get('/join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
         Route::get('{code}/clone', 'ClassroomsController@clone');
         Route::delete('{code}', 'ClassroomsController@destroy');
@@ -173,6 +173,7 @@ Route::group(['middleware' => 'language'], function () {
 
         //Tags
         Route::post('/{code}/tag', 'TagController@store');
+        Route::patch('/{code}/tag', 'TagController@update');
         Route::delete('/tag/{id}', 'TagController@destroy');
         
         // Utils

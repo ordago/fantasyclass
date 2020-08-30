@@ -21,6 +21,22 @@ class TagController extends Controller
         $tag->delete();
     }
 
+    public function update($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'short' => ['required', 'string', 'max:10'],
+            'description' => ['required', 'string'],
+            'percent' => ['required', 'numeric'],
+            'id' => ['required', 'numeric'],
+        ]);
+
+        $tag = Tag::where('id', $data['id'])->where('classroom_id', $class->id)->firstOrFail();
+        $tag->update($data);
+
+    }
     public function store($code)
     {
         $class = Classroom::where('code', $code)->firstOrFail();
