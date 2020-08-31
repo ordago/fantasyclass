@@ -127,6 +127,9 @@
                 </div>
             </div>
         </nav>
+
+        @yield('breadcrumb')
+        
         @endauth
 
         <div id="prompt" class="prompt  has-background-light border-top" style="display: none;">
