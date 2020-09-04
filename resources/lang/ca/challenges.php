@@ -10,12 +10,12 @@ return [
     'edit' => 'Edita repte',
     'name' => 'Nom',
     'icon' => 'Icona',
-    'parent' => 'Grup pare (opcional)',
+    'parent' => 'Categoria pare (opcional)',
 
     'completion' => 'Selecciona els requeriments per ser marcar com complet',
-    'completion_teacher' => 'El/la profe marca el repte com a completat',
-    'completion_student' => 'El/la estudian marca el repte com a completat',
-    'completion_both' => 'Tant profe com estudiants han de marcar el repte com a completat',
+    'completion_teacher' => 'El/la profe marca el repte com a superat',
+    'completion_student' => 'El/la estudiant marca el repte com a superat',
+    'completion_both' => 'Tant profe com estudiants han de marcar el repte com a superat',
     
     'empty' => 'Creem uns reptes!',
 
@@ -26,7 +26,7 @@ return [
     'content' => 'Contingut',
     'conquer' => 'És una prova de conquesta?',
     'rewards' => 'Recompenses',
-    'auto_assign' => 'Auto-assinació de cartes?',
+    'auto_assign' => 'Auto-assignació de cartes?',
     'group' => 'Repte de grup',
     'optional' => 'Opcional',
     

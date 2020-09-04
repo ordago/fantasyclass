@@ -1,5 +1,10 @@
 <template>
   <div class="w-100 content">
+    <!-- <download-excel style="display:inline" :data="jsonGrades">
+      <b-button type="is-success has-margin-2">
+        <i class="fas fa-file-spreadsheet"></i>
+      </b-button>
+    </download-excel> -->
     <table>
       <th>Student name</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
@@ -14,15 +19,19 @@
         <td>{{ finalGrade(student) }} / {{ settings.eval_max }}</td>
       </tr>
     </table>
-    <button class="button is-dark noprint" @click="print"><i class="fas fa-print"></i></button>
+    <button class="button is-dark noprint" @click="print">
+      <i class="fas fa-print"></i>
+    </button>
   </div>
 </template>
 <script>
 export default {
   props: ["classroom", "grades", "settings"],
-  created: function () {},
+  created: function () {
+  },
   data: function () {
-    return {};
+    return {
+    };
   },
   methods: {
     finalGrade: function (student) {
@@ -46,8 +55,8 @@ td {
   text-align: center !important;
 }
 @media print {
-   .noprint {
-      visibility: hidden;
-   }
+  .noprint {
+    visibility: hidden;
+  }
 }
 </style>

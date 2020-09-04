@@ -93,6 +93,30 @@ class ClassroomPolicy
     }
 
     /**
+     * Determine whether the user can access as student.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Classroom  $classroom
+     * @return mixed
+     */
+    public function study(User $user, Classroom $classroom)
+    {
+        return $this->isStudent($user, $classroom);
+    }
+
+    /**
+     * Determine whether the user can access as student or teacher.
+     *
+     * @param  \App\User  $user
+     * @param  \App\Classroom  $classroom
+     * @return mixed
+     */
+    public function studyOrTeach(User $user, Classroom $classroom)
+    {
+        return $this->isStudent($user, $classroom) || $this->isTeacher($user, $classroom);
+    }
+
+    /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\User  $user

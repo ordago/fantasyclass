@@ -1,7 +1,10 @@
 <template>
   <div class="box card-shadow-s has-margin-bottom-3" v-bind:class="getBackground">
     <section class="media">
-      <div class="media-content">
+      <div class="media-content is-relative">
+          <div class="challenge-category has-background-light" v-if="!admin && full" v-tippy :content="challengeReactive.group.name">
+            <i :class="challengeReactive.group.icon"></i>
+          </div>
         <div class="content">
           <h1>
             <i

@@ -11,7 +11,14 @@
 // .contentView img {
 //   max-width: 90% !important;
 // }
-
+.challenge-category {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.2em;
+    padding: 10px;
+    border-radius: 50%;
+}
 
 .map-iframe {
     position: absolute;

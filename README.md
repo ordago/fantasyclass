@@ -123,6 +123,9 @@ Popper tippy:
 
  Vue-slider-component:
  https://github.com/NightCatSama/vue-slider-component
+
+ Vue-excel
+ https://github.com/jecovier/vue-json-excel#readme
  
 ## License
 

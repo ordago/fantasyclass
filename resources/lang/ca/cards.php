@@ -18,7 +18,7 @@ return [
     /* Help */
     'radius_help' => 'L\'arrodoniment de la imatge, 0 implica cantonades quadrades i a mesura que s\'incrementa el valor es produeix l\'arrodoniment.',
     'min_lvl_help' => 'Nivell mínim per utiltizar la carta.',
-    'type_help' => 'Defineix la probabilitat de que surta. El percentatge de cada tipues es configura a preferències.',
+    'type_help' => 'Defineix la probabilitat que surta. El percentatge de cada tipus es configura a preferències.',
     'special_help' => 'Les cartes especial no ocupen espai (existeix un límit de 5 cartes per defecte) i a més, no consumeix or al utilitzar-les o eliminar-les.',
     'fullscreen_help' => 'Marca aquesta opció per fer servir cartes d\'un altre generador.',
     'xp_help' => 'Experiència guanyada (valor positiu) o perduda (valor negatiu) quan s\'utilitza la carta.',

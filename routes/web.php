@@ -66,16 +66,16 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/student/{id}', 'StudentController@destroy');
         
         // Student View
-        Route::get('/show/{code}', 'ClassroomsStudentController@show'); // TODO Policy protect
-        Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // TODO Policy protect
-        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // TODO Policy protect
-        Route::get('/show/{code}/map', 'ClassroomsStudentController@map'); // TODO Policy protect
-        Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules'); // TODO Policy protect
-        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // TODO Policy protect
-        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // TODO Policy protect
-        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // TODO Policy protect
-        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // TODO Policy protect
-        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // TODO Policy protect
+        Route::get('/show/{code}', 'ClassroomsStudentController@show');
+        Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
+        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories');
+        Route::get('/show/{code}/map', 'ClassroomsStudentController@map');
+        Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules');
+        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
+        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
+        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
+        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
+        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -186,6 +186,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/utils/music', 'UtilsController@music');
     
     // Profile
+    Route::get('/profile/promote', 'ProfileController@promote');
     Route::get('/profile', 'ProfileController@index');
     Route::patch('/profile/update', 'ProfileController@update');
 

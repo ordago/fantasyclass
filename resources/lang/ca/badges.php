@@ -11,7 +11,7 @@ return [
     'title' => 'Títol',
     'description' => 'Descripció',
     'attributes' => 'Atributs',
-    'attributes_info' => 'valors positius per a bons insígniess i negatius per a dolents',
+    'attributes_info' => 'valors positius per a bons comportaments i negatius per a dolents',
 
     'hp' => 'Punts de vida',
     'experience' => 'Experiència',

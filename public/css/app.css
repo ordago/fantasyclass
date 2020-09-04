@@ -12686,6 +12686,15 @@ textPath {
     padding: 20px;
   }
 }
+.challenge-category {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1.2em;
+  padding: 10px;
+  border-radius: 50%;
+}
+
 .map-iframe {
   position: absolute;
   top: 56px;

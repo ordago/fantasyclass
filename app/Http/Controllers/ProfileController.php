@@ -25,10 +25,17 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        
         $user = auth()->user();
         $profile = true;
         $lang = language()->allowed();
         return view('profile.index', compact('user', 'profile', 'lang'));
+    }
+
+    protected function promote()
+    {
+        $user = auth()->user();
+        $user->update(['is_student' => 0]);
     }
 
     protected function update()
@@ -41,8 +48,8 @@ class ProfileController extends Controller
             'current_password' => ['nullable', 'string'],
             'user_lang' => ['required', 'string', 'min:2', 'max:2'],
             'password' => ['nullable', 'string', 'min:8'],
+            'email' => ['nullable', 'string', 'min:6'],
         ]);
-
         if ($data['password']) {
             if (Hash::check($data['current_password'], $user->password)) {
                 $user->update([
@@ -58,6 +65,16 @@ class ProfileController extends Controller
                 'name' => $data['name'],
                 'locale' => $data['user_lang'],
             ]);
+        }
+        if($data['email'] != $user->email) {
+            if (Hash::check($data['current_password'], $user->password)) {
+                $user->update([
+                    'email' => $data['email'],
+                    'email_verified_at' => NULL,
+                ]);
+                $user->sendEmailVerificationNotification();
+            } else abort(403);
+            
         }
     }
 }

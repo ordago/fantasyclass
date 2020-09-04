@@ -53,19 +53,31 @@
           />
         </div>
 
+        <div class="has-margin-top-4">
+          <label for="new-password" class="has-margin-y-2">E-mail</label>
+          <input
+            type="email"
+            class="input has-margin-y-2 is-info"
+            v-model="email"
+            @input="email_change = true"
+          />
+        </div>
+        <small>If you change the e-mail you'll be logged out and you'll need to confirm the new one.</small>
+
         <div class="has-margin-y-4">
           <label
             for="current-password"
             class="has-margin-y-2"
-            v-if="password.length"
+            v-if="password.length || email_change"
           >{{trans.get('profile.current_password') }}</label>
           <input
             type="password"
             class="input has-margin-y-2 is-info"
             name="current_password"
+            required
             autocomplete="current-password"
             v-model="current_password"
-            v-if="password.length"
+            v-if="password.length || email_change"
           />
         </div>
 
@@ -77,10 +89,13 @@
               v-for="(language, code) in lang"
               v-bind:key="language"
             >{{ language }}</option>
-            <!-- @foreach (language()->allowed() as $code => $name) -->
-            <!-- <option value="{{ $code }}">{{ $name }}</option>@endforeach -->
           </select>
         </div>
+        <button
+          class="button is-dark"
+          v-if="user.is_student == 1"
+          @click.prevent="promote"
+        >I want to create my own classrooms</button>
 
         <div
           class="is-flex has-padding-x-4 has-padding-y-4"
@@ -99,6 +114,7 @@ export default {
   mounted() {
     this.name = this.user.name;
     this.user_lang = this.user.locale;
+    this.email = this.user.email;
   },
   data: function () {
     return {
@@ -107,30 +123,32 @@ export default {
       password: "",
       password_confirm: "",
       user_lang: "",
+      email_change: false,
+      email: "",
       _method: "patch",
     };
   },
   methods: {
-    send: function () {
-      if (this.password != this.password_confirm) {
-        this.$refs.new_password.classList.add("is-danger");
-        this.$refs.password_confirm.classList.add("is-danger");
-        return false;
-      }
+    promote: function () {
+      axios.get("/profile/promote").then((response) => {
+        location.href = "/classroom";
+      });
+    },
+    axiosSend: function () {
       axios
         .patch("/profile/update", this.$data)
         .then((response) => {
-          this.$toasted.show(this.trans.get('profile.update_success'), {
+          this.$toasted.show(this.trans.get("profile.update_success"), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",
             icon: "check",
             type: "success",
           });
-          location.reload()
+          location.reload();
         })
         .catch((error) => {
-          this.$toasted.show(this.trans.get('profile.incorrect_password'), {
+          this.$toasted.show(this.trans.get("profile.incorrect_password"), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",
@@ -138,6 +156,34 @@ export default {
             type: "error",
           });
         });
+    },
+    send: function () {
+      if (this.password != this.password_confirm) {
+        this.$refs.new_password.classList.add("is-danger");
+        this.$refs.password_confirm.classList.add("is-danger");
+        return false;
+      }
+      if (this.email_change) {
+        this.$buefy.dialog.prompt({
+          message: `Please repeat the e-mail`,
+          inputAttrs: {
+            placeholder: "",
+          },
+          trapFocus: true,
+          onConfirm: (value) => {
+            if (value == this.email) this.axiosSend();
+            else {
+              this.$toasted.show("The e-mail verification failed", {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: "times",
+                type: "error",
+              });
+            }
+          },
+        });
+      } else this.axiosSend();
     },
   },
 };
