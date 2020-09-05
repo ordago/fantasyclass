@@ -26,8 +26,10 @@
                 <b-tag type="is-info is-light" class="has-small-font">{{ challenge.numChallenges }}</b-tag>
               </span>
             </span>
-            <span class="has-padding-2 arrow rounded-right">
-              <i class="fal fa-angle-right"></i>
+            <span>
+              <span class="has-margin-0 has-padding-2 arrow rounded-right">
+                <i class="fal fa-angle-right"></i>
+              </span>
             </span>
           </div>
           <div
@@ -76,21 +78,21 @@ import ShowChallenges from "./ShowChallenges.vue";
 
 export default {
   props: ["code", "challengesgroup", "icon"],
-  mounted: function() {},
-  data: function() {
+  mounted: function () {},
+  data: function () {
     return {
       activeAddGroup: false,
       activeGroup: false,
       updated: false,
       challenges: [],
       isLoading: false,
-      isFullPage: true
+      isFullPage: true,
     };
   },
   methods: {
-    refresh: function(elem) {
+    refresh: function (elem) {
       if (elem.challenges_group_id) {
-        let challenge = this.challengesgroup.filter(function(data) {
+        let challenge = this.challengesgroup.filter(function (data) {
           return data.id == elem.challenges_group_id;
         });
         challenge[0].children.push(elem);
@@ -101,16 +103,16 @@ export default {
       this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/challenges/get", { id: id })
-        .then(response => {
+        .then((response) => {
           this.challenges = response.data;
           this.$forceUpdate;
           this.isLoading = false;
         });
-    }
+    },
   },
   components: {
     CreateChallengeGroup,
-    ShowChallenges
+    ShowChallenges,
   },
   computed: {
     buttonAddGroup() {
@@ -118,7 +120,7 @@ export default {
         ? this.trans.get("general.cancel")
         : "<i class='far fa-plus has-padding-right-2'></i>" +
             this.trans.get("challenges.add_category");
-    }
-  }
+    },
+  },
 };
 </script>

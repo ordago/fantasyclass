@@ -1,6 +1,18 @@
 <template>
   <div class="w-100">
     <form action="#" method="post" @submit.prevent="createChallenge">
+      <div class="has-margin-y-3" v-if="edit">
+        <label for="name">{{ trans.get('challenges.categories') }}</label>
+        <div class="field has-margin-top-3">
+          <div class="control">
+            <div class="select is-fullwidth">
+              <select @input="reload=true" v-model="challenge.challenges_group_id">
+                <option v-for="group in challengegroups" :key="group.id" :value="group.id">{{ group.name }}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="field w-100">
         <label class="label">{{ trans.get('challenges.title') }} *</label>
         <div class="control">
@@ -26,10 +38,14 @@
           v-model="challenge.password"
           password-reveal
         ></b-input>
-      </b-field> -->
+      </b-field>-->
       <div class="w-100">
         <b-field label="When it will be visible?">
-          <b-datetimepicker v-model="datepicker" :placeholder="trans.get('challenges.click_select')" icon-pack="fa">
+          <b-datetimepicker
+            v-model="datepicker"
+            :placeholder="trans.get('challenges.click_select')"
+            icon-pack="fa"
+          >
             <template slot="left">
               <button class="button is-primary" @click="datetime = new Date()">
                 <b-icon icon="clock"></b-icon>
@@ -180,7 +196,7 @@
             true-value="1"
             false-value="0"
           >{{ trans.get('challenges.optional') }}</b-switch>
-        </div> -->
+        </div>-->
       </div>
       <button
         type="submit"
@@ -196,12 +212,18 @@
   </div>
 </template>
 <script>
-const Editor =
-        () => import('../utils/Editor.vue');
+const Editor = () => import("../utils/Editor.vue");
 
 export default {
-  props: ["challengegroup", "code", "iconPrev", "edit", "groups"],
-  mounted: function() {
+  props: [
+    "challengegroup",
+    "code",
+    "iconPrev",
+    "edit",
+    "groups",
+    "challengegroups",
+  ],
+  mounted: function () {
     if (this.edit) {
       this.challenge = this.edit;
       this.icon = this.challenge.icon;
@@ -213,10 +235,11 @@ export default {
       this.datepicker = new Date();
     }
   },
-  data: function() {
+  data: function () {
     return {
       content: ``,
       datepicker: null,
+      reload: false,
       icon: null,
       challenge: {
         icon: null,
@@ -236,15 +259,16 @@ export default {
         type: 0,
         password: null,
         challenges_group_id: null,
-        _method: "post"
-      }
+        _method: "post",
+      },
     };
   },
   methods: {
     createChallenge() {
       this.challenge.content = this.content;
       this.challenge.icon = this.icon;
-      this.challenge.challenges_group_id = this.challengegroup;
+      if(!this.challenge.challenges_group_id)
+        this.challenge.challenges_group_id = this.challengegroup;
       let date = this.datepicker;
       this.challenge.datetime =
         date.getFullYear() +
@@ -264,13 +288,13 @@ export default {
         route = "/classroom/" + this.code + "/challenges";
       }
 
-      axios.post(route, this.challenge).then(response => {
+      axios.post(route, this.challenge).then((response) => {
         this.$toasted.show(response.data.message, {
           position: "top-center",
           duration: 3000,
           iconPack: "fontawesome",
           icon: response.data.icon,
-          type: response.data.type
+          type: response.data.type,
         });
         if (response.data.type == "success") {
           this.$parent.addChallenge = false;
@@ -279,16 +303,19 @@ export default {
           );
         }
       });
-      this.$parent.$parent.$forceUpdate();
+      if(this.reload)
+        location.reload(true)
+      else
+        this.$parent.$parent.$forceUpdate();
     },
     dateFormatter(dt) {
       return dt.toLocaleDateString("es-ES", dateoptions);
-    }
+    },
   },
   components: {
     Editor,
   },
 
-  computed: {}
+  computed: {},
 };
 </script>

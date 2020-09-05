@@ -104,6 +104,7 @@ Route::group(['middleware' => 'language'], function () {
         // Challenges
         Route::get('/{code}/challenges', 'ChallengesGroupController@index');
         Route::post('/{code}/challenges/group', 'ChallengesGroupController@store');
+        Route::delete('/challenges/group/{id}', 'ChallengesGroupController@destroy');
         Route::post('/{code}/challenges', 'ChallengesController@store');
         Route::post('/{code}/challenges/get', 'ChallengesController@index');
         Route::post('/challenges/image', 'ChallengesController@uploadImage');

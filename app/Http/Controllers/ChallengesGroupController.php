@@ -20,6 +20,15 @@ class ChallengesGroupController extends Controller
         return view('challenges.index', compact('class', 'challenges'));
 
     }
+    public function destroy($id) {
+        $group = ChallengesGroup::findOrFail($id);
+        $class = Classroom::where('id', '=', $group->classroom_id)->firstorFail();
+        $this->authorize('update', $class);
+        if($group->challenges->count() == 0) {
+            $group->delete();
+        }        
+    }
+
     public function store($code) {
         $class = Classroom::where('code', '=', $code)->first();
         $this->authorize('update', $class);

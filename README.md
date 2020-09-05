@@ -14,6 +14,7 @@ Help and sponsors
 - Nacho.  
 - Carlos.
 - [Ander García.](https://aprendecoreano.com/) 
+- Isabel Hernández.
 
 ## Contribute in the project
 ### To import the project

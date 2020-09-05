@@ -2,8 +2,13 @@
   <div class="has-padding-left-0-desktop">
     <div class="panel has-padding-left-0-desktop">
       <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
-        <span class="has-padding-left-3">{{ challengegroup.name }}</span>
-        <button class="button" @click="addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
+        <span>
+          <i :class="challengegroup.icon"></i>
+          <span class="has-padding-left-3">{{ challengegroup.name }}</span>
+          <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button>
+          <button style="font-size: .5em" class="button is-danger" @click="deleteChallengeGroup(challengegroup.id)" v-if="challenges.length == 0"><i class="fas fa-trash"></i></button>
+        </span>
+        <button class="button" @click="edit=false;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
       </p>
       <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
         <p class="control has-icons-left">
@@ -18,6 +23,7 @@
         <CreateChallenges
           :edit="challengeEdit"
           :iconPrev="icon"
+          :challengegroups="$parent.challengesgroup"
           :code="code"
           :challengegroup="challengegroup.id"
         ></CreateChallenges>
@@ -98,6 +104,24 @@ export default {
     };
   },
   methods: {
+    deleteChallengeGroup(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/challenges/group/" + id).then(response => {
+            location.reload()
+          });
+        }
+      });
+    },
     confirmDelete(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
