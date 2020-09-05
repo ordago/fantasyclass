@@ -120,6 +120,20 @@ class StudentController extends Controller
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
 
+    public function destroy($code, $stdId)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $student = Student::findOrFail($stdId);
+        dump($student->classroom);
+        // dump($student->classroom_id ." " . $class->id);
+        if ($student->classroom->classroom_id != $class->id)
+            abort(403);
+
+        $student->classroom()->delete();
+        $student->delete();
+    }
+
     public static function getRandomStudent($class)
     {
 
@@ -187,7 +201,7 @@ class StudentController extends Controller
     public function deleteLog(Request $request)
     {
 
-        
+
         $student = Student::findOrFail($request->student);
         $class = Classroom::where('id', $student->classroom->classroom->id)->first();
         $this->authorize('update', $class);
@@ -200,10 +214,9 @@ class StudentController extends Controller
             ->orderBy('created_at')
             ->take(1)
             ->delete();
-            // ->get();
+        // ->get();
 
-            $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
-        
+        $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
     }
     public function deleteBehaviour(Request $request)
     {
@@ -219,9 +232,9 @@ class StudentController extends Controller
             ->orderBy('created_at')
             ->take(1)
             ->delete();
-            // ->get();
-        
-            return $student->fresh()->behaviours;
+        // ->get();
+
+        return $student->fresh()->behaviours;
     }
     public function updateName(Request $request)
     {
@@ -233,7 +246,6 @@ class StudentController extends Controller
             'name' => ['string', 'required', 'min:4']
         ]);
         $student->update(['name' => $data['name']]);
-
     }
     public function update(Request $request)
     {
@@ -260,8 +272,8 @@ class StudentController extends Controller
     {
         $student = Student::findOrFail(request()->id);
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        if(isset(request()->mode) && isset(request()->mode) == 'student') {
-            if($student->classroom->user->user_id != auth()->user()->user_id) {
+        if (isset(request()->mode) && isset(request()->mode) == 'student') {
+            if ($student->classroom->user->user_id != auth()->user()->user_id) {
                 abort(403);
             }
         } else {

@@ -34,7 +34,7 @@
             class="subtitle is-6"
             :v-tippy="student.group"
             v-tippy
-            :content="'Proud member 😄 <br><img src=' + student.groups[0].logo + '>'"
+            :content="'Proud member 😄 <br><img style=\'background-color: #e6e6e6\' class=\'has-padding-2 card-shadow-s is-full-rounded\' src=' + student.groups[0].logo + '>'"
             v-if="student.groups && student.groups.length"
           >
             <small v-if="student.groups && student.groups.length">

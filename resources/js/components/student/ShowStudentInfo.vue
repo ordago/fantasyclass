@@ -180,6 +180,11 @@
               v-bind:key="charclass.id"
             />
           </div>
+          <div v-if="admin">
+            <button class="button is-danger" @click="deleteStudent">
+              <i class="fas fa-trash has-margin-right-2"></i> Delete student from classroom
+            </button>
+          </div>
         </b-tab-item>
 
         <b-tab-item label="Inventory" class="has-padding-0" icon="backpack" icon-pack="fad">
@@ -522,7 +527,7 @@ export default {
     "items",
     "shop",
     "challenges",
-    "cards"
+    "cards",
   ],
   mounted() {
     this.behaviours = this.student.behaviours;
@@ -537,7 +542,7 @@ export default {
       this.eq3Json = JSON.parse(this.shop.eq3);
     }
   },
-  data: function() {
+  data: function () {
     return {
       activeTab: 0,
       dateStart: null,
@@ -554,24 +559,46 @@ export default {
       forceReload: 0,
       prevImage: null,
       image: null,
-      behaviours: null
+      behaviours: null,
     };
   },
   methods: {
+    deleteStudent() {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/" + this.classroom.code + "/student/" + this.student.id, {
+              _method: "delete",
+            })
+            .then((response) => {
+              location.href = "/classroom/" + this.classroom.code 
+            });
+        },
+      });
+    },
     updateName() {
       if (this.student.name.length >= 4) {
         axios
           .post("/classroom/" + this.classroom.code + "/student/name", {
             id: this.student.id,
-            name: this.student.name
+            name: this.student.name,
           })
-          .then(response => {
+          .then((response) => {
             this.$toasted.show(this.trans.get("success_error.update_success"), {
               position: "top-center",
               duration: 3000,
               iconPack: "fontawesome",
               icon: "check",
-              type: "success"
+              type: "success",
             });
             this.$forceUpdate();
           });
@@ -581,7 +608,7 @@ export default {
           duration: 3000,
           iconPack: "fontawesome",
           icon: "times",
-          type: "error"
+          type: "error",
         });
       }
     },
@@ -602,9 +629,9 @@ export default {
               row: row,
               date: date,
               student: this.student.id,
-              _method: "delete"
+              _method: "delete",
             })
-            .then(response => {
+            .then((response) => {
               if (type == "behaviour") {
                 this.behaviours = response.data;
                 this.student.updated_at = new Date();
@@ -613,16 +640,16 @@ export default {
                 location.reload();
               }
             });
-        }
+        },
       });
     },
     toggle(id) {
       axios
         .post("/classroom/student/badge", {
           badge: id,
-          student: this.student.id
+          student: this.student.id,
         })
-        .then(response => {
+        .then((response) => {
           this.student.badges = response.data.badges;
           this.student.hp = response.data.hp;
           this.student.xp = response.data.xp;
@@ -631,7 +658,7 @@ export default {
         });
     },
     findInStudent(id) {
-      var index = this.student.badges.findIndex(function(badge, i) {
+      var index = this.student.badges.findIndex(function (badge, i) {
         return badge.id === id;
       });
       if (index >= 0) return false;
@@ -657,12 +684,12 @@ export default {
           axios
             .post(
               "/classroom/" + this.classroom.code + "/student/changecharacter",
-              { id: this.student.id, character_id: subclass, mode: 'student' }
+              { id: this.student.id, character_id: subclass, mode: "student" }
             )
-            .then(response => {
+            .then((response) => {
               location.reload();
             });
-        }
+        },
       });
     },
     useItem(item, messageItem) {
@@ -672,9 +699,9 @@ export default {
           axios
             .post("/classroom/" + this.classroom.code + "/student/useitem", {
               id: this.student.id,
-              itemId: item.id
+              itemId: item.id,
             })
-            .then(response => {
+            .then((response) => {
               if (!response.data) {
               } else {
                 item.pivot.count--;
@@ -687,7 +714,7 @@ export default {
                 this.forceRerender();
               }
             });
-        }
+        },
       });
     },
     forceRerender() {
@@ -698,7 +725,7 @@ export default {
         id: this.student.id,
         item_id: item,
         count: count,
-        _method: "patch"
+        _method: "patch",
       });
     },
     message(item) {
@@ -762,15 +789,15 @@ export default {
         onConfirm: () => {
           axios
             .post("/classroom/" + this.classroom.code + "/student/buyitem", {
-              item: item.id
+              item: item.id,
             })
-            .then(response => {
+            .then((response) => {
               this.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: 3000,
                 iconPack: "fontawesome",
                 icon: response.data.icon,
-                type: response.data.type
+                type: response.data.type,
               });
               if (response.data.type == "success") {
                 this.student.items = response.data.items;
@@ -779,7 +806,7 @@ export default {
                 this.$forceUpdate();
               }
             });
-        }
+        },
       });
     },
     buyEquipment(oldItem, newItem) {
@@ -804,16 +831,16 @@ export default {
             .post(
               "/classroom/" + this.classroom.code + "/student/buyequipment",
               {
-                new: newItem
+                new: newItem,
               }
             )
-            .then(response => {
+            .then((response) => {
               this.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: 3000,
                 iconPack: "fontawesome",
                 icon: response.data.icon,
-                type: response.data.type
+                type: response.data.type,
               });
               if (response.data.type == "success") {
                 this.student.equipment = response.data.equipment;
@@ -834,19 +861,19 @@ export default {
                 this.$forceUpdate();
               }
             });
-        }
+        },
       });
     },
     filterEquipment(equipment, type) {
       if (equipment) {
-        return equipment.filter(gear => {
+        return equipment.filter((gear) => {
           return gear.type == type;
         });
       }
     },
     updateAvatar() {
       this.image.generateBlob(
-        blob => {
+        (blob) => {
           if (blob != null) {
             let formData = new FormData();
             formData.append("avatar", blob, "avatar.png");
@@ -859,11 +886,11 @@ export default {
                 formData,
                 {
                   headers: {
-                    "content-type": "multipart/form-data"
-                  }
+                    "content-type": "multipart/form-data",
+                  },
                 }
               )
-              .then(response => {
+              .then((response) => {
                 location.reload();
               });
           }
@@ -871,12 +898,12 @@ export default {
         "image/png",
         0.8
       );
-    }
+    },
   },
   computed: {
     filteredEntries() {
       if (this.behaviours) {
-        return this.behaviours.filter(entry => {
+        return this.behaviours.filter((entry) => {
           return (
             (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
             (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
@@ -885,7 +912,7 @@ export default {
       }
     },
     filteredLogEntries() {
-      return this.student.log_entries.filter(entry => {
+      return this.student.log_entries.filter((entry) => {
         return (
           (entry.created_at >= this.dateStart || !this.dateStart) &&
           (entry.created_at <= this.dateEnd || !this.dateEnd)
@@ -896,12 +923,12 @@ export default {
       let array = _.groupBy(this.filteredEntries, "id");
       return array;
     },
-    orderedEquipment: function() {
+    orderedEquipment: function () {
       return _.orderBy(this.student.equipment, "type");
     },
-    orderedChallenges: function() {
+    orderedChallenges: function () {
       return _.orderBy(this.challenges, "datetime", "desc");
-    }
+    },
   },
   watch: {
     groupedData: {
@@ -926,7 +953,7 @@ export default {
           "#000000",
           "#000000",
           "#000000",
-          "#000000"
+          "#000000",
         ];
         let colorsKO = [
           "#ffccbc",
@@ -947,7 +974,7 @@ export default {
           "#000000",
           "#000000",
           "#000000",
-          "#000000"
+          "#000000",
         ];
         this.series = this.labels = [];
         let data = this.groupedData;
@@ -958,7 +985,7 @@ export default {
         this.labels = [];
         this.series = [];
         this.colors = [];
-        propes.forEach(element => {
+        propes.forEach((element) => {
           let behaviour = element[0];
           this.series.push(element.length);
           this.labels.push(
@@ -975,8 +1002,8 @@ export default {
             colorsKO.shift();
           }
         });
-      }
-    }
-  }
+      },
+    },
+  },
 };
 </script>
