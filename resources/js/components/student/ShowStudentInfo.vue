@@ -415,7 +415,7 @@
 
         <b-tab-item
           label="Badges"
-          v-if="classroom.badges || student.badges.length"
+          v-if="(classroom.badges && classroom.badges.length) || student.badges.length"
           icon="award"
           icon-pack="fad"
         >

@@ -5,11 +5,17 @@
         type="submit"
         class="button is-success"
         @click="markCard(card, 1)"
-        v-bind:class="{ disabled : card.min_lvl > $parent.$parent.$parent.student.level ? $parent.$parent.$parent.student.level.number : 0 , 'has-background-dark' : card.pivot.marked == 1 }"
+        v-bind:class="{ disabled : checkLevel() , 'has-background-dark' : card.pivot.marked == 1 }"
       >
         <i class="fas fa-check"></i> Use
       </button>
-      <button type="submit" v-if="card.xp >= 0 && card.gold >= 0 && card.hp >= 0 " @click="markCard(card, 2)" class="button is-danger" v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }">
+      <button
+        type="submit"
+        v-if="card.xp >= 0 && card.gold >= 0 && card.hp >= 0 "
+        @click="markCard(card, 2)"
+        class="button is-danger"
+        v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }"
+      >
         <i class="fas fa-trash-alt"></i> Delete
       </button>
     </div>
@@ -104,17 +110,20 @@ import Utils from "../../utils.js";
 export default {
   props: ["card", "admin", "code", "use", "student"],
   mounted() {
-
     this.description = Utils.styleText(this.trans.get(this.card.description));
-
   },
-  data: function() {
+  data: function () {
     return {
-      description: '',
+      description: "",
     };
   },
   methods: {
     markCard(card, type) {
+      let number = 0;
+      if (this.$parent.$parent.$parent.student.level != null)
+        number = this.$parent.$parent.$parent.student.level.number;
+      if(this.card.min_lvl > number) return false;
+
       this.$buefy.dialog.confirm({
         title: this.trans.get("cards.use_title"),
         message: this.trans.get("cards.use_text"),
@@ -129,21 +138,27 @@ export default {
           axios
             .post("/classroom/" + this.code + "/card/mark/" + this.card.id, {
               type: type,
-              student: this.student.id
+              student: this.student.id,
             })
-            .then(response => {
+            .then((response) => {
               this.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: 3000,
                 iconPack: "fontawesome",
                 icon: response.data.icon,
-                type: response.data.type
+                type: response.data.type,
               });
-              card.pivot.marked = type
-              this.$forceUpdate()
+              card.pivot.marked = type;
+              this.$forceUpdate();
             });
-        }
+        },
       });
+    },
+    checkLevel() {
+      let number = 0;
+      if (this.$parent.$parent.$parent.student.level != null)
+        number = this.$parent.$parent.$parent.student.level.number;
+      return this.card.min_lvl > number ? true : false;
     },
     confirmDelete() {
       this.$buefy.dialog.confirm({
@@ -157,14 +172,14 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/card/" + this.card.id).then(response => {
+          axios.delete("/classroom/card/" + this.card.id).then((response) => {
             if (response.data === 1) {
               this.$el.parentNode.removeChild(this.$el);
             }
           });
-        }
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>

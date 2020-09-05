@@ -46,7 +46,6 @@ class ChallengesGroupController extends Controller
                 ];
             
         } catch (\Throwable $th) {
-            dump($th);
             return [
                     "message" => __('success_error.error'),
                     "icon" => "times",
