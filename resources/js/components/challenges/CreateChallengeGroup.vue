@@ -52,9 +52,11 @@
 
 <script>
   export default {
-        props: ['code', 'challenge'],
+        props: ['code', 'challenge', 'editgroup'],
         created() {
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+          if(this.editgroup)
+            this.challengeInfo = this.editgroup
         },
         data: function() {
             return {

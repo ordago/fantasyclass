@@ -5,10 +5,10 @@
         <span>
           <i :class="challengegroup.icon"></i>
           <span class="has-padding-left-3">{{ challengegroup.name }}</span>
-          <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button>
+          <!-- <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button> -->
           <button style="font-size: .5em" class="button is-danger" @click="deleteChallengeGroup(challengegroup.id)" v-if="challenges.length == 0"><i class="fas fa-trash"></i></button>
         </span>
-        <button class="button" @click="edit=false;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
+        <button class="button" @click="challengeEdit=null;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
       </p>
       <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
         <p class="control has-icons-left">
