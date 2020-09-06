@@ -285,8 +285,15 @@ class ClassroomsStudentController extends Controller
     }
     public function buyItem($code)
     {
+
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('study', $class);        
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        
+        if(!settings()->get('items_visibility', false))
+            abort(403);
+
         $student = Functions::getCurrentStudent($class, []);
 
         if($student->hp == 0)
@@ -336,7 +343,7 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
 
         if($student->hp == 0)
-        return false;
+            abort(403);
 
         $new = Equipment::where('id', '=', request()->new)->firstOrFail();
 
@@ -356,15 +363,22 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         switch ($new->offset) {
             case 1:
             default:
+                if(!settings()->get('equipment_1_visibility', false))
+                    abort(403);
                 $key = "shop_multiplier_1";
             break;
             case 2:
+                if(!settings()->get('equipment_2_visibility', false))
+                    abort(403);
                 $key = "shop_multiplier_2";
             break;
             case 3:
+                if(!settings()->get('equipment_3_visibility', false))
+                    abort(403);
                 $key = "shop_multiplier_3";
                 break;
         }
