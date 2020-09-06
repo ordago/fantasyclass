@@ -19,7 +19,7 @@ class Student extends Model implements HasMedia
         'password_plain'
     ];
 
-    protected $appends = ['username', 'level', 'avatar'];
+    protected $appends = ['username', 'level', 'avatar', 'grouplogo'];
 
     public function getAvatarAttribute()
     {
@@ -28,6 +28,14 @@ class Student extends Model implements HasMedia
             return $media->getUrl();
         }
         return "/img/no_avatar.png";
+    }
+    
+    public function getGrouplogoAttribute()
+    {
+        $group = $this->groups->first();
+        if($group)
+            return $group->logo;
+        return null;
     }
 
 

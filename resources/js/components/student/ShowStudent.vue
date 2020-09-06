@@ -4,7 +4,6 @@
       <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
       {{ student.level.number }}
     </span>
-
     <div
       class="card-image card-shadow-s rounded-top char-bg"
       :style="'background-color:' + theme.color + ';background-image: url(/img/bg/thumb_' + theme.name + ');'"

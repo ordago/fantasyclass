@@ -168,7 +168,9 @@
             class="level-top rounded has-padding-4 has-background-light"
             v-if="student.level"
           >{{ student.level.number }}</span>
-
+          <span v-if="student.grouplogo" class="top-right is-full-rounded">
+            <img :src="student.grouplogo" class=" is-full-rounded" />
+          </span>
           <div
             class="card-image card-shadow-s rounded-top char-bg"
             :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
@@ -589,7 +591,7 @@ export default {
     this.sortKey = $cookies.get("order") ?? "name";
     this.viewGrid = $cookies.get("viewGrid") ?? 0;
   },
-  data: function() {
+  data: function () {
     return {
       mainBehavioursJson: [],
       otherBehavioursJson: [],
@@ -615,7 +617,7 @@ export default {
       showCard: false,
       studentSelected: 0,
       groupSelected: 0,
-      event: null
+      event: null,
     };
   },
   methods: {
@@ -632,7 +634,7 @@ export default {
             icon: "times-circle",
             iconPack: "fa",
             ariaRole: "alertdialog",
-            ariaModal: true
+            ariaModal: true,
           });
           return false;
         } else {
@@ -648,7 +650,7 @@ export default {
             icon: "times-circle",
             iconPack: "fa",
             ariaRole: "alertdialog",
-            ariaModal: true
+            ariaModal: true,
           });
           return false;
         } else {
@@ -659,9 +661,9 @@ export default {
         .post("/classroom/" + this.classroom.code + "/card/assign", {
           type: to,
           id: target,
-          card: card
+          card: card,
         })
-        .then(response => {
+        .then((response) => {
           this.showCard = false;
         });
     },
@@ -680,14 +682,14 @@ export default {
             angle: 60,
             spread: 105,
             origin: { x: 0 },
-            colors: colors
+            colors: colors,
           });
           confetti({
             particleCount: 4,
             angle: 120,
             spread: 105,
             origin: { x: 1 },
-            colors: colors
+            colors: colors,
           });
 
           if (Date.now() < end) {
@@ -716,7 +718,7 @@ export default {
     getRandomCard() {
       axios
         .get("/classroom/" + this.classroom.code + "/card/random")
-        .then(response => {
+        .then((response) => {
           this.randomCard = response.data;
           this.isCardModalActive = true;
         });
@@ -731,7 +733,7 @@ export default {
         "&amp;size=400x400";
       this.isQrModalActive = true;
     },
-    orderBy: function(sorKey) {
+    orderBy: function (sorKey) {
       this.$cookies.set("order", sorKey, Infinity);
       this.sortKey = sorKey;
     },
@@ -745,28 +747,28 @@ export default {
         this.numItems
       );
     },
-    changeView: function() {
+    changeView: function () {
       this.viewGrid = (this.viewGrid + 1) % 3;
       this.$cookies.set("viewGrid", this.viewGrid, Infinity);
     },
-    updateProp: function(id, prop, value) {
+    updateProp: function (id, prop, value) {
       let options = { id: id, prop: prop, value: value };
-      axios.post("/classroom/students/update", options).then(response => {
+      axios.post("/classroom/students/update", options).then((response) => {
         if (prop == "xp") {
-          let student = this.students.find(el => el.id === id);
+          let student = this.students.find((el) => el.id === id);
           student.xp = response.data.xp;
           student.level = response.data.level;
         } else if (prop == "gold")
-          this.students.find(el => el.id === id).gold = response.data;
+          this.students.find((el) => el.id === id).gold = response.data;
         this.custom = 0;
         this.$emit("students", this.students);
         this.$forceUpdate();
       });
     },
-    addBehaviour: function(id, behaviour) {
+    addBehaviour: function (id, behaviour) {
       let options = { id: id, behaviour: behaviour };
-      axios.post("/classroom/student/behaviour", options).then(response => {
-        let student = this.students.find(el => el.id === id);
+      axios.post("/classroom/student/behaviour", options).then((response) => {
+        let student = this.students.find((el) => el.id === id);
         student.hp = response.data.hp;
         student.xp = response.data.xp.xp;
         student.gold = response.data.gold;
@@ -777,14 +779,14 @@ export default {
     redirect(id) {
       window.location.href =
         "/classroom/" + this.classroom.code + "/student/" + id;
-    }
+    },
   },
   computed: {
-    orderedStudents: function() {
+    orderedStudents: function () {
       let order = "desc";
       if (this.sortKey == "name") order = "asc";
       return _.orderBy(this.students, this.sortKey, order);
-    }
-  }
+    },
+  },
 };
 </script>

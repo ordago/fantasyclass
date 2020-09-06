@@ -201,7 +201,6 @@ class StudentController extends Controller
     public function deleteLog(Request $request)
     {
 
-
         $student = Student::findOrFail($request->student);
         $class = Classroom::where('id', $student->classroom->classroom->id)->first();
         $this->authorize('update', $class);
