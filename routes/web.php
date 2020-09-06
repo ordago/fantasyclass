@@ -21,6 +21,13 @@ Route::group(['middleware' => 'language'], function () {
     // Home
     Route::redirect('/', '/classroom');
 
+    // Miscellany
+    Route::get('/contribute', 'MiscellanyController@contribute');
+
+    // Login
+    Route::get('/login/{locale}', 'Auth\LoginController@index');
+    Route::get('/register/{locale}', 'Auth\RegisterController@index');
+
     // Classroom
     Route::prefix('classroom')->group(function () {
         Route::get('/', 'ClassroomsController@index')->name('classrooms');
@@ -71,6 +78,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories');
         Route::get('/show/{code}/map', 'ClassroomsStudentController@map');
         Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules');
+        Route::get('/show/{code}/licenses', 'ClassroomsStudentController@licenses');
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
@@ -120,7 +128,7 @@ Route::group(['middleware' => 'language'], function () {
         // Question
         Route::post('/challenge/question', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
-        Route::post('/question/answer', 'QuestionController@answer'); // TODO Policy protect
+        Route::post('/question/answer', 'QuestionController@answer');
         
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
@@ -143,7 +151,7 @@ Route::group(['middleware' => 'language'], function () {
         // Settings
         Route::get('/{code}/settings', 'SettingsController@index');
         Route::patch('/{code}/setting', 'SettingsController@updateSetting');
-        Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+        Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite'); 
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
         

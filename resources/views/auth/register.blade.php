@@ -1,9 +1,16 @@
 @extends('layouts.app')
 
+@php
+App::setlocale('ca');
+@endphp
+
 @section('content')
+<div class="top-right rounded" style="width: auto; font-size: 1em">
+    <i class="fal fa-globe"></i> <a class="has-text-light" href="/register/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/en">en</a>
+</div>
 <div class="box form">
     <div class="has-text-centered">
-        <img src="img/logo.svg" width="100px" />
+        <img src="/img/logo.svg" width="100px" />
     </div>
     <div class="">
         <form method="POST" action="{{ route('register') }}">

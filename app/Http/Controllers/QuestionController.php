@@ -67,6 +67,8 @@ class QuestionController extends Controller
     {
         $question = Question::find(request()->question['id']);
         $class = Classroom::where('id', $question->challenge->group->classroom_id)->first();
+        $this->authorize('study', $class);
+
         $student = Functions::getCurrentStudent($class, []);
         if ($student->questions->contains($question->id))
             return false;

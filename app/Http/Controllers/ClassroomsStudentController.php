@@ -32,6 +32,7 @@ class ClassroomsStudentController extends Controller
     {
 
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class); 
 
         $data = request()->validate([
             'avatar' => ['image'],
@@ -200,8 +201,16 @@ class ClassroomsStudentController extends Controller
         $rules = Rules::where('classroom_id', $class->id)->first();
         $rules = Functions::replaceSpecial($rules->content, $class);
         $student = Functions::getCurrentStudent($class, []);
-
+        
         return view('studentsview.rules', compact('class', 'rules', 'student'));
+    }
+    
+    public function licenses($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);        
+        $student = Functions::getCurrentStudent($class, []);
+        
+        return view('studentsview.licenses', compact('class', 'student'));
     }
 
     public function markChallenge($code)

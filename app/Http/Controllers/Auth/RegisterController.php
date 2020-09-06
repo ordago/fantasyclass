@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -39,6 +40,14 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+    }
+
+    public function index($locale) {
+        if (! in_array($locale, ['en', 'es', 'ca'])) {
+            abort(404);
+        }
+        App::setLocale($locale);
+        return view('auth.register');
     }
 
     /**

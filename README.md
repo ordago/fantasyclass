@@ -1,3 +1,12 @@
+## Contibute
+
+Patreon us!
+https://www.patreon.com/join/gamifica
+
+Buy us some beers / coffes :)
+https://www.paypal.com/paypalme/gamificaOnline
+
+
 ## Contibutions
 
 Coders
@@ -16,7 +25,7 @@ Help and sponsors
 - [Ander García.](https://aprendecoreano.com/) 
 - Isabel Hernández.
 
-## Contribute in the project
+## Contribute to the project
 ### To import the project
 
 [Laravel Installation](https://laravel.com/docs/7.x/installation)
@@ -128,6 +137,17 @@ Popper tippy:
  Vue-excel
  https://github.com/jecovier/vue-json-excel#readme
  
+## 3rd party Licenses
+
+- Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+- [Vector de negocios creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/negocios)
+- [Vector de fondo creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/fondo)
+- [Vector de Niños creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/ninos)
+- [Vector de Diseño creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/diseno)
+- [Vector de Carácter creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/caracter)
+- [Vector de Moda creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/moda)
+- [Vector de Dibujos animados creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/dibujos-animados)
+
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).

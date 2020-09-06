@@ -270,7 +270,7 @@ export default {
             .then(response => {
               if (response.data === 1) {
                 // TODO change to delete teacher from array
-                location.reload()
+                location.reload(true)
               }
             });
         }
@@ -298,7 +298,7 @@ export default {
               });
               if (response.data.type == "success") {
                 // TODO change to insert teacher from array
-                location.reload()
+                location.reload(true)
               }
             });
         }
