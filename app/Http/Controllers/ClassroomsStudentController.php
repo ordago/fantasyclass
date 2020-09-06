@@ -144,6 +144,9 @@ class ClassroomsStudentController extends Controller
             'eq1' => json_encode($eq1),
             'eq2' => json_encode($eq2),
             'eq3' => json_encode($eq3),
+            'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
+            'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
+            'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ];
 
         $challenges = DB::table('students')
@@ -332,6 +335,9 @@ class ClassroomsStudentController extends Controller
         $this->authorize('study', $class);        
         $student = Functions::getCurrentStudent($class, []);
 
+        if($student->hp == 0)
+        return false;
+
         $new = Equipment::where('id', '=', request()->new)->firstOrFail();
 
         // $old = Equipment::where('id', '=', request()->old)->firstOrFail();
@@ -350,14 +356,28 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
-        if ($new->price > $student->gold) {
+        switch ($new->offset) {
+            case 1:
+            default:
+                $key = "shop_multiplier_1";
+            break;
+            case 2:
+                $key = "shop_multiplier_2";
+            break;
+            case 3:
+                $key = "shop_multiplier_3";
+                break;
+        }
+        $mult = (float) settings()->get($key, 1);
+        $price = round($new->price * $mult);
+        if ($price > $student->gold) {
             return [
                 "message" => " " . __('success_error.shop_failed_money'),
                 "icon" => "sad-tear",
                 "type" => "error"
             ];
         }
-        $gold = $student->gold - $new->price;
+        $gold = $student->gold - $price;
         $student->update(['gold' => $gold]);
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);

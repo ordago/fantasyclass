@@ -12,7 +12,10 @@
           >{{ trans.get('shop.visibility') }}</b-switch>
         </div>
 
-        <a class="button is-primary" :href="'/classroom/'+ code + '/shop/create'">{{ trans.get('shop.new_item') }}</a>
+        <a
+          class="button is-primary"
+          :href="'/classroom/'+ code + '/shop/create'"
+        >{{ trans.get('shop.new_item') }}</a>
 
         <div
           v-for="item in items"
@@ -129,7 +132,12 @@
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" :label="trans.get('shop.eq1')" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item
+        v-if="character"
+        :label="trans.get('shop.eq1')"
+        icon-pack="fa"
+        class="has-padding-x-4"
+      >
         <div class="field">
           <b-switch
             :value="true"
@@ -138,10 +146,49 @@
             passive-type="is-danger"
             @input="toggleVisibility('equipment_1_visibility')"
           >{{ trans.get('shop.visibility') }}</b-switch>
+
+          <b-field label="Multiplier" class="has-margin-top-4">
+            <b-numberinput
+              @input="$forceUpdate()"
+              controls-position="compact"
+              step=".05"
+              v-model="config.multiplier1"
+            ></b-numberinput>
+          </b-field>
+          <button class="button is-primary" @click="save(1)">
+            <i class="fas fa-save has-margin-right-2"></i> Save
+          </button>
+        </div>
+        <div
+          v-for="(char, index) in shop['eq1']"
+          :key="index"
+          class="is-flex has-border-dark has-margin-2"
+        >
+          <div
+            v-for="item in char"
+            :key="index + '-' + item.id"
+            class="is-flex has-all-centered has-margin-4 has-border"
+          >
+            <img
+              class="has-margin-right-3"
+              :src="'/img/character/' + item.src"
+              width="50px"
+              height="50px"
+            />
+            {{ Math.round(item.price * config.multiplier1) }}
+            <i
+              class="fas fa-coins colored"
+            ></i>
+          </div>
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" :label="trans.get('shop.eq2')" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item
+        v-if="character"
+        :label="trans.get('shop.eq2')"
+        icon-pack="fa"
+        class="has-padding-x-4"
+      >
         <div class="field">
           <b-switch
             :value="true"
@@ -150,10 +197,48 @@
             passive-type="is-danger"
             @input="toggleVisibility('equipment_2_visibility')"
           >{{ trans.get('shop.visibility') }}</b-switch>
+          <b-field label="Multiplier" class="has-margin-top-4">
+            <b-numberinput
+              @input="$forceUpdate()"
+              controls-position="compact"
+              step=".05"
+              v-model="config.multiplier2"
+            ></b-numberinput>
+          </b-field>
+          <button class="button is-primary" @click="save(2)">
+            <i class="fas fa-save has-margin-right-2"></i> Save
+          </button>
+        </div>
+        <div
+          v-for="(char, index) in shop['eq2']"
+          :key="index"
+          class="is-flex has-border-dark has-margin-2"
+        >
+          <div
+            v-for="item in char"
+            :key="index + '-' + item.id"
+            class="is-flex has-all-centered has-margin-4 has-border"
+          >
+            <img
+              class="has-margin-right-3"
+              :src="'/img/character/' + item.src"
+              width="50px"
+              height="50px"
+            />
+            {{ Math.round(item.price * config.multiplier2) }}
+            <i
+              class="fas fa-coins colored"
+            ></i>
+          </div>
         </div>
       </b-tab-item>
 
-      <b-tab-item v-if="character" :label="trans.get('shop.eq3')" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item
+        v-if="character"
+        :label="trans.get('shop.eq3')"
+        icon-pack="fa"
+        class="has-padding-x-4"
+      >
         <div class="field">
           <b-switch
             :value="true"
@@ -162,6 +247,39 @@
             passive-type="is-danger"
             @input="toggleVisibility('equipment_3_visibility')"
           >{{ trans.get('shop.visibility') }}</b-switch>
+          <b-field label="Multiplier" class="has-margin-top-4">
+            <b-numberinput
+              @input="$forceUpdate()"
+              controls-position="compact"
+              step=".05"
+              v-model="config.multiplier3"
+            ></b-numberinput>
+          </b-field>
+          <button class="button is-primary" @click="save(3)">
+            <i class="fas fa-save has-margin-right-2"></i> Save
+          </button>
+        </div>
+        <div
+          v-for="(char, index) in shop['eq3']"
+          :key="index"
+          class="is-flex has-border-dark has-margin-2"
+        >
+          <div
+            v-for="item in char"
+            :key="index + '-' + item.id"
+            class="is-flex has-all-centered has-margin-4 has-border"
+          >
+            <img
+              class="has-margin-right-3"
+              :src="'/img/character/' + item.src"
+              width="50px"
+              height="50px"
+            />
+            {{ Math.round(item.price * config.multiplier3) }}
+            <i
+              class="fas fa-coins colored"
+            ></i>
+          </div>
         </div>
       </b-tab-item>
     </b-tabs>
@@ -170,9 +288,9 @@
 
 <script>
 export default {
-  props: ["items", "config", "code", "character"],
+  props: ["items", "config", "code", "character", "shop"],
   mounted() {},
-  data: function() {
+  data: function () {
     return {
       activeTab: 0,
       items_visibility: this.config.items_visibility,
@@ -181,7 +299,7 @@ export default {
       equipment_3_visibility: this.config.equipment_3_visibility ? true : false,
       forceUpdate: 0,
       nom: "",
-      visible: false
+      visible: false,
     };
   },
   methods: {
@@ -190,18 +308,44 @@ export default {
         .patch("/classroom/" + this.code + "/setting", {
           _method: "patch",
           prop: prop,
-          action: "toggle"
+          action: "toggle",
         })
-        .then(response => {});
+        .then((response) => {});
     },
     updateForSale(item) {
       axios
         .patch("/classroom/" + this.code + "/shop/forsale", {
           _method: "patch",
           id: item.id,
-          for_sale: item.for_sale
+          for_sale: item.for_sale,
         })
-        .then(response => {});
+        .then((response) => {});
+    },
+    save(eq) {
+      console.log(1)
+      let key;
+      let value;
+      switch (eq) {
+        case 1:
+          key = "shop_multiplier_1";
+          value = this.config.multiplier1;
+          break;
+        case 2:
+          key = "shop_multiplier_2";
+          value = this.config.multiplier2;
+          break;
+        case 3:
+          key = "shop_multiplier_3";
+          value = this.config.multiplier3;
+          break;
+      }
+      console.log('saving')
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: key,
+        value: value,
+        action: "update",
+      });
     },
     deleteItem(id) {
       this.$buefy.dialog.confirm({
@@ -215,18 +359,18 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          var index = this.items.findIndex(function(item, i) {
+          var index = this.items.findIndex(function (item, i) {
             return item.id === id;
           });
-          axios.delete("/classroom/shop/" + id).then(response => {
+          axios.delete("/classroom/shop/" + id).then((response) => {
             if (response.data === 1) {
               this.items.splice(index, 1);
               this.$forceUpdate();
             }
           });
-        }
+        },
       });
-    }
+    },
   },
   computed: {
     visibilityItems() {
@@ -251,7 +395,7 @@ export default {
     },
     getIconItem() {
       return this.items_visibility ? "eye-slash" : "eye";
-    }
-  }
+    },
+  },
 };
 </script>

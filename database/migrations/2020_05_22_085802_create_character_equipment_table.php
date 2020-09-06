@@ -249,9 +249,9 @@ class CreateCharacterItemsTable extends Migration
                 ['id' => '291','src' => 'pirateanimals/croco_eq3_head.png', 'offset' => '3', 'type' => '2','character_id' => '14','hp' => '20','xp' => '20','gold' => '40','price' => '1800', 'classes' => 'is-absolute head-5 moveHeadUD'],
                 ['id' => '300','src' => 'skeleton_head.png', 'offset' => '0', 'type' => '1','character_id' => '15','hp' => '0','xp' => '0','gold' => '0','price' => '0', 'classes' => 'helmet'],
                 ['id' => '301','src' => 'skeleton_body.png', 'offset' => '0', 'type' => '2','character_id' => '15','hp' => '0','xp' => '0','gold' => '0','price' => '0', 'classes' => 'armor'],
-                ['id' => '302','src' => 'skeleton_legs.png', 'offset' => '0', 'type' => '3','character_id' => '15','hp' => '0','xp' => '0','gold' => '10','price' => '0', 'classes' => 'boots'],
-                ['id' => '303','src' => 'sword-0_974536_char.png', 'offset' => '0', 'type' => '4','character_id' => '15','hp' => '0','xp' => '0','gold' => '40','price' => '0', 'classes' => 'sword'],
-                ['id' => '304','src' => 'shield-0_0762db6a6a.png', 'offset' => '0', 'type' => '5','character_id' => '15','hp' => '0','xp' => '0','gold' => '40','price' => '0', 'classes' => 'shield'],
+                ['id' => '302','src' => 'skeleton_legs.png', 'offset' => '0', 'type' => '3','character_id' => '15','hp' => '0','xp' => '0','gold' => '0','price' => '0', 'classes' => 'boots'],
+                ['id' => '303','src' => 'sword-0_974536_char.png', 'offset' => '0', 'type' => '4','character_id' => '15','hp' => '0','xp' => '0','gold' => '0','price' => '0', 'classes' => 'sword'],
+                ['id' => '304','src' => 'shield-0_0762db6a6a.png', 'offset' => '0', 'type' => '5','character_id' => '15','hp' => '0','xp' => '0','gold' => '0','price' => '0', 'classes' => 'shield'],
             
                 ]
         );

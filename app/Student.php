@@ -212,7 +212,7 @@ class Student extends Model implements HasMedia
     public function setUndead()
     {
         $this->equipment()->detach($this->equipment);
-        $this->equipment()->attach([300, 301, 302, 303, 304, 305]);
+        $this->equipment()->attach([300, 301, 302, 303, 304]);
         
     }
     public function setBasicEquipment()

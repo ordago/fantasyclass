@@ -260,7 +260,7 @@
                         class="item"
                       />
                       <div class="price-buy rounded" @click="buyEquipment(gear, itemStore)">
-                        {{ itemStore.price }}
+                        {{ calculate(itemStore) }}
                         <i class="fas fa-coins colored"></i>
                       </div>
                     </div>
@@ -563,6 +563,22 @@ export default {
     };
   },
   methods: {
+    calculate(item) {
+      console.log(item);
+      let mult = 1;
+      switch (item.offset) {
+        case 1:
+          mult = this.shop.multiplier1;
+          break;
+        case 2:
+          mult = this.shop.multiplier2;
+          break;
+        case 3:
+          mult = this.shop.multiplier3;
+          break;
+      }
+      return Math.round(item.price * mult);
+    },
     deleteStudent() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -844,7 +860,7 @@ export default {
               });
               if (response.data.type == "success") {
                 this.student.equipment = response.data.equipment;
-                this.student.gold = this.student.gold - newItem.price;
+                this.student.gold = this.student.gold - this.calculate(newItem);
                 oldItem.src = newItem.src;
                 let reference = "item" + oldItem.id;
                 this.student.boost = response.data.boost;
