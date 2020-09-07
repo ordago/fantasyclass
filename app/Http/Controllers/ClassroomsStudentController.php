@@ -95,7 +95,7 @@ class ClassroomsStudentController extends Controller
         $stories = [];
 
         foreach ($class->challengeGroups as $group) {
-            array_push($stories, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now()->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($stories, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
                     ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
                     ->all();
@@ -153,7 +153,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
-            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
                     ->from('challenges')
@@ -175,7 +175,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
-            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
             ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
                 $query->select('challenges_groups.id')
                     ->from('challenges_groups')

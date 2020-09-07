@@ -63,6 +63,9 @@ export default {
       }
     },
     setCard(id, line, type, action, index, indexC) {
+      this.pending[index].cards.splice(indexC, 1);
+      if (!this.pending[index].cards.length) this.open = false;
+      this.$forceUpdate();
       axios
         .post("/classroom/card/usedelete/" + id, {
           student: line.student.id,
@@ -79,10 +82,6 @@ export default {
           });
           if (action) {
             if (response.data.type == "success") location.reload();
-          } else {
-            this.pending[index].cards.splice(indexC, 1);
-            if (!this.pending[index].cards.length) this.open = false;
-            this.$forceUpdate();
           }
         });
     },

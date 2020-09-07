@@ -169,7 +169,7 @@
             v-if="student.level"
           >{{ student.level.number }}</span>
           <span v-if="student.grouplogo" class="top-right is-full-rounded">
-            <img :src="student.grouplogo" class=" is-full-rounded" />
+            <img :src="student.grouplogo" class="is-full-rounded" />
           </span>
           <div
             class="card-image card-shadow-s rounded-top char-bg"
@@ -207,6 +207,13 @@
 
             <div class="content">
               <div>
+                <div
+                  class="notification is-danger has-margin-y-2"
+                  v-if="student.numcards[0] > student.numcards[1]"
+                >
+                  <i class="fas fa-exclamation-square"></i>
+                  Cards number exceded {{ student.numcards[0] }} / {{ student.numcards[1] }}
+                </div>
                 <div class="centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3">
                   <span
                     class="attribute has-background-white-ter has-padding-y-2 rounded"
@@ -664,6 +671,7 @@ export default {
           card: card,
         })
         .then((response) => {
+          this.getRandomCard();
           this.showCard = false;
         });
     },

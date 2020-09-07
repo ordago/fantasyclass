@@ -122,7 +122,7 @@ export default {
       let number = 0;
       if (this.$parent.$parent.$parent.student.level != null)
         number = this.$parent.$parent.$parent.student.level.number;
-      if(this.card.min_lvl > number) return false;
+      if(type == 1 && this.card.min_lvl > number) return false;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("cards.use_title"),

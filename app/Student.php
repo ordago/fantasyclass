@@ -38,6 +38,21 @@ class Student extends Model implements HasMedia
         return null;
     }
 
+    public function getNumcardsAttribute()
+    {
+        settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
+        
+        $num = 0;
+        $max = settings()->get('num_cards', 5);
+        
+        foreach ($this->cards as $card) {
+            if($card->special != 1)
+                $num++;
+            if($card->slot != 0)
+                $max += $card->slot;
+        }
+        return [$num, $max];
+    }
 
     public function getBoostAttribute()
     {

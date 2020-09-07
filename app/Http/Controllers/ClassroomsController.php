@@ -226,6 +226,8 @@ class ClassroomsController extends Controller
         $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
 
+        $students->each->append('numcards');
+
         $pending = collect();
         foreach ($class->students as $student) {
             $cards = $student->cards->where('pivot.marked', ">", 0);
