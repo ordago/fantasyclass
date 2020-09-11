@@ -195,7 +195,10 @@ class StudentController extends Controller
         $cards = $student->cards;
         $student->append('boost');
 
-        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards'));
+        $evaluation[0] = EvaluationController::individualReport($class, $student);
+        $settings = EvaluationController::getEvalSettings($class->id);
+
+        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings'));
     }
 
     public function deleteLog(Request $request)

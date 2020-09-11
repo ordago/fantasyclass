@@ -17,14 +17,39 @@ class EvaluationController extends Controller
         $this->middleware('verified');
     }
 
-    public function getSettings($classId)
+    public static function getEvalSettings($classId)
     {
         $settings = [];
         settings()->setExtraColumns(['classroom_id' => $classId]);
         $settings['eval_type'] = settings()->get('eval_type', 0);
         $settings['eval_max'] = settings()->get('eval_max', 10);
-        $settings['eval_visible'] = settings()->get('eval_visible', true);
+        $settings['eval_visible'] = settings()->get('eval_visible', false);
         return $settings;
+    }
+
+    public static function individualReport($class, $student) {
+        $tags = collect();
+        foreach ($class->tags as $tag) {
+            $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0, 'count' => 0]);
+        }
+
+        foreach ($student->grades as $grade) {
+            if ($grade->pivot->grade) {
+                $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
+                foreach ($evaluable->tags as $evalTag) {
+                    $tags->transform(function ($item, $key) use ($evalTag, $grade) {
+                        if ($item['id'] == $evalTag->id) {
+                            $item['count'] = $item['count'] + 1;
+                                $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
+                        } else {
+                                $gradeCalc = $item['grade'];
+                        }
+                        return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc, 'count' => $item['count']];
+                    });
+                }
+            }
+        }
+        return ['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags];
     }
 
     public function report($code)
@@ -35,30 +60,10 @@ class EvaluationController extends Controller
         $grades = collect();
         $students = $class->students;
         foreach ($students as $student) {
-            $tags = collect();
-            foreach ($class->tags as $tag) {
-                $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0, 'count' => 0]);
-            }
-
-            foreach ($student->grades as $grade) {
-                if ($grade->pivot->grade) {
-                    $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
-                    foreach ($evaluable->tags as $evalTag) {
-                        $tags->transform(function ($item, $key) use ($evalTag, $grade) {
-                            if ($item['id'] == $evalTag->id) {
-                                $item['count'] = $item['count'] + 1;
-                                    $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
-                            } else {
-                                    $gradeCalc = $item['grade'];
-                            }
-                            return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc, 'count' => $item['count']];
-                        });
-                    }
-                }
-            }
-            $grades->push(['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags]);
+            
+            $grades->push(EvaluationController::individualReport($class, $student));
         }
-        $settings = $this->getSettings($class->id);
+        $settings = EvaluationController::getEvalSettings($class->id);
 
         return view('evaluation.report', compact('grades', 'class', 'settings'));
     }
@@ -72,7 +77,7 @@ class EvaluationController extends Controller
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $lines = Evaluable::where('classroom_id', $class->id)->with('tags')->get();
 
-        $settings = $this->getSettings($class->id);
+        $settings = EvaluationController::getEvalSettings($class->id);
 
         return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines', 'settings'));
     }
@@ -116,7 +121,7 @@ class EvaluationController extends Controller
             ->selectRaw('students.id, students.name, evaluable_student.grade, evaluable_student.feedback')
             ->get();
 
-        $settings = $this->getSettings($class->id);
+        $settings = EvaluationController::getEvalSettings($class->id);
 
         return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric', 'settings'));
     }

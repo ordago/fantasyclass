@@ -32,7 +32,7 @@ class ClassroomsStudentController extends Controller
     {
 
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('studyOrTeach', $class); 
+        $this->authorize('studyOrTeach', $class);
 
         $data = request()->validate([
             'avatar' => ['image'],
@@ -62,10 +62,11 @@ class ClassroomsStudentController extends Controller
         Image::make($path)->resize(128, 128)->save();
     }
 
-    public function checkVisibility($class) {
+    public function checkVisibility($class)
+    {
         settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
-        if(settings()->get('state', 0) == 2)
+        if (settings()->get('state', 0) == 2)
             abort(403);
     }
 
@@ -73,7 +74,7 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.groups', 'theme')->firstOrFail();
         $this->checkVisibility($class->id);
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
 
         $student = Functions::getCurrentStudent($class);
         $students = $class->students->map(function ($user) {
@@ -90,7 +91,7 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
         $this->checkVisibility($class->id);
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
         $stories = [];
 
@@ -101,7 +102,7 @@ class ClassroomsStudentController extends Controller
                     ->all();
             }));
         }
-        
+
         $all = [];
         foreach ($stories as $section) {
             foreach ($section as $value) {
@@ -194,32 +195,41 @@ class ClassroomsStudentController extends Controller
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');
+        
+        $evaluation = null;
+        if (settings()->get('eval_visible', false)){
+            $evaluation[0] = EvaluationController::individualReport($class, $student);
+        }
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards'));
+        $settings = EvaluationController::getEvalSettings($class->id);
+        
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings'));
     }
 
-    public function rules($code) {
+    public function rules($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $rules = Rules::where('classroom_id', $class->id)->first();
         $rules = Functions::replaceSpecial($rules->content, $class);
         $student = Functions::getCurrentStudent($class, []);
-        
+
         return view('studentsview.rules', compact('class', 'rules', 'student'));
     }
-    
-    public function licenses($code) {
+
+    public function licenses($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
-        
+
         return view('studentsview.licenses', compact('class', 'student'));
     }
 
     public function markChallenge($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
 
         $data = request()->validate([
@@ -261,21 +271,21 @@ class ClassroomsStudentController extends Controller
             'student' => ['numeric', 'nullable'],
         ]);
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('studyOrTeach', $class);        
-        
-        if($data['student']) {
+        $this->authorize('studyOrTeach', $class);
+
+        if ($data['student']) {
             $student = Student::where('id', $data['student'])->firstOrFail();
-            if($student->classroom->classroom_id != $class->id)
+            if ($student->classroom->classroom_id != $class->id)
                 return false;
-        } else 
+        } else
             $student = Functions::getCurrentStudent($class, []);
-        
+
         $card = Card::where('id', '=', $id)->where('classroom_id', '=', $class->id)->first();
         $cardLine = CardStudent::where('card_id', $card->id)
-        ->where('student_id', $student->id)
-        ->orderBy('marked')
-        ->first();
-        
+            ->where('student_id', $student->id)
+            ->orderBy('marked')
+            ->first();
+
         $cardLine->update(['marked' => $data['type']]);
         return [
             "message" => " " . __('success_error.update_success'),
@@ -287,16 +297,16 @@ class ClassroomsStudentController extends Controller
     {
 
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        
-        if(!settings()->get('items_visibility', false))
+
+        if (!settings()->get('items_visibility', false))
             abort(403);
 
         $student = Functions::getCurrentStudent($class, []);
 
-        if($student->hp == 0)
+        if ($student->hp == 0)
             return false;
 
         $data = request()->validate([
@@ -339,10 +349,10 @@ class ClassroomsStudentController extends Controller
     public function buyEquipment($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
 
-        if($student->hp == 0)
+        if ($student->hp == 0)
             abort(403);
 
         $new = Equipment::where('id', '=', request()->new)->firstOrFail();
@@ -367,17 +377,17 @@ class ClassroomsStudentController extends Controller
         switch ($new->offset) {
             case 1:
             default:
-                if(!settings()->get('equipment_1_visibility', false))
+                if (!settings()->get('equipment_1_visibility', false))
                     abort(403);
                 $key = "shop_multiplier_1";
-            break;
+                break;
             case 2:
-                if(!settings()->get('equipment_2_visibility', false))
+                if (!settings()->get('equipment_2_visibility', false))
                     abort(403);
                 $key = "shop_multiplier_2";
-            break;
+                break;
             case 3:
-                if(!settings()->get('equipment_3_visibility', false))
+                if (!settings()->get('equipment_3_visibility', false))
                     abort(403);
                 $key = "shop_multiplier_3";
                 break;
@@ -407,17 +417,17 @@ class ClassroomsStudentController extends Controller
     public function useItem($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         $data = request()->validate([
             'id' => 'numeric',
             'itemId' => 'numeric',
         ]);
 
         $student = Functions::getCurrentStudent($class, []);
-        
-        if($student->hp <= 0)
+
+        if ($student->hp <= 0)
             return false;
-            
+
         $item = $student->items->where('id', '=', $data['itemId'])->first();
 
         if (!$item->pivot->count > 0)
@@ -441,12 +451,12 @@ class ClassroomsStudentController extends Controller
     public function map($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);        
+        $this->authorize('study', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $activeMap = settings()->get('active_map');
 
         $map = Map::where('id', '=', $activeMap)->firstOrFail();
-  
+
         $student = Functions::getCurrentStudent($class);
         return view('studentsview.map', compact('class', 'map', 'student'));
     }

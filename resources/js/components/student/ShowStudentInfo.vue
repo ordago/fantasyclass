@@ -419,6 +419,15 @@
         </b-tab-item>
 
         <b-tab-item
+          label="Evaluation"
+          v-if="evaluation"
+          icon="analytics"
+          icon-pack="fad"
+        >
+              <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
+        </b-tab-item>
+
+        <b-tab-item
           label="Badges"
           v-if="(classroom.badges && classroom.badges.length) || student.badges.length"
           icon="award"
@@ -528,6 +537,8 @@ export default {
     "shop",
     "challenges",
     "cards",
+    "evaluation",
+    "settings",
   ],
   mounted() {
     this.behaviours = this.student.behaviours;

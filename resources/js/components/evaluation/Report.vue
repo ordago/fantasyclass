@@ -16,7 +16,7 @@
       <tr v-for="student in grades" :key="student.student_id">
         <td>{{ student.name }}</td>
         <td v-for="grade in student.grades" :key="grade.id">
-          {{ getGrade(grade) }}
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">{{ getGrade(grade) }}</span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(getGrade(grade)) + ' rateEmoji'"></i>
           </span>
@@ -25,7 +25,7 @@
           </span>
         </td>
         <td>
-          {{ finalGrade(student) }} / {{ settings.eval_max }}
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">{{ finalGrade(student) }} / {{ settings.eval_max }}</span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(finalGrade(student)) + ' rateEmoji'"></i>
           </span>
@@ -44,8 +44,9 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["classroom", "grades", "settings"],
-  created: function () {},
+  props: ["classroom", "grades", "settings", "admin"],
+  created: function () {
+  },
   data: function () {
     return {};
   },
