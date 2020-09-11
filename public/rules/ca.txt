@@ -1,1 +1,21 @@
-<h1>%GAME_NAME%</h1><p>Como en todo juego, este también tiene una serie de normas que se tienen que cumplir. Estas reglas serán \"vivas\" y siempre <strong><u>la decisión final será del profesor</u></strong>.</p><h2>Objetivo</h2><p>En %GAME_NAME%, el objetivo principal&nbsp;es conseguir conquistar todos los territorios del mapa y llegar al máximo nivel. Para hacerlo tendrás que ir superando los desafíos propuestos.</p><h2>Atributos</h2><p>Con la <strong>experiencia </strong>%XP% irás escalando por los niveles, y estos te permitirán usar objetos y cartas únicas.</p><p>Con el <strong>oro </strong>%GOLD% podrás comprar objetos y equipamiento para mejorar tus atributos. Además, te servirá para usar cartas (%GOLDUSE% %GOLD%) y también lo neccesitarás para eliminarlas (%GOLD_DELETE% %GOLD%)</p><p>Durante el juego deberás evitar perder todos tus <strong>puntos de vida</strong> %HP%. Cuando se llega a tener 0 %HP%, se pasa a formar parte del grupo de los \"Undead\", que lucharán para recuperar el honor perdido.</p><h2>Subclases</h2><p>En el juego hay diferentes subclases a elegir, cada una destaca en un atributo:</p><ul><li><p>%HP%: Pueden comprar equipo para potenciar este atributo, al perder vida, perderán menos cantidad que el resto de subclases.</p></li><li><p>%GOLD%: Pueden potenciar el atributo de dinero, ganarán más dinero que el resto de subclases.</p></li><li><p>%XP%: Comprando el equipo adecuado, les permitirá ganar más experiencia que el resto de subclases.</p></li></ul><p>¡Piensa bien la clase adecuada!</p><h2>Desafíos</h2><p>Los desafíos, además de los comportamientos, te harán ganar experiencia, oro, puntos de vida, etc. Pero también te aportarán recompensas únicas como objetos o cartas, que podrás usar para obtener superpoderes durante el juego.</p><p>Seguro que te esforzarás al máximo por superarlos, ¡adelante!</p><h2>¿Jugamos? 😁</h2>
+<h1>%GAME_NAME%</h1>
+<p>Com tot joc, aquest també té una sèrie de normes que s'han d'acomplir. Aquestes regles seran "vives" i sempre <strong><u>la decisió final serà del professor</u></strong>.</p>
+<h2>Objectiu</h2>
+<p>En %GAME_NAME%, l'objectiu principal és aconseguir conquerir tots els territoris del mapa i aconseguir el màxim nivell. Per a fer-ho hauràs de superar els reptes proposats.</p>
+<h2>Atributs</h2>
+<p>Amb l'<strong>experiència </strong>%XP% podràs escalar pels nivells, i aquests et permetran utilitzar objectes i cartes úniques.</p>
+<p>Amb l'<strong>or </strong>%GOLD% podràs comprar objectes i equipaments per millorar els teus atributs. A més, et servirà per utilitzar cartes (%GOLD_USE% %GOLD%) i també el necessitaràs per eliminar-les (%GOLD_DELETE% %GOLD%)</p>
+<p>Durant el joc hauràs d'evitar perdre tots els teus <strong>punts de vida</strong> %HP%. Quan s'arriba a tenir 0 %HP%, es passa a formar part del grup dels "Undead", que lluitaran per recuperar l'honor perdut (i perdràs tot el que tenies).</p>
+<h2>Subclasses</h2>
+<p>En el joc hi ha diferents subclasses a escollir, cada una destaca en un atribut:</p>
+<ul><li><p>%HP%: Poden comprar equipament per a potenciar aquest atribut, en perdre vida, perdran menys quantitat que la resta de subclasses.</p></li>
+<li><p>%GOLD%: Poden potenciar l'atribut dels diners, guanyaran més diners que la resta de subclasses.</p></li>
+<li><p>%XP%: Comprant l'equipament adequat, els permetrà guanyar més experiència que la resta de subclasses.</p></li></ul>
+<p>Pensa bé la classe adequada!</p>
+<h2>Reptes</h2>
+<p>Els reptes, a banda dels comportaments, et faran guanyar experiència, or, punts de vida, etc. Però també t'aportaran recompenses úniques com objectes o cartes, que podràs utilitzar per obtenir superpoders durant el joc.</p>
+<p>Segur que t'esforçaràs al màxim per superar-los, endavant!</p>
+<h2>Cartes</h2>
+<p>Durant el joc aconseguiràs cartes del tresor que poden ser positives o negatives, però ull! Solament pots tenir %NUM_CARDS%, i eliminar-les o utilitzar-les et costarà or.</p>
+<p>Existeixen unes cartes especials (color daurat) que no ocupen lloc, així que no comptaran en el recompte de cartes. 👏👏👏</p>
+<h2>Juguem? 😁</h2>

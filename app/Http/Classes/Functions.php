@@ -28,6 +28,7 @@ class Functions
       $text = str_replace('%GAME_NAME%', $class->adventure_name, $text);
       $text = str_replace('%GOLD_USE%', settings()->get('card_use', 200), $text);
       $text = str_replace('%GOLD_DELETE%', settings()->get('card_delete', 50), $text);
+      $text = str_replace('%NUM_CARDS%', settings()->get('num_cards', 5), $text);
 
     }
   
