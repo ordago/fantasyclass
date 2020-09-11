@@ -22,11 +22,7 @@ class EvaluationController extends Controller
         $settings = [];
         settings()->setExtraColumns(['classroom_id' => $classId]);
         $settings['eval_type'] = settings()->get('eval_type', 0);
-        if ($settings['eval_type'] != 1) {
-            $settings['eval_max'] = settings()->get('eval_max', 10);
-        } else {
-            $settings['eval_max'] = 5;
-        }
+        $settings['eval_max'] = settings()->get('eval_max', 10);
         $settings['eval_visible'] = settings()->get('eval_visible', true);
         return $settings;
     }
@@ -39,22 +35,23 @@ class EvaluationController extends Controller
         $grades = collect();
         $students = $class->students;
         foreach ($students as $student) {
-            // $grades->push(['student' => $student, 'tags' => $tags]);
             $tags = collect();
             foreach ($class->tags as $tag) {
-                $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0]);
+                $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0, 'count' => 0]);
             }
 
             foreach ($student->grades as $grade) {
                 if ($grade->pivot->grade) {
                     $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
                     foreach ($evaluable->tags as $evalTag) {
-
                         $tags->transform(function ($item, $key) use ($evalTag, $grade) {
                             if ($item['id'] == $evalTag->id) {
-                                $gradeCalc = $item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade;
-                            } else $gradeCalc = $item['grade'];
-                            return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc];
+                                $item['count'] = $item['count'] + 1;
+                                    $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
+                            } else {
+                                    $gradeCalc = $item['grade'];
+                            }
+                            return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc, 'count' => $item['count']];
                         });
                     }
                 }

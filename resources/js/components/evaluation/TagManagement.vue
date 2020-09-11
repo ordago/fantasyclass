@@ -86,7 +86,7 @@
               @click="showEditLine(props.row)"
             >
               <i class="fas fa-edit"></i>
-            </b-button> -->
+            </b-button>-->
             <b-button
               v-tippy
               :content="trans.get('general.delete')"
@@ -163,7 +163,7 @@
                 </div>
               </div>
             </div>
-            <div class="field" v-if="settings.eval_type != '1'">
+            <div class="field">
               <label class="label">Max grade</label>
               <div class="control">
                 <input
@@ -325,14 +325,12 @@ export default {
         value: this.settings.eval_type,
         action: "update",
       });
-      if (this.settings.eval_type != 1) {
-        axios.patch("/classroom/" + this.classroom.code + "/setting", {
-          _method: "patch",
-          prop: "eval_max",
-          value: this.settings.eval_max,
-          action: "update",
-        });
-      }
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_max",
+        value: this.settings.eval_max,
+        action: "update",
+      });
       this.isPrefsModalActive = false;
     },
     editTag() {

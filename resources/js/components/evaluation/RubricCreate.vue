@@ -10,7 +10,7 @@
       <label class="label">Rows</label>
       <div class="control">
         <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row has-margin-y-2">
-          <div class="has-padding-2">
+          <!-- <div class="has-padding-2">
             <input
               type="checkbox"
               data-toggle="popover"
@@ -19,7 +19,7 @@
               v-model="row.optional"
               data-tippy-content="Opcional (serveix per a donar punts extra o penalitzacions)"
             />
-          </div>
+          </div> -->
           <div class="description">
             <textarea
               style="height:100%"

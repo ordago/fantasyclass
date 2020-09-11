@@ -25,4 +25,15 @@ class RubricRow extends Model
     {
         return $this->belongsToMany(Student::class)->withPivot('rubric_row_item_id');
     }
+
+    public static function boot()
+    {
+        parent::boot();    
+    
+        // cause a delete of a product to cascade to children so they are also deleted
+        static::deleted(function($rubricRow)
+        {
+            $rubricRow->items()->delete();
+        });
+    } 
 }

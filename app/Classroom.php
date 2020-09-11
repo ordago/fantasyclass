@@ -119,6 +119,7 @@ class Classroom extends Model
             $classroom->challengeGroups()->delete();
             $classroom->maps()->delete();
             $classroom->rules()->delete();
+            $classroom->badges()->delete();
             $classroom->evaluables()->delete();
         });
     } 

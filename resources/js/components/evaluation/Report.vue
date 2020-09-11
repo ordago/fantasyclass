@@ -4,7 +4,7 @@
       <b-button type="is-success has-margin-2">
         <i class="fas fa-file-spreadsheet"></i>
       </b-button>
-    </download-excel> -->
+    </download-excel>-->
     <table>
       <th>Student name</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
@@ -15,8 +15,24 @@
       <th>Total</th>
       <tr v-for="student in grades" :key="student.student_id">
         <td>{{ student.name }}</td>
-        <td v-for="grade in student.grades" :key="grade.id">{{ grade.grade }}</td>
-        <td>{{ finalGrade(student) }} / {{ settings.eval_max }}</td>
+        <td v-for="grade in student.grades" :key="grade.id">
+          {{ getGrade(grade) }}
+          <span v-if="settings.eval_type == 1">
+            <i :class="'fas ' + getEmoji(getGrade(grade)) + ' rateEmoji'"></i>
+          </span>
+          <span v-if="settings.eval_type == 2">
+            <i :class="'fas ' + getPassFail(getGrade(grade))"></i>
+          </span>
+        </td>
+        <td>
+          {{ finalGrade(student) }} / {{ settings.eval_max }}
+          <span v-if="settings.eval_type == 1">
+            <i :class="'fas ' + getEmoji(finalGrade(student)) + ' rateEmoji'"></i>
+          </span>
+          <span v-if="settings.eval_type == 2">
+            <i :class="'fas ' + getPassFail(finalGrade(student))"></i>
+          </span>
+        </td>
       </tr>
     </table>
     <button class="button is-dark noprint" @click="print">
@@ -25,21 +41,31 @@
   </div>
 </template>
 <script>
+import Utils from "../../utils.js";
+
 export default {
   props: ["classroom", "grades", "settings"],
-  created: function () {
-  },
+  created: function () {},
   data: function () {
-    return {
-    };
+    return {};
   },
   methods: {
+    getPassFail: function (grade) {
+      return Utils.getPassFail(grade, this.settings.eval_max);
+    },
+    getEmoji: function (grade) {
+      return Utils.getEmoji(grade, this.settings.eval_max);
+    },
+    getGrade: function (grade) {
+      if (grade.count) return (grade.grade / grade.count).toFixed(2);
+      return grade.grade;
+    },
     finalGrade: function (student) {
       let finalGrade = 0;
       student.grades.forEach((grade) => {
-        finalGrade += (grade.grade * grade.percent) / 100;
+        finalGrade += (this.getGrade(grade) * grade.percent) / 100;
       });
-      return finalGrade;
+      return finalGrade.toFixed(2);
     },
   },
 };

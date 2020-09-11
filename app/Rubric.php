@@ -18,4 +18,15 @@ class Rubric extends Model
     public function rows() {
         return $this->hasMany(RubricRow::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();    
+    
+        // cause a delete of a product to cascade to children so they are also deleted
+        static::deleted(function($rubric)
+        {
+            $rubric->rows()->delete();
+        });
+    } 
 }

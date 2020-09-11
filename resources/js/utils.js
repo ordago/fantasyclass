@@ -3,6 +3,29 @@ import Toasted from 'vue-toasted';
 
 export default {
 
+    getEmoji(grade, max) {
+
+        let gradeCalc = grade * 5 / max;
+        if (gradeCalc < 1.5) {
+            return "fa-frown";
+        } else if (gradeCalc < 2.5) {
+            return "fa-frown-open";
+        } else if (gradeCalc < 3.5) {
+            return "fa-meh";
+        } else if (gradeCalc < 4.5) {
+            return "fa-smile";
+        } else {
+            return "fa-laugh-beam";
+        }
+    },
+
+    getPassFail(grade, max) {
+        if (grade < max/2) {
+            return "fa-times"
+        }
+        return "fa-check";
+    },
+
     // 1 succes, 2, error 
     toast(vue, str, type = 0, duration = 5000, theme = "toasted-primary", ficon = "") {
         switch (type) {
