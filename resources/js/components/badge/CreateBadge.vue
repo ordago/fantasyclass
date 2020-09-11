@@ -5,7 +5,7 @@
 
         <div class="field has-addons">
           <p class="control">
-                <icon-selector></icon-selector>
+                <IconSelector></IconSelector>
           </p>
           <p class="control">
                 <input v-model="icon" name="icon" class="input" required :placeholder="trans.get('badges.icon_select')" type="text" />
@@ -69,6 +69,8 @@
 
 <script>
 
+const IconSelector = () => import("../utils/IconSelector.vue");
+
   export default {
         props: ['code', 'badge'],
         created() {
@@ -95,6 +97,9 @@
                 gold: 0,
                 id: null,
             }
+        },
+        components: {
+          IconSelector
         },
         methods: {
             formSubmit: function(e) {  

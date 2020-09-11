@@ -5,7 +5,7 @@
 
         <div class="field has-addons">
           <p class="control">
-                <icon-selector></icon-selector>
+                <IconSelector></IconSelector>
                 <!-- <vfa-picker is-both="false">
                       <template v-slot:activator="{ on }">
                         <button class="button is-link fullIcon" type="button" @click="on">
@@ -85,6 +85,8 @@
 
 <script>
 
+const IconSelector = () => import("../utils/IconSelector.vue");
+
   export default {
         props: ['code', 'behaviour'],
         created() {
@@ -111,6 +113,9 @@
                 gold: 0,
                 id: null,
             }
+        },
+        components: {
+          IconSelector
         },
         methods: {
             formSubmit: function(e) {  

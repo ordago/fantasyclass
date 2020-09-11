@@ -516,11 +516,13 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
 import Utils from "../../utils.js";
 
 // Download excel
-import JsonExcel from "vue-json-excel";
-Vue.component("downloadExcel", JsonExcel);
+// import JsonExcel from "vue-json-excel";
+// Vue.component("download-excel", JsonExcel);
 
 // Charts
 import VueApexCharts from "vue-apexcharts";

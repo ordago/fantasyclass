@@ -80,7 +80,7 @@
           <label class="label">{{ trans.get('challenges.icon') }}</label>
           <div class="field has-addons">
             <p class="control">
-              <icon-selector></icon-selector>
+              <IconSelector></IconSelector>
             </p>
             <p class="control is-expanded">
               <input
@@ -213,6 +213,7 @@
 </template>
 <script>
 const Editor = () => import("../utils/Editor.vue");
+const IconSelector = () => import("../utils/IconSelector.vue");
 
 export default {
   props: [
@@ -314,6 +315,7 @@ export default {
   },
   components: {
     Editor,
+    IconSelector,
   },
 
   computed: {},

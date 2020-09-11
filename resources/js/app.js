@@ -22,7 +22,6 @@ Vue.prototype.trans = new Lang( {
 
 Vue.prototype.print = window.print;
 
-
 // Toast management
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
@@ -45,6 +44,7 @@ Vue.use(Buefy, {
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
+
 Vue.use(Croppa)
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
@@ -54,7 +54,8 @@ Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
 Vue.component('show-students-student', require('./components/student/ShowStudentsStudent.vue').default);
-Vue.component('show-student-info', require('./components/student/ShowStudentInfo.vue').default);
+Vue.component('show-student-info', () => import('./components/student/ShowStudentInfo.vue'));
+
 Vue.component('show-student-map', require('./components/student/ShowStudentMap.vue').default);
 Vue.component('show-student', require('./components/student/ShowStudent.vue').default);
 
@@ -62,10 +63,10 @@ Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', require('./components/card/ShowCards.vue').default);
 Vue.component('create-card', require('./components/card/CreateCard.vue').default);
 
-Vue.component('create-behaviour', require('./components/behaviour/CreateBehaviour.vue').default);
+Vue.component('create-behaviour', () => import('./components/behaviour/CreateBehaviour.vue'));
 Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
 
-Vue.component('create-badge', require('./components/badge/CreateBadge.vue').default);
+Vue.component('create-badge', () => import('./components/badge/CreateBadge.vue'));
 Vue.component('show-badges', require('./components/badge/ShowBadges.vue').default);
 
 Vue.component('create-levels', require('./components/level/CreateLevels.vue').default);
@@ -75,8 +76,8 @@ Vue.component('show-level-student', require('./components/level/ShowLevelStudent
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
-Vue.component('create-challenges-group', require('./components/challenges/CreateChallengeGroup.vue').default);
-Vue.component('create-challenges', () => import('./components/challenges/CreateChallenges.vue').default);
+Vue.component('create-challenges-group', () => import('./components/challenges/CreateChallengeGroup.vue'));
+Vue.component('create-challenges', () => import('./components/challenges/CreateChallenges.vue'));
 
 Vue.component('show-question', require('./components/challenges/ShowQuestion.vue').default);
 
@@ -101,20 +102,20 @@ Vue.component('tag-management', require('./components/evaluation/TagManagement.v
 Vue.component('grade', require('./components/evaluation/Grade.vue').default);
 Vue.component('report', require('./components/evaluation/Report.vue').default);
 Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
-Vue.component('rubric-create', require('./components/evaluation/RubricCreate.vue').default);
+Vue.component('rubric-create', () => import('./components/evaluation/RubricCreate.vue'));
 
 // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
-Vue.component('icon-selector', require('./components/utils/IconSelector.vue').default);
+// Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);
 
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
-Vue.component('editor', () => import('./components/utils/Editor.vue').default);
+// Vue.component('editor', () => import('./components/utils/Editor.vue').default);
 
 Vue.component('count-down', require('./components/utils/CountDown.vue').default);
 
 Vue.component('notifications', require('./components/utils/Notifications.vue').default);
 
-Vue.component('input-emoji', require('./components/utils/InputEmoji.vue').default);
+Vue.component('input-emoji', () => import('./components/utils/InputEmoji.vue').default);
 
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
 
@@ -189,10 +190,9 @@ Vue.component('massive-actions', require('./components/utils/MassiveActions.vue'
 // });
 
 
-
 const app = new Vue({
     el: '#app',
     data: {
         showNav: false
-    }
+    },
 });

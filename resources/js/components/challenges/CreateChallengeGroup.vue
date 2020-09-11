@@ -13,7 +13,7 @@
       </div>
         <div class="field has-addons">
           <p class="control">
-                <icon-selector></icon-selector>
+                <IconSelector></IconSelector>
           </p>
           <p class="control is-expanded">
                 <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
@@ -51,6 +51,8 @@
 </template>
 
 <script>
+  const IconSelector = () => import("../utils/IconSelector.vue");
+
   export default {
         props: ['code', 'challenge', 'editgroup'],
         created() {
@@ -69,6 +71,9 @@
                 },
                 icon: null,
             }
+        },
+        components: {
+          IconSelector
         },
         methods: {
             formSubmit: function(e) {
