@@ -37,6 +37,18 @@ class ClassroomsController extends Controller
         return $unique;
     }
 
+    public function regenerate($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $code = $this->reference(5);
+        $class->update([
+            'enrollment_code' => $code,
+        ]);
+
+        return $code;
+    }
+
     public function update($code)
     {
 
@@ -54,7 +66,6 @@ class ClassroomsController extends Controller
         $class->update([
             'name' => $data['name'],
             'adventure_name' => $data['adventureName'],
-            'enrollment_code' => $this->reference(5),
             'character_theme' => $data['charTheme'],
             'theme_id' => $data['bgtheme'],
             'goal_type' => $data['goalType'],

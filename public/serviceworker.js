@@ -2,7 +2,18 @@ var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
     // './offline',
     // '/css/app.css',
-    // '/js/app.js',
+    '/js/app.js',
+    '/js/vuejs_code_split/0.js',
+    '/js/vuejs_code_split/1.js',
+    '/js/vuejs_code_split/2.js',
+    '/js/vuejs_code_split/3.js',
+    '/js/vuejs_code_split/4.js',
+    '/js/vuejs_code_split/5.js',
+    '/js/vuejs_code_split/6.js',
+    '/js/vuejs_code_split/7.js',
+    '/js/vuejs_code_split/8.js',
+    '/js/vuejs_code_split/9.js',
+    '/js/vuejs_code_split/10.js',
 ];
 
 // Cache on install

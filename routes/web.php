@@ -38,6 +38,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
         Route::get('{code}/clone', 'ClassroomsController@clone');
+        Route::get('/{code}/regenerate', 'ClassroomsController@regenerate');
         Route::delete('{code}', 'ClassroomsController@destroy');
 
         // Cards

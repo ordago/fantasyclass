@@ -25,6 +25,7 @@ class SettingsController extends Controller
         $settings['rain'] = settings()->get('rain', false);
         $settings['snow'] = settings()->get('snow', false);
         $settings['fog'] = settings()->get('fog', false);
+        $settings['num_cards'] = settings()->get('num_cards', 5);
 
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
