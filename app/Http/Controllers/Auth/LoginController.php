@@ -46,6 +46,8 @@ class LoginController extends Controller
         if (! in_array($locale, ['en', 'es', 'ca'])) {
             abort(404);
         }
+        // $bg = Theme::where('id', '>', 17)->inRandomOrder()->first();
+        // $bg = $bg->name;
         App::setLocale($locale);
         return view('auth.login', compact('locale'));
     }

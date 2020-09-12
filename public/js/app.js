@@ -7074,7 +7074,7 @@ __webpack_require__.r(__webpack_exports__);
         value: this.value
       });
     },
-    saveEconomic: function saveEconomic() {
+    saveCards: function saveCards() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
         prop: "card_use",
@@ -57610,7 +57610,7 @@ var render = function() {
               staticClass: "button is-primary has-margin-4",
               on: {
                 click: function($event) {
-                  return _vm.saveEconomic()
+                  return _vm.saveCards()
                 }
               }
             },
