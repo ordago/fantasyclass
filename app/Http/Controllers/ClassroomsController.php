@@ -172,7 +172,8 @@ class ClassroomsController extends Controller
     public function join($code)
     {
         $class = Classroom::where('enrollment_code', '=', $code)->firstOrFail();
-        $id = auth()->user()->id;
+        $user = auth()->user();
+        $id = $user->id;
         $classId = $class->id;
         try {
             ClassroomUser::create([
