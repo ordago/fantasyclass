@@ -10,20 +10,20 @@ return [
     |
     */
     
-    'classroom' => 'Classroom Management',
-    'parameters' => 'Parameters',
-    'probability' => 'Card type probabilities',
-    'economic' => 'Economic parameters',
-    'use_card_gold' => 'Use card gold',
-    'delete_card_gold' => 'Delete card gold',
-    'weather_management' => 'Weather management',
-    'teachers' => 'Teachers',
-    'add_teachers' => 'Add teacher',
+    'classroom' => 'Gestión de clase',
+    'parameters' => 'Parametros',
+    'probability' => 'Probabilidades de les cartas',
+    'economic' => 'Parametros económicos',
+    'use_card_gold' => 'Oro para utilitzar cartas',
+    'delete_card_gold' => 'Oro para eliminar cartas',
+    'weather_management' => 'Gestión del tiempo',
+    'teachers' => 'Profes',
+    'add_teachers' => 'Añadir profe',
     
-    'rare' => 'Rare',
-    'common' => "Common",
-    'epic' => "epic",
-    'legendary' => "Legendary",
+    'rare' => 'Rara',
+    'common' => "Común",
+    'epic' => "Épica",
+    'legendary' => "Legendaria",
 
 
     
