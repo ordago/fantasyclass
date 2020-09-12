@@ -9,7 +9,7 @@ class CustomPathGenerator implements PathGenerator
 {
     public function getPath(Media $media): string
     {
-        return $media->collection_name . "/" . $media->id . "/";
+        return $media->collection_name . "/" . $media->getAttribute('uuid') . "/";
     }
 
     public function getPathForConversions(Media $media): string
