@@ -201,6 +201,9 @@ class ClassroomsController extends Controller
 
         // Assign basic equipment        
         $student->setBasicEquipment();
+
+        return view('classrooms.index', compact('user'));
+
     }
 
     public function edit($code)
