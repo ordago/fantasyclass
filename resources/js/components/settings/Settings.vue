@@ -152,7 +152,7 @@
             </div>
           </div>
         </div>
-        <button class="button is-primary has-margin-4" @click="saveEconomic()">
+        <button class="button is-primary has-margin-4" @click="saveCards()">
           <i class="fas fa-save has-margin-right-3"></i>
           {{ trans.get('general.save') }}
         </button>
@@ -359,7 +359,7 @@ export default {
         value: this.value,
       });
     },
-    saveEconomic() {
+    saveCards() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
         prop: "card_use",

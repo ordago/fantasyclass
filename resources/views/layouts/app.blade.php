@@ -44,6 +44,7 @@
         // Initialize the service worker
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/serviceworker.js', {
+                registrationStrategy: 'registerImmediately',
                 scope: '/'
             }).then(function(registration) {
                 // Registration was successful
