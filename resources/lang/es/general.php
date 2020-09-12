@@ -10,17 +10,17 @@ return [
     |
     */
     
-    'add' => 'Add',
-    'update' => "Update",
-    'edit' => "Edit",
-    'save' => "Save",
-    'delete' => "Delete",
-    'close' => "Close",
-    'cancel' => "Cancel",
+    'add' => 'Añade',
+    'update' => "Actualiza",
+    'edit' => "Edita",
+    'save' => "Guarda",
+    'delete' => "Elimina",
+    'close' => "Cierra",
+    'cancel' => "Cancela",
     
     'no' => "No",
 
-    'confirm_delete' => "Are you sure you want to delete this element? This action can't be undone.",
-    'confirm_delete_class' => "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION.",
-    'delete' => "Delete",
+    'confirm_delete' => "Estás seguro/en de eliminar este elemento? Esta acción no se puede deshacer.",
+    'confirm_delete_class' => "Estás seguro/en de eliminar este elemento? Esta acción no se puede deshacer. Se ELIMINARÁ TODA LA INFORMACIÓN DE LOS ESTUDIANTES.",
+    'delete' => "Elimina",
 ];

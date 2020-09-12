@@ -2,20 +2,32 @@
 
 return [
 
-    'add' => 'Add story / challenge',
-    'add_category' => 'Add category',
-    'create_challenge' => 'Create challenge',
-    'create' => 'Create challenge',
-    'edit' => 'Edit challenge',
-    'name' => 'Name',
-    'icon' => 'Icon',
-    'parent' => 'Parent group (optional)',
+    'add' => 'Añade historia / reto',
+    'add_category' => 'Añade categoria',
+    'create_challenge' => 'Crea reto',
+    'create' => 'Crea categoria',
+    'categories' => 'Categorias',
+    'edit' => 'Edita Añade',
+    'name' => 'Nombre',
+    'icon' => 'Icono',
+    'parent' => 'Grupo padre (opcional)',
 
-    'completion' => 'Select the requirements to set the challenge as completed',
-    'completion_teacher' => 'The teacher marks it as completed',
-    'completion_student' => 'The student marks it as completed',
-    'completion_both' => 'Both teacher and estudent should mark it as completed',
+    'completion' => 'Selecciona los requisitos para ser marcado como completado',
+    'completion_teacher' => 'El/la profe marca el reto como completado',
+    'completion_student' => 'El/la estudiante marca el reto como completado',
+    'completion_both' => 'Tanto profe como estudiantes tienen que marcar el reto como completado',
     
-    'empty' => 'Let\'s create some challenges!',
+    'empty' => 'Creamos unos retos!',
+
+    'title' => 'Título',
+    'description' => 'Descripción',
+    'description_info' => 'Esto es información del mundo real. P.e. Prueba de trigonometría',
+    'click_select' => 'Clic para seleccionar...',
+    'content' => 'Contenido',
+    'conquer' => 'Es una prueba de conquista?',
+    'rewards' => 'Recompensas',
+    'auto_assign' => 'Auto-asinación de cartas?',
+    'group' => 'Reto de grupo',
+    'optional' => 'Opcional',
     
 ];

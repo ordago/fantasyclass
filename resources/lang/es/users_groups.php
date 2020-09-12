@@ -10,16 +10,18 @@ return [
     |
     */
 
-    'change_layout' => 'Toggle layout view',
-    'order_name' => 'Order by name',
-    'order_hp' => 'Order by health points',
-    'order_xp' => 'Order by experience',
-    'order_gold' => 'Order by gold',
+    'change_layout' => 'Alternar vista de diseño',
+    'order_name' => 'Ordena por nombre',
+    'order_hp' => 'Ordena por puntos de vida',
+    'order_xp' => 'Ordena por experiencia',
+    'order_gold' => 'Ordena por oro',
     
-    'apply' => 'Apply',
+    'apply' => 'Aplica',
     
-    'add_behaviours' => 'Add new behaviours to interact with students',
+    'add_behaviours' => 'Añade nuevos comportamientos para interactuar con estudiantes',
     
-    'add_student' => 'Add student',
+    'create_students' => 'Crear estudiantes',
+    'add_student' => 'Añadir estudiante',
+    'add_students' => 'Añadir estudiantes',
 
 ];

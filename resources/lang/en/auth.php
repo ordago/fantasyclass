@@ -13,9 +13,9 @@ return [
     |
     */
 
-    'provider_failed' => 'El e-mail no está grabado.',
-    'failed' => 'Las credenciales no son correctas.',
-    'throttle' => 'Massa intentos incorrectos. Por favor, intenta en :seconds segundos.',
-    'email' => 'E-mail o nombre de usuario',
+    'provider_failed' => 'The e-mail is not registered.',
+    'failed' => 'These credentials do not match our records.',
+    'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'email' => 'E-mail or username',
 
 ];
