@@ -13,9 +13,14 @@ return [
     |
     */
 
-    'provider_failed' => 'El e-mail no está grabado.',
-    'failed' => 'Las credenciales no son correctas.',
-    'throttle' => 'Massa intentos incorrectos. Por favor, intenta en :seconds segundos.',
-    'email' => 'E-mail o nombre de usuario',
+    'add' => 'Añade mapa',
+    'name' => 'Nombre',
+    'url' => 'URL',
+    'url_info' => 'puede ser una imagen, genial.ly, páguina web ...',
+    'create' => 'Crear',
+    'preview' => 'Vista previa',
+    'set_active' => 'Marcar mapa como activo',
+    'active' => 'Activar',
+    'confirm_active' => 'Esta opción cambiará el mapa activo. Este mapa será visible por los estudiantes.',
 
 ];
