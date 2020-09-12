@@ -203,7 +203,7 @@ class ClassroomsController extends Controller
         // Assign basic equipment        
         $student->setBasicEquipment();
 
-        return view('classrooms.index', compact('user'));
+        return redirect('/classroom');
 
     }
 
