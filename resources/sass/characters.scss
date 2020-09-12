@@ -1,31 +1,32 @@
 .character-student {
-    position: absolute!important;
+    position: absolute !important;
     width: 150px;
     min-height: 150px;
     left: 20px;
     top: 25px;
-    margin: 0!important;
-  }
+    margin: 0 !important;
+}
+
 .disabled {
     opacity: 0.4;
 }
 
-  .char-bg {
+.char-bg {
     max-height: 160px;
     background-size: cover;
     background-repeat: no-repeat;
-  }
+}
 
-  .character-small {
-    transform: scale(0.55)!important;
+.character-small {
+    transform: scale(0.55) !important;
     top: -40px;
     -moz-transform-origin: center center;
     -ms-transform-origin: center center;
     -webkit-transform-origin: center center;
     transform-origin: center center;
-  }
+}
 
-  .character-container {
+.character-container {
     text-align: center;
     margin: 0 auto 0 auto;
 }
@@ -75,15 +76,19 @@
     0% {
         transform: translateY(0px)
     }
+
     20% {
         transform: translateY(4px)
     }
+
     40% {
         transform: translateY(-4px)
     }
+
     60% {
         transform: translateY(4px)
     }
+
     100% {
         transform: translateY(-4px)
     }
@@ -93,15 +98,19 @@
     0% {
         transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(0px)
     }
+
     20% {
         transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(-8.5px)
     }
+
     40% {
         transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(8.5px)
     }
+
     60% {
         transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(-8.5px)
     }
+
     100% {
         transform: scale(0.4, 0.4) scaleY(-1) rotateY(0) translateY(8.5px)
     }
@@ -111,15 +120,19 @@
     0% {
         transform: scale(0.4, 0.4) scaleX(-1) translateY(0px)
     }
+
     20% {
         transform: scale(0.4, 0.4) scaleX(-1) translateY(6.5px)
     }
+
     40% {
         transform: scale(0.4, 0.4) scaleX(-1) translateY(-6.5px)
     }
+
     60% {
         transform: scale(0.4, 0.4) scaleX(-1) translateY(6.5px)
     }
+
     100% {
         transform: scale(0.4, 0.4) scaleX(-1) translateY(-6.5px)
     }
@@ -167,7 +180,7 @@
     z-index: 2;
     animation-name: movement;
     animation-duration: 1.5s;
-  animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
 }
 
 .bow {
@@ -263,3 +276,402 @@
 }
 
 /*****************************/
+
+/************* ROBOTS *********/
+
+
+.armorRobot1 {
+    position: absolute;
+    top: 88px;
+    left: 32.5px;
+}
+
+.bowTieRobot1 {
+    position: absolute;
+    top: 68px;
+    left: 42px;
+}
+
+.bootsRobot1 {
+    position: absolute;
+    left: 37px;
+    top: 155px;
+    z-index: -1;
+}
+
+.helmetRobot1 {
+    left: 40px;
+    z-index: -1;
+}
+
+.gauntletRobot1 {
+    position: absolute;
+    left: 100px;
+    top: 88px;
+    z-index: -1;
+    animation: robot1 1.2s ease infinite;
+}
+
+.character:hover .gauntletRobot1 {
+    animation: robot1 0.5s ease infinite;
+}
+
+.character:hover .helmetRobot1 {
+    animation: robotHead1 2.2s linear infinite;
+}
+
+@keyframes robotHead1 {
+    0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+
+    40% {
+        -webkit-transform: rotate(5deg);
+        transform: rotate(5deg);
+    }
+
+    80% {
+        -webkit-transform: rotate(-5deg);
+        transform: rotate(-5deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+    }
+}
+
+@keyframes robot1 {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.5);
+    }
+
+    40% {
+        transform: scaleY(0);
+    }
+
+    60% {
+        transform: scaleY(0.5);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+@keyframes robot2 {
+    0% {
+        transform: scaleY(1);
+    }
+
+    20% {
+        transform: scaleY(0.75);
+    }
+
+    60% {
+        transform: scaleY(0.75);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.helmetRobot2 {
+    top: 32px;
+    left: 31px;
+}
+
+.eyesRobot2,
+.eyesRobot3 {
+    position: absolute;
+    top: -10px;
+    left: 32.5px;
+    z-index: -1;
+}
+
+.armorRobot2,
+.armorRobot3 {
+    position: absolute;
+    top: 112px;
+    left: 32.5px;
+}
+
+.gauntletRobot2,
+.gauntletRobot3,
+.gauntletRobot4 {
+    position: absolute;
+    left: 14px;
+    transform-origin: 50% 0%;
+    animation: robot2 1.2s ease infinite;
+}
+
+.character:hover .gauntletRobot2,
+.character:hover .gauntletRobot3 {
+    animation: none;
+    transform-origin: 0% 15%;
+    transform: scaleY(-1);
+}
+
+.bootsRobot2,
+.bootsRobot3 {
+    position: absolute;
+    left: 19px;
+    top: 168px;
+    z-index: -1;
+}
+
+.helmetRobot3 {
+    top: 28px;
+    left: 30px;
+}
+
+.helmetRobot4 {
+    top: 25px;
+    left: 23px;
+}
+
+.gauntletRobot4 {
+    z-index: -1;
+    top: 116px;
+}
+
+.bootsRobot4 {
+    left: 17px;
+}
+
+.is-absolute {
+    position: absolute;
+}
+
+/* superh */
+.eqPart {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.legs-sh1 {
+    top: 153.502px;
+    left: 14.209px;
+}
+
+.legs-sh2 {
+    top: 169.78px;
+    left: 12.040px;
+}
+
+.legs-sh3 {
+    top: 170.72px;
+    left: 24.585px;
+}
+
+.body-sh1 {
+    top: 83.776px;
+    left: 0px;
+}
+
+.body-sh2 {
+    top: 54.836px;
+    left: 0;
+}
+
+.body-sh3 {
+    top: 102.838px;
+    left: 10.362px;
+}
+
+.head-sh1 {
+    top: 0;
+    left: 0.901px;
+}
+
+.head-sh2 {
+    top: 26.68px;
+    left: 21px;
+}
+
+.head-sh3 {
+    top: 2.324px;
+    left: 17.718px;
+}
+
+.arms-sh1 {
+    top: 35.72px;
+    left: 2px;
+}
+
+.arms-sh2 {
+    top: 13.059px;
+    left: 22.972px;
+}
+
+.arms-sh3 {
+    top: 103.068px;
+    left: 11.666px;
+}
+
+.backPart {
+    z-index: -1;
+}
+
+.lastPart {
+    z-index: -2;
+}
+
+@keyframes float {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-20px);
+    }
+
+    100% {
+        transform: translatey(0px);
+    }
+}
+
+@keyframes floathover {
+    0% {
+        transform: translatey(-35px);
+    }
+
+    50% {
+        transform: translatey(-28px);
+    }
+
+    100% {
+        transform: translatey(-35px);
+    }
+}
+
+.fly {
+    transform: translatey(0px);
+    animation: float 4s ease-in-out infinite;
+}
+
+.character:hover .fly {
+    animation: floathover .5s ease-in-out infinite;
+}
+
+/**************/
+
+/*** Animals **/
+@keyframes movementAnimal {
+    0% {
+        transform: translateY(0px)
+    }
+
+    20% {
+        transform: translateY(2px)
+    }
+
+    40% {
+        transform: translateY(-2px)
+    }
+
+    60% {
+        transform: translateY(2px)
+    }
+
+    100% {
+        transform: translateY(-2px)
+    }
+}
+
+.moveHeadUD {
+    animation-name: movementAnimal;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+}
+
+.character-container:hover .moveHeadUD {
+    animation-name: robotHead1;
+    animation-duration: 1.5s;
+}
+
+.tail-1 {
+    top: 146.412px;
+    left: 99.955px;
+}
+
+.body-1 {
+    top: 127.645px;
+    left: 2.147px;
+}
+
+.head-1 {
+    z-index: 10;
+    top: 5.138px;
+    left: 1.194px;
+}
+
+.tail-2 {
+    top: 174.529px;
+    left: 99.184px;
+}
+
+.body-2 {
+    top: 147.282px;
+    left: 27.454px;
+}
+
+.head-2 {
+    z-index: 10;
+    top: 7.857px;
+    left: 6.119px;
+}
+.legs-3 {
+    top: 204.594px;
+    left: 10.215px;
+}
+
+.body-3 {
+    top: 115.341px;
+    left: 12.79px;
+}
+
+.head-3 {
+    z-index: 10;
+    top: 40.34px;
+    left: -2px;
+}
+.legs-4 {
+    top: 182.804px;
+    left: 45.163px;
+}
+
+.body-4 {
+    top: 110.444px;
+    left: 19.785px;
+}
+
+.head-4 {
+    z-index: 10;
+    top: 10px;
+    left: 10.679px;
+}
+.legs-5 {
+    top: 186.074px;
+    left: 33.642px;
+}
+
+.body-5 {
+    top: 34.259px;
+    left: 0;
+}
+
+.head-5 {
+    z-index: 10;
+    top: 0;
+    left: 35.419px;
+}
+
+/**************/

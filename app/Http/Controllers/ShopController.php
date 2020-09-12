@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Character;
+use App\CharacterTheme;
 use App\Classroom;
+use App\Equipment;
 use App\Item;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -18,15 +21,38 @@ class ShopController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('items')->firstOrFail();
         $this->authorize('view', $class);
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $config = json_encode([
             'items_visibility' => settings()->get('items_visibility', false) ? true : false,
             'equipment_1_visibility' => settings()->get('equipment_1_visibility', false) ? true : false,
             'equipment_2_visibility' => settings()->get('equipment_2_visibility', false) ? true : false,
             'equipment_3_visibility' => settings()->get('equipment_3_visibility', false) ? true : false,
+            'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
+            'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
+            'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ]);
+        $character = null;
+        if ($class->character_theme) {
+            $character = CharacterTheme::find($class->character_theme)->with('characters')->first();
+            $eq1 = $eq2 = $eq3 = null;
+
+            foreach (Character::where('character_theme_id', $class->character_theme)->get() as $char) {
+                $eq1[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 1)->get();
+                $eq2[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 2)->get();
+                $eq3[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 3)->get();
+            }
+
+            $shop = [
+                'eq1' => $eq1,
+                'eq2' => $eq2,
+                'eq3' => $eq3,
+            ];
+        }
         $items = $class->items;
-        return view('shop.index', compact('class', 'config', 'items'));
+
+
+
+        return view('shop.index', compact('class', 'config', 'items', 'character', 'shop'));
     }
 
     public function create($code)
@@ -56,7 +82,8 @@ class ShopController extends Controller
         return 1;
     }
 
-    public function updateForSale($code) {
+    public function updateForSale($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
@@ -67,7 +94,6 @@ class ShopController extends Controller
 
         $item = Item::where('id', '=', $data['id'])->where('classroom_id', '=', $class->id)->firstOrFail();
         $item->update($data);
-
     }
     public function update($code)
     {
@@ -114,7 +140,7 @@ class ShopController extends Controller
 
             $item->update(['icon' => '/storage/' . $imgPath]);
             $message = __('success_error.add_success');
-            if($action == 'update') 
+            if ($action == 'update')
                 $message = __('success_error.update_success');
             return [
                 "message" => $message,

@@ -20,10 +20,10 @@
         ></croppa>
       </label>
     </figure>
-    <label>Group Name</label>
+    <label>{{ trans.get('groups.group_name') }}</label>
     <input type="text" class="input" v-model="group.name" />
-    <button class="button is-dark has-margin-3" @click="edit">Edit</button>
-    <button class="button is-danger has-margin-3" @click="remove">Delete</button>
+    <button class="button is-dark has-margin-3" @click="edit">{{ trans.get('general.edit') }}</button>
+    <button class="button is-danger has-margin-3" @click="remove">{{ trans.get('general.delete') }}</button>
   </div>
 </template>
 
@@ -32,7 +32,6 @@ export default {
   props: ["group", "code"],
   created() {
     this.prevImage = this.group.logo;
-    console.log(this.group.logo);
   },
   data: function() {
     return {
@@ -51,6 +50,8 @@ export default {
           icon: "check",
           type: "success"
         });
+        this.$destroy();
+        this.$el.parentNode.removeChild(this.$el);
       });
     },
     edit() {

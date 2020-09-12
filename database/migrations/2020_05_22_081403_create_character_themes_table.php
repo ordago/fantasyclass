@@ -24,6 +24,7 @@ class CreateCharacterThemesTable extends Migration
                 ['id' => '2','name' => 'Robots'],
                 ['id' => '3','name' => 'Superheros'],
                 ['id' => '4','name' => 'Pirates / animals'],
+                ['id' => '5','name' => 'Undead'],
             ]);
     }
 

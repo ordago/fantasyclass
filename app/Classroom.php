@@ -21,7 +21,7 @@ class Classroom extends Model
 
     public function getStateAttribute() {
 
-        settings()->setExtraColumns(['user_id' => $this->id]);
+        settings()->setExtraColumns(['classroom_id' => $this->id]);
         return settings()->get('state', 0);
     }
 
@@ -43,6 +43,10 @@ class Classroom extends Model
     public function items()
     {
         return $this->hasMany(Item::class);
+    }
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
     }
 
     public function theme()
@@ -88,6 +92,17 @@ class Classroom extends Model
         return $this->hasMany(Event::class);
     }
 
+    public function rules() {
+        return $this->hasOne(Rules::class);
+    }
+
+    public function badges() {
+        return $this->hasMany(Badge::class);
+    }
+    public function evaluables() {
+        return $this->hasMany(Evaluable::class);
+    }
+
     public static function boot()
     {
         parent::boot();    
@@ -103,7 +118,9 @@ class Classroom extends Model
             $classroom->levels()->delete();
             $classroom->challengeGroups()->delete();
             $classroom->maps()->delete();
-
+            $classroom->rules()->delete();
+            $classroom->badges()->delete();
+            $classroom->evaluables()->delete();
         });
     } 
 }

@@ -11,14 +11,14 @@
                         </a>
                         </p>
                         <p class="control is-expanded">
-                            <input class="input" v-model="stdName" required type="text" placeholder="Name and surname">
+                            <input class="input" v-model="stdName" required type="text" minlength="4" placeholder="Name and surname">
                         </p>
                         <p class="control is-expanded">
                             <input class="input" v-model="stdEmail" type="email" placeholder="Email (optional)">
                         </p>
                         <p class="control">
                             <button class="button is-primary">
-                                +
+                                {{ trans.get('users_groups.add_student') }}
                             </button>
                         </p>
                     </div>
@@ -35,7 +35,7 @@
                 <button class="button is-danger delete-button-right" v-on:click="deleteStudent(index)"><i class="far fa-trash"></i></button>
             </div>            
         </div>
-        <button v-if="students.length" @click="sendStudents" class="button is-link">Create students</button>
+        <button v-if="students.length" @click="sendStudents" class="button is-link">{{ trans.get('users_groups.create_students') }}</button>
     </div>
 </template>
 

@@ -12,6 +12,7 @@ use App\Item;
 use App\Student;
 use App\User;
 use App\Map;
+use App\Rules;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -31,6 +32,7 @@ class ClassroomsStudentController extends Controller
     {
 
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
 
         $data = request()->validate([
             'avatar' => ['image'],
@@ -60,17 +62,20 @@ class ClassroomsStudentController extends Controller
         Image::make($path)->resize(128, 128)->save();
     }
 
-    public function checkVisibility($class) {
-        settings()->setExtraColumns(['user_id' => $class]);
+    public function checkVisibility($class)
+    {
+        settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
-        if(settings()->get('state', 0) == 2)
+        if (settings()->get('state', 0) == 2)
             abort(403);
     }
 
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.groups', 'theme')->firstOrFail();
-        $this->checkVisibility($class->id);        
+        $this->checkVisibility($class->id);
+        $this->authorize('study', $class);
+
         $student = Functions::getCurrentStudent($class);
         $students = $class->students->map(function ($user) {
             return collect($user->toArray())
@@ -86,18 +91,25 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
         $this->checkVisibility($class->id);
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
-        $stories = collect();
+        $stories = [];
 
         foreach ($class->challengeGroups as $group) {
-            $stories = $group->challenges()->with('attachments', 'comments')->where('datetime', '<=', Carbon::now()->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($stories, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'questioninfo'])
+                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
                     ->all();
-            });
+            }));
         }
-        $stories = Arr::sort($stories, function ($story) {
-            // Sort the student's scores by their name.
+
+        $all = [];
+        foreach ($stories as $section) {
+            foreach ($section as $value) {
+                array_push($all, $value);
+            }
+        }
+        $stories = Arr::sort($all, function ($story) {
             return $story['datetime'];
         });
         return view('studentsview.stories', compact('class', 'student', 'stories'));
@@ -107,11 +119,12 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
         $this->checkVisibility($class->id);
+        $this->authorize('study', $class);
         $admin = false;
         $student = Functions::getCurrentStudent($class);
 
         // Shop information
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $items = $eq1 = $eq2 = $eq3 = null;
         if (settings()->get('items_visibility', false) ? true : false) {
@@ -132,13 +145,16 @@ class ClassroomsStudentController extends Controller
             'eq1' => json_encode($eq1),
             'eq2' => json_encode($eq2),
             'eq3' => json_encode($eq3),
+            'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
+            'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
+            'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ];
 
         $challenges = DB::table('students')
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
-            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
                     ->from('challenges')
@@ -160,7 +176,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
-            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
             ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
                 $query->select('challenges_groups.id')
                     ->from('challenges_groups')
@@ -177,13 +193,43 @@ class ClassroomsStudentController extends Controller
 
         $challenges = $challenges->merge($groupChallenges);
         $cards = $student->cards;
+        $student->append('boost');
+        $student->load('badges');
+        
+        $evaluation = null;
+        if (settings()->get('eval_visible', false)){
+            $evaluation[0] = EvaluationController::individualReport($class, $student);
+        }
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards'));
+        $settings = EvaluationController::getEvalSettings($class->id);
+        
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings'));
+    }
+
+    public function rules($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+        $rules = Rules::where('classroom_id', $class->id)->first();
+        $rules = Functions::replaceSpecial($rules->content, $class);
+        $student = Functions::getCurrentStudent($class, []);
+
+        return view('studentsview.rules', compact('class', 'rules', 'student'));
+    }
+
+    public function licenses($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+        $student = Functions::getCurrentStudent($class, []);
+
+        return view('studentsview.licenses', compact('class', 'student'));
     }
 
     public function markChallenge($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
 
         $data = request()->validate([
@@ -205,9 +251,9 @@ class ClassroomsStudentController extends Controller
             }
         }
         if ($update) {
-            $student->setProperty('hp', $challenge->hp);
-            $student->setProperty('xp', $challenge->xp);
-            $student->setProperty('gold', $challenge->gold);
+            $student->setProperty('hp', $challenge->hp, true);
+            $student->setProperty('xp', $challenge->xp, true);
+            $student->setProperty('gold', $challenge->gold, true);
         }
         return [
             'success' => true,
@@ -225,20 +271,21 @@ class ClassroomsStudentController extends Controller
             'student' => ['numeric', 'nullable'],
         ]);
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        
-        if($data['student']) {
+        $this->authorize('studyOrTeach', $class);
+
+        if ($data['student']) {
             $student = Student::where('id', $data['student'])->firstOrFail();
-            if($student->classroom->classroom_id != $class->id)
+            if ($student->classroom->classroom_id != $class->id)
                 return false;
-        } else 
+        } else
             $student = Functions::getCurrentStudent($class, []);
-        
+
         $card = Card::where('id', '=', $id)->where('classroom_id', '=', $class->id)->first();
         $cardLine = CardStudent::where('card_id', $card->id)
-        ->where('student_id', $student->id)
-        ->orderBy('marked')
-        ->first();
-        
+            ->where('student_id', $student->id)
+            ->orderBy('marked')
+            ->first();
+
         $cardLine->update(['marked' => $data['type']]);
         return [
             "message" => " " . __('success_error.update_success'),
@@ -248,8 +295,19 @@ class ClassroomsStudentController extends Controller
     }
     public function buyItem($code)
     {
+
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+
+        if (!settings()->get('items_visibility', false))
+            abort(403);
+
         $student = Functions::getCurrentStudent($class, []);
+
+        if ($student->hp == 0)
+            return false;
 
         $data = request()->validate([
             'item' => 'numeric',
@@ -282,7 +340,7 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => ($student->gold - $item->price)]);
 
         return [
-            "message" => " " . __('success_error.equipment_succes'),
+            "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
             "type" => "success",
             "items" => $student->fresh()->items,
@@ -291,7 +349,11 @@ class ClassroomsStudentController extends Controller
     public function buyEquipment($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
+
+        if ($student->hp == 0)
+            abort(403);
 
         $new = Equipment::where('id', '=', request()->new)->firstOrFail();
 
@@ -311,34 +373,61 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
-        if ($new->price > $student->gold) {
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        switch ($new->offset) {
+            case 1:
+            default:
+                if (!settings()->get('equipment_1_visibility', false))
+                    abort(403);
+                $key = "shop_multiplier_1";
+                break;
+            case 2:
+                if (!settings()->get('equipment_2_visibility', false))
+                    abort(403);
+                $key = "shop_multiplier_2";
+                break;
+            case 3:
+                if (!settings()->get('equipment_3_visibility', false))
+                    abort(403);
+                $key = "shop_multiplier_3";
+                break;
+        }
+        $mult = (float) settings()->get($key, 1);
+        $price = round($new->price * $mult);
+        if ($price > $student->gold) {
             return [
                 "message" => " " . __('success_error.shop_failed_money'),
                 "icon" => "sad-tear",
                 "type" => "error"
             ];
         }
-        $gold = $student->gold - $new->price;
+        $gold = $student->gold - $price;
         $student->update(['gold' => $gold]);
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);
         return [
-            "message" => " " . __('success_error.shop_succes'),
+            "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
             "type" => "success",
             "equipment" => $student->fresh()->equipment,
+            "boost" => $student->fresh()->getBoost(),
         ];
     }
 
     public function useItem($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
         $data = request()->validate([
             'id' => 'numeric',
             'itemId' => 'numeric',
         ]);
 
         $student = Functions::getCurrentStudent($class, []);
+
+        if ($student->hp <= 0)
+            return false;
+
         $item = $student->items->where('id', '=', $data['itemId'])->first();
 
         if (!$item->pivot->count > 0)
@@ -350,10 +439,10 @@ class ClassroomsStudentController extends Controller
             $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
 
         if ($item->hp > 0) {
-            $student->setProperty('hp', $item->hp);
+            $student->setProperty('hp', $item->hp, true);
         }
         if ($item->xp > 0) {
-            $student->setProperty('xp', $item->xp);
+            $student->setProperty('xp', $item->xp, true);
         }
 
         return ['xp' => $item->xp, 'hp' => $item->hp];
@@ -362,11 +451,12 @@ class ClassroomsStudentController extends Controller
     public function map($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        $this->authorize('study', $class);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $activeMap = settings()->get('active_map');
 
         $map = Map::where('id', '=', $activeMap)->firstOrFail();
-  
+
         $student = Functions::getCurrentStudent($class);
         return view('studentsview.map', compact('class', 'map', 'student'));
     }

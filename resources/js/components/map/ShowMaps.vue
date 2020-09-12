@@ -7,39 +7,32 @@
             </div>
             <div class="column is-hidden-mobile">
             </div>
-            <div class="column is-narrow" v-if="data.length">
-                <download-excel style="display:inline"
-                    :data   = "data"
-                    :fields   = "json_fields"              
-                    >
-                    <b-button type="is-success has-margin-2"><i class="fas fa-file-spreadsheet"></i></b-button>
-                </download-excel>
-            </div>
         </div>
-        <div class="container">
+        <div class="has-margin-0 w-100">
         <b-table v-if="data.length"
             :data="data"
             :default-sort="['hp', 'desc']"
             icon-pack="fas"
+            cell-class="align-right"
             sort-icon="arrow-up"
             :row-class="(row, index) => row.id == mapSelected && 'is-info'"
             >
 
             <template slot-scope="props">
-                <b-table-column field="name" label="Name" sortable>
+                <b-table-column field="name" :label="trans.get('maps.name')" sortable>
                     {{ props.row.name }}
                 </b-table-column>
-               <!--
+
                 <b-table-column field="url" label="Url" sortable>
                     {{ props.row.url }}
                 </b-table-column>
--->
-                <b-table-column field="settings" label="Settings" centered>
-                    <b-button type="is-success is-small" @click="mapFullScreen(props.row.name, getURLRefactoring(props.row.url))"><i class="fas fa-map"></i></b-button>
-                    <b-button type="is-primary is-small" v-if="props.row.id != mapSelected" @click="confirmActive(props.row.id)"><i class="fas fa-home"></i></b-button>
-                    <i class="fa fa-ellipsis-v fas fa-lg"></i>
-                    <a :href="'/classroom/' + code + '/maps/' + props.row.id" class="button is-info is-small"><i class="fas fa-edit"></i></a>
-                    <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
+                
+                <b-table-column field="settings" :label="trans.get('menu.settings')" centered class="w-100 is-flex has-all-centered">
+                    <b-button v-tippy :content="trans.get('maps.preview')" type="is-dark is-small" @click="mapFullScreen(props.row.name, getURLRefactoring(props.row.url))"><i class="fas fa-eye"></i></b-button>
+                    <b-button v-tippy :content="trans.get('maps.set_active')" type="is-primary is-small has-margin-left-3" v-if="props.row.id != mapSelected" @click="confirmActive(props.row.id)"><i class="fas fa-map-marker-check"></i></b-button>
+                    <i class="fal fa-ellipsis-v fas fa-lg has-padding-x-3"></i>
+                    <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + code + '/maps/' + props.row.id" class="button is-info is-small has-margin-right-3"><i class="fas fa-edit"></i></a>
+                    <b-button v-tippy :content="trans.get('general.delete')" type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
                 </b-table-column>
                 
             </template>
@@ -59,8 +52,9 @@ import Utils from "../../utils.js";
         props: ['name', 'url'],
         template: `
             <div class="modal-card" style="width: auto">
-                <header class="modal-card-head">
+                <header class="modal-card-head has-padding-2">
                     <p class="modal-card-title">{{ name }}</p>
+                    <button class="button" type="button" @click="$parent.close()">{{ trans.get('general.close') }}</button>
                 </header>
                 <section class="modal-card-body">
                     <div>
@@ -69,9 +63,6 @@ import Utils from "../../utils.js";
                     type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
                     </div>
                 </section>
-                <footer class="modal-card-foot">
-                    <button class="button" type="button" @click="$parent.close()">Close</button>
-                </footer>
             </div>
         `
     }
@@ -139,9 +130,9 @@ import Utils from "../../utils.js";
             },
             confirmActive(mapId) {
                 this.$buefy.dialog.confirm({
-                    title: this.trans.get('map.active'),
-                    message: this.trans.get('map.confirm_active'),
-                    confirmText: this.trans.get('map.active'),
+                    title: this.trans.get('maps.active'),
+                    message: this.trans.get('maps.confirm_active'),
+                    confirmText: this.trans.get('maps.active'),
                     type: 'is-info',
                     hasIcon: true,
                     icon: 'times-circle',
@@ -165,7 +156,13 @@ import Utils from "../../utils.js";
 
 <style>
   tr.is-info {
-      background: #167df0;
+      background: #00d1b2;
       color: #fff;
+  }
+  .align-right {
+      text-align: right;
+  }
+  td [data-label="Url"] {
+      word-break: break-all;
   }
 </style>

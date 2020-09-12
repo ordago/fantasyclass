@@ -1,3 +1,31 @@
+## Contibute
+
+Patreon us!
+https://www.patreon.com/join/gamifica
+
+Buy us some beers / coffes :)
+https://www.paypal.com/paypalme/gamificaOnline
+
+
+## Contibutions
+
+Coders
+- Joan Climent.
+- José García.
+- Xavi Franch.
+
+Help and sponsors
+- [Xavier Climent.](https://twitter.com/xavier_climent) 
+- [Jesús Manzaneque.](https://twitter.com/manzanequejesus) 
+- Guillermo Guerrero. 
+- [Maria Ghirardi (graphics).](http://leideedimari.com/)  
+- [Jujo (graphics).](https://twitter.com/soyjujo_juanjo) 
+- Nacho.  
+- Carlos.
+- [Ander García.](https://aprendecoreano.com/) 
+- Isabel Hernández.
+
+## Contribute to the project
 ### To import the project
 
 [Laravel Installation](https://laravel.com/docs/7.x/installation)
@@ -32,9 +60,9 @@ GOOGLE_SECRET=
 GOOGE_REDIRECT=http://localhost:8000/callback/google
 ```
 
-## After every pull from the server
+### After every pull from the server
 ```
- composer update
+ composer install
  npm install
  php artisan migrate:fresh
  php artisan db:seed
@@ -105,7 +133,21 @@ Popper tippy:
 
  Vue-slider-component:
  https://github.com/NightCatSama/vue-slider-component
+
+ Vue-excel
+ https://github.com/jecovier/vue-json-excel#readme
  
+## 3rd party Licenses
+
+- Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
+- [Vector de negocios creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/negocios)
+- [Vector de fondo creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/fondo)
+- [Vector de Niños creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/ninos)
+- [Vector de Diseño creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/diseno)
+- [Vector de Carácter creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/caracter)
+- [Vector de Moda creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/moda)
+- [Vector de Dibujos animados creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/dibujos-animados)
+
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).

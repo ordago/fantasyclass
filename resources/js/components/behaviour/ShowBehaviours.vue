@@ -7,12 +7,11 @@
           class="button is-link"
         >{{ trans.get('behaviours.add') }}</a>
         <a
-            v-if="behaviours.length < 4"
-            :href="'/classroom/' + this.code + '/behaviours/import/default'"
-            class="button is-info"
+          v-if="behaviours.length < 4"
+          :href="'/classroom/' + this.code + '/behaviours/import/default'"
+          class="button is-info"
         >{{ trans.get('behaviours.import_default') }}</a>
       </div>
-
 
       <div class="column is-hidden-mobile"></div>
       <div class="column is-narrow" v-if="data.length">
@@ -32,7 +31,7 @@
       sort-icon="arrow-up"
     >
       <template slot-scope="props">
-        <b-table-column field="icon" label="Icon" centered>
+        <b-table-column field="icon" :label="trans.get('behaviours.icon')" centered>
           <span
             class="tag"
             v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -41,26 +40,34 @@
           </span>
         </b-table-column>
 
-        <b-table-column field="name" label="First Name" sortable>{{ props.row.name }}</b-table-column>
+        <b-table-column
+          field="name"
+          :label="trans.get('behaviours.name')"
+          sortable
+        >{{ trans.get(props.row.name) }}</b-table-column>
 
-        <b-table-column field="custom_text" label="Custom text" sortable>{{ props.row.custom_text }}</b-table-column>
+        <b-table-column
+          field="custom_text"
+          :label="trans.get('behaviours.custom_text')"
+          sortable
+        >{{ trans.get(props.row.custom_text) }}</b-table-column>
 
-        <b-table-column field="hp" label="Health Points" sortable centered>
+        <b-table-column field="hp" :label="trans.get('behaviours.hp')" sortable centered>
           <i class="fas fa-heart"></i>
           {{ props.row.hp }}
         </b-table-column>
 
-        <b-table-column field="name" label="Experience" sortable centered>
+        <b-table-column field="name" :label="trans.get('behaviours.experience')" sortable centered>
           <i class="fas fa-fist-raised"></i>
           {{ props.row.xp }}
         </b-table-column>
 
-        <b-table-column field="name" label="Gold" sortable centered>
+        <b-table-column field="name" :label="trans.get('behaviours.gold')" sortable centered>
           <i class="fas fa-coins"></i>
           {{ props.row.gold }}
         </b-table-column>
 
-        <b-table-column field="name" label="Settings" centered>
+        <b-table-column field="name" :label="trans.get('menu.settings')" centered>
           <a
             :href="'/classroom/' + code + '/behaviours/' + props.row.id"
             class="button is-info is-small"
@@ -77,12 +84,15 @@
 </template>
 
 <script>
+import JsonExcel from "vue-json-excel";
+Vue.component("download-excel", JsonExcel);
+
 export default {
   props: ["behaviours", "code"],
   created() {
     this.data = JSON.parse(this.behaviours);
   },
-  data: function() {
+  data: function () {
     return {
       data: [],
       json_fields: {
@@ -91,10 +101,10 @@ export default {
         "Custom text": "custom_text",
         HP: "hp",
         XP: "xp",
-        Gold: "gold"
+        Gold: "gold",
       },
       sortIcon: "arrow-down",
-      sortIconSize: "is-small"
+      sortIconSize: "is-small",
     };
   },
   methods: {
@@ -110,17 +120,19 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          var index = this.data.findIndex(function(item, i) {
+          var index = this.data.findIndex(function (item, i) {
             return item.id === behaviourId;
           });
-          axios.delete("/classroom/behaviour/" + behaviourId).then(response => {
-            if (response.data === 1) {
-              this.data.splice(index, 1);
-            }
-          });
-        }
+          axios
+            .delete("/classroom/behaviour/" + behaviourId)
+            .then((response) => {
+              if (response.data === 1) {
+                this.data.splice(index, 1);
+              }
+            });
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>

@@ -42,7 +42,7 @@ class Challenge extends Model
     {
         $questions = collect();
         foreach ($this->questions as $question) {
-            $questions->add(['question' => $question->name , 'stats' => $question->getTeacherInfo()]);
+            $questions->add(['id' => $question->id ,'question' => $question->name , 'stats' => $question->getTeacherInfo()]);
         }
         return $questions;
     }

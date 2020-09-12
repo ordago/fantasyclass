@@ -21,6 +21,13 @@ Route::group(['middleware' => 'language'], function () {
     // Home
     Route::redirect('/', '/classroom');
 
+    // Miscellany
+    Route::get('/contribute', 'MiscellanyController@contribute');
+
+    // Login
+    Route::get('/login/{locale}', 'Auth\LoginController@index');
+    Route::get('/register/{locale}', 'Auth\RegisterController@index');
+
     // Classroom
     Route::prefix('classroom')->group(function () {
         Route::get('/', 'ClassroomsController@index')->name('classrooms');
@@ -28,9 +35,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}', 'ClassroomsController@update');
         Route::get('create', 'ClassroomsController@create');
         Route::get('/{code}/edit', 'ClassroomsController@edit');
-        Route::get('join/{code}', 'ClassroomsController@join');
+        Route::get('/join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
         Route::get('{code}/clone', 'ClassroomsController@clone');
+        Route::get('/{code}/regenerate', 'ClassroomsController@regenerate');
         Route::delete('{code}', 'ClassroomsController@destroy');
 
         // Cards
@@ -57,20 +65,26 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update');
         Route::get('/{code}/student/{id}', 'StudentController@show');
+        Route::post('/{code}/student/name', 'StudentController@updateName');
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter');
+        Route::delete('/student/behaviour', 'StudentController@deleteBehaviour');
         Route::post('/student/behaviour', 'StudentController@addBehaviour');
+        Route::delete('/student/logentry', 'StudentController@deleteLog');
         Route::patch('/student/inventory', 'InventoryController@update');
+        Route::delete('/{code}/student/{id}', 'StudentController@destroy');
         
         // Student View
-        Route::get('/show/{code}', 'ClassroomsStudentController@show'); // Policy protect
-        Route::get('/show/{code}/users', 'ClassroomsStudentController@index'); // Policy protect
-        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories'); // Policy protect
-        Route::get('/show/{code}/map', 'ClassroomsStudentController@map'); // Policy protect
-        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem'); // Policy protect
-        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem'); // Policy protect
-        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment'); // Policy protect
-        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge'); // Policy protect
-        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard'); // Policy protect
+        Route::get('/show/{code}', 'ClassroomsStudentController@show');
+        Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
+        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories');
+        Route::get('/show/{code}/map', 'ClassroomsStudentController@map');
+        Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules');
+        Route::get('/show/{code}/licenses', 'ClassroomsStudentController@licenses');
+        Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
+        Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
+        Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
+        Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
+        Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -81,6 +95,15 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
         Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
         
+        // Badges
+        Route::get('/{code}/badges', 'BadgeController@index');
+        Route::get('/{code}/badges/create', 'BadgeController@create');
+        Route::post('/{code}/badges', 'BadgeController@store');
+        Route::post('/student/badge', 'BadgeController@toggle');
+        Route::delete('/badge/{id}', 'BadgeController@destroy');
+        Route::get('/{code}/badges/{id}', 'BadgeController@show');
+        Route::patch('/badges/{id}', 'BadgeController@update');
+        
         // Levels
         Route::get('/{code}/levels', 'LevelsController@index');
         Route::post('/{code}/levels', 'LevelsController@store');
@@ -90,6 +113,7 @@ Route::group(['middleware' => 'language'], function () {
         // Challenges
         Route::get('/{code}/challenges', 'ChallengesGroupController@index');
         Route::post('/{code}/challenges/group', 'ChallengesGroupController@store');
+        Route::delete('/challenges/group/{id}', 'ChallengesGroupController@destroy');
         Route::post('/{code}/challenges', 'ChallengesController@store');
         Route::post('/{code}/challenges/get', 'ChallengesController@index');
         Route::post('/challenges/image', 'ChallengesController@uploadImage');
@@ -105,11 +129,16 @@ Route::group(['middleware' => 'language'], function () {
         // Question
         Route::post('/challenge/question', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
-        Route::post('/question/answer', 'QuestionController@answer'); // TODO Policy protect
+        Route::post('/question/answer', 'QuestionController@answer');
         
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
+
+        // Rules
+        Route::get('/{code}/rules', 'RulesController@show');
+        Route::post('/default/rules', 'RulesController@default');
+        Route::patch('/{code}/rules', 'RulesController@update');
 
         // Shop
         Route::get('/{code}/shop', 'ShopController@index');
@@ -123,7 +152,7 @@ Route::group(['middleware' => 'language'], function () {
         // Settings
         Route::get('/{code}/settings', 'SettingsController@index');
         Route::patch('/{code}/setting', 'SettingsController@updateSetting');
-        Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar'); // Policy protect
+        Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite'); 
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
         
@@ -131,16 +160,46 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/event/random', 'EventController@show');
 
         // Maps
-        Route::get('/{code}/maps', 'MapsController@index'); // ToDo: Policy protect
-        Route::get('/{code}/maps/create', 'MapsController@create'); // ToDo: Policy protect
-        Route::post('/{code}/maps', 'MapsController@store'); // ToDo: Policy protect
-        Route::delete('/maps/{id}', 'MapsController@destroy'); // ToDo: Policy protect
-        Route::get('/{code}/maps/{id}', 'MapsController@show'); // ToDo: Policy protect
+        Route::get('/{code}/maps', 'MapsController@index');
+        Route::get('/{code}/maps/create', 'MapsController@create');
+        Route::post('/{code}/maps', 'MapsController@store');
+        Route::delete('/maps/{id}', 'MapsController@destroy');
+        Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
+        
+        // Evaluation
+        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
+        Route::get('/{code}/evaluation', 'EvaluationController@index');
+        Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');
+        Route::post('/evaluation/student/rubric', 'EvaluationController@getRubric');
+        Route::post('/evaluation/{id}/evaluate/rubric', 'EvaluationController@evaluateRubric');
+        Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
+        Route::post('/{code}/evaline', 'EvaluationController@store');
+        Route::delete('/evaline/{id}', 'EvaluationController@destroy');
+        Route::get('/{code}/rubrics', 'RubricController@index');
+        Route::get('/{code}/rubric/create', 'RubricController@create');
+        Route::post('/{code}/rubric', 'RubricController@store');
+        Route::patch('/{code}/rubric/{id}', 'RubricController@update');
+        Route::get('/{code}/rubric/{id}', 'RubricController@edit');
+
+        //Tags
+        Route::post('/{code}/tag', 'TagController@store');
+        Route::patch('/{code}/tag', 'TagController@update');
+        Route::delete('/tag/{id}', 'TagController@destroy');
+        
+        // Utils
+        Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
+        Route::post('/{code}/utils/meter', 'UtilsController@meter');
+        Route::post('/{code}/utils/massive', 'UtilsController@massive');
     });
 
     Route::get('/utils/music', 'UtilsController@music');
     
+    // Profile
+    Route::get('/profile/promote', 'ProfileController@promote');
+    Route::get('/profile', 'ProfileController@index');
+    Route::patch('/profile/update', 'ProfileController@update');
+
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');

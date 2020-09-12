@@ -238,7 +238,7 @@ class CardsController extends Controller
 
 
         if ($data['action']) {
-            settings()->setExtraColumns(['user_id' => $class->id]);
+            settings()->setExtraColumns(['classroom_id' => $class->id]);
             if ($data['type'] == 1) {
                 if ($student->level && $card->min_lvl > $student->level->number) {
                     return [
@@ -256,12 +256,12 @@ class CardsController extends Controller
                     ];
                 }
                 if ($card->gold) {
-                    $student->setProperty('gold', $card->gold);
+                    $student->setProperty('gold', $card->gold, true);
                 } else if (!$card->special) {
-                    $student->setProperty('gold', $cost * -1);
+                    $student->setProperty('gold', $cost * -1, true);
                 }
-                if ($card->xp) $student->setProperty('xp', $card->xp);
-                if ($card->hp) $student->setProperty('hp', $card->hp);
+                if ($card->xp) $student->setProperty('xp', $card->xp, true);
+                if ($card->hp) $student->setProperty('hp', $card->hp, true);
             } else {
                 $cost = settings()->get('card_delete', 50);
                 if ($student->gold < $cost) {
@@ -271,7 +271,7 @@ class CardsController extends Controller
                         "type" => "error",
                     ];
                 }
-                $student->setProperty('gold', $cost * -1);
+                $student->setProperty('gold', $cost * -1, true);
             }
             $cardLine->delete();
             return [
@@ -297,7 +297,7 @@ class CardsController extends Controller
         if(!$class->cards->count())
             return false;
 
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
         
         do {

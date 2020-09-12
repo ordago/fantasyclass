@@ -1,7 +1,15 @@
 <template>
   <div class="box card-shadow-s has-margin-bottom-3" v-bind:class="getBackground">
     <section class="media">
-      <div class="media-content">
+      <div class="media-content is-relative">
+        <div
+          class="challenge-category has-background-light"
+          v-if="!admin && full"
+          v-tippy
+          :content="challengeReactive.group.name"
+        >
+          <i :class="challengeReactive.group.icon"></i>
+        </div>
         <div class="content">
           <h1>
             <i
@@ -37,13 +45,12 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <!-- class="el-tiptap-editor__content" -->
           <div v-if="edit || full" v-html="challengeReactive.content"></div>
-          <div class="" v-for="(question, index) in challenge.questioninfo" :key="index">
+          <div class v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
           </div>
-          <div class="" v-for="(question, index) in challenge.stats" :key="index">
-            <show-question :admin="admin" :question="question"></show-question>
+          <div class v-for="(question, index) in challenge.stats" :key="index">
+            <show-question :admin="admin" :index="index" :question="question"></show-question>
           </div>
           <div class="has-margin-top-5">
             <div
@@ -110,7 +117,7 @@
               </div>
             </div>
           </div>
-          <input-emoji></input-emoji>
+          <InputEmoji v-if="edit || full"></InputEmoji>
           <div class="has-margin-top-3 comments">
             <div
               class="comment has-margin-0"
@@ -283,9 +290,9 @@
             <p class="modal-card-title">Add question</p>
           </header>
           <section class="modal-card-body">
-               <b-field>
-                  <b-input placeholder="Question" v-model="question.question" type="text" required></b-input>
-              </b-field>
+            <b-field>
+              <b-input placeholder="Question" v-model="question.question" type="text" required></b-input>
+            </b-field>
             <div class="field is-horizontal has-margin-bottom-3">
               <div class="field-body">
                 <div class="field is-expanded">
@@ -297,7 +304,12 @@
                     </p>
                     <p class="control is-expanded">
                       <b-field>
-                          <b-input placeholder="Correct answer" v-model="question.correctAnswer" type="text" required></b-input>
+                        <b-input
+                          placeholder="Correct answer"
+                          v-model="question.correctAnswer"
+                          type="text"
+                          required
+                        ></b-input>
                       </b-field>
                     </p>
                   </div>
@@ -315,7 +327,12 @@
                     </p>
                     <p class="control is-expanded">
                       <b-field>
-                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer1" required type="text"></b-input>
+                        <b-input
+                          placeholder="Inorrect answer"
+                          v-model="question.incorrectAnswer1"
+                          required
+                          type="text"
+                        ></b-input>
                       </b-field>
                     </p>
                   </div>
@@ -333,7 +350,11 @@
                     </p>
                     <p class="control is-expanded">
                       <b-field>
-                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer2" type="text"></b-input>
+                        <b-input
+                          placeholder="Inorrect answer"
+                          v-model="question.incorrectAnswer2"
+                          type="text"
+                        ></b-input>
                       </b-field>
                     </p>
                   </div>
@@ -351,7 +372,11 @@
                     </p>
                     <p class="control is-expanded">
                       <b-field>
-                          <b-input placeholder="Inorrect answer" v-model="question.incorrectAnswer3" type="text"></b-input>
+                        <b-input
+                          placeholder="Inorrect answer"
+                          v-model="question.incorrectAnswer3"
+                          type="text"
+                        ></b-input>
                       </b-field>
                     </p>
                   </div>
@@ -372,12 +397,14 @@
 import confetti from "canvas-confetti";
 import Utils from "../../utils.js";
 
+const InputEmoji = () => import("../utils/InputEmoji.vue");
+
 export default {
   props: ["challenge", "edit", "admin", "code", "full"],
-  created: function() {
+  created: function () {
     this.challengeReactive = this.challenge;
   },
-  data: function() {
+  data: function () {
     return {
       challengeReactive: null,
       isAttachmentModalActive: false,
@@ -387,23 +414,26 @@ export default {
         type: null,
         name: "",
         url: "",
-        challenge_id: null
+        challenge_id: null,
       },
       question: {
         challenge_id: null,
-        question: '',
-        correctAnswer: '',
-        incorrectAnswer1: '',
-        incorrectAnswer2: '',
-        incorrectAnswer3: '',
+        question: "",
+        correctAnswer: "",
+        incorrectAnswer1: "",
+        incorrectAnswer2: "",
+        incorrectAnswer3: "",
       },
-      comment: ""
+      comment: "",
     };
+  },
+  components: {
+    InputEmoji,
   },
   methods: {
     deleteComment(id) {
-      axios.delete("/classroom/challenge/comment/" + id).then(response => {
-        var index = this.challenge.comments.findIndex(function(comment, i) {
+      axios.delete("/classroom/challenge/comment/" + id).then((response) => {
+        var index = this.challenge.comments.findIndex(function (comment, i) {
           return comment.id === id;
         });
         this.challenge.comments.splice(index, 1);
@@ -416,11 +446,11 @@ export default {
       axios
         .post("/classroom/challenge/comment", {
           challenge_id: this.challenge.id,
-          text: this.comment
+          text: this.comment,
         })
-        .then(response => {
-          this.challenge.comments.push(response.data) 
-          this.comment = ""
+        .then((response) => {
+          this.challenge.comments.push(response.data);
+          this.comment = "";
         });
     },
     confirmDelete(id, index) {
@@ -437,29 +467,29 @@ export default {
         onConfirm: () => {
           axios
             .delete("/classroom/challenge/attachment/" + id)
-            .then(response => {
-              console.log(response.data);
+            .then((response) => {
               if (response.data === 1) {
                 this.challenge.attachments.splice(index, 1);
                 this.$forceUpdate();
               }
             });
-        }
+        },
       });
     },
     getYoutube(url) {
       return Utils.getYoutube(url);
     },
     addQuestion() {
-      this.question.challenge_id = this.challenge.id
+      this.question.challenge_id = this.challenge.id;
       axios
         .post("/classroom/challenge/question", {
-          question: this.question
+          question: this.question,
         })
-        .then(response => {
+        .then((response) => {
           this.isQuestionModalActive = false;
-          // this.challenge.questions.push(response.data);
-          this.$parent().$forceUpdate();
+          this.$parent.$parent.getChallenges(
+            this.challenge.challenges_group_id
+          );
         });
     },
     addAttachment() {
@@ -469,12 +499,11 @@ export default {
       this.attachment.challenge_id = this.challenge.id;
       axios
         .post("/classroom/challenge/attachment", {
-          attachment: this.attachment
+          attachment: this.attachment,
         })
-        .then(response => {
+        .then((response) => {
           this.isAttachmentModalActive = false;
           this.challenge.attachments.push(response.data);
-          this.$parent().$forceUpdate();
         });
     },
     markCompleted(challenge) {
@@ -489,14 +518,14 @@ export default {
         onConfirm: () => {
           axios
             .post("/classroom/" + this.code + "/student/markchallenge", {
-              challenge: this.challengeReactive.id
+              challenge: this.challengeReactive.id,
             })
-            .then(response => {
+            .then((response) => {
               if (response.data.success == true) {
                 confetti({
                   particleCount: 200,
                   spread: 100,
-                  origin: { y: 1.0 }
+                  origin: { y: 1.0 },
                 });
                 this.challengeReactive.count++;
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
@@ -505,12 +534,12 @@ export default {
                 this.$parent.$parent.$parent.forceReload++;
               }
             });
-        }
+        },
       });
-    }
+    },
   },
   computed: {
-    orderedComments: function() {
+    orderedComments: function () {
       return _.orderBy(this.challenge.comments, "created_at", "desc");
     },
     checkCompletion() {
@@ -533,17 +562,17 @@ export default {
           case 0:
           case 1:
             return this.challengeReactive.count == 1
-              ? "has-background-success"
-              : "has-background-danger";
+              ? "has-background-success-light"
+              : "has-background-danger-light";
             break;
           case 2:
             return this.challengeReactive.count == 2
-              ? "has-background-success"
-              : "has-background-danger";
+              ? "has-background-success-light"
+              : "has-background-danger-light";
             break;
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>

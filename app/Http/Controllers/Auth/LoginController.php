@@ -7,6 +7,7 @@ use App\Providers\RouteServiceProvider;
 use App\Theme;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
@@ -40,8 +41,16 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+    
+    public function index($locale) {
+        if (! in_array($locale, ['en', 'es', 'ca'])) {
+            abort(404);
+        }
+        App::setLocale($locale);
+        return view('auth.login', compact('locale'));
+    }
 
-        /**
+    /**
      * Create a new controller instance.
      *
      * @return void

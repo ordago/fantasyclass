@@ -12,6 +12,7 @@
         "akaunting/language": "^1.0",
         "andcarpi/laravel-popper": "^0.9.4",
         "arcanedev/laravel-settings": "^7.0",
+        "doctrine/dbal": "^2.10",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^1.0",
         "guzzlehttp/guzzle": "^6.3",

@@ -17,7 +17,7 @@ class SettingsController extends Controller
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $settings['probabilities'] = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
         $settings['card_use'] = settings()->get('card_use', 200);
         $settings['card_delete'] = settings()->get('card_delete', 50);
@@ -25,6 +25,7 @@ class SettingsController extends Controller
         $settings['rain'] = settings()->get('rain', false);
         $settings['snow'] = settings()->get('snow', false);
         $settings['fog'] = settings()->get('fog', false);
+        $settings['num_cards'] = settings()->get('num_cards', 5);
 
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
@@ -78,7 +79,7 @@ class SettingsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        settings()->setExtraColumns(['user_id' => $class->id]);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         if (request()->action == 'toggle') {
             $value = !settings()->get(request()->prop, 0);
             settings()->set(request()->prop, $value);

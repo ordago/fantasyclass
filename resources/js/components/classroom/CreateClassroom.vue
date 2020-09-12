@@ -44,20 +44,20 @@
                     <img  src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
                 </label>
                 <label>
-                    <input v-model="classForm.character_theme" type="radio" disabled name="charTheme" class="hide-radios" value="2">
-                    <img  src="/img/character/themes-preview/robots.png" class="themePreview disabled" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="2">
+                    <img  src="/img/character/themes-preview/robots.png" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
                 </label>
                 <label>
-                    <input v-model="classForm.character_theme" type="radio" disabled name="charTheme" class="hide-radios" value="3">
-                    <img  src="/img/character/themes-preview/superheros.png" class="themePreview disabled">
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="3">
+                    <img  src="/img/character/themes-preview/superheros.png" class="themePreview">
                 </label>
                 <label>
-                    <input v-model="classForm.character_theme" type="radio" disabled name="charTheme" class="hide-radios" value="4">
-                    <img  src="/img/character/themes-preview/pirateanimals.png" class="themePreview disabled" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="4">
+                    <img  src="/img/character/themes-preview/pirateanimals.png" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
                 </label>
                 <label>
-                    <input v-model="classForm.character_theme" type="radio" disabled name="charTheme" class="hide-radios" value="0">
-                    <img  src="/img/character/themes-preview/custom.png" class="themePreview disabled" v-tippy :content="trans.get('classroom.custom_theme')">
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="0">
+                    <img  src="/img/character/themes-preview/custom.png" class="themePreview" v-tippy :content="trans.get('classroom.custom_theme')">
                 </label>
 
             </b-tab-item>

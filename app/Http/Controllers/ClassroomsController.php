@@ -13,6 +13,7 @@ use App\Grouping;
 use App\Theme;
 use App\Item;
 use App\QuestionBank;
+use App\Rules;
 use App\Student;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -36,6 +37,18 @@ class ClassroomsController extends Controller
         return $unique;
     }
 
+    public function regenerate($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $code = $this->reference(5);
+        $class->update([
+            'enrollment_code' => $code,
+        ]);
+
+        return $code;
+    }
+
     public function update($code)
     {
 
@@ -53,7 +66,6 @@ class ClassroomsController extends Controller
         $class->update([
             'name' => $data['name'],
             'adventure_name' => $data['adventureName'],
-            'enrollment_code' => $this->reference(5),
             'character_theme' => $data['charTheme'],
             'theme_id' => $data['bgtheme'],
             'goal_type' => $data['goalType'],
@@ -144,6 +156,11 @@ class ClassroomsController extends Controller
             'name' => 'General',
             'classroom_id' => $classroom->id,
         ]);
+        
+        Rules::create([
+            'classroom_id' => $classroom->id,
+            'content' => file_get_contents(public_path() . '/rules/' . auth()->user()->locale . '.txt')
+        ]);
 
         auth()->user()->classrooms()->attach([
             $classroom->id => ['role' => 2],
@@ -155,7 +172,8 @@ class ClassroomsController extends Controller
     public function join($code)
     {
         $class = Classroom::where('enrollment_code', '=', $code)->firstOrFail();
-        $id = auth()->user()->id;
+        $user = auth()->user();
+        $id = $user->id;
         $classId = $class->id;
         try {
             ClassroomUser::create([
@@ -184,6 +202,9 @@ class ClassroomsController extends Controller
 
         // Assign basic equipment        
         $student->setBasicEquipment();
+
+        return redirect('/classroom');
+
     }
 
     public function edit($code)
@@ -219,6 +240,8 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
+
+        $students->each->append('numcards');
 
         $pending = collect();
         foreach ($class->students as $student) {

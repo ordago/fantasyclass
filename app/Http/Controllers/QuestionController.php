@@ -42,8 +42,8 @@ class QuestionController extends Controller
 
         $options = collect();
         $ids = $ids->shuffle();
-
         $id = $ids->pop();
+        $options->add(['correctAnswer' => $id]);
         $options->add(['answer' => ['id' => $id, 'text' => $data['question']['correctAnswer']]]);
         $id = $ids->pop();
         $options->add(['answer' => ['id' => $id, 'text' => $data['question']['incorrectAnswer1']]]);
@@ -67,6 +67,8 @@ class QuestionController extends Controller
     {
         $question = Question::find(request()->question['id']);
         $class = Classroom::where('id', $question->challenge->group->classroom_id)->first();
+        $this->authorize('study', $class);
+
         $student = Functions::getCurrentStudent($class, []);
         if ($student->questions->contains($question->id))
             return false;
@@ -80,10 +82,10 @@ class QuestionController extends Controller
     public function destroy($id)
     {
 
-        $attachment = Attachment::findOrFail($id);
-        $class = Classroom::find($attachment->challenge->group->classroom_id);
+        $question = Question::findOrFail($id);
+        $class = Classroom::find($question->challenge->group->classroom_id);
         $this->authorize('update', $class);
 
-        return $attachment->delete();
+        return $question->delete();
     }
 }

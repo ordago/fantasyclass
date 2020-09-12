@@ -1,13 +1,12 @@
   #app {
       height: 100%;
       overflow: auto;
-      overflow-x: auto;
   }
 
   body,
   html {
       height: 100%;
-      overflow: hidden;
+      overflow-y: auto!important;
   }
 
   .deck {
@@ -65,6 +64,18 @@
 
   .night {
     filter: brightness(50%);
+  }
+
+  .level-hidden {
+      z-index: 10; 
+      position:absolute; 
+      top:0; 
+      left: 25px;
+      display: none;
+  }
+
+  .level-top:hover .level-hidden {
+      display: initial;
   }
 
   .cursor-default {
@@ -645,22 +656,22 @@
       visibility: visible;
   }
 
-  .storyConquer .fa-smile,
+  .rateEmoji.fa-smile,
   .coloredEmoji .fa-smile {
       color: darkgreen;
   }
 
-  .storyConquer .fa-frown,
+  .rateEmoji.fa-frown,
   .coloredEmoji .fa-frown {
       color: red;
   }
 
-  .storyConquer .fa-frown-open,
+  .rateEmoji.fa-frown-open,
   .coloredEmoji .fa-frown-open {
       color: #af4448;
   }
 
-  .storyConquer .fa-meh,
+  .rateEmoji.fa-meh,
   .coloredEmoji .fa-meh {
       color: yellow;
   }
@@ -889,13 +900,13 @@
       overflow: auto;
   }
 
-  .gemInfo>i,
-  .gold>i,
-  .score i.fa-fist-raised {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-  }
+//   .gemInfo>i,
+//   .gold>i,
+//   .score i.fa-fist-raised {
+//       position: absolute;
+//       top: 5px;
+//       left: 5px;
+//   }
 
   /* Progress bar level */
 
@@ -915,7 +926,7 @@
 
   .fantasyTitle {
       text-align: center;
-      color: #ddd;
+      color: #fff;
       text-shadow: -.75px 0 black, 0 .75px black, .75px 0 black, 0 -.75px #000;
       font-family: logo;
       font-size: 5rem;
@@ -1367,11 +1378,23 @@
       position: absolute;
       top: 0;
       right: 0;
+      z-index: 10;
       color: #ccc;
       background-color: rgba(0, 0, 0, 0.2);
       padding: 15px;
       font-size: 2em;
       height: 100%;
+  }
+  .top-right {
+      position: absolute;
+      width: 75px;
+      top: 5px;
+      right: 5px;
+      z-index: 10;
+      color: #ccc;
+      background-color: rgba(0, 0, 0, 0.2);
+      padding: 5px;
+      font-size: 2em;
   }
 
   @media screen and (max-width: 500px) {

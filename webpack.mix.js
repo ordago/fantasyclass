@@ -13,10 +13,27 @@ const mix = require('laravel-mix');
 
 
 mix.js([
-    'resources/js/app.js',
-    'resources/js/classroom.js',
+        'resources/js/app.js',
     ], 'public/js')
+    .version()
 
 mix.sass('resources/sass/app.scss', 'public/css').options({
-    processCssUrls: mix.inProduction()
+        processCssUrls: mix.inProduction()
+    })
+    .version();
+
+if (mix.inProduction()) {
+    mix.version();
+}
+
+require('laravel-mix-bundle-analyzer');
+
+if (mix.isWatching()) {
+    mix.bundleAnalyzer();
+}
+
+mix.webpackConfig({
+    output: {
+        chunkFilename: 'js/vuejs_code_split/[name].js',
+    }
 });

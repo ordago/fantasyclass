@@ -1,0 +1,21 @@
+<h1>%GAME_NAME%</h1>
+<p>Com tot joc, aquest també té una sèrie de normes que s'han d'acomplir. Aquestes regles seran "vives" i sempre <strong><u>la decisió final serà del professor</u></strong>.</p>
+<h2>Objectiu</h2>
+<p>En %GAME_NAME%, l'objectiu principal és aconseguir conquerir tots els territoris del mapa i aconseguir el màxim nivell. Per a fer-ho hauràs de superar els reptes proposats.</p>
+<h2>Atributs</h2>
+<p>Amb l'<strong>experiència </strong>%XP% podràs escalar pels nivells, i aquests et permetran utilitzar objectes i cartes úniques.</p>
+<p>Amb l'<strong>or </strong>%GOLD% podràs comprar objectes i equipaments per millorar els teus atributs. A més, et servirà per utilitzar cartes (%GOLD_USE% %GOLD%) i també el necessitaràs per eliminar-les (%GOLD_DELETE% %GOLD%)</p>
+<p>Durant el joc hauràs d'evitar perdre tots els teus <strong>punts de vida</strong> %HP%. Quan s'arriba a tenir 0 %HP%, es passa a formar part del grup dels "Undead", que lluitaran per recuperar l'honor perdut (i perdràs tot el que tenies).</p>
+<h2>Subclasses</h2>
+<p>En el joc hi ha diferents subclasses a escollir, cada una destaca en un atribut:</p>
+<ul><li><p>%HP%: Poden comprar equipament per a potenciar aquest atribut, en perdre vida, perdran menys quantitat que la resta de subclasses.</p></li>
+<li><p>%GOLD%: Poden potenciar l'atribut dels diners, guanyaran més diners que la resta de subclasses.</p></li>
+<li><p>%XP%: Comprant l'equipament adequat, els permetrà guanyar més experiència que la resta de subclasses.</p></li></ul>
+<p>Pensa bé la classe adequada!</p>
+<h2>Reptes</h2>
+<p>Els reptes, a banda dels comportaments, et faran guanyar experiència, or, punts de vida, etc. Però també t'aportaran recompenses úniques com objectes o cartes, que podràs utilitzar per obtenir superpoders durant el joc.</p>
+<p>Segur que t'esforçaràs al màxim per superar-los, endavant!</p>
+<h2>Cartes</h2>
+<p>Durant el joc aconseguiràs cartes del tresor que poden ser positives o negatives, però ull! Solament pots tenir %NUM_CARDS%, i eliminar-les o utilitzar-les et costarà or.</p>
+<p>Existeixen unes cartes especials (color daurat) que no ocupen lloc, així que no comptaran en el recompte de cartes. 👏👏👏</p>
+<h2>Juguem? 😁</h2>

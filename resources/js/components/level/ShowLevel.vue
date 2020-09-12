@@ -1,14 +1,14 @@
 <template>
   <div
-    class="column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered"
+    :class="{ 'column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered' : edit, 'column': !edit}"
   >
-    <input :value="levelJson.id" type="hidden" name="id" />
-    <input :id="'file' + levelJson.id" type="file" style="display: none" @change="getImage" />
+    <input :value="level.id" type="hidden" name="id" />
+    <input v-if="edit" :id="'file' + level.id" type="file" style="display: none" @change="getImage" />
 
-    <div class="columns w-100 is-variable is-0 has-padding-y-2">
-      <div class="column is-narrow has-padding-y-0 card-shadow-s rounded-left">
+    <div :class="{ 'min-width' : !edit }" class="columns w-100 is-variable is-0 has-padding-y-2">
+      <div class="column is-narrow has-padding-y-0 card-shadow-s rounded-left has-background-light">
         <figure class="image is-128x128">
-          <label class="cursor-pointer" :for="'file' + levelJson.id">
+          <label class="cursor-pointer" :for="'file' + level.id">
             <img
               style="width: 128px; height: 128px"
               :src="image"
@@ -17,19 +17,21 @@
           </label>
         </figure>
       </div>
-      <div class="column card has-padding-4 rounded-right card-shadow-s">
-        <p class="is-size-4">Level {{ levelJson.number }}</p>
-        <p class="has-margin-y-2">
-          <i class="fas fa-fist-raised colored"></i> Needed experience
+      <div class="column content card has-padding-4 rounded-right card-shadow-s">
+        <p class="is-size-4">{{ trans.get('levels.level') }} {{ level.number }}</p>
+        <p class="has-margin-y-2" v-if="edit">
+          <i class="fas fa-fist-raised colored"></i> {{ trans.get('levels.xp') }}
         </p>
-        <input type="number" v-model="levelJson.xp" class="input w-100" />
-        <p class="has-margin-y-2">Title (optional)</p>
-        <input v-model="levelJson.title" type="text" class="input w-100" />
-        <p class="has-margin-y-2">Description (optional)</p>
-        <h1 class="is-2">
-          <textarea style="resize: none;" class="input" v-model="levelJson.description"></textarea>
-        </h1>
-        <div class="has-text-right has-margin-top-2">
+        <h2 v-if="!edit">{{ level.title }}</h2>
+        <p v-if="!edit">{{ level.description }}</p>
+        <input type="number" v-if="edit" v-model="level.xp" class="input w-100" />
+        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.title') }}</p>
+        <input v-model="level.title" v-if="edit" type="text" class="input w-100" />
+        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.description') }}</p>
+        <p v-if="edit">
+          <textarea style="resize: none;" class="input" v-model="level.description"></textarea>
+        </p>
+        <div v-if="edit" class="has-text-right has-margin-top-2">
           <button class="button is-dark" @click="update">
             <i class="fas fa-edit"></i>
           </button>
@@ -44,17 +46,14 @@
 
 <script>
 export default {
-  props: ["level", "last", "code"],
+  props: ["level", "last", "code", "edit"],
   created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    this.levelJson = JSON.parse(this.level);
-    this.image = this.levelJson.imagelvl;
-    console.log(this.levelJson.imagelvl);
+    this.image = this.level.imagelvl;
   },
   data: function() {
     return {
       csrfToken: null,
-      levelJson: null,
       image: ""
     };
   },
@@ -88,18 +87,14 @@ export default {
       let formData = new FormData();
       formData.append(
         "file",
-        document.getElementById("file" + this.levelJson.id).files[0]
+        document.getElementById("file" + this.level.id).files[0]
       );
-      formData.append("id", this.levelJson.id);
-      formData.append("title", this.levelJson.title);
-      formData.append("description", this.levelJson.description);
+      formData.append("id", this.level.id);
+      formData.append("title", this.level.title ? this.level.title : '');
+      formData.append("description", this.level.description ? this.level.description : '');
       formData.append("_method", "patch");
       axios
-        .post(
-          "/classroom/levels/" + this.levelJson.id,
-          formData,
-          config
-        )
+        .post("/classroom/levels/" + this.level.id, formData, config)
         .then(response => {
           this.$toasted.show(response.data.message, {
             position: "top-center",
@@ -111,7 +106,7 @@ export default {
         });
     },
     remove: function() {
-      axios.delete("/classroom/level/" + this.levelJson.id).then(response => {
+      axios.delete("/classroom/level/" + this.level.id).then(response => {
         //   if(response.data === 1) {
         //     this.data.splice(index, 1);
         location.reload();
@@ -121,3 +116,10 @@ export default {
   }
 };
 </script>
+<style>
+
+.min-width {
+  min-width: 400px;
+}
+
+</style>

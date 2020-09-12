@@ -1,0 +1,22 @@
+<h1>%GAME_NAME%</h1>
+<p>As in every game, this one also has a series of rules that have to be fulfilled. These rules will be "alive" and always <strong><u> the final decision will be of the teacher</u></strong>.
+<h2>Goal</h2>
+<p>In %GAME_NAME%, the main goal is to conquer all the territories on the map and reach the maximum level. To do this you will have to overcome the proposed challenges.
+<h2>Attributes</h2>
+<p>With the experience you will be able to climb the levels, and these will allow you to use unique objects and cards.</p>
+<p>With the <strong>gold </strong>%GOLD% you can buy objects and equipment to improve your attributes. In addition, you will be able to use cards (%GOLD_USE% %GOLD%) and you will also need it to remove them (%GOLD_DELETE% %GOLD%)</p>
+<p>During the game you must avoid losing all your <strong>life points</strong> %HP%. When you reach 0 %HP%, you become part of the "Undead" group, who will fight to regain the lost honor (you will lose all the things you have).</p>
+<h2>Subclasses</h2>
+<p>In the game there are different subclasses to choose from, each one stands out in an attribute:</p>
+<ul><li><p>%HP%: They can buy equipment to enhance this attribute, when losing life, they will lose less quantity than the rest of subclasses.</p></li>
+<li><p>%GOLD%: They can boost the money attribute, they will earn more money than the rest of subclasses.</p></li>
+<li><p>%XP%: Buying the right equipment will allow you to gain more experience than the rest of the subclasses.</p></li>
+</ul>
+<p>Think of the right class!</p>
+<h2>Challenges</h2>
+<p>The challenges, in addition to the behaviors, will make you gain experience, gold, life points, etc. But they will also bring you unique rewards such as objects or cards, which you can use to obtain super powers during the game.</p>
+<p>I'm sure you will do your best to overcome them, go ahead!
+<h2>Cards</h2>
+<p>During the game you will get treasure cards that can be positive or negative, but watch out! You can only have %NUM_CARDS%, and removing them or using them will cost you gold.</p>
+<p>There are some special cards (golden color) that don't use card spaces, so they will not count in the card count. 👏👏👏</p>
+<h2>Shall we play? 😁</h2>

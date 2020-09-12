@@ -13,7 +13,7 @@
       </div>
         <div class="field has-addons">
           <p class="control">
-                <icon-selector></icon-selector>
+                <IconSelector></IconSelector>
           </p>
           <p class="control is-expanded">
                 <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
@@ -42,7 +42,7 @@
           </div>
           <div class="has-margin-top-3">
           <button class="button is-link" @click="update" v-if="challenge" type="button">{{ trans.get('challenges.edit') }}</button>
-          <button class="button is-success" type="submit" v-if="!challenge">Create category</button>
+          <button class="button is-success" type="submit" v-if="!challenge">{{ trans.get('challenges.create') }}</button>
         </div>
       </form>
       </div>
@@ -51,10 +51,14 @@
 </template>
 
 <script>
+  const IconSelector = () => import("../utils/IconSelector.vue");
+
   export default {
-        props: ['code', 'challenge'],
+        props: ['code', 'challenge', 'editgroup'],
         created() {
           this.csrfToken = document.querySelector('meta[name="csrf-token"]').content
+          if(this.editgroup)
+            this.challengeInfo = this.editgroup
         },
         data: function() {
             return {
@@ -67,6 +71,9 @@
                 },
                 icon: null,
             }
+        },
+        components: {
+          IconSelector
         },
         methods: {
             formSubmit: function(e) {

@@ -1,0 +1,435 @@
+<template>
+  <div class="w-100 content">
+    <div>
+      <button class="button is-link" @click="isTagModalActive=true">
+        <i class="has-margin-right-2 fas fa-tag"></i> Add tag
+      </button>
+      <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
+        <i class="has-margin-right-2 fas fa-tasks-alt"></i> Rubric management
+      </a>
+      <button class="button is-dark" @click="isPrefsModalActive=true">
+        <i class="has-margin-right-2 fas fa-cog"></i> Preferences
+      </button>
+      <a :href="'/classroom/' + classroom.code + '/evaluation/report'" class="button is-primary">
+        <i class="has-margin-right-2 fas fa-file-chart-line"></i> Evaluation report
+      </a>
+    </div>
+    <div class="has-margin-y-3">
+      <span
+        class="tag is-dark is-medium has-margin-right-2"
+        v-for="(tag, index) in tagsReactive"
+        :key="tag.id"
+        v-tippy
+        :content="tag.description"
+      >
+        <i class="fas fa-tag has-margin-right-2"></i>
+        {{ tag.short }} ({{ tag.percent }}%)
+        <small>
+          <i
+            class="fas fa-edit has-background-info rounded pointer has-padding-2 has-margin-left-3"
+            @click="showEditTag(tag)"
+          ></i>
+        </small>
+        <small @click="deleteTag(tag.id, index)">
+          <i
+            class="fas fa-trash-alt has-background-danger rounded pointer has-padding-2 has-margin-left-3"
+          ></i>
+        </small>
+      </span>
+    </div>
+    <div>
+      <button
+        class="button is-link"
+        v-if="tagsReactive.length"
+        @click="isLineModalActive=true"
+      >Add evaluation line</button>
+    </div>
+    <div class="has-margin-3">
+      <b-table
+        v-if="linesReactive.length"
+        :data="linesReactive"
+        icon-pack="fas"
+        cell-class="align-right"
+        sort-icon="arrow-up"
+      >
+        <template slot-scope="props">
+          <b-table-column
+            field="Description"
+            :label="trans.get('maps.name')"
+            sortable
+          >{{ props.row.description }}</b-table-column>
+
+          <b-table-column field="Tags" label="Url" sortable>
+            <span
+              class="tag is-dark has-margin-right-2"
+              v-for="tag in props.row.tags"
+              :key="tag.id"
+            >{{ tag.short }}</span>
+          </b-table-column>
+
+          <b-table-column
+            field="settings"
+            :label="trans.get('menu.settings')"
+            centered
+            class="w-100 is-flex has-all-centered"
+          >
+            <a
+              :href="'/classroom/evaluation/' + props.row.id + '/grade'"
+              class="button is-dark is-small has-margin-right-3"
+            >
+              <i class="fad fa-pencil"></i> Grade
+            </a>
+            <!-- <b-button
+              v-tippy
+              :content="trans.get('general.edit')"
+              type="is-info is-small"
+              @click="showEditLine(props.row)"
+            >
+              <i class="fas fa-edit"></i>
+            </b-button>-->
+            <b-button
+              v-tippy
+              :content="trans.get('general.delete')"
+              type="is-danger is-small"
+              @click="deleteLine(props.row.id)"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </b-button>
+          </b-table-column>
+        </template>
+      </b-table>
+    </div>
+
+    <b-modal
+      :active.sync="isTagModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="addTag">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title" v-if="!tag.classroom_id">Add tag</p>
+            <p class="modal-card-title" v-if="tag.classroom_id">Edit tag</p>
+          </header>
+          <section class="modal-card-body">
+            <b-field label="Abbreviation">
+              <b-input v-model="tag.short" maxlength="15" required></b-input>
+            </b-field>
+            <b-field label="Full description">
+              <b-input v-model="tag.description" required></b-input>
+            </b-field>
+            <b-field label="% of the final grade">
+              <b-input v-model="tag.percent" type="number" required></b-input>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button"
+              type="button"
+              @click="tag={short: '', description: '', percent: 0,},isTagModalActive=false"
+            >Close</button>
+            <button class="button is-primary" v-if="!tag.classroom_id">Add</button>
+            <button class="button is-primary" v-if="tag.classroom_id" @click.prevent="editTag">Edit</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+    <b-modal
+      :active.sync="isPrefsModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="updatePrefs">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Prefs</p>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">Type</label>
+              <div class="control">
+                <div class="select">
+                  <select v-model="settings.eval_type" @input="$forceUpdate()">
+                    <option value="0">Number grade</option>
+                    <option value="1">Emoji grade</option>
+                    <option value="2">Pass / Fail</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="field">
+              <label class="label">Max grade</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="number"
+                  v-model="settings.eval_max"
+                  placeholder="Text input"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <b-switch
+                true-value="1"
+                false-value="0"
+                v-model="settings.eval_visible"
+              >Evaluation visible by students</b-switch>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isPrefsModalActive=false">Close</button>
+            <button class="button is-primary" @click="updatePrefs">Update</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+    <b-modal
+      :active.sync="isLineModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="addLine">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">Add line</p>
+          </header>
+          <section class="modal-card-body">
+            <section>
+              <b-field label="Evaluation tags">
+                <b-taginput
+                  v-model="line.tags"
+                  :data="filteredTags"
+                  autocomplete
+                  ref="taginput"
+                  icon="tag"
+                  @input="setWeight"
+                  placeholder="Add a tag"
+                  icon-pack="fa"
+                  @typing="getFilteredTags"
+                >
+                  <template slot-scope="props">
+                    <strong>{{props.option.short}}</strong>
+                    : {{props.option.description}}
+                  </template>
+                  <template slot="empty">There are no items</template>
+                  <template slot="selected" slot-scope="props">
+                    <b-tag
+                      v-for="(tag, index) in props.tags"
+                      :key="index"
+                      rounded
+                      :tabstop="false"
+                      ellipsis
+                      closable
+                      @close="$refs.taginput.removeTag(index, $event)"
+                    >{{tag.short}}</b-tag>
+                  </template>
+                </b-taginput>
+              </b-field>
+            </section>
+            <b-field label="Description">
+              <b-input v-model="line.description" required></b-input>
+            </b-field>
+            <b-field label="Type">
+              <b-select v-model="line.type" expanded>
+                <option value="0">Simple</option>
+                <option value="1">Advanced (rubric)</option>
+              </b-select>
+            </b-field>
+            <b-field v-if="line.type == 1" label="Rubric">
+              <b-select v-model="line.rubric" expanded>
+                <option
+                  v-for="rubric in rubrics"
+                  :key="rubric.id"
+                  :value="rubric.id"
+                >{{ rubric.name }}</option>
+              </b-select>
+            </b-field>
+            <div v-if="line.tags && line.tags.length">
+              <details>
+                <summary class="is-size-6">
+                  <i class="fas fa-gear"></i> Advanced
+                </summary>
+                <h3>Weigth in the tag</h3>
+                <div class="is-block w-100 has-margin-y-2" v-for="tag in line.tags" :key="tag.id">
+                  <b-field>
+                    <b-field grouped class="is-flex has-all-centered">
+                      <p class="control">{{ tag.short }}</p>
+                      <b-numberinput step="0.1" v-model="line.weights[tag.id]" />
+                    </b-field>
+                  </b-field>
+                </div>
+              </details>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isLineModalActive=false">Close</button>
+            <button class="button is-primary">Add</button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
+  </div>
+</template>
+<script>
+export default {
+  props: ["classroom", "tags", "rubrics", "lines", "settings"],
+  created: function () {
+    this.tagsReactive = this.tags;
+    this.filteredTags = this.tags;
+    this.linesReactive = this.lines;
+  },
+  data: function () {
+    return {
+      filteredTags: null,
+      tagsReactive: null,
+      isTagModalActive: false,
+      isLineModalActive: false,
+      isGradeModalActive: false,
+      isPrefsModalActive: false,
+      linesReactive: [],
+      tag: {
+        short: "",
+        description: "",
+        percent: 0,
+      },
+      line: {
+        id: null,
+        tags: [],
+        description: "",
+        weights: {},
+        type: 0,
+        rubric: null,
+      },
+    };
+  },
+  methods: {
+    updatePrefs() {
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_visible",
+        value: this.settings.eval_visible,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_type",
+        value: this.settings.eval_type,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "eval_max",
+        value: this.settings.eval_max,
+        action: "update",
+      });
+      this.isPrefsModalActive = false;
+    },
+    editTag() {
+      axios
+        .patch("/classroom/" + this.classroom.code + "/tag", this.tag)
+        .then((response) => {
+          this.isTagModalActive = false;
+        });
+    },
+    showEditTag(tag) {
+      this.tag = tag;
+      this.isTagModalActive = true;
+    },
+    showEditLine(line) {
+      // this.line.id = line.id;
+      // this.line.description = line.description;
+      // this.line.weights = line.weights;
+      // this.line.type = line.type;
+      // this.line.rubric = line.rubric;
+      // // line.tags.forEach((element) => {
+      // //   let tag = this.tagsReactive.find(function (item, i) {
+      // //     return item.id === element.id;
+      // //   });
+      // //   this.line.tags.push(tag);
+      // // });
+      // this.isLineModalActive = true;
+    },
+    deleteLine(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/evaline/" + id).then((response) => {
+            var index = this.linesReactive.findIndex(function (item, i) {
+              return item.id === id;
+            });
+            this.linesReactive.splice(index, 1);
+          });
+        },
+      });
+    },
+    deleteTag(id, index) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/tag/" + id).then((response) => {
+            this.tagsReactive.splice(index, 1);
+          });
+        },
+      });
+    },
+    setWeight(elems) {
+      elems.forEach((element) => {
+        this.line.weights[element.id] = 1;
+      });
+    },
+    addLine() {
+      if (this.line.tags) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/evaline", this.line)
+          .then((response) => {
+            this.isLineModalActive = false;
+            this.linesReactive.push(response.data);
+          });
+      }
+    },
+    addTag() {
+      axios
+        .post("/classroom/" + this.classroom.code + "/tag", this.tag)
+        .then((response) => {
+          this.isTagModalActive = false;
+          this.tagsReactive.push(response.data);
+        });
+    },
+    getFilteredTags(text) {
+      this.filteredTags = this.tagsReactive.filter((option) => {
+        return (
+          option.short.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0
+        );
+      });
+    },
+  },
+  components: {},
+
+  computed: {},
+};
+</script>
