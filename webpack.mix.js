@@ -22,6 +22,10 @@ mix.sass('resources/sass/app.scss', 'public/css').options({
     })
     .version();
 
+if (mix.inProduction()) {
+    mix.version();
+}
+
 require('laravel-mix-bundle-analyzer');
 
 if (mix.isWatching()) {
