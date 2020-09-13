@@ -37,5 +37,7 @@ return [
     'noise' => 'Medidor de soroll',
     'badges' => 'Insignies',
     'massive' => 'Accions massives',
+    'config' => 'Configura',
+    'contribute' => 'Convida a cafè o cervesa!',
 
 ];

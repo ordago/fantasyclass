@@ -7,7 +7,7 @@
         <span class="icon is-small">
             <i class="fad fa-home" aria-hidden="true"></i>
         </span>
-        <span>Home</span>
+        <span>{{ __('general.home') }}</span>
     </a>
 </li>
 <li>
@@ -15,7 +15,7 @@
         <span class="icon is-small">
             <i class="fad fa-club" aria-hidden="true"></i>
         </span>
-        <span>Cards</span>
+        <span>{{ __('menu.cards') }}</span>
     </a>
 </li>
 <li class="is-active">
@@ -23,7 +23,7 @@
         <span class="icon is-small">
           <i class="fad fa-plus" aria-hidden="true"></i>
         </span>
-        <span>Create card</span>
+        <span>{{ __('cards.create_card') }}</span>
     </a>
 </li>
 @include('layouts.breadcrumbend')

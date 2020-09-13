@@ -12,7 +12,7 @@ return [
     'min_lvl' => 'Nivel mínimo',
     'type' => 'Tipos',
     'special' => 'Especial (no ocupa espacio)',
-    'custom_image' => 'Imatgen personalizada',
+    'custom_image' => 'Imagen personalizada',
     'confirm_empty' => 'Título y contenido están vacíos, estás seguro/en que quieres crear una carta vacía?',
     
     /* Help */

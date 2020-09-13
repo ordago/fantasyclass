@@ -3291,6 +3291,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Editor = function Editor() {
   return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
@@ -50489,7 +50500,7 @@ var render = function() {
           [
             _c(
               "b-field",
-              { attrs: { label: "When it will be visible?" } },
+              { attrs: { label: _vm.trans.get("challenges.avaliability") } },
               [
                 _c(
                   "b-datetimepicker",
@@ -50659,7 +50670,36 @@ var render = function() {
                       }
                     })
                   ])
-                ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "form-group",
+                    staticStyle: { "margin-top": "-10px" }
+                  },
+                  [
+                    _c("label", [
+                      _c("small", [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.trans.get("behaviours.fontawesome")) +
+                            "\n              "
+                        ),
+                        _c(
+                          "a",
+                          {
+                            attrs: {
+                              href: "https://fontawesome.com/icons?d=gallery",
+                              target: "_blank"
+                            }
+                          },
+                          [_vm._v("FontAwesome")]
+                        )
+                      ])
+                    ])
+                  ]
+                )
               ]),
               _vm._v(" "),
               _c("label", { staticClass: "label" }, [
@@ -50932,7 +50972,7 @@ var render = function() {
           : _c(
               "button",
               { staticClass: "button is-info", attrs: { type: "submit" } },
-              [_vm._v(_vm._s(_vm.trans.get("challenges.edit_challenge")))]
+              [_vm._v(_vm._s(_vm.trans.get("challenges.edit")))]
             )
       ]
     )
@@ -51414,7 +51454,13 @@ var render = function() {
                           [
                             _vm._m(1),
                             _vm._v(" "),
-                            _c("span", [_vm._v("Add attachment")])
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.trans.get("challenges.add_attachment")
+                                )
+                              )
+                            ])
                           ]
                         )
                       : _vm._e(),
@@ -51433,7 +51479,11 @@ var render = function() {
                           [
                             _vm._m(2),
                             _vm._v(" "),
-                            _c("span", [_vm._v("Add question")])
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("challenges.add_question"))
+                              )
+                            ])
                           ]
                         )
                       : _vm._e(),
@@ -51465,7 +51515,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._m(4), _vm._v(" "), _c("span", [_vm._v("Edit")])]
+                          [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.trans.get("general.edit")))
+                            ])
+                          ]
                         )
                       : _vm._e(),
                     _vm._v(" "),
@@ -51485,7 +51541,9 @@ var render = function() {
                           [
                             _vm._m(5),
                             _vm._v(" "),
-                            _c("span", [_vm._v("Delete")])
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.trans.get("general.delete")))
+                            ])
                           ]
                         )
                       : _vm._e()
@@ -51536,7 +51594,9 @@ var render = function() {
                     [
                       _c("header", { staticClass: "modal-card-head" }, [
                         _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v("Add attachment")
+                          _vm._v(
+                            _vm._s(_vm.trans.get("challenges.add_attachment"))
+                          )
                         ])
                       ]),
                       _vm._v(" "),
@@ -51554,7 +51614,9 @@ var render = function() {
                                     "font-family": "Arial, FontAwesome"
                                   },
                                   attrs: {
-                                    placeholder: "Attachment type",
+                                    placeholder: _vm.trans.get(
+                                      "challenges.attachment_type"
+                                    ),
                                     icon: "paperclip",
                                     "icon-pack": "fas",
                                     required: ""
@@ -51672,7 +51734,13 @@ var render = function() {
                             { staticClass: "has-margin-top-3" },
                             [
                               _c("b-input", {
-                                attrs: { placeholder: "Name (Optional)" },
+                                attrs: {
+                                  placeholder:
+                                    _vm.trans.get("general.name") +
+                                    " (" +
+                                    _vm.trans.get("general.optional") +
+                                    ")"
+                                },
                                 model: {
                                   value: _vm.attachment.name,
                                   callback: function($$v) {
@@ -51721,11 +51789,11 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Close")]
+                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
                         ),
                         _vm._v(" "),
                         _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v("Add")
+                          _vm._v(_vm._s(_vm.trans.get("general.add")))
                         ])
                       ])
                     ]
@@ -51775,7 +51843,9 @@ var render = function() {
                     [
                       _c("header", { staticClass: "modal-card-head" }, [
                         _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v("Add question")
+                          _vm._v(
+                            _vm._s(_vm.trans.get("challenges.add_question"))
+                          )
                         ])
                       ]),
                       _vm._v(" "),
@@ -51788,7 +51858,9 @@ var render = function() {
                             [
                               _c("b-input", {
                                 attrs: {
-                                  placeholder: "Question",
+                                  placeholder: _vm.trans.get(
+                                    "challenges.question"
+                                  ),
                                   type: "text",
                                   required: ""
                                 },
@@ -51846,8 +51918,9 @@ var render = function() {
                                               [
                                                 _c("b-input", {
                                                   attrs: {
-                                                    placeholder:
-                                                      "Correct answer",
+                                                    placeholder: _vm.trans.get(
+                                                      "challenges.correct_answer"
+                                                    ),
                                                     type: "text",
                                                     required: ""
                                                   },
@@ -51920,8 +51993,9 @@ var render = function() {
                                               [
                                                 _c("b-input", {
                                                   attrs: {
-                                                    placeholder:
-                                                      "Inorrect answer",
+                                                    placeholder: _vm.trans.get(
+                                                      "challenges.incorrect_answer"
+                                                    ),
                                                     required: "",
                                                     type: "text"
                                                   },
@@ -51994,8 +52068,9 @@ var render = function() {
                                               [
                                                 _c("b-input", {
                                                   attrs: {
-                                                    placeholder:
-                                                      "Inorrect answer",
+                                                    placeholder: _vm.trans.get(
+                                                      "challenges.incorrect_answer"
+                                                    ),
                                                     type: "text"
                                                   },
                                                   model: {
@@ -52067,8 +52142,9 @@ var render = function() {
                                               [
                                                 _c("b-input", {
                                                   attrs: {
-                                                    placeholder:
-                                                      "Inorrect answer",
+                                                    placeholder: _vm.trans.get(
+                                                      "challenges.incorrect_answer"
+                                                    ),
                                                     type: "text"
                                                   },
                                                   model: {
@@ -52111,15 +52187,15 @@ var render = function() {
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
-                                _vm.isAttachmentModalActive = false
+                                _vm.isQuestionModalActive = false
                               }
                             }
                           },
-                          [_vm._v("Close")]
+                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
                         ),
                         _vm._v(" "),
                         _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v("Add")
+                          _vm._v(_vm._s(_vm.trans.get("general.add")))
                         ])
                       ])
                     ]
@@ -54219,7 +54295,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-tag" }),
-            _vm._v(" Add tag\n    ")
+            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.add_tag")) + "\n    ")
           ]
         ),
         _vm._v(" "),
@@ -54231,7 +54307,11 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-tasks-alt" }),
-            _vm._v(" Rubric management\n    ")
+            _vm._v(
+              " " +
+                _vm._s(_vm.trans.get("evaluation.rubric_management")) +
+                "\n    "
+            )
           ]
         ),
         _vm._v(" "),
@@ -54247,7 +54327,7 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-cog" }),
-            _vm._v(" Preferences\n    ")
+            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.config")) + "\n    ")
           ]
         ),
         _vm._v(" "),
@@ -54263,7 +54343,7 @@ var render = function() {
             _c("i", {
               staticClass: "has-margin-right-2 fas fa-file-chart-line"
             }),
-            _vm._v(" Evaluation report\n    ")
+            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.report")) + "\n    ")
           ]
         )
       ]),
@@ -54335,7 +54415,7 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v("Add evaluation line")]
+              [_vm._v(_vm._s(_vm.trans.get("evaluation.evaluation_line")))]
             )
           : _vm._e()
       ]),
@@ -54362,8 +54442,8 @@ var render = function() {
                             "b-table-column",
                             {
                               attrs: {
-                                field: "Description",
-                                label: _vm.trans.get("maps.name"),
+                                field: _vm.description,
+                                label: _vm.trans.get("evaluation.description"),
                                 sortable: ""
                               }
                             },
@@ -54374,8 +54454,8 @@ var render = function() {
                             "b-table-column",
                             {
                               attrs: {
-                                field: "Tags",
-                                label: "Url",
+                                field: "tags",
+                                label: _vm.trans.get("evaluation.tags"),
                                 sortable: ""
                               }
                             },
@@ -54417,7 +54497,13 @@ var render = function() {
                                 },
                                 [
                                   _c("i", { staticClass: "fad fa-pencil" }),
-                                  _vm._v(" Grade\n          ")
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.trans.get("evaluation.grade")
+                                      ) +
+                                      "\n          "
+                                  )
                                 ]
                               ),
                               _vm._v(" "),
@@ -54448,7 +54534,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  4115084364
+                  1214244499
                 )
               })
             : _vm._e()
@@ -54492,13 +54578,13 @@ var render = function() {
                   _c("header", { staticClass: "modal-card-head" }, [
                     !_vm.tag.classroom_id
                       ? _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v("Add tag")
+                          _vm._v(_vm._s(_vm.trans.get("evaluation.add")))
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.tag.classroom_id
                       ? _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v("Edit tag")
+                          _vm._v(_vm._s(_vm.trans.get("evaluation.edit")))
                         ])
                       : _vm._e()
                   ]),
@@ -58330,7 +58416,7 @@ var render = function() {
                         "b-field",
                         {
                           staticClass: "has-margin-top-4",
-                          attrs: { label: "Multiplier" }
+                          attrs: { label: _vm.trans.get("shop.multiplier") }
                         },
                         [
                           _c("b-numberinput", {
@@ -58369,7 +58455,11 @@ var render = function() {
                           _c("i", {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
-                          _vm._v(" Save\n        ")
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.trans.get("general.save")) +
+                              "\n        "
+                          )
                         ]
                       )
                     ],
@@ -58502,7 +58592,11 @@ var render = function() {
                           _c("i", {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
-                          _vm._v(" Save\n        ")
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.trans.get("general.save")) +
+                              "\n        "
+                          )
                         ]
                       )
                     ],
@@ -58635,7 +58729,11 @@ var render = function() {
                           _c("i", {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
-                          _vm._v(" Save\n        ")
+                          _vm._v(
+                            " " +
+                              _vm._s(_vm.trans.get("general.save")) +
+                              "\n        "
+                          )
                         ]
                       )
                     ],
@@ -58751,7 +58849,7 @@ var render = function() {
                         required: "",
                         type: "text",
                         minlength: "4",
-                        placeholder: "Name and surname"
+                        placeholder: _vm.trans.get("students.name_surname")
                       },
                       domProps: { value: _vm.stdName },
                       on: {
@@ -58776,7 +58874,11 @@ var render = function() {
                         }
                       ],
                       staticClass: "input",
-                      attrs: { type: "email", placeholder: "Email (optional)" },
+                      attrs: {
+                        type: "email",
+                        placeholder:
+                          "Email (" + _vm.trans.get("general.optional") + ")"
+                      },
                       domProps: { value: _vm.stdEmail },
                       on: {
                         input: function($event) {
@@ -79780,6 +79882,7 @@ __webpack_require__.r(__webpack_exports__);
     "empty": "Creem uns reptes!",
     "title": "T\xEDtol",
     "description": "Descripci\xF3",
+    "avaliability": "Quant estar\xE0 visible?",
     "description_info": "Aix\xF2 \xE9s informaci\xF3 del m\xF3n real. P.e. Prova de trigonometria",
     "click_select": "Clic per seleccionar...",
     "content": "Contingut",
@@ -79787,7 +79890,13 @@ __webpack_require__.r(__webpack_exports__);
     "rewards": "Recompenses",
     "auto_assign": "Auto-assignaci\xF3 de cartes?",
     "group": "Repte de grup",
-    "optional": "Opcional"
+    "optional": "Opcional",
+    "add_attachment": "Afegeix adjunt",
+    "attachment_type": "Tipus d'adjunt",
+    "add_question": "Afegeix pregunta",
+    "question": "Pregunta",
+    "correct_answer": "Resposta correcta",
+    "incorrect_answer": "Resposta incorrecta"
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -79874,9 +79983,13 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Elimina",
     "close": "Tanca",
     "cancel": "Cancel\xB7la",
+    "name": "Nom",
+    "optional": "opcional",
+    "home": "Inici",
     "no": "No",
     "confirm_delete": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer.",
-    "confirm_delete_class": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer. S'ELIMINAR\xC0 TOTA LA INFORMACI\xD3 DELS ESTUDIANTS."
+    "confirm_delete_class": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer. S'ELIMINAR\xC0 TOTA LA INFORMACI\xD3 DELS ESTUDIANTS.",
+    "type_message": "Escriu un missatge..."
   },
   "ca.groups": {
     "group_name": "Nom del grup",
@@ -79900,7 +80013,7 @@ __webpack_require__.r(__webpack_exports__);
     "name": "Nom",
     "url": "URL",
     "url_info": "pot ser una imatge, genial.ly, p\xE0gina web ...",
-    "create": "Crear",
+    "create": "Crear mapa",
     "preview": "Vista pr\xE8via",
     "set_active": "Marcar mapa com actiu",
     "active": "Activar",
@@ -79934,7 +80047,9 @@ __webpack_require__.r(__webpack_exports__);
     "licenses": "Llic\xE8ncies",
     "noise": "Medidor de soroll",
     "badges": "Insignies",
-    "massive": "Accions massives"
+    "massive": "Accions massives",
+    "config": "Configura",
+    "contribute": "Convida a caf\xE8 o cervesa!"
   },
   "ca.pagination": {
     "previous": "&laquo; Anterior",
@@ -79986,7 +80101,11 @@ __webpack_require__.r(__webpack_exports__);
     "min_level": "Nivell m\xEDnim",
     "item_hp": "Assigna un valor si l'objecte serveix per recuperar vida",
     "item_xp": "Assigna un valor si l'objecte serveix obtenir experi\xE8ncia",
-    "min_level_info": "Nivell m\xEDnim per poder comprar l'objecte"
+    "min_level_info": "Nivell m\xEDnim per poder comprar l'objecte",
+    "multiplier": "Multiplicador"
+  },
+  "ca.students": {
+    "name_surname": "Nom i cognoms"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -80241,6 +80360,7 @@ __webpack_require__.r(__webpack_exports__);
     "add_category": "Add category",
     "create_challenge": "Create challenge",
     "create": "Create challenge",
+    "categories": "Categories",
     "edit": "Edit challenge",
     "name": "Name",
     "icon": "Icon",
@@ -80249,7 +80369,24 @@ __webpack_require__.r(__webpack_exports__);
     "completion_teacher": "The teacher marks it as completed",
     "completion_student": "The student marks it as completed",
     "completion_both": "Both teacher and estudent should mark it as completed",
-    "empty": "Let's create some challenges!"
+    "empty": "Let's create some challenges!",
+    "title": "Title",
+    "description": "Description",
+    "avaliability": "When it will be available?",
+    "description_info": "That's real world information. E.g. Trigonometry test",
+    "click_select": "Click to select...",
+    "content": "Content",
+    "conquer": "Is this a conquer story?",
+    "rewards": "Rewards",
+    "auto_assign": "Autoassign cards?",
+    "group": "Group challenge",
+    "optional": "Optional",
+    "add_attachment": "Add attachment",
+    "attachment_type": "Attachment type",
+    "add_question": "Add question",
+    "question": "Question",
+    "correct_answer": "Correct answer",
+    "incorrect_answer": "Incorrect answer"
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -80339,13 +80476,24 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Delete",
     "close": "Close",
     "cancel": "Cancel",
+    "name": "Name",
+    "optional": "optional",
+    "home": "Home",
     "no": "No",
     "confirm_delete": "Are you sure you want to delete this element? This action can't be undone.",
-    "confirm_delete_class": "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION."
+    "confirm_delete_class": "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION.",
+    "type_message": "Type a message..."
   },
   "en.maps": {
     "add": "Add map",
-    "name": "Name"
+    "name": "Name",
+    "url": "Map URL",
+    "url_info": "it could be an image, genial.ly, webpage ...",
+    "create": "Create map",
+    "preview": "Preview",
+    "set_active": "Set as active map",
+    "active": "Activate",
+    "confirm_active": "This options will change the active map. This map will be seen by the students"
   },
   "en.menu": {
     "user_groups": "Users and groups",
@@ -80372,7 +80520,9 @@ __webpack_require__.r(__webpack_exports__);
     "profile": "Profile",
     "behaviours": "Behaviours",
     "rewards": "Rewards",
-    "licenses": "Licenses"
+    "licenses": "Licenses",
+    "config": "Configure",
+    "contribute": "Buy us coffe or beer!"
   },
   "en.pagination": {
     "previous": "&laquo; Previous",
@@ -80384,6 +80534,17 @@ __webpack_require__.r(__webpack_exports__);
     "sent": "We have e-mailed your password reset link!",
     "token": "This password reset token is invalid.",
     "user": "We can't find a user with that e-mail address."
+  },
+  "en.profile": {
+    "profile": "User profile",
+    "name": "User's name",
+    "current_password": "Current password",
+    "new_password": "Change password",
+    "confirm_new_password": "Repeat password",
+    "language": "Display languages",
+    "edit": "Edit profile",
+    "update_success": "The profile has been updated successfully",
+    "incorrect_password": "Account's password not valid"
   },
   "en.settings": {
     "classroom": "Classroom Management",
@@ -80400,7 +80561,25 @@ __webpack_require__.r(__webpack_exports__);
     "epic": "epic",
     "legendary": "Legendary"
   },
-  "en.shop": [],
+  "en.shop": {
+    "items": "Items",
+    "eq1": "Equipment 1",
+    "eq2": "Equipment 2",
+    "eq3": "Equipment 3",
+    "visibility": "Visible",
+    "new_item": "New item",
+    "for_sale": "For sale?",
+    "description": "Description",
+    "price": "Price",
+    "min_level": "Minimum level",
+    "item_hp": "Assign a value if this is an item that could be used to restore health.",
+    "item_xp": "Assign a value if this is an item that could be used to get experience.",
+    "min_level_info": "Minimum level to buy the item.",
+    "multiplier": "Multiplier"
+  },
+  "en.students": {
+    "name_surname": "Name and surname"
+  },
   "en.success_error": {
     "add_success": "The element has been added successfully",
     "update_success": "The element has been updated successfully",
@@ -80561,7 +80740,7 @@ __webpack_require__.r(__webpack_exports__);
     "import_default": "Importa comportamientos por defecto",
     "icon": "Icono",
     "fontawesome": "Quieres m\xE1s iconos? Visita: ",
-    "name": "Nom",
+    "name": "Nombre",
     "name_info": "informaci\xF3n general sobre el comportamiento. P.e: Uso no autorizado del m\xF3vil",
     "custom_text": "Texto personalizado",
     "custom_text_info": "texto que se muestra a los estudiantes. P.e: Estaba despistado mirando la br\xFAjula y se ha estampado contra un \xE1rbol",
@@ -80597,7 +80776,7 @@ __webpack_require__.r(__webpack_exports__);
     "min_lvl": "Nivel m\xEDnimo",
     "type": "Tipos",
     "special": "Especial (no ocupa espacio)",
-    "custom_image": "Imatgen personalizada",
+    "custom_image": "Imagen personalizada",
     "confirm_empty": "T\xEDtulo y contenido est\xE1n vac\xEDos, est\xE1s seguro/en que quieres crear una carta vac\xEDa?",
     "radius_help": "El redondeo de la imagen, 0 implica esquinas cuadradas y a medida que se incrementa el valor se produce el redondeo.",
     "min_lvl_help": "Nivel m\xEDnimo para utiltizar la carta.",
@@ -80664,30 +80843,37 @@ __webpack_require__.r(__webpack_exports__);
     "use_confirm": "Acepta"
   },
   "es.challenges": {
-    "add": "A\xF1ade historia / reto",
+    "add": "A\xF1ade historia / desaf\xEDo",
     "add_category": "A\xF1ade categoria",
-    "create_challenge": "Crea reto",
+    "create_challenge": "Crea desaf\xEDo",
     "create": "Crea categoria",
     "categories": "Categorias",
-    "edit": "Edita A\xF1ade",
+    "edit": "Edita desaf\xEDo",
     "name": "Nombre",
     "icon": "Icono",
     "parent": "Grupo padre (opcional)",
     "completion": "Selecciona los requisitos para ser marcado como completado",
-    "completion_teacher": "El\/la profe marca el reto como completado",
-    "completion_student": "El\/la estudiante marca el reto como completado",
-    "completion_both": "Tanto profe como estudiantes tienen que marcar el reto como completado",
-    "empty": "Creamos unos retos!",
+    "completion_teacher": "El/la profe marca el desaf\xEDo como completado",
+    "completion_student": "El/la estudiante marca el desaf\xEDo como completado",
+    "completion_both": "Tanto profe como estudiantes tienen que marcar el desaf\xEDo como completado",
+    "empty": "\xA1Creemos unos desaf\xEDos!",
     "title": "T\xEDtulo",
     "description": "Descripci\xF3n",
+    "avaliability": "\xBFCu\xE1ndo estar\xE1 visible?",
     "description_info": "Esto es informaci\xF3n del mundo real. P.e. Prueba de trigonometr\xEDa",
     "click_select": "Clic para seleccionar...",
     "content": "Contenido",
     "conquer": "Es una prueba de conquista?",
     "rewards": "Recompensas",
     "auto_assign": "Auto-asinaci\xF3n de cartas?",
-    "group": "Reto de grupo",
-    "optional": "Opcional"
+    "group": "Desaf\xEDo de grupo",
+    "optional": "Opcional",
+    "add_attachment": "A\xF1ade adjunto",
+    "attachment_type": "Tipo de adjunto",
+    "add_question": "A\xF1ade pregunta",
+    "question": "Pregunta",
+    "correct_answer": "Respuesta correcta",
+    "incorrect_answer": "Respuesta incorrecta"
   },
   "es.classroom": {
     "add": "A\xF1ade clase",
@@ -80712,11 +80898,24 @@ __webpack_require__.r(__webpack_exports__);
     "finish_title": "Est\xE1s a punto de hacer cosas maravillosas!",
     "info_wizard_0": "Ya tenso configurada una parte de la clase, ahora:",
     "info_wizard_1": "Crea estudiantes y agrupalos en grups.",
-    "info_wizard_2": "Crea retos.",
+    "info_wizard_2": "Crea desaf\xEDos.",
     "info_wizard_3": "Configura recompensas para los estudiantes.",
     "info_wizard_4": "Pregunta cualquier cosa al Telegram, estaremos encantados de ayudarte.",
     "info_wizard_5": "Comienza la aventura!",
     "end_wizard": "Acabar asistente"
+  },
+  "es.evaluation": {
+    "add_tag": "A\xF1ade etiqueta de evaluaci\xF3n",
+    "add": "A\xF1ade etiqueta",
+    "description": "Descripci\xF3n",
+    "edit": "Edita etiqueta",
+    "rubric_management": "Gesti\xF3n de r\xFAbricas",
+    "config": "Configuraci\xF3n",
+    "report": "Informe de evaluaci\xF3n",
+    "evaluation_line": "A\xF1adir l\xEDnea de evaluaci\xF3n",
+    "tags": "Etiquetas",
+    "grade": "Eval\xFAa",
+    "": ""
   },
   "es.events": {
     "curse_silence_title": "La maldici\xF3n del silencio",
@@ -80774,9 +80973,13 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Elimina",
     "close": "Cierra",
     "cancel": "Cancela",
+    "name": "Nombre",
+    "optional": "opcional",
+    "home": "Inicio",
     "no": "No",
     "confirm_delete": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer.",
-    "confirm_delete_class": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer. Se ELIMINAR\xC1 TODA LA INFORMACI\xD3N DE LOS ESTUDIANTES."
+    "confirm_delete_class": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer. Se ELIMINAR\xC1 TODA LA INFORMACI\xD3N DE LOS ESTUDIANTES.",
+    "type_message": "Escribe un mensaje.."
   },
   "es.groups": {
     "group_name": "Nombre del grupo",
@@ -80800,7 +81003,7 @@ __webpack_require__.r(__webpack_exports__);
     "name": "Nombre",
     "url": "URL",
     "url_info": "puede ser una imagen, genial.ly, p\xE1guina web ...",
-    "create": "Crear",
+    "create": "Crear mapa",
     "preview": "Vista previa",
     "set_active": "Marcar mapa como activo",
     "active": "Activar",
@@ -80809,20 +81012,20 @@ __webpack_require__.r(__webpack_exports__);
   "es.menu": {
     "user_groups": "Usuarios y grupos",
     "users": "Usuarios",
-    "events": "Acontecimientos",
+    "events": "Eventos",
     "students": "Estudiantes",
     "groups": "Grupos",
     "cards": "Cartas",
     "card": "Carta",
     "classcode": "Codigo de clase pera unirse",
-    "dice": "Tira el dado!",
+    "dice": "\xA1Tira el dado!",
     "music": "M\xFAsica",
     "countdown": "Cuenta atr\xE1s",
     "map": "Mapa",
     "levels": "Niveles",
     "stories": "Historias",
     "goals": "Objectivos",
-    "challenges": "Retos",
+    "challenges": "Desaf\xEDos",
     "evaluation": "Avaluaci\xF3n",
     "rules": "Normas",
     "log": "Registro",
@@ -80834,7 +81037,9 @@ __webpack_require__.r(__webpack_exports__);
     "licenses": "Licencias",
     "noise": "Medidor de ruido",
     "badges": "Insignias",
-    "massive": "Acciones masivas"
+    "massive": "Acciones masivas",
+    "config": "Configura",
+    "contribute": "\xA1Invita a caf\xE9 o cerveza!"
   },
   "es.pagination": {
     "previous": "&laquo; Anterior",
@@ -80886,7 +81091,11 @@ __webpack_require__.r(__webpack_exports__);
     "min_level": "Nivel m\xEDnimo",
     "item_hp": "Asigna un valor si el objeto sirve para recuperar vida",
     "item_xp": "Asigna un valor si el objeto sirve obtener experiencia",
-    "min_level_info": "Nivel m\xEDnimo para poder comprar el objeto"
+    "min_level_info": "Nivel m\xEDnimo para poder comprar el objeto",
+    "multiplier": "Multiplicador"
+  },
+  "es.students": {
+    "name_surname": "Nombre y apellidos"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

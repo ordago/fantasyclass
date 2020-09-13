@@ -34,5 +34,7 @@ return [
     'behaviours' => 'Behaviours',
     'rewards' => 'Rewards',
     'licenses' => 'Licenses',
+    'config' => 'Configure',
+    'contribute' => 'Buy us coffe or beer!',
 
 ];

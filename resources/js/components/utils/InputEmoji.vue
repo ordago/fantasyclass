@@ -6,7 +6,7 @@
              @keypress.enter.prevent
              @input="updateBody($event.target.innerHTML)"
              @click="handleEditorClick"
-             placeholder="Type a message...">
+             :placeholder="trans.get('general.type_message')">
         </div>
         <button class="button is-link" @click="$parent.sendComment();$refs.textarea.innerHTML=''" v-if="$parent.comment.length"><i class="fas fa-comment"></i></button>
         <div class="message-emoji">

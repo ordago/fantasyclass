@@ -171,7 +171,7 @@
               <span class="icon is-small">
                 <i class="fas fa-paperclip"></i>
               </span>
-              <span>Add attachment</span>
+              <span>{{ trans.get('challenges.add_attachment') }}</span>
             </button>
             <button
               v-if="admin"
@@ -181,7 +181,7 @@
               <span class="icon is-small">
                 <i class="fas fa-question"></i>
               </span>
-              <span>Add question</span>
+              <span>{{ trans.get('challenges.add_question') }}</span>
             </button>
             <button
               v-if="challengeReactive.is_conquer && admin"
@@ -201,7 +201,7 @@
               <span class="icon is-small">
                 <i class="fas fa-edit"></i>
               </span>
-              <span>Edit</span>
+              <span>{{ trans.get('general.edit') }}</span>
             </button>
             <button
               class="button is-danger is-outlined"
@@ -211,7 +211,7 @@
               <span class="icon is-small">
                 <i class="fas fa-trash-alt"></i>
               </span>
-              <span>Delete</span>
+              <span>{{ trans.get('general.delete') }}</span>
             </button>
           </div>
         </div>
@@ -229,12 +229,12 @@
       <form @submit.prevent="addAttachment">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">Add attachment</p>
+            <p class="modal-card-title">{{ trans.get('challenges.add_attachment') }}</p>
           </header>
           <section class="modal-card-body">
             <b-field>
               <b-select
-                placeholder="Attachment type"
+                :placeholder="trans.get('challenges.attachment_type')"
                 icon="paperclip"
                 icon-pack="fas"
                 v-model="attachment.type"
@@ -262,15 +262,15 @@
               </b-radio-button>
             </div>
             <b-field class="has-margin-top-3">
-              <b-input v-model="attachment.name" placeholder="Name (Optional)"></b-input>
+              <b-input v-model="attachment.name" :placeholder="trans.get('general.name') + ' (' + trans.get('general.optional') + ')'"></b-input>
             </b-field>
             <b-field>
               <b-input placeholder="URL" v-model="attachment.url" required type="url"></b-input>
             </b-field>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isAttachmentModalActive=false">Close</button>
-            <button class="button is-primary">Add</button>
+            <button class="button" type="button" @click="isAttachmentModalActive=false">{{ trans.get('general.close') }}</button>
+            <button class="button is-primary">{{ trans.get('general.add') }}</button>
           </footer>
         </div>
       </form>
@@ -287,11 +287,11 @@
       <form @submit.prevent="addQuestion">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">Add question</p>
+            <p class="modal-card-title">{{ trans.get('challenges.add_question') }}</p>
           </header>
           <section class="modal-card-body">
             <b-field>
-              <b-input placeholder="Question" v-model="question.question" type="text" required></b-input>
+              <b-input :placeholder="trans.get('challenges.question')" v-model="question.question" type="text" required></b-input>
             </b-field>
             <div class="field is-horizontal has-margin-bottom-3">
               <div class="field-body">
@@ -305,7 +305,7 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          placeholder="Correct answer"
+                          :placeholder="trans.get('challenges.correct_answer')"
                           v-model="question.correctAnswer"
                           type="text"
                           required
@@ -328,7 +328,7 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          placeholder="Inorrect answer"
+                          :placeholder="trans.get('challenges.incorrect_answer')"
                           v-model="question.incorrectAnswer1"
                           required
                           type="text"
@@ -351,7 +351,7 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          placeholder="Inorrect answer"
+                          :placeholder="trans.get('challenges.incorrect_answer')"
                           v-model="question.incorrectAnswer2"
                           type="text"
                         ></b-input>
@@ -373,7 +373,7 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          placeholder="Inorrect answer"
+                          :placeholder="trans.get('challenges.incorrect_answer')"
                           v-model="question.incorrectAnswer3"
                           type="text"
                         ></b-input>
@@ -385,8 +385,8 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isAttachmentModalActive=false">Close</button>
-            <button class="button is-primary">Add</button>
+            <button class="button" type="button" @click="isQuestionModalActive=false">{{ trans.get('general.close') }}</button>
+            <button class="button is-primary">{{ trans.get('general.add') }}</button>
           </footer>
         </div>
       </form>

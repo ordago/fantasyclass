@@ -113,6 +113,9 @@
                                     <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="/contribute">
+                                        <i class="fal fa-hands-heart"></i> {{ __('menu.contribute') }}
+                                    </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fal fa-sign-out"></i> {{ __('Logout') }}

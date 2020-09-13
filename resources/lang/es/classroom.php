@@ -27,7 +27,7 @@ return [
     "finish_title" => "Estás a punto de hacer cosas maravillosas!",
     "info_wizard_0" => "Ya tenso configurada una parte de la clase, ahora:",
     "info_wizard_1" => "Crea estudiantes y agrupalos en grups.",
-    "info_wizard_2" => "Crea retos.",
+    "info_wizard_2" => "Crea desafíos.",
     "info_wizard_3" => "Configura recompensas para los estudiantes.",
     "info_wizard_4" => "Pregunta cualquier cosa al Telegram, estaremos encantados de ayudarte.",
     "info_wizard_5" => "Comienza la aventura!",

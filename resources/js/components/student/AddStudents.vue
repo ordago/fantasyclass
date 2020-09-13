@@ -11,10 +11,10 @@
                         </a>
                         </p>
                         <p class="control is-expanded">
-                            <input class="input" v-model="stdName" required type="text" minlength="4" placeholder="Name and surname">
+                            <input class="input" v-model="stdName" required type="text" minlength="4" :placeholder="trans.get('students.name_surname')">
                         </p>
                         <p class="control is-expanded">
-                            <input class="input" v-model="stdEmail" type="email" placeholder="Email (optional)">
+                            <input class="input" v-model="stdEmail" type="email" :placeholder="'Email (' + trans.get('general.optional') + ')'">
                         </p>
                         <p class="control">
                             <button class="button is-primary">

@@ -21,6 +21,7 @@ return [
 
     'title' => 'Títol',
     'description' => 'Descripció',
+    'avaliability' => 'Quant estarà visible?',
     'description_info' => 'Això és informació del món real. P.e. Prova de trigonometria',
     'click_select' => 'Clic per seleccionar...',
     'content' => 'Contingut',
@@ -29,5 +30,13 @@ return [
     'auto_assign' => 'Auto-assignació de cartes?',
     'group' => 'Repte de grup',
     'optional' => 'Opcional',
+
+    'add_attachment' => 'Afegeix adjunt',
+    'attachment_type' => 'Tipus d\'adjunt',
     
+    'add_question' => 'Afegeix pregunta',
+    'question' => 'Pregunta',
+    'correct_answer' => 'Resposta correcta',
+    'incorrect_answer' => 'Resposta incorrecta',
+
 ];

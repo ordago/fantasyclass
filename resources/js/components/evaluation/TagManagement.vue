@@ -2,16 +2,16 @@
   <div class="w-100 content">
     <div>
       <button class="button is-link" @click="isTagModalActive=true">
-        <i class="has-margin-right-2 fas fa-tag"></i> Add tag
+        <i class="has-margin-right-2 fas fa-tag"></i> {{ trans.get('evaluation.add_tag') }}
       </button>
       <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
-        <i class="has-margin-right-2 fas fa-tasks-alt"></i> Rubric management
+        <i class="has-margin-right-2 fas fa-tasks-alt"></i> {{ trans.get('evaluation.rubric_management') }}
       </a>
       <button class="button is-dark" @click="isPrefsModalActive=true">
-        <i class="has-margin-right-2 fas fa-cog"></i> Preferences
+        <i class="has-margin-right-2 fas fa-cog"></i> {{ trans.get('evaluation.config') }}
       </button>
       <a :href="'/classroom/' + classroom.code + '/evaluation/report'" class="button is-primary">
-        <i class="has-margin-right-2 fas fa-file-chart-line"></i> Evaluation report
+        <i class="has-margin-right-2 fas fa-file-chart-line"></i> {{ trans.get('evaluation.report') }}
       </a>
     </div>
     <div class="has-margin-y-3">
@@ -42,7 +42,7 @@
         class="button is-link"
         v-if="tagsReactive.length"
         @click="isLineModalActive=true"
-      >Add evaluation line</button>
+      >{{ trans.get('evaluation.evaluation_line') }}</button>
     </div>
     <div class="has-margin-3">
       <b-table
@@ -54,12 +54,12 @@
       >
         <template slot-scope="props">
           <b-table-column
-            field="Description"
-            :label="trans.get('maps.name')"
+            :field="description"
+            :label="trans.get('evaluation.description')"
             sortable
           >{{ props.row.description }}</b-table-column>
 
-          <b-table-column field="Tags" label="Url" sortable>
+          <b-table-column field="tags" :label="trans.get('evaluation.tags')" sortable>
             <span
               class="tag is-dark has-margin-right-2"
               v-for="tag in props.row.tags"
@@ -77,7 +77,7 @@
               :href="'/classroom/evaluation/' + props.row.id + '/grade'"
               class="button is-dark is-small has-margin-right-3"
             >
-              <i class="fad fa-pencil"></i> Grade
+              <i class="fad fa-pencil"></i> {{ trans.get('evaluation.grade') }}
             </a>
             <!-- <b-button
               v-tippy
@@ -111,8 +111,8 @@
       <form @submit.prevent="addTag">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title" v-if="!tag.classroom_id">Add tag</p>
-            <p class="modal-card-title" v-if="tag.classroom_id">Edit tag</p>
+            <p class="modal-card-title" v-if="!tag.classroom_id">{{ trans.get('evaluation.add') }}</p>
+            <p class="modal-card-title" v-if="tag.classroom_id">{{ trans.get('evaluation.edit') }}</p>
           </header>
           <section class="modal-card-body">
             <b-field label="Abbreviation">

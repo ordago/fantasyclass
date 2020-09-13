@@ -147,7 +147,7 @@
             @input="toggleVisibility('equipment_1_visibility')"
           >{{ trans.get('shop.visibility') }}</b-switch>
 
-          <b-field label="Multiplier" class="has-margin-top-4">
+          <b-field :label="trans.get('shop.multiplier')" class="has-margin-top-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -156,7 +156,7 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(1)">
-            <i class="fas fa-save has-margin-right-2"></i> Save
+            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
           </button>
         </div>
         <div
@@ -206,7 +206,7 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(2)">
-            <i class="fas fa-save has-margin-right-2"></i> Save
+            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
           </button>
         </div>
         <div
@@ -256,7 +256,7 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(3)">
-            <i class="fas fa-save has-margin-right-2"></i> Save
+            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
           </button>
         </div>
         <div

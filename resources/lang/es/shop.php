@@ -23,4 +23,5 @@ return [
     'item_hp' => "Asigna un valor si el objeto sirve para recuperar vida",
     'item_xp' => "Asigna un valor si el objeto sirve obtener experiencia",
     'min_level_info' => "Nivel mínimo para poder comprar el objeto",
+    'multiplier' => "Multiplicador",
 ];

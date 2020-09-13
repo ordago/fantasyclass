@@ -17,7 +17,7 @@ return [
     'name' => 'Nombre',
     'url' => 'URL',
     'url_info' => 'puede ser una imagen, genial.ly, páguina web ...',
-    'create' => 'Crear',
+    'create' => 'Crear mapa',
     'preview' => 'Vista previa',
     'set_active' => 'Marcar mapa como activo',
     'active' => 'Activar',

@@ -7,7 +7,11 @@
           <div class="control">
             <div class="select is-fullwidth">
               <select @input="reload=true" v-model="challenge.challenges_group_id">
-                <option v-for="group in challengegroups" :key="group.id" :value="group.id">{{ group.name }}</option>
+                <option
+                  v-for="group in challengegroups"
+                  :key="group.id"
+                  :value="group.id"
+                >{{ group.name }}</option>
               </select>
             </div>
           </div>
@@ -40,7 +44,7 @@
         ></b-input>
       </b-field>-->
       <div class="w-100">
-        <b-field label="When it will be visible?">
+        <b-field :label="trans.get('challenges.avaliability')">
           <b-datetimepicker
             v-model="datepicker"
             :placeholder="trans.get('challenges.click_select')"
@@ -102,6 +106,17 @@
                 style="padding:0;min-width: 50px;"
               />
             </p>
+          </div>
+          <div class="form-group" style="margin-top: -10px;">
+            <label>
+              <small>
+                {{ trans.get('behaviours.fontawesome') }}
+                <a
+                  href="https://fontawesome.com/icons?d=gallery"
+                  target="_blank"
+                >FontAwesome</a>
+              </small>
+            </label>
           </div>
         </div>
         <label class="label">{{ trans.get('challenges.rewards') }}</label>
@@ -203,11 +218,7 @@
         v-if="!edit"
         class="button is-primary"
       >{{ trans.get('challenges.create_challenge') }}</button>
-      <button
-        type="submit"
-        v-else
-        class="button is-info"
-      >{{ trans.get('challenges.edit_challenge') }}</button>
+      <button type="submit" v-else class="button is-info">{{ trans.get('challenges.edit') }}</button>
     </form>
   </div>
 </template>
@@ -268,7 +279,7 @@ export default {
     createChallenge() {
       this.challenge.content = this.content;
       this.challenge.icon = this.icon;
-      if(!this.challenge.challenges_group_id)
+      if (!this.challenge.challenges_group_id)
         this.challenge.challenges_group_id = this.challengegroup;
       let date = this.datepicker;
       this.challenge.datetime =
@@ -304,10 +315,8 @@ export default {
           );
         }
       });
-      if(this.reload)
-        location.reload(true)
-      else
-        this.$parent.$parent.$forceUpdate();
+      if (this.reload) location.reload(true);
+      else this.$parent.$parent.$forceUpdate();
     },
     dateFormatter(dt) {
       return dt.toLocaleDateString("es-ES", dateoptions);

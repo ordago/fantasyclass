@@ -4,7 +4,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Settings
+    | Shop
     |--------------------------------------------------------------------------
     |
     |
@@ -23,4 +23,6 @@ return [
     'item_hp' => "Assigna un valor si l'objecte serveix per recuperar vida",
     'item_xp' => "Assigna un valor si l'objecte serveix obtenir experiència",
     'min_level_info' => "Nivell mínim per poder comprar l'objecte",
+    'multiplier' => "Multiplicador",
+
 ];

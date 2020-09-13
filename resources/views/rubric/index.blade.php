@@ -7,7 +7,7 @@
         <span class="icon is-small">
             <i class="fad fa-home" aria-hidden="true"></i>
         </span>
-        <span>Home</span>
+        <span>{{ _('general.home') }}</span>
     </a>
 </li>
 <li>

@@ -138,7 +138,10 @@ var render = function() {
       _c("div", {
         ref: "textarea",
         staticClass: "rich-editor-container rounded has-padding-4",
-        attrs: { contenteditable: "true", placeholder: "Type a message..." },
+        attrs: {
+          contenteditable: "true",
+          placeholder: _vm.trans.get("general.type_message")
+        },
         on: {
           keypress: function($event) {
             if (

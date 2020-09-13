@@ -9,7 +9,7 @@ return [
     'import_default' => 'Importa comportamientos por defecto',
     'icon' => 'Icono',
     'fontawesome' => 'Quieres más iconos? Visita: ',
-    'name' => 'Nom',
+    'name' => 'Nombre',
     'name_info' => 'información general sobre el comportamiento. P.e: Uso no autorizado del móvil',
     'custom_text' => 'Texto personalizado',
     'custom_text_info' => 'texto que se muestra a los estudiantes. P.e: Estaba despistado mirando la brújula y se ha estampado contra un árbol',
