@@ -11,7 +11,7 @@ https://www.paypal.com/paypalme/gamificaOnline
 
 Coders
 - Joan Climent.
-- José García.
+- Jose García.
 - Xavi Franch.
 
 Help and sponsors
