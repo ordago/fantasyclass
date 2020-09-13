@@ -72,6 +72,21 @@
                     </div>
                 </div>
             </div>
+            <div class="has-margin-y-3">
+                <div class="field">
+                    <div class="control has-icons-left">
+                        <div class="select w-100 is-expanded">
+                            <select style="height: 50px;" class="has-background-light has-text-dark is-expanded" name="type">
+                                <option value="0">{{ __('auth.teacher') }}</option>
+                                <option value="1">{{ __('auth.student') }}</option>
+                            </select>
+                        </div>
+                        <div class="icon is-small is-left">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 

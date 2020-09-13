@@ -24,5 +24,6 @@ return [
     'password' => 'Password',
     'confirm' => 'Confirm password',
     'username_info' => 'It should start with a letter, 4 character minimum and without special characters, spaces...',
-
+    'student' => 'Student',
+    'teacher' => 'Teacher',
 ];

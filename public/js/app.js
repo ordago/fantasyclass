@@ -57073,11 +57073,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("small", [
-            _vm._v(
-              "If you change the e-mail you'll be logged out and you'll need to confirm the new one."
-            )
-          ]),
+          _c("small", [_vm._v(_vm._s(_vm.trans.get("profile.info_email")))]),
           _vm._v(" "),
           _c("div", { staticClass: "has-margin-y-4" }, [
             _vm.password.length || _vm.email_change
@@ -57180,7 +57176,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("I want to create my own classrooms")]
+                [_vm._v(_vm._s(_vm.trans.get("profile.upgrade")))]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -79857,7 +79853,9 @@ __webpack_require__.r(__webpack_exports__);
     "username": "Nom d'usuari",
     "password": "Contrasenya",
     "confirm": "Confirma contrasenya",
-    "username_info": "Ha de comen\xE7ar amb una lletra, 4 car\xE0cters m\xEDnim i sense car\xE0cters especials, espais..."
+    "username_info": "Ha de comen\xE7ar amb una lletra, 4 car\xE0cters m\xEDnim i sense car\xE0cters especials, espais...",
+    "student": "Estudiant",
+    "teacher": "Docent"
   },
   "ca.badges": {
     "add": "Afegeix ins\xEDgnia",
@@ -80225,7 +80223,9 @@ __webpack_require__.r(__webpack_exports__);
     "language": "Idioma a mostrar",
     "edit": "Edita el perfil",
     "update_success": "El perfil s'ha actualitzat correctament",
-    "incorrect_password": "La contrasenya del compte \xE9s incorrecta, torna a intentar-ho"
+    "incorrect_password": "La contrasenya del compte \xE9s incorrecta, torna a intentar-ho",
+    "info_email": "Si canvies el correu haur\xE0s de confirmar el nou i haur\xE0s de tornar a accedir",
+    "upgrade": "Vull crear les meues pr\xF2pies classes!"
   },
   "ca.settings": {
     "classroom": "Gesti\xF3 de classe",
@@ -80412,7 +80412,9 @@ __webpack_require__.r(__webpack_exports__);
     "username": "Username",
     "password": "Password",
     "confirm": "Confirm password",
-    "username_info": "It should start with a letter, 4 character minimum and without special characters, spaces..."
+    "username_info": "It should start with a letter, 4 character minimum and without special characters, spaces...",
+    "student": "Student",
+    "teacher": "Teacher"
   },
   "en.behaviours": {
     "add": "Add behaviour",
@@ -80746,7 +80748,9 @@ __webpack_require__.r(__webpack_exports__);
     "language": "Display languages",
     "edit": "Edit profile",
     "update_success": "The profile has been updated successfully",
-    "incorrect_password": "Account's password not valid"
+    "incorrect_password": "Account's password not valid",
+    "info_email": "If you change the e-mail you'll be logged out and you'll need to confirm the new one.",
+    "upgrade": "I want to create my own classrooms!"
   },
   "en.settings": {
     "classroom": "Classroom Management",
@@ -80930,7 +80934,9 @@ __webpack_require__.r(__webpack_exports__);
     "username": "Nombre de usuario",
     "password": "Contrase\xF1a",
     "confirm": "Confirma contrase\xF1a",
-    "username_info": "Tiene que empezar con una letra, 4 caracteres m\xEDnimo y sin caracteres espciales, espacios..."
+    "username_info": "Tiene que empezar con una letra, 4 caracteres m\xEDnimo y sin caracteres espciales, espacios...",
+    "student": "Estudiante",
+    "teacher": "Docente"
   },
   "es.badges": {
     "add": "A\xF1ade insignia",
@@ -81298,7 +81304,9 @@ __webpack_require__.r(__webpack_exports__);
     "language": "Idioma a mostrar",
     "edit": "Edita el perfil",
     "update_success": "El perfil se ha actualitzado correctamente",
-    "incorrect_password": "La contrase\xF1a de la cuenta es incorrecta, vuelve a intentarlo"
+    "incorrect_password": "La contrase\xF1a de la cuenta es incorrecta, vuelve a intentarlo",
+    "info_email": "Si cambias el correo tendr\xE1s que confirmar el nuevo y tendr\xE1s que volver a acceder",
+    "upgrade": "\xA1Quiero crear mis propias clases!"
   },
   "es.settings": {
     "classroom": "Gesti\xF3n de clase",

@@ -62,7 +62,7 @@
             @input="email_change = true"
           />
         </div>
-        <small>If you change the e-mail you'll be logged out and you'll need to confirm the new one.</small>
+        <small>{{ trans.get('profile.info_email') }}</small>
 
         <div class="has-margin-y-4">
           <label
@@ -95,7 +95,7 @@
           class="button is-dark"
           v-if="user.is_student == 1"
           @click.prevent="promote"
-        >I want to create my own classrooms</button>
+        >{{ trans.get('profile.upgrade') }}</button>
 
         <div
           class="is-flex has-padding-x-4 has-padding-y-4"

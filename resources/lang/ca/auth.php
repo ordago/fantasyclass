@@ -24,5 +24,7 @@ return [
     'password' => 'Contrasenya',
     'confirm' => 'Confirma contrasenya',
     'username_info' => 'Ha de començar amb una lletra, 4 caràcters mínim i sense caràcters especials, espais...',
+    'student' => 'Estudiant',
+    'teacher' => 'Docent',
 
 ];
