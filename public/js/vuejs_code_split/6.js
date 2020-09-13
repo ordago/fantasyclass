@@ -94,9 +94,6 @@ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___names
 //
 //
 //
-//
-//
-//
 
 Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 
@@ -161,7 +158,7 @@ Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
       }
     },
     handleEmojiPicked: function handleEmojiPicked(emoji, text) {
-      var event = new Event('input');
+      var event = new Event("input");
       this.$refs[text][0].value += emoji;
       this.$refs[text][0].dispatchEvent(event);
     },
@@ -253,7 +250,9 @@ var render = function() {
     },
     [
       _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Name")]),
+        _c("label", { staticClass: "label" }, [
+          _vm._v(_vm._s(_vm.trans.get("evaluation.name")))
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "control" }, [
           _c("input", {
@@ -281,7 +280,9 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [_vm._v("Rows")]),
+        _c("label", { staticClass: "label" }, [
+          _vm._v(_vm._s(_vm.trans.get("evaluation.rows")))
+        ]),
         _vm._v(" "),
         _c(
           "div",
@@ -302,7 +303,12 @@ var render = function() {
                       }
                     ],
                     staticStyle: { height: "100%" },
-                    attrs: { placeholder: "Descripció general", required: "" },
+                    attrs: {
+                      placeholder: _vm.trans.get(
+                        "evaluation.general_description"
+                      ),
+                      required: ""
+                    },
                     domProps: { value: row.description },
                     on: {
                       input: function($event) {
@@ -318,12 +324,10 @@ var render = function() {
                 _c(
                   "div",
                   {
-                    staticClass: "button is-success addRubricItem",
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    staticClass: "button is-success has-margin-x-2",
                     attrs: {
-                      "data-toggle": "popover",
-                      "data-placement": "right",
-                      "data-trigger": "hover",
-                      "data-tippy-content": "Afegir element a la fila",
+                      content: _vm.trans.get("evaluation.add_column"),
                       tabindex: "0"
                     },
                     on: {
@@ -438,7 +442,11 @@ var render = function() {
                               }
                             }
                           }),
-                          _vm._v(" Punts\n            ")
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(_vm.trans.get("evaluation.points")) +
+                              "\n            "
+                          )
                         ]),
                         _vm._v(" "),
                         !_vm.rubricEdit
@@ -478,7 +486,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Add row")]
+        [_vm._v(_vm._s(_vm.trans.get("evaluation.add_row")))]
       ),
       _vm._v(" "),
       _c(
@@ -493,14 +501,14 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Cancel")]
+        [_vm._v(_vm._s(_vm.trans.get("general.cancel")))]
       ),
       _vm._v(" "),
       _vm.rubric.rows.length && !this.rubricEdit
         ? _c(
             "button",
-            { staticClass: "button is-info", attrs: { type: "submit" } },
-            [_vm._v("Create Rubric")]
+            { staticClass: "button is-success", attrs: { type: "submit" } },
+            [_vm._v(_vm._s(_vm.trans.get("evaluation.create_rubric")))]
           )
         : _vm._e(),
       _vm._v(" "),
@@ -508,7 +516,7 @@ var render = function() {
         ? _c(
             "button",
             { staticClass: "button is-info", attrs: { type: "submit" } },
-            [_vm._v("Edit rubric")]
+            [_vm._v(_vm._s(_vm.trans.get("evaluation.edit_rubric")))]
           )
         : _vm._e()
     ]

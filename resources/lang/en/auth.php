@@ -17,5 +17,12 @@ return [
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email' => 'E-mail or username',
+    'register' => 'Register',
+    'forgot' => 'Forgot your password?',
+    'name' => 'Name',
+    'username' => 'Username',
+    'password' => 'Password',
+    'confirm' => 'Confirm password',
+    'username_info' => 'It should start with a letter, 4 character minimum and without special characters, spaces...',
 
 ];

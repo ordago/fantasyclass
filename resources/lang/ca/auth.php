@@ -17,5 +17,12 @@ return [
     'failed' => 'Les credencials no són correctes.',
     'throttle' => 'Massa intents incorrectes. Per favor, intenta en :seconds segons.',
     'email' => 'E-mail o nom d\'usuari',
+    'register' => 'Registra\'t',
+    'forgot' => 'Recuperar contrasenya',
+    'name' => 'Nom',
+    'username' => 'Nom d\'usuari',
+    'password' => 'Contrasenya',
+    'confirm' => 'Confirma contrasenya',
+    'username_info' => 'Ha de començar amb una lletra, 4 caràcters mínim i sense caràcters especials, espais...',
 
 ];

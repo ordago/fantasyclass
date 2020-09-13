@@ -1,39 +1,27 @@
 <template>
   <form @submit.prevent="createRubric" class="has-padding-3">
     <div class="field">
-      <label class="label">Name</label>
+      <label class="label">{{ trans.get('evaluation.name') }}</label>
       <div class="control">
         <input class="input" required minlength="3" type="text" v-model="rubric.name" />
       </div>
     </div>
     <div class="field">
-      <label class="label">Rows</label>
+      <label class="label">{{ trans.get('evaluation.rows') }}</label>
       <div class="control">
         <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row has-margin-y-2">
-          <!-- <div class="has-padding-2">
-            <input
-              type="checkbox"
-              data-toggle="popover"
-              data-placement="top"
-              data-trigger="hover"
-              v-model="row.optional"
-              data-tippy-content="Opcional (serveix per a donar punts extra o penalitzacions)"
-            />
-          </div> -->
           <div class="description">
             <textarea
               style="height:100%"
               v-model="row.description"
-              placeholder="Descripció general"
+              :placeholder="trans.get('evaluation.general_description')"
               required
             ></textarea>
           </div>
           <div
-            class="button is-success addRubricItem"
-            data-toggle="popover"
-            data-placement="right"
-            data-trigger="hover"
-            data-tippy-content="Afegir element a la fila"
+            class="button is-success has-margin-x-2"
+            v-tippy
+            :content="trans.get('evaluation.add_column')"
             @click="addColumn(index)"
             tabindex="0"
           >
@@ -57,7 +45,8 @@
               </div>
               <div id="container"></div>
               <div class="pointsItem">
-                <input type="number" v-model="column.points" value="0" style="width: 4em;" min="0" /> Punts
+                <input type="number" v-model="column.points" value="0" style="width: 4em;" min="0" />
+                {{ trans.get('evaluation.points') }}
               </div>
               <div
                 class="button is-danger delSubItem"
@@ -71,14 +60,22 @@
         </div>
       </div>
     </div>
-    <button class="button is-primary" @click.prevent="addRow">Add row</button>
-    <button class="button is-info" @click.prevent="back" type="submit">Cancel</button>
+    <button class="button is-primary" @click.prevent="addRow">{{ trans.get('evaluation.add_row') }}</button>
     <button
       class="button is-info"
+      @click.prevent="back"
+      type="submit"
+    >{{ trans.get('general.cancel') }}</button>
+    <button
+      class="button is-success"
       v-if="rubric.rows.length && !this.rubricEdit"
       type="submit"
-    >Create Rubric</button>
-    <button class="button is-info" v-if="this.rubricEdit" type="submit">Edit rubric</button>
+    >{{ trans.get('evaluation.create_rubric') }}</button>
+    <button
+      class="button is-info"
+      v-if="this.rubricEdit"
+      type="submit"
+    >{{ trans.get('evaluation.edit_rubric') }}</button>
   </form>
 </template>
 
@@ -152,7 +149,7 @@ export default {
       }
     },
     handleEmojiPicked(emoji, text) {
-      const event = new Event('input')
+      const event = new Event("input");
       this.$refs[text][0].value += emoji;
       this.$refs[text][0].dispatchEvent(event);
     },

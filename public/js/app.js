@@ -5305,6 +5305,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "tags", "rubrics", "lines", "settings"],
   created: function created() {
@@ -54154,7 +54159,7 @@ var render = function() {
           staticClass: "button is-link has-margin-bottom-3",
           attrs: { href: "/classroom/" + _vm.classroom.code + "/rubric/create" }
         },
-        [_vm._v("Create Rubric")]
+        [_vm._v(_vm._s(_vm.trans.get("evaluation.create_rubric")))]
       ),
       _vm._v(" "),
       _vm.rubrics.length
@@ -54595,7 +54600,11 @@ var render = function() {
                     [
                       _c(
                         "b-field",
-                        { attrs: { label: "Abbreviation" } },
+                        {
+                          attrs: {
+                            label: _vm.trans.get("evaluation.abbreviation")
+                          }
+                        },
                         [
                           _c("b-input", {
                             attrs: { maxlength: "15", required: "" },
@@ -54613,7 +54622,11 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "b-field",
-                        { attrs: { label: "Full description" } },
+                        {
+                          attrs: {
+                            label: _vm.trans.get("evaluation.full_description")
+                          }
+                        },
                         [
                           _c("b-input", {
                             attrs: { required: "" },
@@ -54631,7 +54644,9 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "b-field",
-                        { attrs: { label: "% of the final grade" } },
+                        {
+                          attrs: { label: _vm.trans.get("evaluation.percent") }
+                        },
                         [
                           _c("b-input", {
                             attrs: { type: "number", required: "" },
@@ -54672,7 +54687,7 @@ var render = function() {
                     _vm._v(" "),
                     !_vm.tag.classroom_id
                       ? _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v("Add")
+                          _vm._v(_vm._s(_vm.trans.get("evaluation.add")))
                         ])
                       : _vm._e(),
                     _vm._v(" "),
@@ -54688,7 +54703,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Edit")]
+                          [_vm._v(_vm._s(_vm.trans.get("general.edit")))]
                         )
                       : _vm._e()
                   ])
@@ -54734,13 +54749,15 @@ var render = function() {
                 [
                   _c("header", { staticClass: "modal-card-head" }, [
                     _c("p", { staticClass: "modal-card-title" }, [
-                      _vm._v("Prefs")
+                      _vm._v(_vm._s(_vm.trans.get("evaluation.config")))
                     ])
                   ]),
                   _vm._v(" "),
                   _c("section", { staticClass: "modal-card-body" }, [
                     _c("div", { staticClass: "field" }, [
-                      _c("label", { staticClass: "label" }, [_vm._v("Type")]),
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v(_vm._s(_vm.trans.get("evaluation.type")))
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "control" }, [
                         _c("div", { staticClass: "select" }, [
@@ -54781,15 +54798,23 @@ var render = function() {
                             },
                             [
                               _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Number grade")
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans.get("evaluation.number_grade")
+                                  )
+                                )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "1" } }, [
-                                _vm._v("Emoji grade")
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("evaluation.emoji"))
+                                )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "2" } }, [
-                                _vm._v("Pass / Fail")
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("evaluation.passfail"))
+                                )
                               ])
                             ]
                           )
@@ -54799,7 +54824,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "field" }, [
                       _c("label", { staticClass: "label" }, [
-                        _vm._v("Max grade")
+                        _vm._v(_vm._s(_vm.trans.get("evaluation.max_grade")))
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "control" }, [
@@ -54847,7 +54872,11 @@ var render = function() {
                               expression: "settings.eval_visible"
                             }
                           },
-                          [_vm._v("Evaluation visible by students")]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans.get("evaluation.visibility"))
+                            )
+                          ]
                         )
                       ],
                       1
@@ -54866,7 +54895,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Close")]
+                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
                     ),
                     _vm._v(" "),
                     _c(
@@ -54875,7 +54904,7 @@ var render = function() {
                         staticClass: "button is-primary",
                         on: { click: _vm.updatePrefs }
                       },
-                      [_vm._v("Update")]
+                      [_vm._v(_vm._s(_vm.trans.get("general.update")))]
                     )
                   ])
                 ]
@@ -54920,7 +54949,9 @@ var render = function() {
                 [
                   _c("header", { staticClass: "modal-card-head" }, [
                     _c("p", { staticClass: "modal-card-title" }, [
-                      _vm._v("Add line")
+                      _vm._v(
+                        _vm._s(_vm.trans.get("evaluation.evaluation_line"))
+                      )
                     ])
                   ]),
                   _vm._v(" "),
@@ -54933,7 +54964,13 @@ var render = function() {
                         [
                           _c(
                             "b-field",
-                            { attrs: { label: "Evaluation tags" } },
+                            {
+                              attrs: {
+                                label: _vm.trans.get(
+                                  "evaluation.evaluation_tags"
+                                )
+                              }
+                            },
                             [
                               _c(
                                 "b-taginput",
@@ -54943,7 +54980,9 @@ var render = function() {
                                     data: _vm.filteredTags,
                                     autocomplete: "",
                                     icon: "tag",
-                                    placeholder: "Add a tag",
+                                    placeholder: _vm.trans.get(
+                                      "evaluation.add"
+                                    ),
                                     "icon-pack": "fa"
                                   },
                                   on: {
@@ -55023,7 +55062,11 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "b-field",
-                        { attrs: { label: "Description" } },
+                        {
+                          attrs: {
+                            label: _vm.trans.get("evaluation.description")
+                          }
+                        },
                         [
                           _c("b-input", {
                             attrs: { required: "" },
@@ -55041,7 +55084,7 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "b-field",
-                        { attrs: { label: "Type" } },
+                        { attrs: { label: _vm.trans.get("evaluation.type") } },
                         [
                           _c(
                             "b-select",
@@ -55057,11 +55100,17 @@ var render = function() {
                             },
                             [
                               _c("option", { attrs: { value: "0" } }, [
-                                _vm._v("Simple")
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("evaluation.basic"))
+                                )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "1" } }, [
-                                _vm._v("Advanced (rubric)")
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans.get("evaluation.advanced_rubric")
+                                  )
+                                )
                               ])
                             ]
                           )
@@ -55072,35 +55121,79 @@ var render = function() {
                       _vm.line.type == 1
                         ? _c(
                             "b-field",
-                            { attrs: { label: "Rubric" } },
+                            {
+                              attrs: {
+                                label: _vm.trans.get("evaluation.rubric")
+                              }
+                            },
                             [
-                              _c(
-                                "b-select",
-                                {
-                                  attrs: { expanded: "" },
-                                  model: {
-                                    value: _vm.line.rubric,
-                                    callback: function($$v) {
-                                      _vm.$set(_vm.line, "rubric", $$v)
-                                    },
-                                    expression: "line.rubric"
-                                  }
-                                },
-                                _vm._l(_vm.rubrics, function(rubric) {
-                                  return _c(
-                                    "option",
+                              !_vm.rubrics.length
+                                ? _c(
+                                    "a",
                                     {
-                                      key: rubric.id,
-                                      domProps: { value: rubric.id }
+                                      staticClass: "button is-warning",
+                                      attrs: {
+                                        href:
+                                          "/classroom/" +
+                                          _vm.classroom.code +
+                                          "/rubrics"
+                                      }
                                     },
-                                    [_vm._v(_vm._s(rubric.name))]
+                                    [
+                                      _c("i", {
+                                        staticClass:
+                                          "has-margin-right-2 fas fa-tasks-alt"
+                                      }),
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm.trans.get(
+                                              "evaluation.rubric_management"
+                                            )
+                                          ) +
+                                          "\n            "
+                                      )
+                                    ]
                                   )
-                                }),
-                                0
-                              )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _vm.rubrics.length
+                                ? _c(
+                                    "b-select",
+                                    {
+                                      attrs: { expanded: "" },
+                                      model: {
+                                        value: _vm.line.rubric,
+                                        callback: function($$v) {
+                                          _vm.$set(_vm.line, "rubric", $$v)
+                                        },
+                                        expression: "line.rubric"
+                                      }
+                                    },
+                                    _vm._l(_vm.rubrics, function(rubric) {
+                                      return _c(
+                                        "option",
+                                        {
+                                          key: rubric.id,
+                                          domProps: { value: rubric.id }
+                                        },
+                                        [_vm._v(_vm._s(rubric.name))]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                : _vm._e()
                             ],
                             1
                           )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.line.type == 1 && !_vm.rubrics.length
+                        ? _c("p", [
+                            _vm._v(
+                              _vm._s(_vm.trans.get("evaluation.rubric_empty"))
+                            )
+                          ])
                         : _vm._e(),
                       _vm._v(" "),
                       _vm.line.tags && _vm.line.tags.length
@@ -55110,7 +55203,13 @@ var render = function() {
                               [
                                 _c("summary", { staticClass: "is-size-6" }, [
                                   _c("i", { staticClass: "fas fa-gear" }),
-                                  _vm._v(" Advanced\n              ")
+                                  _vm._v(
+                                    " " +
+                                      _vm._s(
+                                        _vm.trans.get("evaluation.advanced")
+                                      ) +
+                                      "\n              "
+                                  )
                                 ]),
                                 _vm._v(" "),
                                 _c("h3", [_vm._v("Weigth in the tag")]),
@@ -55188,11 +55287,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Close")]
+                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
                     ),
                     _vm._v(" "),
                     _c("button", { staticClass: "button is-primary" }, [
-                      _vm._v("Add")
+                      _vm._v(
+                        _vm._s(_vm.trans.get("evaluation.evaluation_line"))
+                      )
                     ])
                   ])
                 ]
@@ -57260,7 +57361,9 @@ var render = function() {
                       attrs: { icon: "check", "icon-pack": "fa" }
                     }),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Active")])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.active")))
+                    ])
                   ],
                   1
                 ),
@@ -57285,7 +57388,9 @@ var render = function() {
                   [
                     _c("b-icon", { attrs: { icon: "hourglass-end" } }),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Finished")])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.finished")))
+                    ])
                   ],
                   1
                 ),
@@ -57310,7 +57415,9 @@ var render = function() {
                   [
                     _c("b-icon", { attrs: { icon: "eye-slash" } }),
                     _vm._v(" "),
-                    _c("span", [_vm._v("Disabled")])
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.disabled")))
+                    ])
                   ],
                   1
                 )
@@ -57327,7 +57434,12 @@ var render = function() {
                   },
                   [
                     _c("i", { staticClass: "fas fa-trash" }),
-                    _vm._v("Delete\n      ")
+                    _vm._v(" "),
+                    _c("span", { staticClass: "has-margin-x-3" }, [
+                      _vm._v(_vm._s(_vm.trans.get("general.delete")) + " "),
+                      _c("i", { staticClass: "fas fa-radiation-alt" }),
+                      _c("i", { staticClass: "fas fa-exclamation-triangle" })
+                    ])
                   ]
                 )
               : _vm._e()
@@ -57339,7 +57451,7 @@ var render = function() {
           "b-field",
           {
             staticStyle: { width: "400px" },
-            attrs: { label: "Enrollment code" }
+            attrs: { label: _vm.trans.get("settings.enrollment_code") }
           },
           [
             _c("div", { staticClass: "field has-addons" }, [
@@ -57367,7 +57479,7 @@ var render = function() {
                   },
                   [
                     _c("i", { staticClass: "fas fa-sync-alt" }),
-                    _vm._v(" Generate a new one")
+                    _vm._v(" " + _vm._s(_vm.trans.get("settings.generate")))
                   ]
                 )
               ])
@@ -79738,7 +79850,14 @@ __webpack_require__.r(__webpack_exports__);
     "provider_failed": "El e-mail no est\xE0 enregistrat.",
     "failed": "Les credencials no s\xF3n correctes.",
     "throttle": "Massa intents incorrectes. Per favor, intenta en :seconds segons.",
-    "email": "E-mail o nom d'usuari"
+    "email": "E-mail o nom d'usuari",
+    "register": "Registra't",
+    "forgot": "Recuperar contrasenya",
+    "name": "Nom",
+    "username": "Nom d'usuari",
+    "password": "Contrasenya",
+    "confirm": "Confirma contrasenya",
+    "username_info": "Ha de comen\xE7ar amb una lletra, 4 car\xE0cters m\xEDnim i sense car\xE0cters especials, espais..."
   },
   "ca.badges": {
     "add": "Afegeix ins\xEDgnia",
@@ -79927,6 +80046,41 @@ __webpack_require__.r(__webpack_exports__);
     "info_wizard_5": "Comen\xE7a l\\'aventura!",
     "end_wizard": "Acabar assistent"
   },
+  "ca.evaluation": {
+    "add_tag": "Afegeix etiqueta d'avaluaci\xF3",
+    "add": "Afegeix etiqueta",
+    "description": "Descripci\xF3",
+    "edit": "Edita etiqueta",
+    "rubric_management": "Gesti\xF3 de r\xFAbriques",
+    "config": "Configuraci\xF3",
+    "report": "Informe d'avaluaci\xF3",
+    "evaluation_line": "Afegir l\xEDnia d'avaluaci\xF3",
+    "tags": "Etiquetes",
+    "grade": "Avalua",
+    "abbreviation": "Abreviaci\xF3",
+    "full_description": "Descripci\xF3 completa",
+    "percent": "%. Percentatge de la nota final",
+    "evaluation_tags": "Etiquetes d'avaluacio",
+    "type": "Tipus",
+    "basic": "Simple",
+    "advanced_rubric": "Avan\xE7ada (r\xFAbriques)",
+    "advanced": "Avan\xE7at",
+    "number_grade": "Nota num\xE9rica",
+    "emoji": "Nota de emoji",
+    "passfail": "Supera \/ No supera",
+    "max_grade": "Nota m\xE0xima",
+    "visibility": "Avaluaci\xF3 visible pels estudiants",
+    "rubric": "R\xFAbrica",
+    "rubric_empty": "Vaja! Sembla que no tens r\xFAbriques, crea primer una en el gestor de r\xFAbriques.",
+    "create_rubric": "Crear r\xFAbrica",
+    "name": "Nom",
+    "rows": "Files",
+    "add_row": "Afegir fila",
+    "general_description": "Descripci\xF3 general",
+    "points": "Punts",
+    "add_column": "Afegeix columna",
+    "edit_rubric": "Edita r\xFAbrica"
+  },
   "ca.events": {
     "curse_silence_title": "La maledicci\xF3 del silenci",
     "curse_silence_content": "Hem estat male\xEFts per un encanteri que no ens permet parlar a cap dels presents (fins i tot al D\xE9u / la Deessa). Nom\xE9s podrem desfer-nos-en superant un repte proposat.",
@@ -80076,6 +80230,7 @@ __webpack_require__.r(__webpack_exports__);
   "ca.settings": {
     "classroom": "Gesti\xF3 de classe",
     "parameters": "Par\xE0metres",
+    "generate": "Generar codi nou",
     "probability": "Probabilitats de les cartes",
     "economic": "Par\xE0metres econ\xF2mics",
     "use_card_gold": "Or per utilitzar cartes",
@@ -80083,10 +80238,15 @@ __webpack_require__.r(__webpack_exports__);
     "weather_management": "Gesti\xF3 del temps",
     "teachers": "Profes",
     "add_teachers": "Afegir profe",
+    "cards": "M\xE0xim de cartes per estudiant",
     "rare": "Rara",
     "common": "Comuna",
     "epic": "\xC8pica",
-    "legendary": "Legend\xE0ria"
+    "legendary": "Legend\xE0ria",
+    "enrollment_code": "C\xF3digo de matriculaci\xF3n",
+    "active": "Activa",
+    "finished": "Finalitzada",
+    "disabled": "Deshabilitada"
   },
   "ca.shop": {
     "items": "Objectes",
@@ -80245,7 +80405,14 @@ __webpack_require__.r(__webpack_exports__);
     "provider_failed": "The e-mail is not registered.",
     "failed": "These credentials do not match our records.",
     "throttle": "Too many login attempts. Please try again in :seconds seconds.",
-    "email": "E-mail or username"
+    "email": "E-mail or username",
+    "register": "Register",
+    "forgot": "Forgot your password?",
+    "name": "Name",
+    "username": "Username",
+    "password": "Password",
+    "confirm": "Confirm password",
+    "username_info": "It should start with a letter, 4 character minimum and without special characters, spaces..."
   },
   "en.behaviours": {
     "add": "Add behaviour",
@@ -80420,6 +80587,41 @@ __webpack_require__.r(__webpack_exports__);
     "info_wizard_5": "Start the adventure!",
     "end_wizard": "Finish wizard"
   },
+  "en.evaluation": {
+    "add_tag": "Add evaluation tag",
+    "add": "Add tag",
+    "description": "Description",
+    "edit": "Edit tag",
+    "rubric_management": "Rubric management",
+    "config": "Configuration",
+    "report": "Evaluation report",
+    "evaluation_line": "Add evaluation line",
+    "tags": "Tags",
+    "grade": "Grade",
+    "abbreviation": "Abbreviation",
+    "full_description": "Full description",
+    "percent": "% of the final grade",
+    "evaluation_tags": "Evaluation tags",
+    "type": "Type",
+    "basic": "Basic",
+    "advanced_rubric": "Advanced (rubrics)",
+    "advanced": "Advanced",
+    "number_grade": "Numeric grade",
+    "emoji": "Emoji grade",
+    "passfail": "Pass \/ Fail",
+    "max_grade": "Max grade",
+    "visibility": "Evaluation visible by students",
+    "rubric": "Rubric",
+    "rubric_empty": "Ops! It seems like you don't have rubrics, you can create one in the rubric manager.",
+    "create_rubric": "Create rubric",
+    "name": "Name",
+    "rows": "Rows",
+    "add_row": "Add row",
+    "general_description": "General description",
+    "points": "Points",
+    "add_column": "Add column",
+    "edit_rubric": "Edit rubric"
+  },
   "en.events": {
     "curse_silence_title": "The curse of silence",
     "curse_silence_content": "We have been cursed by a spell that does not allow us to speak to anyone present (including God\/Goddess). We can only get rid of it by overcoming a proposed challenge.",
@@ -80549,6 +80751,7 @@ __webpack_require__.r(__webpack_exports__);
   "en.settings": {
     "classroom": "Classroom Management",
     "parameters": "Parameters",
+    "generate": "Generate new code",
     "probability": "Card type probabilities",
     "economic": "Economic parameters",
     "use_card_gold": "Use card gold",
@@ -80556,10 +80759,15 @@ __webpack_require__.r(__webpack_exports__);
     "weather_management": "Weather management",
     "teachers": "Teachers",
     "add_teachers": "Add teacher",
+    "cards": "Max number of cards for students",
     "rare": "Rare",
     "common": "Common",
     "epic": "epic",
-    "legendary": "Legendary"
+    "legendary": "Legendary",
+    "enrollment_code": "Enrollment code",
+    "active": "Active",
+    "finished": "Finished",
+    "disabled": "Disabled"
   },
   "en.shop": {
     "items": "Items",
@@ -80715,7 +80923,14 @@ __webpack_require__.r(__webpack_exports__);
     "provider_failed": "El e-mail no est\xE1 grabado.",
     "failed": "Las credenciales no son correctas.",
     "throttle": "Massa intentos incorrectos. Por favor, intenta en :seconds segundos.",
-    "email": "E-mail o nombre de usuario"
+    "email": "E-mail o nombre de usuario",
+    "register": "Reg\xEDstrate",
+    "forgot": "Recuperar contrase\xF1a",
+    "name": "Nombre",
+    "username": "Nombre de usuario",
+    "password": "Contrase\xF1a",
+    "confirm": "Confirma contrase\xF1a",
+    "username_info": "Tiene que empezar con una letra, 4 caracteres m\xEDnimo y sin caracteres espciales, espacios..."
   },
   "es.badges": {
     "add": "A\xF1ade insignia",
@@ -80915,7 +81130,29 @@ __webpack_require__.r(__webpack_exports__);
     "evaluation_line": "A\xF1adir l\xEDnea de evaluaci\xF3n",
     "tags": "Etiquetas",
     "grade": "Eval\xFAa",
-    "": ""
+    "abbreviation": "Abreviaci\xF3n",
+    "full_description": "Descripci\xF3n completa",
+    "percent": "%. Porcentaje de la nota final",
+    "evaluation_tags": "Etiquetas de evaluacion",
+    "type": "Tipo",
+    "basic": "Simple",
+    "advanced_rubric": "Avanzada (r\xFAbricas)",
+    "advanced": "Avanzado",
+    "number_grade": "Nota num\xE9rica",
+    "emoji": "Nota de emoji",
+    "passfail": "Supera \/ No supera",
+    "max_grade": "Nota m\xE1xima",
+    "visibility": "Evaluaci\xF3n visible por estudiantes",
+    "rubric": "R\xFAbrica",
+    "rubric_empty": "\xA1Vaya! Parece que no tienes r\xFAbricas, crea primero una en el gestor de r\xFAbricas.",
+    "create_rubric": "Crear r\xFAbrica",
+    "name": "Nombres",
+    "rows": "Filas",
+    "add_row": "A\xF1adir fila",
+    "general_description": "Descripci\xF3n general",
+    "points": "Puntos",
+    "add_column": "A\xF1ade columna",
+    "edit_rubric": "Edita r\xFAbrica"
   },
   "es.events": {
     "curse_silence_title": "La maldici\xF3n del silencio",
@@ -81026,7 +81263,7 @@ __webpack_require__.r(__webpack_exports__);
     "stories": "Historias",
     "goals": "Objectivos",
     "challenges": "Desaf\xEDos",
-    "evaluation": "Avaluaci\xF3n",
+    "evaluation": "Evaluaci\xF3n",
     "rules": "Normas",
     "log": "Registro",
     "shop": "Tienda",
@@ -81066,6 +81303,7 @@ __webpack_require__.r(__webpack_exports__);
   "es.settings": {
     "classroom": "Gesti\xF3n de clase",
     "parameters": "Parametros",
+    "generate": "Generar c\xF3digo nuevo",
     "probability": "Probabilidades de les cartas",
     "economic": "Parametros econ\xF3micos",
     "use_card_gold": "Oro para utilitzar cartas",
@@ -81073,10 +81311,15 @@ __webpack_require__.r(__webpack_exports__);
     "weather_management": "Gesti\xF3n del tiempo",
     "teachers": "Profes",
     "add_teachers": "A\xF1adir profe",
+    "cards": "M\xE1ximo de cartas por estudiante",
     "rare": "Rara",
     "common": "Com\xFAn",
     "epic": "\xC9pica",
-    "legendary": "Legendaria"
+    "legendary": "Legendaria",
+    "enrollment_code": "Codi de matriculaci\xF3",
+    "active": "Activa",
+    "finished": "Finalizada",
+    "disabled": "Deshabilitada"
   },
   "es.shop": {
     "items": "Objetos",

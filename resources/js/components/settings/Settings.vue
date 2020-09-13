@@ -14,7 +14,7 @@
             type="is-success"
           >
             <b-icon icon="check" icon-pack="fa"></b-icon>
-            <span>Active</span>
+            <span>{{ trans.get('settings.active') }}</span>
           </b-radio-button>
           <b-radio-button
             v-model="state"
@@ -23,7 +23,7 @@
             type="is-warning"
           >
             <b-icon icon="hourglass-end"></b-icon>
-            <span>Finished</span>
+            <span>{{ trans.get('settings.finished') }}</span>
           </b-radio-button>
           <b-radio-button
             v-model="state"
@@ -32,21 +32,21 @@
             type="is-danger"
           >
             <b-icon icon="eye-slash"></b-icon>
-            <span>Disabled</span>
+            <span>{{ trans.get('settings.disabled') }}</span>
           </b-radio-button>
         </b-field>
         <button class="button has-margin-left-4 is-danger" @click="confirmDelete" v-if="isAdmin">
-          <i class="fas fa-trash"></i>Delete
+          <i class="fas fa-trash"></i> <span class="has-margin-x-3">{{ trans.get('general.delete') }} <i class="fas fa-radiation-alt"></i><i class="fas fa-exclamation-triangle"></i></span>
         </button>
       </div>
 
-      <b-field label="Enrollment code" style="width: 400px">
+      <b-field :label="trans.get('settings.enrollment_code')" style="width: 400px">
         <div class="field has-addons">
           <p class="control">
             <b-input type="password" :value="classroom.enrollment_code" password-reveal></b-input>
           </p>
           <p class="control">
-            <button class="button is-info" @click="regenerate"><i class="fas fa-sync-alt"></i> Generate a new one</button> 
+            <button class="button is-info" @click="regenerate"><i class="fas fa-sync-alt"></i> {{ trans.get('settings.generate') }}</button> 
           </p>
         </div>
       </b-field>

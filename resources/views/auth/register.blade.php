@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@php
-App::setlocale('ca');
-@endphp
-
 @section('content')
 <div class="top-right rounded" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/register/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/en">en</a>
@@ -17,7 +13,7 @@ App::setlocale('ca');
             @csrf
 
             <div class="has-margin-y-3">
-                <input id="name" placeholder="{{ __('Name') }}" type="text" class="input is-info @error('name') is-danger @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <input id="name" placeholder="{{ __('auth.name') }}" type="text" class="input is-info @error('name') is-danger @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                 @error('name')
                 <span class="help is-danger" role="alert">
@@ -27,17 +23,17 @@ App::setlocale('ca');
             </div>
 
             <div class="has-margin-y-3">
-                <input id="username" placeholder="{{ __('Username') }}" type="text" pattern="[a-zA-Z][a-zA-Z0-9]{3,31}" class="input is-info @error('username') is-danger @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
+                <input id="username" placeholder="{{ __('auth.username') }}" type="text" pattern="[a-zA-Z][a-zA-Z0-9]{3,31}" class="input is-info @error('username') is-danger @enderror" name="username" value="{{ old('username') }}" required autocomplete="username">
 
                 @error('username')
                 <span class="help is-danger" role="alert">
                     {{ $message }}
                 </span>
                 @enderror
-                <small class="has-italic-text">It should start with a letter, 4 character minimum and without special characters, spaces...</small>
+                <small class="has-italic-text">{{ __('auth.username_info') }}</small>
             </div>
             <div class="has-margin-y-3">
-                <input id="email" placeholder="{{ __('E-Mail Address') }}" type="email" class="input is-info @error('email') is-danger @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
+                <input id="email" placeholder="{{ __('auth.email') }}" type="email" class="input is-info @error('email') is-danger @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                 @error('email')
                 <span class="help is-danger" role="alert">
@@ -47,7 +43,7 @@ App::setlocale('ca');
             </div>
 
             <div class="has-margin-y-3">
-                <input id="password" placeholder="{{ __('Password') }}" type="password" class="input is-info @error('password') is-danger @enderror" name="password" required autocomplete="new-password">
+                <input id="password" placeholder="{{ __('auth.password') }}" type="password" class="input is-info @error('password') is-danger @enderror" name="password" required autocomplete="new-password">
 
                 @error('password')
                 <span class="help is-danger" role="alert">
@@ -57,7 +53,7 @@ App::setlocale('ca');
             </div>
 
             <div class="has-margin-y-3">
-                <input id="password-confirm" placeholder="{{ __('Confirm Password') }}" type="password" class="input is-info" name="password_confirmation" required autocomplete="new-password">
+                <input id="password-confirm" placeholder="{{ __('auth.confirm') }}" type="password" class="input is-info" name="password_confirmation" required autocomplete="new-password">
             </div>
 
             <div class="has-margin-y-3">
@@ -80,8 +76,11 @@ App::setlocale('ca');
 
 
             <div class="has-margin-y-4">
+                <a href="/" class="button is-info">
+                    <i class="fas fa-long-arrow-left"></i>
+                </a>
                 <button type="submit" class="button is-link">
-                    {{ __('Register') }}
+                    {{ __('auth.register') }}
                 </button>
             </div>
         </form>

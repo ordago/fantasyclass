@@ -25,7 +25,7 @@ return [
     'stories' => 'Historias',
     'goals' => 'Objectivos',
     'challenges' => 'Desafíos',
-    'evaluation' => 'Avaluación',
+    'evaluation' => 'Evaluación',
     'rules' => 'Normas',
     'log' => 'Registro',
     'shop' => "Tienda",

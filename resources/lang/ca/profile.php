@@ -11,7 +11,7 @@ return [
     */
     
     'profile' => 'Perfil d\'usuari',
-    'name' => 'Nom d\'usuari',
+    'name' => 'Nom',
     'current_password' => 'Contrasenya actual',
     'new_password' => 'Canvia contrasenya',
     'confirm_new_password' => 'Confirma la contrasenya',

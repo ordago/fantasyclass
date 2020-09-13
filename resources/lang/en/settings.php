@@ -12,6 +12,7 @@ return [
     
     'classroom' => 'Classroom Management',
     'parameters' => 'Parameters',
+    'generate' => 'Generate new code',
     'probability' => 'Card type probabilities',
     'economic' => 'Economic parameters',
     'use_card_gold' => 'Use card gold',
@@ -20,11 +21,15 @@ return [
     'teachers' => 'Teachers',
     'add_teachers' => 'Add teacher',
     
+    'cards' => 'Max number of cards for students',
     'rare' => 'Rare',
     'common' => "Common",
     'epic' => "epic",
     'legendary' => "Legendary",
 
-
+    'enrollment_code' => "Enrollment code",
+    'active' => "Active",
+    'finished' => "Finished",
+    'disabled' => "Disabled",
     
 ];

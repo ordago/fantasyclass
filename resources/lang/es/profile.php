@@ -11,7 +11,7 @@ return [
     */
     
     'profile' => 'Perfil de usuario',
-    'name' => 'Nombre de usuario',
+    'name' => 'Nombre',
     'current_password' => 'Contraseña actual',
     'new_password' => 'Cambia contraseña',
     'confirm_new_password' => 'Confirma la contraseña',

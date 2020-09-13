@@ -7,7 +7,7 @@
         <span class="icon is-small">
             <i class="fad fa-home" aria-hidden="true"></i>
         </span>
-        <span>{{ _('general.home') }}</span>
+        <span>{{ __('general.home') }}</span>
     </a>
 </li>
 <li>
@@ -15,7 +15,7 @@
         <span class="icon is-small">
             <i class="fad fa-analytics" aria-hidden="true"></i>
         </span>
-        <span>Evaluation</span>
+        <span>{{ __('menu.evaluation') }}</span>
     </a>
 </li>
 <li class="is-active">
@@ -23,7 +23,7 @@
         <span class="icon is-small">
             <i class="fad fa-tasks-alt" aria-hidden="true"></i>
         </span>
-        <span>Rubric management</span>
+        <span>{{ __('evaluation.rubric_management') }}</span>
     </a>
 </li>
 @include('layouts.breadcrumbend')

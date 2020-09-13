@@ -115,13 +115,13 @@
             <p class="modal-card-title" v-if="tag.classroom_id">{{ trans.get('evaluation.edit') }}</p>
           </header>
           <section class="modal-card-body">
-            <b-field label="Abbreviation">
+            <b-field :label="trans.get('evaluation.abbreviation')">
               <b-input v-model="tag.short" maxlength="15" required></b-input>
             </b-field>
-            <b-field label="Full description">
+            <b-field :label="trans.get('evaluation.full_description')">
               <b-input v-model="tag.description" required></b-input>
             </b-field>
-            <b-field label="% of the final grade">
+            <b-field :label="trans.get('evaluation.percent')">
               <b-input v-model="tag.percent" type="number" required></b-input>
             </b-field>
           </section>
@@ -131,8 +131,8 @@
               type="button"
               @click="tag={short: '', description: '', percent: 0,},isTagModalActive=false"
             >Close</button>
-            <button class="button is-primary" v-if="!tag.classroom_id">Add</button>
-            <button class="button is-primary" v-if="tag.classroom_id" @click.prevent="editTag">Edit</button>
+            <button class="button is-primary" v-if="!tag.classroom_id">{{ trans.get('evaluation.add') }}</button>
+            <button class="button is-primary" v-if="tag.classroom_id" @click.prevent="editTag">{{ trans.get('general.edit') }}</button>
           </footer>
         </div>
       </form>
@@ -148,23 +148,23 @@
       <form @submit.prevent="updatePrefs">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">Prefs</p>
+            <p class="modal-card-title">{{ trans.get('evaluation.config') }}</p>
           </header>
           <section class="modal-card-body">
             <div class="field">
-              <label class="label">Type</label>
+              <label class="label">{{ trans.get('evaluation.type') }}</label>
               <div class="control">
                 <div class="select">
                   <select v-model="settings.eval_type" @input="$forceUpdate()">
-                    <option value="0">Number grade</option>
-                    <option value="1">Emoji grade</option>
-                    <option value="2">Pass / Fail</option>
+                    <option value="0">{{ trans.get('evaluation.number_grade') }}</option>
+                    <option value="1">{{ trans.get('evaluation.emoji') }}</option>
+                    <option value="2">{{ trans.get('evaluation.passfail') }}</option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="field">
-              <label class="label">Max grade</label>
+              <label class="label">{{ trans.get('evaluation.max_grade') }}</label>
               <div class="control">
                 <input
                   class="input"
@@ -179,12 +179,12 @@
                 true-value="1"
                 false-value="0"
                 v-model="settings.eval_visible"
-              >Evaluation visible by students</b-switch>
+              >{{ trans.get('evaluation.visibility') }}</b-switch>
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isPrefsModalActive=false">Close</button>
-            <button class="button is-primary" @click="updatePrefs">Update</button>
+            <button class="button" type="button" @click="isPrefsModalActive=false">{{ trans.get('general.close') }}</button>
+            <button class="button is-primary" @click="updatePrefs">{{ trans.get('general.update') }}</button>
           </footer>
         </div>
       </form>
@@ -200,11 +200,11 @@
       <form @submit.prevent="addLine">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">Add line</p>
+            <p class="modal-card-title">{{ trans.get('evaluation.evaluation_line') }}</p>
           </header>
           <section class="modal-card-body">
             <section>
-              <b-field label="Evaluation tags">
+              <b-field :label="trans.get('evaluation.evaluation_tags')">
                 <b-taginput
                   v-model="line.tags"
                   :data="filteredTags"
@@ -212,7 +212,7 @@
                   ref="taginput"
                   icon="tag"
                   @input="setWeight"
-                  placeholder="Add a tag"
+                  :placeholder="trans.get('evaluation.add')"
                   icon-pack="fa"
                   @typing="getFilteredTags"
                 >
@@ -235,17 +235,20 @@
                 </b-taginput>
               </b-field>
             </section>
-            <b-field label="Description">
+            <b-field :label="trans.get('evaluation.description')">
               <b-input v-model="line.description" required></b-input>
             </b-field>
-            <b-field label="Type">
+            <b-field :label="trans.get('evaluation.type')">
               <b-select v-model="line.type" expanded>
-                <option value="0">Simple</option>
-                <option value="1">Advanced (rubric)</option>
+                <option value="0">{{ trans.get('evaluation.basic') }}</option>
+                <option value="1">{{ trans.get('evaluation.advanced_rubric') }}</option>
               </b-select>
             </b-field>
-            <b-field v-if="line.type == 1" label="Rubric">
-              <b-select v-model="line.rubric" expanded>
+            <b-field v-if="line.type == 1" :label="trans.get('evaluation.rubric')">
+              <a v-if="!rubrics.length" :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
+                <i class="has-margin-right-2 fas fa-tasks-alt"></i> {{ trans.get('evaluation.rubric_management') }}
+              </a>
+              <b-select v-if="rubrics.length" v-model="line.rubric" expanded>
                 <option
                   v-for="rubric in rubrics"
                   :key="rubric.id"
@@ -253,10 +256,12 @@
                 >{{ rubric.name }}</option>
               </b-select>
             </b-field>
+            <p v-if="line.type == 1 && !rubrics.length">{{ trans.get('evaluation.rubric_empty') }}</p>
+
             <div v-if="line.tags && line.tags.length">
               <details>
                 <summary class="is-size-6">
-                  <i class="fas fa-gear"></i> Advanced
+                  <i class="fas fa-gear"></i> {{ trans.get('evaluation.advanced') }}
                 </summary>
                 <h3>Weigth in the tag</h3>
                 <div class="is-block w-100 has-margin-y-2" v-for="tag in line.tags" :key="tag.id">
@@ -271,8 +276,8 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isLineModalActive=false">Close</button>
-            <button class="button is-primary">Add</button>
+            <button class="button" type="button" @click="isLineModalActive=false">{{ trans.get('general.close') }}</button>
+            <button class="button is-primary">{{ trans.get('evaluation.evaluation_line') }}</button>
           </footer>
         </div>
       </form>

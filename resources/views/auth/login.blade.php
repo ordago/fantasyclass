@@ -43,13 +43,13 @@
                 </button>
                 <a href="{{ url('/auth/redirect/google') }}" class="button is-danger w-100 has-margin-y-2"><i class="fa fa-google has-margin-right-2"></i> Google</a>
                 @if (Route::has('register'))
-                <a class="button is-primary w-100 has-margin-y-2" href="{{ route('register') }}/{{ $locale ?? '' }}"><i class="fas fa-user-plus has-margin-right-2"></i> {{ __('Register') }}</a>
+                <a class="button is-primary w-100 has-margin-y-2" href="{{ route('register') }}/{{ $locale ?? '' }}"><i class="fas fa-user-plus has-margin-right-2"></i> {{ __('auth.register') }}</a>
                 @endif
                 <div class="d-flex align-items-center">
                     <i class="fal fa-ellipsis-v has-margin-top-1 has-margin-x-2"></i>
                     @if (Route::has('password.request'))
                     <a class="nav-link" href="{{ route('password.request') }}">
-                        {{ __('Forgot Your Password?') }}
+                        {{ __('auth.forgot') }}
                     </a>
                     @endif
                 </div>

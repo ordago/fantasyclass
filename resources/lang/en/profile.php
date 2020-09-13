@@ -11,7 +11,7 @@ return [
     */
 
     'profile' => 'User profile',
-    'name' => 'User\'s name',
+    'name' => 'Name',
     'current_password' => 'Current password',
     'new_password' => 'Change password',
     'confirm_new_password' => 'Repeat password',

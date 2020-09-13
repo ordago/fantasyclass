@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="'/classroom/' + classroom.code + '/rubric/create'" class="button is-link has-margin-bottom-3">Create Rubric</a>
+    <a :href="'/classroom/' + classroom.code + '/rubric/create'" class="button is-link has-margin-bottom-3">{{ trans.get('evaluation.create_rubric') }}</a>
     <b-table v-if="rubrics.length"
             :data="rubrics"
             :default-sort="['name']"
