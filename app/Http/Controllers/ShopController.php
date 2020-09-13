@@ -132,7 +132,7 @@ class ShopController extends Controller
                 ->toMediaCollection('item');
 
             $itemPath = $item->getMedia('item')->first();
-            $imgPath = $itemPath->collection_name . "/" . $itemPath->id . '/' . $itemPath->file_name;
+            $imgPath = $itemPath->collection_name . "/" . $itemPath->uuid . '/' . $itemPath->file_name;
             $path = Storage::disk('public')->path('/') . $imgPath;
             if ($itemPath->mime_type != "image/gif" || $itemPath->size >= 500000) {
                 Image::make($path)->resize(60, 60)->save();

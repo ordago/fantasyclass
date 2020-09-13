@@ -57,7 +57,7 @@ class ClassroomsStudentController extends Controller
             ->toMediaCollection('avatar');
 
         $avatarPath = $student->getMedia('avatar')->first();
-        $imgPath = $avatarPath->collection_name . "/" . $avatarPath->id . '/' . $avatarPath->file_name;
+        $imgPath = $avatarPath->collection_name . "/" . $avatarPath->uuid . '/' . $avatarPath->file_name;
         $path = Storage::disk('public')->path('/') . $imgPath;
         Image::make($path)->resize(128, 128)->save();
     }

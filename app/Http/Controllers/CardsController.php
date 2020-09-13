@@ -111,7 +111,7 @@ class CardsController extends Controller
                 ->toMediaCollection('card');
 
             $cardPath = $card->getMedia('card')->first();
-            $imgPath = $cardPath->collection_name . "/" . $cardPath->id . '/' . $cardPath->file_name;
+            $imgPath = $cardPath->collection_name . "/" . $cardPath->uuid . '/' . $cardPath->file_name;
             $path = Storage::disk('public')->path('/') . $imgPath;
             if ($cardPath->mime_type != "image/gif" || $cardPath->size >= 500000) {
                 $image = Image::make($path)->resize($data['width'], null, function ($constraint) {
