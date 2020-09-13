@@ -8,7 +8,7 @@ class MiscellanyController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('verified');
+        // $this->middleware('verified');
     }
 
     public function contribute()
