@@ -65,7 +65,10 @@
     </div>
     <div class="card-body bg-light text-dark">
       <p class="card-text">Sabemos que cuesta contribuir en proyectos digitales, pero si estás aquí es porque crees que se tiene que valorar el trabajo aunque éste no sea tangible.</p>
-      <p class="card-text">¿Para qué será tu aportación? La plataforma tiene gastos mensuales relacionados con el dominio y el alojamiento. Por otra parte, están todas las horas dedicadas al$ <p class="card-text">Si quieres colaborar y agradecer el trabajo en la plataforma, lo puedes hacer de dos maneras:</p>
+      <p class="card-text">¿Para qué será tu aportación? La plataforma tiene gastos mensuales relacionados con el dominio y el alojamiento. Por otra parte, están todas las horas dedicadas al proyecto, que no són pocas ... ¡Y todas las que quedan! Además de servir como inyección de moral
+      <i class="fas fa-smile-wink"></i>
+      </p>  
+      <p class="card-text">Si quieres colaborar y agradecer el trabajo en la plataforma, lo puedes hacer de dos maneras:</p>
         <div><a href="https://www.paypal.me/gamificaOnline?locale.x=es_ES" class="btn btn-primary" target="_blank"><i class="fab fa-paypal"></i> Aportación única</a> 
         <a href="https://www.patreon.com/join/fantasyclass" class="btn btn-primary" target="_blank"><i class="fab fa-patreon"></i> Aportación mensual (Sponsors)</a></div>          
           <h3>Colaboradores</h3                                                                                                                                                                            >
