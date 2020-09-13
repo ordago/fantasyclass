@@ -72,7 +72,8 @@
                     </div>
                 </div>
             </div>
-            <div class="has-margin-y-3">
+            <div class="has-margin-bottom-4">
+                <p class="has-margin-top-4 has-margin-bottom-1">{{ __('auth.teacher_student') }}</p>
                 <div class="field">
                     <div class="control has-icons-left">
                         <div class="select w-100 is-expanded">

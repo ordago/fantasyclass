@@ -26,4 +26,6 @@ return [
     'username_info' => 'Tiene que empezar con una letra, 4 caracteres mínimo y sin caracteres espciales, espacios...',
     'student' => 'Estudiante',
     'teacher' => 'Docente',
+    'teacher_student' => '¿Docente o estudiante?',
+
 ];
