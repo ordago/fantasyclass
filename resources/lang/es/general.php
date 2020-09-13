@@ -17,6 +17,7 @@ return [
     'delete' => "Elimina",
     'close' => "Cierra",
     'cancel' => "Cancela",
+    'create' => "Crea",
 
     'name' => "Nombre",
     'optional' => "opcional",

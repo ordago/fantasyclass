@@ -79855,7 +79855,8 @@ __webpack_require__.r(__webpack_exports__);
     "confirm": "Confirma contrasenya",
     "username_info": "Ha de comen\xE7ar amb una lletra, 4 car\xE0cters m\xEDnim i sense car\xE0cters especials, espais...",
     "student": "Estudiant",
-    "teacher": "Docent"
+    "teacher": "Docent",
+    "teacher_student": "Docent o estudiant?"
   },
   "ca.badges": {
     "add": "Afegeix ins\xEDgnia",
@@ -80135,6 +80136,7 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Elimina",
     "close": "Tanca",
     "cancel": "Cancel\xB7la",
+    "create": "Crea",
     "name": "Nom",
     "optional": "opcional",
     "home": "Inici",
@@ -80414,7 +80416,8 @@ __webpack_require__.r(__webpack_exports__);
     "confirm": "Confirm password",
     "username_info": "It should start with a letter, 4 character minimum and without special characters, spaces...",
     "student": "Student",
-    "teacher": "Teacher"
+    "teacher": "Teacher",
+    "teacher_student": "Teacher or student?"
   },
   "en.behaviours": {
     "add": "Add behaviour",
@@ -80680,6 +80683,7 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Delete",
     "close": "Close",
     "cancel": "Cancel",
+    "create": "Create",
     "name": "Name",
     "optional": "optional",
     "home": "Home",
@@ -80936,7 +80940,8 @@ __webpack_require__.r(__webpack_exports__);
     "confirm": "Confirma contrase\xF1a",
     "username_info": "Tiene que empezar con una letra, 4 caracteres m\xEDnimo y sin caracteres espciales, espacios...",
     "student": "Estudiante",
-    "teacher": "Docente"
+    "teacher": "Docente",
+    "teacher_student": "\xBFDocente o estudiante?"
   },
   "es.badges": {
     "add": "A\xF1ade insignia",
@@ -81216,6 +81221,7 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Elimina",
     "close": "Cierra",
     "cancel": "Cancela",
+    "create": "Crea",
     "name": "Nombre",
     "optional": "opcional",
     "home": "Inicio",
