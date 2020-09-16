@@ -531,6 +531,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -595,8 +598,20 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
 
       return Math.round(item.price * mult);
     },
-    deleteStudent: function deleteStudent() {
+    hide: function hide() {
       var _this = this;
+
+      axios.post("/classroom/students/toggle", {
+        id: this.student.id,
+        prop: "hidden"
+      }).then(function (response) {
+        _this.student.hidden = (_this.student.hidden + 1) % 2;
+
+        _this.$forceUpdate();
+      });
+    },
+    deleteStudent: function deleteStudent() {
+      var _this2 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -609,23 +624,23 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this.classroom.code + "/student/" + _this.student.id, {
+          axios["delete"]("/classroom/" + _this2.classroom.code + "/student/" + _this2.student.id, {
             _method: "delete"
           }).then(function (response) {
-            location.href = "/classroom/" + _this.classroom.code;
+            location.href = "/classroom/" + _this2.classroom.code;
           });
         }
       });
     },
     updateName: function updateName() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.student.name.length >= 4) {
         axios.post("/classroom/" + this.classroom.code + "/student/name", {
           id: this.student.id,
           name: this.student.name
         }).then(function (response) {
-          _this2.$toasted.show(_this2.trans.get("success_error.update_success"), {
+          _this3.$toasted.show(_this3.trans.get("success_error.update_success"), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",
@@ -633,7 +648,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             type: "success"
           });
 
-          _this2.$forceUpdate();
+          _this3.$forceUpdate();
         });
       } else {
         this.$toasted.show(this.trans.get("success_error.min_name"), {
@@ -646,7 +661,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     confirmDelete: function confirmDelete(type, row, date) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -662,14 +677,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           axios.post("/classroom/student/" + type, {
             row: row,
             date: date,
-            student: _this3.student.id,
+            student: _this4.student.id,
             _method: "delete"
           }).then(function (response) {
             if (type == "behaviour") {
-              _this3.behaviours = response.data;
-              _this3.student.updated_at = new Date();
+              _this4.behaviours = response.data;
+              _this4.student.updated_at = new Date();
 
-              _this3.forceRerender();
+              _this4.forceRerender();
             } else {
               location.reload();
             }
@@ -678,18 +693,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       });
     },
     toggle: function toggle(id) {
-      var _this4 = this;
+      var _this5 = this;
 
       axios.post("/classroom/student/badge", {
         badge: id,
         student: this.student.id
       }).then(function (response) {
-        _this4.student.badges = response.data.badges;
-        _this4.student.hp = response.data.hp;
-        _this4.student.xp = response.data.xp;
-        _this4.student.gold = response.data.gold;
+        _this5.student.badges = response.data.badges;
+        _this5.student.hp = response.data.hp;
+        _this5.student.xp = response.data.xp;
+        _this5.student.gold = response.data.gold;
 
-        _this4.$forceUpdate();
+        _this5.$forceUpdate();
       });
     },
     findInStudent: function findInStudent(id) {
@@ -709,7 +724,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       this.inventoryRemaining = line - this.student.items.length;
     },
     confirmChangeClass: function confirmChangeClass(subclass) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$buefy.dialog.confirm({
         title: "Class change",
@@ -719,8 +734,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         iconPack: "fa",
         hasIcon: true,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this5.classroom.code + "/student/changecharacter", {
-            id: _this5.student.id,
+          axios.post("/classroom/" + _this6.classroom.code + "/student/changecharacter", {
+            id: _this6.student.id,
             character_id: subclass,
             mode: "student"
           }).then(function (response) {
@@ -730,22 +745,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       });
     },
     useItem: function useItem(item, messageItem) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$buefy.dialog.confirm({
         message: messageItem + " <br><br>Would you like to use the item?",
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this6.classroom.code + "/student/useitem", {
-            id: _this6.student.id,
+          axios.post("/classroom/" + _this7.classroom.code + "/student/useitem", {
+            id: _this7.student.id,
             itemId: item.id
           }).then(function (response) {
             if (!response.data) {} else {
               item.pivot.count--;
-              if (item.pivot.count == 0) _this6.inventoryRemaining++;
-              _this6.student.hp = Math.min(_this6.student.hp + response.data.hp, 100);
-              _this6.student.xp += response.data.xp;
+              if (item.pivot.count == 0) _this7.inventoryRemaining++;
+              _this7.student.hp = Math.min(_this7.student.hp + response.data.hp, 100);
+              _this7.student.xp += response.data.xp;
 
-              _this6.forceRerender();
+              _this7.forceRerender();
             }
           });
         }
@@ -792,7 +807,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     buyItem: function buyItem(item) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.$buefy.dialog.confirm({
         title: "Buy item",
@@ -802,43 +817,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         iconPack: "fa",
         hasIcon: false,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this7.classroom.code + "/student/buyitem", {
+          axios.post("/classroom/" + _this8.classroom.code + "/student/buyitem", {
             item: item.id
-          }).then(function (response) {
-            _this7.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
-              type: response.data.type
-            });
-
-            if (response.data.type == "success") {
-              _this7.student.items = response.data.items;
-
-              _this7.updateEmpty();
-
-              _this7.student.gold = _this7.student.gold - item.price;
-
-              _this7.$forceUpdate();
-            }
-          });
-        }
-      });
-    },
-    buyEquipment: function buyEquipment(oldItem, newItem) {
-      var _this8 = this;
-
-      this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
-        confirmText: "Buy",
-        type: "is-link",
-        iconPack: "fa",
-        hasIcon: false,
-        onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this8.classroom.code + "/student/buyequipment", {
-            "new": newItem
           }).then(function (response) {
             _this8.$toasted.show(response.data.message, {
               position: "top-center",
@@ -849,11 +829,46 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             });
 
             if (response.data.type == "success") {
-              _this8.student.equipment = response.data.equipment;
-              _this8.student.gold = _this8.student.gold - _this8.calculate(newItem);
+              _this8.student.items = response.data.items;
+
+              _this8.updateEmpty();
+
+              _this8.student.gold = _this8.student.gold - item.price;
+
+              _this8.$forceUpdate();
+            }
+          });
+        }
+      });
+    },
+    buyEquipment: function buyEquipment(oldItem, newItem) {
+      var _this9 = this;
+
+      this.$buefy.dialog.confirm({
+        title: "Buy item",
+        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
+        confirmText: "Buy",
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/" + _this9.classroom.code + "/student/buyequipment", {
+            "new": newItem
+          }).then(function (response) {
+            _this9.$toasted.show(response.data.message, {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: response.data.icon,
+              type: response.data.type
+            });
+
+            if (response.data.type == "success") {
+              _this9.student.equipment = response.data.equipment;
+              _this9.student.gold = _this9.student.gold - _this9.calculate(newItem);
               oldItem.src = newItem.src;
               var reference = "item" + oldItem.id;
-              _this8.student.boost = response.data.boost;
+              _this9.student.boost = response.data.boost;
               var newClass = "inv-item-armor-bronce";
 
               switch (newItem.offset) {
@@ -866,9 +881,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
                   break;
               }
 
-              _this8.$refs[reference][0].classList.add(newClass);
+              _this9.$refs[reference][0].classList.add(newClass);
 
-              _this8.$forceUpdate();
+              _this9.$forceUpdate();
             }
           });
         }
@@ -882,18 +897,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     updateAvatar: function updateAvatar() {
-      var _this9 = this;
+      var _this10 = this;
 
       this.image.generateBlob(function (blob) {
         if (blob != null) {
           var formData = new FormData();
           formData.append("avatar", blob, "avatar.png");
 
-          if (_this9.admin) {
-            formData.append("student_id", _this9.student.id);
+          if (_this10.admin) {
+            formData.append("student_id", _this10.student.id);
           }
 
-          axios.post("/classroom/" + _this9.classroom.code + "/setting/updateavatar", formData, {
+          axios.post("/classroom/" + _this10.classroom.code + "/setting/updateavatar", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
@@ -906,19 +921,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
   },
   computed: {
     filteredEntries: function filteredEntries() {
-      var _this10 = this;
+      var _this11 = this;
 
       if (this.behaviours) {
         return this.behaviours.filter(function (entry) {
-          return (entry.pivot.created_at >= _this10.dateStart || !_this10.dateStart) && (entry.pivot.created_at <= _this10.dateEnd || !_this10.dateEnd);
+          return (entry.pivot.created_at >= _this11.dateStart || !_this11.dateStart) && (entry.pivot.created_at <= _this11.dateEnd || !_this11.dateEnd);
         });
       }
     },
     filteredLogEntries: function filteredLogEntries() {
-      var _this11 = this;
+      var _this12 = this;
 
       return this.student.log_entries.filter(function (entry) {
-        return (entry.created_at >= _this11.dateStart || !_this11.dateStart) && (entry.created_at <= _this11.dateEnd || !_this11.dateEnd);
+        return (entry.created_at >= _this12.dateStart || !_this12.dateStart) && (entry.created_at <= _this12.dateEnd || !_this12.dateEnd);
       });
     },
     groupedData: function groupedData() {
@@ -937,7 +952,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     groupedData: {
       immediate: true,
       handler: function handler() {
-        var _this12 = this;
+        var _this13 = this;
 
         var colorsOK = ["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a", "#4caf50", "#43a047", "#388e3c", "#2e7d32", "#1b5e20", "#003300", "#002200", "#001100", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
         var colorsKO = ["#ffccbc", "#ffab91", "#ff8a65", "#ff7043", "#ff5722", "#f4511e", "#e64a19", "#d84315", "#bf360c", "#570000", "#370000", "#170000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
@@ -955,16 +970,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         propes.forEach(function (element) {
           var behaviour = element[0];
 
-          _this12.series.push(element.length);
+          _this13.series.push(element.length);
 
-          _this12.labels.push("<i class='" + behaviour.icon + "'></i> " + _this12.trans.get(behaviour.name));
+          _this13.labels.push("<i class='" + behaviour.icon + "'></i> " + _this13.trans.get(behaviour.name));
 
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-            _this12.colors.push(colorsOK[0]);
+            _this13.colors.push(colorsOK[0]);
 
             colorsOK.shift();
           } else {
-            _this12.colors.push(colorsKO[0]);
+            _this13.colors.push(colorsKO[0]);
 
             colorsKO.shift();
           }
@@ -1277,6 +1292,10 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
+                    _c("button", { staticClass: "button is-info" }, [
+                      _vm._v("Select 📷 from image bank")
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "has-margin-3" }, [
                       _vm.image && _vm.image.chosenFile
                         ? _c(
@@ -1297,7 +1316,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "field is-horizontal" }, [
                     _c("div", { staticClass: "field-label is-normal" }, [
-                      _c("label", { staticClass: "label" }, [_vm._v("Name")])
+                      _c("label", { staticClass: "label" }, [
+                        _vm._v(_vm._s(_vm.trans.get("students.name")))
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "field-body" }, [
@@ -1399,7 +1420,7 @@ var render = function() {
                     ? _c("div", { staticClass: "field is-horizontal" }, [
                         _c("div", { staticClass: "field-label is-normal" }, [
                           _c("label", { staticClass: "label" }, [
-                            _vm._v("Password")
+                            _vm._v(_vm._s(_vm.trans.get("students.password")))
                           ])
                         ]),
                         _vm._v(" "),
@@ -1478,6 +1499,34 @@ var render = function() {
                   _vm._v(" "),
                   _vm.admin
                     ? _c("div", [
+                        _vm.student.hidden == 1
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "button is-success",
+                                on: { click: _vm.hide }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-eye" }),
+                                _vm._v(
+                                  " " + _vm._s(_vm.trans.get("students.show"))
+                                )
+                              ]
+                            )
+                          : _c(
+                              "button",
+                              {
+                                staticClass: "button is-warning",
+                                on: { click: _vm.hide }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-eye-slash" }),
+                                _vm._v(
+                                  " " + _vm._s(_vm.trans.get("students.hide"))
+                                )
+                              ]
+                            ),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {
@@ -1488,7 +1537,11 @@ var render = function() {
                             _c("i", {
                               staticClass: "fas fa-trash has-margin-right-2"
                             }),
-                            _vm._v(" Delete student from classroom\n          ")
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.trans.get("students.delete")) +
+                                "\n          "
+                            )
                           ]
                         )
                       ])

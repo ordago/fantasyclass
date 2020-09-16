@@ -137,7 +137,7 @@ class StudentController extends Controller
     public static function getRandomStudent($class)
     {
 
-        return $class->students->random(1)->first();
+        return $class->students->where('hidden', 0)->random(1)->first();
     }
 
     public function addBehaviour()
@@ -268,6 +268,14 @@ class StudentController extends Controller
                 $student->setProperty($request->prop, $request->value, true);
             }
         }
+    }
+
+    public function toggle()
+    {
+        $student = Student::findOrFail(request()->id);
+        $class = Classroom::where('id', $student->classroom->classroom->id)->first();
+        $this->authorize('update', $class);
+        $student->update([request()->prop => (($student->hidden + 1) % 2)]);
     }
 
     public function changeCharacter($code)

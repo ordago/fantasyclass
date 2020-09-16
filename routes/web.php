@@ -64,6 +64,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/', 'StudentController@store');
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update');
+        Route::post('/students/toggle', 'StudentController@toggle');
         Route::get('/{code}/student/{id}', 'StudentController@show');
         Route::post('/{code}/student/name', 'StudentController@updateName');
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter');

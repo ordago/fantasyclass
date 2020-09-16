@@ -77,7 +77,7 @@ class ClassroomsStudentController extends Controller
         $this->authorize('study', $class);
 
         $student = Functions::getCurrentStudent($class);
-        $students = $class->students->map(function ($user) {
+        $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
             return collect($user->toArray())
                 ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level', 'groups'])
                 ->all();

@@ -13676,6 +13676,14 @@ textPath {
   background-color: salmon;
 }
 
+.has-background-hidden {
+  background-color: #aaaaaa;
+}
+
+.hidden {
+  display: none;
+}
+
 .close-button {
   position: absolute;
   top: 2px;

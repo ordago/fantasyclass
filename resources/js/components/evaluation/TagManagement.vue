@@ -54,7 +54,7 @@
       >
         <template slot-scope="props">
           <b-table-column
-            :field="description"
+            field="description"
             :label="trans.get('evaluation.description')"
             sortable
           >{{ props.row.description }}</b-table-column>

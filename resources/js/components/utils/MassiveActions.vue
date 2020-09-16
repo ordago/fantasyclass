@@ -32,8 +32,10 @@
             class="column has-padding-3 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
             v-for="student in classroom.students"
             :key="student.id"
+            v-bind:class="{ 'hidden' : student.hidden == 1 }"
           >
             <div
+              v-if="student.hidden != 1"
               :id="student.id"
               @click="toggle(student.id)"
               class="student-massive has-padding-3 is-flex has-all-centered rounded"

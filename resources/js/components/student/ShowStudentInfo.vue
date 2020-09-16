@@ -108,6 +108,7 @@
                 class="rounded"
               ></croppa>
             </div>
+            <button class="button is-info">Select 📷 from image bank</button>
             <div class="has-margin-3">
               <button
                 class="button is-link"
@@ -118,7 +119,7 @@
           </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">Name</label>
+              <label class="label">{{ trans.get('students.name') }}</label>
             </div>
             <div class="field-body">
               <div class="field has-addons">
@@ -153,7 +154,7 @@
           </div>
           <div class="field is-horizontal" v-if="student.password_plain&&admin">
             <div class="field-label is-normal">
-              <label class="label">Password</label>
+              <label class="label">{{ trans.get('students.password') }}</label>
             </div>
             <div class="field-body">
               <b-field class="is-static">
@@ -181,8 +182,10 @@
             />
           </div>
           <div v-if="admin">
+            <button class="button is-success" v-if="student.hidden == 1" @click="hide"><i class="fas fa-eye"></i> {{ trans.get('students.show') }}</button>
+            <button class="button is-warning" v-else @click="hide"><i class="fas fa-eye-slash"></i> {{ trans.get('students.hide') }}</button>
             <button class="button is-danger" @click="deleteStudent">
-              <i class="fas fa-trash has-margin-right-2"></i> Delete student from classroom
+              <i class="fas fa-trash has-margin-right-2"></i> {{ trans.get('students.delete') }}
             </button>
           </div>
         </b-tab-item>
@@ -591,6 +594,17 @@ export default {
           break;
       }
       return Math.round(item.price * mult);
+    },
+    hide() {
+          axios
+            .post("/classroom/students/toggle", {
+              id: this.student.id,
+              prop: "hidden",
+            })
+            .then((response) => {
+              this.student.hidden = (this.student.hidden + 1) % 2
+              this.$forceUpdate()
+            });
     },
     deleteStudent() {
       this.$buefy.dialog.confirm({

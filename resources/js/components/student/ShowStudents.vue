@@ -190,7 +190,7 @@
               <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
             </div>
           </div>
-          <div class="card-content">
+          <div class="card-content" v-bind:class="{ 'has-background-hidden' : student.hidden == 1 }">
             <div class="media has-margin-bottom-0">
               <div class="media-left" v-if="classroom.character_theme != 0">
                 <figure class="image is-48x48">
@@ -198,7 +198,7 @@
                 </figure>
               </div>
               <div class="media-content cursor-pointer" @click="redirect(student.id)">
-                <p class="title is-4">{{ student.name }}</p>
+                <p class="title is-4">{{ student.name }} <i class="fas fa-eye-slash" v-if="student.hidden == 1"></i></p>
                 <p class="subtitle is-6">
                   <small>@{{ student.username }}</small>
                 </p>
@@ -456,7 +456,7 @@
       <button
         class="button is-link has-margin-2"
         v-if="shuffledStudents && shuffledStudents.length"
-        @click="currentStudent = shuffledStudents.shift()"
+        @click="uppdateCurrentStudent"
       >
         <i class="fad fa-random"></i>
       </button>
@@ -713,11 +713,17 @@ export default {
       this.diceUrl = "/dice/dice?notation=1d6&roll";
       this.dice = true;
     },
+    uppdateCurrentStudent() {
+        this.currentStudent = this.shuffledStudents.shift();
+        if(this.currentStudent.hidden == 1)
+          this.uppdateCurrentStudent();
+    },
     randomStudents() {
       this.shuffledStudents = _.shuffle(this.students);
-      this.currentStudent = this.shuffledStudents.shift();
+      this.uppdateCurrentStudent();
       this.isRandomStudentActive = true;
     },
+
     randomGroups() {
       this.shuffledGroups = _.shuffle(this.classroom.grouping[0].groups);
       this.currentGroup = this.shuffledGroups.shift();
@@ -793,7 +799,7 @@ export default {
     orderedStudents: function () {
       let order = "desc";
       if (this.sortKey == "name") order = "asc";
-      return _.orderBy(this.students, this.sortKey, order);
+      return _.orderBy(_.orderBy(this.students, this.sortKey, order), 'hidden', "asc");
     },
   },
 };
