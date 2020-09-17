@@ -120,10 +120,13 @@
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fal fa-sign-out"></i> {{ __('Logout') }}
                                     </a>
-
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    <hr class="dropdown-divider">
+                                    <div class="has-text-right">
+                                        <small class="has-padding-3"><em><a href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md" target="_blank">FantasyClass {{ config('app.version') }}</a></em></small>
+                                    </div>
                                 </div>
                             </div>
                         </div>

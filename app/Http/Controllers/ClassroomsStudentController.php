@@ -60,6 +60,7 @@ class ClassroomsStudentController extends Controller
             if(count($avatar))
                 $avatar[0]->delete();
         } else {
+            settings()->setExtraColumns(['classroom_id' => $class->id]);
             $student->update(['avatar_url' => null]);
             $student->addMedia(request()->file('avatar'))
                 ->toMediaCollection('avatar');
