@@ -18,6 +18,7 @@ return [
     'close' => "Cierra",
     'cancel' => "Cancela",
     'create' => "Crea",
+    'help' => "Ayuda",
 
     'name' => "Nombre",
     'optional' => "opcional",

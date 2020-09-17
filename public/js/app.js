@@ -6335,13 +6335,96 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var ModalForm = {
-  props: ['name', 'url'],
+  props: ["name", "url"],
   template: "\n            <div class=\"modal-card\" style=\"width: auto\">\n                <header class=\"modal-card-head has-padding-2\">\n                    <p class=\"modal-card-title\">{{ name }}</p>\n                    <button class=\"button\" type=\"button\" @click=\"$parent.close()\">{{ trans.get('general.close') }}</button>\n                </header>\n                <section class=\"modal-card-body\">\n                    <div>\n                    <iframe frameborder=\"0\" class=\"map-iframe\" \n                    v-bind:src=\"url\"\n                    type=\"text/html\" allowscriptaccess=\"always\" allowfullscreen=\"true\" scrolling=\"yes\" allownetworking=\"all\"></iframe>\n                    </div>\n                </section>\n            </div>\n        "
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['maps', 'code', 'activeMap'],
+  props: ["maps", "code", "activeMap"],
   components: {
     ModalForm: ModalForm
   },
@@ -6354,16 +6437,16 @@ var ModalForm = {
       data: [],
       isComponentModalActive: false,
       formProps: {
-        url: 'url',
-        name: 'name'
+        url: "url",
+        name: "name"
       },
       mapSelected: null,
       json_fields: {
-        'Name': 'name',
-        'Url': 'url'
+        Name: "name",
+        Url: "url"
       },
-      sortIcon: 'arrow-down',
-      sortIconSize: 'is-small'
+      sortIcon: "arrow-down",
+      sortIconSize: "is-small"
     };
   },
   methods: {
@@ -6379,21 +6462,21 @@ var ModalForm = {
       var _this = this;
 
       this.$buefy.dialog.confirm({
-        title: this.trans.get('general.delete'),
-        message: this.trans.get('general.confirm_delete'),
-        confirmText: this.trans.get('general.delete'),
-        type: 'is-danger',
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
         hasIcon: true,
-        icon: 'times-circle',
-        iconPack: 'fa',
-        ariaRole: 'alertdialog',
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
           var index = _this.data.findIndex(function (item, i) {
             return item.id === mapId;
           });
 
-          axios["delete"]('/classroom/maps/' + mapId).then(function (response) {
+          axios["delete"]("/classroom/maps/" + mapId).then(function (response) {
             if (response.data === 1) {
               _this.data.splice(index, 1);
             }
@@ -6405,19 +6488,19 @@ var ModalForm = {
       var _this2 = this;
 
       this.$buefy.dialog.confirm({
-        title: this.trans.get('maps.active'),
-        message: this.trans.get('maps.confirm_active'),
-        confirmText: this.trans.get('maps.active'),
-        type: 'is-info',
+        title: this.trans.get("maps.active"),
+        message: this.trans.get("maps.confirm_active"),
+        confirmText: this.trans.get("maps.active"),
+        type: "is-info",
         hasIcon: true,
-        icon: 'times-circle',
-        iconPack: 'fa',
-        ariaRole: 'dialog',
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "dialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
           axios.patch("/classroom/" + _this2.code + "/setting", {
             _method: "patch",
-            prop: 'active_map',
+            prop: "active_map",
             value: mapId,
             action: "update"
           });
@@ -25761,7 +25844,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ntr.is-info {\n    background: #00d1b2;\n    color: #fff;\n}\n.align-right {\n    text-align: right;\n}\ntd [data-label=\"Url\"] {\n    word-break: break-all;\n}\n", ""]);
+exports.push([module.i, "\ntr.is-info {\r\n  background: #00d1b2;\r\n  color: #fff;\n}\n.align-right {\r\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\r\n  word-break: break-all;\n}\r\n", ""]);
 
 // exports
 
@@ -56778,7 +56861,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    { staticClass: "has-padding-2" },
+    { staticClass: "has-padding-2 content" },
     [
       _c("div", { staticClass: "columns has-margin-bottom-0" }, [
         _c("div", { staticClass: "column is-narrow" }, [
@@ -56826,13 +56909,7 @@ var render = function() {
                                 sortable: ""
                               }
                             },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(props.row.name) +
-                                  "\n            "
-                              )
-                            ]
+                            [_vm._v(_vm._s(props.row.name))]
                           ),
                           _vm._v(" "),
                           _c(
@@ -56844,13 +56921,7 @@ var render = function() {
                                 sortable: ""
                               }
                             },
-                            [
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(props.row.url) +
-                                  "\n            "
-                              )
-                            ]
+                            [_vm._v(_vm._s(props.row.url))]
                           ),
                           _vm._v(" "),
                           _c(
@@ -56966,7 +57037,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  3638275836
+                  3928926044
                 )
               })
             : _vm._e()
@@ -56991,12 +57062,223 @@ var render = function() {
         },
         [_c("modal-form", _vm._b({}, "modal-form", _vm.formProps, false))],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("h1", [
+        _vm._v(_vm._s(_vm.trans.get("maps.templates")) + " (Genial.ly)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "columns" }, [
+        _c("div", { staticClass: "column" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f6253f951337070914e0604/interactive-content-fantasyclass-1"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f6253f951337070914e0604"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f6256633c6c490cee94ca80/interactive-content-fantasyclass-2"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f6256633c6c490cee94ca80"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f633cd051337070914e116e/interactive-content-fantasyclass-3"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item has-margin-bottom-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f633cd051337070914e116e"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/templates/Fantasyclass-1.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/templates/Fantasyclass-2.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/templates/Fantasyclass-3.png" } })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -80499,6 +80781,7 @@ __webpack_require__.r(__webpack_exports__);
     "close": "Tanca",
     "cancel": "Cancel\xB7la",
     "create": "Crea",
+    "help": "Ajuda",
     "name": "Nom",
     "optional": "opcional",
     "home": "Inici",
@@ -80533,7 +80816,10 @@ __webpack_require__.r(__webpack_exports__);
     "preview": "Vista pr\xE8via",
     "set_active": "Marcar mapa com actiu",
     "active": "Activar",
-    "confirm_active": "Aquesta opci\xF3 canviar\xE0 el mapa actiu. Aquest mapa ser\xE0 visible pels estudiants."
+    "confirm_active": "Aquesta opci\xF3 canviar\xE0 el mapa actiu. Aquest mapa ser\xE0 visible pels estudiants.",
+    "templates": "Plantilles",
+    "show_template": "Visualitza plantilla",
+    "use_template": "Utilitza plantilla"
   },
   "ca.menu": {
     "user_groups": "Usuaris i grups",
@@ -81053,6 +81339,7 @@ __webpack_require__.r(__webpack_exports__);
     "close": "Close",
     "cancel": "Cancel",
     "create": "Create",
+    "help": "Help",
     "name": "Name",
     "optional": "optional",
     "home": "Home",
@@ -81070,7 +81357,10 @@ __webpack_require__.r(__webpack_exports__);
     "preview": "Preview",
     "set_active": "Set as active map",
     "active": "Activate",
-    "confirm_active": "This options will change the active map. This map will be seen by the students"
+    "confirm_active": "This options will change the active map. This map will be seen by the students",
+    "templates": "Templates",
+    "show_template": "Show template",
+    "use_template": "Use template"
   },
   "en.menu": {
     "user_groups": "Users and groups",
@@ -81600,6 +81890,7 @@ __webpack_require__.r(__webpack_exports__);
     "close": "Cierra",
     "cancel": "Cancela",
     "create": "Crea",
+    "help": "Ayuda",
     "name": "Nombre",
     "optional": "opcional",
     "home": "Inicio",
@@ -81634,7 +81925,10 @@ __webpack_require__.r(__webpack_exports__);
     "preview": "Vista previa",
     "set_active": "Marcar mapa como activo",
     "active": "Activar",
-    "confirm_active": "Esta opci\xF3n cambiar\xE1 el mapa activo. Este mapa ser\xE1 visible por los estudiantes."
+    "confirm_active": "Esta opci\xF3n cambiar\xE1 el mapa activo. Este mapa ser\xE1 visible por los estudiantes.",
+    "templates": "Plantillas",
+    "show_template": "Visualiza plantilla",
+    "use_template": "Utiliza plantilla"
   },
   "es.menu": {
     "user_groups": "Usuarios y grupos",

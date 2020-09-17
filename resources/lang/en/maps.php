@@ -22,7 +22,9 @@ return [
     'set_active' => 'Set as active map',
     'active' => 'Activate',
     'confirm_active' => 'This options will change the active map. This map will be seen by the students',
-
+    'templates' => 'Templates',
+    'show_template' => 'Show template',
+    'use_template' => 'Use template',
 
 
 ];

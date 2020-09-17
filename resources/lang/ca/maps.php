@@ -22,5 +22,8 @@ return [
     'set_active' => 'Marcar mapa com actiu',
     'active' => 'Activar',
     'confirm_active' => 'Aquesta opció canviarà el mapa actiu. Aquest mapa serà visible pels estudiants.',
+    'templates' => 'Plantilles',
+    'show_template' => 'Visualitza plantilla',
+    'use_template' => 'Utilitza plantilla',
 
 ];

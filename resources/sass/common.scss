@@ -13,6 +13,12 @@
       overflow-y: auto!important;
   }
 
+  .help {
+      position: absolute;
+      top: -2px;
+      right: 0;
+  }
+
   .student-massive, .img-categories {
     text-transform: capitalize;
     cursor: pointer;

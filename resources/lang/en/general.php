@@ -18,6 +18,7 @@ return [
     'close' => "Close",
     'cancel' => "Cancel",
     'create' => "Create",
+    'help' => "Help",
 
     'name' => "Name",
     'optional' => "optional",
