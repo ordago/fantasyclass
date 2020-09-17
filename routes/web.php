@@ -192,6 +192,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');
         Route::post('/{code}/utils/massive', 'UtilsController@massive');
+        Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
+        Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
     });
 
     Route::get('/utils/music', 'UtilsController@music');

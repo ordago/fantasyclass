@@ -20,6 +20,8 @@ return [
     'weather_management' => 'Weather management',
     'teachers' => 'Teachers',
     'add_teachers' => 'Add teacher',
+    'general_preferences' => 'General preferences',
+    'allow_upload' => 'Allow students to upload custom images',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

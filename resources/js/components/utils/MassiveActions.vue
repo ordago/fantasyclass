@@ -110,9 +110,6 @@ export default {
 };
 </script>
 <style scoped>
-.student-massive {
-  border: 1px solid #555;
-}
 .selected {
   margin: 0;
   background-color: lightskyblue;

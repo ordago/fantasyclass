@@ -1261,58 +1261,70 @@ var render = function() {
                   }
                 },
                 [
-                  _c("div", {}, [
-                    _c(
-                      "div",
-                      { staticClass: "has-margin-3" },
-                      [
-                        _c("croppa", {
-                          staticClass: "rounded",
-                          attrs: {
-                            width: 128,
-                            height: 128,
-                            accept: "image/*",
-                            placeholder: "📷 Avatar",
-                            "placeholder-font-size": 16,
-                            "canvas-color": "transparent",
-                            "show-remove-button": true,
-                            "remove-button-color": "black",
-                            "show-loading": true,
-                            "loading-size": 50
-                          },
-                          model: {
-                            value: _vm.image,
-                            callback: function($$v) {
-                              _vm.image = $$v
-                            },
-                            expression: "image"
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("button", { staticClass: "button is-info" }, [
-                      _vm._v("Select 📷 from image bank")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "has-margin-3" }, [
-                      _vm.image && _vm.image.chosenFile
+                  _c(
+                    "div",
+                    {},
+                    [
+                      _vm.admin || _vm.settings.allow_upload != 0
                         ? _c(
-                            "button",
-                            {
-                              staticClass: "button is-link",
-                              on: {
-                                click: function($event) {
-                                  return _vm.updateAvatar()
+                            "div",
+                            { staticClass: "has-margin-3" },
+                            [
+                              _c("croppa", {
+                                staticClass: "rounded",
+                                attrs: {
+                                  width: 128,
+                                  height: 128,
+                                  accept: "image/*",
+                                  placeholder: "📷 Avatar",
+                                  "placeholder-font-size": 16,
+                                  "canvas-color": "transparent",
+                                  "show-remove-button": true,
+                                  "remove-button-color": "black",
+                                  "show-loading": true,
+                                  "loading-size": 50
+                                },
+                                model: {
+                                  value: _vm.image,
+                                  callback: function($$v) {
+                                    _vm.image = $$v
+                                  },
+                                  expression: "image"
                                 }
-                              }
-                            },
-                            [_vm._v("Update avatar")]
+                              })
+                            ],
+                            1
                           )
-                        : _vm._e()
-                    ])
-                  ]),
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "has-margin-3" }, [
+                        _vm.image && _vm.image.chosenFile
+                          ? _c(
+                              "button",
+                              {
+                                staticClass: "button is-link",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.updateAvatar()
+                                  }
+                                }
+                              },
+                              [_vm._v("Update avatar")]
+                            )
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("image-bank", {
+                        staticClass: "has-margin-3",
+                        attrs: {
+                          admin: _vm.admin,
+                          student: _vm.student,
+                          code: _vm.classroom.code
+                        }
+                      })
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "field is-horizontal" }, [
                     _c("div", { staticClass: "field-label is-normal" }, [

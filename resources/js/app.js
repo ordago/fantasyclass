@@ -111,6 +111,8 @@ Vue.component('rubric-create', () => import('./components/evaluation/RubricCreat
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
 // Vue.component('editor', () => import('./components/utils/Editor.vue').default);
 
+Vue.component('image-bank', require('./components/utils/ImageBank.vue').default);
+
 Vue.component('count-down', require('./components/utils/CountDown.vue').default);
 
 Vue.component('notifications', require('./components/utils/Notifications.vue').default);

@@ -92,7 +92,7 @@
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item label="Information" icon="info-circle" icon-pack="fad">
           <div class>
-            <div class="has-margin-3">
+            <div class="has-margin-3" v-if="admin || settings.allow_upload != 0">
               <croppa
                 v-model="image"
                 :width="128"
@@ -108,7 +108,6 @@
                 class="rounded"
               ></croppa>
             </div>
-            <button class="button is-info">Select 📷 from image bank</button>
             <div class="has-margin-3">
               <button
                 class="button is-link"
@@ -116,6 +115,7 @@
                 @click="updateAvatar()"
               >Update avatar</button>
             </div>
+            <image-bank class="has-margin-3" :admin="admin" :student="student" :code="classroom.code"></image-bank>
           </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">

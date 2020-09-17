@@ -20,6 +20,8 @@ return [
     'weather_management' => 'Gestió del temps',
     'teachers' => 'Profes',
     'add_teachers' => 'Afegir profe',
+    'general_preferences' => 'Preferències generals',
+    'allow_upload' => 'Permet als i les estudiants pujar imatges pròpies',
     
     'cards' => 'Màxim de cartes per estudiant',
     'rare' => 'Rara',

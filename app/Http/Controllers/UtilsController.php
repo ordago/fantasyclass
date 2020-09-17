@@ -50,6 +50,19 @@ class UtilsController extends Controller
             $student->addBehaviour($behaviour->id);
         }
     }
+    public function iconPack($category)
+    {
+        $path = public_path() . '/img/icon-packs/' . $category;
+        $images = array_diff(scandir($path), array('..', '.'));
+        array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );      
+        return json_encode($images);
+    }
+
+    public function iconPacks()
+    {   
+        $array = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.'));
+        return json_encode($array);
+    }
     public function music()
     {
         $directory = "/music/";

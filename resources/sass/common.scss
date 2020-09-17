@@ -13,6 +13,12 @@
       overflow-y: auto!important;
   }
 
+  .student-massive, .img-categories {
+    text-transform: capitalize;
+    cursor: pointer;
+    border: 1px solid #555;
+  }
+
   .deck {
     position: absolute;
     width: 300px;

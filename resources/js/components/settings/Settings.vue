@@ -36,7 +36,12 @@
           </b-radio-button>
         </b-field>
         <button class="button has-margin-left-4 is-danger" @click="confirmDelete" v-if="isAdmin">
-          <i class="fas fa-trash"></i> <span class="has-margin-x-3">{{ trans.get('general.delete') }} <i class="fas fa-radiation-alt"></i><i class="fas fa-exclamation-triangle"></i></span>
+          <i class="fas fa-trash"></i>
+          <span class="has-margin-x-3">
+            {{ trans.get('general.delete') }}
+            <i class="fas fa-radiation-alt"></i>
+            <i class="fas fa-exclamation-triangle"></i>
+          </span>
         </button>
       </div>
 
@@ -46,11 +51,27 @@
             <b-input type="password" :value="classroom.enrollment_code" password-reveal></b-input>
           </p>
           <p class="control">
-            <button class="button is-info" @click="regenerate"><i class="fas fa-sync-alt"></i> {{ trans.get('settings.generate') }}</button> 
+            <button class="button is-info" @click="regenerate">
+              <i class="fas fa-sync-alt"></i>
+              {{ trans.get('settings.generate') }}
+            </button>
           </p>
         </div>
       </b-field>
       <div class="has-padding-2">
+        <h1>
+          <i class="fal fa-cog"></i>
+          {{ trans.get('settings.general_preferences') }}
+        </h1>
+        <b-switch
+          class="has-margin-left-4"
+          true-value="1"
+          false-value="0"
+          @input="toggleProp('allow_upload')"
+          v-model="settings.allow_upload"
+        >{{ trans.get('settings.allow_upload') }}</b-switch>
+      </div>
+      <div class="has-padding-2 has-margin-top-4">
         <h1>
           <i class="fal fa-user-graduate"></i>
           {{ trans.get('settings.teachers') }}
@@ -261,10 +282,11 @@ export default {
   },
   methods: {
     regenerate() {
-      axios.get('/classroom/' + this.classroom.code + '/regenerate')
-        .then(response => {
-          this.classroom.enrollment_code = response.data
-          this.$forceUpdate()
+      axios
+        .get("/classroom/" + this.classroom.code + "/regenerate")
+        .then((response) => {
+          this.classroom.enrollment_code = response.data;
+          this.$forceUpdate();
         });
     },
     confirmDelete() {
@@ -379,12 +401,12 @@ export default {
         value: this.settings.num_cards,
       });
       this.$toasted.show(this.trans.get("success_error.update_success"), {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: "check",
-              type: "success",
-            });
+        position: "top-center",
+        duration: 3000,
+        iconPack: "fontawesome",
+        icon: "check",
+        type: "success",
+      });
     },
   },
 };

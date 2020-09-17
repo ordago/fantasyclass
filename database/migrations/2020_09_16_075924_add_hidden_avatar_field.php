@@ -15,6 +15,7 @@ class AddHiddenField extends Migration
     {
         Schema::table('students', function (Blueprint $table) {
             $table->boolean('hidden')->default(0)->after('password_plain');
+            $table->string('avatar_url')->nullable()->after('password_plain');
         });
     }
 

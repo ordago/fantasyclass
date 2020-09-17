@@ -15,11 +15,12 @@ return [
     'order_hp' => 'Order by health points',
     'order_xp' => 'Order by experience',
     'order_gold' => 'Order by gold',
-    
+
     'apply' => 'Apply',
     
     'add_behaviours' => 'Add new behaviours to interact with students',
-    
+        
+    'create_students' => 'Create students',
     'add_student' => 'Add student',
-
+    'add_students' => 'Add students',
 ];

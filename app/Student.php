@@ -17,17 +17,22 @@ class Student extends Model implements HasMedia
         'gold',
         'character_id',
         'password_plain',
-        'hidden'
+        'hidden',
+        'avatar_url'
     ];
 
     protected $appends = ['username', 'level', 'avatar', 'grouplogo'];
 
     public function getAvatarAttribute()
     {
+        if($this->avatar_url)
+            return $this->avatar_url;
+
         $media = $this->getMedia('avatar')->first();
         if ($media) {
             return $media->getUrl();
         }
+
         return "/img/no_avatar.png";
     }
     

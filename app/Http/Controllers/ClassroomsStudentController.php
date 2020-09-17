@@ -35,7 +35,8 @@ class ClassroomsStudentController extends Controller
         $this->authorize('studyOrTeach', $class);
 
         $data = request()->validate([
-            'avatar' => ['image'],
+            'avatar' => ['image', 'nullable'],
+            'url' => ['string', 'nullable'],
             'student_id' => ['numeric', 'nullable'],
         ]);
 
@@ -53,13 +54,21 @@ class ClassroomsStudentController extends Controller
             $student = Functions::getCurrentStudent($class, []);
         }
 
-        $student->addMedia(request()->file('avatar'))
-            ->toMediaCollection('avatar');
-
-        $avatarPath = $student->getMedia('avatar')->first();
-        $imgPath = $avatarPath->collection_name . "/" . $avatarPath->uuid . '/' . $avatarPath->file_name;
-        $path = Storage::disk('public')->path('/') . $imgPath;
-        Image::make($path)->resize(128, 128)->save();
+        if(isset($data['url'])) {
+            $student->update(['avatar_url' => $data['url']]);
+            $avatar = $student->getMedia('avatar');
+            if(count($avatar))
+                $avatar[0]->delete();
+        } else {
+            $student->update(['avatar_url' => null]);
+            $student->addMedia(request()->file('avatar'))
+                ->toMediaCollection('avatar');
+    
+            $avatarPath = $student->getMedia('avatar')->first();
+            $imgPath = $avatarPath->collection_name . "/" . $avatarPath->uuid . '/' . $avatarPath->file_name;
+            $path = Storage::disk('public')->path('/') . $imgPath;
+            Image::make($path)->resize(128, 128)->save();
+        }
     }
 
     public function checkVisibility($class)
@@ -202,6 +211,7 @@ class ClassroomsStudentController extends Controller
         }
 
         $settings = EvaluationController::getEvalSettings($class->id);
+        $settings['allow_upload'] = settings()->get('allow_upload', 0);
         
         return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings'));
     }
