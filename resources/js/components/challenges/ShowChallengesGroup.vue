@@ -23,7 +23,7 @@
               </span>
               <span :title="challenge.name">
                 {{ challenge.name.length > 30 ? challenge.name.substring(0, 30) + "..." : challenge.name }}
-                <b-tag type="is-info is-light" class="has-small-font">{{ challenge.numChallenges }}</b-tag>
+                <!-- <b-tag type="is-info is-light" class="has-small-font">{{ challenge.numChallenges }}</b-tag> -->
               </span>
             </span>
             <span>

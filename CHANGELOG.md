@@ -4,7 +4,7 @@
 ### Added
 - Genial.ly templates in map section.
 - Help bar in maps.
-- Update dependences.
+- Update critical dependences.
 
 ## v1.01 Beta (17/09/2020)
 ### Added
