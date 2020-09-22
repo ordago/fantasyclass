@@ -1,7 +1,7 @@
 @extends('layouts.teacher')
 
 @section('help')
-  <span class="has-margin-right-3"><i class="fas fa-question-circle"></i> {{ __('general.help') }}</span> <i class="fab fa-youtube has-margin-right-3 has-text-danger" style="font-size: 2em;"></i>
+  <span class="has-margin-right-3"><i class="fas fa-question-circle"></i> {{ __('general.help') }}</span> <a href="https://youtu.be/b2QcE7VwJXE" target="_blank"><i class="fab fa-youtube has-margin-right-3 has-text-danger" style="font-size: 2em;"></i></a>
 @endsection
 
 @section('breadcrumb')
