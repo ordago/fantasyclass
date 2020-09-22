@@ -57334,7 +57334,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/Fantasyclass-1.png" } })
+      _c("img", { attrs: { src: "/img/templates/FantasyClass-1.png" } })
     ])
   },
   function() {
@@ -57342,7 +57342,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/Fantasyclass-2.png" } })
+      _c("img", { attrs: { src: "/img/templates/FantasyClass-2.png" } })
     ])
   },
   function() {
@@ -57350,7 +57350,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/Fantasyclass-3.png" } })
+      _c("img", { attrs: { src: "/img/templates/FantasyClass-3.png" } })
     ])
   }
 ]
