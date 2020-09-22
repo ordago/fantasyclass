@@ -1149,7 +1149,7 @@ var render = function() {
                 "b-tab-item",
                 {
                   attrs: {
-                    label: "Information",
+                    label: _vm.trans.get("students.information"),
                     icon: "info-circle",
                     "icon-pack": "fad"
                   }
@@ -1464,7 +1464,7 @@ var render = function() {
                 {
                   staticClass: "has-padding-0",
                   attrs: {
-                    label: "Inventory",
+                    label: _vm.trans.get("students.inventory"),
                     icon: "backpack",
                     "icon-pack": "fad"
                   }
@@ -1858,7 +1858,7 @@ var render = function() {
                     "b-tab-item",
                     {
                       attrs: {
-                        label: "Cards",
+                        label: _vm.trans.get("students.cards"),
                         icon: "club",
                         "icon-pack": "fad"
                       }
@@ -1901,7 +1901,7 @@ var render = function() {
                     "b-tab-item",
                     {
                       attrs: {
-                        label: "Behaviours",
+                        label: _vm.trans.get("students.behaviours"),
                         icon: "heart",
                         "icon-pack": "fad"
                       }
@@ -1998,7 +1998,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "icon",
-                                            label: "Icon",
+                                            label: _vm.trans.get(
+                                              "students.icon"
+                                            ),
                                             centered: ""
                                           }
                                         },
@@ -2026,7 +2028,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "name",
-                                            label: "Name",
+                                            label: _vm.trans.get(
+                                              "students.name"
+                                            ),
                                             centered: "",
                                             sortable: ""
                                           }
@@ -2045,7 +2049,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
-                                            label: "Created at",
+                                            label: _vm.trans.get(
+                                              "students.created"
+                                            ),
                                             "default-sort-direction": "desc",
                                             "custom-sort": _vm.sortByDate,
                                             sortable: "",
@@ -2068,7 +2074,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "hp",
-                                            label: "Health Points",
+                                            label: _vm.trans.get("students.hp"),
                                             centered: "",
                                             sortable: ""
                                           }
@@ -2090,7 +2096,7 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "name",
-                                            label: "Experience",
+                                            label: _vm.trans.get("students.xp"),
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2112,7 +2118,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "name",
-                                            label: "Gold",
+                                            label: _vm.trans.get(
+                                              "students.gold"
+                                            ),
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2135,7 +2143,9 @@ var render = function() {
                                             {
                                               attrs: {
                                                 field: "name",
-                                                label: "Settings",
+                                                label: _vm.trans.get(
+                                                  "students.settings"
+                                                ),
                                                 centered: ""
                                               }
                                             },
@@ -2174,7 +2184,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              1043174481
+                              2698763198
                             )
                           })
                         : _vm._e()
@@ -2188,7 +2198,7 @@ var render = function() {
                     "b-tab-item",
                     {
                       attrs: {
-                        label: "Challenges",
+                        label: _vm.trans.get("students.challenges"),
                         icon: "pen-fancy",
                         "icon-pack": "fad"
                       }
@@ -2219,7 +2229,7 @@ var render = function() {
                     "b-tab-item",
                     {
                       attrs: {
-                        label: "Evaluation",
+                        label: _vm.trans.get("students.evaluation"),
                         icon: "analytics",
                         "icon-pack": "fad"
                       }
@@ -2244,7 +2254,7 @@ var render = function() {
                     "b-tab-item",
                     {
                       attrs: {
-                        label: "Badges",
+                        label: _vm.trans.get("students.badges"),
                         icon: "award",
                         "icon-pack": "fad"
                       }
@@ -2325,7 +2335,11 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
-                      attrs: { label: "Log", icon: "file", "icon-pack": "fad" }
+                      attrs: {
+                        label: _vm.trans.get("students.log"),
+                        icon: "file",
+                        "icon-pack": "fad"
+                      }
                     },
                     [
                       _c("div", { staticClass: "columns" }, [
@@ -2398,7 +2412,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "type",
-                                            label: "Type",
+                                            label: _vm.trans.get(
+                                              "students.type"
+                                            ),
                                             centered: ""
                                           }
                                         },
@@ -2435,7 +2451,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "value",
-                                            label: "value",
+                                            label: _vm.trans.get(
+                                              "students.value"
+                                            ),
                                             sortable: ""
                                           }
                                         },
@@ -2447,7 +2465,9 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
-                                            label: "Created at",
+                                            label: _vm.trans.get(
+                                              "students.created_at"
+                                            ),
                                             "default-sort-direction": "desc",
                                             "custom-sort": _vm.sortLogByDate,
                                             sortable: "",
@@ -2471,7 +2491,9 @@ var render = function() {
                                             {
                                               attrs: {
                                                 field: "name",
-                                                label: "Settings",
+                                                label: _vm.trans.get(
+                                                  "students.settings"
+                                                ),
                                                 centered: ""
                                               }
                                             },
@@ -2509,7 +2531,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              3626445575
+                              2039962136
                             )
                           })
                         : _vm._e()

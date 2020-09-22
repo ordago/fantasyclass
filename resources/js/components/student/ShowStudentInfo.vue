@@ -61,7 +61,7 @@
     </div>
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
-        <b-tab-item label="Information" icon="info-circle" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.information')" icon="info-circle" icon-pack="fad">
           <div class>
             <div class="has-margin-3" v-if="admin || settings.allow_upload != 0">
               <croppa
@@ -173,7 +173,7 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item label="Inventory" class="has-padding-0" icon="backpack" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.inventory')" class="has-padding-0" icon="backpack" icon-pack="fad">
           <div class="columns is-multiline is-variable" v-if="admin">
             <div
               v-for="item in items"
@@ -282,7 +282,7 @@
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item label="Cards" v-if="cards.length" icon="club" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.cards')" v-if="cards.length" icon="club" icon-pack="fad">
           <div class="columns is-multiline is-variable">
             <div
               v-for="(card, index) in cards"
@@ -301,7 +301,7 @@
           </div>
         </b-tab-item>
         <b-tab-item
-          label="Behaviours"
+          :label="trans.get('students.behaviours')"
           v-if="behaviours && behaviours.length"
           icon="heart"
           icon-pack="fad"
@@ -336,7 +336,7 @@
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="icon" label="Icon" centered>
+              <b-table-column field="icon" :label="trans.get('students.icon')" centered>
                 <span
                   class="tag"
                   v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -347,36 +347,36 @@
 
               <b-table-column
                 field="name"
-                label="Name"
+                :label="trans.get('students.name')"
                 centered
                 sortable
               >{{ trans.get(props.row.name) }}</b-table-column>
 
               <b-table-column
                 field="created_at"
-                label="Created at"
+                :label="trans.get('students.created')"
                 default-sort-direction="desc"
                 :custom-sort="sortByDate"
                 sortable
                 centered
               >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
 
-              <b-table-column field="hp" label="Health Points" centered sortable>
+              <b-table-column field="hp" :label="trans.get('students.hp')" centered sortable>
                 <i class="fas fa-heart"></i>
                 {{ props.row.hp }}
               </b-table-column>
 
-              <b-table-column field="name" label="Experience" sortable centered>
+              <b-table-column field="name" :label="trans.get('students.xp')" sortable centered>
                 <i class="fas fa-fist-raised"></i>
                 {{ props.row.xp }}
               </b-table-column>
 
-              <b-table-column field="name" label="Gold" sortable centered>
+              <b-table-column field="name" :label="trans.get('students.gold')" sortable centered>
                 <i class="fas fa-coins"></i>
                 {{ props.row.gold }}
               </b-table-column>
 
-              <b-table-column field="name" label="Settings" v-if="admin" centered>
+              <b-table-column field="name" :label="trans.get('students.settings')" v-if="admin" centered>
                 <b-button
                   type="is-danger is-small"
                   @click="confirmDelete('behaviour', props.row, props.row.pivot.created_at)"
@@ -389,7 +389,7 @@
         </b-tab-item>
 
         <b-tab-item
-          label="Challenges"
+          :label="trans.get('students.challenges')"
           v-if="challenges && challenges.length"
           icon="pen-fancy"
           icon-pack="fad"
@@ -404,12 +404,12 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item label="Evaluation" v-if="evaluation" icon="analytics" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.evaluation')" v-if="evaluation" icon="analytics" icon-pack="fad">
           <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
         </b-tab-item>
 
         <b-tab-item
-          label="Badges"
+          :label="trans.get('students.badges')"
           v-if="(classroom.badges && classroom.badges.length) || student.badges.length"
           icon="award"
           icon-pack="fad"
@@ -440,7 +440,7 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item label="Log" v-if="student.log_entries.length" icon="file" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.log')" v-if="student.log_entries.length" icon="file" icon-pack="fad">
           <div class="columns">
             <div class="column">
               <input type="date" class="input is-rounded" v-model="dateStart" />
@@ -458,7 +458,7 @@
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="type" label="Type" centered>
+              <b-table-column field="type" :label="trans.get('students.type')" centered>
                 <span
                   class="tag"
                   v-bind:class="[ props.row.value >= 0 ? 'is-success' : 'is-danger']"
@@ -469,18 +469,18 @@
                 </span>
               </b-table-column>
 
-              <b-table-column field="value" label="value" sortable>{{ props.row.value }}</b-table-column>
+              <b-table-column field="value" :label="trans.get('students.value')" sortable>{{ props.row.value }}</b-table-column>
 
               <b-table-column
                 field="created_at"
-                label="Created at"
+                :label="trans.get('students.created_at')"
                 default-sort-direction="desc"
                 :custom-sort="sortLogByDate"
                 sortable
                 centered
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
 
-              <b-table-column field="name" label="Settings" v-if="admin" centered>
+              <b-table-column field="name" :label="trans.get('students.settings')" v-if="admin" centered>
                 <b-button
                   type="is-danger is-small"
                   @click="confirmDelete('logentry', props.row, props.row.created_at)"

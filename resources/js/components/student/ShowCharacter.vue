@@ -4,7 +4,7 @@
       {{ student.level.number }}
     </span>
     <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
-    <span v-if="student.grouplogo" class="top-right is-full-rounded">
+    <span v-if="student.grouplogo" v-tippy="{arrow: true}" :content="'<i class=\'fas fa-users\'></i> ' + student.groups[0].name" class="top-right is-full-rounded">
       <img :src="student.grouplogo" class="is-full-rounded" />
     </span>
     <div

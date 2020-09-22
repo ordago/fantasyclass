@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.02 Beta (XX/09/2020)
+## v1.02 Beta (22/09/2020)
 ### Added
 - Genial.ly templates in map section.
 - Help bar in maps.
@@ -11,6 +11,8 @@
 - Fixed translations in student's view.
 - Fixed update level experience.
 - Fixed level show.
+- Updated student translations.
+- Show better feedback in cards.
 
 ### Disabled / removed
 - Disabled challenge count in categories for now.

@@ -2837,6 +2837,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["card", "admin", "code", "use", "student"],
@@ -2884,6 +2886,11 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    getMessage: function getMessage(marked) {
+      if (this.checkLevel()) return this.trans.get('students.card_level');else if (marked == 1) {
+        return this.trans.get('students.card_marked');
+      } else return this.trans.get('students.card_use');
     },
     checkLevel: function checkLevel() {
       var number = 0;
@@ -50126,12 +50133,16 @@ var render = function() {
           _c(
             "button",
             {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "button is-success",
               class: {
                 disabled: _vm.checkLevel(),
                 "has-background-dark": _vm.card.pivot.marked == 1
               },
-              attrs: { type: "submit" },
+              attrs: {
+                type: "submit",
+                content: _vm.getMessage(_vm.card.pivot.marked)
+              },
               on: {
                 click: function($event) {
                   return _vm.markCard(_vm.card, 1)
@@ -59650,12 +59661,30 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm.student.grouplogo
-        ? _c("span", { staticClass: "top-right is-full-rounded" }, [
-            _c("img", {
-              staticClass: "is-full-rounded",
-              attrs: { src: _vm.student.grouplogo }
-            })
-          ])
+        ? _c(
+            "span",
+            {
+              directives: [
+                {
+                  name: "tippy",
+                  rawName: "v-tippy",
+                  value: { arrow: true },
+                  expression: "{arrow: true}"
+                }
+              ],
+              staticClass: "top-right is-full-rounded",
+              attrs: {
+                content:
+                  "<i class='fas fa-users'></i> " + _vm.student.groups[0].name
+              }
+            },
+            [
+              _c("img", {
+                staticClass: "is-full-rounded",
+                attrs: { src: _vm.student.grouplogo }
+              })
+            ]
+          )
         : _vm._e(),
       _vm._v(" "),
       _c(
@@ -81060,7 +81089,26 @@ __webpack_require__.r(__webpack_exports__);
     "password": "Contrasenya",
     "hide": "Oculta l'estudiant",
     "show": "Mostra l'estudiant",
-    "delete": "Elimina l'estudiant de la classe"
+    "delete": "Elimina l'estudiant de la classe",
+    "information": "Informaci\xF3",
+    "inventory": "Inventari",
+    "cards": "Cartes",
+    "behaviours": "Comportaments",
+    "icon": "Icona",
+    "created_at": "Creat en",
+    "hp": "Punts de vida",
+    "xp": "Experi\xE8ncia",
+    "gold": "Or",
+    "settings": "Propietats",
+    "challenges": "Reptes",
+    "evaluation": "Avaluaci\xF3",
+    "badges": "Ins\xEDgnies",
+    "log": "Registre",
+    "type": "Tipus",
+    "value": "Valor",
+    "card_level": "No tens suficient nivell :(",
+    "card_use": "Utilitzar la carta",
+    "card_marked": "Carta marcada per ser utilitzada"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -81601,11 +81649,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   "en.students": {
     "name_surname": "Name and surname",
-    "name": "Name",
+    "name": "Nanem",
     "password": "Password",
     "hide": "Hide student",
     "show": "Show student",
-    "delete": "Delete student from classroom"
+    "delete": "Delete student from classroom",
+    "information": "Information",
+    "inventory": "Inventory",
+    "cards": "Cards",
+    "behaviours": "Behaviours",
+    "icon": "Icon",
+    "created_at": "Created at",
+    "hp": "Health points",
+    "xp": "Experience",
+    "gold": "Gold",
+    "settings": "Settings",
+    "challenges": "Challenges",
+    "evaluation": "Evaluation",
+    "badges": "Badges",
+    "log": "Log",
+    "type": "Type",
+    "value": "Value",
+    "card_level": "Not enough level :(",
+    "card_use": "Use card",
+    "card_marked": "Card marked to be used"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -81878,7 +81945,7 @@ __webpack_require__.r(__webpack_exports__);
     "first_title": "El primer de la clase",
     "first_description": "Empezar\xE1s una prueba 5 minutos antes de que los y las compa\xF1eras.",
     "use_title": "Marcar carta",
-    "use_text": "La carta se marcar\xE1 pera ser utilitzada o para eliminarla. El/la profe tiene que confirmar la acci\xF3n.",
+    "use_text": "La carta se marcar\xE1 para ser utilizada o para eliminarla. El/la profe tiene que confirmar la acci\xF3n.",
     "use_confirm": "Acepta"
   },
   "es.challenges": {
@@ -82176,7 +82243,26 @@ __webpack_require__.r(__webpack_exports__);
     "password": "Contrase\xF1a",
     "hide": "Oculta estudiante",
     "show": "Muestra estudiante",
-    "delete": "Elimina estudiante de la clase"
+    "delete": "Elimina estudiante de la clase",
+    "information": "Informaci\xF3n",
+    "inventory": "Inventario",
+    "cards": "Cartas",
+    "behaviours": "Comportamientos",
+    "icon": "Icono",
+    "created_at": "Creado en",
+    "hp": "Puntos de vida",
+    "xp": "Experiencia",
+    "gold": "Oro",
+    "settings": "Propiedades",
+    "challenges": "Desaf\xEDos",
+    "evaluation": "Evaluaci\xF3n",
+    "badges": "Ins\xEDgnias",
+    "log": "Registro",
+    "type": "Tipo",
+    "value": "Valor",
+    "card_level": "No tienes suficiente nivel",
+    "card_use": "Usar la carta",
+    "card_marked": "Carta marcada para ser utilizada"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

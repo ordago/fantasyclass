@@ -5,6 +5,8 @@
         type="submit"
         class="button is-success"
         @click="markCard(card, 1)"
+        v-tippy
+        :content="getMessage(card.pivot.marked)"
         v-bind:class="{ disabled : checkLevel() , 'has-background-dark' : card.pivot.marked == 1 }"
       >
         <i class="fas fa-check"></i> Use
@@ -122,7 +124,7 @@ export default {
       let number = 0;
       if (this.$parent.$parent.$parent.student.level != null)
         number = this.$parent.$parent.$parent.student.level.number;
-      if(type == 1 && this.card.min_lvl > number) return false;
+      if (type == 1 && this.card.min_lvl > number) return false;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("cards.use_title"),
@@ -153,6 +155,12 @@ export default {
             });
         },
       });
+    },
+    getMessage(marked) {
+      if (this.checkLevel()) return this.trans.get('students.card_level');
+      else if(marked == 1) {
+        return this.trans.get('students.card_marked')
+      } else return this.trans.get('students.card_use');
     },
     checkLevel() {
       let number = 0;
