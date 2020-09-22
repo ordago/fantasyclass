@@ -9,7 +9,8 @@
 ### Changed
 - Unified show character view. Now in all places the student's group logo is showed.
 - Fixed translations in student's view.
-- Fixed update level experience. 
+- Fixed update level experience.
+- Fixed level show.
 
 ### Disabled / removed
 - Disabled challenge count in categories for now.
