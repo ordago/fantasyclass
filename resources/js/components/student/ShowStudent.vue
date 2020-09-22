@@ -1,25 +1,6 @@
 <template>
   <div class="card rounded card-shadow-s">
-    <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
-      <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
-      {{ student.level.number }}
-    </span>
-    <div
-      class="card-image card-shadow-s rounded-top char-bg"
-      :style="'background-color:' + theme.color + ';background-image: url(/img/bg/thumb_' + theme.name + ');'"
-    >
-      <div v-if="characterTheme" class="character-container character character-small is-relative">
-        <img
-          :src="'/img/character/' + element.src"
-          :class="element.classes"
-          v-for="element in student.equipment"
-          v-bind:key="element.id"
-        />
-      </div>
-      <div v-else class="is-flex has-all-centered has-padding-y-3">
-        <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
-      </div>
-    </div>
+    <show-character :student="student" :classroom="classroom"></show-character>
     <div class="card-content">
       <div class="media has-margin-bottom-0">
         <div class="media-left" v-if="characterTheme">
@@ -121,11 +102,16 @@
 <script>
 export default {
   props: ["student", "theme", "characterTheme"],
-  mounted() {},
-  data: function() {
-    return {};
+  created() {
+    this.classroom = { theme: this.theme }
+    this.student.grouplogo = this.student.groups[0].logo
+  },
+  data: function () {
+    return {
+      classroom: {},
+    };
   },
   methods: {},
-  computed: {}
+  computed: {},
 };
 </script>

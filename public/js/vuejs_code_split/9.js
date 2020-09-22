@@ -512,28 +512,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1021,94 +999,9 @@ var render = function() {
             staticStyle: { "min-width": "275px" }
           },
           [
-            _vm.student.level
-              ? _c(
-                  "span",
-                  {
-                    staticClass:
-                      "level-top rounded has-padding-4 has-background-light"
-                  },
-                  [
-                    _c("show-level", {
-                      staticClass: "level-hidden",
-                      attrs: { level: _vm.student.level, edit: false }
-                    }),
-                    _vm._v(
-                      "\n        " +
-                        _vm._s(_vm.student.level.number) +
-                        "\n      "
-                    )
-                  ],
-                  1
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "card-image card-shadow-s rounded-top char-bg",
-                style:
-                  "min-height: 160px;background-color:" +
-                  _vm.classroom.theme.color +
-                  ";background-image: url(/img/bg/thumb_" +
-                  _vm.classroom.theme.name +
-                  ");"
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    directives: [{ name: "tippy", rawName: "v-tippy" }],
-                    staticClass: "boost-right outer_glow_dark",
-                    attrs: {
-                      content:
-                        "<i class='fas fa-heart colored'></i>" +
-                        _vm.student.boost.hp +
-                        "% | <i class='fas fa-fist-raised colored'></i>" +
-                        _vm.student.boost.xp +
-                        "% | <i class='fas fa-coins colored'></i>" +
-                        _vm.student.boost.gold +
-                        "%"
-                    }
-                  },
-                  [_c("i", { staticClass: "fas fa-arrow-alt-square-up" })]
-                ),
-                _vm._v(" "),
-                _vm.classroom.character_theme
-                  ? _c(
-                      "div",
-                      {
-                        staticClass:
-                          "character-container character character-small is-relative"
-                      },
-                      _vm._l(_vm.student.equipment, function(element) {
-                        return _c("img", {
-                          key: element.id,
-                          class: element.classes,
-                          attrs: { src: "/img/character/" + element.src }
-                        })
-                      }),
-                      0
-                    )
-                  : _c(
-                      "div",
-                      {
-                        staticClass: "is-flex has-all-centered has-padding-y-3"
-                      },
-                      [
-                        _c("img", {
-                          staticClass: "rounded",
-                          attrs: {
-                            src: _vm.student.avatar,
-                            width: "128px",
-                            height: "128px",
-                            alt: ""
-                          }
-                        })
-                      ]
-                    )
-              ]
-            ),
+            _c("show-character", {
+              attrs: { student: _vm.student, classroom: _vm.classroom }
+            }),
             _vm._v(" "),
             _c("div", { staticClass: "card-content" }, [
               _c(
@@ -1230,7 +1123,8 @@ var render = function() {
                 ]
               )
             ])
-          ]
+          ],
+          1
         )
       ]),
       _vm._v(" "),
@@ -1521,7 +1415,9 @@ var render = function() {
                               [
                                 _c("i", { staticClass: "fas fa-eye" }),
                                 _vm._v(
-                                  " " + _vm._s(_vm.trans.get("students.show"))
+                                  "\n            " +
+                                    _vm._s(_vm.trans.get("students.show")) +
+                                    "\n          "
                                 )
                               ]
                             )
@@ -1534,7 +1430,9 @@ var render = function() {
                               [
                                 _c("i", { staticClass: "fas fa-eye-slash" }),
                                 _vm._v(
-                                  " " + _vm._s(_vm.trans.get("students.hide"))
+                                  "\n            " +
+                                    _vm._s(_vm.trans.get("students.hide")) +
+                                    "\n          "
                                 )
                               ]
                             ),
@@ -1550,7 +1448,7 @@ var render = function() {
                               staticClass: "fas fa-trash has-margin-right-2"
                             }),
                             _vm._v(
-                              " " +
+                              "\n            " +
                                 _vm._s(_vm.trans.get("students.delete")) +
                                 "\n          "
                             )

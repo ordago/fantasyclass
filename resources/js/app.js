@@ -53,6 +53,7 @@ Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.
 
 Vue.component('add-students', require('./components/student/AddStudents.vue').default);
 Vue.component('show-students', require('./components/student/ShowStudents.vue').default);
+Vue.component('show-character', require('./components/student/ShowCharacter.vue').default);
 Vue.component('show-students-student', require('./components/student/ShowStudentsStudent.vue').default);
 Vue.component('show-student-info', () => import('./components/student/ShowStudentInfo.vue'));
 

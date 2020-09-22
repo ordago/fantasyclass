@@ -27,7 +27,7 @@ class TagController extends Controller
         $this->authorize('update', $class);
 
         $data = request()->validate([
-            'short' => ['required', 'string', 'max:10'],
+            'short' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string'],
             'percent' => ['required', 'numeric'],
             'id' => ['required', 'numeric'],
@@ -44,7 +44,7 @@ class TagController extends Controller
 
 
         $data = request()->validate([
-            'short' => ['required', 'string', 'max:10'],
+            'short' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string'],
             'percent' => ['required', 'numeric'],
         ]);

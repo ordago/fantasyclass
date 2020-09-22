@@ -47,7 +47,7 @@
 <script>
 export default {
   props: ["level", "last", "code", "edit"],
-  created() {
+  created() { 
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     this.image = this.level.imagelvl;
   },
@@ -92,6 +92,7 @@ export default {
       formData.append("id", this.level.id);
       formData.append("title", this.level.title ? this.level.title : '');
       formData.append("description", this.level.description ? this.level.description : '');
+      formData.append("xp", this.level.xp);
       formData.append("_method", "patch");
       axios
         .post("/classroom/levels/" + this.level.id, formData, config)

@@ -6,6 +6,14 @@
 - Help bar in maps.
 - Update critical dependences.
 
+### Changed
+- Unified show character view. Now in all places the student's group logo is showed.
+- Fixed translations in student's view.
+- Fixed update level experience. 
+
+### Disabled / removed
+- Disabled challenge count in categories for now.
+
 ## v1.01 Beta (17/09/2020)
 ### Added
 - Option to hide students.

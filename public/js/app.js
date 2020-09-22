@@ -6148,6 +6148,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append("id", this.level.id);
       formData.append("title", this.level.title ? this.level.title : '');
       formData.append("description", this.level.description ? this.level.description : '');
+      formData.append("xp", this.level.xp);
       formData.append("_method", "patch");
       axios.post("/classroom/levels/" + this.level.id, formData, config).then(function (response) {
         _this2.$toasted.show(response.data.message, {
@@ -7963,6 +7964,64 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["student", "classroom"],
+  mounted: function mounted() {},
+  data: function data() {
+    return {};
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudent.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowStudent.vue?vue&type=script&lang=js& ***!
@@ -8073,30 +8132,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "theme", "characterTheme"],
-  mounted: function mounted() {},
+  created: function created() {
+    this.classroom = {
+      theme: this.theme
+    };
+    this.student.grouplogo = this.student.groups[0].logo;
+  },
   data: function data() {
-    return {};
+    return {
+      classroom: {}
+    };
   },
   methods: {},
   computed: {}
@@ -8149,25 +8196,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
 /* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -8965,7 +8993,7 @@ __webpack_require__.r(__webpack_exports__);
     orderedStudents: function orderedStudents() {
       var order = "desc";
       if (this.sortKey == "name") order = "asc";
-      return _.orderBy(_.orderBy(this.students, this.sortKey, order), 'hidden', "asc");
+      return _.orderBy(_.orderBy(this.students, this.sortKey, order), "hidden", "asc");
     }
   }
 });
@@ -59587,6 +59615,126 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "span",
+    [
+      _vm.student.level
+        ? _c(
+            "span",
+            {
+              staticClass:
+                "level-top rounded has-padding-4 has-background-light"
+            },
+            [_vm._v("\n    " + _vm._s(_vm.student.level.number) + "\n  ")]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("show-level", {
+        staticClass: "level-hidden",
+        attrs: { level: _vm.student.level, edit: false }
+      }),
+      _vm._v(" "),
+      _vm.student.grouplogo
+        ? _c("span", { staticClass: "top-right is-full-rounded" }, [
+            _c("img", {
+              staticClass: "is-full-rounded",
+              attrs: { src: _vm.student.grouplogo }
+            })
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "card-image card-shadow-s rounded-top char-bg",
+          style:
+            "background-color:" +
+            _vm.classroom.theme.color +
+            ";background-image: url(/img/bg/thumb_" +
+            _vm.classroom.theme.name +
+            ");"
+        },
+        [
+          _vm.student.boost
+            ? _c(
+                "span",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "boost-right outer_glow_dark",
+                  attrs: {
+                    content:
+                      "<i class='fas fa-heart colored'></i>" +
+                      _vm.student.boost.hp +
+                      "% | <i class='fas fa-fist-raised colored'></i>" +
+                      _vm.student.boost.xp +
+                      "% | <i class='fas fa-coins colored'></i>" +
+                      _vm.student.boost.gold +
+                      "%"
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-arrow-alt-square-up" })]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.classroom.character_theme != 0
+            ? _c(
+                "div",
+                {
+                  staticClass:
+                    "character-container character character-small is-relative"
+                },
+                _vm._l(_vm.student.equipment, function(element) {
+                  return _c("img", {
+                    key: element.id,
+                    class: element.classes,
+                    attrs: { src: "/img/character/" + element.src }
+                  })
+                }),
+                0
+              )
+            : _c(
+                "div",
+                { staticClass: "is-flex has-all-centered has-padding-y-3" },
+                [
+                  _c("img", {
+                    staticClass: "rounded",
+                    attrs: {
+                      src: _vm.student.avatar,
+                      width: "128px",
+                      height: "128px",
+                      alt: ""
+                    }
+                  })
+                ]
+              )
+        ]
+      )
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudent.vue?vue&type=template&id=f2b8e0e2&":
 /*!**********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowStudent.vue?vue&type=template&id=f2b8e0e2& ***!
@@ -59602,235 +59750,183 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card rounded card-shadow-s" }, [
-    _vm.student.level
-      ? _c(
-          "span",
-          {
-            staticClass: "level-top rounded has-padding-4 has-background-light"
-          },
-          [
-            _c("show-level", {
-              staticClass: "level-hidden",
-              attrs: { level: _vm.student.level, edit: false }
-            }),
-            _vm._v("\n    " + _vm._s(_vm.student.level.number) + "\n  ")
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "card-image card-shadow-s rounded-top char-bg",
-        style:
-          "background-color:" +
-          _vm.theme.color +
-          ";background-image: url(/img/bg/thumb_" +
-          _vm.theme.name +
-          ");"
-      },
-      [
-        _vm.characterTheme
-          ? _c(
-              "div",
-              {
-                staticClass:
-                  "character-container character character-small is-relative"
-              },
-              _vm._l(_vm.student.equipment, function(element) {
-                return _c("img", {
-                  key: element.id,
-                  class: element.classes,
-                  attrs: { src: "/img/character/" + element.src }
-                })
-              }),
-              0
-            )
-          : _c(
-              "div",
-              { staticClass: "is-flex has-all-centered has-padding-y-3" },
-              [
-                _c("img", {
-                  staticClass: "rounded",
-                  attrs: {
-                    src: _vm.student.avatar,
-                    width: "128px",
-                    height: "128px",
-                    alt: ""
-                  }
-                })
-              ]
-            )
-      ]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-content" }, [
-      _c("div", { staticClass: "media has-margin-bottom-0" }, [
-        _vm.characterTheme
-          ? _c("div", { staticClass: "media-left" }, [
-              _c("figure", { staticClass: "image is-48x48" }, [
-                _c("img", {
-                  staticClass: "rounded",
-                  attrs: { src: _vm.student.avatar, alt: "" }
-                })
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-content cursor-default" }, [
-          _c("p", { staticClass: "title is-4" }, [
-            _vm._v(_vm._s(_vm.student.name))
-          ]),
-          _vm._v(" "),
-          _vm.student.groups && _vm.student.groups.length
-            ? _c(
-                "p",
-                {
-                  directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "subtitle is-6",
-                  attrs: {
-                    "v-tippy": _vm.student.group,
-                    content:
-                      "Proud member 😄 <br><img style='background-color: #e6e6e6' class='has-padding-2 card-shadow-s is-full-rounded' src=" +
-                      _vm.student.groups[0].logo +
-                      ">"
-                  }
-                },
-                [
-                  _vm.student.groups && _vm.student.groups.length
-                    ? _c("small", [
-                        _c("i", { staticClass: "fas fa-users" }),
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(_vm.student.groups[0].name) +
-                            "\n          "
-                        )
-                      ])
-                    : _vm._e()
-                ]
-              )
-            : _vm._e()
-        ])
-      ]),
+  return _c(
+    "div",
+    { staticClass: "card rounded card-shadow-s" },
+    [
+      _c("show-character", {
+        attrs: { student: _vm.student, classroom: _vm.classroom }
+      }),
       _vm._v(" "),
-      _c("div", { staticClass: "content has-margin-top-3" }, [
-        _c("div", { staticClass: "is-flex has-all-centered" }, [
-          _c("div", { staticClass: "w-100 is-relative" }, [
-            _vm._m(0),
+      _c("div", { staticClass: "card-content" }, [
+        _c("div", { staticClass: "media has-margin-bottom-0" }, [
+          _vm.characterTheme
+            ? _c("div", { staticClass: "media-left" }, [
+                _c("figure", { staticClass: "image is-48x48" }, [
+                  _c("img", {
+                    staticClass: "rounded",
+                    attrs: { src: _vm.student.avatar, alt: "" }
+                  })
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "media-content cursor-default" }, [
+            _c("p", { staticClass: "title is-4" }, [
+              _vm._v(_vm._s(_vm.student.name))
+            ]),
             _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
-                staticStyle: { border: "none" }
-              },
-              [
-                _c(
-                  "span",
+            _vm.student.groups && _vm.student.groups.length
+              ? _c(
+                  "p",
                   {
-                    staticClass:
-                      "attribute has-background-white-ter has-padding-y-3 rounded",
-                    staticStyle: { width: "100%", border: "1px solid black" }
+                    directives: [{ name: "tippy", rawName: "v-tippy" }],
+                    staticClass: "subtitle is-6",
+                    attrs: {
+                      "v-tippy": _vm.student.group,
+                      content:
+                        "Proud member 😄 <br><img style='background-color: #e6e6e6' class='has-padding-2 card-shadow-s is-full-rounded' src=" +
+                        _vm.student.groups[0].logo +
+                        ">"
+                    }
                   },
                   [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "has-text-grey-light",
-                        class: { "has-text-white-ter": _vm.student.hp >= 30 }
-                      },
-                      [_vm._v(_vm._s(_vm.student.hp))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "attribute has-background-danger has-padding-y-3 rounded-left",
-                    class: { rounded: _vm.student.hp == 100 },
-                    style: "width: " + _vm.student.hp + "%"
-                  },
-                  [
-                    _vm.student.hp > 0
-                      ? _c(
-                          "span",
-                          { class: { "has-text-danger": _vm.student.hp < 30 } },
-                          [_vm._v(_vm._s(_vm.student.hp))]
-                        )
+                    _vm.student.groups && _vm.student.groups.length
+                      ? _c("small", [
+                          _c("i", { staticClass: "fas fa-users" }),
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.student.groups[0].name) +
+                              "\n          "
+                          )
+                        ])
                       : _vm._e()
                   ]
                 )
-              ]
-            )
+              : _vm._e()
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "is-flex is-relative has-all-centered" }, [
-          _c("div", { staticClass: "w-100 is-realative" }, [
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
-                staticStyle: { border: "none" }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "attribute has-background-dark has-padding-y-3 rounded",
-                    staticStyle: { width: "100%", border: "1px solid black" }
-                  },
-                  [
-                    _c("span", { staticClass: "has-text-light" }, [
-                      _vm._v(_vm._s(_vm.student.xp))
-                    ])
-                  ]
-                )
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "is-flex is-relative has-all-centered" }, [
-          _c("div", { staticClass: "w-100 is-realative" }, [
-            _vm._m(2),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "attribute has-background-warning has-padding-y-3 rounded",
-                    staticStyle: { width: "100%", border: "1px solid black" }
-                  },
-                  [
-                    _c("span", { staticClass: "has-text-dark" }, [
-                      _vm._v(_vm._s(_vm.student.gold))
-                    ])
-                  ]
-                )
-              ]
-            )
+        _c("div", { staticClass: "content has-margin-top-3" }, [
+          _c("div", { staticClass: "is-flex has-all-centered" }, [
+            _c("div", { staticClass: "w-100 is-relative" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
+                  staticStyle: { border: "none" }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "attribute has-background-white-ter has-padding-y-3 rounded",
+                      staticStyle: { width: "100%", border: "1px solid black" }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "has-text-grey-light",
+                          class: { "has-text-white-ter": _vm.student.hp >= 30 }
+                        },
+                        [_vm._v(_vm._s(_vm.student.hp))]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "attribute has-background-danger has-padding-y-3 rounded-left",
+                      class: { rounded: _vm.student.hp == 100 },
+                      style: "width: " + _vm.student.hp + "%"
+                    },
+                    [
+                      _vm.student.hp > 0
+                        ? _c(
+                            "span",
+                            {
+                              class: { "has-text-danger": _vm.student.hp < 30 }
+                            },
+                            [_vm._v(_vm._s(_vm.student.hp))]
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "is-flex is-relative has-all-centered" }, [
+            _c("div", { staticClass: "w-100 is-realative" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
+                  staticStyle: { border: "none" }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "attribute has-background-dark has-padding-y-3 rounded",
+                      staticStyle: { width: "100%", border: "1px solid black" }
+                    },
+                    [
+                      _c("span", { staticClass: "has-text-light" }, [
+                        _vm._v(_vm._s(_vm.student.xp))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "is-flex is-relative has-all-centered" }, [
+            _c("div", { staticClass: "w-100 is-realative" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass:
+                        "attribute has-background-warning has-padding-y-3 rounded",
+                      staticStyle: { width: "100%", border: "1px solid black" }
+                    },
+                    [
+                      _c("span", { staticClass: "has-text-dark" }, [
+                        _vm._v(_vm._s(_vm.student.gold))
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ])
           ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -60295,817 +60391,818 @@ var render = function() {
                   "column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
               },
               [
-                _c("div", { staticClass: "card rounded card-shadow-s" }, [
-                  student.level
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "level-top rounded has-padding-4 has-background-light"
-                        },
-                        [_vm._v(_vm._s(student.level.number))]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  student.grouplogo
-                    ? _c("span", { staticClass: "top-right is-full-rounded" }, [
-                        _c("img", {
-                          staticClass: "is-full-rounded",
-                          attrs: { src: student.grouplogo }
-                        })
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "card-image card-shadow-s rounded-top char-bg",
-                      style:
-                        "background-color:" +
-                        _vm.classroom.theme.color +
-                        ";background-image: url(/img/bg/thumb_" +
-                        _vm.classroom.theme.name +
-                        ");"
-                    },
-                    [
-                      _vm.classroom.character_theme != 0
-                        ? _c(
-                            "div",
-                            {
-                              staticClass:
-                                "character-container character character-small is-relative"
-                            },
-                            _vm._l(student.equipment, function(element) {
-                              return _c("img", {
-                                key: element.id,
-                                class: element.classes,
-                                attrs: { src: "/img/character/" + element.src }
-                              })
-                            }),
-                            0
-                          )
-                        : _c(
-                            "div",
-                            {
-                              staticClass:
-                                "is-flex has-all-centered has-padding-y-3"
-                            },
-                            [
-                              _c("img", {
-                                staticClass: "rounded",
-                                attrs: {
-                                  src: student.avatar,
-                                  width: "128px",
-                                  height: "128px",
-                                  alt: ""
-                                }
-                              })
-                            ]
-                          )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "card-content",
-                      class: { "has-background-hidden": student.hidden == 1 }
-                    },
-                    [
-                      _c("div", { staticClass: "media has-margin-bottom-0" }, [
-                        _vm.classroom.character_theme != 0
-                          ? _c("div", { staticClass: "media-left" }, [
-                              _c("figure", { staticClass: "image is-48x48" }, [
-                                _c("img", {
-                                  staticClass: "rounded",
-                                  attrs: { src: student.avatar, alt: "" }
-                                })
-                              ])
-                            ])
-                          : _vm._e(),
-                        _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "card rounded card-shadow-s" },
+                  [
+                    _c("show-character", {
+                      attrs: { student: student, classroom: _vm.classroom }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        staticClass: "card-content",
+                        class: { "has-background-hidden": student.hidden == 1 }
+                      },
+                      [
                         _c(
                           "div",
-                          {
-                            staticClass: "media-content cursor-pointer",
-                            on: {
-                              click: function($event) {
-                                return _vm.redirect(student.id)
-                              }
-                            }
-                          },
+                          { staticClass: "media has-margin-bottom-0" },
                           [
-                            _c("p", { staticClass: "title is-4" }, [
-                              _vm._v(_vm._s(student.name) + " "),
-                              student.hidden == 1
-                                ? _c("i", { staticClass: "fas fa-eye-slash" })
-                                : _vm._e()
-                            ]),
-                            _vm._v(" "),
-                            _c("p", { staticClass: "subtitle is-6" }, [
-                              _c("small", [
-                                _vm._v("@" + _vm._s(student.username))
-                              ])
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "content" }, [
-                        _c("div", [
-                          student.numcards[0] > student.numcards[1]
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "notification is-danger has-margin-y-2"
-                                },
-                                [
-                                  _c("i", {
-                                    staticClass: "fas fa-exclamation-square"
-                                  }),
-                                  _vm._v(
-                                    "\n                Cards number exceded " +
-                                      _vm._s(student.numcards[0]) +
-                                      " / " +
-                                      _vm._s(student.numcards[1]) +
-                                      "\n              "
-                                  )
-                                ]
-                              )
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3"
-                            },
-                            [
-                              _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "attribute has-background-white-ter has-padding-y-2 rounded",
-                                  staticStyle: { width: "100%" }
-                                },
-                                [
-                                  _vm._m(3, true),
-                                  _vm._v(" "),
-                                  student.hp < 20
-                                    ? _c(
-                                        "span",
-                                        { staticClass: "has-text-grey-light" },
-                                        [_vm._v(_vm._s(student.hp))]
-                                      )
-                                    : _vm._e()
-                                ]
-                              ),
-                              _vm._v(" "),
-                              student.hp > 0
-                                ? _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "attribute has-background-danger has-padding-y-2 rounded-left",
-                                      class: { rounded: student.hp == 100 },
-                                      style: "width: " + student.hp + "%"
-                                    },
+                            _vm.classroom.character_theme != 0
+                              ? _c("div", { staticClass: "media-left" }, [
+                                  _c(
+                                    "figure",
+                                    { staticClass: "image is-48x48" },
                                     [
-                                      _c("i", {
-                                        staticClass: "fas fa-heart",
-                                        class: {
-                                          "has-text-danger": student.hp < 52
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      student.hp >= 20
-                                        ? _c("span", [
-                                            _vm._v(_vm._s(student.hp))
-                                          ])
-                                        : _vm._e()
+                                      _c("img", {
+                                        staticClass: "rounded",
+                                        attrs: { src: student.avatar, alt: "" }
+                                      })
                                     ]
                                   )
-                                : _vm._e()
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "my-1 has-text-centered" }, [
+                                ])
+                              : _vm._e(),
+                            _vm._v(" "),
                             _c(
                               "div",
-                              { staticClass: "w-100 is-flex has-all-centered" },
+                              {
+                                staticClass: "media-content cursor-pointer",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.redirect(student.id)
+                                  }
+                                }
+                              },
                               [
-                                _vm._l(_vm.mainBehavioursJson, function(
-                                  behaviour
-                                ) {
-                                  return _c(
-                                    "button",
-                                    {
-                                      directives: [
-                                        { name: "tippy", rawName: "v-tippy" }
-                                      ],
-                                      key: behaviour.id,
-                                      staticClass:
-                                        "button has-margin-1 has-padding-x-4 is-light",
-                                      class: [
-                                        behaviour.xp +
-                                          behaviour.hp +
-                                          behaviour.gold >=
-                                        0
-                                          ? "is-success"
-                                          : "is-danger"
-                                      ],
-                                      attrs: {
-                                        content:
-                                          _vm.trans.get(behaviour.name) +
-                                          " <small>(<i class='fas fa-heart colored'></i> " +
-                                          behaviour.hp +
-                                          " <i class='fas fa-fist-raised colored'></i> " +
-                                          behaviour.xp +
-                                          " <i class='fas fa-coins colored'></i> " +
-                                          behaviour.gold +
-                                          ")</small>"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.addBehaviour(
-                                            student.id,
-                                            behaviour.id
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_c("i", { class: behaviour.icon })]
-                                  )
-                                }),
+                                _c("p", { staticClass: "title is-4" }, [
+                                  _vm._v(
+                                    "\n                " +
+                                      _vm._s(student.name) +
+                                      "\n                "
+                                  ),
+                                  student.hidden == 1
+                                    ? _c("i", {
+                                        staticClass: "fas fa-eye-slash"
+                                      })
+                                    : _vm._e()
+                                ]),
                                 _vm._v(" "),
-                                _vm.otherBehavioursJson.length
-                                  ? _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "button is-link is-light has-margin-1 has-padding-x-4",
-                                        on: {
-                                          click: function($event) {
-                                            _vm.show2l = !_vm.show2l
-                                          }
-                                        }
-                                      },
-                                      [_c("i", { staticClass: "fas fa-plus" })]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                _vm.mainBehavioursJson.length == 0
-                                  ? _c(
-                                      "a",
-                                      {
-                                        directives: [
-                                          { name: "tippy", rawName: "v-tippy" }
-                                        ],
-                                        staticClass:
-                                          "button is-link is-light has-margin-1 has-padding-x-4",
-                                        attrs: {
-                                          href:
-                                            "/classroom/" +
-                                            _vm.classroom.code +
-                                            "/behaviours/",
-                                          content: _vm.trans.get(
-                                            "users_groups.add_behaviours"
-                                          )
-                                        }
-                                      },
-                                      [_c("i", { staticClass: "fas fa-plus" })]
-                                    )
-                                  : _vm._e()
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _vm.show2l
+                                _c("p", { staticClass: "subtitle is-6" }, [
+                                  _c("small", [
+                                    _vm._v("@" + _vm._s(student.username))
+                                  ])
+                                ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "content" }, [
+                          _c("div", [
+                            student.numcards[0] > student.numcards[1]
                               ? _c(
                                   "div",
-                                  _vm._l(_vm.otherBehavioursJson, function(
-                                    behaviour
-                                  ) {
-                                    return _c(
-                                      "button",
-                                      {
-                                        directives: [
-                                          { name: "tippy", rawName: "v-tippy" }
-                                        ],
-                                        key: behaviour.id,
-                                        staticClass:
-                                          "button has-margin-1 is-light has-padding-x-4",
-                                        class: [
-                                          behaviour.xp +
-                                            behaviour.hp +
-                                            behaviour.gold >=
-                                          0
-                                            ? "is-success"
-                                            : "is-danger"
-                                        ],
-                                        attrs: {
-                                          content:
-                                            _vm.trans.get(behaviour.name) +
-                                            " <small>(<i class='fas fa-heart colored'></i> " +
-                                            behaviour.hp +
-                                            " <i class='fas fa-fist-raised colored'></i> " +
-                                            behaviour.xp +
-                                            " <i class='fas fa-coins colored'></i> " +
-                                            behaviour.gold +
-                                            ")</small>"
-                                        },
-                                        on: {
-                                          click: function($event) {
-                                            return _vm.addBehaviour(
-                                              student.id,
-                                              behaviour.id
-                                            )
-                                          }
-                                        }
-                                      },
-                                      [_c("i", { class: behaviour.icon })]
-                                    )
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "score has-padding-3 has-margin-1" },
-                            [
-                              _vm._m(4, true),
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(student.xp) +
-                                  "\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "has-margin-y-2 has-text-centered" },
-                            [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button is-dark has-padding-x-3",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        100
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("100")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button is-dark has-padding-x-3",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        50
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("50")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "button is-dark has-padding-x-3",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        10
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("10")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "tippy",
-                                {
-                                  staticStyle: { display: "inline-block" },
-                                  attrs: {
-                                    interactive: "",
-                                    "animate-fill": false,
-                                    theme: "light",
-                                    placement: "bottom",
-                                    animation: "fade",
-                                    trigger: "click",
-                                    arrow: ""
+                                  {
+                                    staticClass:
+                                      "notification is-danger has-margin-y-2"
                                   },
-                                  scopedSlots: _vm._u(
-                                    [
-                                      {
-                                        key: "trigger",
-                                        fn: function() {
-                                          return [
-                                            _c(
-                                              "button",
-                                              {
-                                                staticClass:
-                                                  "button is-primary has-padding-x-3",
-                                                attrs: { type: "submit" }
-                                              },
-                                              [
-                                                _c("i", {
-                                                  staticClass: "fas fa-hashtag"
-                                                })
-                                              ]
-                                            )
-                                          ]
-                                        },
-                                        proxy: true
-                                      }
-                                    ],
-                                    null,
-                                    true
-                                  )
-                                },
-                                [
-                                  _vm._v(" "),
-                                  _c("span", [
-                                    _c("div", { staticClass: "is-flex" }, [
-                                      _c("input", {
-                                        directives: [
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-exclamation-square"
+                                    }),
+                                    _vm._v(
+                                      "\n                Cards number exceded " +
+                                        _vm._s(student.numcards[0]) +
+                                        " / " +
+                                        _vm._s(student.numcards[1]) +
+                                        "\n              "
+                                    )
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3"
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass:
+                                      "attribute has-background-white-ter has-padding-y-2 rounded",
+                                    staticStyle: { width: "100%" }
+                                  },
+                                  [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    student.hp < 20
+                                      ? _c(
+                                          "span",
                                           {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.custom,
-                                            expression: "custom"
+                                            staticClass: "has-text-grey-light"
+                                          },
+                                          [_vm._v(_vm._s(student.hp))]
+                                        )
+                                      : _vm._e()
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                student.hp > 0
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "attribute has-background-danger has-padding-y-2 rounded-left",
+                                        class: { rounded: student.hp == 100 },
+                                        style: "width: " + student.hp + "%"
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-heart",
+                                          class: {
+                                            "has-text-danger": student.hp < 52
                                           }
-                                        ],
-                                        staticClass: "input has-margin-right-1",
-                                        attrs: { type: "number" },
-                                        domProps: { value: _vm.custom },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.custom = $event.target.value
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
+                                        }),
+                                        _vm._v(" "),
+                                        student.hp >= 20
+                                          ? _c("span", [
+                                              _vm._v(_vm._s(student.hp))
+                                            ])
+                                          : _vm._e()
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "my-1 has-text-centered" },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "w-100 is-flex has-all-centered"
+                                  },
+                                  [
+                                    _vm._l(_vm.mainBehavioursJson, function(
+                                      behaviour
+                                    ) {
+                                      return _c(
                                         "button",
                                         {
+                                          directives: [
+                                            {
+                                              name: "tippy",
+                                              rawName: "v-tippy"
+                                            }
+                                          ],
+                                          key: behaviour.id,
                                           staticClass:
-                                            "button is-primary is-inline",
+                                            "button has-margin-1 has-padding-x-4 is-light",
+                                          class: [
+                                            behaviour.xp +
+                                              behaviour.hp +
+                                              behaviour.gold >=
+                                            0
+                                              ? "is-success"
+                                              : "is-danger"
+                                          ],
+                                          attrs: {
+                                            content:
+                                              _vm.trans.get(behaviour.name) +
+                                              " <small>(<i class='fas fa-heart colored'></i> " +
+                                              behaviour.hp +
+                                              " <i class='fas fa-fist-raised colored'></i> " +
+                                              behaviour.xp +
+                                              " <i class='fas fa-coins colored'></i> " +
+                                              behaviour.gold +
+                                              ")</small>"
+                                          },
                                           on: {
                                             click: function($event) {
-                                              return _vm.updateProp(
+                                              return _vm.addBehaviour(
                                                 student.id,
-                                                "xp",
-                                                _vm.custom
+                                                behaviour.id
                                               )
                                             }
                                           }
                                         },
-                                        [
-                                          _vm._v(
-                                            _vm._s(
-                                              _vm.trans.get(
-                                                "users_groups.apply"
-                                              )
-                                            )
-                                          )
-                                        ]
+                                        [_c("i", { class: behaviour.icon })]
                                       )
-                                    ])
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "button is-dark is-outlined has-padding-x-2",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        -10
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("-10")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "button is-dark is-outlined has-padding-x-2",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        -50
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("-50")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "button is-dark is-outlined has-padding-x-2",
-                                  attrs: { type: "submit" },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.updateProp(
-                                        student.id,
-                                        "xp",
-                                        -100
-                                      )
-                                    }
-                                  }
-                                },
-                                [_vm._v("-100")]
-                              )
-                            ],
-                            1
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass: "gold has-padding-3 has-margin-y-1"
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-coins colored" }),
-                              _vm._v(
-                                "\n                " +
-                                  _vm._s(student.gold) +
-                                  "\n              "
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            { staticClass: "has-margin-y-2 has-text-centered" },
-                            [
-                              _c(
-                                "div",
-                                {},
-                                [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-warning has-padding-x-3",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            100
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("100")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-warning has-padding-x-3",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            50
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("50")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-warning has-padding-x-3",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            10
-                                          )
-                                        }
-                                      }
-                                    },
-                                    [_vm._v("10")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "tippy",
-                                    {
-                                      staticStyle: { display: "inline-block" },
-                                      attrs: {
-                                        interactive: "",
-                                        "animate-fill": false,
-                                        theme: "light",
-                                        placement: "bottom",
-                                        animation: "fade",
-                                        trigger: "click",
-                                        arrow: ""
-                                      },
-                                      scopedSlots: _vm._u(
-                                        [
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.otherBehavioursJson.length
+                                      ? _c(
+                                          "div",
                                           {
-                                            key: "trigger",
-                                            fn: function() {
-                                              return [
-                                                _c(
-                                                  "button",
-                                                  {
-                                                    staticClass:
-                                                      "button is-primary has-padding-x-3",
-                                                    attrs: { type: "submit" }
-                                                  },
-                                                  [
-                                                    _c("i", {
-                                                      staticClass:
-                                                        "fas fa-hashtag"
-                                                    })
-                                                  ]
-                                                )
-                                              ]
-                                            },
-                                            proxy: true
-                                          }
-                                        ],
-                                        null,
-                                        true
-                                      )
-                                    },
-                                    [
-                                      _vm._v(" "),
-                                      _c("span", [
-                                        _c("div", { staticClass: "is-flex" }, [
-                                          _c("input", {
+                                            staticClass:
+                                              "button is-link is-light has-margin-1 has-padding-x-4",
+                                            on: {
+                                              click: function($event) {
+                                                _vm.show2l = !_vm.show2l
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-plus"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _vm.mainBehavioursJson.length == 0
+                                      ? _c(
+                                          "a",
+                                          {
                                             directives: [
                                               {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: _vm.custom,
-                                                expression: "custom"
+                                                name: "tippy",
+                                                rawName: "v-tippy"
                                               }
                                             ],
                                             staticClass:
-                                              "input has-margin-right-1",
-                                            attrs: { type: "number" },
-                                            domProps: { value: _vm.custom },
+                                              "button is-link is-light has-margin-1 has-padding-x-4",
+                                            attrs: {
+                                              href:
+                                                "/classroom/" +
+                                                _vm.classroom.code +
+                                                "/behaviours/",
+                                              content: _vm.trans.get(
+                                                "users_groups.add_behaviours"
+                                              )
+                                            }
+                                          },
+                                          [
+                                            _c("i", {
+                                              staticClass: "fas fa-plus"
+                                            })
+                                          ]
+                                        )
+                                      : _vm._e()
+                                  ],
+                                  2
+                                ),
+                                _vm._v(" "),
+                                _vm.show2l
+                                  ? _c(
+                                      "div",
+                                      _vm._l(_vm.otherBehavioursJson, function(
+                                        behaviour
+                                      ) {
+                                        return _c(
+                                          "button",
+                                          {
+                                            directives: [
+                                              {
+                                                name: "tippy",
+                                                rawName: "v-tippy"
+                                              }
+                                            ],
+                                            key: behaviour.id,
+                                            staticClass:
+                                              "button has-margin-1 is-light has-padding-x-4",
+                                            class: [
+                                              behaviour.xp +
+                                                behaviour.hp +
+                                                behaviour.gold >=
+                                              0
+                                                ? "is-success"
+                                                : "is-danger"
+                                            ],
+                                            attrs: {
+                                              content:
+                                                _vm.trans.get(behaviour.name) +
+                                                " <small>(<i class='fas fa-heart colored'></i> " +
+                                                behaviour.hp +
+                                                " <i class='fas fa-fist-raised colored'></i> " +
+                                                behaviour.xp +
+                                                " <i class='fas fa-coins colored'></i> " +
+                                                behaviour.gold +
+                                                ")</small>"
+                                            },
                                             on: {
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.custom = $event.target.value
+                                              click: function($event) {
+                                                return _vm.addBehaviour(
+                                                  student.id,
+                                                  behaviour.id
+                                                )
                                               }
                                             }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "button",
+                                          },
+                                          [_c("i", { class: behaviour.icon })]
+                                        )
+                                      }),
+                                      0
+                                    )
+                                  : _vm._e()
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "score has-padding-3 has-margin-1"
+                              },
+                              [
+                                _vm._m(4, true),
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(student.xp) +
+                                    "\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "has-margin-y-2 has-text-centered"
+                              },
+                              [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark has-padding-x-3",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          100
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("100")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark has-padding-x-3",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          50
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("50")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark has-padding-x-3",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          10
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("10")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "tippy",
+                                  {
+                                    staticStyle: { display: "inline-block" },
+                                    attrs: {
+                                      interactive: "",
+                                      "animate-fill": false,
+                                      theme: "light",
+                                      placement: "bottom",
+                                      animation: "fade",
+                                      trigger: "click",
+                                      arrow: ""
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "trigger",
+                                          fn: function() {
+                                            return [
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "button is-primary has-padding-x-3",
+                                                  attrs: { type: "submit" }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "fas fa-hashtag"
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          },
+                                          proxy: true
+                                        }
+                                      ],
+                                      null,
+                                      true
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("span", [
+                                      _c("div", { staticClass: "is-flex" }, [
+                                        _c("input", {
+                                          directives: [
                                             {
-                                              staticClass:
-                                                "button is-primary col-4 pl-1",
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.updateProp(
-                                                    student.id,
-                                                    "gold",
-                                                    _vm.custom
-                                                  )
-                                                }
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.custom,
+                                              expression: "custom"
+                                            }
+                                          ],
+                                          staticClass:
+                                            "input has-margin-right-1",
+                                          attrs: { type: "number" },
+                                          domProps: { value: _vm.custom },
+                                          on: {
+                                            input: function($event) {
+                                              if ($event.target.composing) {
+                                                return
                                               }
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  _vm.trans.get(
-                                                    "users_groups.apply"
-                                                  )
+                                              _vm.custom = $event.target.value
+                                            }
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass:
+                                              "button is-primary is-inline",
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.updateProp(
+                                                  student.id,
+                                                  "xp",
+                                                  _vm.custom
                                                 )
+                                              }
+                                            }
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.trans.get(
+                                                  "users_groups.apply"
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        )
+                                      ])
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark is-outlined has-padding-x-2",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          -10
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("-10")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark is-outlined has-padding-x-2",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          -50
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("-50")]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-dark is-outlined has-padding-x-2",
+                                    attrs: { type: "submit" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.updateProp(
+                                          student.id,
+                                          "xp",
+                                          -100
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_vm._v("-100")]
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "gold has-padding-3 has-margin-y-1"
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-coins colored"
+                                }),
+                                _vm._v(
+                                  "\n                " +
+                                    _vm._s(student.gold) +
+                                    "\n              "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass: "has-margin-y-2 has-text-centered"
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {},
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-warning has-padding-x-3",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              100
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("100")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-warning has-padding-x-3",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              50
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("50")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-warning has-padding-x-3",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              10
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("10")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "tippy",
+                                      {
+                                        staticStyle: {
+                                          display: "inline-block"
+                                        },
+                                        attrs: {
+                                          interactive: "",
+                                          "animate-fill": false,
+                                          theme: "light",
+                                          placement: "bottom",
+                                          animation: "fade",
+                                          trigger: "click",
+                                          arrow: ""
+                                        },
+                                        scopedSlots: _vm._u(
+                                          [
+                                            {
+                                              key: "trigger",
+                                              fn: function() {
+                                                return [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "button is-primary has-padding-x-3",
+                                                      attrs: { type: "submit" }
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fas fa-hashtag"
+                                                      })
+                                                    ]
+                                                  )
+                                                ]
+                                              },
+                                              proxy: true
+                                            }
+                                          ],
+                                          null,
+                                          true
+                                        )
+                                      },
+                                      [
+                                        _vm._v(" "),
+                                        _c("span", [
+                                          _c(
+                                            "div",
+                                            { staticClass: "is-flex" },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: _vm.custom,
+                                                    expression: "custom"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "input has-margin-right-1",
+                                                attrs: { type: "number" },
+                                                domProps: { value: _vm.custom },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.custom =
+                                                      $event.target.value
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "button is-primary col-4 pl-1",
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.updateProp(
+                                                        student.id,
+                                                        "gold",
+                                                        _vm.custom
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.trans.get(
+                                                        "users_groups.apply"
+                                                      )
+                                                    )
+                                                  )
+                                                ]
                                               )
                                             ]
                                           )
                                         ])
-                                      ])
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-dark is-outlined has-padding-x-2",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            -10
-                                          )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-dark is-outlined has-padding-x-2",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              -10
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("-10")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-dark is-outlined has-padding-x-2",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            -50
-                                          )
+                                      },
+                                      [_vm._v("-10")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-dark is-outlined has-padding-x-2",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              -50
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("-50")]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass:
-                                        "button is-dark is-outlined has-padding-x-2",
-                                      attrs: { type: "submit" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.updateProp(
-                                            student.id,
-                                            "gold",
-                                            -100
-                                          )
+                                      },
+                                      [_vm._v("-50")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "button is-dark is-outlined has-padding-x-2",
+                                        attrs: { type: "submit" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.updateProp(
+                                              student.id,
+                                              "gold",
+                                              -100
+                                            )
+                                          }
                                         }
-                                      }
-                                    },
-                                    [_vm._v("-100")]
-                                  )
-                                ],
-                                1
-                              )
-                            ]
-                          )
+                                      },
+                                      [_vm._v("-100")]
+                                    )
+                                  ],
+                                  1
+                                )
+                              ]
+                            )
+                          ])
                         ])
-                      ])
-                    ]
-                  )
-                ])
+                      ]
+                    )
+                  ],
+                  1
+                )
               ]
             )
           }),
@@ -82413,6 +82510,7 @@ Vue.component('join-classroom', __webpack_require__(/*! ./components/classroom/J
 Vue.component('clone-classroom', __webpack_require__(/*! ./components/classroom/CloneClassroom.vue */ "./resources/js/components/classroom/CloneClassroom.vue")["default"]);
 Vue.component('add-students', __webpack_require__(/*! ./components/student/AddStudents.vue */ "./resources/js/components/student/AddStudents.vue")["default"]);
 Vue.component('show-students', __webpack_require__(/*! ./components/student/ShowStudents.vue */ "./resources/js/components/student/ShowStudents.vue")["default"]);
+Vue.component('show-character', __webpack_require__(/*! ./components/student/ShowCharacter.vue */ "./resources/js/components/student/ShowCharacter.vue")["default"]);
 Vue.component('show-students-student', __webpack_require__(/*! ./components/student/ShowStudentsStudent.vue */ "./resources/js/components/student/ShowStudentsStudent.vue")["default"]);
 Vue.component('show-student-info', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(10), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
@@ -84985,6 +85083,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddStudents_vue_vue_type_template_id_16f87a2c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AddStudents_vue_vue_type_template_id_16f87a2c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowCharacter.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/student/ShowCharacter.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowCharacter.vue?vue&type=template&id=7763827d& */ "./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d&");
+/* harmony import */ var _ShowCharacter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowCharacter.vue?vue&type=script&lang=js& */ "./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowCharacter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/student/ShowCharacter.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCharacter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowCharacter.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowCharacter.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCharacter_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowCharacter.vue?vue&type=template&id=7763827d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowCharacter.vue?vue&type=template&id=7763827d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowCharacter_vue_vue_type_template_id_7763827d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

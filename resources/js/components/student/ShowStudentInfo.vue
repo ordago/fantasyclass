@@ -2,36 +2,7 @@
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
     <div class="column is-narrow has-padding-right-0">
       <div class="card rounded card-shadow-s" style="min-width: 275px">
-        <span class="level-top rounded has-padding-4 has-background-light" v-if="student.level">
-          <show-level class="level-hidden" style :level="student.level" :edit="false"></show-level>
-          {{ student.level.number }}
-        </span>
-        <div
-          class="card-image card-shadow-s rounded-top char-bg"
-          :style="'min-height: 160px;background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
-        >
-          <span
-            class="boost-right outer_glow_dark"
-            v-tippy
-            :content="'<i class=\'fas fa-heart colored\'></i>' + student.boost.hp + '% | <i class=\'fas fa-fist-raised colored\'></i>' + student.boost.xp + '% | <i class=\'fas fa-coins colored\'></i>' + student.boost.gold + '%'"
-          >
-            <i class="fas fa-arrow-alt-square-up"></i>
-          </span>
-          <div
-            v-if="classroom.character_theme"
-            class="character-container character character-small is-relative"
-          >
-            <img
-              :src="'/img/character/' + element.src"
-              :class="element.classes"
-              v-for="element in student.equipment"
-              v-bind:key="element.id"
-            />
-          </div>
-          <div v-else class="is-flex has-all-centered has-padding-y-3">
-            <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
-          </div>
-        </div>
+        <show-character :student="student" :classroom="classroom"></show-character>
         <div class="card-content">
           <div class="media has-margin-bottom-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
@@ -115,7 +86,12 @@
                 @click="updateAvatar()"
               >Update avatar</button>
             </div>
-            <image-bank class="has-margin-3" :admin="admin" :student="student" :code="classroom.code"></image-bank>
+            <image-bank
+              class="has-margin-3"
+              :admin="admin"
+              :student="student"
+              :code="classroom.code"
+            ></image-bank>
           </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">
@@ -182,10 +158,17 @@
             />
           </div>
           <div v-if="admin">
-            <button class="button is-success" v-if="student.hidden == 1" @click="hide"><i class="fas fa-eye"></i> {{ trans.get('students.show') }}</button>
-            <button class="button is-warning" v-else @click="hide"><i class="fas fa-eye-slash"></i> {{ trans.get('students.hide') }}</button>
+            <button class="button is-success" v-if="student.hidden == 1" @click="hide">
+              <i class="fas fa-eye"></i>
+              {{ trans.get('students.show') }}
+            </button>
+            <button class="button is-warning" v-else @click="hide">
+              <i class="fas fa-eye-slash"></i>
+              {{ trans.get('students.hide') }}
+            </button>
             <button class="button is-danger" @click="deleteStudent">
-              <i class="fas fa-trash has-margin-right-2"></i> {{ trans.get('students.delete') }}
+              <i class="fas fa-trash has-margin-right-2"></i>
+              {{ trans.get('students.delete') }}
             </button>
           </div>
         </b-tab-item>
@@ -421,13 +404,8 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item
-          label="Evaluation"
-          v-if="evaluation"
-          icon="analytics"
-          icon-pack="fad"
-        >
-              <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
+        <b-tab-item label="Evaluation" v-if="evaluation" icon="analytics" icon-pack="fad">
+          <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
         </b-tab-item>
 
         <b-tab-item
@@ -519,7 +497,7 @@
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
 
 import Utils from "../../utils.js";
 
@@ -596,15 +574,15 @@ export default {
       return Math.round(item.price * mult);
     },
     hide() {
-          axios
-            .post("/classroom/students/toggle", {
-              id: this.student.id,
-              prop: "hidden",
-            })
-            .then((response) => {
-              this.student.hidden = (this.student.hidden + 1) % 2
-              this.$forceUpdate()
-            });
+      axios
+        .post("/classroom/students/toggle", {
+          id: this.student.id,
+          prop: "hidden",
+        })
+        .then((response) => {
+          this.student.hidden = (this.student.hidden + 1) % 2;
+          this.$forceUpdate();
+        });
     },
     deleteStudent() {
       this.$buefy.dialog.confirm({
@@ -619,11 +597,17 @@ export default {
         ariaModal: true,
         onConfirm: () => {
           axios
-            .delete("/classroom/" + this.classroom.code + "/student/" + this.student.id, {
-              _method: "delete",
-            })
+            .delete(
+              "/classroom/" +
+                this.classroom.code +
+                "/student/" +
+                this.student.id,
+              {
+                _method: "delete",
+              }
+            )
             .then((response) => {
-              location.href = "/classroom/" + this.classroom.code 
+              location.href = "/classroom/" + this.classroom.code;
             });
         },
       });

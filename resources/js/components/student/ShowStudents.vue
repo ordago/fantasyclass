@@ -164,33 +164,11 @@
         v-bind:key="student.id"
       >
         <div class="card rounded card-shadow-s">
-          <span
-            class="level-top rounded has-padding-4 has-background-light"
-            v-if="student.level"
-          >{{ student.level.number }}</span>
-          <span v-if="student.grouplogo" class="top-right is-full-rounded">
-            <img :src="student.grouplogo" class="is-full-rounded" />
-          </span>
+          <show-character :student="student" :classroom="classroom"></show-character>
           <div
-            class="card-image card-shadow-s rounded-top char-bg"
-            :style="'background-color:' + classroom.theme.color + ';background-image: url(/img/bg/thumb_' + classroom.theme.name + ');'"
+            class="card-content"
+            v-bind:class="{ 'has-background-hidden' : student.hidden == 1 }"
           >
-            <div
-              v-if="classroom.character_theme != 0"
-              class="character-container character character-small is-relative"
-            >
-              <img
-                :src="'/img/character/' + element.src"
-                :class="element.classes"
-                v-for="element in student.equipment"
-                v-bind:key="element.id"
-              />
-            </div>
-            <div v-else class="is-flex has-all-centered has-padding-y-3">
-              <img :src="student.avatar" width="128px" height="128px" class="rounded" alt />
-            </div>
-          </div>
-          <div class="card-content" v-bind:class="{ 'has-background-hidden' : student.hidden == 1 }">
             <div class="media has-margin-bottom-0">
               <div class="media-left" v-if="classroom.character_theme != 0">
                 <figure class="image is-48x48">
@@ -198,7 +176,10 @@
                 </figure>
               </div>
               <div class="media-content cursor-pointer" @click="redirect(student.id)">
-                <p class="title is-4">{{ student.name }} <i class="fas fa-eye-slash" v-if="student.hidden == 1"></i></p>
+                <p class="title is-4">
+                  {{ student.name }}
+                  <i class="fas fa-eye-slash" v-if="student.hidden == 1"></i>
+                </p>
                 <p class="subtitle is-6">
                   <small>@{{ student.username }}</small>
                 </p>
@@ -714,9 +695,8 @@ export default {
       this.dice = true;
     },
     uppdateCurrentStudent() {
-        this.currentStudent = this.shuffledStudents.shift();
-        if(this.currentStudent.hidden == 1)
-          this.uppdateCurrentStudent();
+      this.currentStudent = this.shuffledStudents.shift();
+      if (this.currentStudent.hidden == 1) this.uppdateCurrentStudent();
     },
     randomStudents() {
       this.shuffledStudents = _.shuffle(this.students);
@@ -799,7 +779,11 @@ export default {
     orderedStudents: function () {
       let order = "desc";
       if (this.sortKey == "name") order = "asc";
-      return _.orderBy(_.orderBy(this.students, this.sortKey, order), 'hidden', "asc");
+      return _.orderBy(
+        _.orderBy(this.students, this.sortKey, order),
+        "hidden",
+        "asc"
+      );
     },
   },
 };
