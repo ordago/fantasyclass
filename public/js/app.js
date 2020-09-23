@@ -4679,16 +4679,8 @@ __webpack_require__.r(__webpack_exports__);
         trapFocus: true,
         onConfirm: function onConfirm(value) {
           axios.get("/classroom/join/".concat(value)).then(function (response) {
-            // location.reload()
-            console.log(response.data);
+            location.reload();
           })["catch"](function (error) {
-            // this.$toasted.show('Classroom code invalid :('), {
-            //   position: "top-center",
-            //   duration: 3000,
-            //   iconPack: "fontawesome",
-            //   icon: "times",
-            //   type: "error",
-            // }
             _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this, 'Classroom code invalid :(', 2, 5000, "toasted-primary", "times");
           });
         }

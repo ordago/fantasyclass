@@ -26,17 +26,9 @@ export default {
           axios
             .get(`/classroom/join/${value}`)
             .then((response) => {
-              // location.reload()
-              console.log(response.data);
+              location.reload()
             })
             .catch((error) => {
-              // this.$toasted.show('Classroom code invalid :('), {
-              //   position: "top-center",
-              //   duration: 3000,
-              //   iconPack: "fontawesome",
-              //   icon: "times",
-              //   type: "error",
-              // }
               Utils.toast(this, 'Classroom code invalid :(', 2, 5000, "toasted-primary", "times");
 
             });

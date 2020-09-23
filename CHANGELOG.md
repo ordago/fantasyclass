@@ -7,6 +7,7 @@
 - Update critical dependences.
 
 ### Changed
+- Fixed reload after join classroom
 - Unified show character view. Now in all places the student's group logo is showed.
 - Fixed translations in student's view.
 - Fixed update level experience.
