@@ -77,26 +77,96 @@ class ClassroomsController extends Controller
     // TODO finish
     public function clone($code)
     {
-        // $class = Classroom::where('code', '=', $code)->firstOrFail();
-        // $this->authorize('admin', $class);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
 
-        // $new = $class->replicate();
-        // $new->code = $this->reference(8);
-        // $new->enrollment_code = $this->reference(5);
-        // $new->name = $new->name." (copy)";
+        $new = $class->replicate();
+        $new->code = $this->reference(8);
+        $new->enrollment_code = $this->reference(5);
+        $new->name = $new->name." (copy)";
 
-        // $new->push();
+        $new->push();
 
         // $class->relations = [];
 
-        // $class->load('items', 'theme', 'goal', 'characterTheme', 'grouping', 'cards', 'behaviours', 'levels', 'challengeGroups', 'events');
+        // $class->load('cards', 'items', 'levels', 'challengeGroups', 'grouping', 'behaviours', 'events');
 
-        // foreach ($class->relations as $relationName => $values) {
-            // $new->{$relationName}()->sync($values);
+        // foreach ($class->relations as $relationName){
+        //     $newItem = $relationName->replicate();
+        //     $newItem->classroom_id = $new->id;
+        //     $newItem->push();
         // }
-        // auth()->user()->classrooms()->attach([
-        //     $new->id => ['role' => 2],
-        // ]);
+
+        // Clone cards
+        foreach ($class->cards as $card) {
+            $newCard = $card->replicate();
+            $newCard->classroom_id = $new->id;
+            $newCard->push();
+        }
+
+        // Clone items
+        foreach ($class->items as $item) {
+            $newItem = $item->replicate();
+            $newItem->classroom_id = $new->id;
+            $newItem->push();
+        }
+
+        // Clone levels
+        foreach ($class->levels as $level) {
+            $newLevel = $level->replicate();
+            $newLevel->classroom_id = $new->id;
+            $newLevel->push();
+        }
+        
+        // Clone challenge groups
+        foreach ($class->challengeGroups as $challengeGroup) {
+            $newChGr = $challengeGroup->replicate();
+            $newChGr->classroom_id = $new->id;
+            $newChGr->push();
+        }
+
+        // Clone groupings
+        foreach ($class->grouping as $grouping) {
+            $newGrouping = $grouping->replicate();
+            $newGrouping->classroom_id = $new->id;
+            $newGrouping->push();
+        }
+
+        // Clone behaviours
+        foreach ($class->behaviours as $behaviour) {
+            $newBehaviour = $behaviour->replicate();
+            $newBehaviour->classroom_id = $new->id;
+            $newBehaviour->push();
+        }
+
+        // Clone events
+        foreach ($class->events as $event) {
+            $newEvent = $event->replicate();
+            $newEvent->classroom_id = $new->id;
+            $newEvent->push();
+        }
+        // // Clone tags
+        // foreach ($class->tags as $tag) {
+        //     $newTag = $tag->replicate();
+        //     $newTag->classroom_id = $new->id;
+        //     $newTag->push();
+        // }
+        // // Clone evaluables
+        // foreach ($class->events as $event) {
+        //     $newEvent = $event->replicate();
+        //     $newEvent->classroom_id = $new->id;
+        //     $newEvent->push();
+        // }
+        // // Clone events
+        // foreach ($class->events as $event) {
+        //     $newEvent = $event->replicate();
+        //     $newEvent->classroom_id = $new->id;
+        //     $newEvent->push();
+        // }
+
+        auth()->user()->classrooms()->attach([
+            $new->id => ['role' => 2],
+        ]);
     }
     public function store()
     {

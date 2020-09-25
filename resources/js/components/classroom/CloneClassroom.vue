@@ -1,5 +1,5 @@
 <template>
-  <span @click="clone">
+  <span @click="clone" class="pointer">
     <i class="fas fa-clone"></i>
   </span>
 </template>

@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.03 Beta (XX/09/2020)
+### Added
+- Clone classroom.
+
+
+### Changed
+
 ## v1.02 Beta (22/09/2020)
 ### Added
 - Genial.ly templates in map section.

@@ -53329,7 +53329,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", { on: { click: _vm.clone } }, [
+  return _c("span", { staticClass: "pointer", on: { click: _vm.clone } }, [
     _c("i", { staticClass: "fas fa-clone" })
   ])
 }
