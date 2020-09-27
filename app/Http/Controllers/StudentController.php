@@ -125,8 +125,6 @@ class StudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $student = Student::findOrFail($stdId);
-        dump($student->classroom);
-        // dump($student->classroom_id ." " . $class->id);
         if ($student->classroom->classroom_id != $class->id)
             abort(403);
 

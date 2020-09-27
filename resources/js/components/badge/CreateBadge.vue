@@ -21,7 +21,7 @@
         </div>
         <div class="has-margin-top-2">
           <label for="custom_text">{{ trans.get('badges.description') }}</label>
-          <input type="text" v-model="description" name="description" class="input" placeholder="">
+          <input type="text" v-model="description" name="description" class="input" required placeholder="">
         </div>
         <div class="has-margin-top-3">
           <label>{{ trans.get('badges.attributes') }} <small class="font-italic">({{ trans.get('badges.attributes_info') }})</small></label>

@@ -71,7 +71,6 @@ class ChallengesGroup extends Model
         // cause a delete of a product to cascade to children so they are also deleted
         static::deleted(function ($group) 
         {
-            dump($group->challenges());
             $group->challenges()->delete();
             $group->children()->delete();
             $group->allChildren()->delete();

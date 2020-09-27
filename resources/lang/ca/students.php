@@ -39,4 +39,7 @@ return [
     'card_use' => 'Utilitzar la carta',
     'card_marked' => 'Carta marcada per ser utilitzada',
     
+    'select_image' => 'Selecciona 📷 del banc d\'imatges',
+    'select_image_title' => 'Selecciona imatge',
+    
 ];

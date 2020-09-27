@@ -7938,7 +7938,7 @@ __webpack_require__.r(__webpack_exports__);
                 iconPack: 'fontawesome',
                 type: 'error',
                 action: {
-                  text: 'Close',
+                  text: _this2.trans.get('general.close'),
                   onClick: function onClick(e, toastObject) {
                     toastObject.goAway(0);
                   }
@@ -53329,9 +53329,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("span", { staticClass: "pointer", on: { click: _vm.clone } }, [
-    _c("i", { staticClass: "fas fa-clone" })
-  ])
+  return _c(
+    "span",
+    {
+      directives: [{ name: "tippy", rawName: "v-tippy" }],
+      staticClass: "cursor-pointer",
+      attrs: { content: _vm.trans.get("classroom.clone") },
+      on: { click: _vm.clone }
+    },
+    [_c("i", { staticClass: "fas fa-clone" })]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -62055,7 +62062,7 @@ var render = function() {
             }
           }
         },
-        [_vm._v("Select 📷 from image bank")]
+        [_vm._v(_vm._s(_vm.trans.get("students.select_image")))]
       ),
       _vm._v(" "),
       _c(
@@ -62080,7 +62087,7 @@ var render = function() {
             [
               _c("header", { staticClass: "modal-card-head" }, [
                 _c("p", { staticClass: "modal-card-title" }, [
-                  _vm._v("Select image")
+                  _vm._v(_vm._s(_vm.trans.get("students.select_image_title")))
                 ])
               ]),
               _vm._v(" "),
@@ -62150,7 +62157,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Close")]
+                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
                     ),
                     _vm._v(" "),
                     _vm.images != null
@@ -62204,7 +62211,11 @@ var render = function() {
     "div",
     { staticClass: "modal-card", staticStyle: { width: "auto" } },
     [
-      _vm._m(0),
+      _c("header", { staticClass: "modal-card-head" }, [
+        _c("p", { staticClass: "modal-card-title" }, [
+          _vm._v(_vm._s(_vm.trans.get("menu.massive")))
+        ])
+      ]),
       _vm._v(" "),
       _c(
         "section",
@@ -62283,7 +62294,11 @@ var render = function() {
                   _c("i", { staticClass: "fas fa-ballot-check" }),
                   _vm._v(" "),
                   _c("i", { staticClass: "far fa-users" }),
-                  _vm._v(" Select All\n        ")
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.trans.get("utils.select_all")) +
+                      "\n        "
+                  )
                 ]
               ),
               _vm._v(" "),
@@ -62299,7 +62314,11 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fas fa-eraser" }),
-                  _vm._v(" Remove selection\n        ")
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.trans.get("utils.remove_selection")) +
+                      "\n        "
+                  )
                 ]
               ),
               _vm._v(" "),
@@ -62308,7 +62327,9 @@ var render = function() {
                 { staticClass: "button is-info", on: { click: _vm.random } },
                 [
                   _c("i", { staticClass: "fas fa-random" }),
-                  _vm._v(" Random\n        ")
+                  _vm._v(
+                    " " + _vm._s(_vm.trans.get("utils.random")) + "\n        "
+                  )
                 ]
               )
             ]),
@@ -62375,7 +62396,7 @@ var render = function() {
               }
             }
           },
-          [_vm._v("Close")]
+          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
         ),
         _vm._v(" "),
         _vm.behaviour
@@ -62393,16 +62414,7 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("header", { staticClass: "modal-card-head" }, [
-      _c("p", { staticClass: "modal-card-title" }, [_vm._v("Massive actions")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -80825,6 +80837,7 @@ __webpack_require__.r(__webpack_exports__);
     "student": "Estudiant",
     "teacher": "Profe",
     "admin": "Admin",
+    "clone": "Clona la classe",
     "name_and_goals": "Nom i objectius",
     "theme": "Tema",
     "char_theme": "Tema de personatges",
@@ -80946,7 +80959,8 @@ __webpack_require__.r(__webpack_exports__);
     "no": "No",
     "confirm_delete": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer.",
     "confirm_delete_class": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer. S'ELIMINAR\xC0 TOTA LA INFORMACI\xD3 DELS ESTUDIANTS.",
-    "type_message": "Escriu un missatge..."
+    "type_message": "Escriu un missatge...",
+    "logout": "Tanca sessi\xF3"
   },
   "ca.groups": {
     "group_name": "Nom del grup",
@@ -81099,7 +81113,9 @@ __webpack_require__.r(__webpack_exports__);
     "value": "Valor",
     "card_level": "No tens suficient nivell :(",
     "card_use": "Utilitzar la carta",
-    "card_marked": "Carta marcada per ser utilitzada"
+    "card_marked": "Carta marcada per ser utilitzada",
+    "select_image": "Selecciona \uD83D\uDCF7 del banc d'imatges",
+    "select_image_title": "Selecciona imatge"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -81124,6 +81140,11 @@ __webpack_require__.r(__webpack_exports__);
     "create_students": "Crear estudiants",
     "add_student": "Afegir estudiant",
     "add_students": "Afegir estudiants"
+  },
+  "ca.utils": {
+    "select_all": "Selecciona tot",
+    "remove_selection": "Elimina selecci\xF3",
+    "random": "Aleatori"
   },
   "ca.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -81399,6 +81420,7 @@ __webpack_require__.r(__webpack_exports__);
     "student": "Student",
     "teacher": "Teacher",
     "admin": "Admin",
+    "clone": "Clone classroom",
     "name_and_goals": "Name and goals",
     "theme": "Theme",
     "char_theme": "Character theme",
@@ -81523,7 +81545,8 @@ __webpack_require__.r(__webpack_exports__);
     "no": "No",
     "confirm_delete": "Are you sure you want to delete this element? This action can't be undone.",
     "confirm_delete_class": "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION.",
-    "type_message": "Type a message..."
+    "type_message": "Type a message...",
+    "logout": "Logout"
   },
   "en.groups": {
     "group_name": "Group name",
@@ -81663,7 +81686,8 @@ __webpack_require__.r(__webpack_exports__);
     "value": "Value",
     "card_level": "Not enough level :(",
     "card_use": "Use card",
-    "card_marked": "Card marked to be used"
+    "select_image": "Select \uD83D\uDCF7 from image bank",
+    "select_image_title": "Select image"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -81687,6 +81711,11 @@ __webpack_require__.r(__webpack_exports__);
     "create_students": "Create students",
     "add_student": "Add student",
     "add_students": "Add students"
+  },
+  "en.utils": {
+    "select_all": "Select all",
+    "remove_selection": "Remove selection",
+    "random": "Random"
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -81979,6 +82008,7 @@ __webpack_require__.r(__webpack_exports__);
     "student": "Estudiante",
     "teacher": "Profe",
     "admin": "Admin",
+    "clone": "Clona la clase",
     "name_and_goals": "Nombre y objetivos",
     "theme": "Tema",
     "char_theme": "Tema de personajes",
@@ -82060,7 +82090,7 @@ __webpack_require__.r(__webpack_exports__);
     "responsibility": "Reponsabilidad m\xE1xima",
     "responsibility_content": "<i class='fas fa-sad-tear colored'></i> Un jugador tendr\xE1 que decidir qui\xE9n de su equipo pierde vida, si no lo hace en 10 segundos ser\xE1 \xE9l elegido.",
     "walking": "The walking dead",
-    "walking_content": "<i class='fas fa-laugh-beam colored'></i> Un jugador muerto, vuelve a la vida con 1 de\r\n <i class='fas fa-heart colored'></i>. Aprov\xE9chalo!",
+    "walking_content": "<i class='fas fa-laugh-beam colored'></i> Un jugador muerto, vuelve a la vida con 1 de\n <i class='fas fa-heart colored'></i>. Aprov\xE9chalo!",
     "silence": "El voto de silencio",
     "silence_content": "Los y las estudiantes con la siguiente subclase han d'estar en silencio mientras el Dios \/ la Diosa no los doy permiso:",
     "helpful": "Los m\xE1s serviciales",
@@ -82100,7 +82130,8 @@ __webpack_require__.r(__webpack_exports__);
     "no": "No",
     "confirm_delete": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer.",
     "confirm_delete_class": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer. Se ELIMINAR\xC1 TODA LA INFORMACI\xD3N DE LOS ESTUDIANTES.",
-    "type_message": "Escribe un mensaje.."
+    "type_message": "Escribe un mensaje..",
+    "logout": "Cerrar sesi\xF3n"
   },
   "es.groups": {
     "group_name": "Nombre del grupo",
@@ -82253,13 +82284,15 @@ __webpack_require__.r(__webpack_exports__);
     "value": "Valor",
     "card_level": "No tienes suficiente nivel",
     "card_use": "Usar la carta",
-    "card_marked": "Carta marcada para ser utilizada"
+    "card_marked": "Carta marcada para ser utilizada",
+    "select_image": "Selecciona \uD83D\uDCF7 del banco de im\xE1genes",
+    "select_image_title": "Selecciona imagen"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",
     "update_success": "El elemento se ha actualizado correctamente",
     "error": "Alguna cosa ha ido mal :(",
-    "email_not_recognised": "El usuario no est\xE1 grabado. Por favor, p\xEDdele que se registre antes de invitarlo en la clase.\r\n",
+    "email_not_recognised": "El usuario no est\xE1 grabado. Por favor, p\xEDdele que se registre antes de invitarlo en la clase.\n",
     "user_already_invited": "El usuario ya es profe de la clase.",
     "equipment_success": "Equipamiento a\xF1adido correctamente",
     "shop_failed_money": "Insuficiente oro",
@@ -82278,6 +82311,11 @@ __webpack_require__.r(__webpack_exports__);
     "create_students": "Crear estudiantes",
     "add_student": "A\xF1adir estudiante",
     "add_students": "A\xF1adir estudiantes"
+  },
+  "es.utils": {
+    "select_all": "Selecciona todo",
+    "remove_selection": "Elimina selecci\xF3n",
+    "random": "Aleatorio"
   },
   "es.validation": {
     "accepted": "El :attribute debe ser aceptado.",

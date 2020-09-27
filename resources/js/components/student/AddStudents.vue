@@ -92,7 +92,7 @@
                                         iconPack: 'fontawesome',
                                         type: 'error',
                                         action : {
-                                            text : 'Close',
+                                            text : this.trans.get('general.close'),
                                             onClick : (e, toastObject) => {
                                                 toastObject.goAway(0);
                                             }

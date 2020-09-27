@@ -31,4 +31,7 @@ return [
     'delete' => "Delete",
 
     'type_message' => "Type a message...",
+    
+    'logout' => "Logout",
+
 ];

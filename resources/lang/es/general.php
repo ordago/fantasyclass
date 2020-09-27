@@ -32,4 +32,7 @@ return [
 
     'type_message' => "Escribe un mensaje..",
 
+    'logout' => "Cerrar sesión",
+
+
 ];

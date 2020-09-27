@@ -1,5 +1,5 @@
 <template>
-  <span @click="clone" class="pointer">
+  <span @click="clone" class="cursor-pointer" v-tippy :content="trans.get('classroom.clone')">
     <i class="fas fa-clone"></i>
   </span>
 </template>

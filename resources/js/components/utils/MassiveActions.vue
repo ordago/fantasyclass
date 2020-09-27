@@ -1,7 +1,7 @@
 <template>
   <div class="modal-card" style="width: auto">
     <header class="modal-card-head">
-      <p class="modal-card-title">Massive actions</p>
+      <p class="modal-card-title">{{ trans.get('menu.massive') }}</p>
     </header>
     <section class="modal-card-body is-flex has-all-centered" style="align-items: flex-start;">
       <div class="has-text-centered w-100">
@@ -18,13 +18,13 @@
         <div class="has-margin-top-3">
           <button class="button is-info" @click="changeAll(true)">
             <i class="fas fa-ballot-check"></i>
-            <i class="far fa-users"></i> Select All
+            <i class="far fa-users"></i> {{ trans.get('utils.select_all') }}
           </button>
           <button class="button is-info" @click="changeAll(false)">
-            <i class="fas fa-eraser"></i> Remove selection
+            <i class="fas fa-eraser"></i> {{ trans.get('utils.remove_selection') }}
           </button>
           <button class="button is-info" @click="random">
-            <i class="fas fa-random"></i> Random
+            <i class="fas fa-random"></i> {{ trans.get('utils.random') }}
           </button>
         </div>
         <div class="columns is-multiline is-variable has-margin-top-3">
@@ -48,7 +48,7 @@
       </div>
     </section>
     <footer class="modal-card-foot">
-      <button class="button" type="button" @click="$parent.$parent.isMassiveModalActive=false">Close</button>
+      <button class="button" type="button" @click="$parent.$parent.isMassiveModalActive=false">{{ trans.get('general.close') }}</button>
       <button class="button is-link" v-if="behaviour" type="button" @click="accept">Accept</button>
     </footer>
   </div>

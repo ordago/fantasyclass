@@ -74,7 +74,6 @@ class ClassroomsController extends Controller
         return redirect('/classroom/' . $code);
     }
 
-    // TODO finish
     public function clone($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
@@ -86,16 +85,6 @@ class ClassroomsController extends Controller
         $new->name = $new->name." (copy)";
 
         $new->push();
-
-        // $class->relations = [];
-
-        // $class->load('cards', 'items', 'levels', 'challengeGroups', 'grouping', 'behaviours', 'events');
-
-        // foreach ($class->relations as $relationName){
-        //     $newItem = $relationName->replicate();
-        //     $newItem->classroom_id = $new->id;
-        //     $newItem->push();
-        // }
 
         // Clone cards
         foreach ($class->cards as $card) {
@@ -111,6 +100,13 @@ class ClassroomsController extends Controller
             $newItem->push();
         }
 
+        // Clone badges
+        foreach ($class->badges as $badge) {
+            $newBadge = $badge->replicate();
+            $newBadge->classroom_id = $new->id;
+            $newBadge->push();
+        }
+
         // Clone levels
         foreach ($class->levels as $level) {
             $newLevel = $level->replicate();
@@ -118,11 +114,41 @@ class ClassroomsController extends Controller
             $newLevel->push();
         }
         
-        // Clone challenge groups
+        // Clone rules
+        $newRules = $class->rules->replicate();
+        $newRules->classroom_id = $new->id;
+        $newRules->push();
+
+        // Clone maps
+        foreach ($class->maps as $map) {
+            $newMap = $map->replicate();
+            $newMap->classroom_id = $new->id;
+            $newMap->push();
+        }
+        
+        // Clone challenge groups and challenges
         foreach ($class->challengeGroups as $challengeGroup) {
             $newChGr = $challengeGroup->replicate();
             $newChGr->classroom_id = $new->id;
             $newChGr->push();
+            foreach ($challengeGroup->challenges as $challenge) {
+                $newChallenge = $challenge->replicate();
+                $newChallenge->challenges_group_id = $newChGr->id;
+                $newChallenge->push();
+
+                foreach ($challenge->questions as $question) {
+                    $newQuestion = $question->replicate();
+                    $newQuestion->challenge_id = $newChallenge->id;
+                    $newQuestion->push();
+                }
+
+                foreach ($challenge->attachments as $attachment) {
+                    $newAttachment = $attachment->replicate();
+                    $newAttachment->challenge_id = $newChallenge->id;
+                    $newAttachment->push();
+                }
+
+            }
         }
 
         // Clone groupings
@@ -145,24 +171,21 @@ class ClassroomsController extends Controller
             $newEvent->classroom_id = $new->id;
             $newEvent->push();
         }
-        // // Clone tags
-        // foreach ($class->tags as $tag) {
-        //     $newTag = $tag->replicate();
-        //     $newTag->classroom_id = $new->id;
-        //     $newTag->push();
-        // }
-        // // Clone evaluables
-        // foreach ($class->events as $event) {
-        //     $newEvent = $event->replicate();
-        //     $newEvent->classroom_id = $new->id;
-        //     $newEvent->push();
-        // }
-        // // Clone events
-        // foreach ($class->events as $event) {
-        //     $newEvent = $event->replicate();
-        //     $newEvent->classroom_id = $new->id;
-        //     $newEvent->push();
-        // }
+
+        // Clone tags
+        foreach ($class->tags as $tag) {
+            $newTag = $tag->replicate();
+            $newTag->classroom_id = $new->id;
+            $newTag->push();
+        }
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $allSettings = settings()->all();
+        
+        settings()->setExtraColumns(['classroom_id' => $new->id]);
+        foreach ($allSettings as $key => $value) {
+            settings()->set($key, $value);
+        }
 
         auth()->user()->classrooms()->attach([
             $new->id => ['role' => 2],

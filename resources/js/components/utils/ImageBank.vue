@@ -1,11 +1,11 @@
 <template>
   <div>
-    <button class="button is-info" @click="isModalActive=true">Select 📷 from image bank</button>
+    <button class="button is-info" @click="isModalActive=true">{{ trans.get('students.select_image') }}</button>
 
     <b-modal :active.sync="isModalActive" has-modal-card full-screen :can-cancel="false">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">Select image</p>
+          <p class="modal-card-title">{{ trans.get('students.select_image_title') }}</p>
         </header>
         <section class="modal-card-body is-relative">
           <div class="columns is-multiline" v-if="images">
@@ -30,7 +30,7 @@
         </section>
         <footer class="modal-card-foot columns is-multiline" style="overflow-x: auto">
           <div class="column is-narrow">
-            <button class="button" type="button" @click="isModalActive=false">Close</button>
+            <button class="button" type="button" @click="isModalActive=false">{{ trans.get('general.close') }}</button>
             <button class="button is-link" @click="images=null" v-if="images != null">
               <i class="far fa-arrow-left"></i>
             </button>

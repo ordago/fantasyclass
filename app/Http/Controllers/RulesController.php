@@ -24,6 +24,7 @@ class RulesController extends Controller
         $this->authorize('view', $class);
         $rules = Rules::where('classroom_id', $class->id)->first();
         return view('rules.show', compact('class', 'rules'));
+
     }
     public function update($code)
     {

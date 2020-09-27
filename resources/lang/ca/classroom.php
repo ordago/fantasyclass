@@ -9,6 +9,7 @@ return [
     "student" => "Estudiant",
     "teacher" => "Profe",
     "admin" => "Admin",
+    "clone" => "Clona la classe",
 
     /* Create */
     "name_and_goals" => "Nom i objectius",

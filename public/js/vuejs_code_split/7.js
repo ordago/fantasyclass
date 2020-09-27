@@ -266,7 +266,12 @@ var render = function() {
               }
             ],
             staticClass: "input",
-            attrs: { type: "text", name: "description", placeholder: "" },
+            attrs: {
+              type: "text",
+              name: "description",
+              required: "",
+              placeholder: ""
+            },
             domProps: { value: _vm.description },
             on: {
               input: function($event) {

@@ -37,6 +37,8 @@ return [
 
     'card_level' => 'Not enough level :(',
     'card_use' => 'Use card',
-    'card_marked' => 'Card marked to be used',
+    
+    'select_image' => 'Select 📷 from image bank',
+    'select_image_title' => 'Select image',
     
 ];
