@@ -15,8 +15,10 @@ use App\Item;
 use App\QuestionBank;
 use App\Rules;
 use App\Student;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class ClassroomsController extends Controller
 {
@@ -109,9 +111,20 @@ class ClassroomsController extends Controller
 
         // Clone levels
         foreach ($class->levels as $level) {
-            $newLevel = $level->replicate();
+            $newLevel = $level->replicate(['media']);
             $newLevel->classroom_id = $new->id;
             $newLevel->push();
+
+            $level->media->each(function (Media $media) use ($newLevel) {
+                $props = $media->toArray();
+                unset($props['uuid']);
+                unset($props['id']);
+                $newLevel->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->withProperties($props)
+                    ->toMediaCollection($media->collection_name);
+            });
+
         }
         
         // Clone rules

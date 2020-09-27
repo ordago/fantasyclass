@@ -3,7 +3,6 @@
 ## v1.03 Beta (XX/09/2020)
 ### Added
 - Clone classroom.
-- Custom teacher role (God, guide...)
 
 ### Changed
 - Fixed some translations.
