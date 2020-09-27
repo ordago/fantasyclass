@@ -25814,7 +25814,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.rubricRow {\r\n  overflow-x: auto;\n}\n.rubricSubitems {\r\n  display: flex;\n}\n.marginRadius {\r\n  border: 1px solid #575757;\r\n  margin: 5px;\r\n  padding: 30px;\r\n  border-radius: 10px;\n}\n.rubricSubitem {\r\n  flex-grow: 1;\r\n  position: relative;\n}\n.rubricDetails {\r\n  font-size: 1.5em;\r\n  padding-right: 35px;\n}\n.rubricSubitem:hover {\r\n  background-color: #dcedc8;\r\n  cursor: pointer;\n}\n.selectedSubItem {\r\n  background-color: #dcedc8;\n}\n.rubricScore {\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  background-color: #ffe0b2;\r\n  border-top-right-radius: 8px;\r\n  border-bottom-right-radius: 8px;\r\n  border-left: 1px solid #575757;\r\n  height: 100%;\r\n  text-align: center;\r\n  box-sizing: border-box;\r\n  padding: 20px;\r\n  font-size: 1.25em;\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-weight: bold;\n}\n.rubricInfo {\r\n  padding: 30px;\r\n  background-color: rgba(250, 250, 250, 1);\r\n  margin: -10px -10px 10px -10px;\r\n  position: -webkit-sticky;\r\n  position: sticky;\r\n  top: 0;\r\n  z-index: 9;\r\n  border-bottom: 1px solid #575757;\n}\n.rubricInfo h2 {\r\n  padding-right: 90px;\n}\n.optional {\r\n  background-color: #cfd8dc;\n}\r\n", ""]);
+exports.push([module.i, "\n.rubricRow {\n  overflow-x: auto;\n}\n.rubricSubitems {\n  display: flex;\n}\n.marginRadius {\n  border: 1px solid #575757;\n  margin: 5px;\n  padding: 30px;\n  border-radius: 10px;\n}\n.rubricSubitem {\n  flex-grow: 1;\n  position: relative;\n}\n.rubricDetails {\n  font-size: 1.5em;\n  padding-right: 35px;\n}\n.rubricSubitem:hover {\n  background-color: #dcedc8;\n  cursor: pointer;\n}\n.selectedSubItem {\n  background-color: #dcedc8;\n}\n.rubricScore {\n  position: absolute;\n  top: 0;\n  right: 0;\n  background-color: #ffe0b2;\n  border-top-right-radius: 8px;\n  border-bottom-right-radius: 8px;\n  border-left: 1px solid #575757;\n  height: 100%;\n  text-align: center;\n  box-sizing: border-box;\n  padding: 20px;\n  font-size: 1.25em;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-weight: bold;\n}\n.rubricInfo {\n  padding: 30px;\n  background-color: rgba(250, 250, 250, 1);\n  margin: -10px -10px 10px -10px;\n  position: -webkit-sticky;\n  position: sticky;\n  top: 0;\n  z-index: 9;\n  border-bottom: 1px solid #575757;\n}\n.rubricInfo h2 {\n  padding-right: 90px;\n}\n.optional {\n  background-color: #cfd8dc;\n}\n", ""]);
 
 // exports
 
@@ -25833,7 +25833,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@font-face {\r\n  font-family: logo;\r\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s;\r\n  transition-delay: 1000ms;\n}\n.fade-enter,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\n.fadesecond-enter-active,\r\n.fadesecond-leave-active {\r\n  transition: opacity 0.5s;\r\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\r\n  opacity: 0;\n}\n.firstAppear {\r\n  height: 30vh;\r\n  background-color: rgba(255, 255, 255, 0.9);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-family: logo;\r\n  font-size: 8em;\r\n  word-spacing: 0.2em;\r\n  border-bottom-left-radius: 50px;\r\n  border-bottom-right-radius: 50px;\r\n  position: relative;\r\n  padding: 40px;\r\n  z-index: 5;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n}\n.secondAppear {\r\n  height: 70vh;\r\n  border-bottom-left-radius: 50px;\r\n  border-bottom-right-radius: 50px;\r\n  background-color: rgba(255, 255, 255, 0.75);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\r\n  padding: 30px;\r\n  padding-top: 70px;\r\n  margin-top: -40px;\r\n  z-index: 2;\r\n  overflow: auto;\n}\n.final {\r\n  opacity: 0;\n}\nh2.secondAppear > * {\r\n  margin: 5px;\n}\n.hiddenName {\r\n  display: inline-block;\r\n  font-size: 2.5em;\r\n  position: relative;\r\n  min-width: 600px;\r\n  text-align: center;\n}\n.hideObj {\r\n  position: absolute;\r\n  z-index: 1000;\r\n  background-image: url(\"/img/hide.png\");\r\n  background-repeat: no-repeat;\r\n  background-size: 100% 100%;\r\n  width: 100%;\r\n  height: 120%;\r\n  border-radius: 5px;\r\n  transition: 1s opacity;\r\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\r\n  opacity: 0;\r\n  transition-delay: 1s;\n}\n.hiddenMEssage {\r\n  visibility: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 1000ms;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.fadesecond-enter-active,\n.fadesecond-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.firstAppear {\n  height: 30vh;\n  background-color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-family: logo;\n  font-size: 8em;\n  word-spacing: 0.2em;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  position: relative;\n  padding: 40px;\n  z-index: 5;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n}\n.secondAppear {\n  height: 70vh;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  background-color: rgba(255, 255, 255, 0.75);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  padding: 30px;\n  padding-top: 70px;\n  margin-top: -40px;\n  z-index: 2;\n  overflow: auto;\n}\n.final {\n  opacity: 0;\n}\nh2.secondAppear > * {\n  margin: 5px;\n}\n.hiddenName {\n  display: inline-block;\n  font-size: 2.5em;\n  position: relative;\n  min-width: 600px;\n  text-align: center;\n}\n.hideObj {\n  position: absolute;\n  z-index: 1000;\n  background-image: url(\"/img/hide.png\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  width: 100%;\n  height: 120%;\n  border-radius: 5px;\n  transition: 1s opacity;\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\n  opacity: 0;\n  transition-delay: 1s;\n}\n.hiddenMEssage {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -25852,7 +25852,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.min-width {\r\n  min-width: 400px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.min-width {\n  min-width: 400px;\n}\n\n", ""]);
 
 // exports
 
@@ -25871,7 +25871,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ntr.is-info {\r\n  background: #00d1b2;\r\n  color: #fff;\n}\n.align-right {\r\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\r\n  word-break: break-all;\n}\r\n", ""]);
+exports.push([module.i, "\ntr.is-info {\n  background: #00d1b2;\n  color: #fff;\n}\n.align-right {\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\n  word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -25890,7 +25890,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.custom-dot {\r\n  width: 20px;\r\n  height: 20px;\r\n  border-radius: 0;\r\n  background-color: white;\r\n  border-radius: 50%;\r\n  border: 2px solid black;\r\n  position: absolute;\r\n  top: -5px;\r\n  left: -5px;\n}\r\n", ""]);
+exports.push([module.i, "\n.custom-dot {\n  width: 20px;\n  height: 20px;\n  border-radius: 0;\n  background-color: white;\n  border-radius: 50%;\n  border: 2px solid black;\n  position: absolute;\n  top: -5px;\n  left: -5px;\n}\n", ""]);
 
 // exports
 
@@ -25909,7 +25909,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.selected[data-v-57e7ecfc] {\r\n  margin: 0;\r\n  background-color: lightskyblue;\n}\r\n", ""]);
+exports.push([module.i, "\n.selected[data-v-57e7ecfc] {\n  margin: 0;\n  background-color: lightskyblue;\n}\n", ""]);
 
 // exports
 
@@ -25928,7 +25928,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#meter {\r\n  padding: 20px;\r\n  background-color: rgba(255, 255, 255, 0.8);\r\n  border-radius: 10px;\r\n  clear: both;\n}\n.propertyMeter {\r\n  display: inline-block;\r\n  width: 40%;\n}\n.itemLog {\r\n  padding: 20px;\r\n  background-color: rgba(255, 255, 255, 0.8);\r\n  border: 1px solid #555;\r\n  border-radius: 5px;\n}\n.bootstrapInlineForm {\r\n  width: 60%;\n}\n.sensitivity {\r\n  margin-top: 35px;\r\n  position: relative;\r\n  padding-bottom: 15px;\n}\n.sensitivity .left {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  left: 0;\r\n  border-radius: 4px;\n}\n.sensitivity .center {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  left: 50%;\r\n  margin-left: -20px;\r\n  border-radius: 4px;\n}\n.sensitivity .right {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  right: 0;\r\n  border-radius: 4px;\n}\n.itemLog {\r\n  position: relative;\n}\n.delLog {\r\n  display: flex;\r\n  align-items: center;\r\n  align-content: center;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  padding: 20px;\r\n  color: white;\r\n  height: 100%;\r\n  cursor: pointer;\n}\n#info {\r\n  display: flex;\r\n  align-items: center;\r\n  align-content: center;\n}\n.acceptDestiny {\r\n  cursor: pointer;\n}\n@media screen and (max-width: 700px) {\n.flexC {\r\n    display: block;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#meter {\n  padding: 20px;\n  background-color: rgba(255, 255, 255, 0.8);\n  border-radius: 10px;\n  clear: both;\n}\n.propertyMeter {\n  display: inline-block;\n  width: 40%;\n}\n.itemLog {\n  padding: 20px;\n  background-color: rgba(255, 255, 255, 0.8);\n  border: 1px solid #555;\n  border-radius: 5px;\n}\n.bootstrapInlineForm {\n  width: 60%;\n}\n.sensitivity {\n  margin-top: 35px;\n  position: relative;\n  padding-bottom: 15px;\n}\n.sensitivity .left {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  left: 0;\n  border-radius: 4px;\n}\n.sensitivity .center {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  left: 50%;\n  margin-left: -20px;\n  border-radius: 4px;\n}\n.sensitivity .right {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  right: 0;\n  border-radius: 4px;\n}\n.itemLog {\n  position: relative;\n}\n.delLog {\n  display: flex;\n  align-items: center;\n  align-content: center;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 20px;\n  color: white;\n  height: 100%;\n  cursor: pointer;\n}\n#info {\n  display: flex;\n  align-items: center;\n  align-content: center;\n}\n.acceptDestiny {\n  cursor: pointer;\n}\n@media screen and (max-width: 700px) {\n.flexC {\n    display: block;\n}\n}\n", ""]);
 
 // exports
 
@@ -58130,7 +58130,6 @@ var render = function() {
                   {
                     key: "dot",
                     fn: function(ref) {
-                      var value = ref.value
                       var focus = ref.focus
                       return [
                         _c("div", { class: ["custom-dot", { focus: focus }] })
@@ -86028,16 +86027,16 @@ __webpack_require__.r(__webpack_exports__);
   */
 
   /*
-    Usage:
+   Usage:
   audioNode = createAudioMeter(audioContext,clipLevel,averaging,clipLag);
-    audioContext: the AudioContext you're using.
+   audioContext: the AudioContext you're using.
   clipLevel: the level (0 to 1) that you would consider "clipping".
      Defaults to 0.98.
   averaging: how "smoothed" you would like the meter to be over time.
      Should be between 0 and less than 1.  Defaults to 0.95.
   clipLag: how long you would like the "clipping" indicator to show
      after clipping has occured, in milliseconds.  Defaults to 750ms.
-    Access the clipping through node.checkClipping(); use node.shutdown to get rid of it.
+   Access the clipping through node.checkClipping(); use node.shutdown to get rid of it.
   */
   createAudioMeter: function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
     var processor = audioContext.createScriptProcessor(512);
@@ -86111,8 +86110,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\fantasylaravel\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/joan/fantasyclass/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/joan/fantasyclass/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

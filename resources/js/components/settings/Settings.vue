@@ -121,7 +121,7 @@
             :tooltip="'always'"
             :dot-options="dotOptions"
           >
-            <template v-slot:dot="{ value, focus }">
+            <template v-slot:dot="{ focus }">
               <div :class="['custom-dot', { focus }]"></div>
             </template>
           </vue-slider>
