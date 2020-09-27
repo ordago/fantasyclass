@@ -77,7 +77,7 @@ Route::group(['middleware' => 'language'], function () {
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
-        Route::get('/show/{code}/stories', 'ClassroomsStudentController@stories');
+        Route::get('/show/{code}/challenges', 'ClassroomsStudentController@challenges');
         Route::get('/show/{code}/map', 'ClassroomsStudentController@map');
         Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules');
         Route::get('/show/{code}/licenses', 'ClassroomsStudentController@licenses');

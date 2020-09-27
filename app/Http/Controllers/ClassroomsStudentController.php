@@ -97,16 +97,16 @@ class ClassroomsStudentController extends Controller
         return view('studentsview.index', compact('class', 'student', 'students'));
     }
 
-    public function stories($code)
+    public function challenges($code)
     {
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
-        $stories = [];
+        $challenges = [];
 
         foreach ($class->challengeGroups as $group) {
-            array_push($stories, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
                     ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
                     ->all();
@@ -114,15 +114,15 @@ class ClassroomsStudentController extends Controller
         }
 
         $all = [];
-        foreach ($stories as $section) {
+        foreach ($challenges as $section) {
             foreach ($section as $value) {
                 array_push($all, $value);
             }
         }
-        $stories = Arr::sort($all, function ($story) {
+        $challenges = Arr::sort($all, function ($story) {
             return $story['datetime'];
         });
-        return view('studentsview.stories', compact('class', 'student', 'stories'));
+        return view('studentsview.challenges', compact('class', 'student', 'challenges'));
     }
 
     public function show($code)
