@@ -67,7 +67,7 @@ class Student extends Model implements HasMedia
 
     public function getLevelAttribute()
     {
-        return Level::where('xp', '<=', $this->xp)->orderByDesc('xp')->first();
+        return Level::where('xp', '<=', $this->xp)->where('classroom_id', $this->classroom->classroom_id)->orderByDesc('xp')->first();
     }
 
     public function registerMediaCollections(): void
