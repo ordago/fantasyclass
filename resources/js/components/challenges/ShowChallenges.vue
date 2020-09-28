@@ -1,5 +1,5 @@
 <template>
-  <div class="has-padding-left-0-desktop">
+  <div class="has-padding-left-0-desktop" ref="topref">
     <div class="panel has-padding-left-0-desktop">
       <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
         <span>
@@ -8,7 +8,10 @@
           <!-- <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button> -->
           <button style="font-size: .5em" class="button is-danger" @click="deleteChallengeGroup(challengegroup.id)" v-if="challenges.length == 0"><i class="fas fa-trash"></i></button>
         </span>
-        <button class="button" @click="challengeEdit=null;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
+        <span>
+          <button class="button" @click="isImportModalActive=true"><i class="fas fa-file-import has-margin-right-2"></i> {{ trans.get('general.import') }}</button>
+          <button class="button" @click="challengeEdit=null;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
+        </span>
       </p>
       <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
         <p class="control has-icons-left">
@@ -22,6 +25,7 @@
       <div class="panel-block" v-if="addChallenge">
         <CreateChallenges
           :edit="challengeEdit"
+          :import-flag="importFlag"
           :iconPrev="icon"
           :challengegroups="$parent.challengesgroup"
           :code="code"
@@ -81,6 +85,9 @@
         </div>
       </div>
     </b-modal>
+    <b-modal :active.sync="isImportModalActive" has-modal-card full-screen>
+      <import-challenge :classroom="code" :challengegroup="challengegroup.id"></import-challenge>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -95,8 +102,10 @@ export default {
     return {
       addChallenge: false,
       search: "",
+      importFlag: false,
       challengeEdit: null,
       isModalActive: false,
+      isImportModalActive: false,
       students: null,
       groups: null,
       currentChallenge: null,
@@ -183,6 +192,10 @@ export default {
     orderedChallenges: function() {
       return _.orderBy(this.challenges, "datetime", "desc");
     }
+  },
+  updated: function () {
+    // this.$refs.topref.scrollTop=0;
+    
   }
 };
 </script>

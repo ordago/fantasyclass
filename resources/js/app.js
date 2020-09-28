@@ -77,6 +77,7 @@ Vue.component('show-level-student', require('./components/level/ShowLevelStudent
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);
 Vue.component('show-challenges', require('./components/challenges/ShowChallenges.vue').default);
 Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
+Vue.component('import-challenge', require('./components/challenges/ImportChallenges.vue').default);
 Vue.component('create-challenges-group', () => import('./components/challenges/CreateChallengeGroup.vue'));
 Vue.component('create-challenges', () => import('./components/challenges/CreateChallenges.vue'));
 

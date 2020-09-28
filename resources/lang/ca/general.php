@@ -19,6 +19,7 @@ return [
     'cancel' => "Cancel·la",
     'create' => "Crea",
     'help' => "Ajuda",
+    'import' => "Importa",
     
     'name' => "Nom",
     'optional' => "opcional",

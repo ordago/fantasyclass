@@ -31,6 +31,34 @@ class ChallengesController extends Controller
         }
         return '/storage/' . $path;
     }
+    
+    public function importChallenge($id)
+    {
+        $challenge = Challenge::findOrFail($id);
+        $class = Classroom::findOrFail($challenge->classroom());
+        $this->authorize('view', $class);
+        
+        $group = ChallengesGroup::findOrFail(request()->group);
+        $class = Classroom::findOrFail($group->classroom_id);
+        $this->authorize('update', $class);
+
+        $newChallenge = $challenge->replicate();
+        $newChallenge->challenges_group_id = $group->id;
+        $newChallenge->push();
+
+        return $newChallenge;
+
+    }
+
+    public function getUserChallenges() 
+    {
+        $user = auth()->user();
+        $classrooms = $user->classrooms->where('pivot.role', '>=', 1);
+        foreach ($classrooms as $class) {
+            $class->load('challengeGroups.challenges');
+        }
+        return $classrooms;
+    }
 
     public function index($code)
     {

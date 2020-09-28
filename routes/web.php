@@ -196,7 +196,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
     });
 
+    // Utils
     Route::get('/utils/music', 'UtilsController@music');
+
+    // User
+    Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
+    Route::post('/user/challenges/import/{id}', 'ChallengesController@importChallenge');
     
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

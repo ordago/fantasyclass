@@ -1,7 +1,7 @@
 <template>
   <div class="w-100">
     <form action="#" method="post" @submit.prevent="createChallenge">
-      <div class="has-margin-y-3" v-if="edit">
+      <div class="has-margin-y-3" v-if="edit && !importFlag">
         <label for="name">{{ trans.get('challenges.categories') }}</label>
         <div class="field has-margin-top-3">
           <div class="control">
@@ -215,7 +215,7 @@
       </div>
       <button
         type="submit"
-        v-if="!edit"
+        v-if="!edit || importFlag"
         class="button is-primary"
       >{{ trans.get('challenges.create_challenge') }}</button>
       <button type="submit" v-else class="button is-info">{{ trans.get('challenges.edit') }}</button>
@@ -232,6 +232,7 @@ export default {
     "code",
     "iconPrev",
     "edit",
+    "importFlag",
     "groups",
     "challengegroups",
   ],
@@ -293,7 +294,7 @@ export default {
         ":" +
         date.getMinutes();
       let route;
-      if (this.edit) {
+      if (this.edit && !this.importFlag) {
         this.challenge._method = "patch";
         route = "/classroom/" + this.code + "/challenges/" + this.challenge.id;
       } else {
@@ -309,6 +310,7 @@ export default {
           type: response.data.type,
         });
         if (response.data.type == "success") {
+          this.importFlag = false;
           this.$parent.addChallenge = false;
           this.$parent.$parent.getChallenges(
             this.challenge.challenges_group_id

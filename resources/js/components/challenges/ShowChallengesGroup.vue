@@ -60,7 +60,8 @@
       </article>
     </div>
     <div class="column has-padding-left-0-desktop">
-      <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
+      <!-- <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading> -->
+
       <CreateChallengeGroup :code="code" v-if="activeAddGroup"></CreateChallengeGroup>
       <ShowChallenges
         :icon="icon"
@@ -86,7 +87,6 @@ export default {
       updated: false,
       challenges: [],
       isLoading: false,
-      isFullPage: true,
     };
   },
   methods: {
@@ -100,13 +100,13 @@ export default {
       this.$forceUpdate();
     },
     getChallenges(id) {
-      this.isLoading = true;
+      // this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/challenges/get", { id: id })
         .then((response) => {
+          // this.isLoading = false;
           this.challenges = response.data;
-          this.$forceUpdate;
-          this.isLoading = false;
+          // this.$forceUpdate();
         });
     },
   },
