@@ -8853,6 +8853,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -25927,7 +25931,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 1000ms;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.fadesecond-enter-active,\n.fadesecond-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.firstAppear {\n  height: 30vh;\n  background-color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-family: logo;\n  font-size: 8em;\n  word-spacing: 0.2em;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  position: relative;\n  padding: 40px;\n  z-index: 5;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n}\n.secondAppear {\n  height: 70vh;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  background-color: rgba(255, 255, 255, 0.75);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  padding: 30px;\n  padding-top: 70px;\n  margin-top: -40px;\n  z-index: 2;\n  overflow: auto;\n}\n.final {\n  opacity: 0;\n}\nh2.secondAppear > * {\n  margin: 5px;\n}\n.hiddenName {\n  display: inline-block;\n  font-size: 2.5em;\n  position: relative;\n  min-width: 600px;\n  text-align: center;\n}\n.hideObj {\n  position: absolute;\n  z-index: 1000;\n  background-image: url(\"/img/hide.png\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  width: 100%;\n  height: 120%;\n  border-radius: 5px;\n  transition: 1s opacity;\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\n  opacity: 0;\n  transition-delay: 1s;\n}\n.hiddenMEssage {\n  visibility: hidden;\n}\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 1000ms;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.fadesecond-enter-active,\n.fadesecond-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.firstAppear {\n  height: 30vh;\n  background-color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-family: logo;\n  font-size: 8em;\n  word-spacing: 0.2em;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  position: relative;\n  padding: 40px;\n  z-index: 5;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  overflow: auto;\n}\n.secondAppear {\n  height: 70vh;\n  border-bottom-left-radius: 50px;\n  border-bottom-right-radius: 50px;\n  background-color: rgba(255, 255, 255, 0.75);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  padding: 30px;\n  padding-top: 70px;\n  margin-top: -40px;\n  z-index: 2;\n  overflow: auto;\n}\n.final {\n  opacity: 0;\n}\nh2.secondAppear > * {\n  margin: 5px;\n}\n.hiddenName {\n  display: inline-block;\n  font-size: 2.5em;\n  position: relative;\n  min-width: 600px;\n  text-align: center;\n}\n.hideObj {\n  position: absolute;\n  z-index: 1000;\n  background-image: url(\"/img/hide.png\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  width: 100%;\n  height: 120%;\n  border-radius: 5px;\n  transition: 1s opacity;\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\n  opacity: 0;\n  transition-delay: 1s;\n}\n.hiddenMEssage {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -60354,6 +60358,27 @@ var render = function() {
             ),
             _vm._v(" "),
             _c(
+              "a",
+              {
+                directives: [{ name: "tippy", rawName: "v-tippy" }],
+                staticClass: "link outer_glow has-text-dark has-padding-x-2",
+                attrs: {
+                  content:
+                    _vm.trans.get("menu.event") +
+                    " " +
+                    _vm.trans.get("utils.random"),
+                  href: "/classroom/" + _vm.classroom.code + "/event/random"
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "fad fa-scroll-old has-margin-right-2",
+                  staticStyle: { "font-size": "2em" }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _c(
               "div",
               {
                 staticClass: "dropdown is-hoverable",
@@ -60369,27 +60394,6 @@ var render = function() {
                       "dropdown-menu has-background-white rounded has-padding-3"
                   },
                   [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: {
-                          href:
-                            "/classroom/" + _vm.classroom.code + "/event/random"
-                        }
-                      },
-                      [
-                        _c("i", {
-                          staticClass: "fad fa-scroll-old has-margin-right-2"
-                        }),
-                        _vm._v(
-                          "\n            Random: " +
-                            _vm._s(_vm.trans.get("menu.events")) +
-                            "\n          "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
                     _vm.students.length
                       ? _c(
                           "a",
@@ -60402,7 +60406,9 @@ var render = function() {
                               staticClass: "fad fa-user has-margin-right-2"
                             }),
                             _vm._v(
-                              "\n            Random: " +
+                              "\n            " +
+                                _vm._s(_vm.trans.get("utils.random")) +
+                                ": " +
                                 _vm._s(_vm.trans.get("menu.students")) +
                                 "\n          "
                             )
@@ -60422,7 +60428,9 @@ var render = function() {
                               staticClass: "fad fa-users has-margin-right-2"
                             }),
                             _vm._v(
-                              "\n            Random: " +
+                              "\n            " +
+                                _vm._s(_vm.trans.get("utils.random")) +
+                                ": " +
                                 _vm._s(_vm.trans.get("menu.groups")) +
                                 "\n          "
                             )
@@ -60443,7 +60451,9 @@ var render = function() {
                               staticClass: "fad fa-club has-margin-right-2"
                             }),
                             _vm._v(
-                              "\n            Random: " +
+                              "\n            " +
+                                _vm._s(_vm.trans.get("utils.random")) +
+                                ": " +
                                 _vm._s(_vm.trans.get("menu.card")) +
                                 "\n          "
                             )
@@ -81265,6 +81275,7 @@ __webpack_require__.r(__webpack_exports__);
     "user_groups": "Usuaris i grups",
     "users": "Usuaris",
     "events": "Esdeveniments",
+    "event": "Esdeveniment",
     "students": "Estudiants",
     "groups": "Grups",
     "cards": "Cartes",
@@ -81842,6 +81853,7 @@ __webpack_require__.r(__webpack_exports__);
     "user_groups": "Users and groups",
     "users": "Users",
     "events": "Events",
+    "event": "Event",
     "students": "Students",
     "groups": "Groups",
     "cards": "Cards",
@@ -82437,7 +82449,7 @@ __webpack_require__.r(__webpack_exports__);
   "es.menu": {
     "user_groups": "Usuarios y grupos",
     "users": "Usuarios",
-    "events": "Eventos",
+    "event": "Evento",
     "students": "Estudiantes",
     "groups": "Grupos",
     "cards": "Cartas",

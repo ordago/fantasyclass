@@ -286,6 +286,7 @@ export default {
   padding: 40px;
   z-index: 5;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+  overflow: auto;
 }
 .secondAppear {
   height: 70vh;

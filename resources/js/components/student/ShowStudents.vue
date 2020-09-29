@@ -16,6 +16,14 @@
         >
           <i class="fad fa-users outer_glow" style="font-size:2em;"></i>
         </a>
+          <a 
+            class="link outer_glow has-text-dark has-padding-x-2"
+            v-tippy 
+            :content="trans.get('menu.event') + ' ' + trans.get('utils.random')" 
+            :href="'/classroom/' + classroom.code + '/event/random'">
+            <i class="fad fa-scroll-old has-margin-right-2" style="font-size:2em;"></i>
+          </a>
+
         <div class="dropdown is-hoverable" style="display:inline-block">
           <span
             class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
@@ -25,15 +33,11 @@
               <i class="fas fa-angle-down" aria-hidden="true"></i>
             </span>
           </span>
-
+        
           <div class="dropdown-menu has-background-white rounded has-padding-3">
-            <a class="dropdown-item" :href="'/classroom/' + classroom.code + '/event/random'">
-              <i class="fad fa-scroll-old has-margin-right-2"></i>
-              Random: {{ trans.get('menu.events') }}
-            </a>
             <a class="dropdown-item" @click="randomStudents" v-if="students.length">
               <i class="fad fa-user has-margin-right-2"></i>
-              Random: {{ trans.get('menu.students') }}
+              {{ trans.get('utils.random') }}: {{ trans.get('menu.students') }}
             </a>
             <a
               class="dropdown-item"
@@ -41,7 +45,7 @@
               v-if="classroom.grouping[0].groups.length > 0"
             >
               <i class="fad fa-users has-margin-right-2"></i>
-              Random: {{ trans.get('menu.groups') }}
+              {{ trans.get('utils.random') }}: {{ trans.get('menu.groups') }}
             </a>
             <a
               class="dropdown-item"
@@ -49,7 +53,7 @@
               v-if="students.length || classroom.grouping[0].groups.length"
             >
               <i class="fad fa-club has-margin-right-2"></i>
-              Random: {{ trans.get('menu.card') }}
+              {{ trans.get('utils.random') }}: {{ trans.get('menu.card') }}
             </a>
           </div>
         </div>

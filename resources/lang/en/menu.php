@@ -12,6 +12,7 @@ return [
     'user_groups' => 'Users and groups',
     'users' => 'Users',
     'events' => 'Events',
+    'event' => 'Event',
     'students' => 'Students',
     'groups' => 'Groups',
     'cards' => 'Cards',

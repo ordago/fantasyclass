@@ -12,6 +12,7 @@ return [
     'user_groups' => 'Usuaris i grups',
     'users' => 'Usuaris',
     'events' => 'Esdeveniments',
+    'event' => 'Esdeveniment',
     'students' => 'Estudiants',
     'groups' => 'Grups',
     'cards' => 'Cartes',

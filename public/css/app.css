@@ -12803,6 +12803,7 @@ textPath {
   padding-left: 75px;
   padding-bottom: 19px;
   width: 100%;
+  overflow: auto;
 }
 
 .tools {
