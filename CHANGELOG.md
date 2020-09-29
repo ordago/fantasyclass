@@ -4,6 +4,7 @@
 ### Added
 - Clone classroom.
 - Allow teachers to leave classrooms.
+- Import stories from other classrooms.
 
 ### Changed
 - Fixed some translations.
