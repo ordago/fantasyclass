@@ -4,6 +4,7 @@
 ### Added
 ~ Group view.
 ~ Edit events.
+~ Chat in students.
 
 ### Changed
 
