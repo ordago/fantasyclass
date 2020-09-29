@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.04 Beta (X/09/2020)
+### Added
+~ Group view.
+~ Edit events.
+
+### Changed
+
+
 ## v1.03 Beta (29/09/2020)
 ### Added
 - Clone classroom.
