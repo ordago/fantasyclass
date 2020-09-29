@@ -3,7 +3,7 @@
 ## v1.03 Beta (29/09/2020)
 ### Added
 - Clone classroom.
-- Leave a classroom if teacher.
+- Allow teachers to leave classrooms.
 
 ### Changed
 - Fixed some translations.
