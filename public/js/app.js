@@ -7229,6 +7229,8 @@ __webpack_require__.r(__webpack_exports__);
             if (response.data === 1) {
               // TODO change to delete teacher from array
               location.reload(true);
+            } else if (response.data == 2) {
+              location.href = "/classroom";
             }
           });
         }
@@ -58341,7 +58343,8 @@ var render = function() {
                           "column is-narrow is-flex align-items-center"
                       },
                       [
-                        _vm.isAdmin && teacher.id != _vm.user
+                        (_vm.isAdmin && teacher.id != _vm.user) ||
+                        (teacher.pivot.role == 1 && teacher.id == _vm.user)
                           ? _c(
                               "button",
                               {

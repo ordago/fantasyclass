@@ -1,12 +1,14 @@
 # Changelog
 
-## v1.03 Beta (XX/09/2020)
+## v1.03 Beta (29/09/2020)
 ### Added
 - Clone classroom.
+- Leave a classroom if teacher.
 
 ### Changed
 - Fixed some translations.
 - Temporary mobile menu fixed.
+- Fixed level showing.
 
 ## v1.02 Beta (22/09/2020)
 ### Added

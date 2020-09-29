@@ -99,7 +99,7 @@
               <button
                 class="button has-margin-left-4 is-danger"
                 @click="confirmDeleteTeacher(teacher.id, index)"
-                v-if="isAdmin && teacher.id != user"
+                v-if="isAdmin && teacher.id != user || teacher.pivot.role == 1 && teacher.id == user"
               >
                 <i class="fas fa-trash"></i> Delete
               </button>
@@ -325,6 +325,8 @@ export default {
               if (response.data === 1) {
                 // TODO change to delete teacher from array
                 location.reload(true);
+              } else if(response.data == 2) {
+                location.href = "/classroom";
               }
             });
         },

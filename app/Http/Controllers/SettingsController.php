@@ -38,9 +38,17 @@ class SettingsController extends Controller
 
     public function destroy($code, $id) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('admin', $class);
-        $cus = ClassroomUser::where('user_id', '=', $id)->where('classroom_id', '=', $class->id)->where('role', '=', 1)->firstOrFail();
-        return $cus->delete();
+        $cus = ClassroomUser::where('user_id', '=', auth()->user()->id)->where('classroom_id', '=', $class->id)->firstOrFail();
+        
+        if($cus->role == 1) {
+            $cus->delete();
+            return 2;
+        } else {
+            $this->authorize('admin', $class);
+            $cus = ClassroomUser::where('user_id', '=', $id)->where('classroom_id', '=', $class->id)->where('role', '=', 1)->firstOrFail();
+            return $cus->delete();
+        }
+
     }
 
     public function invite($code)
