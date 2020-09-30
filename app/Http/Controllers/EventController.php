@@ -17,11 +17,16 @@ class EventController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
+        $max = 0;
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $disabled = collect(settings()->get('disabled_events'));
 
         do {
             $again = false;
             $event = Event::whereNull('classroom_id')->orWhere('classroom_id', '=', $class->id)->inRandomOrder()->first();
-            if (($event->type == 1 || $event->type == 3 || $event->type == 4 || $event->type == 8 || $event->type == 9 || $event->type == 11 || $event->type == 12 || $event->type == 13) && !count($class->students)) {
+            if($disabled->contains($event->id)) {
+                $again = true;
+            } else if (($event->type == 1 || $event->type == 3 || $event->type == 4 || $event->type == 8 || $event->type == 9 || $event->type == 11 || $event->type == 12 || $event->type == 13) && !count($class->students)) {
                 $again = true;
             } else if (($event->type == 2 || $event->type == 10) && !count($class->grouping->first()->groups)) {
                 $again = true;
@@ -35,7 +40,8 @@ class EventController extends Controller
                 // TODO For now event 13 is disabled
                 $again = true;
             }
-        } while ($again);
+            $max++;
+        } while ($again && $max < 100);
 
         $return = null;
         switch ($event->type) {

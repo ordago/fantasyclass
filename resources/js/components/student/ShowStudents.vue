@@ -114,7 +114,6 @@
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
       <div class="column has-text-right is-center-vertically" v-if="students.length>0">
-        <!-- <span class="mr-1 hideGrid pointer" v-tippy :content="trans.get('users_groups.change_layout')" @click="changeView"><i class="fas fa-th fs-1 colored" style="color:white"></i></span> -->
         <span>
           <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
         </span>
@@ -156,245 +155,28 @@
         >
           <i class="fas fa-coins pointer has-margin-right-3"></i>
         </span>
-        <!-- <input type="checkbox" id="toggleStdView" class="cbx" style="display:none"/>
-            <label  style="width: 40px" for="toggleStdView" class="toggle"><span></span></label>
-        <span><i class="fas fa-user ml-2 outer_glow"></i></span>-->
+        <span v-if="groups.length">
+        <span><i class="fas fa-user ml-2 outer_glow"></i></span>
+          <b-switch v-model="view" true-value="1" @input="toggleView"
+                  false-value="0" class="has-margin-right-0"></b-switch>
+          <span><i class="fas fa-users outer_glow"></i></span>
+        </span>
       </div>
     </div>
-    <div class="columns is-multiline is-variable is-1 has-margin-y-2">
+
+    <div class="column has-padding-x-1" v-if="view == 1">
+      <show-group-view :behaviours="mainBehavioursJson" :behaviourshidden="otherBehavioursJson" :groups="groups" :classroom="classroom" :students="students"></show-group-view>
+    </div>
+
+    <div class="columns is-multiline is-variable is-1 has-margin-y-2" v-else>
       <div
         class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
         v-for="student in orderedStudents"
         v-bind:key="student.id"
       >
-        <div class="card rounded card-shadow-s">
-          <show-character :student="student" :classroom="classroom"></show-character>
-          <div
-            class="card-content"
-            v-bind:class="{ 'has-background-hidden' : student.hidden == 1 }"
-          >
-            <div class="media has-margin-bottom-0">
-              <div class="media-left" v-if="classroom.character_theme != 0">
-                <figure class="image is-48x48">
-                  <img :src="student.avatar" class="rounded" alt />
-                </figure>
-              </div>
-              <div class="media-content cursor-pointer" @click="redirect(student.id)">
-                <p class="title is-4">
-                  {{ student.name }}
-                  <i class="fas fa-eye-slash" v-if="student.hidden == 1"></i>
-                </p>
-                <p class="subtitle is-6">
-                  <small>@{{ student.username }}</small>
-                </p>
-              </div>
-            </div>
-
-            <div class="content">
-              <div>
-                <div
-                  class="notification is-danger has-margin-y-2"
-                  v-if="student.numcards[0] > student.numcards[1]"
-                >
-                  <i class="fas fa-exclamation-square"></i>
-                  Cards number exceded {{ student.numcards[0] }} / {{ student.numcards[1] }}
-                </div>
-                <div class="centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3">
-                  <span
-                    class="attribute has-background-white-ter has-padding-y-2 rounded"
-                    style="width:100%;"
-                  >
-                    <span>
-                      <i class="fas fa-heart has-text-grey-light"></i>
-                    </span>
-                    <span class="has-text-grey-light" v-if="student.hp<20">{{ student.hp }}</span>
-                  </span>
-                  <span
-                    class="attribute has-background-danger has-padding-y-2 rounded-left"
-                    v-bind:class="{ rounded: student.hp==100 }"
-                    :style="'width: ' + student.hp + '%'"
-                    v-if="student.hp>0"
-                  >
-                    <i class="fas fa-heart" v-bind:class="{ 'has-text-danger': student.hp<52 }"></i>
-                    <span v-if="student.hp>=20">{{ student.hp }}</span>
-                  </span>
-                </div>
-                <div class="my-1 has-text-centered">
-                  <div class="w-100 is-flex has-all-centered">
-                    <button
-                      v-for="behaviour in mainBehavioursJson"
-                      v-tippy
-                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
-                      class="button has-margin-1 has-padding-x-4 is-light"
-                      @click="addBehaviour(student.id, behaviour.id)"
-                      v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
-                      v-bind:key="behaviour.id"
-                    >
-                      <i :class="behaviour.icon"></i>
-                    </button>
-                    <div
-                      class="button is-link is-light has-margin-1 has-padding-x-4"
-                      @click="show2l=!show2l"
-                      v-if="otherBehavioursJson.length"
-                    >
-                      <i class="fas fa-plus"></i>
-                    </div>
-                    <a
-                      :href="'/classroom/' + classroom.code + '/behaviours/'"
-                      class="button is-link is-light has-margin-1 has-padding-x-4"
-                      v-tippy
-                      :content="trans.get('users_groups.add_behaviours')"
-                      v-if="mainBehavioursJson.length == 0"
-                    >
-                      <i class="fas fa-plus"></i>
-                    </a>
-                  </div>
-                  <div v-if="show2l">
-                    <button
-                      v-for="behaviour in otherBehavioursJson"
-                      v-tippy
-                      :content="trans.get(behaviour.name) + ' <small>(<i class=\'fas fa-heart colored\'></i> ' + behaviour.hp + ' <i class=\'fas fa-fist-raised colored\'></i> '+ behaviour.xp +' <i class=\'fas fa-coins colored\'></i> '+ behaviour.gold +')</small>'"
-                      class="button has-margin-1 is-light has-padding-x-4"
-                      v-bind:class="[ behaviour.xp + behaviour.hp + behaviour.gold >= 0 ? 'is-success' : 'is-danger']"
-                      v-bind:key="behaviour.id"
-                      @click="addBehaviour(student.id, behaviour.id)"
-                    >
-                      <i :class="behaviour.icon"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="score has-padding-3 has-margin-1">
-                  <span>
-                    <i class="fas fa-fist-raised colored"></i>
-                  </span>
-                  {{ student.xp }}
-                </div>
-                <div class="has-margin-y-2 has-text-centered">
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', 100)"
-                    class="button is-dark has-padding-x-3"
-                  >100</button>
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', 50)"
-                    class="button is-dark has-padding-x-3"
-                  >50</button>
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', 10)"
-                    class="button is-dark has-padding-x-3"
-                  >10</button>
-                  <tippy
-                    interactive
-                    :animate-fill="false"
-                    theme="light"
-                    placement="bottom"
-                    animation="fade"
-                    trigger="click"
-                    style="display:inline-block"
-                    arrow
-                  >
-                    <template v-slot:trigger>
-                      <button type="submit" class="button is-primary has-padding-x-3">
-                        <i class="fas fa-hashtag"></i>
-                      </button>
-                    </template>
-                    <span>
-                      <div class="is-flex">
-                        <input type="number" v-model="custom" class="input has-margin-right-1" />
-                        <button
-                          @click="updateProp(student.id, 'xp', custom)"
-                          class="button is-primary is-inline"
-                        >{{trans.get('users_groups.apply')}}</button>
-                      </div>
-                    </span>
-                  </tippy>
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', -10)"
-                    class="button is-dark is-outlined has-padding-x-2"
-                  >-10</button>
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', -50)"
-                    class="button is-dark is-outlined has-padding-x-2"
-                  >-50</button>
-                  <button
-                    type="submit"
-                    @click="updateProp(student.id, 'xp', -100)"
-                    class="button is-dark is-outlined has-padding-x-2"
-                  >-100</button>
-                </div>
-                <div class="gold has-padding-3 has-margin-y-1">
-                  <i class="fas fa-coins colored"></i>
-                  {{ student.gold }}
-                </div>
-                <div class="has-margin-y-2 has-text-centered">
-                  <div class>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', 100)"
-                      class="button is-warning has-padding-x-3"
-                    >100</button>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', 50)"
-                      class="button is-warning has-padding-x-3"
-                    >50</button>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', 10)"
-                      class="button is-warning has-padding-x-3"
-                    >10</button>
-                    <tippy
-                      interactive
-                      :animate-fill="false"
-                      theme="light"
-                      placement="bottom"
-                      animation="fade"
-                      trigger="click"
-                      style="display:inline-block"
-                      arrow
-                    >
-                      <template v-slot:trigger>
-                        <button type="submit" class="button is-primary has-padding-x-3">
-                          <i class="fas fa-hashtag"></i>
-                        </button>
-                      </template>
-
-                      <span>
-                        <div class="is-flex">
-                          <input type="number" v-model="custom" class="input has-margin-right-1" />
-                          <button
-                            @click="updateProp(student.id, 'gold', custom)"
-                            class="button is-primary col-4 pl-1"
-                          >{{trans.get('users_groups.apply')}}</button>
-                        </div>
-                      </span>
-                    </tippy>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', -10)"
-                      class="button is-dark is-outlined has-padding-x-2"
-                    >-10</button>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', -50)"
-                      class="button is-dark is-outlined has-padding-x-2"
-                    >-50</button>
-                    <button
-                      type="submit"
-                      @click="updateProp(student.id, 'gold', -100)"
-                      class="button is-dark is-outlined has-padding-x-2"
-                    >-100</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <show-student-teacher :behaviours="mainBehavioursJson" :behaviourshidden="otherBehavioursJson" :student="student" :classroom="classroom"></show-student-teacher>
       </div>
+
       <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd">
         <div
           class="box card-shadow-s is-flex has-background-link has-all-centered"
@@ -407,6 +189,8 @@
         </div>
       </div>
     </div>
+
+    <!-- Modals -->
     <b-modal :active.sync="isQrModalActive" :width="640" scroll="keep">
       <div class="card rounded">
         <div class="card-image has-padding-4">
@@ -431,20 +215,26 @@
       :active.sync="isRandomStudentActive"
       :width="640"
       scroll="keep"
+      :can-cancel="false"
       class="has-text-centered"
     >
-      <show-student
+
+      <show-student-teacher
+        :behaviours="mainBehavioursJson" 
+        :behaviourshidden="otherBehavioursJson"
         :character-theme="classroom.character_theme"
+        :classroom="classroom"
         :student="currentStudent"
-        :theme="classroom.theme"
-      ></show-student>
+        :random="true"
+      ></show-student-teacher>
       <button
         class="button is-link has-margin-2"
         v-if="shuffledStudents && shuffledStudents.length"
         @click="uppdateCurrentStudent"
       >
-        <i class="fad fa-random"></i>
+        <i class="fad fa-random has-margin-right-3"></i> {{ trans.get('utils.random') }}
       </button>
+      <button class="button has-margin-2" @click="refresh"><i class="fas fa-times has-margin-right-3"></i> {{ trans.get('general.close') }}</button>
     </b-modal>
     <b-modal
       :active.sync="isRandomGroupActive"
@@ -571,7 +361,10 @@ import Utils from "../../utils.js";
 import confetti from "canvas-confetti";
 
 export default {
-  props: ["students", "classroom"],
+  props: ["students", "classroom", "groups"],
+  created() {
+    this.view = this.$cookies.get("view");
+  },
   mounted() {
     let orderedBehaviours = _.orderBy(
       this.classroom.behaviours,
@@ -585,14 +378,13 @@ export default {
   },
   data: function () {
     return {
+      view: 1,
       mainBehavioursJson: [],
       otherBehavioursJson: [],
       sortKey: "",
       viewGrid: "",
       buttons: "",
-      custom: 0,
       numItems: 5,
-      show2l: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
       isRandomGroupActive: false,
@@ -613,6 +405,13 @@ export default {
     };
   },
   methods: {
+    toggleView() {
+      this.$cookies.set("view", this.$cookies.get("view") == 0 ? 1 : 0);
+      this.view = this.$cookies.get("view")
+    },
+    refresh() {
+        location.reload()
+    },
     assignCard(to) {
       let card = this.randomCard.id;
       let target;
@@ -748,35 +547,6 @@ export default {
     changeView: function () {
       this.viewGrid = (this.viewGrid + 1) % 3;
       this.$cookies.set("viewGrid", this.viewGrid, Infinity);
-    },
-    updateProp: function (id, prop, value) {
-      let options = { id: id, prop: prop, value: value };
-      axios.post("/classroom/students/update", options).then((response) => {
-        if (prop == "xp") {
-          let student = this.students.find((el) => el.id === id);
-          student.xp = response.data.xp;
-          student.level = response.data.level;
-        } else if (prop == "gold")
-          this.students.find((el) => el.id === id).gold = response.data;
-        this.custom = 0;
-        this.$emit("students", this.students);
-        this.$forceUpdate();
-      });
-    },
-    addBehaviour: function (id, behaviour) {
-      let options = { id: id, behaviour: behaviour };
-      axios.post("/classroom/student/behaviour", options).then((response) => {
-        let student = this.students.find((el) => el.id === id);
-        student.hp = response.data.hp;
-        student.xp = response.data.xp.xp;
-        student.gold = response.data.gold;
-        student.level = response.data.xp.level;
-        this.$forceUpdate();
-      });
-    },
-    redirect(id) {
-      window.location.href =
-        "/classroom/" + this.classroom.code + "/student/" + id;
     },
   },
   computed: {

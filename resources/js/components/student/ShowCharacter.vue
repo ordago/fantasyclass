@@ -20,7 +20,7 @@
         <i class="fas fa-arrow-alt-square-up"></i>
       </span>
       <div
-        v-if="classroom.character_theme != 0"
+        v-if="classroom.character_theme != 0 && classroom.character_theme != null"
         class="character-container character character-small is-relative"
       >
         <img

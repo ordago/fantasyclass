@@ -512,6 +512,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1281,6 +1293,50 @@ var render = function() {
                       ])
                     ])
                   ]),
+                  _vm._v(" "),
+                  _vm.student.classroom.user.email
+                    ? _c("div", { staticClass: "field is-horizontal" }, [
+                        _c("div", { staticClass: "field-label is-normal" }, [
+                          _c("label", { staticClass: "label" }, [
+                            _vm._v("E-mail")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "field-body" }, [
+                          _c("div", { staticClass: "field" }, [
+                            _c("p", { staticClass: "control" }, [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.student.classroom.user.email,
+                                    expression: "student.classroom.user.email"
+                                  }
+                                ],
+                                staticClass: "input is-static",
+                                attrs: { disabled: "", type: "text" },
+                                domProps: {
+                                  value: _vm.student.classroom.user.email
+                                },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.student.classroom.user,
+                                      "email",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ])
+                        ])
+                      ])
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("div", { staticClass: "field is-horizontal" }, [
                     _c("div", { staticClass: "field-label is-normal" }, [

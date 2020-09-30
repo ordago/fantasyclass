@@ -18,6 +18,10 @@
   min-width: 50%;
 }
 
+.is-scrollable-h {
+  overflow-x: auto;
+}
+
 .has-background-success-light {
   background-color: darkseagreen;
 }

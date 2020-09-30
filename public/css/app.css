@@ -12803,7 +12803,6 @@ textPath {
   padding-left: 75px;
   padding-bottom: 19px;
   width: 100%;
-  overflow: auto;
 }
 
 .tools {
@@ -13687,6 +13686,10 @@ textPath {
 /************/
 .sidebar-content {
   min-width: 50%;
+}
+
+.is-scrollable-h {
+  overflow-x: auto;
 }
 
 .has-background-success-light {

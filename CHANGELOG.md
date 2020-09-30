@@ -1,13 +1,17 @@
 # Changelog
 
-## v1.04 Beta (X/09/2020)
+## v1.04 Beta (X/10/2020)
 ### Added
-~ Group view.
-~ Edit events.
+- Group view in teachers' view.
 ~ Chat in students.
+~ Edit events.
+- Added shorcut to configure classroom in settings.
+- Show group name when no group logo is present.
+- Random student now allows to edit XP, Gold and behaviours.
 
 ### Changed
-
+- Fixed showing theme in student info.
+- Fixed errors in level in student info.
 
 ## v1.03 Beta (29/09/2020)
 ### Added

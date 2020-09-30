@@ -116,6 +116,18 @@
               </div>
             </div>
           </div>
+          <div class="field is-horizontal" v-if="student.classroom.user.email">
+            <div class="field-label is-normal">
+              <label class="label">E-mail</label>
+            </div>
+            <div class="field-body">
+              <div class="field">
+                <p class="control">
+                  <input class="input is-static" disabled type="text" v-model="student.classroom.user.email" />
+                </p>
+              </div>
+            </div>
+          </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">
               <label class="label">Username</label>

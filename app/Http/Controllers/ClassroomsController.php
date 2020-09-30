@@ -321,6 +321,7 @@ class ClassroomsController extends Controller
         $themes = Theme::All();
         return view('classrooms.create', compact('goals', 'themes', 'class'));
     }
+
     public function create()
     {
         $goals = GoalThemes::All();
@@ -341,11 +342,13 @@ class ClassroomsController extends Controller
         $class->delete();
         return "/classroom";
     }
+
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
         $students = $class->students()->with('equipment')->get();
+        $groups = $class->grouping->first()->groups;
 
         $students->each->append('numcards');
 
@@ -356,6 +359,6 @@ class ClassroomsController extends Controller
                 $pending->add(['student' => $student, 'cards' => $cards]);
         }
 
-        return view('classrooms.show', compact('class', 'students', 'pending'));
+        return view('classrooms.show', compact('class', 'students', 'pending', 'groups'));
     }
 }

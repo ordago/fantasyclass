@@ -38,8 +38,8 @@ https://docs.spatie.be/laravel-medialibrary/v8/installation-setup/
 MariaDB +10.2.7 (or mysql with json support)
 
 Register in [mailtrap.io](https://mailtrap.io)
-Configure .env:
 
+Configure .env:
 ``` 
  MAIL_MAILER=smtp
  MAIL_HOST=smtp.mailtrap.io
@@ -47,8 +47,13 @@ Configure .env:
  MAIL_USERNAME=
  MAIL_PASSWORD=
  MAIL_ENCRYPTION=null
- MAIL_FROM_ADDRESS=register@gamifica.online
+ MAIL_FROM_ADDRESS=register@fantasyclass.app
  MAIL_FROM_NAME="${APP_NAME}"
+```
+
+To protect chat:
+```
+ CHAT_KEY=
 ```
 
 To enable Google Login:

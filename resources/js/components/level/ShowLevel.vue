@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="level"
     :class="{ 'column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered' : edit, 'column': !edit}"
   >
     <input :value="level.id" type="hidden" name="id" />
@@ -49,6 +50,7 @@ export default {
   props: ["level", "last", "code", "edit"],
   created() { 
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+    if(this.level)
     this.image = this.level.imagelvl;
   },
   data: function() {

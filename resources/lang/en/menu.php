@@ -35,7 +35,11 @@ return [
     'behaviours' => 'Behaviours',
     'rewards' => 'Rewards',
     'licenses' => 'Licenses',
+    'noise' => 'Volume meter',
+    'badges' => 'Badges',
+    'massive' => 'Massive actions',
     'config' => 'Configure',
     'contribute' => 'Buy us coffe or beer!',
+
 
 ];

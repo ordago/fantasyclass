@@ -5,7 +5,8 @@
         <i class="fal fa-chalkboard"></i>
         {{ trans.get('settings.classroom') }}
       </h1>
-      <div class="has-padding-left-4 is-flex">
+      <div class="has-padding-left-4 is-flex is-scrollable-h">
+        <a class="button has-margin-right-4" :href="'/classroom/' + classroom.code + '/edit'"><i class="far fa-cog has-margin-right-2"></i> {{ trans.get('menu.config') }} (wizard)</a>
         <b-field>
           <b-radio-button
             v-model="state"
