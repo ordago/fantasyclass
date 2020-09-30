@@ -93,9 +93,6 @@ class ClassroomsStudentController extends Controller
                 ->all();
         });
 
-        $chat = sha1(env('CHAT_KEY').$class->id);
-        $url = env('APP_URL_SHORT');
-        $chatbro = md5(env('APP_URL_SHORT').auth()->user()->id.'-'.$student->id.$student->name.$student->avatar.env('CHATBRO_KEY'));
 
         return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'chatbro', 'url'));
     }
@@ -216,8 +213,12 @@ class ClassroomsStudentController extends Controller
 
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
+
+        $chat = sha1(env('CHAT_KEY').$class->id);
+        $url = env('APP_URL_SHORT');
+        $chatbro = md5(env('APP_URL_SHORT').auth()->user()->id.'-'.$student->id.$student->name.env('APP_URL').$student->avatar.env('CHATBRO_KEY'));
         
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings'));
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'url', 'chatbro'));
     }
 
     public function rules($code)
