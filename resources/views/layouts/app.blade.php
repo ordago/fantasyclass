@@ -150,6 +150,7 @@
         <main class="main-content has-padding-3">
             @yield('content')
         </main>
+        @yield('scriptchat');
     </div>
 </body>
 

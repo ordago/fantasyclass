@@ -103,8 +103,9 @@
 export default {
   props: ["student", "theme", "characterTheme"],
   created() {
-    this.classroom = { theme: this.theme }
-    this.student.grouplogo = this.student.groups[0].logo
+    this.classroom = { theme: this.theme, character_theme: this.characterTheme }
+    if(this.student.groups.length)
+      this.student.grouplogo = this.student.groups[0].logo
   },
   data: function () {
     return {

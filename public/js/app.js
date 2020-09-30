@@ -8289,9 +8289,10 @@ __webpack_require__.r(__webpack_exports__);
   props: ["student", "theme", "characterTheme"],
   created: function created() {
     this.classroom = {
-      theme: this.theme
+      theme: this.theme,
+      character_theme: this.characterTheme
     };
-    this.student.grouplogo = this.student.groups[0].logo;
+    if (this.student.groups.length) this.student.grouplogo = this.student.groups[0].logo;
   },
   data: function data() {
     return {

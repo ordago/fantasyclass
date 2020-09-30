@@ -93,8 +93,11 @@ class ClassroomsStudentController extends Controller
                 ->all();
         });
 
+        $chat = sha1(env('CHAT_KEY').$class->id);
+        $url = env('APP_URL_SHORT');
+        $chatbro = md5(env('APP_URL_SHORT').auth()->user()->id.'-'.$student->id.$student->name.$student->avatar.env('CHATBRO_KEY'));
 
-        return view('studentsview.index', compact('class', 'student', 'students'));
+        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'chatbro', 'url'));
     }
 
     public function challenges($code)
