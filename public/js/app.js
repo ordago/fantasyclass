@@ -9030,7 +9030,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["students", "classroom", "groups"],
   created: function created() {
-    this.view = this.$cookies.get("view");
+    if (!this.groups.length) this.view = 0;else this.view = this.$cookies.get("view");
   },
   mounted: function mounted() {
     var _$cookies$get, _$cookies$get2;

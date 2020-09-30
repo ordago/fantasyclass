@@ -363,7 +363,10 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom", "groups"],
   created() {
-    this.view = this.$cookies.get("view");
+    if(!this.groups.length)
+      this.view = 0
+    else
+      this.view = this.$cookies.get("view");
   },
   mounted() {
     let orderedBehaviours = _.orderBy(

@@ -10,6 +10,7 @@
 - Random student now allows to edit XP, Gold and behaviours.
 
 ### Changed
+- Random event is now in main utilities menu.
 - Fixed showing theme in student info.
 - Fixed errors in level in student info.
 
