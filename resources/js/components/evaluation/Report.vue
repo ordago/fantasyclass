@@ -46,6 +46,7 @@ import Utils from "../../utils.js";
 export default {
   props: ["classroom", "grades", "settings", "admin"],
   created: function () {
+    console.log(this.grades);
   },
   data: function () {
     return {};

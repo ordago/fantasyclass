@@ -5030,7 +5030,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "grades", "settings", "admin"],
-  created: function created() {},
+  created: function created() {
+    console.log(this.grades);
+  },
   data: function data() {
     return {};
   },

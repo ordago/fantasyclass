@@ -30,7 +30,7 @@ class EvaluationController extends Controller
     public static function individualReport($class, $student) {
         $tags = collect();
         foreach ($class->tags as $tag) {
-            $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'grade' => 0, 'count' => 0]);
+            $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'evaluables' => collect()]);
         }
 
         foreach ($student->grades as $grade) {
@@ -39,16 +39,18 @@ class EvaluationController extends Controller
                 foreach ($evaluable->tags as $evalTag) {
                     $tags->transform(function ($item, $key) use ($evalTag, $grade) {
                         if ($item['id'] == $evalTag->id) {
-                            $item['count'] = $item['count'] + 1;
-                                $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
+                            $item['evaluables']->push($evalTag);
+                            // $item['count'] = $item['count'] + 1;
+                            // $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
                         } else {
-                                $gradeCalc = $item['grade'];
+                                // $gradeCalc = $item['grade'];
                         }
-                        return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'grade' => $gradeCalc, 'count' => $item['count']];
+                        return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'evaluables' => $item['evaluables']];
                     });
                 }
             }
         }
+        dump($tags);
         return ['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags];
     }
 
