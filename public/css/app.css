@@ -13827,6 +13827,10 @@ textPath {
   font: 16px/1 "Oxygen", sans-serif !important;
 }
 
+.chatbro_chat_name {
+  display: none;
+}
+
 .control.has-icons-left .icon,
 .control.has-icons-right .icon {
   pointer-events: auto !important;
