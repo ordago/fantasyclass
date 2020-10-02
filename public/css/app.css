@@ -13861,7 +13861,7 @@ textPath {
 }
 
 .chatbro_chat_name {
-  display: none;
+  display: none !important;
 }
 
 .control.has-icons-left .icon,
