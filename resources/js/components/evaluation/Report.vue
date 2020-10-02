@@ -46,7 +46,6 @@ import Utils from "../../utils.js";
 export default {
   props: ["classroom", "grades", "settings", "admin"],
   created: function () {
-    console.log(this.grades);
   },
   data: function () {
     return {};
@@ -59,8 +58,13 @@ export default {
       return Utils.getEmoji(grade, this.settings.eval_max);
     },
     getGrade: function (grade) {
-      if (grade.count) return (grade.grade / grade.count).toFixed(2);
-      return grade.grade;
+      // console.log(evaluables)
+      grade.evaluables.forEach(element => {
+        console.log(element)
+      });
+      
+      // if (grade.count) return (grade.grade / grade.count).toFixed(2);
+      // return grade.grade;
     },
     finalGrade: function (student) {
       let finalGrade = 0;

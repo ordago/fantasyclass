@@ -5030,9 +5030,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "grades", "settings", "admin"],
-  created: function created() {
-    console.log(this.grades);
-  },
+  created: function created() {},
   data: function data() {
     return {};
   },
@@ -5044,6 +5042,10 @@ __webpack_require__.r(__webpack_exports__);
       return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getEmoji(grade, this.settings.eval_max);
     },
     getGrade: function getGrade(grade) {
+      // console.log(evaluables)
+      grade.evaluables.forEach(function (element) {
+        console.log(element);
+      });
       if (grade.count) return (grade.grade / grade.count).toFixed(2);
       return grade.grade;
     },

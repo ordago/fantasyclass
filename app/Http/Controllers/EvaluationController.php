@@ -50,7 +50,6 @@ class EvaluationController extends Controller
                 }
             }
         }
-        dump($tags);
         return ['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags];
     }
 
