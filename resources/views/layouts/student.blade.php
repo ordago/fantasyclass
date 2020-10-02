@@ -9,7 +9,7 @@
 @section('menu')
 <div class="navbar-start">
     <a href="/classroom/show/{{ $class->code }}" class="navbar-item" v-tippy content="{{ $student->name }}">
-        <img class="rounded" src="{{ $student->avatar }}"> <span style="min-width: 70px" class="has-margin-left-2">{{ Str::limit($student->name, 8, $end='...') }}</span>
+        <img class="rounded" src="{{ $student->avatar }}"> <span style="min-width: 70px" class=" has-text-centered has-margin-left-2">{{ Str::limit($student->name, 8, $end='...') }}</span>
     </a>
     <a href="/classroom/show/{{ $class->code }}/users" class="navbar-item">
         <i class="fad fa-users has-margin-right-2"></i> {{ __('menu.students') }}
