@@ -5045,9 +5045,8 @@ __webpack_require__.r(__webpack_exports__);
       // console.log(evaluables)
       grade.evaluables.forEach(function (element) {
         console.log(element);
-      });
-      if (grade.count) return (grade.grade / grade.count).toFixed(2);
-      return grade.grade;
+      }); // if (grade.count) return (grade.grade / grade.count).toFixed(2);
+      // return grade.grade;
     },
     finalGrade: function finalGrade(student) {
       var _this = this;
