@@ -77,14 +77,16 @@ class ClassroomsStudentController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
         if (settings()->get('state', 0) == 2)
-            abort(403);
+        abort(403);
     }
-
+    
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.groups', 'theme')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('study', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class]);
 
         $student = Functions::getCurrentStudent($class);
         $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
@@ -97,7 +99,9 @@ class ClassroomsStudentController extends Controller
         $url = env('APP_URL_SHORT');
         $chatbro = md5(env('APP_URL_SHORT').auth()->user()->id.'-'.$student->id.$student->name.env('APP_URL').$student->avatar.env('CHATBRO_KEY'));
         
-        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'chatbro', 'url'));
+        $showChat = settings()->get('show_chat', false);
+
+        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'chatbro', 'url', 'showChat'));
     }
 
     public function challenges($code)
@@ -217,11 +221,19 @@ class ClassroomsStudentController extends Controller
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
 
-        $chat = sha1(env('CHAT_KEY').$class->id);
-        $url = env('APP_URL_SHORT');
-        $chatbro = md5(env('APP_URL_SHORT').auth()->user()->id.'-'.$student->id.$student->name.env('APP_URL').$student->avatar.env('CHATBRO_KEY'));
-        
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'url', 'chatbro'));
+        $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
+        $chat['url'] = env('APP_URL_SHORT'); 
+        $chat['chatbro_id'] = env('CHATBRO_ID');
+        $chat['id'] = auth()->user()->id.'-'.$student->id;
+        $chat['name'] = $student->name;
+        if(strpos($student->avatar, "http") !== false)
+            $chat['avatar'] = $student->avatar;
+        else $chat['avatar'] = env('APP_URL').$student->avatar;
+
+        $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].env('CHATBRO_KEY'));         
+        $showChat = settings()->get('show_chat', false);
+
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat'));
     }
 
     public function rules($code)

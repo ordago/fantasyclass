@@ -322,7 +322,6 @@ export default {
         .then((response) => {});
     },
     save(eq) {
-      console.log(1)
       let key;
       let value;
       switch (eq) {
@@ -339,7 +338,6 @@ export default {
           value = this.config.multiplier3;
           break;
       }
-      console.log('saving')
       axios.patch("/classroom/" + this.code + "/setting", {
         _method: "patch",
         prop: key,

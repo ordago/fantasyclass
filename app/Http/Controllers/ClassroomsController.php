@@ -359,6 +359,17 @@ class ClassroomsController extends Controller
                 $pending->add(['student' => $student, 'cards' => $cards]);
         }
 
-        return view('classrooms.show', compact('class', 'students', 'pending', 'groups'));
+        $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
+        $chat['url'] = env('APP_URL_SHORT'); 
+        $chat['chatbro_id'] = env('CHATBRO_ID');
+        $chat['id'] = '999999-'.auth()->user()->id;
+        $chat['name'] = 'Teacher';
+        $chat['avatar'] = env('APP_URL').'/img/teacher.svg';
+
+        $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].'delete'.env('CHATBRO_KEY')); 
+
+        $showChat = settings()->get('show_chat', false);
+
+        return view('classrooms.show', compact('class', 'students', 'pending', 'groups', 'chat', 'showChat'));
     }
 }

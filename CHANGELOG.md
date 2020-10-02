@@ -1,18 +1,21 @@
 # Changelog
 
-## v1.04 Beta (X/10/2020)
+## v1.04 Beta (02/10/2020)
 ### Added
 - Group view in teachers' view.
-~ Chat in students.
-~ Edit events.
+- Classroom chat.
+- Random student now allows to edit XP, Gold and behaviours.
 - Added shorcut to configure classroom in settings.
 - Show group name when no group logo is present.
-- Random student now allows to edit XP, Gold and behaviours.
+- Show evaluable lines in student's info.
+- Option to delete classroom in configure.
 
 ### Changed
+- Fixed weight grade calculation. 
 - Random event is now in main utilities menu.
 - Fixed showing theme in student info.
 - Fixed errors in level in student info.
+- Fixed settings mobile view.
 
 ## v1.03 Beta (29/09/2020)
 ### Added

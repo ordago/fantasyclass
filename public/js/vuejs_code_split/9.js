@@ -524,6 +524,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -569,7 +582,6 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
   },
   methods: {
     calculate: function calculate(item) {
-      console.log(item);
       var mult = 1;
 
       switch (item.offset) {
@@ -1003,142 +1015,150 @@ var render = function() {
       class: { "has-bg-student": !_vm.admin }
     },
     [
-      _c("div", { staticClass: "column is-narrow has-padding-right-0" }, [
-        _c(
-          "div",
-          {
-            staticClass: "card rounded card-shadow-s",
-            staticStyle: { "min-width": "275px" }
-          },
-          [
-            _c("show-character", {
-              attrs: { student: _vm.student, classroom: _vm.classroom }
-            }),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-content" }, [
-              _c(
-                "div",
-                { staticClass: "media has-margin-bottom-0 has-all-centered" },
-                [
-                  _vm.classroom.character_theme
-                    ? _c("div", { staticClass: "media-left" }, [
-                        _c("figure", { staticClass: "image is-48x48" }, [
-                          _c("img", {
-                            staticClass: "rounded",
-                            attrs: { src: _vm.student.avatar, alt: "" }
-                          })
-                        ])
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "media-content" }, [
-                    _c("p", { staticClass: "title is-4" }, [
-                      _vm._v(_vm._s(_vm.student.name))
-                    ]),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "subtitle is-6" }, [
-                      _c("small", [_vm._v("@" + _vm._s(_vm.student.username))])
-                    ])
-                  ])
-                ]
-              ),
+      _c(
+        "div",
+        { staticClass: "column is-narrow has-padding-right-0 noprint" },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "card rounded card-shadow-s",
+              staticStyle: { "min-width": "275px" }
+            },
+            [
+              _c("show-character", {
+                attrs: { student: _vm.student, classroom: _vm.classroom }
+              }),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
-                  staticStyle: { border: "none" }
-                },
-                [
-                  _c(
-                    "span",
-                    {
-                      staticClass:
-                        "attribute has-background-white-ter has-padding-y-3 rounded",
-                      staticStyle: { width: "100%" }
-                    },
-                    [
-                      _c("span", [
-                        _c("i", {
-                          staticClass:
-                            "fas fa-heart colored has-text-grey-light",
-                          class: { invisible: _vm.student.hp >= 30 }
-                        })
+              _c("div", { staticClass: "card-content" }, [
+                _c(
+                  "div",
+                  { staticClass: "media has-margin-bottom-0 has-all-centered" },
+                  [
+                    _vm.classroom.character_theme
+                      ? _c("div", { staticClass: "media-left" }, [
+                          _c("figure", { staticClass: "image is-48x48" }, [
+                            _c("img", {
+                              staticClass: "rounded",
+                              attrs: { src: _vm.student.avatar, alt: "" }
+                            })
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "media-content" }, [
+                      _c("p", { staticClass: "title is-4" }, [
+                        _vm._v(_vm._s(_vm.student.name))
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.student.hp < 30,
-                              expression: "student.hp<30"
-                            }
-                          ],
-                          staticClass: "has-text-grey-light"
-                        },
-                        [_vm._v(_vm._s(_vm.student.hp))]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.student.hp > 0
-                    ? _c(
-                        "span",
-                        {
-                          staticClass:
-                            "attribute has-background-danger has-padding-y-3 rounded-left",
-                          class: { rounded: _vm.student.hp == 100 },
-                          style: "width: " + _vm.student.hp + "%"
-                        },
-                        [
+                      _c("p", { staticClass: "subtitle is-6" }, [
+                        _c("small", [
+                          _vm._v("@" + _vm._s(_vm.student.username))
+                        ])
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
+                    staticStyle: { border: "none" }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "attribute has-background-white-ter has-padding-y-3 rounded",
+                        staticStyle: { width: "100%" }
+                      },
+                      [
+                        _c("span", [
                           _c("i", {
-                            staticClass: "fas fa-heart colored",
-                            class: { invisible: _vm.student.hp < 30 }
-                          }),
-                          _vm._v(" "),
-                          _vm.student.hp >= 30
-                            ? _c("span", [_vm._v(_vm._s(_vm.student.hp))])
-                            : _vm._e()
-                        ]
-                      )
-                    : _vm._e()
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "score has-padding-3 has-margin-1 has-margin-top-3"
-                },
-                [
-                  _vm._m(0),
-                  _vm._v("\n          " + _vm._s(_vm.student.xp) + "\n        ")
-                ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "gold has-padding-3 has-margin-1 has-margin-top-2"
-                },
-                [
-                  _vm._m(1),
-                  _vm._v(
-                    "\n          " + _vm._s(_vm.student.gold) + "\n        "
-                  )
-                ]
-              )
-            ])
-          ],
-          1
-        )
-      ]),
+                            staticClass:
+                              "fas fa-heart colored has-text-grey-light",
+                            class: { invisible: _vm.student.hp >= 30 }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "span",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.student.hp < 30,
+                                expression: "student.hp<30"
+                              }
+                            ],
+                            staticClass: "has-text-grey-light"
+                          },
+                          [_vm._v(_vm._s(_vm.student.hp))]
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm.student.hp > 0
+                      ? _c(
+                          "span",
+                          {
+                            staticClass:
+                              "attribute has-background-danger has-padding-y-3 rounded-left",
+                            class: { rounded: _vm.student.hp == 100 },
+                            style: "width: " + _vm.student.hp + "%"
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fas fa-heart colored",
+                              class: { invisible: _vm.student.hp < 30 }
+                            }),
+                            _vm._v(" "),
+                            _vm.student.hp >= 30
+                              ? _c("span", [_vm._v(_vm._s(_vm.student.hp))])
+                              : _vm._e()
+                          ]
+                        )
+                      : _vm._e()
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "score has-padding-3 has-margin-1 has-margin-top-3"
+                  },
+                  [
+                    _vm._m(0),
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.student.xp) + "\n        "
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "gold has-padding-3 has-margin-1 has-margin-top-2"
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(
+                      "\n          " + _vm._s(_vm.student.gold) + "\n        "
+                    )
+                  ]
+                )
+              ])
+            ],
+            1
+          )
+        ]
+      ),
       _vm._v(" "),
       _c(
         "div",
@@ -2291,6 +2311,33 @@ var render = function() {
                       }
                     },
                     [
+                      _c("div", { staticClass: "content" }, [
+                        _c("h1", [_vm._v(_vm._s(_vm.student.name))]),
+                        _vm._v(" "),
+                        _c(
+                          "table",
+                          { staticClass: "grades" },
+                          [
+                            _c("th", [_vm._v("Description")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("Grade")]),
+                            _vm._v(" "),
+                            _c("th", [_vm._v("Feedback")]),
+                            _vm._v(" "),
+                            _vm._l(_vm.student.grades, function(grade, index) {
+                              return _c("tr", { key: index }, [
+                                _c("td", [_vm._v(_vm._s(grade.description))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(grade.pivot.grade))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(grade.pivot.feedback))])
+                              ])
+                            })
+                          ],
+                          2
+                        )
+                      ]),
+                      _vm._v(" "),
                       _c("report", {
                         attrs: {
                           classroom: _vm.classroom,

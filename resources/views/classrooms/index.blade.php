@@ -40,7 +40,7 @@
         <span class="admin">
           @yield('state')
           <clone-classroom :classroom="{{ $classroom }}"></clone-classroom>
-          <a href="/classroom/{{ $classroom->code }}/edit" class="has-text-white" {{ Popper::pop(__('menu.config')) }}><i class="far fa-cog"></i></a>
+          <a href="/classroom/{{ $classroom->code }}/edit" class="has-text-white has-margin-x-2" {{ Popper::pop(__('menu.config')) }}><i class="far fa-cog"></i></a>
           <span {{ Popper::pop(__('classroom.admin')) }}>
             <i class="far fa-user-crown"></i>
           </span>

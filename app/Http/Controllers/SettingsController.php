@@ -27,6 +27,7 @@ class SettingsController extends Controller
         $settings['fog'] = settings()->get('fog', false);
         $settings['num_cards'] = settings()->get('num_cards', 5);
         $settings['allow_upload'] = settings()->get('allow_upload', false);
+        $settings['show_chat'] = settings()->get('show_chat', false);
 
         $teachers = $class->users->where('pivot.role', '>', 0);     
         

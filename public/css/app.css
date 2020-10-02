@@ -11383,7 +11383,6 @@ label.panel-block:hover {
 }
 #app {
   height: 100%;
-  overflow: auto;
 }
 
 .fs-2 {
@@ -12704,6 +12703,29 @@ textPath {
     padding: 20px;
   }
 }
+@media print {
+  .noprint {
+    display: none;
+  }
+
+  .tabs {
+    display: none;
+  }
+}
+/* PWA */
+@media screen and (max-width: 1024px) {
+  div {
+    -webkit-user-select: none;
+    /* Safari 3.1+ */
+    -moz-user-select: none;
+    /* Firefox 2+ */
+    -ms-user-select: none;
+    /* IE 10+ */
+    user-select: none;
+    /* Standard syntax */
+  }
+}
+/***************************/
 .challenge-category {
   position: absolute;
   top: 0;
@@ -12711,6 +12733,17 @@ textPath {
   font-size: 1.2em;
   padding: 10px;
   border-radius: 50%;
+}
+
+.grades th {
+  background-color: black;
+  color: white !important;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+.grades td {
+  text-align: center !important;
 }
 
 .map-iframe {

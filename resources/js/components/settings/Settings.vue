@@ -5,45 +5,51 @@
         <i class="fal fa-chalkboard"></i>
         {{ trans.get('settings.classroom') }}
       </h1>
-      <div class="has-padding-left-4 is-flex is-scrollable-h">
-        <a class="button has-margin-right-4" :href="'/classroom/' + classroom.code + '/edit'"><i class="far fa-cog has-margin-right-2"></i> {{ trans.get('menu.config') }} (wizard)</a>
-        <b-field>
-          <b-radio-button
-            v-model="state"
-            @input="updateClassState('state', 0)"
-            native-value="0"
-            type="is-success"
-          >
-            <b-icon icon="check" icon-pack="fa"></b-icon>
-            <span>{{ trans.get('settings.active') }}</span>
-          </b-radio-button>
-          <b-radio-button
-            v-model="state"
-            @input="updateClassState('state', 1)"
-            native-value="1"
-            type="is-warning"
-          >
-            <b-icon icon="hourglass-end"></b-icon>
-            <span>{{ trans.get('settings.finished') }}</span>
-          </b-radio-button>
-          <b-radio-button
-            v-model="state"
-            @input="updateClassState('state', 2)"
-            native-value="2"
-            type="is-danger"
-          >
-            <b-icon icon="eye-slash"></b-icon>
-            <span>{{ trans.get('settings.disabled') }}</span>
-          </b-radio-button>
-        </b-field>
-        <button class="button has-margin-left-4 is-danger" @click="confirmDelete" v-if="isAdmin">
-          <i class="fas fa-trash"></i>
-          <span class="has-margin-x-3">
-            {{ trans.get('general.delete') }}
-            <i class="fas fa-radiation-alt"></i>
-            <i class="fas fa-exclamation-triangle"></i>
-          </span>
-        </button>
+      <div class="has-padding-left-4 columns">
+        <div class="column is-narrow">
+          <a class="button has-margin-right-4" :href="'/classroom/' + classroom.code + '/edit'"><i class="far fa-cog has-margin-right-2"></i> {{ trans.get('menu.config') }} (wizard)</a>
+        </div>
+        <div class="column is-narrow">
+          <b-field>
+            <b-radio-button
+              v-model="state"
+              @input="updateClassState('state', 0)"
+              native-value="0"
+              type="is-success"
+            >
+              <b-icon icon="check" icon-pack="fa"></b-icon>
+              <span>{{ trans.get('settings.active') }}</span>
+            </b-radio-button>
+            <b-radio-button
+              v-model="state"
+              @input="updateClassState('state', 1)"
+              native-value="1"
+              type="is-warning"
+            >
+              <b-icon icon="hourglass-end"></b-icon>
+              <span>{{ trans.get('settings.finished') }}</span>
+            </b-radio-button>
+            <b-radio-button
+              v-model="state"
+              @input="updateClassState('state', 2)"
+              native-value="2"
+              type="is-danger"
+            >
+              <b-icon icon="eye-slash"></b-icon>
+              <span>{{ trans.get('settings.disabled') }}</span>
+            </b-radio-button>
+          </b-field>
+        </div>
+        <div class="column is-narrow">
+          <button class="button has-margin-left-4 is-danger" @click="confirmDelete" v-if="isAdmin">
+            <i class="fas fa-trash"></i>
+            <span class="has-margin-x-3">
+              {{ trans.get('general.delete') }}
+              <i class="fas fa-radiation-alt"></i>
+              <i class="fas fa-exclamation-triangle"></i>
+            </span>
+          </button>
+        </div>
       </div>
 
       <b-field :label="trans.get('settings.enrollment_code')" style="width: 400px">
@@ -64,13 +70,24 @@
           <i class="fal fa-cog"></i>
           {{ trans.get('settings.general_preferences') }}
         </h1>
-        <b-switch
-          class="has-margin-left-4"
-          true-value="1"
-          false-value="0"
-          @input="toggleProp('allow_upload')"
-          v-model="settings.allow_upload"
-        >{{ trans.get('settings.allow_upload') }}</b-switch>
+        <div class="has-margin-y-4">
+          <b-switch
+            class="has-margin-left-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('allow_upload')"
+            v-model="settings.allow_upload"
+          >{{ trans.get('settings.allow_upload') }}</b-switch>
+        </div>
+        <div class="has-margin-y-4">
+          <b-switch
+            class="has-margin-left-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('show_chat')"
+            v-model="settings.show_chat"
+          >{{ trans.get('settings.show_chat') }}</b-switch>
+        </div>
       </div>
       <div class="has-padding-2 has-margin-top-4">
         <h1>

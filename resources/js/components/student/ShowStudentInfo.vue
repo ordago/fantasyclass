@@ -1,6 +1,6 @@
 <template>
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
-    <div class="column is-narrow has-padding-right-0">
+    <div class="column is-narrow has-padding-right-0 noprint">
       <div class="card rounded card-shadow-s" style="min-width: 275px">
         <show-character :student="student" :classroom="classroom"></show-character>
         <div class="card-content">
@@ -417,6 +417,19 @@
         </b-tab-item>
 
         <b-tab-item :label="trans.get('students.evaluation')" v-if="evaluation" icon="analytics" icon-pack="fad">
+          <div class="content">
+            <h1>{{ student.name }}</h1>
+            <table class="grades">
+              <th>Description</th>
+              <th>Grade</th>
+              <th>Feedback</th>
+              <tr v-for="(grade,index) in student.grades" :key="index">
+                <td>{{ grade.description }}</td>
+                <td>{{ grade.pivot.grade }}</td>
+                <td>{{ grade.pivot.feedback }}</td>
+              </tr>
+            </table>
+          </div>
           <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
         </b-tab-item>
 
@@ -570,7 +583,6 @@ export default {
   },
   methods: {
     calculate(item) {
-      console.log(item);
       let mult = 1;
       switch (item.offset) {
         case 1:

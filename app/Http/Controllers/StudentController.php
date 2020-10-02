@@ -151,7 +151,7 @@ class StudentController extends Controller
 
     public function show($code, $id)
     {
-        $student = Student::where('id', $id)->with(['equipment', 'badges', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
+        $student = Student::where('id', $id)->with(['equipment', 'badges', 'classroom', 'behaviours', 'logEntries', 'items', 'grades'])->first();
 
         if ($student->classroom->classroom->code != $code)
             abort(404);

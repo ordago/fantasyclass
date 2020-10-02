@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluable extends Model
 {
+
     protected $fillable = [
         'description',
         'classroom_id',
@@ -13,7 +14,7 @@ class Evaluable extends Model
         'rubric_id',
         'challenge_id',
     ];
-
+    
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withPivot('weight');

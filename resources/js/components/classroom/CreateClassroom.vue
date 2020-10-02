@@ -76,13 +76,23 @@
                 </div>
             </b-tab-item>
         </b-tabs>
-        <div class="is-flex has-padding-x-4" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
-            <div class="buttons has-addons">
+        <div class="has-padding-x-4 columns" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
+            <div class="column has-margin-0 buttons has-addons">
                 <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
                 <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<3"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <button class="button is-link" v-if="classroom">{{ trans.get('classroom.edit') }}</button>
-            <button class="button is-success" v-if="!classroom">{{ trans.get('classroom.end_wizard') }}</button>
+            <div class="column has-margin-0 has-text-right" v-if="classroom">
+                <button class="button has-margin-left-4 is-danger" @click.prevent="confirmDelete">
+                    <i class="fas fa-trash"></i>
+                    <span class="has-margin-x-3">
+                    {{ trans.get('general.delete') }}
+                    <i class="fas fa-radiation-alt"></i>
+                    <i class="fas fa-exclamation-triangle"></i>
+                    </span>
+                </button>
+                <button class="button is-link"><i class="fas fa-edit has-margin-right-2"></i> {{ trans.get('classroom.edit') }}</button>
+            </div>
+            <button class="button is-success" v-else>{{ trans.get('classroom.end_wizard') }}</button>
         </div>
     </section>
 </template>
@@ -120,6 +130,24 @@
                 selectGoal: function(id) {
                     this.goalSelected = id
                 },
+                confirmDelete() {
+                    this.$buefy.dialog.confirm({
+                        title: this.trans.get("general.delete"),
+                        message: this.trans.get("general.confirm_delete_class"),
+                        confirmText: this.trans.get("general.delete"),
+                        type: "is-danger",
+                        hasIcon: true,
+                        icon: "times-circle",
+                        iconPack: "fa",
+                        ariaRole: "alertdialog",
+                        ariaModal: true,
+                        onConfirm: () => {
+                        axios.delete("/classroom/" + this.classroom.code).then((response) => {
+                            location.href = response.data;
+                        });
+                        },
+                    });
+                    },
             },
     }
 </script>

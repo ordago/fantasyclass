@@ -22,6 +22,7 @@ return [
     'add_teachers' => 'Add teacher',
     'general_preferences' => 'General preferences',
     'allow_upload' => 'Allow students to upload custom images',
+    'show_chat' => 'Enable classroom chat',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

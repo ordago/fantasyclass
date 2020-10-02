@@ -22,6 +22,7 @@ return [
     'add_teachers' => 'Añadir profe',
     'general_preferences' => 'Preferencias generales',
     'allow_upload' => 'Permite a los y las estudiantes subir imágenes propias',
+    'show_chat' => 'Habilita el chat de la clase',
     
     'cards' => 'Máximo de cartas por estudiante',
     'rare' => 'Rara',

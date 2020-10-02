@@ -151,7 +151,9 @@
             @yield('content')
         </main>
     </div>
-    @stack('scriptchat');
+    @if(isset($showChat) && $showChat == true)
+        @stack('scriptchat');
+    @endif
 </body>
 
 </html>

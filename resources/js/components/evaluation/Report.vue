@@ -5,7 +5,7 @@
         <i class="fas fa-file-spreadsheet"></i>
       </b-button>
     </download-excel>-->
-    <table>
+    <table class="grades">
       <th>Student name</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
         {{ tag.name }}
@@ -77,19 +77,3 @@ export default {
   },
 };
 </script>
-<style lang="scss" scoped>
-th {
-  background-color: black;
-  color: white !important;
-  text-align: center !important;
-  vertical-align: middle !important;
-}
-td {
-  text-align: center !important;
-}
-@media print {
-  .noprint {
-    visibility: hidden;
-  }
-}
-</style>

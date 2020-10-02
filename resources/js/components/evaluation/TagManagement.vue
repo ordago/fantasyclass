@@ -7,12 +7,12 @@
       <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
         <i class="has-margin-right-2 fas fa-tasks-alt"></i> {{ trans.get('evaluation.rubric_management') }}
       </a>
-      <button class="button is-dark" @click="isPrefsModalActive=true">
-        <i class="has-margin-right-2 fas fa-cog"></i> {{ trans.get('evaluation.config') }}
-      </button>
       <a :href="'/classroom/' + classroom.code + '/evaluation/report'" class="button is-primary">
         <i class="has-margin-right-2 fas fa-file-chart-line"></i> {{ trans.get('evaluation.report') }}
       </a>
+      <button class="button is-dark" @click="isPrefsModalActive=true">
+        <i class="has-margin-right-2 fas fa-cog"></i> {{ trans.get('evaluation.config') }}
+      </button>
     </div>
     <div class="has-margin-y-3">
       <span
@@ -293,7 +293,6 @@ export default {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
     this.linesReactive = this.lines;
-    console.log(this.linesReactive)
   },
   data: function () {
     return {
