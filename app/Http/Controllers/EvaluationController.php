@@ -39,7 +39,9 @@ class EvaluationController extends Controller
                 foreach ($evaluable->tags as $evalTag) {
                     $tags->transform(function ($item, $key) use ($evalTag, $grade) {
                         if ($item['id'] == $evalTag->id) {
+                            $evalTag->grade = $grade->pivot->grade;
                             $item['evaluables']->push($evalTag);
+                            
                             // $item['count'] = $item['count'] + 1;
                             // $gradeCalc = ($item['grade'] + $evalTag->pivot->weight * $grade->pivot->grade);
                         } else {
@@ -50,6 +52,7 @@ class EvaluationController extends Controller
                 }
             }
         }
+        // dump($tags);
         return ['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags];
     }
 

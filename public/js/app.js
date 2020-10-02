@@ -5042,11 +5042,14 @@ __webpack_require__.r(__webpack_exports__);
       return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getEmoji(grade, this.settings.eval_max);
     },
     getGrade: function getGrade(grade) {
-      // console.log(evaluables)
+      var totalGrades = 0;
+      var totalWeight = 0;
       grade.evaluables.forEach(function (element) {
-        console.log(element);
-      }); // if (grade.count) return (grade.grade / grade.count).toFixed(2);
-      // return grade.grade;
+        totalGrades += element.grade * element.pivot.weight;
+        totalWeight += element.pivot.weight;
+      });
+      if (totalGrades == 0) return 0;
+      return (totalGrades / totalWeight).toFixed(2);
     },
     finalGrade: function finalGrade(student) {
       var _this = this;

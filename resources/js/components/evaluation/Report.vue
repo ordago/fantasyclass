@@ -58,13 +58,14 @@ export default {
       return Utils.getEmoji(grade, this.settings.eval_max);
     },
     getGrade: function (grade) {
-      // console.log(evaluables)
+      let totalGrades = 0;
+      let totalWeight = 0;
       grade.evaluables.forEach(element => {
-        console.log(element)
+        totalGrades += element.grade * element.pivot.weight
+        totalWeight +=  element.pivot.weight
       });
-      
-      // if (grade.count) return (grade.grade / grade.count).toFixed(2);
-      // return grade.grade;
+      if(totalGrades == 0) return 0;
+      return (totalGrades / totalWeight).toFixed(2);
     },
     finalGrade: function (student) {
       let finalGrade = 0;
