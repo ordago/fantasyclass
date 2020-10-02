@@ -64,6 +64,8 @@
               class="tag is-dark has-margin-right-2"
               v-for="tag in props.row.tags"
               :key="tag.id"
+              v-tippy
+              :content="'Weight: ' + tag.pivot.weight"
             >{{ tag.short }}</span>
           </b-table-column>
 
@@ -291,6 +293,7 @@ export default {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
     this.linesReactive = this.lines;
+    console.log(this.linesReactive)
   },
   data: function () {
     return {

@@ -5407,12 +5407,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "tags", "rubrics", "lines", "settings"],
   created: function created() {
     this.tagsReactive = this.tags;
     this.filteredTags = this.tags;
     this.linesReactive = this.lines;
+    console.log(this.linesReactive);
   },
   data: function data() {
     return {
@@ -55152,8 +55155,14 @@ var render = function() {
                               return _c(
                                 "span",
                                 {
+                                  directives: [
+                                    { name: "tippy", rawName: "v-tippy" }
+                                  ],
                                   key: tag.id,
-                                  staticClass: "tag is-dark has-margin-right-2"
+                                  staticClass: "tag is-dark has-margin-right-2",
+                                  attrs: {
+                                    content: "Weight: " + tag.pivot.weight
+                                  }
                                 },
                                 [_vm._v(_vm._s(tag.short))]
                               )
@@ -55223,7 +55232,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2813121235
+                  418754758
                 )
               })
             : _vm._e()
