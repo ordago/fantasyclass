@@ -294,7 +294,8 @@
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item :label="trans.get('students.cards')" v-if="cards.length" icon="club" icon-pack="fad">
+        <b-tab-item :label="trans.get('students.cards')" v-if="admin || cards.length" icon="club" icon-pack="fad">
+          <button class="button is-link has-margin-left-3" v-if="admin" @click="isAssignModalActive=true">{{ trans.get('cards.assign') }}</button>
           <div class="columns is-multiline is-variable">
             <div
               v-for="(card, index) in cards"
@@ -518,6 +519,24 @@
         </b-tab-item>
       </b-tabs>
     </div>
+
+    <b-modal v-if="admin" :active.sync="isAssignModalActive" has-modal-card full-screen :can-cancel="false">
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get('cards.add') }}</p>
+        </header>
+        <section class="modal-card-body is-relative" style="z-index: 1">
+           <show-cards :code="classroom.code" :cards="allcards" :student="student.id"></show-cards>
+        </section>
+        <footer class="modal-card-foot columns is-multiline" style="overflow-x: auto">
+          <div class="column is-narrow">
+            <button class="button" type="button" @click="isAssignModalActive=false">{{ trans.get('general.close') }}</button>
+          </div>
+        </footer>
+      </div>
+    </b-modal>
+
+
   </div>
 </template>
 
@@ -547,6 +566,7 @@ export default {
     "cards",
     "evaluation",
     "settings",
+    "allcards",
   ],
   mounted() {
     this.behaviours = this.student.behaviours;
@@ -579,6 +599,7 @@ export default {
       prevImage: null,
       image: null,
       behaviours: null,
+      isAssignModalActive: false,
     };
   },
   methods: {

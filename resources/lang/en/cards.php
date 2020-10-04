@@ -5,6 +5,7 @@ return [
     'import_default' => 'Import default cards',
     'create_card' => 'Create card',
     'edit_card' => 'Edit card',
+    'assign' => 'Assign card manually',
     
     'title' => 'Title',
     'background_color' => 'Background color',

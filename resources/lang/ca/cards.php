@@ -5,6 +5,7 @@ return [
     'import_default' => 'Importa cartes per defecte',
     'create_card' => 'Crea carta',
     'edit_card' => 'Edita carta',
+    'assign' => 'Assigna carta manualment',
     
     'title' => 'Títol',
     'description' => 'Descripció',

@@ -91,7 +91,10 @@
         <span>{{ card.gold }}</span>
       </div>
     </div>
-    <div style="text-align:center;" v-if="this.admin==1">
+    <div style="text-align:center;" v-if="this.admin==1 && this.assign">
+      <button class="button is-dark" @click="assignCard">Assign</button>
+    </div>
+    <div style="text-align:center;" v-if="this.admin==1 && !this.assign">
       <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-dark">
         <i class="fas fa-edit"></i>
       </a>
@@ -110,7 +113,7 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["card", "admin", "code", "use", "student"],
+  props: ["card", "admin", "code", "use", "student", "assign"],
   mounted() {
     this.description = Utils.styleText(this.trans.get(this.card.description));
   },
@@ -120,6 +123,12 @@ export default {
     };
   },
   methods: {
+    assignCard() {
+      axios.post('/classroom/' + this.code + '/card/assign', {type: 'student', 'id': this.assign, card: this.card.id})
+        .then(response => {
+          location.reload();
+        })
+    },
     markCard(card, type) {
       let number = 0;
       if (this.$parent.$parent.$parent.student.level != null)

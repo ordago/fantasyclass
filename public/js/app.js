@@ -2839,9 +2839,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["card", "admin", "code", "use", "student"],
+  props: ["card", "admin", "code", "use", "student", "assign"],
   mounted: function mounted() {
     this.description = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].styleText(this.trans.get(this.card.description));
   },
@@ -2851,6 +2854,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    assignCard: function assignCard() {
+      axios.post('/classroom/' + this.code + '/card/assign', {
+        type: 'student',
+        'id': this.assign,
+        card: this.card.id
+      }).then(function (response) {
+        location.reload();
+      });
+    },
     markCard: function markCard(card, type) {
       var _this = this;
 
@@ -2942,7 +2954,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['cards', 'code'],
+  props: ['cards', 'code', 'student'],
   mounted: function mounted() {
     this.cardsJson = JSON.parse(this.cards);
   },
@@ -50770,7 +50782,17 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    this.admin == 1
+    this.admin == 1 && this.assign
+      ? _c("div", { staticStyle: { "text-align": "center" } }, [
+          _c(
+            "button",
+            { staticClass: "button is-dark", on: { click: _vm.assignCard } },
+            [_vm._v("Assign")]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    this.admin == 1 && !this.assign
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
           _c(
             "a",
@@ -50841,7 +50863,7 @@ var render = function() {
     _vm._l(this.orderedCards, function(card) {
       return _c("show-card", {
         key: card.id,
-        attrs: { code: _vm.code, admin: "1", card: card }
+        attrs: { code: _vm.code, admin: "1", assign: _vm.student, card: card }
       })
     }),
     1
@@ -81789,6 +81811,7 @@ __webpack_require__.r(__webpack_exports__);
     "import_default": "Importa cartes per defecte",
     "create_card": "Crea carta",
     "edit_card": "Edita carta",
+    "assign": "Assigna carta manualment",
     "title": "T\xEDtol",
     "description": "Descripci\xF3",
     "background_color": "Color de fons",
@@ -82382,6 +82405,7 @@ __webpack_require__.r(__webpack_exports__);
     "import_default": "Import default cards",
     "create_card": "Create card",
     "edit_card": "Edit card",
+    "assign": "Assign card manually",
     "title": "Title",
     "background_color": "Background color",
     "min_lvl": "Min level",
@@ -82981,6 +83005,7 @@ __webpack_require__.r(__webpack_exports__);
     "import_default": "Importa cartas por defecto",
     "create_card": "Crea carta",
     "edit_card": "Edita carta",
+    "assign": "Asigna carta manualmente",
     "title": "T\xEDtulo",
     "description": "Descripci\xF3n",
     "background_color": "Color de fondo",

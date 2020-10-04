@@ -537,6 +537,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -547,7 +566,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges", "cards", "evaluation", "settings"],
+  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges", "cards", "evaluation", "settings", "allcards"],
   mounted: function mounted() {
     this.behaviours = this.student.behaviours;
 
@@ -577,7 +596,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       forceReload: 0,
       prevImage: null,
       image: null,
-      behaviours: null
+      behaviours: null,
+      isAssignModalActive: false
     };
   },
   methods: {
@@ -1929,7 +1949,7 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm.cards.length
+              _vm.admin || _vm.cards.length
                 ? _c(
                     "b-tab-item",
                     {
@@ -1940,6 +1960,21 @@ var render = function() {
                       }
                     },
                     [
+                      _vm.admin
+                        ? _c(
+                            "button",
+                            {
+                              staticClass: "button is-link has-margin-left-3",
+                              on: {
+                                click: function($event) {
+                                  _vm.isAssignModalActive = true
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.trans.get("cards.assign")))]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
                       _c(
                         "div",
                         { staticClass: "columns is-multiline is-variable" },
@@ -2647,8 +2682,84 @@ var render = function() {
           )
         ],
         1
-      )
-    ]
+      ),
+      _vm._v(" "),
+      _vm.admin
+        ? _c(
+            "b-modal",
+            {
+              attrs: {
+                active: _vm.isAssignModalActive,
+                "has-modal-card": "",
+                "full-screen": "",
+                "can-cancel": false
+              },
+              on: {
+                "update:active": function($event) {
+                  _vm.isAssignModalActive = $event
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-card", staticStyle: { width: "auto" } },
+                [
+                  _c("header", { staticClass: "modal-card-head" }, [
+                    _c("p", { staticClass: "modal-card-title" }, [
+                      _vm._v(_vm._s(_vm.trans.get("cards.add")))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "section",
+                    {
+                      staticClass: "modal-card-body is-relative",
+                      staticStyle: { "z-index": "1" }
+                    },
+                    [
+                      _c("show-cards", {
+                        attrs: {
+                          code: _vm.classroom.code,
+                          cards: _vm.allcards,
+                          student: _vm.student.id
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "footer",
+                    {
+                      staticClass: "modal-card-foot columns is-multiline",
+                      staticStyle: { "overflow-x": "auto" }
+                    },
+                    [
+                      _c("div", { staticClass: "column is-narrow" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "button",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                _vm.isAssignModalActive = false
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]
+          )
+        : _vm._e()
+    ],
+    1
   )
 }
 var staticRenderFns = [

@@ -3,6 +3,7 @@
 ## v1.05 Beta (XX/10/2020)
 ### Added
 - Event management: create and edit events.
+- Assign card to student manually.
 ~ Show rubric in student.
 
 ### Changed
