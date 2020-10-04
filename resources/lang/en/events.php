@@ -2,6 +2,11 @@
 
 return [
 
+    'add' => 'Add event',
+    'title' => 'Title',
+    'content' => 'Content',
+    'edit' => 'Edit event',
+
     /*
     |--------------------------------------------------------------------------
     | Events

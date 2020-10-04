@@ -47,10 +47,8 @@ class ShopController extends Controller
                 'eq2' => $eq2,
                 'eq3' => $eq3,
             ];
-        }
+        } else $shop = null;
         $items = $class->items;
-
-
 
         return view('shop.index', compact('class', 'config', 'items', 'character', 'shop'));
     }

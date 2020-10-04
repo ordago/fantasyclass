@@ -2,6 +2,11 @@
 
 return [
 
+    'add' => 'Afegeix esdeveniment',
+    'title' => 'Títol',
+    'content' => 'Contingut',
+    'edit' => 'Edita esdeveniment',
+
     /*
     |--------------------------------------------------------------------------
     | Events

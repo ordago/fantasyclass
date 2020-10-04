@@ -27,6 +27,9 @@ return [
     
     'no' => "No",
 
+    'enable' => "Habilita",
+    'disable' => "Deshabilita",
+
     'confirm_delete' => "Estàs segur/a d'eliminar aquest element? Aquesta acció no es pot desfer.",
     'confirm_delete_class' => "Estàs segur/a d'eliminar aquest element? Aquesta acció no es pot desfer. S'ELIMINARÀ TOTA LA INFORMACIÓ DELS ESTUDIANTS.",
     'delete' => "Elimina",

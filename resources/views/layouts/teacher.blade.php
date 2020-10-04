@@ -39,9 +39,9 @@
             <a href="/classroom/{{ $class->code }}/shop" class="navbar-item">
                 <i class="fad fa-store has-margin-right-2"></i> {{ __('menu.shop') }}
             </a>
-            <!-- <a href="/classroom/{{ $class->code }}/events" class="navbar-item">
+            <a href="/classroom/{{ $class->code }}/events" class="navbar-item">
                 <i class="fad fa-scroll has-margin-right-2"></i> {{ __('menu.events') }}
-            </a> -->
+            </a>
         </div>
     </div>
     <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">

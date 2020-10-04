@@ -359,7 +359,7 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
-        if ($item->min_lvl > $student->level->number) {
+        if ($student->level && $item->min_lvl > $student->level->number) {
             return [
                 "message" => " " . __('success_error.shop_failed_level'),
                 "icon" => "sad-tear",

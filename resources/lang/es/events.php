@@ -2,6 +2,11 @@
 
 return [
 
+    'add' => 'Añade evento',
+    'title' => 'Título',
+    'content' => 'Contenido',
+    'edit' => 'Edita evento',
+
     /*
     |--------------------------------------------------------------------------
     | Events
@@ -16,7 +21,7 @@ return [
     'leader' => 'Sigue al líder', 
     'leader_content' => 'Antes de empezar la clase tenéis que hacer aquello que diga el Dios / la Diosa del juego. Quien no lo haga / participo, perderá 10 <i class=\'fas fa-heart colored\'></i>.',
     'monty' => 'Los caballeros que diuen NI!', 
-    'monty_content' => 'El Dios / La Diosa hoy no se encuentra bien y se le escapan \'ni\' mientras nos transmite sus conocimientos. Es contagioso!!! Todos los presentes tendrán que hacer el mismo en sus intervenciones.', 
+    'monty_content' => 'El Dios / La Diosa hoy no se encuentra bien y se le escapan \'ni\' mientras nos transmite sus conocimientos. ¡¡¡Es contagioso!!! Todos los presentes tendrán que hacer el mismo en sus intervenciones.', 
     'cordiality' => 'Cordialidad', 
     'cordiality_content' => 'Cada vez que alguien se dirija a otra persona tiene que empezar y acabar con una reverencia.',
     'plague' => 'La peste', 
@@ -24,7 +29,7 @@ return [
     'panic' => 'Pánico total', 
     'panic_content' => '<i class=\'fas fa-sad-tear colored\'></i> Una mandada de jabalíes aparece y os pilla desprevenidos.',
     'indigestion' => 'Indigestión', 
-    'indigestion_content' => '"<i class=\'fas fa-sad-tear colored\'></i> Habéis comido pez en mal estado. &nbsp;<i class=\'fas fa-fish\'></i><i class=\'fas fa-dizzy\'></i>',
+    'indigestion_content' => '<i class=\'fas fa-sad-tear colored\'></i> Habéis comido pescado en mal estado. &nbsp;<i class=\'fas fa-fish\'></i><i class=\'fas fa-dizzy\'></i>',
     'assistant' => 'El asistente', 
     'assistant_content' => '<i class=\'fas fa-user-graduate\'></i> Un héroe / una heroína será el ayudante del Dios / de la Diosa.',
     'breath' => 'Un respiro...', 
@@ -39,15 +44,15 @@ return [
     'helpful' => 'Los más serviciales', 
     'helpful_content' => 'Los y las estudiantes con la siguiente subclase serán los últimos al salir de clase:',
     'laugh' => 'La vida es para reír', 
-    'laugh_content' => '<i class=\'fas fa-laugh-beam colored\'></i> Una persona a l\'azar cuenta un chiste, el Dios / la Diosa del juego decidirá si darle oro o castigarlo con vida.',
+    'laugh_content' => '<i class=\'fas fa-laugh-beam colored\'></i> Una persona al azar cuenta un chiste, el Dios / la Diosa del juego decidirá si darle oro o castigarlo con vida.',
     'wisdom' => 'Portador de sabiduría', 
     'wisdom_content' => '<i class=\'fas fa-question-circle\'></i> El Dios / La Diosa formula una pregunta a un héroe / a una heroína. Ganará o perderá experiencia.',
     'lucky' => 'Tu dia de suerte!', 
     'lucky_content' => '<i class=\'fas fa-laugh-beam colored\'></i> Un/a estudiante ganará oro!',
-    'tithes' => 'Dia dels delmes', 
-    'tithes_content' => '<i class=\'fas fa-sad-tear colored\'></i> Un/a estudiant deberá pagarlos.',
+    'tithes' => 'Dia de los diezmos', 
+    'tithes_content' => '<i class=\'fas fa-sad-tear colored\'></i> Un/a estudiante deberá pagarlos.',
     'reward' => 'La gran recompensa', 
-    'reward_content' => '<i class=\'fas fa-gift\'></i> Un/a estudiant gana una carta!',
+    'reward_content' => '<i class=\'fas fa-gift\'></i> Un/a estudiante gana una carta!',
     'dragon' => '<i class=\'fas fa-dragon\'></i> Habrá dragones en esta cueva?', 
     'dragon_content' => 'Tenéis que decidir si entrar o no.',
     'dragon_content_ok' => 'Bien! No había dragones y hemos encontrado un tesoro!!!',

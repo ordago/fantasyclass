@@ -5868,6 +5868,202 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["classroom", "events", "disabled"],
+  mounted: function mounted() {},
+  data: function data() {
+    return {
+      isModalActive: false,
+      event: {
+        title: "",
+        content: "",
+        id: null,
+        type: 0,
+        options: null,
+        classroom_id: this.classroom.id
+      },
+      edit: false
+    };
+  },
+  methods: {
+    addEvent: function addEvent(type) {
+      if (type == 0) {
+        axios.post('/classroom/events/add', {
+          event: this.event
+        }).then(function (response) {
+          location.reload();
+        });
+      } else {
+        axios.post('/classroom/events/edit', {
+          event: this.event
+        }).then(function (response) {
+          location.reload();
+        });
+      }
+    },
+    showAddModal: function showAddModal() {
+      this.edit = false;
+      this.event.title = "";
+      this.event.content = "";
+      this.isModalActive = true;
+    },
+    editModal: function editModal(event) {
+      this.event.id = event.id;
+      this.event.title = event.title;
+      this.event.content = event.content;
+      this.edit = true;
+      this.isModalActive = true;
+    },
+    toggle: function toggle(event) {
+      var _this = this;
+
+      axios.post('/classroom/' + this.classroom.code + '/events/disable', {
+        id: event
+      }).then(function (response) {
+        if (_this.isDisabled(event)) {
+          var index = _this.disabled.indexOf(event);
+
+          if (index > -1) {
+            _this.disabled.splice(index, 1);
+          }
+        } else _this.disabled.push(event);
+
+        _this.$forceUpdate();
+      });
+    },
+    isDisabled: function isDisabled(event) {
+      return this.disabled.includes(event);
+    },
+    confirmDelete: function confirmDelete(event) {
+      var _this2 = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          var index = _this2.events.findIndex(function (item, i) {
+            return item.id === event;
+          });
+
+          axios["delete"]("/classroom/events/" + event).then(function (response) {
+            if (response.data === 1) {
+              _this2.events.splice(index, 1);
+            }
+          });
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/group/CreateGroups.vue?vue&type=script&lang=js&":
 /*!*****************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/group/CreateGroups.vue?vue&type=script&lang=js& ***!
@@ -26100,6 +26296,25 @@ exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntr.is-disabled {\n  background: #999;\n  color: #fff;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/level/ShowLevel.vue?vue&type=style&index=0&lang=css&":
 /*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/level/ShowLevel.vue?vue&type=style&index=0&lang=css& ***!
@@ -44843,6 +45058,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvents.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/level/ShowLevel.vue?vue&type=style&index=0&lang=css&":
 /*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/level/ShowLevel.vue?vue&type=style&index=0&lang=css& ***!
@@ -56543,6 +56788,329 @@ var render = function() {
             )
           : _vm._e()
       ])
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414& ***!
+  \*******************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    [
+      _c(
+        "button",
+        {
+          staticClass: "button is-primary has-margin-y-3",
+          on: { click: _vm.showAddModal }
+        },
+        [_vm._v(_vm._s(_vm.trans.get("events.add")))]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "has-margin-0 w-100" },
+        [
+          _c("b-table", {
+            attrs: {
+              data: _vm.events,
+              "default-sort": ["id"],
+              "icon-pack": "fas",
+              "cell-class": "align-right",
+              "sort-icon": "arrow-up",
+              "row-class": function(row, index) {
+                return _vm.isDisabled(row.id) && "is-disabled"
+              }
+            },
+            scopedSlots: _vm._u([
+              {
+                key: "default",
+                fn: function(props) {
+                  return [
+                    _c(
+                      "b-table-column",
+                      {
+                        attrs: {
+                          field: "name",
+                          label: _vm.trans.get("events.title"),
+                          sortable: ""
+                        }
+                      },
+                      [
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans.get(props.row.title))
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-table-column",
+                      {
+                        attrs: {
+                          field: "url",
+                          label: _vm.trans.get("events.content"),
+                          sortable: ""
+                        }
+                      },
+                      [
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans.get(props.row.content))
+                          }
+                        })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "b-table-column",
+                      {
+                        staticClass: "w-100 is-flex has-all-centered",
+                        attrs: {
+                          field: "settings",
+                          label: _vm.trans.get("menu.settings"),
+                          centered: ""
+                        }
+                      },
+                      [
+                        _c(
+                          "a",
+                          {
+                            directives: [{ name: "tippy", rawName: "v-tippy" }],
+                            staticClass: "button  is-small has-margin-right-3",
+                            class: {
+                              "is-dark": !_vm.isDisabled(props.row.id),
+                              "is-light": _vm.isDisabled(props.row.id)
+                            },
+                            attrs: {
+                              content: _vm.isDisabled(props.row.id)
+                                ? _vm.trans.get("general.enable")
+                                : _vm.trans.get("general.disable")
+                            },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.toggle(props.row.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm.isDisabled(props.row.id)
+                              ? _c("i", { staticClass: "fas fa-eye" })
+                              : _c("i", { staticClass: "fas fa-eye-slash" })
+                          ]
+                        ),
+                        _vm._v(" "),
+                        props.row.classroom_id != null
+                          ? _c(
+                              "button",
+                              {
+                                directives: [
+                                  { name: "tippy", rawName: "v-tippy" }
+                                ],
+                                staticClass:
+                                  "button is-info is-small has-margin-right-3",
+                                attrs: {
+                                  content: _vm.trans.get("general.edit")
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.editModal(props.row)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-edit" })]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        props.row.classroom_id != null
+                          ? _c(
+                              "b-button",
+                              {
+                                directives: [
+                                  { name: "tippy", rawName: "v-tippy" }
+                                ],
+                                attrs: {
+                                  content: _vm.trans.get("general.delete"),
+                                  type: "is-danger is-small"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.confirmDelete(props.row.id)
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "fas fa-trash-alt" })]
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]
+                }
+              }
+            ])
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.isModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isModalActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v(_vm._s(_vm.trans.get("events.add")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "section",
+                {
+                  staticClass: "modal-card-body is-relative",
+                  attrs: { id: "confetti-bg" }
+                },
+                [
+                  _c(
+                    "b-field",
+                    { attrs: { label: _vm.trans.get("events.title") } },
+                    [
+                      _c("b-input", {
+                        attrs: {
+                          type: "text",
+                          minlength: "5",
+                          maxlength: "50"
+                        },
+                        model: {
+                          value: _vm.event.title,
+                          callback: function($$v) {
+                            _vm.$set(_vm.event, "title", $$v)
+                          },
+                          expression: "event.title"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-field",
+                    { attrs: { label: _vm.trans.get("events.content") } },
+                    [
+                      _c("b-input", {
+                        attrs: {
+                          type: "textarea",
+                          minlength: "5",
+                          maxlength: "200"
+                        },
+                        model: {
+                          value: _vm.event.content,
+                          callback: function($$v) {
+                            _vm.$set(_vm.event, "content", $$v)
+                          },
+                          expression: "event.content"
+                        }
+                      })
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  !_vm.edit
+                    ? _c(
+                        "button",
+                        {
+                          staticClass: "button is-primary",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.addEvent(0)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.trans.get("events.add")))]
+                      )
+                    : _c(
+                        "button",
+                        {
+                          staticClass: "button is-info",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.addEvent(1)
+                            }
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.trans.get("events.edit")))]
+                      )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "footer",
+                {
+                  staticClass: "modal-card-foot columns is-multiline",
+                  staticStyle: { "overflow-x": "auto" }
+                },
+                [
+                  _c("div", { staticClass: "column is-narrow" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.isModalActive = false
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        ]
+      )
     ],
     1
   )
@@ -81392,6 +81960,10 @@ __webpack_require__.r(__webpack_exports__);
     "edit_rubric": "Edita r\xFAbrica"
   },
   "ca.events": {
+    "add": "Afegeix esdeveniment",
+    "title": "T\xEDtol",
+    "content": "Contingut",
+    "edit": "Edita esdeveniment",
     "curse_silence_title": "La maledicci\xF3 del silenci",
     "curse_silence_content": "Hem estat male\xEFts per un encanteri que no ens permet parlar a cap dels presents (fins i tot al D\xE9u / la Deessa). Nom\xE9s podrem desfer-nos-en superant un repte proposat.",
     "mirror": "El mirall",
@@ -81454,6 +82026,8 @@ __webpack_require__.r(__webpack_exports__);
     "optional": "opcional",
     "home": "Inici",
     "no": "No",
+    "enable": "Habilita",
+    "disable": "Deshabilita",
     "confirm_delete": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer.",
     "confirm_delete_class": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer. S'ELIMINAR\xC0 TOTA LA INFORMACI\xD3 DELS ESTUDIANTS.",
     "type_message": "Escriu un missatge...",
@@ -81981,6 +82555,10 @@ __webpack_require__.r(__webpack_exports__);
     "edit_rubric": "Edit rubric"
   },
   "en.events": {
+    "add": "Add event",
+    "title": "Title",
+    "content": "Content",
+    "edit": "Edit event",
     "curse_silence_title": "The curse of silence",
     "curse_silence_content": "We have been cursed by a spell that does not allow us to speak to anyone present (including God\/Goddess). We can only get rid of it by overcoming a proposed challenge.",
     "mirror": "The mirror",
@@ -82043,6 +82621,8 @@ __webpack_require__.r(__webpack_exports__);
     "optional": "optional",
     "home": "Home",
     "no": "No",
+    "enable": "Enable",
+    "disable": "Disable",
     "confirm_delete": "Are you sure you want to delete this element? This action can't be undone.",
     "confirm_delete_class": "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION.",
     "type_message": "Type a message...",
@@ -82572,6 +83152,10 @@ __webpack_require__.r(__webpack_exports__);
     "edit_rubric": "Edita r\xFAbrica"
   },
   "es.events": {
+    "add": "A\xF1ade evento",
+    "title": "T\xEDtulo",
+    "content": "Contenido",
+    "edit": "Edita evento",
     "curse_silence_title": "La maldici\xF3n del silencio",
     "curse_silence_content": "Hemos sido maldecidos por un hechizo que no nos permite hablar a ninguno de los presentes (incluso a Dios \/ la Diosa). Solo podremos deshacernos superando un reto propuesto.",
     "mirror": "El espejo",
@@ -82579,7 +83163,7 @@ __webpack_require__.r(__webpack_exports__);
     "leader": "Sigue al l\xEDder",
     "leader_content": "Antes de empezar la clase ten\xE9is que hacer aquello que diga el Dios / la Diosa del juego. Quien no lo haga / participo, perder\xE1 10 <i class='fas fa-heart colored'></i>.",
     "monty": "Los caballeros que diuen NI!",
-    "monty_content": "El Dios / La Diosa hoy no se encuentra bien y se le escapan 'ni' mientras nos transmite sus conocimientos. Es contagioso!!! Todos los presentes tendr\xE1n que hacer el mismo en sus intervenciones.",
+    "monty_content": "El Dios / La Diosa hoy no se encuentra bien y se le escapan 'ni' mientras nos transmite sus conocimientos. \xA1\xA1\xA1Es contagioso!!! Todos los presentes tendr\xE1n que hacer el mismo en sus intervenciones.",
     "cordiality": "Cordialidad",
     "cordiality_content": "Cada vez que alguien se dirija a otra persona tiene que empezar y acabar con una reverencia.",
     "plague": "La peste",
@@ -82587,7 +83171,7 @@ __webpack_require__.r(__webpack_exports__);
     "panic": "P\xE1nico total",
     "panic_content": "<i class='fas fa-sad-tear colored'></i> Una mandada de jabal\xEDes aparece y os pilla desprevenidos.",
     "indigestion": "Indigesti\xF3n",
-    "indigestion_content": "\"<i class='fas fa-sad-tear colored'></i> Hab\xE9is comido pez en mal estado. &nbsp;<i class='fas fa-fish'></i><i class='fas fa-dizzy'></i>",
+    "indigestion_content": "<i class='fas fa-sad-tear colored'></i> Hab\xE9is comido pescado en mal estado. &nbsp;<i class='fas fa-fish'></i><i class='fas fa-dizzy'></i>",
     "assistant": "El asistente",
     "assistant_content": "<i class='fas fa-user-graduate'></i> Un h\xE9roe / una hero\xEDna ser\xE1 el ayudante del Dios / de la Diosa.",
     "breath": "Un respiro...",
@@ -82601,15 +83185,15 @@ __webpack_require__.r(__webpack_exports__);
     "helpful": "Los m\xE1s serviciales",
     "helpful_content": "Los y las estudiantes con la siguiente subclase ser\xE1n los \xFAltimos al salir de clase:",
     "laugh": "La vida es para re\xEDr",
-    "laugh_content": "<i class='fas fa-laugh-beam colored'></i> Una persona a l'azar cuenta un chiste, el Dios / la Diosa del juego decidir\xE1 si darle oro o castigarlo con vida.",
+    "laugh_content": "<i class='fas fa-laugh-beam colored'></i> Una persona al azar cuenta un chiste, el Dios / la Diosa del juego decidir\xE1 si darle oro o castigarlo con vida.",
     "wisdom": "Portador de sabidur\xEDa",
     "wisdom_content": "<i class='fas fa-question-circle'></i> El Dios / La Diosa formula una pregunta a un h\xE9roe / a una hero\xEDna. Ganar\xE1 o perder\xE1 experiencia.",
     "lucky": "Tu dia de suerte!",
     "lucky_content": "<i class='fas fa-laugh-beam colored'></i> Un/a estudiante ganar\xE1 oro!",
-    "tithes": "Dia dels delmes",
-    "tithes_content": "<i class='fas fa-sad-tear colored'></i> Un/a estudiant deber\xE1 pagarlos.",
+    "tithes": "Dia de los diezmos",
+    "tithes_content": "<i class='fas fa-sad-tear colored'></i> Un/a estudiante deber\xE1 pagarlos.",
     "reward": "La gran recompensa",
-    "reward_content": "<i class='fas fa-gift'><\/i> Un\/a estudiant gana una carta!",
+    "reward_content": "<i class='fas fa-gift'><\/i> Un\/a estudiante gana una carta!",
     "dragon": "<i class='fas fa-dragon'></i> Habr\xE1 dragones en esta cueva?",
     "dragon_content": "Ten\xE9is que decidir si entrar o no.",
     "dragon_content_ok": "Bien! No hab\xEDa dragones y hemos encontrado un tesoro!!!",
@@ -82634,6 +83218,8 @@ __webpack_require__.r(__webpack_exports__);
     "optional": "opcional",
     "home": "Inicio",
     "no": "No",
+    "enable": "Habilita",
+    "disable": "Deshabilita",
     "confirm_delete": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer.",
     "confirm_delete_class": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer. Se ELIMINAR\xC1 TODA LA INFORMACI\xD3N DE LOS ESTUDIANTES.",
     "type_message": "Escribe un mensaje..",
@@ -82673,6 +83259,7 @@ __webpack_require__.r(__webpack_exports__);
   "es.menu": {
     "user_groups": "Usuarios y grupos",
     "users": "Usuarios",
+    "events": "Eventos",
     "event": "Evento",
     "students": "Estudiantes",
     "groups": "Grupos",
@@ -83174,6 +83761,7 @@ Vue.component('show-maps', __webpack_require__(/*! ./components/map/ShowMaps.vue
 Vue.component('create-map', __webpack_require__(/*! ./components/map/CreateMap.vue */ "./resources/js/components/map/CreateMap.vue")["default"]);
 Vue.component('settings', __webpack_require__(/*! ./components/settings/Settings.vue */ "./resources/js/components/settings/Settings.vue")["default"]);
 Vue.component('show-event', __webpack_require__(/*! ./components/event/ShowEvent.vue */ "./resources/js/components/event/ShowEvent.vue")["default"]);
+Vue.component('show-events', __webpack_require__(/*! ./components/event/ShowEvents.vue */ "./resources/js/components/event/ShowEvents.vue")["default"]);
 Vue.component('edit-rules', __webpack_require__(/*! ./components/rules/EditRules.vue */ "./resources/js/components/rules/EditRules.vue")["default"]);
 Vue.component('profile', __webpack_require__(/*! ./components/profile/Profile.vue */ "./resources/js/components/profile/Profile.vue")["default"]);
 Vue.component('tag-management', __webpack_require__(/*! ./components/evaluation/TagManagement.vue */ "./resources/js/components/evaluation/TagManagement.vue")["default"]);
@@ -84739,6 +85327,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/event/ShowEvents.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/event/ShowEvents.vue ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowEvents.vue?vue&type=template&id=a0be0414& */ "./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414&");
+/* harmony import */ var _ShowEvents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowEvents.vue?vue&type=script&lang=js& */ "./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ShowEvents.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ShowEvents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/event/ShowEvents.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvents.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css& ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvents.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414& ***!
+  \*************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvents.vue?vue&type=template&id=a0be0414& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvents.vue?vue&type=template&id=a0be0414&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvents_vue_vue_type_template_id_a0be0414___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

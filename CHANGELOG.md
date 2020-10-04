@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.05 Beta (XX/10/2020)
+### Added
+- Event management: create and edit events.
+~ Show rubric in student.
+
+### Changed
+~ Better evaluation information in students.
+
 ## v1.04 Beta (02/10/2020)
 ### Added
 - Group view in teachers' view.
@@ -16,6 +24,7 @@
 - Fixed showing theme in student info.
 - Fixed errors in level in student info.
 - Fixed settings mobile view.
+- Fixed shop when custom.
 
 ## v1.03 Beta (29/09/2020)
 ### Added

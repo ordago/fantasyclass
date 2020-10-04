@@ -11,6 +11,7 @@ return [
     */
     'user_groups' => 'Usuarios y grupos',
     'users' => 'Usuarios',
+    'events' => 'Eventos',
     'event' => 'Evento',
     'students' => 'Estudiantes',
     'groups' => 'Grupos',

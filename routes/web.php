@@ -158,7 +158,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
         
         // Events
+        Route::get('/{code}/events', 'EventController@index');
+        Route::post('/{code}/events/disable', 'EventController@disable');
         Route::get('/{code}/event/random', 'EventController@show');
+        Route::post('/events/add', 'EventController@add');
+        Route::post('/events/edit', 'EventController@update');
+        Route::delete('/events/{id}', 'EventController@destroy');
 
         // Maps
         Route::get('/{code}/maps', 'MapsController@index');

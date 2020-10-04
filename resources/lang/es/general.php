@@ -27,6 +27,9 @@ return [
     
     'no' => "No",
 
+    'enable' => "Habilita",
+    'disable' => "Deshabilita",
+
     'confirm_delete' => "Estás seguro/en de eliminar este elemento? Esta acción no se puede deshacer.",
     'confirm_delete_class' => "Estás seguro/en de eliminar este elemento? Esta acción no se puede deshacer. Se ELIMINARÁ TODA LA INFORMACIÓN DE LOS ESTUDIANTES.",
     'delete' => "Elimina",
