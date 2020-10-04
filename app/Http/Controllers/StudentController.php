@@ -151,7 +151,7 @@ class StudentController extends Controller
 
     public function show($code, $id)
     {
-        $student = Student::where('id', $id)->with(['equipment', 'badges', 'classroom', 'behaviours', 'logEntries', 'items', 'grades'])->first();
+        $student = Student::where('id', $id)->with(['equipment', 'badges', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])->first();
 
         if ($student->classroom->classroom->code != $code)
             abort(404);
@@ -216,7 +216,6 @@ class StudentController extends Controller
             ->orderBy('created_at')
             ->take(1)
             ->delete();
-        // ->get();
 
         $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
     }
@@ -234,7 +233,6 @@ class StudentController extends Controller
             ->orderBy('created_at')
             ->take(1)
             ->delete();
-        // ->get();
 
         return $student->fresh()->behaviours;
     }

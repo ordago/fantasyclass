@@ -5,7 +5,7 @@
         <i class="fas fa-file-spreadsheet"></i>
       </b-button>
     </download-excel>-->
-    <table class="grades">
+    <table class="grades has-background-light">
       <th>Student name</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
         {{ tag.name }}
@@ -16,7 +16,7 @@
       <tr v-for="student in grades" :key="student.student_id">
         <td>{{ student.name }}</td>
         <td v-for="grade in student.grades" :key="grade.id">
-          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">{{ getGrade(grade) }}</span>
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)"><span :class="{ 'is-success' : getGrade(grade) >= (settings.eval_max / 2), 'is-danger' : getGrade(grade) < (settings.eval_max / 2) }" class="tag is-size-6">{{ getGrade(grade) }}</span></span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(getGrade(grade)) + ' rateEmoji'"></i>
           </span>
@@ -25,7 +25,7 @@
           </span>
         </td>
         <td>
-          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">{{ finalGrade(student) }} / {{ settings.eval_max }}</span>
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)"><span :class="{ 'is-success' : finalGrade(student) >= (settings.eval_max / 2), 'is-danger' : finalGrade(student) < (settings.eval_max / 2) }" class="tag is-size-6">{{ finalGrade(student) }} / {{ settings.eval_max }}</span></span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(finalGrade(student)) + ' rateEmoji'"></i>
           </span>

@@ -418,20 +418,24 @@
         </b-tab-item>
 
         <b-tab-item :label="trans.get('students.evaluation')" v-if="evaluation" icon="analytics" icon-pack="fad">
+          <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
           <div class="content">
-            <h1>{{ student.name }}</h1>
-            <table class="grades">
+            <table class="grades has-background-light">
               <th>Description</th>
               <th>Grade</th>
               <th>Feedback</th>
               <tr v-for="(grade,index) in student.grades" :key="index">
                 <td>{{ grade.description }}</td>
-                <td>{{ grade.pivot.grade }}</td>
+                <td>
+                  <span v-if="grade.rubric_id" class="cursor-pointer" @click="loadRubric(grade.rubric_id)">
+                    <span class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }"><i class="fas fa-external-link-alt has-margin-right-2"></i> {{ grade.pivot.grade }}</span>
+                  </span>
+                  <span v-else class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">{{ grade.pivot.grade }}</span>
+                </td>
                 <td>{{ grade.pivot.feedback }}</td>
               </tr>
             </table>
           </div>
-          <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
         </b-tab-item>
 
         <b-tab-item
@@ -536,6 +540,47 @@
       </div>
     </b-modal>
 
+    <b-modal
+      :active.sync="showRubric"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      full-screen
+      v-if="rubric"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ student.name }}</p>
+        </header>
+        <section class="modal-card-body">
+          <div
+            class="div_rounded rubricRow marginRadius"
+            v-for="rubricRow in rubric.rows"
+            :key="rubricRow.id"
+          >
+            <h2 class="description">{{ rubricRow.description }}</h2>
+            <div class="rubricSubitems">
+              <div
+                class="rubricSubitem marginRadius"
+                v-for="item in rubricRow.items"
+                :key="item.id"
+                :row="'row' + rubricRow.id"
+                :item="'item' + item.id"
+              >
+                <div class="rubricDetails">{{ item.description }}</div>
+                <div class="rubricScore">{{ item.points }}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="showRubric=false">{{ trans.get('general.close') }}</button>
+        </footer>
+      </div>
+    </b-modal>
+
 
   </div>
 </template>
@@ -600,9 +645,34 @@ export default {
       image: null,
       behaviours: null,
       isAssignModalActive: false,
+      showRubric: false,
+      rubric: null,
     };
   },
   methods: {
+    loadRubric: function (rubric) {
+      axios
+        .post("/classroom/evaluation/rubric", {
+          rubric: rubric,
+        })
+        .then((response) => {
+            this.rubric = response.data;
+            this.showRubric = true;
+
+            axios
+              .post("/classroom/evaluation/student/rubric", {
+                student: this.student.id,
+                rubric: rubric,
+              })
+              .then((response) => {
+                response.data.forEach((row) => {
+                  document
+                    .querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]")
+                    .classList.add("selectedSubItem");
+                });
+              });
+        });
+    },
     calculate(item) {
       let mult = 1;
       switch (item.offset) {

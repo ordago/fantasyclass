@@ -38,7 +38,7 @@ class Functions
   /***
    * Returns the current class student
    */
-  public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])
+  public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])
   {
     return Student::where('id', '=', auth()->user()->classrooms
       ->where('pivot.classroom_id', '=', $classroom->id)

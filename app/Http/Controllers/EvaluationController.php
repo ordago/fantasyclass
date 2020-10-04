@@ -138,6 +138,20 @@ class EvaluationController extends Controller
             $student->rows()->syncWithoutDetaching(array($row['0'] => array('rubric_row_item_id' => $row['1'])));
         }
     }
+    public function getShowRubric()
+    {
+
+        $data = request()->validate([
+            'rubric' => ['numeric', 'required'],
+        ]);
+
+        $rubric = Rubric::find($data['rubric']);
+        $rubric->load('rows.items');
+
+        return $rubric;  
+
+    }
+
     public function getRubric()
     {
 

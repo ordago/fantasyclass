@@ -7,7 +7,7 @@
 ~ Show rubric in student.
 
 ### Changed
-~ Better evaluation information in students.
+- Better evaluation information.
 
 ## v1.04 Beta (02/10/2020)
 ### Added

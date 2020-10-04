@@ -178,6 +178,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/evaluation', 'EvaluationController@index');
         Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');
         Route::post('/evaluation/student/rubric', 'EvaluationController@getRubric');
+        Route::post('/evaluation/rubric', 'EvaluationController@getShowRubric');
         Route::post('/evaluation/{id}/evaluate/rubric', 'EvaluationController@evaluateRubric');
         Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
         Route::post('/{code}/evaline', 'EvaluationController@store');

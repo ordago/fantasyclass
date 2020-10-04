@@ -556,6 +556,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -597,10 +642,30 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       prevImage: null,
       image: null,
       behaviours: null,
-      isAssignModalActive: false
+      isAssignModalActive: false,
+      showRubric: false,
+      rubric: null
     };
   },
   methods: {
+    loadRubric: function loadRubric(rubric) {
+      var _this = this;
+
+      axios.post("/classroom/evaluation/rubric", {
+        rubric: rubric
+      }).then(function (response) {
+        _this.rubric = response.data;
+        _this.showRubric = true;
+        axios.post("/classroom/evaluation/student/rubric", {
+          student: _this.student.id,
+          rubric: rubric
+        }).then(function (response) {
+          response.data.forEach(function (row) {
+            document.querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]").classList.add("selectedSubItem");
+          });
+        });
+      });
+    },
     calculate: function calculate(item) {
       var mult = 1;
 
@@ -621,19 +686,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       return Math.round(item.price * mult);
     },
     hide: function hide() {
-      var _this = this;
+      var _this2 = this;
 
       axios.post("/classroom/students/toggle", {
         id: this.student.id,
         prop: "hidden"
       }).then(function (response) {
-        _this.student.hidden = (_this.student.hidden + 1) % 2;
+        _this2.student.hidden = (_this2.student.hidden + 1) % 2;
 
-        _this.$forceUpdate();
+        _this2.$forceUpdate();
       });
     },
     deleteStudent: function deleteStudent() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -646,23 +711,23 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this2.classroom.code + "/student/" + _this2.student.id, {
+          axios["delete"]("/classroom/" + _this3.classroom.code + "/student/" + _this3.student.id, {
             _method: "delete"
           }).then(function (response) {
-            location.href = "/classroom/" + _this2.classroom.code;
+            location.href = "/classroom/" + _this3.classroom.code;
           });
         }
       });
     },
     updateName: function updateName() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.student.name.length >= 4) {
         axios.post("/classroom/" + this.classroom.code + "/student/name", {
           id: this.student.id,
           name: this.student.name
         }).then(function (response) {
-          _this3.$toasted.show(_this3.trans.get("success_error.update_success"), {
+          _this4.$toasted.show(_this4.trans.get("success_error.update_success"), {
             position: "top-center",
             duration: 3000,
             iconPack: "fontawesome",
@@ -670,7 +735,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             type: "success"
           });
 
-          _this3.$forceUpdate();
+          _this4.$forceUpdate();
         });
       } else {
         this.$toasted.show(this.trans.get("success_error.min_name"), {
@@ -683,7 +748,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     confirmDelete: function confirmDelete(type, row, date) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -699,14 +764,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           axios.post("/classroom/student/" + type, {
             row: row,
             date: date,
-            student: _this4.student.id,
+            student: _this5.student.id,
             _method: "delete"
           }).then(function (response) {
             if (type == "behaviour") {
-              _this4.behaviours = response.data;
-              _this4.student.updated_at = new Date();
+              _this5.behaviours = response.data;
+              _this5.student.updated_at = new Date();
 
-              _this4.forceRerender();
+              _this5.forceRerender();
             } else {
               location.reload();
             }
@@ -715,18 +780,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       });
     },
     toggle: function toggle(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.post("/classroom/student/badge", {
         badge: id,
         student: this.student.id
       }).then(function (response) {
-        _this5.student.badges = response.data.badges;
-        _this5.student.hp = response.data.hp;
-        _this5.student.xp = response.data.xp;
-        _this5.student.gold = response.data.gold;
+        _this6.student.badges = response.data.badges;
+        _this6.student.hp = response.data.hp;
+        _this6.student.xp = response.data.xp;
+        _this6.student.gold = response.data.gold;
 
-        _this5.$forceUpdate();
+        _this6.$forceUpdate();
       });
     },
     findInStudent: function findInStudent(id) {
@@ -746,7 +811,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       this.inventoryRemaining = line - this.student.items.length;
     },
     confirmChangeClass: function confirmChangeClass(subclass) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.$buefy.dialog.confirm({
         title: "Class change",
@@ -756,8 +821,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         iconPack: "fa",
         hasIcon: true,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this6.classroom.code + "/student/changecharacter", {
-            id: _this6.student.id,
+          axios.post("/classroom/" + _this7.classroom.code + "/student/changecharacter", {
+            id: _this7.student.id,
             character_id: subclass,
             mode: "student"
           }).then(function (response) {
@@ -767,22 +832,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       });
     },
     useItem: function useItem(item, messageItem) {
-      var _this7 = this;
+      var _this8 = this;
 
       this.$buefy.dialog.confirm({
         message: messageItem + " <br><br>Would you like to use the item?",
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this7.classroom.code + "/student/useitem", {
-            id: _this7.student.id,
+          axios.post("/classroom/" + _this8.classroom.code + "/student/useitem", {
+            id: _this8.student.id,
             itemId: item.id
           }).then(function (response) {
             if (!response.data) {} else {
               item.pivot.count--;
-              if (item.pivot.count == 0) _this7.inventoryRemaining++;
-              _this7.student.hp = Math.min(_this7.student.hp + response.data.hp, 100);
-              _this7.student.xp += response.data.xp;
+              if (item.pivot.count == 0) _this8.inventoryRemaining++;
+              _this8.student.hp = Math.min(_this8.student.hp + response.data.hp, 100);
+              _this8.student.xp += response.data.xp;
 
-              _this7.forceRerender();
+              _this8.forceRerender();
             }
           });
         }
@@ -829,7 +894,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     buyItem: function buyItem(item) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.$buefy.dialog.confirm({
         title: "Buy item",
@@ -839,43 +904,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         iconPack: "fa",
         hasIcon: false,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this8.classroom.code + "/student/buyitem", {
+          axios.post("/classroom/" + _this9.classroom.code + "/student/buyitem", {
             item: item.id
-          }).then(function (response) {
-            _this8.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
-              type: response.data.type
-            });
-
-            if (response.data.type == "success") {
-              _this8.student.items = response.data.items;
-
-              _this8.updateEmpty();
-
-              _this8.student.gold = _this8.student.gold - item.price;
-
-              _this8.$forceUpdate();
-            }
-          });
-        }
-      });
-    },
-    buyEquipment: function buyEquipment(oldItem, newItem) {
-      var _this9 = this;
-
-      this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
-        confirmText: "Buy",
-        type: "is-link",
-        iconPack: "fa",
-        hasIcon: false,
-        onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this9.classroom.code + "/student/buyequipment", {
-            "new": newItem
           }).then(function (response) {
             _this9.$toasted.show(response.data.message, {
               position: "top-center",
@@ -886,11 +916,46 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             });
 
             if (response.data.type == "success") {
-              _this9.student.equipment = response.data.equipment;
-              _this9.student.gold = _this9.student.gold - _this9.calculate(newItem);
+              _this9.student.items = response.data.items;
+
+              _this9.updateEmpty();
+
+              _this9.student.gold = _this9.student.gold - item.price;
+
+              _this9.$forceUpdate();
+            }
+          });
+        }
+      });
+    },
+    buyEquipment: function buyEquipment(oldItem, newItem) {
+      var _this10 = this;
+
+      this.$buefy.dialog.confirm({
+        title: "Buy item",
+        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
+        confirmText: "Buy",
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/" + _this10.classroom.code + "/student/buyequipment", {
+            "new": newItem
+          }).then(function (response) {
+            _this10.$toasted.show(response.data.message, {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: response.data.icon,
+              type: response.data.type
+            });
+
+            if (response.data.type == "success") {
+              _this10.student.equipment = response.data.equipment;
+              _this10.student.gold = _this10.student.gold - _this10.calculate(newItem);
               oldItem.src = newItem.src;
               var reference = "item" + oldItem.id;
-              _this9.student.boost = response.data.boost;
+              _this10.student.boost = response.data.boost;
               var newClass = "inv-item-armor-bronce";
 
               switch (newItem.offset) {
@@ -903,9 +968,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
                   break;
               }
 
-              _this9.$refs[reference][0].classList.add(newClass);
+              _this10.$refs[reference][0].classList.add(newClass);
 
-              _this9.$forceUpdate();
+              _this10.$forceUpdate();
             }
           });
         }
@@ -919,18 +984,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     updateAvatar: function updateAvatar() {
-      var _this10 = this;
+      var _this11 = this;
 
       this.image.generateBlob(function (blob) {
         if (blob != null) {
           var formData = new FormData();
           formData.append("avatar", blob, "avatar.png");
 
-          if (_this10.admin) {
-            formData.append("student_id", _this10.student.id);
+          if (_this11.admin) {
+            formData.append("student_id", _this11.student.id);
           }
 
-          axios.post("/classroom/" + _this10.classroom.code + "/setting/updateavatar", formData, {
+          axios.post("/classroom/" + _this11.classroom.code + "/setting/updateavatar", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
@@ -943,19 +1008,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
   },
   computed: {
     filteredEntries: function filteredEntries() {
-      var _this11 = this;
+      var _this12 = this;
 
       if (this.behaviours) {
         return this.behaviours.filter(function (entry) {
-          return (entry.pivot.created_at >= _this11.dateStart || !_this11.dateStart) && (entry.pivot.created_at <= _this11.dateEnd || !_this11.dateEnd);
+          return (entry.pivot.created_at >= _this12.dateStart || !_this12.dateStart) && (entry.pivot.created_at <= _this12.dateEnd || !_this12.dateEnd);
         });
       }
     },
     filteredLogEntries: function filteredLogEntries() {
-      var _this12 = this;
+      var _this13 = this;
 
       return this.student.log_entries.filter(function (entry) {
-        return (entry.created_at >= _this12.dateStart || !_this12.dateStart) && (entry.created_at <= _this12.dateEnd || !_this12.dateEnd);
+        return (entry.created_at >= _this13.dateStart || !_this13.dateStart) && (entry.created_at <= _this13.dateEnd || !_this13.dateEnd);
       });
     },
     groupedData: function groupedData() {
@@ -974,7 +1039,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     groupedData: {
       immediate: true,
       handler: function handler() {
-        var _this13 = this;
+        var _this14 = this;
 
         var colorsOK = ["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a", "#4caf50", "#43a047", "#388e3c", "#2e7d32", "#1b5e20", "#003300", "#002200", "#001100", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
         var colorsKO = ["#ffccbc", "#ffab91", "#ff8a65", "#ff7043", "#ff5722", "#f4511e", "#e64a19", "#d84315", "#bf360c", "#570000", "#370000", "#170000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
@@ -992,16 +1057,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         propes.forEach(function (element) {
           var behaviour = element[0];
 
-          _this13.series.push(element.length);
+          _this14.series.push(element.length);
 
-          _this13.labels.push("<i class='" + behaviour.icon + "'></i> " + _this13.trans.get(behaviour.name));
+          _this14.labels.push("<i class='" + behaviour.icon + "'></i> " + _this14.trans.get(behaviour.name));
 
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-            _this13.colors.push(colorsOK[0]);
+            _this14.colors.push(colorsOK[0]);
 
             colorsOK.shift();
           } else {
-            _this13.colors.push(colorsKO[0]);
+            _this14.colors.push(colorsKO[0]);
 
             colorsKO.shift();
           }
@@ -2346,12 +2411,19 @@ var render = function() {
                       }
                     },
                     [
+                      _c("report", {
+                        attrs: {
+                          classroom: _vm.classroom,
+                          admin: _vm.admin,
+                          grades: _vm.evaluation,
+                          settings: _vm.settings
+                        }
+                      }),
+                      _vm._v(" "),
                       _c("div", { staticClass: "content" }, [
-                        _c("h1", [_vm._v(_vm._s(_vm.student.name))]),
-                        _vm._v(" "),
                         _c(
                           "table",
-                          { staticClass: "grades" },
+                          { staticClass: "grades has-background-light" },
                           [
                             _c("th", [_vm._v("Description")]),
                             _vm._v(" "),
@@ -2363,7 +2435,62 @@ var render = function() {
                               return _c("tr", { key: index }, [
                                 _c("td", [_vm._v(_vm._s(grade.description))]),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(grade.pivot.grade))]),
+                                _c("td", [
+                                  grade.rubric_id
+                                    ? _c(
+                                        "span",
+                                        {
+                                          staticClass: "cursor-pointer",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.loadRubric(
+                                                grade.rubric_id
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass: "tag is-size-6",
+                                              class: {
+                                                "is-success":
+                                                  grade.pivot.grade >=
+                                                  _vm.settings.eval_max / 2,
+                                                "is-danger":
+                                                  grade.pivot.grade <
+                                                  _vm.settings.eval_max / 2
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fas fa-external-link-alt has-margin-right-2"
+                                              }),
+                                              _vm._v(
+                                                " " + _vm._s(grade.pivot.grade)
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    : _c(
+                                        "span",
+                                        {
+                                          staticClass: "tag is-size-6",
+                                          class: {
+                                            "is-success":
+                                              grade.pivot.grade >=
+                                              _vm.settings.eval_max / 2,
+                                            "is-danger":
+                                              grade.pivot.grade <
+                                              _vm.settings.eval_max / 2
+                                          }
+                                        },
+                                        [_vm._v(_vm._s(grade.pivot.grade))]
+                                      )
+                                ]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(grade.pivot.feedback))])
                               ])
@@ -2371,16 +2498,7 @@ var render = function() {
                           ],
                           2
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("report", {
-                        attrs: {
-                          classroom: _vm.classroom,
-                          admin: _vm.admin,
-                          grades: _vm.evaluation,
-                          settings: _vm.settings
-                        }
-                      })
+                      ])
                     ],
                     1
                   )
@@ -2753,6 +2871,105 @@ var render = function() {
                       ])
                     ]
                   )
+                ]
+              )
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.rubric
+        ? _c(
+            "b-modal",
+            {
+              attrs: {
+                active: _vm.showRubric,
+                "has-modal-card": "",
+                "trap-focus": "",
+                "destroy-on-hide": false,
+                "aria-role": "dialog",
+                "aria-modal": "",
+                "full-screen": ""
+              },
+              on: {
+                "update:active": function($event) {
+                  _vm.showRubric = $event
+                }
+              }
+            },
+            [
+              _c(
+                "div",
+                { staticClass: "modal-card", staticStyle: { width: "auto" } },
+                [
+                  _c("header", { staticClass: "modal-card-head" }, [
+                    _c("p", { staticClass: "modal-card-title" }, [
+                      _vm._v(_vm._s(_vm.student.name))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "section",
+                    { staticClass: "modal-card-body" },
+                    _vm._l(_vm.rubric.rows, function(rubricRow) {
+                      return _c(
+                        "div",
+                        {
+                          key: rubricRow.id,
+                          staticClass: "div_rounded rubricRow marginRadius"
+                        },
+                        [
+                          _c("h2", { staticClass: "description" }, [
+                            _vm._v(_vm._s(rubricRow.description))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "rubricSubitems" },
+                            _vm._l(rubricRow.items, function(item) {
+                              return _c(
+                                "div",
+                                {
+                                  key: item.id,
+                                  staticClass: "rubricSubitem marginRadius",
+                                  attrs: {
+                                    row: "row" + rubricRow.id,
+                                    item: "item" + item.id
+                                  }
+                                },
+                                [
+                                  _c("div", { staticClass: "rubricDetails" }, [
+                                    _vm._v(_vm._s(item.description))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "rubricScore" }, [
+                                    _vm._v(_vm._s(item.points))
+                                  ])
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  ),
+                  _vm._v(" "),
+                  _c("footer", { staticClass: "modal-card-foot" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.showRubric = false
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                    )
+                  ])
                 ]
               )
             ]
