@@ -527,7 +527,7 @@
     <b-modal v-if="admin" :active.sync="isAssignModalActive" has-modal-card full-screen :can-cancel="false">
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ trans.get('cards.add') }}</p>
+          <p class="modal-card-title">{{ trans.get('cards.assign') }}</p>
         </header>
         <section class="modal-card-body is-relative" style="z-index: 1">
            <show-cards :code="classroom.code" :cards="allcards" :student="student.id"></show-cards>

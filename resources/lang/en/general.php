@@ -20,6 +20,7 @@ return [
     'create' => "Create",
     'help' => "Help",
     'import' => "Import",
+    'assign' => "Assign",
 
     'name' => "Name",
     'optional' => "optional",

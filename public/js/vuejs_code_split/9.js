@@ -2825,7 +2825,7 @@ var render = function() {
                 [
                   _c("header", { staticClass: "modal-card-head" }, [
                     _c("p", { staticClass: "modal-card-title" }, [
-                      _vm._v(_vm._s(_vm.trans.get("cards.add")))
+                      _vm._v(_vm._s(_vm.trans.get("cards.assign")))
                     ])
                   ]),
                   _vm._v(" "),

@@ -92,7 +92,7 @@
       </div>
     </div>
     <div style="text-align:center;" v-if="this.admin==1 && this.assign">
-      <button class="button is-dark" @click="assignCard">Assign</button>
+      <button class="button is-dark" @click="assignCard"><i class="fas fa-arrow-up"></i> {{ trans.get('general.assign') }}</button>
     </div>
     <div style="text-align:center;" v-if="this.admin==1 && !this.assign">
       <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-dark">

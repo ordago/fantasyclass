@@ -50816,7 +50816,10 @@ var render = function() {
           _c(
             "button",
             { staticClass: "button is-dark", on: { click: _vm.assignCard } },
-            [_vm._v("Assign")]
+            [
+              _c("i", { staticClass: "fas fa-arrow-up" }),
+              _vm._v(" " + _vm._s(_vm.trans.get("general.assign")))
+            ]
           )
         ])
       : _vm._e(),
@@ -82112,6 +82115,7 @@ __webpack_require__.r(__webpack_exports__);
     "create": "Crea",
     "help": "Ajuda",
     "import": "Importa",
+    "assign": "Assigna",
     "name": "Nom",
     "optional": "opcional",
     "home": "Inici",
@@ -82708,6 +82712,7 @@ __webpack_require__.r(__webpack_exports__);
     "create": "Create",
     "help": "Help",
     "import": "Import",
+    "assign": "Assign",
     "name": "Name",
     "optional": "optional",
     "home": "Home",
@@ -83306,6 +83311,7 @@ __webpack_require__.r(__webpack_exports__);
     "create": "Crea",
     "help": "Ayuda",
     "import": "Importa",
+    "assign": "Asigna",
     "name": "Nombre",
     "optional": "opcional",
     "home": "Inicio",

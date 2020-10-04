@@ -1,10 +1,10 @@
 # Changelog
 
-## v1.05 Beta (XX/10/2020)
+## v1.05 Beta (05/10/2020)
 ### Added
-- Event management: create and edit events.
+- Event management: create basic events and disable.
 - Assign card to student manually.
-~ Show rubric in student.
+- Show rubric in student.
 
 ### Changed
 - Better evaluation information.
