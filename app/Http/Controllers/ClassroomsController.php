@@ -347,6 +347,9 @@ class ClassroomsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+
         $students = $class->students()->with('equipment')->get();
         $groups = $class->grouping->first()->groups;
 
