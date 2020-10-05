@@ -4,6 +4,8 @@ return [
     "add" => "Add classroom",
     "edit" => "Edit classroom",
     "join" => "Join classroom",
+    "finished" => "Finished",
+    "disabled" => "Disabled",
 
     /* Roles */
     "student" => "Student",

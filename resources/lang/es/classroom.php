@@ -4,6 +4,8 @@ return [
     "add" => "Añade clase",
     "edit" => "Edita clase",
     "join" => "Unirse a clase",
+    "finished" => "Acabada",
+    "disabled" => "Desactivada",
 
     /* Roles */
     "student" => "Estudiante",

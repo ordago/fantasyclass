@@ -11,6 +11,7 @@
 ### Changed
 - Better evaluation information.
 - Replace icons in students' challenges.
+- Fixed order in classrooms.
 
 ## v1.04 Beta (02/10/2020)
 ### Added
