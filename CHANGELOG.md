@@ -6,6 +6,7 @@
 - Assign card to student manually.
 - Show rubric in student.
 - Info in editor to replace icons.
+- Last behaviour in students view.
 
 ### Changed
 - Better evaluation information.

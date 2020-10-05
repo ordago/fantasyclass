@@ -40,5 +40,8 @@ return [
     
     'select_image' => 'Select 📷 from image bank',
     'select_image_title' => 'Select image',
+
+    'last' => 'Last event / behaviour',
+
     
 ];

@@ -82266,7 +82266,8 @@ __webpack_require__.r(__webpack_exports__);
     "card_use": "Utilitzar la carta",
     "card_marked": "Carta marcada per ser utilitzada",
     "select_image": "Selecciona \uD83D\uDCF7 del banc d'imatges",
-    "select_image_title": "Selecciona imatge"
+    "select_image_title": "Selecciona imatge",
+    "last": "Darrer esdeveniment \/ comportament"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -82854,7 +82855,8 @@ __webpack_require__.r(__webpack_exports__);
     "card_level": "Not enough level :(",
     "card_use": "Use card",
     "select_image": "Select \uD83D\uDCF7 from image bank",
-    "select_image_title": "Select image"
+    "select_image_title": "Select image",
+    "last": "Last event \/ behaviour"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -83466,7 +83468,8 @@ __webpack_require__.r(__webpack_exports__);
     "card_use": "Usar la carta",
     "card_marked": "Carta marcada para ser utilizada",
     "select_image": "Selecciona \uD83D\uDCF7 del banco de im\xE1genes",
-    "select_image_title": "Selecciona imagen"
+    "select_image_title": "Selecciona imagen",
+    "last": "\xDAltimo evento / comportamiento"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

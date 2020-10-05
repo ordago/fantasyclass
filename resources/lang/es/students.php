@@ -42,4 +42,6 @@ return [
     'select_image' => 'Selecciona 📷 del banco de imágenes',
     'select_image_title' => 'Selecciona imagen',
     
+    'last' => 'Último evento / comportamiento',
+
 ];

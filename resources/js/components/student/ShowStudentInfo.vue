@@ -186,6 +186,10 @@
         </b-tab-item>
 
         <b-tab-item :label="trans.get('students.inventory')" class="has-padding-0" icon="backpack" icon-pack="fad">
+          <div v-tippy :content="trans.get('students.last')" v-if="!admin && student.behaviours.length" class="notification is-light cursor-default has-margin-bottom-3 has-margin-top-0">
+            <span v-html="lastBehaviour()"></span>
+          </div>
+
           <div class="columns is-multiline is-variable" v-if="admin">
             <div
               v-for="item in items"
@@ -662,6 +666,10 @@ export default {
     };
   },
   methods: {
+    lastBehaviour: function () {
+      let behaviour = this.student.behaviours[this.student.behaviours.length - 1];
+      return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+    },
     getPassFail: function (grade) {
       return Utils.getPassFail(grade, this.settings.eval_max);
     },

@@ -613,6 +613,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -660,6 +664,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     };
   },
   methods: {
+    lastBehaviour: function lastBehaviour() {
+      var behaviour = this.student.behaviours[this.student.behaviours.length - 1];
+      return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='" + behaviour.icon + " has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+    },
     getPassFail: function getPassFail(grade) {
       return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getPassFail(grade, this.settings.eval_max);
     },
@@ -1649,6 +1657,23 @@ var render = function() {
                   }
                 },
                 [
+                  !_vm.admin && _vm.student.behaviours.length
+                    ? _c(
+                        "div",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass:
+                            "notification is-light cursor-default has-margin-bottom-3 has-margin-top-0",
+                          attrs: { content: _vm.trans.get("students.last") }
+                        },
+                        [
+                          _c("span", {
+                            domProps: { innerHTML: _vm._s(_vm.lastBehaviour()) }
+                          })
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
                   _vm.admin
                     ? _c(
                         "div",

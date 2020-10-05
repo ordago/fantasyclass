@@ -41,5 +41,7 @@ return [
     
     'select_image' => 'Selecciona 📷 del banc d\'imatges',
     'select_image_title' => 'Selecciona imatge',
+
+    'last' => 'Darrer esdeveniment / comportament',
     
 ];
