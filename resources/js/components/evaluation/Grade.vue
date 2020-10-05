@@ -13,6 +13,7 @@
                 class="input"
                 step="0.01"
                 type="number"
+                min="0"
                 :max="settings.eval_max"
                 placeholder="Grade"
               />

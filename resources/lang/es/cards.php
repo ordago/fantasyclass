@@ -82,6 +82,8 @@ return [
 
     
     /* Use cards */
+    'use' => 'Usar',
+    'delete' => 'Eliminar',
     'use_title' => 'Marcar carta',
     'use_text' => 'La carta se marcará para ser utilizada o para eliminarla. El/la profe tiene que confirmar la acción.',
     'use_confirm' => 'Acepta',

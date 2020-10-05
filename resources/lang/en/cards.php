@@ -81,6 +81,8 @@ return [
 
     
     /* Use cards */
+    'use' => 'Use',
+    'delete' => 'Delete',
     'use_title' => 'Mark card',
     'use_text' => 'The card will be marked for use or delete. The teacher needs to confirm the action.',
     'use_confirm' => 'Accept',

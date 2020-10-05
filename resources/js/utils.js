@@ -19,6 +19,13 @@ export default {
         }
     },
 
+    getGradeClass(grade, max) {
+        if(grade >= max / 2) {
+            return 'is-success';
+        }
+        return 'is-danger';
+    },
+
     getPassFail(grade, max) {
         if (grade < max/2) {
             return "fa-times"

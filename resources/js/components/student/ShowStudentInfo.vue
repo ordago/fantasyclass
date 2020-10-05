@@ -427,10 +427,22 @@
               <tr v-for="(grade,index) in student.grades" :key="index">
                 <td>{{ grade.description }}</td>
                 <td>
-                  <span v-if="grade.rubric_id" class="cursor-pointer" @click="loadRubric(grade.rubric_id)">
-                    <span class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }"><i class="fas fa-external-link-alt has-margin-right-2"></i> {{ grade.pivot.grade }}</span>
+
+                  <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">
+                    <span v-if="grade.rubric_id" class="cursor-pointer" @click="loadRubric(grade.rubric_id)">
+                      <span class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }"><i class="fas fa-external-link-alt has-margin-right-2"></i> {{ grade.pivot.grade }}</span>
+                    </span>
+
+                    <span v-else class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">{{ grade.pivot.grade }}</span>
                   </span>
-                  <span v-else class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">{{ grade.pivot.grade }}</span>
+
+                  <span v-if="settings.eval_type == 1">
+                    <i :class="'fas ' + getEmoji(grade.pivot.grade) + ' rateEmoji'"></i>
+                  </span>
+                  <span v-if="settings.eval_type == 2" class="tag" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">
+                    <i :class="'fas ' + getPassFail(grade.pivot.grade)"></i>
+                  </span>
+
                 </td>
                 <td>{{ grade.pivot.feedback }}</td>
               </tr>
@@ -650,6 +662,12 @@ export default {
     };
   },
   methods: {
+    getPassFail: function (grade) {
+      return Utils.getPassFail(grade, this.settings.eval_max);
+    },
+    getEmoji: function (grade) {
+      return Utils.getEmoji(grade, this.settings.eval_max);
+    },
     loadRubric: function (rubric) {
       axios
         .post("/classroom/evaluation/rubric", {

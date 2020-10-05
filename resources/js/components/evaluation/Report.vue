@@ -16,20 +16,22 @@
       <tr v-for="student in grades" :key="student.student_id">
         <td>{{ student.name }}</td>
         <td v-for="grade in student.grades" :key="grade.id">
-          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)"><span :class="{ 'is-success' : getGrade(grade) >= (settings.eval_max / 2), 'is-danger' : getGrade(grade) < (settings.eval_max / 2) }" class="tag is-size-6">{{ getGrade(grade) }}</span></span>
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)"><span :class="getGradeClass(getGrade(grade))" class="tag is-size-6">{{ getGrade(grade) }}</span></span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(getGrade(grade)) + ' rateEmoji'"></i>
           </span>
-          <span v-if="settings.eval_type == 2">
+          <span v-if="settings.eval_type == 2" class="tag" :class="getGradeClass(getGrade(grade))">
             <i :class="'fas ' + getPassFail(getGrade(grade))"></i>
           </span>
         </td>
         <td>
-          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)"><span :class="{ 'is-success' : finalGrade(student) >= (settings.eval_max / 2), 'is-danger' : finalGrade(student) < (settings.eval_max / 2) }" class="tag is-size-6">{{ finalGrade(student) }} / {{ settings.eval_max }}</span></span>
+          <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">
+            <span :class="getGradeClass(finalGrade(student))" class="tag is-size-6">{{ finalGrade(student) }} / {{ settings.eval_max }}</span>
+            </span>
           <span v-if="settings.eval_type == 1">
             <i :class="'fas ' + getEmoji(finalGrade(student)) + ' rateEmoji'"></i>
           </span>
-          <span v-if="settings.eval_type == 2">
+          <span v-if="settings.eval_type == 2" class="tag" :class="getGradeClass(finalGrade(student))">
             <i :class="'fas ' + getPassFail(finalGrade(student))"></i>
           </span>
         </td>
@@ -51,6 +53,9 @@ export default {
     return {};
   },
   methods: {
+    getGradeClass: function (grade) {
+      return Utils.getGradeClass(grade, this.settings.eval_max);
+    },
     getPassFail: function (grade) {
       return Utils.getPassFail(grade, this.settings.eval_max);
     },

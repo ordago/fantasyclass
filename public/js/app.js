@@ -4918,6 +4918,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "evaluable", "students", "rubric", "settings"],
   created: function created() {},
@@ -5069,6 +5070,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "grades", "settings", "admin"],
@@ -5077,6 +5080,9 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   methods: {
+    getGradeClass: function getGradeClass(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getGradeClass(grade, this.settings.eval_max);
+    },
     getPassFail: function getPassFail(grade) {
       return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getPassFail(grade, this.settings.eval_max);
     },
@@ -50657,7 +50663,10 @@ var render = function() {
                 }
               }
             },
-            [_c("i", { staticClass: "fas fa-check" }), _vm._v(" Use\n    ")]
+            [
+              _c("i", { staticClass: "fas fa-check" }),
+              _vm._v(" " + _vm._s(_vm.trans.get("cards.use")) + "\n    ")
+            ]
           ),
           _vm._v(" "),
           _vm.card.xp >= 0 && _vm.card.gold >= 0 && _vm.card.hp >= 0
@@ -50675,7 +50684,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fas fa-trash-alt" }),
-                  _vm._v(" Delete\n    ")
+                  _vm._v(" " + _vm._s(_vm.trans.get("cards.delete")) + "\n    ")
                 ]
               )
             : _vm._e()
@@ -54800,6 +54809,7 @@ var render = function() {
                       attrs: {
                         step: "0.01",
                         type: "number",
+                        min: "0",
                         max: _vm.settings.eval_max,
                         placeholder: "Grade"
                       },
@@ -55071,13 +55081,7 @@ var render = function() {
                           "span",
                           {
                             staticClass: "tag is-size-6",
-                            class: {
-                              "is-success":
-                                _vm.getGrade(grade) >=
-                                _vm.settings.eval_max / 2,
-                              "is-danger":
-                                _vm.getGrade(grade) < _vm.settings.eval_max / 2
-                            }
+                            class: _vm.getGradeClass(_vm.getGrade(grade))
                           },
                           [_vm._v(_vm._s(_vm.getGrade(grade)))]
                         )
@@ -55096,11 +55100,18 @@ var render = function() {
                     : _vm._e(),
                   _vm._v(" "),
                   _vm.settings.eval_type == 2
-                    ? _c("span", [
-                        _c("i", {
-                          class: "fas " + _vm.getPassFail(_vm.getGrade(grade))
-                        })
-                      ])
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "tag",
+                          class: _vm.getGradeClass(_vm.getGrade(grade))
+                        },
+                        [
+                          _c("i", {
+                            class: "fas " + _vm.getPassFail(_vm.getGrade(grade))
+                          })
+                        ]
+                      )
                     : _vm._e()
                 ])
               }),
@@ -55113,14 +55124,7 @@ var render = function() {
                         "span",
                         {
                           staticClass: "tag is-size-6",
-                          class: {
-                            "is-success":
-                              _vm.finalGrade(student) >=
-                              _vm.settings.eval_max / 2,
-                            "is-danger":
-                              _vm.finalGrade(student) <
-                              _vm.settings.eval_max / 2
-                          }
+                          class: _vm.getGradeClass(_vm.finalGrade(student))
                         },
                         [
                           _vm._v(
@@ -55145,11 +55149,19 @@ var render = function() {
                   : _vm._e(),
                 _vm._v(" "),
                 _vm.settings.eval_type == 2
-                  ? _c("span", [
-                      _c("i", {
-                        class: "fas " + _vm.getPassFail(_vm.finalGrade(student))
-                      })
-                    ])
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "tag",
+                        class: _vm.getGradeClass(_vm.finalGrade(student))
+                      },
+                      [
+                        _c("i", {
+                          class:
+                            "fas " + _vm.getPassFail(_vm.finalGrade(student))
+                        })
+                      ]
+                    )
                   : _vm._e()
               ])
             ],
@@ -81950,6 +81962,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "Si mors, recuperes autom\xE0ticament 20 de vida.",
     "first_title": "El primer de la classe",
     "first_description": "Comen\xE7ar\xE0s una prova 5 minuts abans que els i les companyes.",
+    "use": "Utilitzar",
+    "delete": "Eliminar",
     "use_title": "Marcar carta",
     "use_text": "La carta es marcar\xE0 per ser utilitzada o per eliminar-la. El/la profe ha de confirmar l'acci\xF3.",
     "use_confirm": "Accepta"
@@ -82544,6 +82558,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "When you die, you get 20 HP back instantly.",
     "first_title": "The first one",
     "first_description": "You're the fastest! You start the test 5 minutes before the partners.",
+    "use": "Use",
+    "delete": "Delete",
     "use_title": "Mark card",
     "use_text": "The card will be marked for use or delete. The teacher needs to confirm the action.",
     "use_confirm": "Accept"
@@ -83146,6 +83162,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "Si mueres, recuperas autom\xE1ticamente 20 de vida.",
     "first_title": "El primer de la clase",
     "first_description": "Empezar\xE1s una prueba 5 minutos antes de que los y las compa\xF1eras.",
+    "use": "Usar",
+    "delete": "Eliminar",
     "use_title": "Marcar carta",
     "use_text": "La carta se marcar\xE1 para ser utilizada o para eliminarla. El/la profe tiene que confirmar la acci\xF3n.",
     "use_confirm": "Acepta"
@@ -87447,6 +87465,13 @@ __webpack_require__.r(__webpack_exports__);
     } else {
       return "fa-laugh-beam";
     }
+  },
+  getGradeClass: function getGradeClass(grade, max) {
+    if (grade >= max / 2) {
+      return 'is-success';
+    }
+
+    return 'is-danger';
   },
   getPassFail: function getPassFail(grade, max) {
     if (grade < max / 2) {

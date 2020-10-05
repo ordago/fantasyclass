@@ -9,7 +9,7 @@
         :content="getMessage(card.pivot.marked)"
         v-bind:class="{ disabled : checkLevel() , 'has-background-dark' : card.pivot.marked == 1 }"
       >
-        <i class="fas fa-check"></i> Use
+        <i class="fas fa-check"></i> {{ trans.get('cards.use') }}
       </button>
       <button
         type="submit"
@@ -18,7 +18,7 @@
         class="button is-danger"
         v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }"
       >
-        <i class="fas fa-trash-alt"></i> Delete
+        <i class="fas fa-trash-alt"></i> {{ trans.get('cards.delete') }}
       </button>
     </div>
     <div

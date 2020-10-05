@@ -601,6 +601,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -648,6 +660,12 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     };
   },
   methods: {
+    getPassFail: function getPassFail(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getPassFail(grade, this.settings.eval_max);
+    },
+    getEmoji: function getEmoji(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getEmoji(grade, this.settings.eval_max);
+    },
     loadRubric: function loadRubric(rubric) {
       var _this = this;
 
@@ -2436,49 +2454,93 @@ var render = function() {
                                 _c("td", [_vm._v(_vm._s(grade.description))]),
                                 _vm._v(" "),
                                 _c("td", [
-                                  grade.rubric_id
+                                  _vm.admin ||
+                                  (_vm.settings.eval_type != 1 &&
+                                    _vm.settings.eval_type != 2)
+                                    ? _c("span", [
+                                        grade.rubric_id
+                                          ? _c(
+                                              "span",
+                                              {
+                                                staticClass: "cursor-pointer",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.loadRubric(
+                                                      grade.rubric_id
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass:
+                                                      "tag is-size-6",
+                                                    class: {
+                                                      "is-success":
+                                                        grade.pivot.grade >=
+                                                        _vm.settings.eval_max /
+                                                          2,
+                                                      "is-danger":
+                                                        grade.pivot.grade <
+                                                        _vm.settings.eval_max /
+                                                          2
+                                                    }
+                                                  },
+                                                  [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-external-link-alt has-margin-right-2"
+                                                    }),
+                                                    _vm._v(
+                                                      " " +
+                                                        _vm._s(
+                                                          grade.pivot.grade
+                                                        )
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "span",
+                                              {
+                                                staticClass: "tag is-size-6",
+                                                class: {
+                                                  "is-success":
+                                                    grade.pivot.grade >=
+                                                    _vm.settings.eval_max / 2,
+                                                  "is-danger":
+                                                    grade.pivot.grade <
+                                                    _vm.settings.eval_max / 2
+                                                }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(grade.pivot.grade)
+                                                )
+                                              ]
+                                            )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.settings.eval_type == 1
+                                    ? _c("span", [
+                                        _c("i", {
+                                          class:
+                                            "fas " +
+                                            _vm.getEmoji(grade.pivot.grade) +
+                                            " rateEmoji"
+                                        })
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.settings.eval_type == 2
                                     ? _c(
                                         "span",
                                         {
-                                          staticClass: "cursor-pointer",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.loadRubric(
-                                                grade.rubric_id
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass: "tag is-size-6",
-                                              class: {
-                                                "is-success":
-                                                  grade.pivot.grade >=
-                                                  _vm.settings.eval_max / 2,
-                                                "is-danger":
-                                                  grade.pivot.grade <
-                                                  _vm.settings.eval_max / 2
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass:
-                                                  "fas fa-external-link-alt has-margin-right-2"
-                                              }),
-                                              _vm._v(
-                                                " " + _vm._s(grade.pivot.grade)
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    : _c(
-                                        "span",
-                                        {
-                                          staticClass: "tag is-size-6",
+                                          staticClass: "tag",
                                           class: {
                                             "is-success":
                                               grade.pivot.grade >=
@@ -2488,8 +2550,15 @@ var render = function() {
                                               _vm.settings.eval_max / 2
                                           }
                                         },
-                                        [_vm._v(_vm._s(grade.pivot.grade))]
+                                        [
+                                          _c("i", {
+                                            class:
+                                              "fas " +
+                                              _vm.getPassFail(grade.pivot.grade)
+                                          })
+                                        ]
                                       )
+                                    : _vm._e()
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(grade.pivot.feedback))])
