@@ -60988,7 +60988,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card rounded card-shadow-s" },
+    {
+      staticClass: "card rounded card-shadow-s",
+      staticStyle: { overflow: "visible" }
+    },
     [
       _c("show-character", {
         attrs: { student: _vm.student, classroom: _vm.classroom }
@@ -61265,7 +61268,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "card rounded card-shadow-s" },
+    {
+      staticClass: "card rounded card-shadow-s",
+      staticStyle: { overflow: "visible" }
+    },
     [
       _c("show-character", {
         attrs: { student: _vm.student, classroom: _vm.classroom }

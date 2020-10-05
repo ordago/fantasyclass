@@ -1,5 +1,5 @@
 <template>
-    <div class="card rounded card-shadow-s">
+    <div class="card rounded card-shadow-s" style="overflow: visible;">
           <show-character :student="student" :classroom="classroom"></show-character>
           <div
             class="card-content"

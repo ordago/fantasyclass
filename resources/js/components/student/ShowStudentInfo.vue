@@ -1,7 +1,7 @@
 <template>
   <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
     <div class="column is-narrow has-padding-right-0 noprint">
-      <div class="card rounded card-shadow-s" style="min-width: 275px">
+      <div class="card rounded card-shadow-s" style="min-width: 275px; overflow: visible;">
         <show-character :student="student" :classroom="classroom"></show-character>
         <div class="card-content">
           <div class="media has-margin-bottom-0 has-all-centered">

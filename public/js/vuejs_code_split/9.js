@@ -1134,7 +1134,7 @@ var render = function() {
             "div",
             {
               staticClass: "card rounded card-shadow-s",
-              staticStyle: { "min-width": "275px" }
+              staticStyle: { "min-width": "275px", overflow: "visible" }
             },
             [
               _c("show-character", {
