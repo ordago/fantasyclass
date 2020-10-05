@@ -3,6 +3,15 @@ import Toasted from 'vue-toasted';
 
 export default {
 
+    replaceSpecial(text) {
+        text = text.replace("%XP%", "<i class='fas fa-fist-raised colored'></i>");
+        text = text.replace("%GOLD%", "<i class='fas fa-coins colored'></i>");
+        text = text.replace("%HP%", "<i class='fas fa-heart colored'></i>");
+        text = text.replace("[XP]", "<i class='fas fa-fist-raised colored'></i>");
+        text = text.replace("[GOLD]", "<i class='fas fa-coins colored'></i>");
+        text = text.replace("[HP]", "<i class='fas fa-heart colored'></i>");
+        return text;
+    },
     getEmoji(grade, max) {
 
         let gradeCalc = grade * 5 / max;

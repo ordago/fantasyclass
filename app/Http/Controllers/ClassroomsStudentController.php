@@ -132,6 +132,7 @@ class ClassroomsStudentController extends Controller
                 array_push($all, $value);
             }
         }
+                
         $challenges = Arr::sort($all, function ($story) {
             return $story['datetime'];
         });

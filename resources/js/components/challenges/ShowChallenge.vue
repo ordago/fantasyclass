@@ -45,7 +45,7 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <div v-if="edit || full" v-html="challengeReactive.content"></div>
+          <div v-if="edit || full" v-html="getContent(challengeReactive.content)"></div>
           <div class v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
           </div>
@@ -431,6 +431,11 @@ export default {
     InputEmoji,
   },
   methods: {
+    getContent(content) {
+       if(!this.admin && content)
+         return Utils.replaceSpecial(content);
+       return content;
+    },
     deleteComment(id) {
       axios.delete("/classroom/challenge/comment/" + id).then((response) => {
         var index = this.challenge.comments.findIndex(function (comment, i) {
