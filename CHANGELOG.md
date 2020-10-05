@@ -5,9 +5,11 @@
 - Event management: create basic events and disable.
 - Assign card to student manually.
 - Show rubric in student.
+- Info in editor to replace icons.
 
 ### Changed
 - Better evaluation information.
+- Replace icons in students' challenges.
 
 ## v1.04 Beta (02/10/2020)
 ### Added
