@@ -22,4 +22,6 @@ return [
     'shop_failed_level' => 'You don\'t have enough level',
     'shop_failed_exists' => 'You already have the item or a better one',
 
+    'taginput' => 'Select at least one valid tag',
+
 ];

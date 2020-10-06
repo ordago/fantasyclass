@@ -35,5 +35,10 @@ return [
     'points' => 'Puntos',
     'add_column' => 'Añade columna',
     'edit_rubric' => 'Edita rúbrica',
+    'grade_number' => 'Nota',
+    'student' => 'Estudiante',
+    'feedback' => 'Retroacción',
 
+    'weight' => 'Peso',
+    'weight_info' => 'Peso dentro de la etiqueta',
 ];

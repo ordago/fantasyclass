@@ -425,9 +425,10 @@
           <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
           <div class="content">
             <table class="grades has-background-light">
-              <th>Description</th>
-              <th>Grade</th>
-              <th>Feedback</th>
+              <th>{{ trans.get('evaluation.description') }}</th>
+              <th>{{ trans.get('evaluation.grade_number') }}</th>
+              <th>{{ trans.get('evaluation.tags') }}</th>
+              <th>{{ trans.get('evaluation.feedback') }}</th>
               <tr v-for="(grade,index) in student.grades" :key="index">
                 <td>{{ grade.description }}</td>
                 <td>
@@ -448,6 +449,7 @@
                   </span>
 
                 </td>
+                <td><span v-for="(tag, index) in grade.tags" class="tag is-dark cursor-default has-margin-x-1" v-tippy :content="tag.description + ' (' + trans.get('evaluation.weight') + ': ' + tag.pivot.weight + ')'" :key="index">{{ tag.short }}</span></td>
                 <td>{{ grade.pivot.feedback }}</td>
               </tr>
             </table>

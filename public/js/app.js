@@ -5097,6 +5097,7 @@ __webpack_require__.r(__webpack_exports__);
       var totalGrades = 0;
       var totalWeight = 0;
       grade.evaluables.forEach(function (element) {
+        console.log(element.grade);
         totalGrades += element.grade * element.pivot.weight;
         totalWeight += element.pivot.weight;
       });
@@ -5461,6 +5462,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "tags", "rubrics", "lines", "settings"],
   created: function created() {
@@ -5493,6 +5496,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    // beforeAdding(tag) {
+    //   console.log(his.filteredTags.includes(tag))
+    //     		return this.filteredTags.includes(tag);
+    // },      
     updatePrefs: function updatePrefs() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
@@ -5592,11 +5599,20 @@ __webpack_require__.r(__webpack_exports__);
     addLine: function addLine() {
       var _this5 = this;
 
-      if (this.line.tags) {
+      if (this.line.tags.length) {
         axios.post("/classroom/" + this.classroom.code + "/evaline", this.line).then(function (response) {
           _this5.isLineModalActive = false;
 
           _this5.linesReactive.push(response.data);
+        });
+      } else {
+        this.$refs.taginput.newTag = '';
+        this.$toasted.show(this.trans.get('success_error.taginput'), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "times",
+          type: "error"
         });
       }
     },
@@ -55055,7 +55071,7 @@ var render = function() {
       "table",
       { staticClass: "grades has-background-light" },
       [
-        _c("th", [_vm._v("Student name")]),
+        _c("th", [_vm._v(_vm._s(_vm.trans.get("evaluation.student")))]),
         _vm._v(" "),
         _vm._l(_vm.grades[0].grades, function(tag, index) {
           return _c("th", { key: index + "-" + tag.id }, [
@@ -55527,7 +55543,10 @@ var render = function() {
                                   key: tag.id,
                                   staticClass: "tag is-dark has-margin-right-2",
                                   attrs: {
-                                    content: "Weight: " + tag.pivot.weight
+                                    content:
+                                      _vm.trans.get("evaluation.weight") +
+                                      ": " +
+                                      tag.pivot.weight
                                   }
                                 },
                                 [_vm._v(_vm._s(tag.short))]
@@ -55598,7 +55617,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  418754758
+                  2215099798
                 )
               })
             : _vm._e()
@@ -56038,6 +56057,7 @@ var render = function() {
                                   attrs: {
                                     data: _vm.filteredTags,
                                     autocomplete: "",
+                                    id: "taginput",
                                     icon: "tag",
                                     placeholder: _vm.trans.get(
                                       "evaluation.add"
@@ -56079,7 +56099,8 @@ var render = function() {
                                                 rounded: "",
                                                 tabstop: false,
                                                 ellipsis: "",
-                                                closable: ""
+                                                closable: "",
+                                                if: "taginput"
                                               },
                                               on: {
                                                 close: function($event) {
@@ -56122,6 +56143,7 @@ var render = function() {
                       _c(
                         "b-field",
                         {
+                          staticClass: "has-margin-top-3",
                           attrs: {
                             label: _vm.trans.get("evaluation.description")
                           }
@@ -56271,7 +56293,13 @@ var render = function() {
                                   )
                                 ]),
                                 _vm._v(" "),
-                                _c("h3", [_vm._v("Weigth in the tag")]),
+                                _c("h3", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.trans.get("evaluation.weight_info")
+                                    )
+                                  )
+                                ]),
                                 _vm._v(" "),
                                 _vm._l(_vm.line.tags, function(tag) {
                                   return _c(
@@ -57640,7 +57668,7 @@ var render = function() {
                           ? _c("croppa", {
                               staticClass:
                                 "has-padding-2 card-shadow-s is-full-rounded",
-                              staticStyle: { "z-index": "1000" },
+                              staticStyle: { "z-index": "15" },
                               attrs: {
                                 width: 128,
                                 height: 128,
@@ -82088,7 +82116,12 @@ __webpack_require__.r(__webpack_exports__);
     "general_description": "Descripci\xF3 general",
     "points": "Punts",
     "add_column": "Afegeix columna",
-    "edit_rubric": "Edita r\xFAbrica"
+    "edit_rubric": "Edita r\xFAbrica",
+    "grade_number": "Nota",
+    "student": "Estudiant",
+    "feedback": "Retroacci\xF3",
+    "weight": "Pes",
+    "weight_info": "Pes respecte a l'etiqueta"
   },
   "ca.events": {
     "add": "Afegeix esdeveniment",
@@ -82333,7 +82366,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_money": "Insuficient or",
     "shop_failed_level": "Insuficient nivell",
     "shop_failed_exists": "Ja tens aquest objecte o un de millor!",
-    "min_name": "El nom ha de ser de com a m\xEDnim 4 car\xE0cters"
+    "min_name": "El nom ha de ser de com a m\xEDnim 4 car\xE0cters",
+    "taginput": "Selecciona com a m\xEDnim una etiqueta v\xE0lida"
   },
   "ca.users_groups": {
     "change_layout": "Toggle layout view",
@@ -82690,7 +82724,12 @@ __webpack_require__.r(__webpack_exports__);
     "general_description": "General description",
     "points": "Points",
     "add_column": "Add column",
-    "edit_rubric": "Edit rubric"
+    "edit_rubric": "Edit rubric",
+    "grade_number": "Grade",
+    "student": "Student",
+    "feedback": "Feedback",
+    "weight": "Weight",
+    "weight_info": "Weight in the tag"
   },
   "en.events": {
     "add": "Add event",
@@ -82923,7 +82962,8 @@ __webpack_require__.r(__webpack_exports__);
     "equipment_succes": "Equipment added successfully",
     "shop_failed_money": "You don't have enough money",
     "shop_failed_level": "You don't have enough level",
-    "shop_failed_exists": "You already have the item or a better one"
+    "shop_failed_exists": "You already have the item or a better one",
+    "taginput": "Select at least one valid tag"
   },
   "en.users_groups": {
     "change_layout": "Toggle layout view",
@@ -83294,7 +83334,12 @@ __webpack_require__.r(__webpack_exports__);
     "general_description": "Descripci\xF3n general",
     "points": "Puntos",
     "add_column": "A\xF1ade columna",
-    "edit_rubric": "Edita r\xFAbrica"
+    "edit_rubric": "Edita r\xFAbrica",
+    "grade_number": "Nota",
+    "student": "Estudiante",
+    "feedback": "Retroacci\xF3n",
+    "weight": "Peso",
+    "weight_info": "Peso dentro de la etiqueta"
   },
   "es.events": {
     "add": "A\xF1ade evento",
@@ -83539,7 +83584,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_money": "Insuficiente oro",
     "shop_failed_level": "Insuficiente nivel",
     "shop_failed_exists": "Ya tienes este objeto o uno de mejor!!",
-    "min_name": "El nombre tiene que ser de como m\xEDnimo 4 caracteres"
+    "min_name": "El nombre tiene que ser de como m\xEDnimo 4 caracteres",
+    "taginput": "Selecciona como m\xEDnimo una etiqueta v\xE1lida"
   },
   "es.users_groups": {
     "change_layout": "Alternar vista de dise\xF1o",

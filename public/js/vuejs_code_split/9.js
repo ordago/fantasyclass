@@ -617,6 +617,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -2468,11 +2470,27 @@ var render = function() {
                           "table",
                           { staticClass: "grades has-background-light" },
                           [
-                            _c("th", [_vm._v("Description")]),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.description"))
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c("th", [_vm._v("Grade")]),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.grade_number"))
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c("th", [_vm._v("Feedback")]),
+                            _c("th", [
+                              _vm._v(_vm._s(_vm.trans.get("evaluation.tags")))
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.feedback"))
+                              )
+                            ]),
                             _vm._v(" "),
                             _vm._l(_vm.student.grades, function(grade, index) {
                               return _c("tr", { key: index }, [
@@ -2585,6 +2603,34 @@ var render = function() {
                                       )
                                     : _vm._e()
                                 ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  _vm._l(grade.tags, function(tag, index) {
+                                    return _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          { name: "tippy", rawName: "v-tippy" }
+                                        ],
+                                        key: index,
+                                        staticClass:
+                                          "tag is-dark cursor-default has-margin-x-1",
+                                        attrs: {
+                                          content:
+                                            tag.description +
+                                            " (" +
+                                            _vm.trans.get("evaluation.weight") +
+                                            ": " +
+                                            tag.pivot.weight +
+                                            ")"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(tag.short))]
+                                    )
+                                  }),
+                                  0
+                                ),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(grade.pivot.feedback))])
                               ])

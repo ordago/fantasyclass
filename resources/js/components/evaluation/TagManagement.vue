@@ -65,7 +65,7 @@
               v-for="tag in props.row.tags"
               :key="tag.id"
               v-tippy
-              :content="'Weight: ' + tag.pivot.weight"
+              :content="trans.get('evaluation.weight') + ': ' + tag.pivot.weight"
             >{{ tag.short }}</span>
           </b-table-column>
 
@@ -212,6 +212,7 @@
                   :data="filteredTags"
                   autocomplete
                   ref="taginput"
+                  id="taginput"
                   icon="tag"
                   @input="setWeight"
                   :placeholder="trans.get('evaluation.add')"
@@ -231,13 +232,14 @@
                       :tabstop="false"
                       ellipsis
                       closable
+                      if="taginput"
                       @close="$refs.taginput.removeTag(index, $event)"
                     >{{tag.short}}</b-tag>
                   </template>
                 </b-taginput>
               </b-field>
             </section>
-            <b-field :label="trans.get('evaluation.description')">
+            <b-field class="has-margin-top-3" :label="trans.get('evaluation.description')">
               <b-input v-model="line.description" required></b-input>
             </b-field>
             <b-field :label="trans.get('evaluation.type')">
@@ -265,7 +267,7 @@
                 <summary class="is-size-6">
                   <i class="fas fa-gear"></i> {{ trans.get('evaluation.advanced') }}
                 </summary>
-                <h3>Weigth in the tag</h3>
+                <h3>{{ trans.get('evaluation.weight_info') }}</h3>
                 <div class="is-block w-100 has-margin-y-2" v-for="tag in line.tags" :key="tag.id">
                   <b-field>
                     <b-field grouped class="is-flex has-all-centered">
@@ -319,6 +321,10 @@ export default {
     };
   },
   methods: {
+    // beforeAdding(tag) {
+    //   console.log(his.filteredTags.includes(tag))
+    //     		return this.filteredTags.includes(tag);
+    // },      
     updatePrefs() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
@@ -410,13 +416,23 @@ export default {
       });
     },
     addLine() {
-      if (this.line.tags) {
+
+      if (this.line.tags.length) {
         axios
           .post("/classroom/" + this.classroom.code + "/evaline", this.line)
           .then((response) => {
             this.isLineModalActive = false;
             this.linesReactive.push(response.data);
           });
+      } else {
+          this.$refs.taginput.newTag = '';
+          this.$toasted.show(this.trans.get('success_error.taginput'), {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: "times",
+                type: "error"
+              });
       }
     },
     addTag() {

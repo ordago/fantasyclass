@@ -35,7 +35,12 @@ return [
     'points' => 'Points',
     'add_column' => 'Add column',
     'edit_rubric' => 'Edit rubric',
+    'grade_number' => 'Grade',
+    'student' => 'Student',
+    'feedback' => 'Feedback',
 
+    'weight' => 'Weight',
+    'weight_info' => 'Weight in the tag',
 
   
 ];

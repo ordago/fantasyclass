@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.06 Beta (06/10/2020)
+### Changed
+- Changed upload image in levels.
+- Better feedback in tag input.
+- Show tags in evaluation info.
+- Fixed bug in grade calculation.
+
 ## v1.05 Beta (05/10/2020)
 ### Added
 - Event management: create basic events and disable.

@@ -6,7 +6,7 @@
       </b-button>
     </download-excel>-->
     <table class="grades has-background-light">
-      <th>Student name</th>
+      <th>{{ trans.get('evaluation.student') }}</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
         {{ tag.name }}
         <br />
@@ -66,6 +66,7 @@ export default {
       let totalGrades = 0;
       let totalWeight = 0;
       grade.evaluables.forEach(element => {
+        console.log(element.grade)
         totalGrades += element.grade * element.pivot.weight
         totalWeight +=  element.pivot.weight
       });

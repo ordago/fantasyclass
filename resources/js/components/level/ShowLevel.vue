@@ -15,7 +15,7 @@
               :width="128"
               :height="128"
               :quality="1"
-              style="z-index: 1000"
+              style="z-index: 15"
               accept="image/*"
               placeholder="Image"
               :placeholder-font-size="16"
