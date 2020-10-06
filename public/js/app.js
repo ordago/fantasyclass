@@ -3462,6 +3462,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "challengegroup"],
   created: function created() {
@@ -51898,84 +51901,108 @@ var render = function() {
           staticStyle: { "align-items": "flex-start" }
         },
         _vm._l(_vm.fullChallenges, function(classroom, index) {
-          return _c(
-            "div",
-            { key: index },
-            [
-              _c("h1", [_vm._v(_vm._s(classroom.name))]),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
-              _vm._l(classroom.challenge_groups, function(group) {
-                return _c(
-                  "div",
-                  { key: group.id },
+          return _c("div", { key: index }, [
+            classroom.challenge_groups.length
+              ? _c(
+                  "details",
                   [
-                    group.challenges.length
-                      ? _c("h2", { staticClass: "has-padding-left-3" }, [
-                          _vm._v(_vm._s(group.name))
+                    _c(
+                      "summary",
+                      { staticClass: "has-margin-y-3 cursor-pointer" },
+                      [
+                        _c("h1", { staticStyle: { display: "inline-block" } }, [
+                          _vm._v(_vm._s(classroom.name))
                         ])
-                      : _vm._e(),
+                      ]
+                    ),
                     _vm._v(" "),
-                    _vm._l(group.challenges, function(challenge) {
+                    _c("hr"),
+                    _vm._v(" "),
+                    _vm._l(classroom.challenge_groups, function(group) {
                       return _c(
                         "div",
-                        {
-                          key: challenge.id,
-                          staticClass: "box has-margin-y-4"
-                        },
+                        { key: group.id },
                         [
-                          _c("article", { staticClass: "media" }, [
-                            _c("div", { staticClass: "media-content" }, [
-                              _c("div", { staticClass: "content" }, [
-                                _c("p", { staticClass: "has-margin-3" }, [
-                                  _c("strong", [
-                                    _vm._v(_vm._s(challenge.title))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("small", [
-                                    _vm._v(_vm._s(challenge.description))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("br")
-                                ]),
-                                _c("div", {
-                                  staticStyle: {
-                                    "max-height": "100px",
-                                    overflow: "auto"
-                                  },
-                                  domProps: {
-                                    innerHTML: _vm._s(challenge.content)
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c("p")
+                          group.challenges.length
+                            ? _c("h2", { staticClass: "has-padding-left-3" }, [
+                                _vm._v(_vm._s(group.name))
                               ])
-                            ])
-                          ]),
+                            : _c("h2", [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans.get(
+                                      "success_error.challenges_empty"
+                                    )
+                                  )
+                                )
+                              ]),
                           _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "button is-primary has-margin-y-4",
-                              on: {
-                                click: function($event) {
-                                  return _vm.importChallenge(challenge)
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(_vm.trans.get("general.import")))]
-                          )
-                        ]
+                          _vm._l(group.challenges, function(challenge) {
+                            return _c(
+                              "div",
+                              {
+                                key: challenge.id,
+                                staticClass: "box has-margin-y-4"
+                              },
+                              [
+                                _c("article", { staticClass: "media" }, [
+                                  _c("div", { staticClass: "media-content" }, [
+                                    _c("div", { staticClass: "content" }, [
+                                      _c("p", { staticClass: "has-margin-3" }, [
+                                        _c("strong", [
+                                          _vm._v(_vm._s(challenge.title))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("small", [
+                                          _vm._v(_vm._s(challenge.description))
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("br")
+                                      ]),
+                                      _c("div", {
+                                        staticStyle: {
+                                          "max-height": "100px",
+                                          overflow: "auto"
+                                        },
+                                        domProps: {
+                                          innerHTML: _vm._s(challenge.content)
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("p")
+                                    ])
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button is-primary has-margin-y-4",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.importChallenge(challenge)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.trans.get("general.import"))
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          })
+                        ],
+                        2
                       )
                     })
                   ],
                   2
                 )
-              })
-            ],
-            2
-          )
+              : _vm._e()
+          ])
         }),
         0
       ),
@@ -82362,7 +82389,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_level": "Insuficient nivell",
     "shop_failed_exists": "Ja tens aquest objecte o un de millor!",
     "min_name": "El nom ha de ser de com a m\xEDnim 4 car\xE0cters",
-    "taginput": "Selecciona com a m\xEDnim una etiqueta v\xE0lida"
+    "taginput": "Selecciona com a m\xEDnim una etiqueta v\xE0lida",
+    "challenges_empty": "No hi ha reptes per importar"
   },
   "ca.users_groups": {
     "change_layout": "Toggle layout view",
@@ -82958,7 +82986,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_money": "You don't have enough money",
     "shop_failed_level": "You don't have enough level",
     "shop_failed_exists": "You already have the item or a better one",
-    "taginput": "Select at least one valid tag"
+    "taginput": "Select at least one valid tag",
+    "challenges_empty": "There are not challenges available to import"
   },
   "en.users_groups": {
     "change_layout": "Toggle layout view",
@@ -83580,7 +83609,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_level": "Insuficiente nivel",
     "shop_failed_exists": "Ya tienes este objeto o uno de mejor!!",
     "min_name": "El nombre tiene que ser de como m\xEDnimo 4 caracteres",
-    "taginput": "Selecciona como m\xEDnimo una etiqueta v\xE1lida"
+    "taginput": "Selecciona como m\xEDnimo una etiqueta v\xE1lida",
+    "challenges_empty": "No hay desaf\xEDos para importar"
   },
   "es.users_groups": {
     "change_layout": "Alternar vista de dise\xF1o",

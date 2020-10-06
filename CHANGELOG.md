@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.07 Beta (XX/10/2020)
+### Changed
+- Group challenges in import.
+
 ## v1.06 Beta (06/10/2020)
 ### Changed
 - Changed upload image in levels.

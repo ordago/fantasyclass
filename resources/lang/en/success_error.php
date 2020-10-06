@@ -24,4 +24,7 @@ return [
 
     'taginput' => 'Select at least one valid tag',
 
+    'challenges_empty' => 'There are not challenges available to import',
+
+
 ];

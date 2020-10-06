@@ -24,5 +24,7 @@ return [
     'min_name' => 'El nom ha de ser de com a mínim 4 caràcters',
     
     'taginput' => 'Selecciona com a mínim una etiqueta vàlida',
+    
+    'challenges_empty' => 'No hi ha reptes per importar',
 
 ];
