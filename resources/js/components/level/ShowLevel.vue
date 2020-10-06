@@ -3,18 +3,31 @@
     v-if="level"
     :class="{ 'column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered' : edit, 'column': !edit}"
   >
-    <input :value="level.id" type="hidden" name="id" />
-    <input v-if="edit" :id="'file' + level.id" type="file" style="display: none" @change="getImage" />
 
+  
     <div :class="{ 'min-width' : !edit }" class="columns w-100 is-variable is-0 has-padding-y-2">
       <div class="column is-narrow has-padding-y-0 card-shadow-s rounded-left has-background-light">
         <figure class="image is-128x128">
           <label class="cursor-pointer" :for="'file' + level.id">
-            <img
-              style="width: 128px; height: 128px"
-              :src="image"
+            <croppa
               class="has-padding-2 card-shadow-s is-full-rounded"
-            />
+              v-model="image"
+              :width="128"
+              :height="128"
+              :quality="1"
+              style="z-index: 1000"
+              accept="image/*"
+              placeholder="Image"
+              :placeholder-font-size="16"
+              canvas-color="transparent"
+              :show-remove-button="true"
+              remove-button-color="black"
+              :show-loading="true"
+              :loading-size="50"
+              :initial-image="prevImage"
+              v-if="edit"
+            ></croppa>
+            <img v-else class="has-padding-2 card-shadow-s is-full-rounded" :src="prevImage">
           </label>
         </figure>
       </div>
@@ -50,63 +63,48 @@ export default {
   props: ["level", "last", "code", "edit"],
   created() { 
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    if(this.level)
-    this.image = this.level.imagelvl;
+    if(this.level) {
+      this.prevImage = this.level.imagelvl;
+    }
   },
   data: function() {
     return {
       csrfToken: null,
-      image: ""
+      prevImage: null,
+      image: null,
     };
   },
   methods: {
-    getImage: function(e) {
-      let imageU = e.target.files[0];
-      if (imageU.size > 10000000) {
-        e.target.value = "";
-        this.$toasted.show("File size error. Max file size 10MB", {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          type: "error"
-        });
-      } else {
-        let reader = new FileReader();
-        reader.readAsDataURL(imageU);
-        reader.onload = e => {
-          this.image = e.target.result;
-        };
-      }
-    },
     update: function() {
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data"
-        }
-      };
 
-      // form data
-      let formData = new FormData();
-      formData.append(
-        "file",
-        document.getElementById("file" + this.level.id).files[0]
+      this.image.generateBlob(
+        blob => {
+          // form data
+          var formData = new FormData();
+          if (blob) formData.append("logo", blob, "logo.png");
+          formData.append("id", this.level.id);
+          formData.append("title", this.level.title ? this.level.title : '');
+          formData.append("description", this.level.description ? this.level.description : '');
+          formData.append("xp", this.level.xp);
+          formData.append("_method", "patch");
+          axios
+            .post("/classroom/levels/" + this.level.id, formData, {headers: {
+              "content-type": "multipart/form-data"
+            }})
+            .then(response => {
+              this.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type
+              });
+            });
+      
+        },
+        "image/png",
+        0.8
       );
-      formData.append("id", this.level.id);
-      formData.append("title", this.level.title ? this.level.title : '');
-      formData.append("description", this.level.description ? this.level.description : '');
-      formData.append("xp", this.level.xp);
-      formData.append("_method", "patch");
-      axios
-        .post("/classroom/levels/" + this.level.id, formData, config)
-        .then(response => {
-          this.$toasted.show(response.data.message, {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: response.data.icon,
-            type: response.data.type
-          });
-        });
     },
     remove: function() {
       axios.delete("/classroom/level/" + this.level.id).then(response => {
