@@ -5097,7 +5097,6 @@ __webpack_require__.r(__webpack_exports__);
       var totalGrades = 0;
       var totalWeight = 0;
       grade.evaluables.forEach(function (element) {
-        console.log(element.grade);
         totalGrades += element.grade * element.pivot.weight;
         totalWeight += element.pivot.weight;
       });
@@ -5496,10 +5495,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // beforeAdding(tag) {
-    //   console.log(his.filteredTags.includes(tag))
-    //     		return this.filteredTags.includes(tag);
-    // },      
     updatePrefs: function updatePrefs() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",

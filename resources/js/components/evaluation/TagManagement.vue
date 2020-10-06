@@ -320,11 +320,7 @@ export default {
       },
     };
   },
-  methods: {
-    // beforeAdding(tag) {
-    //   console.log(his.filteredTags.includes(tag))
-    //     		return this.filteredTags.includes(tag);
-    // },      
+  methods: {  
     updatePrefs() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",

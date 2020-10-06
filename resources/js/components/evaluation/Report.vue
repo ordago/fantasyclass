@@ -66,7 +66,6 @@ export default {
       let totalGrades = 0;
       let totalWeight = 0;
       grade.evaluables.forEach(element => {
-        console.log(element.grade)
         totalGrades += element.grade * element.pivot.weight
         totalWeight +=  element.pivot.weight
       });
