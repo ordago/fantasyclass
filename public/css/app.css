@@ -13498,6 +13498,11 @@ textPath {
   }
 }
 /***************************/
+.link.outer_glow {
+  margin: 3px;
+  padding: 3px;
+}
+
 .challenge-category {
   position: absolute;
   top: 0;
@@ -14483,6 +14488,10 @@ textPath {
 @media screen and (max-width: 1024px) {
   #navbar .navbar-dropdown {
     display: none;
+  }
+
+  .modal-content, .modal-card {
+    max-height: 100vh;
   }
 
   #navbar .has-dropdown:hover .navbar-dropdown {

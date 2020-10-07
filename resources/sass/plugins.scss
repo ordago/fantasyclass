@@ -6,6 +6,10 @@
     display: none;
   }
 
+  .modal-content, .modal-card {
+    max-height: 100vh;
+  }
+
   #navbar .has-dropdown:hover .navbar-dropdown {
     display: block;
   }

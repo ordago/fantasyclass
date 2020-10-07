@@ -62033,251 +62033,265 @@ var render = function() {
         [
           _vm._m(0),
           _vm._v(" "),
-          _c("div", { staticClass: "column has-padding-x-0 is-flex" }, [
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass: "link outer_glow has-text-dark has-padding-x-2",
-                attrs: {
-                  content: _vm.trans.get("menu.groups"),
-                  href: "/classroom/" + _vm.classroom.code + "/groups"
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-users outer_glow",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass: "link outer_glow has-text-dark has-padding-x-2",
-                attrs: {
-                  content:
-                    _vm.trans.get("menu.event") +
-                    " " +
-                    _vm.trans.get("utils.random"),
-                  href: "/classroom/" + _vm.classroom.code + "/event/random"
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-scroll-old has-margin-right-2",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "dropdown is-hoverable",
-                staticStyle: { display: "inline-block" }
-              },
-              [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "dropdown-menu has-background-white rounded has-padding-3"
-                  },
-                  [
-                    _vm.students.length
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            on: { click: _vm.randomStudents }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fad fa-user has-margin-right-2"
-                            }),
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(_vm.trans.get("utils.random")) +
-                                ": " +
-                                _vm._s(_vm.trans.get("menu.students")) +
-                                "\n          "
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.classroom.grouping[0].groups.length > 0
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            on: { click: _vm.randomGroups }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fad fa-users has-margin-right-2"
-                            }),
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(_vm.trans.get("utils.random")) +
-                                ": " +
-                                _vm._s(_vm.trans.get("menu.groups")) +
-                                "\n          "
-                            )
-                          ]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.students.length ||
-                    _vm.classroom.grouping[0].groups.length
-                      ? _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            on: { click: _vm.getRandomCard }
-                          },
-                          [
-                            _c("i", {
-                              staticClass: "fad fa-club has-margin-right-2"
-                            }),
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(_vm.trans.get("utils.random")) +
-                                ": " +
-                                _vm._s(_vm.trans.get("menu.card")) +
-                                "\n          "
-                            )
-                          ]
-                        )
-                      : _vm._e()
-                  ]
-                )
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass: "link outer_glow has-text-dark has-padding-x-2",
-                attrs: { content: _vm.trans.get("menu.classcode") },
-                on: { click: _vm.showClassCode }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-qrcode outer_glow",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass: "link outer_glow cursor-pointer",
-                attrs: { content: _vm.trans.get("menu.dice") },
-                on: { click: _vm.rollTheDice }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-dice",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass:
-                  "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
-                attrs: {
-                  href: "/utils/music",
-                  target: "_blank",
-                  content: _vm.trans.get("menu.music")
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-music outer_glow",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass: "link outer_glow has-padding-x-2 cursor-pointer",
-                attrs: { content: _vm.trans.get("menu.countdown") },
-                on: {
-                  click: function($event) {
-                    _vm.isCountDownModalActive = true
+          _c(
+            "div",
+            {
+              staticClass: "column has-padding-x-0 is-12-mobile is-flex",
+              staticStyle: { "flex-flow": "wrap" }
+            },
+            [
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "link outer_glow has-text-dark has-padding-x-2",
+                  attrs: {
+                    content: _vm.trans.get("menu.groups"),
+                    href: "/classroom/" + _vm.classroom.code + "/groups"
                   }
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-stopwatch outer_glow",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass:
-                  "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
-                attrs: {
-                  href: "/classroom/" + _vm.classroom.code + "/utils/meter",
-                  target: "_blank",
-                  content: _vm.trans.get("menu.noise")
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-microphone outer_glow",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                directives: [{ name: "tippy", rawName: "v-tippy" }],
-                staticClass:
-                  "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
-                attrs: { content: _vm.trans.get("menu.massive") },
-                on: {
-                  click: function($event) {
-                    _vm.isMassiveModalActive = true
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-users outer_glow",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "link outer_glow has-text-dark has-padding-x-2",
+                  attrs: {
+                    content:
+                      _vm.trans.get("menu.event") +
+                      " " +
+                      _vm.trans.get("utils.random"),
+                    href: "/classroom/" + _vm.classroom.code + "/event/random"
                   }
-                }
-              },
-              [
-                _c("i", {
-                  staticClass: "fad fa-poll-people",
-                  staticStyle: { "font-size": "2em" }
-                })
-              ]
-            )
-          ]),
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-scroll-old has-margin-right-2",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown is-hoverable",
+                  staticStyle: {
+                    display: "inline-block",
+                    padding: "3px",
+                    "margin-top": "3px"
+                  }
+                },
+                [
+                  _vm._m(1),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "dropdown-menu has-background-white rounded has-padding-3"
+                    },
+                    [
+                      _vm.students.length
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: { click: _vm.randomStudents }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fad fa-user has-margin-right-2"
+                              }),
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.trans.get("utils.random")) +
+                                  ": " +
+                                  _vm._s(_vm.trans.get("menu.students")) +
+                                  "\n          "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.classroom.grouping[0].groups.length > 0
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: { click: _vm.randomGroups }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fad fa-users has-margin-right-2"
+                              }),
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.trans.get("utils.random")) +
+                                  ": " +
+                                  _vm._s(_vm.trans.get("menu.groups")) +
+                                  "\n          "
+                              )
+                            ]
+                          )
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.students.length ||
+                      _vm.classroom.grouping[0].groups.length
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              on: { click: _vm.getRandomCard }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fad fa-club has-margin-right-2"
+                              }),
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.trans.get("utils.random")) +
+                                  ": " +
+                                  _vm._s(_vm.trans.get("menu.card")) +
+                                  "\n          "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "link outer_glow has-text-dark has-padding-x-2",
+                  attrs: { content: _vm.trans.get("menu.classcode") },
+                  on: { click: _vm.showClassCode }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-qrcode outer_glow",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "link outer_glow cursor-pointer",
+                  attrs: { content: _vm.trans.get("menu.dice") },
+                  on: { click: _vm.rollTheDice }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-dice",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass:
+                    "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
+                  attrs: {
+                    href: "/utils/music",
+                    target: "_blank",
+                    content: _vm.trans.get("menu.music")
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-music outer_glow",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "link outer_glow has-padding-x-2 cursor-pointer",
+                  attrs: { content: _vm.trans.get("menu.countdown") },
+                  on: {
+                    click: function($event) {
+                      _vm.isCountDownModalActive = true
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-stopwatch outer_glow",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass:
+                    "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
+                  attrs: {
+                    href: "/classroom/" + _vm.classroom.code + "/utils/meter",
+                    target: "_blank",
+                    content: _vm.trans.get("menu.noise")
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-microphone outer_glow",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass:
+                    "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
+                  attrs: { content: _vm.trans.get("menu.massive") },
+                  on: {
+                    click: function($event) {
+                      _vm.isMassiveModalActive = true
+                    }
+                  }
+                },
+                [
+                  _c("i", {
+                    staticClass: "fad fa-poll-people",
+                    staticStyle: { "font-size": "2em" }
+                  })
+                ]
+              )
+            ]
+          ),
           _vm._v(" "),
           _vm.students.length > 0
             ? _c(
                 "div",
-                { staticClass: "column has-text-right is-center-vertically" },
+                {
+                  staticClass:
+                    "column is-narrow has-text-right is-center-vertically"
+                },
                 [
                   _vm._m(2),
                   _vm._v(" "),
@@ -62754,35 +62768,42 @@ var render = function() {
                   staticStyle: { "overflow-x": "auto" }
                 },
                 [
-                  _c("div", { staticClass: "column is-narrow" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            _vm.isCardModalActive = false
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "column is-narrow is-12-mobile is-flex has-all-centered"
+                    },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              _vm.isCardModalActive = false
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Close")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "button is-link",
-                        on: {
-                          click: function($event) {
-                            _vm.getRandomCard()
-                            _vm.showCard = false
+                        },
+                        [_vm._v("Close")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "button is-link",
+                          on: {
+                            click: function($event) {
+                              _vm.getRandomCard()
+                              _vm.showCard = false
+                            }
                           }
-                        }
-                      },
-                      [_c("i", { staticClass: "far fa-redo-alt" })]
-                    )
-                  ]),
+                        },
+                        [_c("i", { staticClass: "far fa-redo-alt" })]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _vm.showCard
                     ? _c(

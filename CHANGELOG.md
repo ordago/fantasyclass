@@ -5,6 +5,7 @@
 - Group challenges by classroom in import.
 - Register XP and Gold when die to allow undo.
 - Fixed editor height.
+- Fixed log sorting.
 
 ## v1.06 Beta (06/10/2020)
 ### Changed

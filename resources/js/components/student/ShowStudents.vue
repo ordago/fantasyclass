@@ -7,7 +7,7 @@
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
       </div>
-      <div class="column has-padding-x-0 is-flex">
+      <div class="column has-padding-x-0 is-12-mobile is-flex" style="flex-flow: wrap">
         <a
           class="link outer_glow has-text-dark has-padding-x-2"
           v-tippy
@@ -24,7 +24,7 @@
             <i class="fad fa-scroll-old has-margin-right-2" style="font-size:2em;"></i>
           </a>
 
-        <div class="dropdown is-hoverable" style="display:inline-block">
+        <div class="dropdown is-hoverable" style="display:inline-block;padding: 3px;margin-top: 3px">
           <span
             class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
           >
@@ -113,7 +113,7 @@
         k outer_glow"><a style="font-size: 2em;" href="utils/attendance.php"><i class="fad fa-calendar-check"></i></a></span>
         <a href="utils/questions.php" class="link outer_glow"><i class="fad fa-question-square" style="font-size:2em;"></i></a>
       -->
-      <div class="column has-text-right is-center-vertically" v-if="students.length>0">
+      <div class="column is-narrow has-text-right is-center-vertically" v-if="students.length>0">
         <span>
           <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
         </span>
@@ -284,7 +284,7 @@
           ></show-card>
         </section>
         <footer class="modal-card-foot columns is-multiline" style="overflow-x: auto">
-          <div class="column is-narrow">
+          <div class="column is-narrow is-12-mobile is-flex has-all-centered">
             <button class="button" type="button" @click="isCardModalActive=false">Close</button>
             <button class="button is-link" @click="getRandomCard();showCard=false">
               <i class="far fa-redo-alt"></i>
