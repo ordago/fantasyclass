@@ -619,6 +619,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -904,22 +907,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       return itemStore.hp + "% <i class='fas fa-heart colored'></i> " + itemStore.xp + "% <i class='fas fa-fist-raised colored'></i> " + itemStore.gold + "% <i class='fas fa-coins colored'></i>";
     },
     sortByDate: function sortByDate(a, b) {
-      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      if (isAsc) {
-        return new Date(b.pivot.created_at).getTime() - new Date(a.pivot.created_at).getTime();
-      } else {
-        return new Date(a.pivot.created_at).getTime() - new Date(b.pivot.created_at).getTime();
-      }
+      return new Date(b.pivot.created_at).getTime() - new Date(a.pivot.created_at).getTime();
     },
-    sortLogByDate: function sortLogByDate(a, b) {
-      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      if (isAsc) {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      } else {
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      }
+    sortByLogDate: function sortByLogDate(a, b) {
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     },
     buyItem: function buyItem(item) {
       var _this9 = this;
@@ -2203,8 +2194,8 @@ var render = function() {
                         ? _c("b-table", {
                             attrs: {
                               data: _vm.filteredEntries,
+                              "default-sort-direction": "asc",
                               "default-sort": "created_at",
-                              "default-sort-direction": "desc",
                               "icon-pack": "fas",
                               "sort-icon": "arrow-up"
                             },
@@ -2270,11 +2261,10 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
-                                            label: _vm.trans.get(
-                                              "students.created"
-                                            ),
-                                            "default-sort-direction": "desc",
                                             "custom-sort": _vm.sortByDate,
+                                            label: _vm.trans.get(
+                                              "students.created_at"
+                                            ),
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2405,7 +2395,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              2698763198
+                              2130886407
                             )
                           })
                         : _vm._e()
@@ -2792,8 +2782,8 @@ var render = function() {
                         ? _c("b-table", {
                             attrs: {
                               data: _vm.filteredLogEntries,
+                              "default-sort-direction": "asc",
                               "default-sort": "created_at",
-                              "default-sort-direction": "desc",
                               "icon-pack": "fas",
                               "sort-icon": "arrow-up"
                             },
@@ -2861,11 +2851,10 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
+                                            "custom-sort": _vm.sortByLogDate,
                                             label: _vm.trans.get(
                                               "students.created_at"
                                             ),
-                                            "default-sort-direction": "desc",
-                                            "custom-sort": _vm.sortLogByDate,
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2927,7 +2916,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              2039962136
+                              4256421611
                             )
                           })
                         : _vm._e()

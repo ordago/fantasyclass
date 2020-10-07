@@ -347,13 +347,17 @@
           <b-table
             v-if="behaviours && behaviours.length"
             :data="filteredEntries"
+            default-sort-direction="asc"
             default-sort="created_at"
-            default-sort-direction="desc"
+
             icon-pack="fas"
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="icon" :label="trans.get('students.icon')" centered>
+              <b-table-column field="icon"
+               :label="trans.get('students.icon')"
+              centered
+              >
                 <span
                   class="tag"
                   v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -371,9 +375,8 @@
 
               <b-table-column
                 field="created_at"
-                :label="trans.get('students.created')"
-                default-sort-direction="desc"
                 :custom-sort="sortByDate"
+                :label="trans.get('students.created_at')"
                 sortable
                 centered
               >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
@@ -500,8 +503,9 @@
           <b-table
             v-if="student.log_entries.length"
             :data="filteredLogEntries"
+            default-sort-direction="asc"
             default-sort="created_at"
-            default-sort-direction="desc"
+
             icon-pack="fas"
             sort-icon="arrow-up"
           >
@@ -521,9 +525,8 @@
 
               <b-table-column
                 field="created_at"
+                :custom-sort="sortByLogDate"
                 :label="trans.get('students.created_at')"
-                default-sort-direction="desc"
-                :custom-sort="sortLogByDate"
                 sortable
                 centered
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
@@ -924,30 +927,19 @@ export default {
         "% <i class='fas fa-coins colored'></i>"
       );
     },
-    sortByDate(a, b, isAsc = false) {
-      if (isAsc) {
+    sortByDate(a, b) {
         return (
           new Date(b.pivot.created_at).getTime() -
           new Date(a.pivot.created_at).getTime()
         );
-      } else {
-        return (
-          new Date(a.pivot.created_at).getTime() -
-          new Date(b.pivot.created_at).getTime()
-        );
-      }
     },
-    sortLogByDate(a, b, isAsc = false) {
-      if (isAsc) {
+    sortByLogDate(a, b) {
         return (
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          new Date(b.created_at).getTime() -
+          new Date(a.created_at).getTime()
         );
-      } else {
-        return (
-          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
-      }
     },
+
     buyItem(item) {
       this.$buefy.dialog.confirm({
         title: "Buy item",
