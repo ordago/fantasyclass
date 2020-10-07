@@ -2,7 +2,9 @@
 
 ## v1.07 Beta (XX/10/2020)
 ### Changed
-- Group challenges in import.
+- Group challenges by classroom in import.
+- Register XP and Gold when die to allow undo.
+- Fixed editor height.
 
 ## v1.06 Beta (06/10/2020)
 ### Changed

@@ -33,6 +33,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
  // import ElementUI's styles
@@ -49,7 +50,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(element_tiptap__WEBPACK_IMPORTED_
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["code"],
+  props: ["code", "height"],
   created: function created() {},
   data: function data() {
     return {
@@ -103,6 +104,7 @@ var render = function() {
       _c("el-tiptap", {
         attrs: {
           extensions: _vm.extensions,
+          height: _vm.height,
           placeholder: "Write here some fun stuff!"
         },
         model: {

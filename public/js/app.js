@@ -58917,10 +58917,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("Editor", {
-        staticStyle: { "max-height": "70vh" },
-        attrs: { code: _vm.code }
-      }),
+      _c("Editor", { attrs: { height: "70vh", code: _vm.code } }),
       _vm._v(" "),
       _c("div", [
         _c(

@@ -24,6 +24,7 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.0",
         "nubs/random-name-generator": "^2.1",
+        "pulkitjalan/google-apiclient": "^4.1",
         "spatie/laravel-medialibrary": "^8.0.0",
         "taylornetwork/laravel-username-generator": "^2.3"
     },

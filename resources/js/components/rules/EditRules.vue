@@ -11,7 +11,7 @@
         <button @click="getRules('ca')" class="button is-info">Importa per defecte (CA)</button>
       </div>
     </div>
-    <Editor style="max-height: 70vh" :code="code"></Editor>
+    <Editor height="70vh" :code="code"></Editor>
     <div>
       <button class="button is-primary has-margin-top-4" @click="saveRules">
         <i class="fas fa-save has-margin-right-2"></i>

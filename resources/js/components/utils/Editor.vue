@@ -8,6 +8,7 @@
   <el-tiptap
     v-model="$parent.content"
     :extensions="extensions"
+    :height="height"
     placeholder="Write here some fun stuff!"
   />
   </div>
@@ -69,8 +70,9 @@ import {
 } from "element-tiptap";
 
 export default {
-  props: ["code"],
-  created() {},
+  props: ["code", "height"],
+  created() {
+  },
   data: function() {
     return {
       extensions: [
