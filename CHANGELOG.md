@@ -12,6 +12,7 @@
 - Fixed log sorting, it'll show first the last events.
 - Mobile view fixes: utilities, random card.
 - Fixed students' not allowed to comment.
+- Fixed last behaviour not showing when description is null.
 
 ## v1.06 Beta (06/10/2020)
 ### Changed
