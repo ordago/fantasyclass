@@ -207,10 +207,8 @@ class Student extends Model implements HasMedia
             if($isAlive != $checkAlive) {
                 if($isAlive) {
                     $this->setUndead();
-                    $this->fill([
-                        'xp' => 0,
-                        'gold' => 0,
-                    ])->save();
+                    $this->setProperty('xp', $this->xp * -1);
+                    $this->setProperty('gold', $this->gold * -1);
                 } else {
                     $this->setBasicEquipment();
                 }

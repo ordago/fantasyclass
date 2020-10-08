@@ -35,6 +35,13 @@ return [
     'points' => 'Punts',
     'add_column' => 'Afegeix columna',
     'edit_rubric' => 'Edita rúbrica',
+    'grade_number' => 'Nota',
+    'student' => 'Estudiant',
+    'feedback' => 'Retroacció',
+    
+    'weight' => 'Pes',
+    'weight_info' => 'Pes respecte a l\'etiqueta',
+
 
   
 ];

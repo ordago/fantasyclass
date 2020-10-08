@@ -31,7 +31,7 @@
         {{ trans.get('general.save') }}
       </button>
     </form>
-    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="true"></b-loading>
+    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="true" ></b-loading>
 
     <b-modal
       :active.sync="showRubric"

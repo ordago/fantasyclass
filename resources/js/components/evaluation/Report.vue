@@ -6,7 +6,7 @@
       </b-button>
     </download-excel>-->
     <table class="grades has-background-light">
-      <th>Student name</th>
+      <th>{{ trans.get('evaluation.student') }}</th>
       <th v-for="(tag,index) in grades[0].grades" :key="index + '-' + tag.id">
         {{ tag.name }}
         <br />

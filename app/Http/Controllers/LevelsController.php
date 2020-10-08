@@ -51,15 +51,11 @@ class LevelsController extends Controller
         $class = Classroom::where('id', '=', $lvl->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
         try {
-            if(request()->file('file')) {
-                $lvl->addMedia(request()->file('file'))
-                ->toMediaCollection('level');
-        
-                    $lvlPath = $lvl->getMedia('level')->first();
-                    $imgPath = $lvlPath->collection_name . "/" . $lvlPath->uuid . '/' . $lvlPath->file_name;
-                    $path = Storage::disk('public')->path('/').$imgPath;        
-                    Image::make($path)->resize(128, 128)->save();
-                }
+                if (request()->logo) {
+                    $media = $lvl->addMedia(request()->file('logo'))
+                        ->toMediaCollection('level');
+                    $lvl->update(['level' => $media->getUrl()]);
+                } 
                 $lvl->update(request()->all());
                 return [
                         "message" => __('success_error.update_success'),

@@ -34,7 +34,7 @@ class EvaluationController extends Controller
         }
 
         foreach ($student->grades as $grade) {
-            if ($grade->pivot->grade) {
+            if ($grade->pivot->grade !== null) {
                 $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
                 foreach ($evaluable->tags as $evalTag) {
                     $tags->transform(function ($item, $key) use ($evalTag, $grade) {

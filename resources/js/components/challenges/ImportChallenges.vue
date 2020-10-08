@@ -5,10 +5,12 @@
     </header>
     <section class="modal-card-body content" style="align-items: flex-start;">
       <div v-for="(classroom, index) in fullChallenges" :key="index">
-        <h1>{{ classroom.name }}</h1>
+        <details v-if="classroom.challenge_groups.length">
+        <summary class="has-margin-y-3 cursor-pointer"><h1 style="display: inline-block;">{{ classroom.name }}</h1></summary>
         <hr>
         <div v-for="group in classroom.challenge_groups" :key="group.id">
           <h2 class="has-padding-left-3" v-if="group.challenges.length">{{ group.name }}</h2>
+          <h2 v-else>{{ trans.get('success_error.challenges_empty') }}</h2>
           <div class="box has-margin-y-4" v-for="challenge in group.challenges" :key="challenge.id">
             <article class="media">
               <div class="media-content">
@@ -24,6 +26,7 @@
             <button @click="importChallenge(challenge)" class="button is-primary has-margin-y-4">{{ trans.get('general.import') }}</button>
           </div>
         </div>
+        </details>
       </div>
     </section>
     <footer class="modal-card-foot">

@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.07 Beta (08/10/2020)
+### Changed
+- Group challenges by classroom in import.
+- Register XP and Gold when die to allow undo.
+- Fixed editor height.
+- Fixed log sorting, it'll show first the last events.
+- Mobile view fixes: utilities, random card.
+- Fixed students' not allowed to comment.
+- Fixed last behaviour not showing when description is null.
+
+## v1.06 Beta (06/10/2020)
+### Changed
+- Changed upload image in levels.
+- Better feedback in tag input.
+- Show tags in evaluation info.
+- Fixed bug in grade calculation.
+
 ## v1.05 Beta (05/10/2020)
 ### Added
 - Event management: create basic events and disable.

@@ -617,6 +617,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -666,7 +671,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
   methods: {
     lastBehaviour: function lastBehaviour() {
       var behaviour = this.student.behaviours[this.student.behaviours.length - 1];
-      return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='" + behaviour.icon + " has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+      var text;
+      if (behaviour.custom_text == null) text = behaviour.name;else text = behaviour.custom_text;
+      if (behaviour) return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='" + behaviour.icon + " has-margin-x-2'></i>" + this.trans.get(text);
+      return "";
     },
     getPassFail: function getPassFail(grade) {
       return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getPassFail(grade, this.settings.eval_max);
@@ -902,22 +910,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       return itemStore.hp + "% <i class='fas fa-heart colored'></i> " + itemStore.xp + "% <i class='fas fa-fist-raised colored'></i> " + itemStore.gold + "% <i class='fas fa-coins colored'></i>";
     },
     sortByDate: function sortByDate(a, b) {
-      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      if (isAsc) {
-        return new Date(b.pivot.created_at).getTime() - new Date(a.pivot.created_at).getTime();
-      } else {
-        return new Date(a.pivot.created_at).getTime() - new Date(b.pivot.created_at).getTime();
-      }
+      return new Date(b.pivot.created_at).getTime() - new Date(a.pivot.created_at).getTime();
     },
-    sortLogByDate: function sortLogByDate(a, b) {
-      var isAsc = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
-      if (isAsc) {
-        return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
-      } else {
-        return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
-      }
+    sortByLogDate: function sortByLogDate(a, b) {
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     },
     buyItem: function buyItem(item) {
       var _this9 = this;
@@ -2201,8 +2197,8 @@ var render = function() {
                         ? _c("b-table", {
                             attrs: {
                               data: _vm.filteredEntries,
+                              "default-sort-direction": "asc",
                               "default-sort": "created_at",
-                              "default-sort-direction": "desc",
                               "icon-pack": "fas",
                               "sort-icon": "arrow-up"
                             },
@@ -2268,11 +2264,10 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
-                                            label: _vm.trans.get(
-                                              "students.created"
-                                            ),
-                                            "default-sort-direction": "desc",
                                             "custom-sort": _vm.sortByDate,
+                                            label: _vm.trans.get(
+                                              "students.created_at"
+                                            ),
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2403,7 +2398,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              2698763198
+                              2130886407
                             )
                           })
                         : _vm._e()
@@ -2468,11 +2463,27 @@ var render = function() {
                           "table",
                           { staticClass: "grades has-background-light" },
                           [
-                            _c("th", [_vm._v("Description")]),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.description"))
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c("th", [_vm._v("Grade")]),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.grade_number"))
+                              )
+                            ]),
                             _vm._v(" "),
-                            _c("th", [_vm._v("Feedback")]),
+                            _c("th", [
+                              _vm._v(_vm._s(_vm.trans.get("evaluation.tags")))
+                            ]),
+                            _vm._v(" "),
+                            _c("th", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("evaluation.feedback"))
+                              )
+                            ]),
                             _vm._v(" "),
                             _vm._l(_vm.student.grades, function(grade, index) {
                               return _c("tr", { key: index }, [
@@ -2585,6 +2596,34 @@ var render = function() {
                                       )
                                     : _vm._e()
                                 ]),
+                                _vm._v(" "),
+                                _c(
+                                  "td",
+                                  _vm._l(grade.tags, function(tag, index) {
+                                    return _c(
+                                      "span",
+                                      {
+                                        directives: [
+                                          { name: "tippy", rawName: "v-tippy" }
+                                        ],
+                                        key: index,
+                                        staticClass:
+                                          "tag is-dark cursor-default has-margin-x-1",
+                                        attrs: {
+                                          content:
+                                            tag.description +
+                                            " (" +
+                                            _vm.trans.get("evaluation.weight") +
+                                            ": " +
+                                            tag.pivot.weight +
+                                            ")"
+                                        }
+                                      },
+                                      [_vm._v(_vm._s(tag.short))]
+                                    )
+                                  }),
+                                  0
+                                ),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(grade.pivot.feedback))])
                               ])
@@ -2746,8 +2785,8 @@ var render = function() {
                         ? _c("b-table", {
                             attrs: {
                               data: _vm.filteredLogEntries,
+                              "default-sort-direction": "asc",
                               "default-sort": "created_at",
-                              "default-sort-direction": "desc",
                               "icon-pack": "fas",
                               "sort-icon": "arrow-up"
                             },
@@ -2815,11 +2854,10 @@ var render = function() {
                                         {
                                           attrs: {
                                             field: "created_at",
+                                            "custom-sort": _vm.sortByLogDate,
                                             label: _vm.trans.get(
                                               "students.created_at"
                                             ),
-                                            "default-sort-direction": "desc",
-                                            "custom-sort": _vm.sortLogByDate,
                                             sortable: "",
                                             centered: ""
                                           }
@@ -2881,7 +2919,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              2039962136
+                              4256421611
                             )
                           })
                         : _vm._e()

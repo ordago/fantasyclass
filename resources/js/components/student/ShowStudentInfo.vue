@@ -347,13 +347,17 @@
           <b-table
             v-if="behaviours && behaviours.length"
             :data="filteredEntries"
+            default-sort-direction="asc"
             default-sort="created_at"
-            default-sort-direction="desc"
+
             icon-pack="fas"
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="icon" :label="trans.get('students.icon')" centered>
+              <b-table-column field="icon"
+               :label="trans.get('students.icon')"
+              centered
+              >
                 <span
                   class="tag"
                   v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
@@ -371,9 +375,8 @@
 
               <b-table-column
                 field="created_at"
-                :label="trans.get('students.created')"
-                default-sort-direction="desc"
                 :custom-sort="sortByDate"
+                :label="trans.get('students.created_at')"
                 sortable
                 centered
               >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
@@ -425,9 +428,10 @@
           <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
           <div class="content">
             <table class="grades has-background-light">
-              <th>Description</th>
-              <th>Grade</th>
-              <th>Feedback</th>
+              <th>{{ trans.get('evaluation.description') }}</th>
+              <th>{{ trans.get('evaluation.grade_number') }}</th>
+              <th>{{ trans.get('evaluation.tags') }}</th>
+              <th>{{ trans.get('evaluation.feedback') }}</th>
               <tr v-for="(grade,index) in student.grades" :key="index">
                 <td>{{ grade.description }}</td>
                 <td>
@@ -448,6 +452,7 @@
                   </span>
 
                 </td>
+                <td><span v-for="(tag, index) in grade.tags" class="tag is-dark cursor-default has-margin-x-1" v-tippy :content="tag.description + ' (' + trans.get('evaluation.weight') + ': ' + tag.pivot.weight + ')'" :key="index">{{ tag.short }}</span></td>
                 <td>{{ grade.pivot.feedback }}</td>
               </tr>
             </table>
@@ -498,8 +503,9 @@
           <b-table
             v-if="student.log_entries.length"
             :data="filteredLogEntries"
+            default-sort-direction="asc"
             default-sort="created_at"
-            default-sort-direction="desc"
+
             icon-pack="fas"
             sort-icon="arrow-up"
           >
@@ -519,9 +525,8 @@
 
               <b-table-column
                 field="created_at"
+                :custom-sort="sortByLogDate"
                 :label="trans.get('students.created_at')"
-                default-sort-direction="desc"
-                :custom-sort="sortLogByDate"
                 sortable
                 centered
               >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
@@ -668,7 +673,13 @@ export default {
   methods: {
     lastBehaviour: function () {
       let behaviour = this.student.behaviours[this.student.behaviours.length - 1];
-      return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+      let text;
+      if(behaviour.custom_text == null)
+        text = behaviour.name;
+      else text = behaviour.custom_text;
+      if(behaviour)
+        return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(text);
+      return "";
     },
     getPassFail: function (grade) {
       return Utils.getPassFail(grade, this.settings.eval_max);
@@ -922,30 +933,19 @@ export default {
         "% <i class='fas fa-coins colored'></i>"
       );
     },
-    sortByDate(a, b, isAsc = false) {
-      if (isAsc) {
+    sortByDate(a, b) {
         return (
           new Date(b.pivot.created_at).getTime() -
           new Date(a.pivot.created_at).getTime()
         );
-      } else {
-        return (
-          new Date(a.pivot.created_at).getTime() -
-          new Date(b.pivot.created_at).getTime()
-        );
-      }
     },
-    sortLogByDate(a, b, isAsc = false) {
-      if (isAsc) {
+    sortByLogDate(a, b) {
         return (
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          new Date(b.created_at).getTime() -
+          new Date(a.created_at).getTime()
         );
-      } else {
-        return (
-          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
-      }
     },
+
     buyItem(item) {
       this.$buefy.dialog.confirm({
         title: "Buy item",
