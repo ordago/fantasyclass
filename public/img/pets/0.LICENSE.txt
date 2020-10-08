@@ -1,0 +1,6 @@
+All sprites in this folder are from habitica (https://habitica.com) with no changes:
+https://github.com/HabitRPG/habitica/
+
+
+All are licensed by:
+http://creativecommons.org/licenses/by-nc-sa/3.0/
