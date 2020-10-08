@@ -673,7 +673,10 @@ export default {
   methods: {
     lastBehaviour: function () {
       let behaviour = this.student.behaviours[this.student.behaviours.length - 1];
-      return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+
+      if(behaviour && behaviour.custom_text)
+        return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(behaviour.custom_text);
+      return "";
     },
     getPassFail: function (grade) {
       return Utils.getPassFail(grade, this.settings.eval_max);

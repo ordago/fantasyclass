@@ -1,11 +1,13 @@
 # Changelog
 
-## v1.07 Beta (XX/10/2020)
+## v1.07 Beta (08/10/2020)
 ### Changed
 - Group challenges by classroom in import.
 - Register XP and Gold when die to allow undo.
 - Fixed editor height.
-- Fixed log sorting.
+- Fixed log sorting, it'll show first the last events.
+- Mobile view fixes: utilities, random card.
+- Fixed students' not allowed to comment.
 
 ## v1.06 Beta (06/10/2020)
 ### Changed

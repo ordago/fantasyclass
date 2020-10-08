@@ -9312,17 +9312,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["students", "classroom", "groups"],
   created: function created() {
-    if (!this.groups.length) this.view = 0;else this.view = this.$cookies.get("view");
+    if (!this.groups.length) this.view = "0";else this.view = this.$cookies.get("view");
   },
   mounted: function mounted() {
-    var _$cookies$get, _$cookies$get2;
+    var _$cookies$get;
 
     var orderedBehaviours = _.orderBy(this.classroom.behaviours, "count_number", "desc");
 
     this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems);
     this.otherBehavioursJson = orderedBehaviours.slice(this.numItems);
-    this.sortKey = (_$cookies$get = $cookies.get("order")) !== null && _$cookies$get !== void 0 ? _$cookies$get : "name";
-    this.viewGrid = (_$cookies$get2 = $cookies.get("viewGrid")) !== null && _$cookies$get2 !== void 0 ? _$cookies$get2 : 0;
+    this.sortKey = (_$cookies$get = $cookies.get("order")) !== null && _$cookies$get !== void 0 ? _$cookies$get : "name"; // this.viewGrid = $cookies.get("viewGrid") ?? 0;
   },
   data: function data() {
     return {

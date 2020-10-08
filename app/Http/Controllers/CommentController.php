@@ -22,7 +22,7 @@ class CommentController extends Controller
         ]);
 
         $class = Classroom::findOrFail(Challenge::find($data['challenge_id'])->group->classroom_id);
-        $this->authorize('update', $class);
+        $this->authorize('studyOrTeach', $class);
         
         return Comment::create(['user_id' => auth()->user()->id, 'challenge_id' => $data['challenge_id'], 'text' => $data['text']]);
 

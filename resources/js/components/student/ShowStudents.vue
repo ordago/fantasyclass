@@ -364,7 +364,7 @@ export default {
   props: ["students", "classroom", "groups"],
   created() {
     if(!this.groups.length)
-      this.view = 0
+      this.view = "0"
     else
       this.view = this.$cookies.get("view");
   },
@@ -377,7 +377,7 @@ export default {
     this.mainBehavioursJson = orderedBehaviours.slice(0, this.numItems);
     this.otherBehavioursJson = orderedBehaviours.slice(this.numItems);
     this.sortKey = $cookies.get("order") ?? "name";
-    this.viewGrid = $cookies.get("viewGrid") ?? 0;
+    // this.viewGrid = $cookies.get("viewGrid") ?? 0;
   },
   data: function () {
     return {
