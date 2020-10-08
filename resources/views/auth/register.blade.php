@@ -13,7 +13,7 @@
             @csrf
 
             <div class="has-margin-y-3">
-                <input id="name" placeholder="{{ __('auth.name') }}" type="text" class="input is-info @error('name') is-danger @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                <input id="name" placeholder="{{ __('auth.name') }}" type="text" class="input is-info @error('name') is-danger @enderror" name="name" minlength="3" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                 @error('name')
                 <span class="help is-danger" role="alert">
