@@ -42,6 +42,9 @@
             <a href="/classroom/{{ $class->code }}/events" class="navbar-item">
                 <i class="fad fa-scroll has-margin-right-2"></i> {{ __('menu.events') }}
             </a>
+            <a href="/classroom/{{ $class->code }}/pets" class="navbar-item">
+                <i class="fad fa-dog has-margin-right-2"></i> {{ __('menu.pets') }}
+            </a>
         </div>
     </div>
     <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">

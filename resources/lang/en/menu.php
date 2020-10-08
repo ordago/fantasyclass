@@ -40,6 +40,7 @@ return [
     'massive' => 'Massive actions',
     'config' => 'Configure',
     'contribute' => 'Buy us coffe or beer!',
+    'pets' => 'Pets',
 
 
 ];

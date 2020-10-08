@@ -20,6 +20,7 @@ class CreatePetsTable extends Migration
             $table->float('hp_boost');
             $table->float('xp_boost');
             $table->float('gold_boost');
+            $table->float('price');
             $table->timestamps();
         });
     }

@@ -1405,7 +1405,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm.admin && _vm.student.name.length >= 4
+                        _vm.admin && _vm.student.name.length >= 3
                           ? _c("div", { staticClass: "control" }, [
                               _c(
                                 "a",
