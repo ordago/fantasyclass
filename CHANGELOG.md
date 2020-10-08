@@ -1,5 +1,9 @@
 # Changelog
 
+## v1.08 Beta (XX/10/2020)
+### Changed
+- 
+
 ## v1.07 Beta (08/10/2020)
 ### Changed
 - Group challenges by classroom in import.
