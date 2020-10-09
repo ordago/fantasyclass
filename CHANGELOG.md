@@ -1,6 +1,9 @@
 # Changelog
 
 ## v1.08 Beta (XX/10/2020)
+### Added
+- Pets. Students can have pets.
+
 ### Changed
 - 
 

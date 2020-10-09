@@ -16,11 +16,13 @@ class CreatePetsTable extends Migration
         Schema::create('pets', function (Blueprint $table) {
             $table->id();
             $table->string('image');
+            $table->string('name', 40)->nullable();
             $table->float('hp')->default(100);
             $table->float('hp_boost');
             $table->float('xp_boost');
             $table->float('gold_boost');
             $table->float('price');
+            $table->boolean('for_sale')->default(0);
             $table->timestamps();
         });
     }
