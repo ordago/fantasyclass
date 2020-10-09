@@ -1,21 +1,23 @@
 <template>
-<div>
-  <div class="tag is-warning has-margin-y-2">
-    %HP%  <i class="fas fa-heart colored"></i> <i class="fal fa-ellipsis-v has-margin-x-3"></i>
-    %XP% <i class="fas fa-fist-raised colored"></i> <i class="fal fa-ellipsis-v has-margin-x-3"></i>
-    %GOLD% <i class="fas fa-coins colored"></i> 
-  </div>
-  <el-tiptap
-    v-model="$parent.content"
-    :extensions="extensions"
-    :height="height"
-    placeholder="Write here some fun stuff!"
-  />
+  <div>
+    <div class="tag is-warning has-margin-y-2">
+      %HP% <i class="fas fa-heart colored"></i>
+      <i class="fal fa-ellipsis-v has-margin-x-3"></i> %XP%
+      <i class="fas fa-fist-raised colored"></i>
+      <i class="fal fa-ellipsis-v has-margin-x-3"></i> %GOLD%
+      <i class="fas fa-coins colored"></i>
+    </div>
+    <el-tiptap
+      v-model="$parent.content"
+      :extensions="extensions"
+      :height="height"
+      placeholder="Write here some fun stuff!"
+    />
   </div>
 </template>
 
 <script>
-import Vue from 'vue'
+import Vue from "vue";
 
 import ElementUI from "element-ui";
 import { ElementTiptapPlugin } from "element-tiptap";
@@ -66,14 +68,13 @@ import {
   Print,
   Fullscreen,
   FontType,
-  FontSize
+  FontSize,
 } from "element-tiptap";
 
 export default {
   props: ["code", "height"],
-  created() {
-  },
-  data: function() {
+  created() {},
+  data: function () {
     return {
       extensions: [
         new Doc(),
@@ -94,10 +95,10 @@ export default {
             let formData = new FormData();
             formData.append("file", file);
             const request = axios.post("/classroom/challenges/image", formData);
-            return request.then(result => {
+            return request.then((result) => {
               return result.data;
             });
-          }
+          },
         }),
         new CodeBlock(),
         new Blockquote(),
@@ -116,16 +117,15 @@ export default {
         new FormatClear(),
         new Print(),
         new Fullscreen(),
-      ]
+      ],
     };
   },
   methods: {
-    sendImage() {
-    }
+    sendImage() {},
   },
   components: {
     ElementUI,
-    ElementTiptapPlugin
-  }
+    ElementTiptapPlugin,
+  },
 };
 </script>
