@@ -90,6 +90,10 @@ class Student extends Model implements HasMedia
         return $this->classroom->user->username;
     }
 
+    public function pet() {
+        return $this->hasOne(Pet::class);
+    }
+
     public function classroom()
     {
         return $this->belongsTo(ClassroomUser::class, 'classroom_user_id');

@@ -40,5 +40,6 @@ return [
     'massive' => 'Acciones masivas',
     'config' => 'Configura',
     'contribute' => '¡Invita a café o cerveza!',
+    'pets' => 'Mascotas',
 
 ];

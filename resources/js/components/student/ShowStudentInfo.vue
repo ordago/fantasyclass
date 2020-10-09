@@ -108,7 +108,7 @@
                     v-model="student.name"
                   />
                 </div>
-                <div class="control" v-if="admin && student.name.length >= 4">
+                <div class="control" v-if="admin && student.name.length >= 3">
                   <a class="button is-info" @click="updateName">
                     <i class="fas fa-save"></i>
                   </a>

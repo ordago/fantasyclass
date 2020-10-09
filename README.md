@@ -153,6 +153,9 @@ Popper tippy:
 - [Vector de Moda creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/moda)
 - [Vector de Dibujos animados creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/dibujos-animados)
 
+- All sprites in "public/img/pets" folder are from habitica (https://habitica.com) with no changes:
+https://github.com/HabitRPG/habitica/ and are licensed by: http://creativecommons.org/licenses/by-nc-sa/3.0/
+
 ## License
 
 FantasyClass is licensed under the [MIT license](https://opensource.org/licenses/MIT).

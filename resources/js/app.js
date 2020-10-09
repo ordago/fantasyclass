@@ -99,6 +99,8 @@ Vue.component('settings', require('./components/settings/Settings.vue').default)
 Vue.component('show-event', require('./components/event/ShowEvent.vue').default);
 Vue.component('show-events', require('./components/event/ShowEvents.vue').default);
 
+Vue.component('show-pets', require('./components/pet/ShowPets.vue').default);
+
 Vue.component('edit-rules', require('./components/rules/EditRules.vue').default);
 
 Vue.component('profile', require('./components/profile/Profile.vue').default);
