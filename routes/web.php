@@ -19,7 +19,8 @@ Route::group(['middleware' => 'language'], function () {
     Auth::routes(['verify' => true]);
 
     // Home
-    Route::redirect('/', '/classroom');
+    // Route::redirect('/', '/classroom');
+    Route::view('/', 'auth.home');
 
     // Miscellany
     Route::get('/contribute', 'MiscellanyController@contribute');
