@@ -23,6 +23,7 @@ class CreatePetsTable extends Migration
             $table->float('gold_boost');
             $table->float('price');
             $table->boolean('for_sale')->default(0);
+            $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });
     }

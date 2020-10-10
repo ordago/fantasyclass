@@ -14,6 +14,7 @@ class Pet extends Model
         'xp_boost',
         'gold_boost',
         'price',
+        'classroom_id',
     ];
 
 

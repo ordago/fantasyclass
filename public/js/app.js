@@ -7136,6 +7136,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["code", "pets"],
@@ -7143,9 +7182,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isModalActive: false,
+      isImageModalActive: false,
+      images: null,
       pet: {
         image: null,
-        hp: 100,
         hp_boost: 0,
         gold_boost: 0,
         xp_boost: 0,
@@ -7154,7 +7194,32 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    addPet: function addPet() {}
+    selectImage: function selectImage(e) {
+      var _this = this;
+
+      this.$refs.selectbutton.classList.remove('is-danger');
+      e.target.classList.add("is-loading");
+      if (this.images == null) axios.get("/classroom/pets/get").then(function (response) {
+        _this.images = response.data;
+        _this.isImageModalActive = true;
+        e.target.classList.remove("is-loading");
+      });else {
+        this.isImageModalActive = true;
+        e.target.classList.remove("is-loading");
+      }
+    },
+    addPet: function addPet() {
+      if (this.pet.image == null) {
+        this.$refs.selectbutton.classList.add('is-danger');
+        return false;
+      }
+
+      axios.post("/classroom/" + this.code + "/pets", {
+        pet: this.pet
+      }).then(function (response) {
+        console.log("success");
+      });
+    }
   }
 });
 
@@ -58909,7 +58974,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "button is-link",
+          staticClass: "button is-link mb-4",
           on: {
             click: function($event) {
               _vm.isModalActive = true
@@ -58933,7 +58998,10 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "column is-narrow is-relative" }, [
-              _c("img", { attrs: { src: pet.image, width: "48px" } })
+              _c("img", {
+                staticClass: "pet-selector",
+                attrs: { src: "/img/pets/" + pet.image }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "column is-narrow" }, [
@@ -59095,15 +59163,15 @@ var render = function() {
                       attrs: { "true-value": "1", "false-value": "0" },
                       on: {
                         input: function($event) {
-                          return _vm.updateForSale(_vm.item)
+                          return _vm.updateForSale(pet)
                         }
                       },
                       model: {
-                        value: _vm.item.for_sale,
+                        value: pet.for_sale,
                         callback: function($$v) {
-                          _vm.$set(_vm.item, "for_sale", $$v)
+                          _vm.$set(pet, "for_sale", $$v)
                         },
-                        expression: "item.for_sale"
+                        expression: "pet.for_sale"
                       }
                     },
                     [_vm._v("For sale?")]
@@ -59111,59 +59179,7 @@ var render = function() {
                 ],
                 1
               )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column is-narrow" }, [
-              _c("textarea", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.item.description,
-                    expression: "item.description"
-                  }
-                ],
-                staticClass: "input",
-                staticStyle: { border: "1px solid" },
-                attrs: {
-                  placeholder: _vm.trans.get("shop.description"),
-                  disabled: ""
-                },
-                domProps: { value: _vm.item.description },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.$set(_vm.item, "description", $event.target.value)
-                  }
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                staticClass: "button",
-                attrs: {
-                  href: "/classroom/" + _vm.code + "/shop/" + _vm.item.id
-                }
-              },
-              [_c("i", { staticClass: "fas fa-edit" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "button",
-              {
-                staticClass: "button is-danger has-margin-left-2",
-                on: {
-                  click: function($event) {
-                    return _vm.deleteItem(_vm.item.id)
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-trash-alt" })]
-            )
+            ])
           ]
         )
       }),
@@ -59214,24 +59230,37 @@ var render = function() {
                     "section",
                     { staticClass: "modal-card-body" },
                     [
-                      _c(
-                        "b-field",
-                        {
-                          attrs: { label: _vm.trans.get("pets.image") + " *" }
-                        },
-                        [
-                          _c("button", { staticClass: "button is-link" }, [
-                            _c("i", { staticClass: "fas fa-image" })
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _vm.pet.image
-                        ? _c("img", {
-                            staticClass: "pet-selector",
-                            attrs: { src: "/img/pets/Pet-Alligator-Base.png" }
-                          })
-                        : _vm._e(),
+                      _c("b-field", [
+                        _c(
+                          "button",
+                          {
+                            ref: "selectbutton",
+                            staticClass: "button is-link mr-2",
+                            staticStyle: { "z-index": "5" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.selectImage($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-image mr-2" }),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(_vm.trans.get("pets.image") + " *") +
+                                "\n            "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.pet.image
+                          ? _c("img", {
+                              staticClass: "pet-selector",
+                              attrs: { src: "/img/pets/" + _vm.pet.image }
+                            })
+                          : _vm._e()
+                      ]),
                       _vm._v(" "),
                       _c(
                         "b-field",
@@ -59446,6 +59475,89 @@ var render = function() {
             ]
           )
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.isImageModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isImageModalActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v(_vm._s(_vm.trans.get("pets.image")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("section", { staticClass: "modal-card-body is-relative" }, [
+                _vm.images
+                  ? _c(
+                      "div",
+                      { staticClass: "columns is-multiline" },
+                      _vm._l(_vm.images, function(image) {
+                        return _c("img", {
+                          key: image,
+                          attrs: { width: "75px", src: "/img/pets/" + image },
+                          on: {
+                            click: function($event) {
+                              _vm.pet.image = image
+                              _vm.isImageModalActive = false
+                            }
+                          }
+                        })
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c(
+                "footer",
+                {
+                  staticClass: "modal-card-foot columns is-multiline",
+                  staticStyle: { "overflow-x": "auto" }
+                },
+                [
+                  _c("div", { staticClass: "column is-narrow" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "button",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.isImageModalActive = false
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.trans.get("general.close")) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        ]
       )
     ],
     2
@@ -59458,7 +59570,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "control" }, [
       _c("a", { staticClass: "button is-static" }, [
-        _c("i", { staticClass: "fas fa-heart colored" })
+        _c("i", { staticClass: "fas fa-heart colored mr-2" }),
+        _vm._v(" %\n                ")
       ])
     ])
   },
@@ -59468,7 +59581,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "control" }, [
       _c("a", { staticClass: "button is-static" }, [
-        _c("i", { staticClass: "fas fa-fist-raised colored" })
+        _c("i", { staticClass: "fas fa-fist-raised colored mr-2" }),
+        _vm._v(" %\n                ")
       ])
     ])
   },
@@ -59478,8 +59592,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "control" }, [
       _c("a", { staticClass: "button is-static" }, [
-        _vm._v("\n                      Price\n                      "),
-        _c("i", { staticClass: "fas fa-coins colored" })
+        _c("i", { staticClass: "fas fa-coins colored mr-2" }),
+        _vm._v(" %\n                ")
       ])
     ])
   },
@@ -59489,7 +59603,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("p", { staticClass: "control" }, [
       _c("a", { staticClass: "button is-static" }, [
-        _vm._v("\n                      Price\n                      "),
+        _vm._v("\n                  Price\n                  "),
         _c("i", { staticClass: "fas fa-coins colored" })
       ])
     ])
@@ -83230,7 +83344,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   "ca.home": {
     "title": "Converteix les teues classes en una aventura!",
-    "subtitle": "Dissenya un viatge de coneixement pels teus herois i hero\xEFnes"
+    "subtitle": "Submergeix-te en un viatge de coneixement",
+    "start": "Inici",
+    "features": "Caracter\xEDstiques",
+    "gamification": "Gamificaci\xF3",
+    "screenshots": "Captures",
+    "feature_telegram": "<strong class=\"has-text-light\">Comunitat:<\/strong> Accedeix al nostre telegram per tenir soport i parlar de la plataforma.",
+    "feature_free": "<strong class=\"has-text-light\">\xA1Gratu\xEFt!</strong> Tot \xE9s gratu\xEFt, solament s'accepten colaboracions per a millores en la plataforma <a class=\"has-text-light\" href=\"https://fantasyclass.app/contribute\" target=\"_blank\">Col\xB7labora</a>",
+    "feature_open": "<strong class=\"has-text-light\">Open source. <\/strong> De codi obert, qualsevol pot contribuir en la plataforma:",
+    "feature_easy": "<strong class=\"has-text-light\">R\xE0pid i f\xE0cil. </strong> Configuraci\xF3 intuitiva i de domini accessible a tots els nivells.",
+    "feature_fun": "<strong class=\"has-text-light\">Diversi\xF3 garantida. </strong> Apren i ensenya creant un univers de reptes, endevinalles i nivells a aconseguir.",
+    "feature_changelog": "<strong class=\"has-text-light\">En constant desenvolupament. </strong> Gaudeix de les darreres novetats a l'aplicaci\xF3, consultables en el registre de canvis:",
+    "more": "M\xE9s que gamificaci\xF3",
+    "universe": "El teu Univers d'aprenentatge",
+    "universe_text": "FantasyClass et permetr\xE0 viure o crear hist\xF2ries ambientades en qualsevol \xE8poca amb: cartes del tresor, nivells, grups, hist\xF2ries, reptes, etc. Invol\xFAcra't en el teu Univers tant com desitges i forma part de grans aventures.",
+    "activities": "Participa en activitats incre\xEFbles.",
+    "activities_text": "En FantasyClass els retes proporcionen recompenses incre\xEFbles, conseguiran superar-los?",
+    "classes": "Les classes seran m\xE9s divertides",
+    "classes_text": "Ja res ser\xE0 com abans, passa-ho b\xE9 aprenent o ensenyant.",
+    "": ""
   },
   "ca.levels": {
     "level": "Nivell",
@@ -83856,7 +83988,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   "en.home": {
     "title": "Make your lesson an adventure!",
-    "subtitle": "Design a journey of knowledge for your heroes and heroines"
+    "subtitle": "Take a journey of knowledge",
+    "start": "Start",
+    "features": "Features",
+    "gamification": "Gamification",
+    "screenshots": "Screenshots",
+    "feature_telegram": "<strong class=\"has-text-light\">Community:<\/strong> Access our telegram to get support and talk about the platform.",
+    "feature_free": "<strong class=\"has-text-light\">Free!<\/strong> Everything is free, we only accept collaborations for improvements in the platform <a class=\"has-text-light\" href=\"https:\/\/fantasyclass.app\/contribute\" target=\"_blank\">Contribute<\/a>.",
+    "feature_open": "<strong class=\"has-text-light\">Open source. <\/strong> Our code is open source, everyone can contribute in the platform:",
+    "feature_easy": "<strong class=\"has-text-light\">Fast and easy. <\/strong> Intuitive configuration and accessible at all levels.",
+    "feature_fun": "<strong class=\"has-text-light\">Fun guaranteed. <\/strong> Learn and teach by creating a universe of challenges, riddles and levels to achieve.",
+    "feature_changelog": "<strong class=\"has-text-light\">Under constant development. <\/strong> Enjoy the latest news in the application, which can be consulted in the changelog:",
+    "more": "More than gamification",
+    "universe": "Your learning Universe",
+    "universe_text": "FantasyClass will allow you to live or create stories set in any era with: treasure cards, levels, groups, stories, challenges, etc. Get involved in your Universe as much as you want and be part of great adventures.",
+    "activities": "Enjoy incredible activities.",
+    "activities_text": "In FantasyClass, challenges provide incredible rewards. Will you be able to overcome them?.",
+    "classes": "Classes will be more fun",
+    "classes_text": "Nothing will be like before, have fun learning or teaching.",
+    "": ""
   },
   "en.maps": {
     "add": "Add map",
@@ -84484,7 +84634,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   "es.home": {
     "title": "\xA1Convierte tus clases en una aventura!",
-    "subtitle": "Dise\xF1a un viaje de conocimientos para tus h\xE9roes y hero\xEDnas"
+    "subtitle": "Sum\xE9rgete en un viaje de conocimientos",
+    "start": "Inicio",
+    "features": "Caracter\xEDsticas",
+    "gamification": "Gamificaci\xF3n",
+    "screenshots": "Capturas",
+    "feature_telegram": "<strong class=\"has-text-light\">Comunidad:<\/strong> Accede a nuestro telegram para tener soporte y hablar de la plataforma.",
+    "feature_free": "<strong class=\"has-text-light\">\xA1Gratuito!</strong> Todo es gratuito, solo se aceptan colaboraciones para mejoras en la plataforma <a class=\"has-text-light\" href=\"https://fantasyclass.app/contribute\" target=\"_blank\">Colabora</a>",
+    "feature_open": "<strong class=\"has-text-light\">Open source. </strong> De c\xF3digo abierto, cualquiera puede contribuir en la plataforma:",
+    "feature_easy": "<strong class=\"has-text-light\">R\xE1pido y f\xE1cil. </strong> Configuraci\xF3n intuitiva y de dominio accesible a todos los niveles.",
+    "feature_fun": "<strong class=\"has-text-light\">Diversi\xF3n garantizada. </strong> Aprende y ense\xF1a creando un universo de retos, adivinanzas y niveles a conseguir.",
+    "feature_changelog": "<strong class=\"has-text-light\">En constante desarrollo. </strong> Disfruta de las \xFAltimas novedades en la aplicaci\xF3n, consultables en el registro de cambios:",
+    "more": "M\xE1s que gamificaci\xF3n",
+    "universe": "Tu Universo de aprendizaje",
+    "universe_text": "FantasyClass te permitir\xE1 vivir o crear historias ambientadas en cualquier \xE9poca con: cartas del tesoro, niveles, grupos, historias, retos, etc. Invol\xFAcrate en tu Universo tanto como desees y forma parte de grandes aventuras.",
+    "activities": "Participa en actividades incre\xEDbles",
+    "activities_text": "En FantasyClass los retos proporcionan recompensas incre\xEFbles \xBFConseguir\xE1n superarlos?",
+    "classes": "Las clases ser\xE1n m\xE1s divertidas",
+    "classes_text": "Ya nada ser\xE1 como antes, divi\xE9rtete aprendiendo o ense\xF1ando.",
+    "": ""
   },
   "es.levels": {
     "level": "Nivel",

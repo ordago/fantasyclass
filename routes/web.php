@@ -199,6 +199,8 @@ Route::group(['middleware' => 'language'], function () {
         
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');
+        Route::get('/pets/get', 'PetsController@get');
+        Route::post('/{code}/pets', 'PetsController@store');
 
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');

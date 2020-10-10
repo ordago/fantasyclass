@@ -92,6 +92,10 @@ class Classroom extends Model
         return $this->hasMany(Event::class);
     }
 
+    public function pets() {
+        return $this->hasMany(Pet::class);
+    }
+
     public function rules() {
         return $this->hasOne(Rules::class);
     }
