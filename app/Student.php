@@ -85,6 +85,11 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Group::class);
     }
 
+    public function pets()
+    {
+        return $this->belongsToMany(Pet::class)->withPivot('hp');
+    }
+
     public function getUsernameAttribute()
     {
         return $this->classroom->user->username;

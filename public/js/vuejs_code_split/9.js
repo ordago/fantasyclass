@@ -640,6 +640,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -650,7 +652,7 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts__WEBPACK_IMPORTED_MODULE_2___default.a);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges", "cards", "evaluation", "settings", "allcards"],
+  props: ["student", "classroom", "chart", "admin", "items", "shop", "challenges", "cards", "evaluation", "settings", "allcards", "pets"],
   mounted: function mounted() {
     this.behaviours = this.student.behaviours;
 
@@ -2097,6 +2099,16 @@ var render = function() {
                     : _vm._e()
                 ]
               ),
+              _vm._v(" "),
+              !_vm.admin && _vm.pets.length
+                ? _c("b-tab-item", {
+                    attrs: {
+                      label: _vm.trans.get("menu.pets"),
+                      icon: "club",
+                      "icon-pack": "fad"
+                    }
+                  })
+                : _vm._e(),
               _vm._v(" "),
               _vm.admin || _vm.cards.length
                 ? _c(

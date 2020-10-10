@@ -316,6 +316,9 @@
             </div>
           </div>
         </b-tab-item>
+        <b-tab-item :label="trans.get('menu.pets')" v-if="!admin && pets.length" icon="dog" icon-pack="fad">
+          
+        </b-tab-item>
         <b-tab-item :label="trans.get('students.cards')" v-if="admin || cards.length" icon="club" icon-pack="fad">
           <button class="button is-link has-margin-left-3" v-if="admin" @click="isAssignModalActive=true">{{ trans.get('cards.assign') }}</button>
           <div class="columns is-multiline is-variable">
@@ -651,6 +654,7 @@ export default {
     "evaluation",
     "settings",
     "allcards",
+    "pets",
   ],
   mounted() {
     this.behaviours = this.student.behaviours;

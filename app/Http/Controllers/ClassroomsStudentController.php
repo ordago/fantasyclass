@@ -12,6 +12,7 @@ use App\Item;
 use App\Student;
 use App\User;
 use App\Map;
+use App\Pet;
 use App\Rules;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
@@ -166,6 +167,8 @@ class ClassroomsStudentController extends Controller
             $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
         }
 
+        $pets = Pet::where('classroom_id', $class->id)->where('for_sale', 1)->get();
+        
         $shop = [
             'items' => json_encode($items),
             'eq1' => json_encode($eq1),
@@ -221,6 +224,7 @@ class ClassroomsStudentController extends Controller
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');
+        $student->load('pets');
         
         $evaluation = null;
         if (settings()->get('eval_visible', false)){
@@ -242,7 +246,7 @@ class ClassroomsStudentController extends Controller
         $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].env('CHATBRO_KEY'));         
         $showChat = settings()->get('show_chat', false);
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat'));
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets'));
     }
 
     public function rules($code)

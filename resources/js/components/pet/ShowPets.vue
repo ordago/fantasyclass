@@ -1,18 +1,18 @@
 <template>
   <div>
-    <button class="button is-link mb-4" @click="isModalActive = true">
+    <button class="button is-link mb-5" @click="isModalActive = true">
       <i class="fas fa-dog has-margin-right-2"></i>
       {{ trans.get("pets.new_pet") }}
     </button>
 
     <div
       v-for="pet in pets"
-      class="columns is-multiline is-variable is-1 has-all-centered has-padding-3"
+      class="columns is-multiline is-variable is-1 has-all-centered p-3"
       style="border-bottom: 1px dashed #999"
       v-bind:key="pet.id"
     >
       <div class="column is-narrow is-relative">
-        <img :src="'/img/pets/' + pet.image" class="pet-selector" />
+        <img v-tippy="{ placement : 'bottom',  arrow: true }" :content="pet.name" :src="'/img/pets/' + pet.image" class="" style="margin-top: -20px;"/>
       </div>
       <div class="column is-narrow">
         <div class="field is-horizontal">
@@ -116,23 +116,25 @@
         <div class="field">
           <b-switch
             v-model="pet.for_sale"
-            @input="updateForSale(pet)"
+            @input="updateForSale(pet.id)"
             true-value="1"
             false-value="0"
             >For sale?</b-switch
           >
         </div>
       </div>
-
-      <!-- <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
+      <button
+        class="button has-margin-left-2"
+        @click="editPet(pet)"
+      >
         <i class="fas fa-edit"></i>
-      </a>
+      </button>
       <button
         class="button is-danger has-margin-left-2"
-        @click="deleteItem(item.id)"
+        @click="deleteItem(pet.id)"
       >
         <i class="fas fa-trash-alt"></i>
-      </button> -->
+      </button>
     </div>
 
     <b-modal
@@ -233,11 +235,14 @@
             </b-field>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isModalActive = false">
+            <button class="button" type="button" @click="isModalActive = false;resetPet();">
               {{ trans.get("general.close") }}
             </button>
-            <button class="button is-primary">
+            <button class="button is-primary" v-if="!edit">
               {{ trans.get("general.add") }}
+            </button>
+            <button @click.prevent="sendEdit" v-else class="button is-link">
+              {{ trans.get("general.edit") }}
             </button>
           </footer>
         </div>
@@ -301,6 +306,7 @@ export default {
       isModalActive: false,
       isImageModalActive: false,
       images: null,
+      edit: false,
       pet: {
         image: null,
         hp_boost: 0,
@@ -311,6 +317,16 @@ export default {
     };
   },
   methods: {
+    resetPet: function () {
+      this.edit = false;
+      this.pet = {
+        image: null,
+        hp_boost: 0,
+        gold_boost: 0,
+        xp_boost: 0,
+        price: 0,
+      }
+    },
     selectImage: function (e) {
       this.$refs.selectbutton.classList.remove('is-danger')
       e.target.classList.add("is-loading");
@@ -325,13 +341,55 @@ export default {
         e.target.classList.remove("is-loading");
       }
     },
+    updateForSale: function (id) {
+      axios.get('/classroom/pets/' + id + '/for-sale')
+    },
+    editPet: function (pet) {
+      this.edit = true;
+      this.pet = pet;
+      this.isModalActive = true;
+    },
+    sendEdit: function () {
+      console.log('hit');
+      axios.patch("/classroom/" + this.code + "/pets", { pet: this.pet }).then((response) => {
+        this.isModalActive = false;
+        this.resetPet();
+      });
+    },
     addPet: function () {
+
       if(this.pet.image == null) {
         this.$refs.selectbutton.classList.add('is-danger')
         return false;
       }
       axios.post("/classroom/" + this.code + "/pets", { pet: this.pet }).then((response) => {
-        console.log("success");
+        this.isModalActive = false;
+        this.pets.push(response.data);
+        this.$forceUpdate();
+      });
+    },
+    deleteItem(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          var index = this.pets.findIndex(function (pet, i) {
+            return pet.id === id;
+          });
+          axios.delete("/classroom/pets/" + id).then((response) => {
+            if (response.data === 1) {
+              this.pets.splice(index, 1);
+              this.$forceUpdate();
+            }
+          });
+        },
       });
     },
   },

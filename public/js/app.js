@@ -7175,6 +7175,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["code", "pets"],
@@ -7184,6 +7189,7 @@ __webpack_require__.r(__webpack_exports__);
       isModalActive: false,
       isImageModalActive: false,
       images: null,
+      edit: false,
       pet: {
         image: null,
         hp_boost: 0,
@@ -7194,6 +7200,16 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    resetPet: function resetPet() {
+      this.edit = false;
+      this.pet = {
+        image: null,
+        hp_boost: 0,
+        gold_boost: 0,
+        xp_boost: 0,
+        price: 0
+      };
+    },
     selectImage: function selectImage(e) {
       var _this = this;
 
@@ -7208,7 +7224,29 @@ __webpack_require__.r(__webpack_exports__);
         e.target.classList.remove("is-loading");
       }
     },
+    updateForSale: function updateForSale(id) {
+      axios.get('/classroom/pets/' + id + '/for-sale');
+    },
+    editPet: function editPet(pet) {
+      this.edit = true;
+      this.pet = pet;
+      this.isModalActive = true;
+    },
+    sendEdit: function sendEdit() {
+      var _this2 = this;
+
+      console.log('hit');
+      axios.patch("/classroom/" + this.code + "/pets", {
+        pet: this.pet
+      }).then(function (response) {
+        _this2.isModalActive = false;
+
+        _this2.resetPet();
+      });
+    },
     addPet: function addPet() {
+      var _this3 = this;
+
       if (this.pet.image == null) {
         this.$refs.selectbutton.classList.add('is-danger');
         return false;
@@ -7217,7 +7255,39 @@ __webpack_require__.r(__webpack_exports__);
       axios.post("/classroom/" + this.code + "/pets", {
         pet: this.pet
       }).then(function (response) {
-        console.log("success");
+        _this3.isModalActive = false;
+
+        _this3.pets.push(response.data);
+
+        _this3.$forceUpdate();
+      });
+    },
+    deleteItem: function deleteItem(id) {
+      var _this4 = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          var index = _this4.pets.findIndex(function (pet, i) {
+            return pet.id === id;
+          });
+
+          axios["delete"]("/classroom/pets/" + id).then(function (response) {
+            if (response.data === 1) {
+              _this4.pets.splice(index, 1);
+
+              _this4.$forceUpdate();
+            }
+          });
+        }
       });
     }
   }
@@ -58974,7 +59044,7 @@ var render = function() {
       _c(
         "button",
         {
-          staticClass: "button is-link mb-4",
+          staticClass: "button is-link mb-5",
           on: {
             click: function($event) {
               _vm.isModalActive = true
@@ -58993,14 +59063,22 @@ var render = function() {
           {
             key: pet.id,
             staticClass:
-              "columns is-multiline is-variable is-1 has-all-centered has-padding-3",
+              "columns is-multiline is-variable is-1 has-all-centered p-3",
             staticStyle: { "border-bottom": "1px dashed #999" }
           },
           [
             _c("div", { staticClass: "column is-narrow is-relative" }, [
               _c("img", {
-                staticClass: "pet-selector",
-                attrs: { src: "/img/pets/" + pet.image }
+                directives: [
+                  {
+                    name: "tippy",
+                    rawName: "v-tippy",
+                    value: { placement: "bottom", arrow: true },
+                    expression: "{ placement : 'bottom',  arrow: true }"
+                  }
+                ],
+                staticStyle: { "margin-top": "-20px" },
+                attrs: { content: pet.name, src: "/img/pets/" + pet.image }
               })
             ]),
             _vm._v(" "),
@@ -59163,7 +59241,7 @@ var render = function() {
                       attrs: { "true-value": "1", "false-value": "0" },
                       on: {
                         input: function($event) {
-                          return _vm.updateForSale(pet)
+                          return _vm.updateForSale(pet.id)
                         }
                       },
                       model: {
@@ -59179,7 +59257,33 @@ var render = function() {
                 ],
                 1
               )
-            ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button has-margin-left-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editPet(pet)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-edit" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button is-danger has-margin-left-2",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteItem(pet.id)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-trash-alt" })]
+            )
           ]
         )
       }),
@@ -59450,6 +59554,7 @@ var render = function() {
                         on: {
                           click: function($event) {
                             _vm.isModalActive = false
+                            _vm.resetPet()
                           }
                         }
                       },
@@ -59462,13 +59567,33 @@ var render = function() {
                       ]
                     ),
                     _vm._v(" "),
-                    _c("button", { staticClass: "button is-primary" }, [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(_vm.trans.get("general.add")) +
-                          "\n          "
-                      )
-                    ])
+                    !_vm.edit
+                      ? _c("button", { staticClass: "button is-primary" }, [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("general.add")) +
+                              "\n          "
+                          )
+                        ])
+                      : _c(
+                          "button",
+                          {
+                            staticClass: "button is-link",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.sendEdit($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans.get("general.edit")) +
+                                "\n          "
+                            )
+                          ]
+                        )
                   ])
                 ]
               )

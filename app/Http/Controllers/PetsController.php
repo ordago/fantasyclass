@@ -25,6 +25,27 @@ class PetsController extends Controller
 
     }
 
+    public function update($code) {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
+    
+        $data = request()->validate([
+            'pet.id' => ['numeric'],
+            'pet.name' => ['nullable', 'string'],
+            'pet.image' => ['required', 'string'],
+            'pet.hp_boost' => ['numeric', 'required'],
+            'pet.xp_boost' => ['numeric', 'required'],
+            'pet.gold_boost' => ['numeric', 'required'],
+            'pet.price' => ['numeric', 'required'],
+        ]);
+
+        $pet = Pet::find($data['pet']['id']);
+        if($pet->classroom_id != $class->id)
+            abort(403, 'What are you trying? :(');
+        
+        $pet->update($data['pet']);
+    }
+
     public function store($code) {
 
         $class = Classroom::where('code', $code)->firstOrFail();
@@ -43,6 +64,30 @@ class PetsController extends Controller
         $data['pet']['classroom_id'] = $class->id;
 
         return Pet::create($data['pet']);
+
+    }
+
+    public function toggle($id) {
+        $pet = Pet::where('id', '=', $id)->first();
+        $class = Classroom::where('id', '=', $pet->classroom_id)->first();
+        $this->authorize('update', $class);
+
+        $pet->update([
+            'for_sale' => $pet->for_sale ? 0 : 1,
+        ]);
+    }
+
+    public function destroy($id) {
+
+        $pet = Pet::where('id', '=', $id)->first();
+        $class = Classroom::where('id', '=', $pet->classroom_id)->first();
+        $this->authorize('update', $class);
+        try {
+            $pet->delete();
+        } catch (\Throwable $th) {
+            return ['error' => $th];
+        }
+        return 1;
 
     }
 

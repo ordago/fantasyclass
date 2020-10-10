@@ -17,7 +17,6 @@ class CreatePetsTable extends Migration
             $table->id();
             $table->string('image');
             $table->string('name', 40)->nullable();
-            $table->float('hp')->default(100);
             $table->float('hp_boost');
             $table->float('xp_boost');
             $table->float('gold_boost');
