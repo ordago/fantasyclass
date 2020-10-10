@@ -9,13 +9,15 @@
             v-model="items_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('items_visibility')"
-          >{{ trans.get('shop.visibility') }}</b-switch>
+            >{{ trans.get("shop.visibility") }}</b-switch
+          >
         </div>
 
         <a
           class="button is-primary"
-          :href="'/classroom/'+ code + '/shop/create'"
-        >{{ trans.get('shop.new_item') }}</a>
+          :href="'/classroom/' + code + '/shop/create'"
+          >{{ trans.get("shop.new_item") }}</a
+        >
 
         <div
           v-for="item in items"
@@ -111,7 +113,8 @@
                 @input="updateForSale(item)"
                 true-value="1"
                 false-value="0"
-              >For sale?</b-switch>
+                >For sale?</b-switch
+              >
             </div>
           </div>
           <div class="column is-narrow">
@@ -126,7 +129,10 @@
           <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
             <i class="fas fa-edit"></i>
           </a>
-          <button class="button is-danger has-margin-left-2" @click="deleteItem(item.id)">
+          <button
+            class="button is-danger has-margin-left-2"
+            @click="deleteItem(item.id)"
+          >
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -145,9 +151,13 @@
             v-model="equipment_1_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_1_visibility')"
-          >{{ trans.get('shop.visibility') }}</b-switch>
+            >{{ trans.get("shop.visibility") }}</b-switch
+          >
 
-          <b-field :label="trans.get('shop.multiplier')" class="has-margin-top-4">
+          <b-field
+            :label="trans.get('shop.multiplier')"
+            class="has-margin-top-4"
+          >
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -156,7 +166,8 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(1)">
-            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
+            <i class="fas fa-save has-margin-right-2"></i>
+            {{ trans.get("general.save") }}
           </button>
         </div>
         <div
@@ -176,9 +187,7 @@
               height="50px"
             />
             {{ Math.round(item.price * config.multiplier1) }}
-            <i
-              class="fas fa-coins colored"
-            ></i>
+            <i class="fas fa-coins colored"></i>
           </div>
         </div>
       </b-tab-item>
@@ -196,7 +205,8 @@
             v-model="equipment_2_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_2_visibility')"
-          >{{ trans.get('shop.visibility') }}</b-switch>
+            >{{ trans.get("shop.visibility") }}</b-switch
+          >
           <b-field label="Multiplier" class="has-margin-top-4">
             <b-numberinput
               @input="$forceUpdate()"
@@ -206,7 +216,8 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(2)">
-            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
+            <i class="fas fa-save has-margin-right-2"></i>
+            {{ trans.get("general.save") }}
           </button>
         </div>
         <div
@@ -226,9 +237,7 @@
               height="50px"
             />
             {{ Math.round(item.price * config.multiplier2) }}
-            <i
-              class="fas fa-coins colored"
-            ></i>
+            <i class="fas fa-coins colored"></i>
           </div>
         </div>
       </b-tab-item>
@@ -246,7 +255,8 @@
             v-model="equipment_3_visibility"
             passive-type="is-danger"
             @input="toggleVisibility('equipment_3_visibility')"
-          >{{ trans.get('shop.visibility') }}</b-switch>
+            >{{ trans.get("shop.visibility") }}</b-switch
+          >
           <b-field label="Multiplier" class="has-margin-top-4">
             <b-numberinput
               @input="$forceUpdate()"
@@ -256,7 +266,8 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(3)">
-            <i class="fas fa-save has-margin-right-2"></i> {{ trans.get('general.save') }}
+            <i class="fas fa-save has-margin-right-2"></i>
+            {{ trans.get("general.save") }}
           </button>
         </div>
         <div
@@ -276,9 +287,7 @@
               height="50px"
             />
             {{ Math.round(item.price * config.multiplier3) }}
-            <i
-              class="fas fa-coins colored"
-            ></i>
+            <i class="fas fa-coins colored"></i>
           </div>
         </div>
       </b-tab-item>

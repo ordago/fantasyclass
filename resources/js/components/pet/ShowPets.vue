@@ -4,6 +4,147 @@
       <i class="fas fa-dog has-margin-right-2"></i>
       {{ trans.get("pets.new_pet") }}
     </button>
+
+    <div
+          v-for="pet in pets"
+          class="columns is-multiline is-variable is-1 has-all-centered has-padding-3"
+          style="border-bottom: 1px dashed #999"
+          v-bind:key="pet.id"
+        >
+          <div class="column is-narrow is-relative">
+            <img :src="pet.image" width="48px" />
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static">
+                        <i class="fas fa-heart colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        disabled
+                        class="input"
+                        style="border: 1px solid"
+                        v-model="pet.hp_boost"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static">
+                        <i class="fas fa-fist-raised colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid"
+                        v-model="pet.xp_boost"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static">
+                        Price
+                        <i class="fas fa-coins colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid"
+                        v-model="pet.gold_boost"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static">
+                        Price
+                        <i class="fas fa-coins colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid"
+                        v-model="pet.price"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="column is-narrow">
+            <div class="field">
+              <b-switch
+                v-model="item.for_sale"
+                @input="updateForSale(item)"
+                true-value="1"
+                false-value="0"
+                >For sale?</b-switch
+              >
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <textarea
+              class="input"
+              :placeholder="trans.get('shop.description')"
+              disabled
+              style="border: 1px solid"
+              v-model="item.description"
+            ></textarea>
+          </div>
+          <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
+            <i class="fas fa-edit"></i>
+          </a>
+          <button
+            class="button is-danger has-margin-left-2"
+            @click="deleteItem(item.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </button>
+        </div>
+
+
     <b-modal
       :active.sync="isModalActive"
       has-modal-card
@@ -26,9 +167,17 @@
                 <i class="fas fa-image"></i>
               </button>
             </b-field>
-            <img src="/img/pets/Pet-Alligator-Base.png" v-if="pet.image" class="pet-selector">
+            <img
+              src="/img/pets/Pet-Alligator-Base.png"
+              v-if="pet.image"
+              class="pet-selector"
+            />
             <b-field :label="trans.get('pets.name')" class="has-margin-top-4">
-              <b-input v-model="pet.name" maxlength="40" placeholder="Careful cat"></b-input>
+              <b-input
+                v-model="pet.name"
+                maxlength="40"
+                placeholder="Careful cat"
+              ></b-input>
             </b-field>
             <div class="columns">
               <div class="column">
@@ -105,7 +254,7 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["code"],
+  props: ["code", "pets"],
 
   created() {},
   data: function () {

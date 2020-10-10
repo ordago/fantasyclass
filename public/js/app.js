@@ -6985,9 +6985,158 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["code"],
+  props: ["code", "pets"],
   created: function created() {},
   data: function data() {
     return {
@@ -7948,6 +8097,15 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -58703,6 +58861,252 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm._l(_vm.pets, function(pet) {
+        return _c(
+          "div",
+          {
+            key: pet.id,
+            staticClass:
+              "columns is-multiline is-variable is-1 has-all-centered has-padding-3",
+            staticStyle: { "border-bottom": "1px dashed #999" }
+          },
+          [
+            _c("div", { staticClass: "column is-narrow is-relative" }, [
+              _c("img", { attrs: { src: pet.image, width: "48px" } })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c("div", { staticClass: "field is-horizontal" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _vm._m(0, true),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: pet.hp_boost,
+                              expression: "pet.hp_boost"
+                            }
+                          ],
+                          staticClass: "input",
+                          staticStyle: { border: "1px solid" },
+                          attrs: { type: "number", disabled: "" },
+                          domProps: { value: pet.hp_boost },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(pet, "hp_boost", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c("div", { staticClass: "field is-horizontal" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _vm._m(1, true),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: pet.xp_boost,
+                              expression: "pet.xp_boost"
+                            }
+                          ],
+                          staticClass: "input",
+                          staticStyle: { border: "1px solid" },
+                          attrs: { type: "number", disabled: "" },
+                          domProps: { value: pet.xp_boost },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(pet, "xp_boost", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c("div", { staticClass: "field is-horizontal" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _vm._m(2, true),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: pet.gold_boost,
+                              expression: "pet.gold_boost"
+                            }
+                          ],
+                          staticClass: "input",
+                          staticStyle: { border: "1px solid" },
+                          attrs: { type: "number", disabled: "" },
+                          domProps: { value: pet.gold_boost },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(pet, "gold_boost", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c("div", { staticClass: "field is-horizontal" }, [
+                _c("div", { staticClass: "field-body" }, [
+                  _c("div", { staticClass: "field is-expanded" }, [
+                    _c("div", { staticClass: "field has-addons" }, [
+                      _vm._m(3, true),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "control is-expanded" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: pet.price,
+                              expression: "pet.price"
+                            }
+                          ],
+                          staticClass: "input",
+                          staticStyle: { border: "1px solid" },
+                          attrs: { type: "number", disabled: "" },
+                          domProps: { value: pet.price },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(pet, "price", $event.target.value)
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c(
+                "div",
+                { staticClass: "field" },
+                [
+                  _c(
+                    "b-switch",
+                    {
+                      attrs: { "true-value": "1", "false-value": "0" },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateForSale(_vm.item)
+                        }
+                      },
+                      model: {
+                        value: _vm.item.for_sale,
+                        callback: function($$v) {
+                          _vm.$set(_vm.item, "for_sale", $$v)
+                        },
+                        expression: "item.for_sale"
+                      }
+                    },
+                    [_vm._v("For sale?")]
+                  )
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "column is-narrow" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.item.description,
+                    expression: "item.description"
+                  }
+                ],
+                staticClass: "input",
+                staticStyle: { border: "1px solid" },
+                attrs: {
+                  placeholder: _vm.trans.get("shop.description"),
+                  disabled: ""
+                },
+                domProps: { value: _vm.item.description },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.item, "description", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "button",
+                attrs: {
+                  href: "/classroom/" + _vm.code + "/shop/" + _vm.item.id
+                }
+              },
+              [_c("i", { staticClass: "fas fa-edit" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "button is-danger has-margin-left-2",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteItem(_vm.item.id)
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-trash-alt" })]
+            )
+          ]
+        )
+      }),
+      _vm._v(" "),
       _c(
         "b-modal",
         {
@@ -58983,10 +59387,53 @@ var render = function() {
         ]
       )
     ],
-    1
+    2
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control" }, [
+      _c("a", { staticClass: "button is-static" }, [
+        _c("i", { staticClass: "fas fa-heart colored" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control" }, [
+      _c("a", { staticClass: "button is-static" }, [
+        _c("i", { staticClass: "fas fa-fist-raised colored" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control" }, [
+      _c("a", { staticClass: "button is-static" }, [
+        _vm._v("\n                      Price\n                      "),
+        _c("i", { staticClass: "fas fa-coins colored" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "control" }, [
+      _c("a", { staticClass: "button is-static" }, [
+        _vm._v("\n                      Price\n                      "),
+        _c("i", { staticClass: "fas fa-coins colored" })
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -60768,7 +61215,7 @@ var render = function() {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
                           _vm._v(
-                            " " +
+                            "\n          " +
                               _vm._s(_vm.trans.get("general.save")) +
                               "\n        "
                           )
@@ -60905,7 +61352,7 @@ var render = function() {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
                           _vm._v(
-                            " " +
+                            "\n          " +
                               _vm._s(_vm.trans.get("general.save")) +
                               "\n        "
                           )
@@ -61042,7 +61489,7 @@ var render = function() {
                             staticClass: "fas fa-save has-margin-right-2"
                           }),
                           _vm._v(
-                            " " +
+                            "\n          " +
                               _vm._s(_vm.trans.get("general.save")) +
                               "\n        "
                           )
