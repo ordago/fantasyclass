@@ -4,17 +4,36 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Classes\Queries;
+use Illuminate\Support\Facades\App;
 
 class HomeController extends Controller
 {
 
-    public function __construct()
-    {
-        $this->middleware('verified');
-    }
+
     public function index()
     {
-        $bg = Queries::getBg();
-        return view('home', compact('bg'));
+        $locale = session('locale', 'es');
+        App::setLocale($locale);
+        return view('auth.home', compact('locale'));
+    }
+
+    public function policy()
+    {
+        return view('auth.policy');
+    }
+    
+    public function locale($locale)
+    {
+
+        if (! in_array($locale, ['en', 'es', 'ca'])) {
+            abort(404);
+        }
+        
+        session(['locale' => $locale]);
+
+        App::setLocale($locale);
+
+        return redirect('/');
+
     }
 }

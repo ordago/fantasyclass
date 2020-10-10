@@ -21,6 +21,8 @@ class SocialController extends Controller
         $user = User::where('email', $getInfo->email)->first();
         
         if($user) {
+            if(!$user->email_verified_at)
+                $user->update(['email_verified_at' => now()]);
             Auth::login($user);
             return redirect()->to('/classroom/');
         } else {

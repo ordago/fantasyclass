@@ -622,6 +622,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1655,19 +1673,46 @@ var render = function() {
                 [
                   !_vm.admin && _vm.student.behaviours.length
                     ? _c(
-                        "div",
+                        "article",
                         {
                           directives: [{ name: "tippy", rawName: "v-tippy" }],
-                          staticClass:
-                            "notification is-light cursor-default has-margin-bottom-3 has-margin-top-0",
+                          staticClass: "message is-dark mb-3",
                           attrs: { content: _vm.trans.get("students.last") }
                         },
                         [
-                          _c("span", {
-                            domProps: { innerHTML: _vm._s(_vm.lastBehaviour()) }
-                          })
+                          _c("div", { staticClass: "message-body" }, [
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(_vm.lastBehaviour())
+                              }
+                            })
+                          ])
                         ]
                       )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.admin &&
+                  _vm.student.numcards[0] > _vm.student.numcards[1]
+                    ? _c("div", { staticClass: "mb-3 mt-0" }, [
+                        _c("article", { staticClass: "message is-danger" }, [
+                          _c("div", { staticClass: "message-body" }, [
+                            _c("i", {
+                              staticClass: "fas fa-exclamation-square"
+                            }),
+                            _vm._v(
+                              "\n              " +
+                                _vm._s(
+                                  _vm.trans.get("success_error.cards_exceded")
+                                ) +
+                                " " +
+                                _vm._s(_vm.student.numcards[0]) +
+                                " /\n              " +
+                                _vm._s(_vm.student.numcards[1]) +
+                                "\n            "
+                            )
+                          ])
+                        ])
+                      ])
                     : _vm._e(),
                   _vm._v(" "),
                   _vm.admin

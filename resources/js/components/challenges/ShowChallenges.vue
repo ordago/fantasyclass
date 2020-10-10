@@ -1,7 +1,7 @@
 <template>
   <div class="has-padding-left-0-desktop" ref="topref">
     <div class="panel has-padding-left-0-desktop">
-      <p class="panel-heading is-flex has-space-between align-items-center has-padding-3">
+      <p class="panel-heading is-flex has-space-between align-items-center has-padding-3 show-challenges-title">
         <span>
           <i :class="challengegroup.icon"></i>
           <span class="has-padding-left-3">{{ challengegroup.name }}</span>
@@ -97,7 +97,9 @@ import ShowChallenge from "./ShowChallenge.vue";
 
 export default {
   props: ["challengegroup", "challenges", "code", "icon"],
-  created: function() {},
+  created: function() {
+    this.$el.scrollTop = 0
+  },
   data: function() {
     return {
       addChallenge: false,
@@ -190,7 +192,7 @@ export default {
       });
     },
     orderedChallenges: function() {
-      return _.orderBy(this.challenges, "datetime", "desc");
+      return _.orderBy(this.challenges, "datetime", "asc");
     }
   },
   updated: function () {

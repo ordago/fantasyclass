@@ -44,12 +44,12 @@
               </span>
               <span :title="challengeChild.name">
                 {{ challengeChild.name.length > 30 ? challengeChild.name.substring(0, 30) + "..." : challengeChild.name }}
-                <small>
+                <!-- <small>
                   <b-tag
                     type="is-info is-light"
                     class="has-small-font"
                   >{{ challengeChild.numChallenges }}</b-tag>
-                </small>
+                </small> -->
               </span>
             </span>
             <span class="has-padding-2 arrow rounded-right">

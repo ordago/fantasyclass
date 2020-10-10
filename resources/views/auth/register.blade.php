@@ -89,10 +89,14 @@
                 </div>
             </div>
 
-
+            <article class="message is-warning">
+                <div class="message-body">
+                    Registrándote aceptas la policita de privacidad y las condiciones de uso: <a target="_blank" href="/policy">Política de privacidad</a>
+                </div>
+            </article>
 
             <div class="has-margin-y-4">
-                <a href="/" class="button is-info">
+                <a href="/login" class="button is-info">
                     <i class="fas fa-long-arrow-left"></i>
                 </a>
                 <button type="submit" class="button is-link">

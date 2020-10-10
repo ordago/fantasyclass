@@ -1,6 +1,6 @@
   #app {
       height: 100%;
-    //   overflow: auto;
+      //   overflow: auto;
   }
 
   .fs-2 {
@@ -10,7 +10,7 @@
   body,
   html {
       height: 100%;
-      overflow-y: auto!important;
+      overflow-y: auto !important;
   }
 
   .help-breadcrumb {
@@ -19,20 +19,21 @@
       right: 0;
   }
 
-  .student-massive, .img-categories {
-    text-transform: capitalize;
-    cursor: pointer;
-    border: 1px solid #555;
+  .student-massive,
+  .img-categories {
+      text-transform: capitalize;
+      cursor: pointer;
+      border: 1px solid #555;
   }
 
   .deck {
-    position: absolute;
-    width: 300px;
-    top: 50%;
-    left: 50%;
-    transform-origin: center center;
-    transform: translate(-50%,-50%);
-    z-index: 12;
+      position: absolute;
+      width: 300px;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+      transform: translate(-50%, -50%);
+      z-index: 12;
   }
 
   .invisible {
@@ -79,18 +80,18 @@
   }
 
   .night {
-    filter: brightness(50%);
+      filter: brightness(50%);
   }
 
   .level-hidden {
-      z-index: 10; 
-      position:absolute; 
-      top:0; 
+      z-index: 10;
+      position: absolute;
+      top: 0;
       left: 50px;
       display: none;
   }
 
-  .level-top:hover + .level-hidden {
+  .level-top:hover+.level-hidden {
       display: initial;
   }
 
@@ -135,6 +136,7 @@
   .shop .columns {
       background-color: #cebf8f;
   }
+
   .wheat {
       background-color: wheat;
   }
@@ -463,6 +465,7 @@
       font-weight: bold;
       transition: all 0.5s ease;
   }
+
   .attribute-info {
       position: absolute;
       display: flex;
@@ -520,10 +523,10 @@
   summary {
       outline: none;
   }
-  
+
   .comments {
-    max-height: 200px;
-    overflow: auto;
+      max-height: 200px;
+      overflow: auto;
   }
 
   .content {
@@ -916,13 +919,13 @@
       overflow: auto;
   }
 
-//   .gemInfo>i,
-//   .gold>i,
-//   .score i.fa-fist-raised {
-//       position: absolute;
-//       top: 5px;
-//       left: 5px;
-//   }
+  //   .gemInfo>i,
+  //   .gold>i,
+  //   .score i.fa-fist-raised {
+  //       position: absolute;
+  //       top: 5px;
+  //       left: 5px;
+  //   }
 
   /* Progress bar level */
 
@@ -1282,6 +1285,7 @@
       top: -4px;
       left: 0;
   }
+
   .lvl-item-top-left span {
       position: absolute;
       top: 2px;
@@ -1401,6 +1405,7 @@
       font-size: 2em;
       height: 100%;
   }
+
   .top-right {
       position: absolute;
       width: 75px;

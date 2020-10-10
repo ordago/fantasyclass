@@ -13,10 +13,14 @@ return [
     |
     */
 
+    'privacy_info' => 'By login in the platform, you accept the terms and conditions and our privacy policy.',
+    'privacy' => 'Privacy policy.',
+
     'provider_failed' => 'The e-mail is not registered.',
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email' => 'E-mail or username',
+    'login' => 'Login',
     'register' => 'Register',
     'forgot' => 'Forgot your password?',
     'name' => 'Name',

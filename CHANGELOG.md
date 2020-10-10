@@ -3,9 +3,12 @@
 ## v1.08 Beta (XX/10/2020)
 ### Added
 - Pets. Students can have pets.
+- Added home page and terms.
 
 ### Changed
-- 
+- Now if a user logins with Google, email is marked as verified.
+- Show challenges scroll to bottom.
+- Better card exceded feedback.
 
 ## v1.07 Beta (08/10/2020)
 ### Changed

@@ -4207,7 +4207,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["challengegroup", "challenges", "code", "icon"],
-  created: function created() {},
+  created: function created() {
+    this.$el.scrollTop = 0;
+  },
   data: function data() {
     return {
       addChallenge: false,
@@ -4298,7 +4300,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     orderedChallenges: function orderedChallenges() {
-      return _.orderBy(this.challenges, "datetime", "desc");
+      return _.orderBy(this.challenges, "datetime", "asc");
     }
   },
   updated: function updated() {// this.$refs.topref.scrollTop=0;
@@ -8930,6 +8932,83 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -53597,7 +53676,7 @@ var render = function() {
           "p",
           {
             staticClass:
-              "panel-heading is-flex has-space-between align-items-center has-padding-3"
+              "panel-heading is-flex has-space-between align-items-center has-padding-3 show-challenges-title"
           },
           [
             _c("span", [
@@ -54061,24 +54140,6 @@ var render = function() {
                                       : challengeChild.name
                                   ) +
                                   "\n              "
-                              ),
-                              _c(
-                                "small",
-                                [
-                                  _c(
-                                    "b-tag",
-                                    {
-                                      staticClass: "has-small-font",
-                                      attrs: { type: "is-info is-light" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(challengeChild.numChallenges)
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
                               )
                             ]
                           )
@@ -62308,9 +62369,7 @@ var render = function() {
               [
                 _c("p", { staticClass: "title is-4" }, [
                   _vm._v(
-                    "\n              " +
-                      _vm._s(_vm.student.name) +
-                      "\n              "
+                    "\n          " + _vm._s(_vm.student.name) + "\n          "
                   ),
                   _vm.student.hidden == 1
                     ? _c("i", { staticClass: "fas fa-eye-slash" })
@@ -62329,16 +62388,24 @@ var render = function() {
               _vm.student.numcards[0] > _vm.student.numcards[1]
                 ? _c(
                     "div",
-                    { staticClass: "notification is-danger has-margin-y-2" },
+                    { staticClass: "has-margin-bottom-2 has-margin-top-3" },
                     [
-                      _c("i", { staticClass: "fas fa-exclamation-square" }),
-                      _vm._v(
-                        "\n              Cards number exceded " +
-                          _vm._s(_vm.student.numcards[0]) +
-                          " / " +
-                          _vm._s(_vm.student.numcards[1]) +
-                          "\n            "
-                      )
+                      _c("article", { staticClass: "message is-danger" }, [
+                        _c("div", { staticClass: "message-body" }, [
+                          _c("i", { staticClass: "fas fa-exclamation-square" }),
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(
+                                _vm.trans.get("success_error.cards_exceded")
+                              ) +
+                              " " +
+                              _vm._s(_vm.student.numcards[0]) +
+                              " /\n              " +
+                              _vm._s(_vm.student.numcards[1]) +
+                              "\n            "
+                          )
+                        ])
+                      ])
                     ]
                   )
                 : _vm._e(),
@@ -62520,9 +62587,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "score has-padding-3 has-margin-1" }, [
                 _vm._m(1),
-                _vm._v(
-                  "\n              " + _vm._s(_vm.student.xp) + "\n            "
-                )
+                _vm._v("\n          " + _vm._s(_vm.student.xp) + "\n        ")
               ]),
               _vm._v(" "),
               _c(
@@ -62540,7 +62605,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("100")]
+                    [_vm._v("\n            100\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -62554,7 +62619,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("50")]
+                    [_vm._v("\n            50\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -62568,7 +62633,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("10")]
+                    [_vm._v("\n            10\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -62646,7 +62711,9 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                _vm._s(_vm.trans.get("users_groups.apply"))
+                                "\n                  " +
+                                  _vm._s(_vm.trans.get("users_groups.apply")) +
+                                  "\n                "
                               )
                             ]
                           )
@@ -62666,7 +62733,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("-10")]
+                    [_vm._v("\n            -10\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -62680,7 +62747,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("-50")]
+                    [_vm._v("\n            -50\n          ")]
                   ),
                   _vm._v(" "),
                   _c(
@@ -62694,7 +62761,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("-100")]
+                    [_vm._v("\n            -100\n          ")]
                   )
                 ],
                 1
@@ -62702,11 +62769,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "gold has-padding-3 has-margin-y-1" }, [
                 _c("i", { staticClass: "fas fa-coins colored" }),
-                _vm._v(
-                  "\n              " +
-                    _vm._s(_vm.student.gold) +
-                    "\n            "
-                )
+                _vm._v("\n          " + _vm._s(_vm.student.gold) + "\n        ")
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "has-margin-y-2 has-text-centered" }, [
@@ -62725,7 +62788,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("100")]
+                      [_vm._v("\n              100\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -62739,7 +62802,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("50")]
+                      [_vm._v("\n              50\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -62753,7 +62816,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("10")]
+                      [_vm._v("\n              10\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -62831,7 +62894,11 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.trans.get("users_groups.apply"))
+                                  "\n                    " +
+                                    _vm._s(
+                                      _vm.trans.get("users_groups.apply")
+                                    ) +
+                                    "\n                  "
                                 )
                               ]
                             )
@@ -62852,7 +62919,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("-10")]
+                      [_vm._v("\n              -10\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -62867,7 +62934,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("-50")]
+                      [_vm._v("\n              -50\n            ")]
                     ),
                     _vm._v(" "),
                     _c(
@@ -62882,7 +62949,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("-100")]
+                      [_vm._v("\n              -100\n            ")]
                     )
                   ],
                   1
@@ -82828,10 +82895,13 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   "ca.auth": {
+    "privacy_info": "Acceding a la plataforma, acceptes els termes i condicions aix\xED com la nostra pol\xEDtica de privacitat.",
+    "privacy": "Pol\xEDtica de privacitat.",
     "provider_failed": "El e-mail no est\xE0 enregistrat.",
     "failed": "Les credencials no s\xF3n correctes.",
     "throttle": "Massa intents incorrectes. Per favor, intenta en :seconds segons.",
     "email": "E-mail o nom d'usuari",
+    "login": "Inicia sessi\xF3",
     "register": "Registra't",
     "forgot": "Recuperar contrasenya",
     "name": "Nom",
@@ -83158,6 +83228,10 @@ __webpack_require__.r(__webpack_exports__);
     "new_group": "Crea un nou grup",
     "edit_groups": "Edita els grups"
   },
+  "ca.home": {
+    "title": "Converteix les teues classes en una aventura!",
+    "subtitle": "Dissenya un viatge de coneixement pels teus herois i hero\xEFnes"
+  },
   "ca.levels": {
     "level": "Nivell",
     "number_levels": "Quants nivells vols crear?",
@@ -83330,7 +83404,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_exists": "Ja tens aquest objecte o un de millor!",
     "min_name": "El nom ha de ser de com a m\xEDnim 4 car\xE0cters",
     "taginput": "Selecciona com a m\xEDnim una etiqueta v\xE0lida",
-    "challenges_empty": "No hi ha reptes per importar"
+    "challenges_empty": "No hi ha reptes per importar",
+    "cards_exceded": "Total de cartes excedit"
   },
   "ca.users_groups": {
     "change_layout": "Toggle layout view",
@@ -83460,10 +83535,13 @@ __webpack_require__.r(__webpack_exports__);
     "attributes": []
   },
   "en.auth": {
+    "privacy_info": "By login in the platform, you accept the terms and conditions and our privacy policy.",
+    "privacy": "Privacy policy.",
     "provider_failed": "The e-mail is not registered.",
     "failed": "These credentials do not match our records.",
     "throttle": "Too many login attempts. Please try again in :seconds seconds.",
     "email": "E-mail or username",
+    "login": "Login",
     "register": "Register",
     "forgot": "Forgot your password?",
     "name": "Name",
@@ -83776,6 +83854,10 @@ __webpack_require__.r(__webpack_exports__);
     "new_group": "Create new group",
     "edit_groups": "Edit groups"
   },
+  "en.home": {
+    "title": "Make your lesson an adventure!",
+    "subtitle": "Design a journey of knowledge for your heroes and heroines"
+  },
   "en.maps": {
     "add": "Add map",
     "name": "Name",
@@ -83936,7 +84018,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_level": "You don't have enough level",
     "shop_failed_exists": "You already have the item or a better one",
     "taginput": "Select at least one valid tag",
-    "challenges_empty": "There are not challenges available to import"
+    "challenges_empty": "There are not challenges available to import",
+    "cards_exceded": "Cards number exceded"
   },
   "en.users_groups": {
     "change_layout": "Toggle layout view",
@@ -84066,10 +84149,13 @@ __webpack_require__.r(__webpack_exports__);
     "attributes": []
   },
   "es.auth": {
+    "privacy_info": "Accediendo a la plataforma, aceptas los t\xE9rminos y condiciones, as\xED como nuestra pol\xEDtica de privacidad.",
+    "privacy": "Pol\xEDtica de privacidad.",
     "provider_failed": "El e-mail no est\xE1 grabado.",
     "failed": "Las credenciales no son correctas.",
     "throttle": "Massa intentos incorrectos. Por favor, intenta en :seconds segundos.",
     "email": "E-mail o nombre de usuario",
+    "login": "Inicia sesi\xF3n",
     "register": "Reg\xEDstrate",
     "forgot": "Recuperar contrase\xF1a",
     "name": "Nombre",
@@ -84396,6 +84482,10 @@ __webpack_require__.r(__webpack_exports__);
     "new_group": "Crea un nuevo grupo",
     "edit_groups": "Edita los grupos"
   },
+  "es.home": {
+    "title": "\xA1Convierte tus clases en una aventura!",
+    "subtitle": "Dise\xF1a un viaje de conocimientos para tus h\xE9roes y hero\xEDnas"
+  },
   "es.levels": {
     "level": "Nivel",
     "number_levels": "Cuantos niveles quieres crear?",
@@ -84568,7 +84658,8 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_exists": "Ya tienes este objeto o uno de mejor!!",
     "min_name": "El nombre tiene que ser de como m\xEDnimo 4 caracteres",
     "taginput": "Selecciona como m\xEDnimo una etiqueta v\xE1lida",
-    "challenges_empty": "No hay desaf\xEDos para importar"
+    "challenges_empty": "No hay desaf\xEDos para importar",
+    "cards_exceded": "Total de cartas excedido"
   },
   "es.users_groups": {
     "change_layout": "Alternar vista de dise\xF1o",

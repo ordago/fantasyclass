@@ -20,7 +20,9 @@ Route::group(['middleware' => 'language'], function () {
 
     // Home
     // Route::redirect('/', '/classroom');
-    Route::view('/', 'auth.home');
+    Route::get('/', 'HomeController@index');
+    Route::get('/locale/{locale}', 'HomeController@locale');
+    Route::get('/policy', 'HomeController@policy');
 
     // Miscellany
     Route::get('/contribute', 'MiscellanyController@contribute');

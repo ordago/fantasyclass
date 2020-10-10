@@ -147,6 +147,8 @@ class ClassroomsStudentController extends Controller
         $admin = false;
         $student = Functions::getCurrentStudent($class);
 
+        $student->append('numcards');
+
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 

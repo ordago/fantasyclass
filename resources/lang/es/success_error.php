@@ -28,6 +28,8 @@ return [
 
     'challenges_empty' => 'No hay desafíos para importar',
 
+    'cards_exceded' => 'Total de cartas excedido',
+
     
 
 ];

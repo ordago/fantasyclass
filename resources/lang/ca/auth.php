@@ -13,10 +13,14 @@ return [
     |
     */
 
+    'privacy_info' => 'Acceding a la plataforma, acceptes els termes i condicions així com la nostra política de privacitat.',
+    'privacy' => 'Política de privacitat.',
+
     'provider_failed' => 'El e-mail no està enregistrat.',
     'failed' => 'Les credencials no són correctes.',
     'throttle' => 'Massa intents incorrectes. Per favor, intenta en :seconds segons.',
     'email' => 'E-mail o nom d\'usuari',
+    'login' => 'Inicia sessió',
     'register' => 'Registra\'t',
     'forgot' => 'Recuperar contrasenya',
     'name' => 'Nom',

@@ -12173,7 +12173,8 @@ html {
   right: 0;
 }
 
-.student-massive, .img-categories {
+.student-massive,
+.img-categories {
   text-transform: capitalize;
   cursor: pointer;
   border: 1px solid #555;
@@ -14508,7 +14509,23 @@ textPath {
   #navbar .has-dropdown:hover .navbar-dropdown {
     display: block;
   }
+
+  .show-challenges-title {
+    position: relative;
+    top: 0;
+  }
 }
+.has-background-gradient {
+  background: linear-gradient(rgba(31, 44, 108, 0.65), rgba(31, 44, 108, 0.65)), rgba(0, 0, 0, 0.55);
+}
+
+.show-challenges-title {
+  position: -webkit-sticky;
+  position: sticky;
+  z-index: 40;
+  top: 65px;
+}
+
 /************/
 .sidebar-content {
   min-width: 50%;

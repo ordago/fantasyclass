@@ -26,5 +26,7 @@ return [
     'taginput' => 'Selecciona com a mínim una etiqueta vàlida',
     
     'challenges_empty' => 'No hi ha reptes per importar',
+    
+    'cards_exceded' => 'Total de cartes excedit',
 
 ];

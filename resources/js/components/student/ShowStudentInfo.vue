@@ -186,8 +186,26 @@
         </b-tab-item>
 
         <b-tab-item :label="trans.get('students.inventory')" class="has-padding-0" icon="backpack" icon-pack="fad">
-          <div v-tippy :content="trans.get('students.last')" v-if="!admin && student.behaviours.length" class="notification is-light cursor-default has-margin-bottom-3 has-margin-top-0">
-            <span v-html="lastBehaviour()"></span>
+          <!-- <div  class="notification is-light cursor-default has-margin-bottom-3 has-margin-top-0">
+          </div> -->
+
+          <article class="message is-dark mb-3" v-tippy :content="trans.get('students.last')" v-if="!admin && student.behaviours.length">
+            <div class="message-body">
+              <span v-html="lastBehaviour()"></span>
+            </div>
+          </article>
+
+          <div
+            class="mb-3 mt-0"
+            v-if="!admin && student.numcards[0] > student.numcards[1]"
+          >
+            <article class="message is-danger">
+              <div class="message-body">
+                <i class="fas fa-exclamation-square"></i>
+                {{ trans.get('success_error.cards_exceded') }} {{ student.numcards[0] }} /
+                {{ student.numcards[1] }}
+              </div>
+            </article>
           </div>
 
           <div class="columns is-multiline is-variable" v-if="admin">

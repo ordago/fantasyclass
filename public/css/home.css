@@ -19,6 +19,17 @@ html {
   padding-bottom: 30px;
 }
 
+.top-right {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 5px 10px;
+}
+
+.is-rounded {
+    border-radius: 5px;
+}
+
 .hero {
   background-image: url(../img/home.png);
   background: linear-gradient(rgba(31, 44, 108, 0.65), rgba(31, 44, 108, 0.65)), rgba(0, 0, 0, 0.55) url("../img/home.png") no-repeat;

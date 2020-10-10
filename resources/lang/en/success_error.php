@@ -26,5 +26,7 @@ return [
 
     'challenges_empty' => 'There are not challenges available to import',
 
+    'cards_exceded' => 'Cards number exceded',
+
 
 ];
