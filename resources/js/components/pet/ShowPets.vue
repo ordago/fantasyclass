@@ -12,7 +12,7 @@
       v-bind:key="pet.id"
     >
       <div class="column is-narrow is-relative">
-        <img v-tippy="{ placement : 'bottom',  arrow: true }" :content="pet.name" :src="'/img/pets/' + pet.image" class="" style="margin-top: -20px;"/>
+        <img v-tippy="{ theme: 'light bordered' , placement : 'bottom',  arrow: true }" :content="getName(pet.name)" :src="'/img/pets/' + pet.image" class="" style="margin-top: -20px;"/>
       </div>
       <div class="column is-narrow">
         <div class="field is-horizontal">
@@ -260,6 +260,7 @@
           <p class="modal-card-title">{{ trans.get("pets.image") }}</p>
         </header>
         <section class="modal-card-body is-relative">
+          All pet images are from: <a href="https://github.com/HabitRPG/habitica">https://github.com/HabitRPG/habitica</a> and are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a>
           <div class="columns is-multiline" v-if="images">
             <img
               width="75px"
@@ -271,8 +272,6 @@
               :key="image"
               :src="'/img/pets/' + image"
             />
-            <!-- <span class="m-2" v-for="image in images"
-              :key="image">{{ image }}</span> -->
           </div>
         </section>
         <footer
@@ -350,7 +349,6 @@ export default {
       this.isModalActive = true;
     },
     sendEdit: function () {
-      console.log('hit');
       axios.patch("/classroom/" + this.code + "/pets", { pet: this.pet }).then((response) => {
         this.isModalActive = false;
         this.resetPet();
@@ -367,6 +365,11 @@ export default {
         this.pets.push(response.data);
         this.$forceUpdate();
       });
+    },
+    getName(name) {
+      if(name)
+        return name + " 🍅🍖";
+      else return "🍅🍖";
     },
     deleteItem(id) {
       this.$buefy.dialog.confirm({

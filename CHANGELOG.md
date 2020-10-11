@@ -2,7 +2,7 @@
 
 ## v1.08 Beta (XX/10/2020)
 ### Added
-- Pets. Students can have pets.
+- Pets! Students can have pets to increase their atributes.
 - Added home page and terms.
 
 ### Changed

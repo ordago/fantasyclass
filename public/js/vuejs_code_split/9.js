@@ -642,6 +642,313 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -920,9 +1227,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     },
     message: function message(item) {
       var message = "";
-      if (item.hp > 0) message += "This item recovers " + item.hp + " <i class='fas fa-heart colored'></i>. ";
-      if (item.xp > 0) message += "This item gives you " + item.xp + " <i class='fas fa-fist-raised colored'></i>. ";
-      if (message == "" && !item.description) return "What is that?";
+      if (item.hp > 0) message += this.trans.get("shop.recovers_hp") + item.hp + " <i class='fas fa-heart colored'></i>. ";
+      if (item.xp > 0) message += this.trans.get("shop.gives_xp") + item.xp + " <i class='fas fa-fist-raised colored'></i>. ";
+      if (message == "" && !item.description) return this.trans.get("shop.what_is");
       message += item.description ? item.description : "";
       return message;
     },
@@ -935,19 +1242,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     sortByLogDate: function sortByLogDate(a, b) {
       return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
     },
-    buyItem: function buyItem(item) {
+    getName: function getName(name) {
+      if (name) return name + " 🍅🍖";else return "🍅🍖";
+    },
+    buyPet: function buyPet(pet) {
       var _this9 = this;
 
       this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item?",
-        confirmText: "Buy",
+        title: this.trans.get("shop.buy_item"),
+        message: this.trans.get("shop.buy_text") + "?",
+        confirmText: this.trans.get("shop.buy"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this9.classroom.code + "/student/buyitem", {
-            item: item.id
+          axios.post("/classroom/" + _this9.classroom.code + "/student/buypet", {
+            pet: pet.id
           }).then(function (response) {
             _this9.$toasted.show(response.data.message, {
               position: "top-center",
@@ -958,31 +1268,31 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             });
 
             if (response.data.type == "success") {
-              _this9.student.items = response.data.items;
-
-              _this9.updateEmpty();
-
-              _this9.student.gold = _this9.student.gold - item.price;
+              _this9.student.pets = response.data.pets;
+              _this9.student.gold = _this9.student.gold - pet.price;
+              _this9.student.boost = response.data.boost;
 
               _this9.$forceUpdate();
+
+              _this9.$refs.showStd.$forceUpdate();
             }
           });
         }
       });
     },
-    buyEquipment: function buyEquipment(oldItem, newItem) {
+    buyItem: function buyItem(item) {
       var _this10 = this;
 
       this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item " + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
-        confirmText: "Buy",
+        title: this.trans.get("shop.buy_item"),
+        message: this.trans.get("shop.buy_text") + "?",
+        confirmText: this.trans.get("shop.buy"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this10.classroom.code + "/student/buyequipment", {
-            "new": newItem
+          axios.post("/classroom/" + _this10.classroom.code + "/student/buyitem", {
+            item: item.id
           }).then(function (response) {
             _this10.$toasted.show(response.data.message, {
               position: "top-center",
@@ -993,11 +1303,46 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
             });
 
             if (response.data.type == "success") {
-              _this10.student.equipment = response.data.equipment;
-              _this10.student.gold = _this10.student.gold - _this10.calculate(newItem);
+              _this10.student.items = response.data.items;
+
+              _this10.updateEmpty();
+
+              _this10.student.gold = _this10.student.gold - item.price;
+
+              _this10.$forceUpdate();
+            }
+          });
+        }
+      });
+    },
+    buyEquipment: function buyEquipment(oldItem, newItem) {
+      var _this11 = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("shop.buy_item"),
+        message: this.trans.get("shop.buy_text") + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
+        confirmText: this.trans.get("shop.buy"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/" + _this11.classroom.code + "/student/buyequipment", {
+            "new": newItem
+          }).then(function (response) {
+            _this11.$toasted.show(response.data.message, {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: response.data.icon,
+              type: response.data.type
+            });
+
+            if (response.data.type == "success") {
+              _this11.student.equipment = response.data.equipment;
+              _this11.student.gold = _this11.student.gold - _this11.calculate(newItem);
               oldItem.src = newItem.src;
               var reference = "item" + oldItem.id;
-              _this10.student.boost = response.data.boost;
+              _this11.student.boost = response.data.boost;
               var newClass = "inv-item-armor-bronce";
 
               switch (newItem.offset) {
@@ -1010,9 +1355,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
                   break;
               }
 
-              _this10.$refs[reference][0].classList.add(newClass);
+              _this11.$refs[reference][0].classList.add(newClass);
 
-              _this10.$forceUpdate();
+              _this11.$forceUpdate();
+
+              _this11.$refs.showStd.$forceUpdate();
             }
           });
         }
@@ -1026,18 +1373,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       }
     },
     updateAvatar: function updateAvatar() {
-      var _this11 = this;
+      var _this12 = this;
 
       this.image.generateBlob(function (blob) {
         if (blob != null) {
           var formData = new FormData();
           formData.append("avatar", blob, "avatar.png");
 
-          if (_this11.admin) {
-            formData.append("student_id", _this11.student.id);
+          if (_this12.admin) {
+            formData.append("student_id", _this12.student.id);
           }
 
-          axios.post("/classroom/" + _this11.classroom.code + "/setting/updateavatar", formData, {
+          axios.post("/classroom/" + _this12.classroom.code + "/setting/updateavatar", formData, {
             headers: {
               "content-type": "multipart/form-data"
             }
@@ -1050,19 +1397,19 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
   },
   computed: {
     filteredEntries: function filteredEntries() {
-      var _this12 = this;
+      var _this13 = this;
 
       if (this.behaviours) {
         return this.behaviours.filter(function (entry) {
-          return (entry.pivot.created_at >= _this12.dateStart || !_this12.dateStart) && (entry.pivot.created_at <= _this12.dateEnd || !_this12.dateEnd);
+          return (entry.pivot.created_at >= _this13.dateStart || !_this13.dateStart) && (entry.pivot.created_at <= _this13.dateEnd || !_this13.dateEnd);
         });
       }
     },
     filteredLogEntries: function filteredLogEntries() {
-      var _this13 = this;
+      var _this14 = this;
 
       return this.student.log_entries.filter(function (entry) {
-        return (entry.created_at >= _this13.dateStart || !_this13.dateStart) && (entry.created_at <= _this13.dateEnd || !_this13.dateEnd);
+        return (entry.created_at >= _this14.dateStart || !_this14.dateStart) && (entry.created_at <= _this14.dateEnd || !_this14.dateEnd);
       });
     },
     groupedData: function groupedData() {
@@ -1081,7 +1428,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
     groupedData: {
       immediate: true,
       handler: function handler() {
-        var _this14 = this;
+        var _this15 = this;
 
         var colorsOK = ["#c8e6c9", "#a5d6a7", "#81c784", "#66bb6a", "#4caf50", "#43a047", "#388e3c", "#2e7d32", "#1b5e20", "#003300", "#002200", "#001100", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
         var colorsKO = ["#ffccbc", "#ffab91", "#ff8a65", "#ff7043", "#ff5722", "#f4511e", "#e64a19", "#d84315", "#bf360c", "#570000", "#370000", "#170000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000", "#000000"];
@@ -1099,16 +1446,16 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         propes.forEach(function (element) {
           var behaviour = element[0];
 
-          _this14.series.push(element.length);
+          _this15.series.push(element.length);
 
-          _this14.labels.push("<i class='" + behaviour.icon + "'></i> " + _this14.trans.get(behaviour.name));
+          _this15.labels.push("<i class='" + behaviour.icon + "'></i> " + _this15.trans.get(behaviour.name));
 
           if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-            _this14.colors.push(colorsOK[0]);
+            _this15.colors.push(colorsOK[0]);
 
             colorsOK.shift();
           } else {
-            _this14.colors.push(colorsKO[0]);
+            _this15.colors.push(colorsKO[0]);
 
             colorsKO.shift();
           }
@@ -1154,6 +1501,7 @@ var render = function() {
             },
             [
               _c("show-character", {
+                ref: "showStd",
                 attrs: { student: _vm.student, classroom: _vm.classroom }
               }),
               _vm._v(" "),
@@ -1219,7 +1567,7 @@ var render = function() {
                                 name: "show",
                                 rawName: "v-show",
                                 value: _vm.student.hp < 30,
-                                expression: "student.hp<30"
+                                expression: "student.hp < 30"
                               }
                             ],
                             staticClass: "has-text-grey-light"
@@ -1362,7 +1710,11 @@ var render = function() {
                                   }
                                 }
                               },
-                              [_vm._v("Update avatar")]
+                              [
+                                _vm._v(
+                                  "\n              Update avatar\n            "
+                                )
+                              ]
                             )
                           : _vm._e()
                       ]),
@@ -1706,7 +2058,7 @@ var render = function() {
                                 _vm._s(
                                   _vm.trans.get("success_error.cards_exceded")
                                 ) +
-                                " " +
+                                "\n              " +
                                 _vm._s(_vm.student.numcards[0]) +
                                 " /\n              " +
                                 _vm._s(_vm.student.numcards[1]) +
@@ -1791,7 +2143,7 @@ var render = function() {
                                       name: "show",
                                       rawName: "v-show",
                                       value: item.pivot.count > 0,
-                                      expression: "item.pivot.count>0"
+                                      expression: "item.pivot.count > 0"
                                     }
                                   ],
                                   key: item.id,
@@ -2004,7 +2356,7 @@ var render = function() {
                         [
                           _c("h2", { staticClass: "is-size-2" }, [
                             _c("i", { staticClass: "fas fa-store" }),
-                            _vm._v(" Shop\n          ")
+                            _vm._v(" Shop")
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.itemsJson, function(item) {
@@ -2078,7 +2430,9 @@ var render = function() {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                Buy " +
+                                          "\n                " +
+                                            _vm._s(_vm.trans.get("shop.buy")) +
+                                            " " +
                                             _vm._s(item.price) +
                                             "\n                "
                                         ),
@@ -2101,13 +2455,116 @@ var render = function() {
               ),
               _vm._v(" "),
               !_vm.admin && _vm.pets.length
-                ? _c("b-tab-item", {
-                    attrs: {
-                      label: _vm.trans.get("menu.pets"),
-                      icon: "club",
-                      "icon-pack": "fad"
-                    }
-                  })
+                ? _c(
+                    "b-tab-item",
+                    {
+                      attrs: {
+                        label: _vm.trans.get("menu.pets"),
+                        icon: "dog",
+                        "icon-pack": "fad"
+                      }
+                    },
+                    [
+                      _c("article", { staticClass: "message is-danger" }, [
+                        _c("div", { staticClass: "message-body" }, [
+                          _c("i", {
+                            staticClass: "fas fa-exclamation-triangle"
+                          }),
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("shop.pet_warning")) +
+                              "\n          "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.pets, function(pet) {
+                        return _c(
+                          "div",
+                          { key: pet.id, staticClass: "p-2 m-2" },
+                          [
+                            _c("div", { staticClass: "columns mb-0" }, [
+                              _c("div", { staticClass: "column is-narrow" }, [
+                                _c("img", {
+                                  directives: [
+                                    {
+                                      name: "tippy",
+                                      rawName: "v-tippy",
+                                      value: {
+                                        theme: "light bordered",
+                                        placement: "bottom",
+                                        arrow: true
+                                      },
+                                      expression:
+                                        "{\n                  theme: 'light bordered',\n                  placement: 'bottom',\n                  arrow: true,\n                }"
+                                    }
+                                  ],
+                                  staticClass: "pet-selector",
+                                  attrs: {
+                                    content: _vm.getName(pet.name),
+                                    src: "/img/pets/" + pet.image
+                                  }
+                                })
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "column" }, [
+                                _c("span", { staticClass: "p-2" }, [
+                                  _vm._v(_vm._s(pet.hp_boost) + "% "),
+                                  _c("i", {
+                                    staticClass: "fas fa-heart colored"
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-3 p-2" }, [
+                                  _vm._v(_vm._s(pet.xp_boost) + "% "),
+                                  _c("i", {
+                                    staticClass: "fas fa-fist-raised colored"
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("span", { staticClass: "ml-3 p-2" }, [
+                                  _vm._v(_vm._s(pet.gold_boost) + "% "),
+                                  _c("i", {
+                                    staticClass: "fas fa-coins colored"
+                                  })
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "column is-narrow" }, [
+                                _c(
+                                  "button",
+                                  {
+                                    staticClass: "button is-success",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.buyPet(pet)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                " +
+                                        _vm._s(_vm.trans.get("shop.buy")) +
+                                        " " +
+                                        _vm._s(pet.price) +
+                                        "\n                "
+                                    ),
+                                    _c("i", {
+                                      staticClass: "fas fa-coins colored",
+                                      staticStyle: { "z-index": "0" }
+                                    })
+                                  ]
+                                )
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c("hr", { staticClass: "mt-0" })
+                          ]
+                        )
+                      })
+                    ],
+                    2
+                  )
                 : _vm._e(),
               _vm._v(" "),
               _vm.admin || _vm.cards.length
@@ -2132,7 +2589,13 @@ var render = function() {
                                 }
                               }
                             },
-                            [_vm._v(_vm._s(_vm.trans.get("cards.assign")))]
+                            [
+                              _vm._v(
+                                "\n          " +
+                                  _vm._s(_vm.trans.get("cards.assign")) +
+                                  "\n        "
+                              )
+                            ]
                           )
                         : _vm._e(),
                       _vm._v(" "),
@@ -2455,7 +2918,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              2130886407
+                              907439787
                             )
                           })
                         : _vm._e()
@@ -2587,7 +3050,7 @@ var render = function() {
                                                         "fas fa-external-link-alt has-margin-right-2"
                                                     }),
                                                     _vm._v(
-                                                      " " +
+                                                      "\n                      " +
                                                         _vm._s(
                                                           grade.pivot.grade
                                                         )
@@ -2976,7 +3439,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              4256421611
+                              1762162791
                             )
                           })
                         : _vm._e()
@@ -3055,7 +3518,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans.get("general.close")) +
+                                "\n          "
+                            )
+                          ]
                         )
                       ])
                     ]
@@ -3156,7 +3625,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(_vm.trans.get("general.close")) +
+                            "\n        "
+                        )
+                      ]
                     )
                   ])
                 ]

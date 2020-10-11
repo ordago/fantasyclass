@@ -10,7 +10,6 @@ class Pet extends Model
     protected $fillable = [
         'image',
         'name',
-        'hp',
         'hp_boost',
         'xp_boost',
         'gold_boost',

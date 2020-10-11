@@ -86,6 +86,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/show/{code}/licenses', 'ClassroomsStudentController@licenses');
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
+        Route::post('/{code}/student/buypet', 'ClassroomsStudentController@buyPet');
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');

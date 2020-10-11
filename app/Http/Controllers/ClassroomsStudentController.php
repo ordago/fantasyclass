@@ -83,7 +83,7 @@ class ClassroomsStudentController extends Controller
     
     public function index($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.groups', 'theme')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.pets', 'students.groups', 'theme')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('study', $class);
 
@@ -92,7 +92,7 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class);
         $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
             return collect($user->toArray())
-                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'level', 'groups'])
+                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'pets', 'level', 'groups'])
                 ->all();
         });
 
@@ -335,6 +335,42 @@ class ClassroomsStudentController extends Controller
             "icon" => "check",
             "type" => "success",
         ];
+    }
+    public function buyPet($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+
+        $data = request()->validate([
+            'pet' => ['numeric', 'required'],
+        ]);
+        
+        $student = Functions::getCurrentStudent($class, []);
+        
+        if ($student->hp == 0)
+        return false;
+        
+        $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->where('for_sale', 1)->firstOrFail();
+
+        if ($pet->price > $student->gold) {
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        $student->pets()->sync([$pet->id]);
+        $student->update(['gold' => ($student->gold - $pet->price)]);
+
+        return [
+            "message" => " " . __('success_error.equipment_success'),
+            "icon" => "check",
+            "type" => "success",
+            "pets" => $student->fresh()->pets,
+            "boost" => $student->fresh()->getBoost(),
+        ];
+
     }
     public function buyItem($code)
     {

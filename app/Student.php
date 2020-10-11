@@ -175,6 +175,14 @@ class Student extends Model implements HasMedia
             $gold += $item->gold;
             $hp += $item->hp;
         }
+        
+        $pet = $this->pets->first();
+        if($pet) {
+            $xp += $pet->xp_boost;
+            $gold += $pet->gold_boost;
+            $hp += $pet->hp_boost;
+        }
+
         return [
             'xp' => $xp,
             'hp' => $hp,

@@ -13508,6 +13508,7 @@ textPath {
   position: relative;
   top: -50px;
   margin-bottom: -40px;
+  z-index: 0;
 }
 
 .link.outer_glow {
@@ -13797,6 +13798,40 @@ textPath {
   }
   100% {
     transform: translateY(-4px);
+  }
+}
+@-webkit-keyframes hmovement {
+  0% {
+    transform: translateX(0px);
+  }
+  20% {
+    transform: translateX(4px);
+  }
+  40% {
+    transform: translateX(-4px);
+  }
+  60% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(-4px);
+  }
+}
+@keyframes hmovement {
+  0% {
+    transform: translateX(0px);
+  }
+  20% {
+    transform: translateX(4px);
+  }
+  40% {
+    transform: translateX(-4px);
+  }
+  60% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(-4px);
   }
 }
 @-webkit-keyframes movementGauntlet {

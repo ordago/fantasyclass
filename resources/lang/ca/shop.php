@@ -24,5 +24,13 @@ return [
     'item_xp' => "Assigna un valor si l'objecte serveix obtenir experiència",
     'min_level_info' => "Nivell mínim per poder comprar l'objecte",
     'multiplier' => "Multiplicador",
+    'buy' => "Compra",  
+    'recovers_hp' => 'Aquest objecte et permet recuperar ',
+    'gives_xp' => 'Aquest objecte et dóna ',
+    'what_is' => 'Què serà això?',
+    'buy_item' => 'Compra objecte',
+    'buy_text' => 'Vols comprar l\'objecte ',
+    'pet_warning' => 'Solament pots tenir una mascota, si compres una altra perdràs la que tenies.',
+
 
 ];

@@ -23,7 +23,15 @@ return [
     'item_hp' => "Assign a value if this is an item that could be used to restore health.",
     'item_xp' => "Assign a value if this is an item that could be used to get experience.",
     'min_level_info' => "Minimum level to buy the item.",
-    'multiplier' => "Multiplier",    
+    'multiplier' => "Multiplier",  
+    'buy' => "Buy",  
+    'recovers_hp' => 'This item recovers ',
+    'gives_xp' => 'This item gives you ',
+    'what_is' => 'What is that?',
+    'buy_item' => 'Buy item',
+    'buy_text' => 'Do you want to buy the item ',
+    'pet_warning' => 'You can only have one pet, if you buy one, you\'ll lose the pet you had',
+
     
     
 ];

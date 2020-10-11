@@ -1,8 +1,18 @@
 <template>
-  <div class="columns h-100 has-margin-right-0" v-bind:class="{ 'has-bg-student': !admin }">
+  <div
+    class="columns h-100 has-margin-right-0"
+    v-bind:class="{ 'has-bg-student': !admin }"
+  >
     <div class="column is-narrow has-padding-right-0 noprint">
-      <div class="card rounded card-shadow-s" style="min-width: 275px; overflow: visible;">
-        <show-character :student="student" :classroom="classroom"></show-character>
+      <div
+        class="card rounded card-shadow-s"
+        style="min-width: 275px; overflow: visible"
+      >
+        <show-character
+          ref="showStd"
+          :student="student"
+          :classroom="classroom"
+        ></show-character>
         <div class="card-content">
           <div class="media has-margin-bottom-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
@@ -24,24 +34,29 @@
           >
             <span
               class="attribute has-background-white-ter has-padding-y-3 rounded"
-              style="width:100%;"
+              style="width: 100%"
             >
               <span>
                 <i
                   class="fas fa-heart colored has-text-grey-light"
-                  v-bind:class="{ invisible: student.hp>=30 }"
+                  v-bind:class="{ invisible: student.hp >= 30 }"
                 ></i>
               </span>
-              <span class="has-text-grey-light" v-show="student.hp<30">{{ student.hp }}</span>
+              <span class="has-text-grey-light" v-show="student.hp < 30">{{
+                student.hp
+              }}</span>
             </span>
             <span
               class="attribute has-background-danger has-padding-y-3 rounded-left"
-              v-bind:class="{ rounded: student.hp==100 }"
+              v-bind:class="{ rounded: student.hp == 100 }"
               :style="'width: ' + student.hp + '%'"
-              v-if="student.hp>0"
+              v-if="student.hp > 0"
             >
-              <i class="fas fa-heart colored" v-bind:class="{ invisible: student.hp<30 }"></i>
-              <span v-if="student.hp>=30">{{ student.hp }}</span>
+              <i
+                class="fas fa-heart colored"
+                v-bind:class="{ invisible: student.hp < 30 }"
+              ></i>
+              <span v-if="student.hp >= 30">{{ student.hp }}</span>
             </span>
           </div>
           <div class="score has-padding-3 has-margin-1 has-margin-top-3">
@@ -61,9 +76,16 @@
     </div>
     <div class="column has-padding-right-0">
       <b-tabs v-model="activeTab" :key="update">
-        <b-tab-item :label="trans.get('students.information')" icon="info-circle" icon-pack="fad">
+        <b-tab-item
+          :label="trans.get('students.information')"
+          icon="info-circle"
+          icon-pack="fad"
+        >
           <div class>
-            <div class="has-margin-3" v-if="admin || settings.allow_upload != 0">
+            <div
+              class="has-margin-3"
+              v-if="admin || settings.allow_upload != 0"
+            >
               <croppa
                 v-model="image"
                 :width="128"
@@ -84,7 +106,9 @@
                 class="button is-link"
                 v-if="image && image.chosenFile"
                 @click="updateAvatar()"
-              >Update avatar</button>
+              >
+                Update avatar
+              </button>
             </div>
             <image-bank
               class="has-margin-3"
@@ -95,7 +119,7 @@
           </div>
           <div class="field is-horizontal">
             <div class="field-label is-normal">
-              <label class="label">{{ trans.get('students.name') }}</label>
+              <label class="label">{{ trans.get("students.name") }}</label>
             </div>
             <div class="field-body">
               <div class="field has-addons">
@@ -123,7 +147,12 @@
             <div class="field-body">
               <div class="field">
                 <p class="control">
-                  <input class="input is-static" disabled type="text" v-model="student.classroom.user.email" />
+                  <input
+                    class="input is-static"
+                    disabled
+                    type="text"
+                    v-model="student.classroom.user.email"
+                  />
                 </p>
               </div>
             </div>
@@ -135,14 +164,22 @@
             <div class="field-body">
               <div class="field">
                 <p class="control">
-                  <input class="input is-static" disabled type="text" v-model="student.username" />
+                  <input
+                    class="input is-static"
+                    disabled
+                    type="text"
+                    v-model="student.username"
+                  />
                 </p>
               </div>
             </div>
           </div>
-          <div class="field is-horizontal" v-if="student.password_plain&&admin">
+          <div
+            class="field is-horizontal"
+            v-if="student.password_plain && admin"
+          >
             <div class="field-label is-normal">
-              <label class="label">{{ trans.get('students.password') }}</label>
+              <label class="label">{{ trans.get("students.password") }}</label>
             </div>
             <div class="field-body">
               <b-field class="is-static">
@@ -157,10 +194,17 @@
               </b-field>
             </div>
           </div>
-          <div class="has-padding-4" v-if="classroom.character_theme && student.hp > 0">
+          <div
+            class="has-padding-4"
+            v-if="classroom.character_theme && student.hp > 0"
+          >
             <img
               v-tippy
-              :content="'Highlights in <i class=\'' + charclass.property + ' colored\'></i>'"
+              :content="
+                'Highlights in <i class=\'' +
+                charclass.property +
+                ' colored\'></i>'
+              "
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="has-padding-2 has-margin-2 rounded"
@@ -170,26 +214,40 @@
             />
           </div>
           <div v-if="admin">
-            <button class="button is-success" v-if="student.hidden == 1" @click="hide">
+            <button
+              class="button is-success"
+              v-if="student.hidden == 1"
+              @click="hide"
+            >
               <i class="fas fa-eye"></i>
-              {{ trans.get('students.show') }}
+              {{ trans.get("students.show") }}
             </button>
             <button class="button is-warning" v-else @click="hide">
               <i class="fas fa-eye-slash"></i>
-              {{ trans.get('students.hide') }}
+              {{ trans.get("students.hide") }}
             </button>
             <button class="button is-danger" @click="deleteStudent">
               <i class="fas fa-trash has-margin-right-2"></i>
-              {{ trans.get('students.delete') }}
+              {{ trans.get("students.delete") }}
             </button>
           </div>
         </b-tab-item>
 
-        <b-tab-item :label="trans.get('students.inventory')" class="has-padding-0" icon="backpack" icon-pack="fad">
+        <b-tab-item
+          :label="trans.get('students.inventory')"
+          class="has-padding-0"
+          icon="backpack"
+          icon-pack="fad"
+        >
           <!-- <div  class="notification is-light cursor-default has-margin-bottom-3 has-margin-top-0">
           </div> -->
 
-          <article class="message is-dark mb-3" v-tippy :content="trans.get('students.last')" v-if="!admin && student.behaviours.length">
+          <article
+            class="message is-dark mb-3"
+            v-tippy
+            :content="trans.get('students.last')"
+            v-if="!admin && student.behaviours.length"
+          >
             <div class="message-body">
               <span v-html="lastBehaviour()"></span>
             </div>
@@ -202,7 +260,8 @@
             <article class="message is-danger">
               <div class="message-body">
                 <i class="fas fa-exclamation-square"></i>
-                {{ trans.get('success_error.cards_exceded') }} {{ student.numcards[0] }} /
+                {{ trans.get("success_error.cards_exceded") }}
+                {{ student.numcards[0] }} /
                 {{ student.numcards[1] }}
               </div>
             </article>
@@ -235,7 +294,7 @@
                 v-for="item in student.items"
                 v-tippy
                 :content="message(item)"
-                v-show="item.pivot.count>0"
+                v-show="item.pivot.count > 0"
                 class="inventory-item"
                 v-bind:key="item.id"
               >
@@ -248,7 +307,11 @@
               </div>
             </div>
             <div>
-              <div v-for="index in inventoryRemaining" class="inventory-item" v-bind:key="index"></div>
+              <div
+                v-for="index in inventoryRemaining"
+                class="inventory-item"
+                v-bind:key="index"
+              ></div>
             </div>
             <div v-if="classroom.character_theme" :key="forceReload">
               <div
@@ -258,19 +321,40 @@
                 :content="propertiesMessage(gear)"
                 :ref="'item' + gear.id"
                 class="inventory-item inv-item-armor relative"
-                v-bind:class="{ 'inv-item-armor-bronce': gear.offset == 1, 'inv-item-armor-silver': gear.offset == 2, 'inv-item-armor-gold': gear.offset == 3 }"
+                v-bind:class="{
+                  'inv-item-armor-bronce': gear.offset == 1,
+                  'inv-item-armor-silver': gear.offset == 2,
+                  'inv-item-armor-gold': gear.offset == 3,
+                }"
               >
-                <img :src="'/img/character/' + gear.src" :alt="gear.id" class="item" />
-                <div class="price-buy rounded not-hover" v-if="(eq1Json || eq2Json || eq3Json)">
+                <img
+                  :src="'/img/character/' + gear.src"
+                  :alt="gear.id"
+                  class="item"
+                />
+                <div
+                  class="price-buy rounded not-hover"
+                  v-if="eq1Json || eq2Json || eq3Json"
+                >
                   <i class="fas fa-plus"></i>
                 </div>
-                <div class="w-100 shop-sub-item" style="position:absolute; top: 100px; left: 0">
-                  <div v-for="(i, index) in [eq1Json, eq2Json, eq3Json]" :key="index">
+                <div
+                  class="w-100 shop-sub-item"
+                  style="position: absolute; top: 100px; left: 0"
+                >
+                  <div
+                    v-for="(i, index) in [eq1Json, eq2Json, eq3Json]"
+                    :key="index"
+                  >
                     <div
                       v-for="itemStore in filterEquipment(i, gear.type)"
                       v-bind:key="itemStore.id"
                       class="inventory-item inv-item-armor w-100"
-                      v-bind:class="{ 'inv-item-armor-bronce': index == 0, 'inv-item-armor-silver': index == 1, 'inv-item-armor-gold': index == 2 }"
+                      v-bind:class="{
+                        'inv-item-armor-bronce': index == 0,
+                        'inv-item-armor-silver': index == 1,
+                        'inv-item-armor-gold': index == 2,
+                      }"
                     >
                       <img
                         v-tippy
@@ -279,7 +363,10 @@
                         :alt="itemStore.id"
                         class="item"
                       />
-                      <div class="price-buy rounded" @click="buyEquipment(gear, itemStore)">
+                      <div
+                        class="price-buy rounded"
+                        @click="buyEquipment(gear, itemStore)"
+                      >
                         {{ calculate(itemStore) }}
                         <i class="fas fa-coins colored"></i>
                       </div>
@@ -288,39 +375,99 @@
                 </div>
               </div>
             </div>
-            <div class style="clear:both"></div>
+            <div class style="clear: both"></div>
           </div>
           <div class="shop has-padding-top-3" v-if="itemsJson">
-            <h2 class="is-size-2">
-              <i class="fas fa-store"></i> Shop
-            </h2>
+            <h2 class="is-size-2"><i class="fas fa-store"></i> Shop</h2>
             <div
               class="columns has-padding-4 has-margin-2 rounded"
               v-for="item in itemsJson"
               :key="item.id"
             >
-              <div class="column is-relative is-flex has-all-centered is-narrow">
+              <div
+                class="column is-relative is-flex has-all-centered is-narrow"
+              >
                 <div class="lvl-item-top-left" v-if="item.min_lvl">
                   <img src="/img/cardgen/lvl.png" class="levelCard" />
-                  <span class="is-flex has-all-centered">{{ item.min_lvl }}</span>
+                  <span class="is-flex has-all-centered">{{
+                    item.min_lvl
+                  }}</span>
                 </div>
                 <img :src="item.icon" />
               </div>
-              <div class="column is-flex has-all-centered rounded wheat" v-html="message(item)"></div>
+              <div
+                class="column is-flex has-all-centered rounded wheat"
+                v-html="message(item)"
+              ></div>
               <div class="column is-flex has-all-centered is-narrow item-price">
                 <button class="button is-success" @click="buyItem(item)">
-                  Buy {{ item.price }}
+                  {{ trans.get("shop.buy") }} {{ item.price }}
                   <i class="fas fa-coins colored" style="z-index: 0"></i>
                 </button>
               </div>
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item :label="trans.get('menu.pets')" v-if="!admin && pets.length" icon="dog" icon-pack="fad">
-          
+        <b-tab-item
+          :label="trans.get('menu.pets')"
+          v-if="!admin && pets.length"
+          icon="dog"
+          icon-pack="fad"
+        >
+          <article class="message is-danger">
+            <div class="message-body">
+              <i class="fas fa-exclamation-triangle"></i>
+              {{ trans.get("shop.pet_warning") }}
+            </div>
+          </article>
+          <div v-for="pet in pets" :key="pet.id" class="p-2 m-2">
+            <div class="columns mb-0">
+              <div class="column is-narrow">
+                <img
+                  v-tippy="{
+                    theme: 'light bordered',
+                    placement: 'bottom',
+                    arrow: true,
+                  }"
+                  :content="getName(pet.name)"
+                  :src="'/img/pets/' + pet.image"
+                  class="pet-selector"
+                />
+              </div>
+              <div class="column">
+                <span class="p-2"
+                  >{{ pet.hp_boost }}% <i class="fas fa-heart colored"></i
+                ></span>
+                <span class="ml-3 p-2"
+                  >{{ pet.xp_boost }}% <i class="fas fa-fist-raised colored"></i
+                ></span>
+                <span class="ml-3 p-2"
+                  >{{ pet.gold_boost }}% <i class="fas fa-coins colored"></i
+                ></span>
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-success" @click="buyPet(pet)">
+                  {{ trans.get("shop.buy") }} {{ pet.price }}
+                  <i class="fas fa-coins colored" style="z-index: 0"></i>
+                </button>
+              </div>
+            </div>
+            <hr class="mt-0" />
+          </div>
         </b-tab-item>
-        <b-tab-item :label="trans.get('students.cards')" v-if="admin || cards.length" icon="club" icon-pack="fad">
-          <button class="button is-link has-margin-left-3" v-if="admin" @click="isAssignModalActive=true">{{ trans.get('cards.assign') }}</button>
+        <b-tab-item
+          :label="trans.get('students.cards')"
+          v-if="admin || cards.length"
+          icon="club"
+          icon-pack="fad"
+        >
+          <button
+            class="button is-link has-margin-left-3"
+            v-if="admin"
+            @click="isAssignModalActive = true"
+          >
+            {{ trans.get("cards.assign") }}
+          </button>
           <div class="columns is-multiline is-variable">
             <div
               v-for="(card, index) in cards"
@@ -350,8 +497,9 @@
               width="450"
               type="donut"
               :options="{
-                        labels: labels,  colors: colors
-                        }"
+                labels: labels,
+                colors: colors,
+              }"
               :series="series"
             ></apexchart>
           </div>
@@ -370,18 +518,22 @@
             :data="filteredEntries"
             default-sort-direction="asc"
             default-sort="created_at"
-
             icon-pack="fas"
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="icon"
-               :label="trans.get('students.icon')"
-              centered
+              <b-table-column
+                field="icon"
+                :label="trans.get('students.icon')"
+                centered
               >
                 <span
                   class="tag"
-                  v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
+                  v-bind:class="[
+                    props.row.xp + props.row.hp + props.row.gold >= 0
+                      ? 'is-success'
+                      : 'is-danger',
+                  ]"
                 >
                   <i :class="props.row.icon"></i>
                 </span>
@@ -392,7 +544,8 @@
                 :label="trans.get('students.name')"
                 centered
                 sortable
-              >{{ trans.get(props.row.name) }}</b-table-column>
+                >{{ trans.get(props.row.name) }}</b-table-column
+              >
 
               <b-table-column
                 field="created_at"
@@ -400,27 +553,56 @@
                 :label="trans.get('students.created_at')"
                 sortable
                 centered
-              >{{ new Date(props.row.pivot.created_at).toLocaleDateString() }}</b-table-column>
+                >{{
+                  new Date(props.row.pivot.created_at).toLocaleDateString()
+                }}</b-table-column
+              >
 
-              <b-table-column field="hp" :label="trans.get('students.hp')" centered sortable>
+              <b-table-column
+                field="hp"
+                :label="trans.get('students.hp')"
+                centered
+                sortable
+              >
                 <i class="fas fa-heart"></i>
                 {{ props.row.hp }}
               </b-table-column>
 
-              <b-table-column field="name" :label="trans.get('students.xp')" sortable centered>
+              <b-table-column
+                field="name"
+                :label="trans.get('students.xp')"
+                sortable
+                centered
+              >
                 <i class="fas fa-fist-raised"></i>
                 {{ props.row.xp }}
               </b-table-column>
 
-              <b-table-column field="name" :label="trans.get('students.gold')" sortable centered>
+              <b-table-column
+                field="name"
+                :label="trans.get('students.gold')"
+                sortable
+                centered
+              >
                 <i class="fas fa-coins"></i>
                 {{ props.row.gold }}
               </b-table-column>
 
-              <b-table-column field="name" :label="trans.get('students.settings')" v-if="admin" centered>
+              <b-table-column
+                field="name"
+                :label="trans.get('students.settings')"
+                v-if="admin"
+                centered
+              >
                 <b-button
                   type="is-danger is-small"
-                  @click="confirmDelete('behaviour', props.row, props.row.pivot.created_at)"
+                  @click="
+                    confirmDelete(
+                      'behaviour',
+                      props.row,
+                      props.row.pivot.created_at
+                    )
+                  "
                 >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
@@ -445,35 +627,100 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item :label="trans.get('students.evaluation')" v-if="evaluation" icon="analytics" icon-pack="fad">
-          <report :classroom="classroom" :admin="admin" :grades="evaluation" :settings="settings"></report>
+        <b-tab-item
+          :label="trans.get('students.evaluation')"
+          v-if="evaluation"
+          icon="analytics"
+          icon-pack="fad"
+        >
+          <report
+            :classroom="classroom"
+            :admin="admin"
+            :grades="evaluation"
+            :settings="settings"
+          ></report>
           <div class="content">
             <table class="grades has-background-light">
-              <th>{{ trans.get('evaluation.description') }}</th>
-              <th>{{ trans.get('evaluation.grade_number') }}</th>
-              <th>{{ trans.get('evaluation.tags') }}</th>
-              <th>{{ trans.get('evaluation.feedback') }}</th>
-              <tr v-for="(grade,index) in student.grades" :key="index">
+              <th>{{ trans.get("evaluation.description") }}</th>
+              <th>{{ trans.get("evaluation.grade_number") }}</th>
+              <th>{{ trans.get("evaluation.tags") }}</th>
+              <th>{{ trans.get("evaluation.feedback") }}</th>
+              <tr v-for="(grade, index) in student.grades" :key="index">
                 <td>{{ grade.description }}</td>
                 <td>
-
-                  <span v-if="admin || (settings.eval_type != 1 && settings.eval_type != 2)">
-                    <span v-if="grade.rubric_id" class="cursor-pointer" @click="loadRubric(grade.rubric_id)">
-                      <span class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }"><i class="fas fa-external-link-alt has-margin-right-2"></i> {{ grade.pivot.grade }}</span>
+                  <span
+                    v-if="
+                      admin ||
+                      (settings.eval_type != 1 && settings.eval_type != 2)
+                    "
+                  >
+                    <span
+                      v-if="grade.rubric_id"
+                      class="cursor-pointer"
+                      @click="loadRubric(grade.rubric_id)"
+                    >
+                      <span
+                        class="tag is-size-6"
+                        :class="{
+                          'is-success':
+                            grade.pivot.grade >= settings.eval_max / 2,
+                          'is-danger':
+                            grade.pivot.grade < settings.eval_max / 2,
+                        }"
+                        ><i
+                          class="fas fa-external-link-alt has-margin-right-2"
+                        ></i>
+                        {{ grade.pivot.grade }}</span
+                      >
                     </span>
 
-                    <span v-else class="tag is-size-6" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">{{ grade.pivot.grade }}</span>
+                    <span
+                      v-else
+                      class="tag is-size-6"
+                      :class="{
+                        'is-success':
+                          grade.pivot.grade >= settings.eval_max / 2,
+                        'is-danger': grade.pivot.grade < settings.eval_max / 2,
+                      }"
+                      >{{ grade.pivot.grade }}</span
+                    >
                   </span>
 
                   <span v-if="settings.eval_type == 1">
-                    <i :class="'fas ' + getEmoji(grade.pivot.grade) + ' rateEmoji'"></i>
+                    <i
+                      :class="
+                        'fas ' + getEmoji(grade.pivot.grade) + ' rateEmoji'
+                      "
+                    ></i>
                   </span>
-                  <span v-if="settings.eval_type == 2" class="tag" :class="{ 'is-success' : grade.pivot.grade >= (settings.eval_max / 2), 'is-danger' : grade.pivot.grade < (settings.eval_max / 2) }">
+                  <span
+                    v-if="settings.eval_type == 2"
+                    class="tag"
+                    :class="{
+                      'is-success': grade.pivot.grade >= settings.eval_max / 2,
+                      'is-danger': grade.pivot.grade < settings.eval_max / 2,
+                    }"
+                  >
                     <i :class="'fas ' + getPassFail(grade.pivot.grade)"></i>
                   </span>
-
                 </td>
-                <td><span v-for="(tag, index) in grade.tags" class="tag is-dark cursor-default has-margin-x-1" v-tippy :content="tag.description + ' (' + trans.get('evaluation.weight') + ': ' + tag.pivot.weight + ')'" :key="index">{{ tag.short }}</span></td>
+                <td>
+                  <span
+                    v-for="(tag, index) in grade.tags"
+                    class="tag is-dark cursor-default has-margin-x-1"
+                    v-tippy
+                    :content="
+                      tag.description +
+                      ' (' +
+                      trans.get('evaluation.weight') +
+                      ': ' +
+                      tag.pivot.weight +
+                      ')'
+                    "
+                    :key="index"
+                    >{{ tag.short }}</span
+                  >
+                </td>
                 <td>{{ grade.pivot.feedback }}</td>
               </tr>
             </table>
@@ -482,7 +729,10 @@
 
         <b-tab-item
           :label="trans.get('students.badges')"
-          v-if="(classroom.badges && classroom.badges.length) || student.badges.length"
+          v-if="
+            (classroom.badges && classroom.badges.length) ||
+            student.badges.length
+          "
           icon="award"
           icon-pack="fad"
         >
@@ -492,7 +742,13 @@
                 @click="toggle(badge.id)"
                 class="personalBadge type0"
                 v-tippy
-                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+                :content="
+                  '<h1>' +
+                  badge.title +
+                  '</h1><h3>' +
+                  badge.description +
+                  '</h3>'
+                "
                 :class="{ notColored: findInStudent(badge.id) }"
               >
                 <i :class="'fal ' + badge.icon"></i>
@@ -504,7 +760,13 @@
               <div
                 class="personalBadge type0"
                 v-tippy
-                :content="'<h1>' + badge.title  + '</h1><h3>' + badge.description  + '</h3>'"
+                :content="
+                  '<h1>' +
+                  badge.title +
+                  '</h1><h3>' +
+                  badge.description +
+                  '</h3>'
+                "
               >
                 <i :class="'fal ' + badge.icon"></i>
               </div>
@@ -512,7 +774,12 @@
           </div>
         </b-tab-item>
 
-        <b-tab-item :label="trans.get('students.log')" v-if="student.log_entries.length" icon="file" icon-pack="fad">
+        <b-tab-item
+          :label="trans.get('students.log')"
+          v-if="student.log_entries.length"
+          icon="file"
+          icon-pack="fad"
+        >
           <div class="columns">
             <div class="column">
               <input type="date" class="input is-rounded" v-model="dateStart" />
@@ -526,23 +793,33 @@
             :data="filteredLogEntries"
             default-sort-direction="asc"
             default-sort="created_at"
-
             icon-pack="fas"
             sort-icon="arrow-up"
           >
             <template slot-scope="props">
-              <b-table-column field="type" :label="trans.get('students.type')" centered>
+              <b-table-column
+                field="type"
+                :label="trans.get('students.type')"
+                centered
+              >
                 <span
                   class="tag"
-                  v-bind:class="[ props.row.value >= 0 ? 'is-success' : 'is-danger']"
+                  v-bind:class="[
+                    props.row.value >= 0 ? 'is-success' : 'is-danger',
+                  ]"
                 >
-                  <span v-if="props.row.type=='xp'">✊</span>
-                  <span v-if="props.row.type=='gold'">💰</span>
-                  <span v-if="props.row.type=='hp'">❤️</span>
+                  <span v-if="props.row.type == 'xp'">✊</span>
+                  <span v-if="props.row.type == 'gold'">💰</span>
+                  <span v-if="props.row.type == 'hp'">❤️</span>
                 </span>
               </b-table-column>
 
-              <b-table-column field="value" :label="trans.get('students.value')" sortable>{{ props.row.value }}</b-table-column>
+              <b-table-column
+                field="value"
+                :label="trans.get('students.value')"
+                sortable
+                >{{ props.row.value }}</b-table-column
+              >
 
               <b-table-column
                 field="created_at"
@@ -550,12 +827,22 @@
                 :label="trans.get('students.created_at')"
                 sortable
                 centered
-              >{{ new Date(props.row.created_at).toLocaleDateString() }}</b-table-column>
+                >{{
+                  new Date(props.row.created_at).toLocaleDateString()
+                }}</b-table-column
+              >
 
-              <b-table-column field="name" :label="trans.get('students.settings')" v-if="admin" centered>
+              <b-table-column
+                field="name"
+                :label="trans.get('students.settings')"
+                v-if="admin"
+                centered
+              >
                 <b-button
                   type="is-danger is-small"
-                  @click="confirmDelete('logentry', props.row, props.row.created_at)"
+                  @click="
+                    confirmDelete('logentry', props.row, props.row.created_at)
+                  "
                 >
                   <i class="fas fa-trash-alt"></i>
                 </b-button>
@@ -566,17 +853,36 @@
       </b-tabs>
     </div>
 
-    <b-modal v-if="admin" :active.sync="isAssignModalActive" has-modal-card full-screen :can-cancel="false">
+    <b-modal
+      v-if="admin"
+      :active.sync="isAssignModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ trans.get('cards.assign') }}</p>
+          <p class="modal-card-title">{{ trans.get("cards.assign") }}</p>
         </header>
         <section class="modal-card-body is-relative" style="z-index: 1">
-           <show-cards :code="classroom.code" :cards="allcards" :student="student.id"></show-cards>
+          <show-cards
+            :code="classroom.code"
+            :cards="allcards"
+            :student="student.id"
+          ></show-cards>
         </section>
-        <footer class="modal-card-foot columns is-multiline" style="overflow-x: auto">
+        <footer
+          class="modal-card-foot columns is-multiline"
+          style="overflow-x: auto"
+        >
           <div class="column is-narrow">
-            <button class="button" type="button" @click="isAssignModalActive=false">{{ trans.get('general.close') }}</button>
+            <button
+              class="button"
+              type="button"
+              @click="isAssignModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
           </div>
         </footer>
       </div>
@@ -618,12 +924,12 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="showRubric=false">{{ trans.get('general.close') }}</button>
+          <button class="button" type="button" @click="showRubric = false">
+            {{ trans.get("general.close") }}
+          </button>
         </footer>
       </div>
     </b-modal>
-
-
   </div>
 </template>
 
@@ -694,13 +1000,22 @@ export default {
   },
   methods: {
     lastBehaviour: function () {
-      let behaviour = this.student.behaviours[this.student.behaviours.length - 1];
+      let behaviour = this.student.behaviours[
+        this.student.behaviours.length - 1
+      ];
       let text;
-      if(behaviour.custom_text == null)
-        text = behaviour.name;
+      if (behaviour.custom_text == null) text = behaviour.name;
       else text = behaviour.custom_text;
-      if(behaviour)
-        return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='"+ behaviour.icon +" has-margin-x-2'></i>" + this.trans.get(text);
+      if (behaviour)
+        return (
+          "<span class='tag is-dark'>" +
+          new Date(behaviour.created_at).toLocaleDateString() +
+          "</span>" +
+          "<i class='" +
+          behaviour.icon +
+          " has-margin-x-2'></i>" +
+          this.trans.get(text)
+        );
       return "";
     },
     getPassFail: function (grade) {
@@ -715,21 +1030,23 @@ export default {
           rubric: rubric,
         })
         .then((response) => {
-            this.rubric = response.data;
-            this.showRubric = true;
+          this.rubric = response.data;
+          this.showRubric = true;
 
-            axios
-              .post("/classroom/evaluation/student/rubric", {
-                student: this.student.id,
-                rubric: rubric,
-              })
-              .then((response) => {
-                response.data.forEach((row) => {
-                  document
-                    .querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]")
-                    .classList.add("selectedSubItem");
-                });
+          axios
+            .post("/classroom/evaluation/student/rubric", {
+              student: this.student.id,
+              rubric: rubric,
+            })
+            .then((response) => {
+              response.data.forEach((row) => {
+                document
+                  .querySelector(
+                    "[row=row" + row[0] + "][item=item" + row[1] + "]"
+                  )
+                  .classList.add("selectedSubItem");
               });
+            });
         });
     },
     calculate(item) {
@@ -933,15 +1250,16 @@ export default {
       let message = "";
       if (item.hp > 0)
         message +=
-          "This item recovers " +
+          this.trans.get("shop.recovers_hp") +
           item.hp +
           " <i class='fas fa-heart colored'></i>. ";
       if (item.xp > 0)
         message +=
-          "This item gives you " +
+          this.trans.get("shop.gives_xp") +
           item.xp +
           " <i class='fas fa-fist-raised colored'></i>. ";
-      if (message == "" && !item.description) return "What is that?";
+      if (message == "" && !item.description)
+        return this.trans.get("shop.what_is");
       message += item.description ? item.description : "";
       return message;
     },
@@ -956,23 +1274,57 @@ export default {
       );
     },
     sortByDate(a, b) {
-        return (
-          new Date(b.pivot.created_at).getTime() -
-          new Date(a.pivot.created_at).getTime()
-        );
+      return (
+        new Date(b.pivot.created_at).getTime() -
+        new Date(a.pivot.created_at).getTime()
+      );
     },
     sortByLogDate(a, b) {
-        return (
-          new Date(b.created_at).getTime() -
-          new Date(a.created_at).getTime()
-        );
+      return (
+        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+      );
     },
-
+    getName(name) {
+      if (name) return name + " 🍅🍖";
+      else return "🍅🍖";
+    },
+    buyPet(pet) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("shop.buy_item"),
+        message: this.trans.get("shop.buy_text") + "?",
+        confirmText: this.trans.get("shop.buy"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/student/buypet", {
+              pet: pet.id,
+            })
+            .then((response) => {
+              this.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type,
+              });
+              if (response.data.type == "success") {
+                this.student.pets = response.data.pets;
+                this.student.gold = this.student.gold - pet.price;
+                this.student.boost = response.data.boost;
+                this.$forceUpdate();
+                this.$refs.showStd.$forceUpdate();
+              }
+            });
+        },
+      });
+    },
     buyItem(item) {
       this.$buefy.dialog.confirm({
-        title: "Buy item",
-        message: "Do you want to buy the item?",
-        confirmText: "Buy",
+        title: this.trans.get("shop.buy_item"),
+        message: this.trans.get("shop.buy_text") + "?",
+        confirmText: this.trans.get("shop.buy"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1001,9 +1353,9 @@ export default {
     },
     buyEquipment(oldItem, newItem) {
       this.$buefy.dialog.confirm({
-        title: "Buy item",
+        title: this.trans.get("shop.buy_item"),
         message:
-          "Do you want to buy the item " +
+          this.trans.get("shop.buy_text") +
           newItem.price +
           "<i class='fas fa-coins colored'></i>? (" +
           newItem.hp +
@@ -1012,7 +1364,7 @@ export default {
           "% <i class='fas fa-fist-raised colored'></i> | " +
           newItem.gold +
           "% <i class='fas fa-coins colored'></i>)",
-        confirmText: "Buy",
+        confirmText: this.trans.get("shop.buy"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1049,6 +1401,7 @@ export default {
                 }
                 this.$refs[reference][0].classList.add(newClass);
                 this.$forceUpdate();
+                this.$refs.showStd.$forceUpdate();
               }
             });
         },
