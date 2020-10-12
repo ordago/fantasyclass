@@ -7,6 +7,10 @@ return [
     "finished" => "Finished",
     "disabled" => "Disabled",
 
+    "code" => "Classroom code",
+    "placeholder_code" => "Just  the code :)",
+    "code_invalid" => "Invalid code",
+
     /* Roles */
     "student" => "Student",
     "teacher" => "Teacher",

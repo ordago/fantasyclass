@@ -39,4 +39,9 @@ return [
     'correct_answer' => 'Correct answer',
     'incorrect_answer' => 'Incorrect answer',
 
+    'mark_title' => 'Mark as done',
+    'mark_confirm' => 'Confirm done',
+    'mark_text' => 'Are you sure you have done all the the work? Trust is needed there.',
+
+
 ];

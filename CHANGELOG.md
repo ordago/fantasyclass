@@ -11,6 +11,7 @@
 - Now if a user logins with Google, email is marked as verified.
 - Show challenges scroll to bottom.
 - Better card exceded feedback.
+- Translations added.
 
 ## v1.07 Beta (08/10/2020)
 ### Changed

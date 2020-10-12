@@ -201,7 +201,8 @@
             <img
               v-tippy
               :content="
-                'Highlights in <i class=\'' +
+                trans.get('students.highlights') +
+                ' <i class=\'' +
                 charclass.property +
                 ' colored\'></i>'
               "
@@ -1077,6 +1078,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -1132,6 +1134,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -1188,10 +1191,10 @@ export default {
     },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({
-        title: "Class change",
-        message:
-          "Basic equipment will be assigned, this action can't be undone.",
-        confirmText: "Change class",
+        title: this.trans.get("students.change_class"),
+        message: this.trans.get("students.basic_equipment"),
+        confirmText: this.trans.get("students.change_class"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-warning",
         iconPack: "fa",
         hasIcon: true,
@@ -1293,6 +1296,7 @@ export default {
         title: this.trans.get("shop.buy_item"),
         message: this.trans.get("shop.buy_text") + "?",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1325,6 +1329,7 @@ export default {
         title: this.trans.get("shop.buy_item"),
         message: this.trans.get("shop.buy_text") + "?",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1365,6 +1370,7 @@ export default {
           newItem.gold +
           "% <i class='fas fa-coins colored'></i>)",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,

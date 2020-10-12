@@ -5,7 +5,8 @@
         <a
           :href="'/classroom/' + this.code + '/maps/create'"
           class="button is-link"
-        >{{ trans.get('maps.add') }}</a>
+          >{{ trans.get("maps.add") }}</a
+        >
       </div>
       <div class="column is-hidden-mobile"></div>
     </div>
@@ -20,9 +21,16 @@
         :row-class="(row, index) => row.id == mapSelected && 'is-info'"
       >
         <template slot-scope="props">
-          <b-table-column field="name" :label="trans.get('maps.name')" sortable>{{ props.row.name }}</b-table-column>
+          <b-table-column
+            field="name"
+            :label="trans.get('maps.name')"
+            sortable
+            >{{ props.row.name }}</b-table-column
+          >
 
-          <b-table-column field="url" label="Url" sortable>{{ props.row.url }}</b-table-column>
+          <b-table-column field="url" label="Url" sortable>{{
+            props.row.url
+          }}</b-table-column>
 
           <b-table-column
             field="settings"
@@ -34,7 +42,9 @@
               v-tippy
               :content="trans.get('maps.preview')"
               type="is-dark is-small"
-              @click="mapFullScreen(props.row.name, getURLRefactoring(props.row.url))"
+              @click="
+                mapFullScreen(props.row.name, getURLRefactoring(props.row.url))
+              "
             >
               <i class="fas fa-eye"></i>
             </b-button>
@@ -68,24 +78,45 @@
         </template>
       </b-table>
     </div>
-    <b-modal :active.sync="isComponentModalActive" has-modal-card full-screen :can-cancel="false">
+    <b-modal
+      :active.sync="isComponentModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
       <modal-form v-bind="formProps"></modal-form>
     </b-modal>
-    <h1>{{ trans.get('maps.templates') }} (Genial.ly)</h1>
+    <h1>{{ trans.get("maps.templates") }} (Genial.ly)</h1>
     <div class="columns">
       <div class="column">
         <div class="card-content has-text-centered">
           <img src="/img/templates/FantasyClass-1.png" />
         </div>
         <footer class="card-footer">
-          <p class="card-footer-item has-margin-bottom-0 has-background-primary rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+          >
             <span>
-              <a target="_blank" href="https://view.genial.ly/5f6253f951337070914e0604/interactive-content-fantasyclass-1" class="has-text-light"><i class="fas fa-eye"></i> {{ trans.get('maps.show_template') }}</a>
+              <a
+                target="_blank"
+                href="https://view.genial.ly/5f6253f951337070914e0604/interactive-content-fantasyclass-1"
+                class="has-text-light"
+                ><i class="fas fa-eye"></i>
+                {{ trans.get("maps.show_template") }}</a
+              >
             </span>
           </p>
-          <p class="card-footer-item has-margin-bottom-0 has-background-info rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+          >
             <span>
-              <a target="_blank" href="https://app.genial.ly/reuse/5f6253f951337070914e0604" class="has-text-light"><i class="fas fa-clone"></i> {{ trans.get('maps.use_template') }}</a>
+              <a
+                target="_blank"
+                href="https://app.genial.ly/reuse/5f6253f951337070914e0604"
+                class="has-text-light"
+                ><i class="fas fa-clone"></i>
+                {{ trans.get("maps.use_template") }}</a
+              >
             </span>
           </p>
         </footer>
@@ -95,14 +126,30 @@
           <img src="/img/templates/FantasyClass-2.png" />
         </div>
         <footer class="card-footer">
-          <p class="card-footer-item has-margin-bottom-0 has-background-primary rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+          >
             <span>
-              <a target="_blank" href="https://view.genial.ly/5f6256633c6c490cee94ca80/interactive-content-fantasyclass-2" class="has-text-light"><i class="fas fa-eye"></i> {{ trans.get('maps.show_template') }}</a>
+              <a
+                target="_blank"
+                href="https://view.genial.ly/5f6256633c6c490cee94ca80/interactive-content-fantasyclass-2"
+                class="has-text-light"
+                ><i class="fas fa-eye"></i>
+                {{ trans.get("maps.show_template") }}</a
+              >
             </span>
           </p>
-          <p class="card-footer-item has-margin-bottom-0 has-background-info rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+          >
             <span>
-              <a target="_blank" href="https://app.genial.ly/reuse/5f6256633c6c490cee94ca80" class="has-text-light"><i class="fas fa-clone"></i> {{ trans.get('maps.use_template') }}</a>
+              <a
+                target="_blank"
+                href="https://app.genial.ly/reuse/5f6256633c6c490cee94ca80"
+                class="has-text-light"
+                ><i class="fas fa-clone"></i>
+                {{ trans.get("maps.use_template") }}</a
+              >
             </span>
           </p>
         </footer>
@@ -112,14 +159,30 @@
           <img src="/img/templates/FantasyClass-3.png" />
         </div>
         <footer class="card-footer">
-          <p class="card-footer-item has-margin-bottom-0 has-background-primary rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+          >
             <span>
-              <a target="_blank" href="https://view.genial.ly/5f633cd051337070914e116e/interactive-content-fantasyclass-3" class="has-text-light"><i class="fas fa-eye"></i> {{ trans.get('maps.show_template') }}</a>
+              <a
+                target="_blank"
+                href="https://view.genial.ly/5f633cd051337070914e116e/interactive-content-fantasyclass-3"
+                class="has-text-light"
+                ><i class="fas fa-eye"></i>
+                {{ trans.get("maps.show_template") }}</a
+              >
             </span>
           </p>
-          <p class="card-footer-item has-margin-bottom-0 has-background-info rounded">
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+          >
             <span>
-              <a target="_blank" href="https://app.genial.ly/reuse/5f633cd051337070914e116e" class="has-text-light"><i class="fas fa-clone"></i> {{ trans.get('maps.use_template') }}</a>
+              <a
+                target="_blank"
+                href="https://app.genial.ly/reuse/5f633cd051337070914e116e"
+                class="has-text-light"
+                ><i class="fas fa-clone"></i>
+                {{ trans.get("maps.use_template") }}</a
+              >
             </span>
           </p>
         </footer>
@@ -190,6 +253,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -213,6 +277,7 @@ export default {
         title: this.trans.get("maps.active"),
         message: this.trans.get("maps.confirm_active"),
         confirmText: this.trans.get("maps.active"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-info",
         hasIcon: true,
         icon: "times-circle",

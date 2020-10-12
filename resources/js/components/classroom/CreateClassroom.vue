@@ -98,56 +98,57 @@
 </template>
 
 <script>
-    export default {
-            props: ['goals', 'themes', 'classroom'],
-            mounted: function() {
-                this.goalsJson = JSON.parse(this.goals)
-                this.themesJson = JSON.parse(this.themes)
-                if(this.classroom) {
-                    this.classForm.name = this.classroom.name
-                    this.classForm.adventure_name = this.classroom.adventure_name
-                    this.classForm.goal_type = this.classroom.goal_type
-                    this.classForm.bg_theme = this.classroom.theme.id
-                    this.classForm.character_theme = this.classroom.character_theme
-                }
-            },
-            data: function() {
-                return {
-                    activeTab: 0,
-                    goalsJson: [],
-                    themesJson: [],
-                    goalSelected: 1,
-                    classForm: {
-                        name: '',
-                        adventure_name: 'FantasyClass',
-                        goal_type: 1,
-                        bg_theme: 1,
-                        character_theme: 1,
-                    }
-                }
-            },
-            methods: {
-                selectGoal: function(id) {
-                    this.goalSelected = id
-                },
-                confirmDelete() {
-                    this.$buefy.dialog.confirm({
-                        title: this.trans.get("general.delete"),
-                        message: this.trans.get("general.confirm_delete_class"),
-                        confirmText: this.trans.get("general.delete"),
-                        type: "is-danger",
-                        hasIcon: true,
-                        icon: "times-circle",
-                        iconPack: "fa",
-                        ariaRole: "alertdialog",
-                        ariaModal: true,
-                        onConfirm: () => {
-                        axios.delete("/classroom/" + this.classroom.code).then((response) => {
-                            location.href = response.data;
-                        });
-                        },
-                    });
-                    },
-            },
+export default {
+  props: ["goals", "themes", "classroom"],
+  mounted: function () {
+    this.goalsJson = JSON.parse(this.goals);
+    this.themesJson = JSON.parse(this.themes);
+    if (this.classroom) {
+      this.classForm.name = this.classroom.name;
+      this.classForm.adventure_name = this.classroom.adventure_name;
+      this.classForm.goal_type = this.classroom.goal_type;
+      this.classForm.bg_theme = this.classroom.theme.id;
+      this.classForm.character_theme = this.classroom.character_theme;
     }
+  },
+  data: function () {
+    return {
+      activeTab: 0,
+      goalsJson: [],
+      themesJson: [],
+      goalSelected: 1,
+      classForm: {
+        name: "",
+        adventure_name: "FantasyClass",
+        goal_type: 1,
+        bg_theme: 1,
+        character_theme: 1,
+      },
+    };
+  },
+  methods: {
+    selectGoal: function (id) {
+      this.goalSelected = id;
+    },
+    confirmDelete() {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete_class"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/" + this.classroom.code).then((response) => {
+            location.href = response.data;
+          });
+        },
+      });
+    },
+  },
+};
 </script>

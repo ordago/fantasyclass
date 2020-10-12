@@ -39,4 +39,8 @@ return [
     'correct_answer' => 'Respuesta correcta',
     'incorrect_answer' => 'Respuesta incorrecta',
 
+    'mark_title' => 'Marcar como superado',
+    'mark_confirm' => 'Confirmo la superación',
+    'mark_text' => '¿Estás seguro/a que has superado la tarea? La confianza es necesaria.',
+
 ];

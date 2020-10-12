@@ -946,6 +946,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1062,6 +1063,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -1112,6 +1114,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -1172,9 +1175,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       var _this7 = this;
 
       this.$buefy.dialog.confirm({
-        title: "Class change",
-        message: "Basic equipment will be assigned, this action can't be undone.",
-        confirmText: "Change class",
+        title: this.trans.get("students.change_class"),
+        message: this.trans.get("students.basic_equipment"),
+        confirmText: this.trans.get("students.change_class"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-warning",
         iconPack: "fa",
         hasIcon: true,
@@ -1252,6 +1256,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         title: this.trans.get("shop.buy_item"),
         message: this.trans.get("shop.buy_text") + "?",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1287,6 +1292,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         title: this.trans.get("shop.buy_item"),
         message: this.trans.get("shop.buy_text") + "?",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1322,6 +1328,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
         title: this.trans.get("shop.buy_item"),
         message: this.trans.get("shop.buy_text") + newItem.price + "<i class='fas fa-coins colored'></i>? (" + newItem.hp + "% <i class='fas fa-heart colored'></i> | " + newItem.xp + "% <i class='fas fa-fist-raised colored'></i> | " + newItem.gold + "% <i class='fas fa-coins colored'></i>)",
         confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
         hasIcon: false,
@@ -1944,7 +1951,8 @@ var render = function() {
                               },
                               attrs: {
                                 content:
-                                  "Highlights in <i class='" +
+                                  _vm.trans.get("students.highlights") +
+                                  " <i class='" +
                                   charclass.property +
                                   " colored'></i>",
                                 src: "/img/character/" + charclass.id + ".png"

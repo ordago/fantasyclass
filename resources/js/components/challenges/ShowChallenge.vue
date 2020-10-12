@@ -1,5 +1,8 @@
 <template>
-  <div class="box card-shadow-s has-margin-bottom-3" v-bind:class="getBackground">
+  <div
+    class="box card-shadow-s has-margin-bottom-3"
+    v-bind:class="getBackground"
+  >
     <section class="media">
       <div class="media-content is-relative">
         <div
@@ -18,39 +21,51 @@
               :style="'color:' + challengeReactive.color"
               :class="challengeReactive.icon + ' colored'"
             ></i>
-            <i v-if="challengeReactive.type==1" class="fas fa-users is-size-4 colored"></i>
+            <i
+              v-if="challengeReactive.type == 1"
+              class="fas fa-users is-size-4 colored"
+            ></i>
             {{ challengeReactive.title }}
-            <span
-              class="tag is-light"
-            >{{ challengeReactive.datetime }}</span>
+            <span class="tag is-light">{{ challengeReactive.datetime }}</span>
           </h1>
           <p>
             <small>{{ challengeReactive.description }}</small>
           </p>
           <p v-if="challengeReactive.is_conquer">
-            <small v-if="challengeReactive.xp!=0">
+            <small v-if="challengeReactive.xp != 0">
               <i class="fas fa-fist-raised colored"></i>
               {{ challengeReactive.xp }}
             </small>
-            <small v-if="challengeReactive.hp!=0">
+            <small v-if="challengeReactive.hp != 0">
               <i class="fas fa-heart colored"></i>
               {{ challengeReactive.hp }}
             </small>
-            <small v-if="challengeReactive.gold!=0">
+            <small v-if="challengeReactive.gold != 0">
               <i class="fas fa-coins colored"></i>
               {{ challengeReactive.gold }}
             </small>
-            <small v-if="challengeReactive.cards!=0">
+            <small v-if="challengeReactive.cards != 0">
               <i class="fas fa-club colored"></i>
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <div v-if="edit || full" v-html="getContent(challengeReactive.content)"></div>
-          <div class v-for="(question, index) in challenge.questioninfo" :key="index">
+          <div
+            v-if="edit || full"
+            v-html="getContent(challengeReactive.content)"
+          ></div>
+          <div
+            class
+            v-for="(question, index) in challenge.questioninfo"
+            :key="index"
+          >
             <show-question :admin="admin" :question="question"></show-question>
           </div>
           <div class v-for="(question, index) in challenge.stats" :key="index">
-            <show-question :admin="admin" :index="index" :question="question"></show-question>
+            <show-question
+              :admin="admin"
+              :index="index"
+              :question="question"
+            ></show-question>
           </div>
           <div class="has-margin-top-5">
             <div
@@ -61,25 +76,40 @@
               <div class="column is-narrow">
                 <i class="fad fa-globe" v-if="attachment.type == 1"></i>
                 <i class="fad fa-icons" v-else-if="attachment.type == 2"></i>
-                <i class="fad fa-graduation-cap" v-else-if="attachment.type == 3"></i>
-                <i class="fab fa-google-drive" v-else-if="attachment.type == 4"></i>
+                <i
+                  class="fad fa-graduation-cap"
+                  v-else-if="attachment.type == 3"
+                ></i>
+                <i
+                  class="fab fa-google-drive"
+                  v-else-if="attachment.type == 4"
+                ></i>
                 <i class="fab fa-youtube" v-else-if="attachment.type == 5"></i>
                 <i class="fab fa-dropbox" v-else-if="attachment.type == 6"></i>
                 <i class="fad fa-file" v-else-if="attachment.type == 7"></i>
                 <i
                   class="fad has-margin-left-3"
-                  v-bind:class="{ 'fa-link' : attachment.mode == 0, 'fa-expand' : attachment.mode == 1 }"
+                  v-bind:class="{
+                    'fa-link': attachment.mode == 0,
+                    'fa-expand': attachment.mode == 1,
+                  }"
                 ></i>
               </div>
-              <div class="column" style="word-break: break-all;">
+              <div class="column" style="word-break: break-all">
                 <a
                   target="_blank"
                   v-if="attachment.mode == 0"
                   :href="attachment.url"
-                >{{ attachment.name ? attachment.name : attachment.url }}</a>
-                <div style="width: 100%;" v-if="attachment.mode==1">
+                  >{{ attachment.name ? attachment.name : attachment.url }}</a
+                >
+                <div style="width: 100%" v-if="attachment.mode == 1">
                   <div
-                    style="position: relative; padding-bottom: 46.57%; padding-top: 0; height: 0;"
+                    style="
+                      position: relative;
+                      padding-bottom: 46.57%;
+                      padding-top: 0;
+                      height: 0;
+                    "
                   >
                     <iframe
                       v-if="attachment.type == 2"
@@ -87,8 +117,16 @@
                       class="rounded"
                       width="3000px"
                       height="1397px"
-                      style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-                      :src="attachment.url.slice(0, attachment.url.lastIndexOf('/'))"
+                      style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                      "
+                      :src="
+                        attachment.url.slice(0, attachment.url.lastIndexOf('/'))
+                      "
                       type="text/html"
                       allowscriptaccess="always"
                       allowfullscreen="true"
@@ -100,7 +138,10 @@
                       <iframe
                         width="560"
                         height="315"
-                        :src="'https://youtube.com/embed/' + getYoutube(attachment.url)"
+                        :src="
+                          'https://youtube.com/embed/' +
+                          getYoutube(attachment.url)
+                        "
                         frameborder="0"
                         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
                         allowfullscreen
@@ -111,7 +152,10 @@
                 <!-- <iframe frameborder="0" class="w-100" :src="attachment.url.slice(0, attachment.url.lastIndexOf('/'))" v-if="attachment.mode==1" type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe> -->
               </div>
               <div class="column is-narrow" v-if="admin">
-                <button class="button is-danger" @click="confirmDelete(attachment.id, index)">
+                <button
+                  class="button is-danger"
+                  @click="confirmDelete(attachment.id, index)"
+                >
                   <i class="fas fa-trash"></i>
                 </button>
               </div>
@@ -138,8 +182,12 @@
               </div>
               <div class="commentInfo has-padding-2">
                 <div>
-                  <span class="tag is-info has-padding-2">{{ comment.info.name }}</span>
-                  <span class="tag is-link has-padding-2">{{ comment.info.datetime }}</span>
+                  <span class="tag is-info has-padding-2">{{
+                    comment.info.name
+                  }}</span>
+                  <span class="tag is-link has-padding-2">{{
+                    comment.info.datetime
+                  }}</span>
                   <button
                     class="button tag is-danger has-text-light has-padding-2"
                     @click="deleteComment(comment.id, index)"
@@ -152,36 +200,44 @@
               </div>
             </div>
           </div>
-          <div class="has-padding-3 has-text-right" v-if="edit && admin || !admin">
+          <div
+            class="has-padding-3 has-text-right"
+            v-if="(edit && admin) || !admin"
+          >
             <button
-              v-if="!admin && (challengeReactive.completion == 2 ||challengeReactive.completion == 1) && !checkCompletion"
+              v-if="
+                !admin &&
+                (challengeReactive.completion == 2 ||
+                  challengeReactive.completion == 1) &&
+                !checkCompletion
+              "
               class="button is-info"
               @click="markCompleted(challenge)"
             >
               <span class="icon is-small">
                 <i class="fas fa-check"></i>
               </span>
-              <span>Mark as realised</span>
+              <span>{{ trans.get('challenges.mark_title') }}</span>
             </button>
             <button
               v-if="admin"
               class="button is-outlined is-link"
-              @click="isAttachmentModalActive=true"
+              @click="isAttachmentModalActive = true"
             >
               <span class="icon is-small">
                 <i class="fas fa-paperclip"></i>
               </span>
-              <span>{{ trans.get('challenges.add_attachment') }}</span>
+              <span>{{ trans.get("challenges.add_attachment") }}</span>
             </button>
             <button
               v-if="admin"
               class="button is-outlined is-primary"
-              @click="isQuestionModalActive=true"
+              @click="isQuestionModalActive = true"
             >
               <span class="icon is-small">
                 <i class="fas fa-question"></i>
               </span>
-              <span>{{ trans.get('challenges.add_question') }}</span>
+              <span>{{ trans.get("challenges.add_question") }}</span>
             </button>
             <button
               v-if="challengeReactive.is_conquer && admin"
@@ -195,13 +251,16 @@
             </button>
             <button
               class="button is-dark is-outlined"
-              @click="$parent.challengeEdit=challenge;$parent.addChallenge=true"
+              @click="
+                $parent.challengeEdit = challenge;
+                $parent.addChallenge = true;
+              "
               v-if="admin"
             >
               <span class="icon is-small">
                 <i class="fas fa-edit"></i>
               </span>
-              <span>{{ trans.get('general.edit') }}</span>
+              <span>{{ trans.get("general.edit") }}</span>
             </button>
             <button
               class="button is-danger is-outlined"
@@ -211,7 +270,7 @@
               <span class="icon is-small">
                 <i class="fas fa-trash-alt"></i>
               </span>
-              <span>{{ trans.get('general.delete') }}</span>
+              <span>{{ trans.get("general.delete") }}</span>
             </button>
           </div>
         </div>
@@ -229,7 +288,9 @@
       <form @submit.prevent="addAttachment">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">{{ trans.get('challenges.add_attachment') }}</p>
+            <p class="modal-card-title">
+              {{ trans.get("challenges.add_attachment") }}
+            </p>
           </header>
           <section class="modal-card-body">
             <b-field>
@@ -239,9 +300,11 @@
                 icon-pack="fas"
                 v-model="attachment.type"
                 required
-                style="font-family:Arial, FontAwesome;"
+                style="font-family: Arial, FontAwesome"
               >
-                <option value="1" icon="paperclip" icon-pack="fas">Web page</option>
+                <option value="1" icon="paperclip" icon-pack="fas">
+                  Web page
+                </option>
                 <option value="2">Genial.ly</option>
                 <option value="3">Moodle</option>
                 <option value="4">Google drive</option>
@@ -250,27 +313,62 @@
                 <option value="7">File</option>
               </b-select>
             </b-field>
-            <div v-if="attachment.type == 1 || attachment.type == 2 || attachment.type == 5">
-              <b-radio-button v-model="attachment.mode" native-value="0" type="is-link">
+            <div
+              v-if="
+                attachment.type == 1 ||
+                attachment.type == 2 ||
+                attachment.type == 5
+              "
+            >
+              <b-radio-button
+                v-model="attachment.mode"
+                native-value="0"
+                type="is-link"
+              >
                 <b-icon icon="link"></b-icon>
                 <span>Link</span>
               </b-radio-button>
 
-              <b-radio-button v-model="attachment.mode" native-value="1" type="is-link">
+              <b-radio-button
+                v-model="attachment.mode"
+                native-value="1"
+                type="is-link"
+              >
                 <b-icon icon="expand"></b-icon>
                 <span>Embedded</span>
               </b-radio-button>
             </div>
             <b-field class="has-margin-top-3">
-              <b-input v-model="attachment.name" :placeholder="trans.get('general.name') + ' (' + trans.get('general.optional') + ')'"></b-input>
+              <b-input
+                v-model="attachment.name"
+                :placeholder="
+                  trans.get('general.name') +
+                  ' (' +
+                  trans.get('general.optional') +
+                  ')'
+                "
+              ></b-input>
             </b-field>
             <b-field>
-              <b-input placeholder="URL" v-model="attachment.url" required type="url"></b-input>
+              <b-input
+                placeholder="URL"
+                v-model="attachment.url"
+                required
+                type="url"
+              ></b-input>
             </b-field>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isAttachmentModalActive=false">{{ trans.get('general.close') }}</button>
-            <button class="button is-primary">{{ trans.get('general.add') }}</button>
+            <button
+              class="button"
+              type="button"
+              @click="isAttachmentModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary">
+              {{ trans.get("general.add") }}
+            </button>
           </footer>
         </div>
       </form>
@@ -287,11 +385,18 @@
       <form @submit.prevent="addQuestion">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">{{ trans.get('challenges.add_question') }}</p>
+            <p class="modal-card-title">
+              {{ trans.get("challenges.add_question") }}
+            </p>
           </header>
           <section class="modal-card-body">
             <b-field>
-              <b-input :placeholder="trans.get('challenges.question')" v-model="question.question" type="text" required></b-input>
+              <b-input
+                :placeholder="trans.get('challenges.question')"
+                v-model="question.question"
+                type="text"
+                required
+              ></b-input>
             </b-field>
             <div class="field is-horizontal has-margin-bottom-3">
               <div class="field-body">
@@ -328,7 +433,9 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          :placeholder="trans.get('challenges.incorrect_answer')"
+                          :placeholder="
+                            trans.get('challenges.incorrect_answer')
+                          "
                           v-model="question.incorrectAnswer1"
                           required
                           type="text"
@@ -351,7 +458,9 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          :placeholder="trans.get('challenges.incorrect_answer')"
+                          :placeholder="
+                            trans.get('challenges.incorrect_answer')
+                          "
                           v-model="question.incorrectAnswer2"
                           type="text"
                         ></b-input>
@@ -373,7 +482,9 @@
                     <p class="control is-expanded">
                       <b-field>
                         <b-input
-                          :placeholder="trans.get('challenges.incorrect_answer')"
+                          :placeholder="
+                            trans.get('challenges.incorrect_answer')
+                          "
                           v-model="question.incorrectAnswer3"
                           type="text"
                         ></b-input>
@@ -385,8 +496,16 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isQuestionModalActive=false">{{ trans.get('general.close') }}</button>
-            <button class="button is-primary">{{ trans.get('general.add') }}</button>
+            <button
+              class="button"
+              type="button"
+              @click="isQuestionModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary">
+              {{ trans.get("general.add") }}
+            </button>
           </footer>
         </div>
       </form>
@@ -432,9 +551,8 @@ export default {
   },
   methods: {
     getContent(content) {
-       if(!this.admin && content)
-         return Utils.replaceSpecial(content);
-       return content;
+      if (!this.admin && content) return Utils.replaceSpecial(content);
+      return content;
     },
     deleteComment(id) {
       axios.delete("/classroom/challenge/comment/" + id).then((response) => {
@@ -463,6 +581,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -513,10 +632,10 @@ export default {
     },
     markCompleted(challenge) {
       this.$buefy.dialog.confirm({
-        title: "Class change",
-        message:
-          "Are you sure you have done all the the work? Trust is needed there.",
-        confirmText: "Confirm done",
+        title: this.trans.get("challenges.mark_title"),
+        message: this.trans.get("challenges.mark_text"),
+        confirmText: this.trans.get("challenges.mark_confirm"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-warning",
         iconPack: "fa",
         hasIcon: true,

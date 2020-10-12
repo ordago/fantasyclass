@@ -155,16 +155,13 @@ export default {
           card: this.card.id,
         })
         .then((response) => {
-          this.$toasted.show(
-            this.trans.get("success_error.add_success"),
-            {
-              position: "top-center",
-              duration: 3000,
-              type: "success",
-              iconPack: "fontawesome",
-              icon: "tick",
-            }
-          );
+          this.$toasted.show(this.trans.get("success_error.add_success"), {
+            position: "top-center",
+            duration: 3000,
+            type: "success",
+            iconPack: "fontawesome",
+            icon: "tick",
+          });
         });
     },
     markCard(card, type) {
@@ -178,6 +175,7 @@ export default {
           title: this.trans.get("cards.use_title"),
           message: this.trans.get("cards.use_text_bypass"),
           confirmText: this.trans.get("cards.use_confirm"),
+          cancelText: this.trans.get("general.cancel"),
           type: "is-warning",
           hasIcon: true,
           icon: "times-circle",
@@ -207,7 +205,7 @@ export default {
                 let gold = response.data.gold;
                 if (gold) {
                   actions.push({
-                    text: this.trans.get('cards.pay'),
+                    text: this.trans.get("cards.pay"),
                     onClick: (e, toastObject) => {
                       if (response.data.gold > this.student.gold) {
                         this.$toasted.show(
@@ -234,7 +232,7 @@ export default {
                         .post("/classroom/students/update", options)
                         .then((response) => {
                           this.student.gold -= gold;
-                          this.$parent.$parent.$parent.$forceUpdate()
+                          this.$parent.$parent.$parent.$forceUpdate();
                           toastObject.goAway(0);
                         });
                     },
@@ -254,6 +252,7 @@ export default {
           title: this.trans.get("cards.use_title"),
           message: this.trans.get("cards.use_text"),
           confirmText: this.trans.get("cards.use_confirm"),
+          cancelText: this.trans.get("general.cancel"),
           type: "is-warning",
           hasIcon: true,
           icon: "times-circle",
@@ -298,6 +297,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",

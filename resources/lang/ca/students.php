@@ -44,4 +44,8 @@ return [
 
     'last' => 'Darrer esdeveniment / comportament',
     
+    'highlights' => 'Destaca en',
+    'change_class' => 'Canvia subclasse',
+    'basic_equipment' => 'L\'equipament bàsic serà assignat, aquesta acció no es pot desfer.',
+    '' => '',
 ];

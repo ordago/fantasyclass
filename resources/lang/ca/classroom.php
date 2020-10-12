@@ -6,6 +6,11 @@ return [
     "join" => "Unir-se a classe",
     "finished" => "Acabada",
     "disabled" => "Desactivada",
+    
+    "code" => "Codi de la classe",
+    "placeholder_code" => "Posa el codi :)",
+    "code_invalid" => "Codi invàlid",
+
 
     /* Roles */
     "student" => "Estudiant",

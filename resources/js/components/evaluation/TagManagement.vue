@@ -1,17 +1,27 @@
 <template>
   <div class="w-100 content">
     <div>
-      <button class="button is-link" @click="isTagModalActive=true">
-        <i class="has-margin-right-2 fas fa-tag"></i> {{ trans.get('evaluation.add_tag') }}
+      <button class="button is-link" @click="isTagModalActive = true">
+        <i class="has-margin-right-2 fas fa-tag"></i>
+        {{ trans.get("evaluation.add_tag") }}
       </button>
-      <a :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
-        <i class="has-margin-right-2 fas fa-tasks-alt"></i> {{ trans.get('evaluation.rubric_management') }}
+      <a
+        :href="'/classroom/' + classroom.code + '/rubrics'"
+        class="button is-warning"
+      >
+        <i class="has-margin-right-2 fas fa-tasks-alt"></i>
+        {{ trans.get("evaluation.rubric_management") }}
       </a>
-      <a :href="'/classroom/' + classroom.code + '/evaluation/report'" class="button is-primary">
-        <i class="has-margin-right-2 fas fa-file-chart-line"></i> {{ trans.get('evaluation.report') }}
+      <a
+        :href="'/classroom/' + classroom.code + '/evaluation/report'"
+        class="button is-primary"
+      >
+        <i class="has-margin-right-2 fas fa-file-chart-line"></i>
+        {{ trans.get("evaluation.report") }}
       </a>
-      <button class="button is-dark" @click="isPrefsModalActive=true">
-        <i class="has-margin-right-2 fas fa-cog"></i> {{ trans.get('evaluation.config') }}
+      <button class="button is-dark" @click="isPrefsModalActive = true">
+        <i class="has-margin-right-2 fas fa-cog"></i>
+        {{ trans.get("evaluation.config") }}
       </button>
     </div>
     <div class="has-margin-y-3">
@@ -41,8 +51,10 @@
       <button
         class="button is-link"
         v-if="tagsReactive.length"
-        @click="isLineModalActive=true"
-      >{{ trans.get('evaluation.evaluation_line') }}</button>
+        @click="isLineModalActive = true"
+      >
+        {{ trans.get("evaluation.evaluation_line") }}
+      </button>
     </div>
     <div class="has-margin-3">
       <b-table
@@ -57,16 +69,24 @@
             field="description"
             :label="trans.get('evaluation.description')"
             sortable
-          >{{ props.row.description }}</b-table-column>
+            >{{ props.row.description }}</b-table-column
+          >
 
-          <b-table-column field="tags" :label="trans.get('evaluation.tags')" sortable>
+          <b-table-column
+            field="tags"
+            :label="trans.get('evaluation.tags')"
+            sortable
+          >
             <span
               class="tag is-dark has-margin-right-2"
               v-for="tag in props.row.tags"
               :key="tag.id"
               v-tippy
-              :content="trans.get('evaluation.weight') + ': ' + tag.pivot.weight"
-            >{{ tag.short }}</span>
+              :content="
+                trans.get('evaluation.weight') + ': ' + tag.pivot.weight
+              "
+              >{{ tag.short }}</span
+            >
           </b-table-column>
 
           <b-table-column
@@ -79,7 +99,7 @@
               :href="'/classroom/evaluation/' + props.row.id + '/grade'"
               class="button is-dark is-small has-margin-right-3"
             >
-              <i class="fad fa-pencil"></i> {{ trans.get('evaluation.grade') }}
+              <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }}
             </a>
             <!-- <b-button
               v-tippy
@@ -113,8 +133,12 @@
       <form @submit.prevent="addTag">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title" v-if="!tag.classroom_id">{{ trans.get('evaluation.add') }}</p>
-            <p class="modal-card-title" v-if="tag.classroom_id">{{ trans.get('evaluation.edit') }}</p>
+            <p class="modal-card-title" v-if="!tag.classroom_id">
+              {{ trans.get("evaluation.add") }}
+            </p>
+            <p class="modal-card-title" v-if="tag.classroom_id">
+              {{ trans.get("evaluation.edit") }}
+            </p>
           </header>
           <section class="modal-card-body">
             <b-field :label="trans.get('evaluation.abbreviation')">
@@ -131,10 +155,23 @@
             <button
               class="button"
               type="button"
-              @click="tag={short: '', description: '', percent: 0,},isTagModalActive=false"
-            >Close</button>
-            <button class="button is-primary" v-if="!tag.classroom_id">{{ trans.get('evaluation.add') }}</button>
-            <button class="button is-primary" v-if="tag.classroom_id" @click.prevent="editTag">{{ trans.get('general.edit') }}</button>
+              @click="
+                (tag = { short: '', description: '', percent: 0 }),
+                  (isTagModalActive = false)
+              "
+            >
+              Close
+            </button>
+            <button class="button is-primary" v-if="!tag.classroom_id">
+              {{ trans.get("evaluation.add") }}
+            </button>
+            <button
+              class="button is-primary"
+              v-if="tag.classroom_id"
+              @click.prevent="editTag"
+            >
+              {{ trans.get("general.edit") }}
+            </button>
           </footer>
         </div>
       </form>
@@ -150,23 +187,31 @@
       <form @submit.prevent="updatePrefs">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">{{ trans.get('evaluation.config') }}</p>
+            <p class="modal-card-title">{{ trans.get("evaluation.config") }}</p>
           </header>
           <section class="modal-card-body">
             <div class="field">
-              <label class="label">{{ trans.get('evaluation.type') }}</label>
+              <label class="label">{{ trans.get("evaluation.type") }}</label>
               <div class="control">
                 <div class="select">
                   <select v-model="settings.eval_type" @input="$forceUpdate()">
-                    <option value="0">{{ trans.get('evaluation.number_grade') }}</option>
-                    <option value="1">{{ trans.get('evaluation.emoji') }}</option>
-                    <option value="2">{{ trans.get('evaluation.passfail') }}</option>
+                    <option value="0">
+                      {{ trans.get("evaluation.number_grade") }}
+                    </option>
+                    <option value="1">
+                      {{ trans.get("evaluation.emoji") }}
+                    </option>
+                    <option value="2">
+                      {{ trans.get("evaluation.passfail") }}
+                    </option>
                   </select>
                 </div>
               </div>
             </div>
             <div class="field">
-              <label class="label">{{ trans.get('evaluation.max_grade') }}</label>
+              <label class="label">{{
+                trans.get("evaluation.max_grade")
+              }}</label>
               <div class="control">
                 <input
                   class="input"
@@ -181,12 +226,21 @@
                 true-value="1"
                 false-value="0"
                 v-model="settings.eval_visible"
-              >{{ trans.get('evaluation.visibility') }}</b-switch>
+                >{{ trans.get("evaluation.visibility") }}</b-switch
+              >
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isPrefsModalActive=false">{{ trans.get('general.close') }}</button>
-            <button class="button is-primary" @click="updatePrefs">{{ trans.get('general.update') }}</button>
+            <button
+              class="button"
+              type="button"
+              @click="isPrefsModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary" @click="updatePrefs">
+              {{ trans.get("general.update") }}
+            </button>
           </footer>
         </div>
       </form>
@@ -202,7 +256,9 @@
       <form @submit.prevent="addLine">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
-            <p class="modal-card-title">{{ trans.get('evaluation.evaluation_line') }}</p>
+            <p class="modal-card-title">
+              {{ trans.get("evaluation.evaluation_line") }}
+            </p>
           </header>
           <section class="modal-card-body">
             <section>
@@ -220,8 +276,8 @@
                   @typing="getFilteredTags"
                 >
                   <template slot-scope="props">
-                    <strong>{{props.option.short}}</strong>
-                    : {{props.option.description}}
+                    <strong>{{ props.option.short }}</strong>
+                    : {{ props.option.description }}
                   </template>
                   <template slot="empty">There are no items</template>
                   <template slot="selected" slot-scope="props">
@@ -234,45 +290,71 @@
                       closable
                       if="taginput"
                       @close="$refs.taginput.removeTag(index, $event)"
-                    >{{tag.short}}</b-tag>
+                      >{{ tag.short }}</b-tag
+                    >
                   </template>
                 </b-taginput>
               </b-field>
             </section>
-            <b-field class="has-margin-top-3" :label="trans.get('evaluation.description')">
+            <b-field
+              class="has-margin-top-3"
+              :label="trans.get('evaluation.description')"
+            >
               <b-input v-model="line.description" required></b-input>
             </b-field>
             <b-field :label="trans.get('evaluation.type')">
               <b-select v-model="line.type" expanded>
-                <option value="0">{{ trans.get('evaluation.basic') }}</option>
-                <option value="1">{{ trans.get('evaluation.advanced_rubric') }}</option>
+                <option value="0">{{ trans.get("evaluation.basic") }}</option>
+                <option value="1">
+                  {{ trans.get("evaluation.advanced_rubric") }}
+                </option>
               </b-select>
             </b-field>
-            <b-field v-if="line.type == 1" :label="trans.get('evaluation.rubric')">
-              <a v-if="!rubrics.length" :href="'/classroom/' + classroom.code + '/rubrics'" class="button is-warning">
-                <i class="has-margin-right-2 fas fa-tasks-alt"></i> {{ trans.get('evaluation.rubric_management') }}
+            <b-field
+              v-if="line.type == 1"
+              :label="trans.get('evaluation.rubric')"
+            >
+              <a
+                v-if="!rubrics.length"
+                :href="'/classroom/' + classroom.code + '/rubrics'"
+                class="button is-warning"
+              >
+                <i class="has-margin-right-2 fas fa-tasks-alt"></i>
+                {{ trans.get("evaluation.rubric_management") }}
               </a>
               <b-select v-if="rubrics.length" v-model="line.rubric" expanded>
                 <option
                   v-for="rubric in rubrics"
                   :key="rubric.id"
                   :value="rubric.id"
-                >{{ rubric.name }}</option>
+                >
+                  {{ rubric.name }}
+                </option>
               </b-select>
             </b-field>
-            <p v-if="line.type == 1 && !rubrics.length">{{ trans.get('evaluation.rubric_empty') }}</p>
+            <p v-if="line.type == 1 && !rubrics.length">
+              {{ trans.get("evaluation.rubric_empty") }}
+            </p>
 
             <div v-if="line.tags && line.tags.length">
               <details>
                 <summary class="is-size-6">
-                  <i class="fas fa-gear"></i> {{ trans.get('evaluation.advanced') }}
+                  <i class="fas fa-gear"></i>
+                  {{ trans.get("evaluation.advanced") }}
                 </summary>
-                <h3>{{ trans.get('evaluation.weight_info') }}</h3>
-                <div class="is-block w-100 has-margin-y-2" v-for="tag in line.tags" :key="tag.id">
+                <h3>{{ trans.get("evaluation.weight_info") }}</h3>
+                <div
+                  class="is-block w-100 has-margin-y-2"
+                  v-for="tag in line.tags"
+                  :key="tag.id"
+                >
                   <b-field>
                     <b-field grouped class="is-flex has-all-centered">
                       <p class="control">{{ tag.short }}</p>
-                      <b-numberinput step="0.1" v-model="line.weights[tag.id]" />
+                      <b-numberinput
+                        step="0.1"
+                        v-model="line.weights[tag.id]"
+                      />
                     </b-field>
                   </b-field>
                 </div>
@@ -280,8 +362,16 @@
             </div>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isLineModalActive=false">{{ trans.get('general.close') }}</button>
-            <button class="button is-primary">{{ trans.get('evaluation.evaluation_line') }}</button>
+            <button
+              class="button"
+              type="button"
+              @click="isLineModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary">
+              {{ trans.get("evaluation.evaluation_line") }}
+            </button>
           </footer>
         </div>
       </form>
@@ -320,7 +410,7 @@ export default {
       },
     };
   },
-  methods: {  
+  methods: {
     updatePrefs() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
@@ -372,6 +462,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -393,6 +484,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -412,7 +504,6 @@ export default {
       });
     },
     addLine() {
-
       if (this.line.tags.length) {
         axios
           .post("/classroom/" + this.classroom.code + "/evaline", this.line)
@@ -421,14 +512,14 @@ export default {
             this.linesReactive.push(response.data);
           });
       } else {
-          this.$refs.taginput.newTag = '';
-          this.$toasted.show(this.trans.get('success_error.taginput'), {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: "times",
-                type: "error"
-              });
+        this.$refs.taginput.newTag = "";
+        this.$toasted.show(this.trans.get("success_error.taginput"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "times",
+          type: "error",
+        });
       }
     },
     addTag() {

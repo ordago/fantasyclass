@@ -16,9 +16,11 @@ export default {
   methods: {
     promptCode() {
       this.$buefy.dialog.prompt({
-        message: `Classroom code`,
+        message: this.trans.get('classroom.code'),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get('general.cancel'),
         inputAttrs: {
-          placeholder: "Just the code :)",
+          placeholder: this.trans.get('classroom.placeholder_code'),
           maxlength: 10,
         },
         trapFocus: true,
@@ -29,7 +31,7 @@ export default {
               location.reload()
             })
             .catch((error) => {
-              Utils.toast(this, 'Classroom code invalid :(', 2, 5000, "toasted-primary", "times");
+              Utils.toast(this, this.trans.get('classroom.code_invalid'), 2, 5000, "toasted-primary", "times");
 
             });
         },

@@ -2093,6 +2093,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["badges", "code"],
   created: function created() {
@@ -2121,6 +2144,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -2240,6 +2264,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 Vue.component("download-excel", vue_json_excel__WEBPACK_IMPORTED_MODULE_0__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2270,6 +2332,7 @@ Vue.component("download-excel", vue_json_excel__WEBPACK_IMPORTED_MODULE_0__["def
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -2907,6 +2970,7 @@ __webpack_require__.r(__webpack_exports__);
           title: this.trans.get("cards.use_title"),
           message: this.trans.get("cards.use_text_bypass"),
           confirmText: this.trans.get("cards.use_confirm"),
+          cancelText: this.trans.get("general.cancel"),
           type: "is-warning",
           hasIcon: true,
           icon: "times-circle",
@@ -2934,7 +2998,7 @@ __webpack_require__.r(__webpack_exports__);
 
               if (gold) {
                 actions.push({
-                  text: _this2.trans.get('cards.pay'),
+                  text: _this2.trans.get("cards.pay"),
                   onClick: function onClick(e, toastObject) {
                     if (response.data.gold > _this2.student.gold) {
                       _this2.$toasted.show(_this2.trans.get("success_error.shop_failed_money"), {
@@ -2980,6 +3044,7 @@ __webpack_require__.r(__webpack_exports__);
           title: this.trans.get("cards.use_title"),
           message: this.trans.get("cards.use_text"),
           confirmText: this.trans.get("cards.use_confirm"),
+          cancelText: this.trans.get("general.cancel"),
           type: "is-warning",
           hasIcon: true,
           icon: "times-circle",
@@ -3024,6 +3089,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4018,6 +4084,125 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4094,6 +4279,7 @@ var InputEmoji = function InputEmoji() {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4144,9 +4330,10 @@ var InputEmoji = function InputEmoji() {
       var _this6 = this;
 
       this.$buefy.dialog.confirm({
-        title: "Class change",
-        message: "Are you sure you have done all the the work? Trust is needed there.",
-        confirmText: "Confirm done",
+        title: this.trans.get("challenges.mark_title"),
+        message: this.trans.get("challenges.mark_text"),
+        confirmText: this.trans.get("challenges.mark_confirm"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-warning",
         iconPack: "fa",
         hasIcon: true,
@@ -4311,6 +4498,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4338,6 +4570,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4358,6 +4591,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4635,6 +4869,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["question", "admin", "index"],
@@ -4654,6 +4901,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4837,7 +5085,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['goals', 'themes', 'classroom'],
+  props: ["goals", "themes", "classroom"],
   mounted: function mounted() {
     this.goalsJson = JSON.parse(this.goals);
     this.themesJson = JSON.parse(this.themes);
@@ -4857,8 +5105,8 @@ __webpack_require__.r(__webpack_exports__);
       themesJson: [],
       goalSelected: 1,
       classForm: {
-        name: '',
-        adventure_name: 'FantasyClass',
+        name: "",
+        adventure_name: "FantasyClass",
         goal_type: 1,
         bg_theme: 1,
         character_theme: 1
@@ -4876,6 +5124,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete_class"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -4922,9 +5171,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.$buefy.dialog.prompt({
-        message: "Classroom code",
+        message: this.trans.get('classroom.code'),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get('general.cancel'),
         inputAttrs: {
-          placeholder: "Just the code :)",
+          placeholder: this.trans.get('classroom.placeholder_code'),
           maxlength: 10
         },
         trapFocus: true,
@@ -4932,7 +5183,7 @@ __webpack_require__.r(__webpack_exports__);
           axios.get("/classroom/join/".concat(value)).then(function (response) {
             location.reload();
           })["catch"](function (error) {
-            _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this, 'Classroom code invalid :(', 2, 5000, "toasted-primary", "times");
+            _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this, _this.trans.get('classroom.code_invalid'), 2, 5000, "toasted-primary", "times");
           });
         }
       });
@@ -5576,6 +5827,96 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "tags", "rubrics", "lines", "settings"],
   created: function created() {
@@ -5660,6 +6001,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -5684,6 +6026,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -5714,8 +6057,8 @@ __webpack_require__.r(__webpack_exports__);
           _this5.linesReactive.push(response.data);
         });
       } else {
-        this.$refs.taginput.newTag = '';
-        this.$toasted.show(this.trans.get('success_error.taginput'), {
+        this.$refs.taginput.newTag = "";
+        this.$toasted.show(this.trans.get("success_error.taginput"), {
           position: "top-center",
           duration: 3000,
           iconPack: "fontawesome",
@@ -6113,6 +6456,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "events", "disabled"],
   mounted: function mounted() {},
@@ -6133,13 +6521,13 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addEvent: function addEvent(type) {
       if (type == 0) {
-        axios.post('/classroom/events/add', {
+        axios.post("/classroom/events/add", {
           event: this.event
         }).then(function (response) {
           location.reload();
         });
       } else {
-        axios.post('/classroom/events/edit', {
+        axios.post("/classroom/events/edit", {
           event: this.event
         }).then(function (response) {
           location.reload();
@@ -6162,7 +6550,7 @@ __webpack_require__.r(__webpack_exports__);
     toggle: function toggle(event) {
       var _this = this;
 
-      axios.post('/classroom/' + this.classroom.code + '/events/disable', {
+      axios.post("/classroom/" + this.classroom.code + "/events/disable", {
         id: event
       }).then(function (response) {
         if (_this.isDisabled(event)) {
@@ -6186,6 +6574,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -6887,6 +7276,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 var ModalForm = {
   props: ["name", "url"],
@@ -6934,6 +7386,7 @@ var ModalForm = {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -6960,6 +7413,7 @@ var ModalForm = {
         title: this.trans.get("maps.active"),
         message: this.trans.get("maps.confirm_active"),
         confirmText: this.trans.get("maps.active"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-info",
         hasIcon: true,
         icon: "times-circle",
@@ -6992,6 +7446,27 @@ var ModalForm = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7320,7 +7795,7 @@ __webpack_require__.r(__webpack_exports__);
     selectImage: function selectImage(e) {
       var _this = this;
 
-      this.$refs.selectbutton.classList.remove('is-danger');
+      this.$refs.selectbutton.classList.remove("is-danger");
       e.target.classList.add("is-loading");
       if (this.images == null) axios.get("/classroom/pets/get").then(function (response) {
         _this.images = response.data;
@@ -7332,7 +7807,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateForSale: function updateForSale(id) {
-      axios.get('/classroom/pets/' + id + '/for-sale');
+      axios.get("/classroom/pets/" + id + "/for-sale");
     },
     editPet: function editPet(pet) {
       this.edit = true;
@@ -7354,7 +7829,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this3 = this;
 
       if (this.pet.image == null) {
-        this.$refs.selectbutton.classList.add('is-danger');
+        this.$refs.selectbutton.classList.add("is-danger");
         return false;
       }
 
@@ -7378,6 +7853,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -7961,6 +8437,55 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8021,6 +8546,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete_class"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -8041,6 +8567,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -8705,6 +9232,7 @@ __webpack_require__.r(__webpack_exports__);
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -50160,7 +50688,7 @@ var render = function() {
               ],
               null,
               false,
-              3575710847
+              3864121587
             )
           })
         : _vm._e()
@@ -53270,7 +53798,11 @@ var render = function() {
                           [
                             _vm._m(0),
                             _vm._v(" "),
-                            _c("span", [_vm._v("Mark as realised")])
+                            _c("span", [
+                              _vm._v(
+                                _vm._s(_vm.trans.get("challenges.mark_title"))
+                              )
+                            ])
                           ]
                         )
                       : _vm._e(),
@@ -53430,7 +53962,11 @@ var render = function() {
                       _c("header", { staticClass: "modal-card-head" }, [
                         _c("p", { staticClass: "modal-card-title" }, [
                           _vm._v(
-                            _vm._s(_vm.trans.get("challenges.add_attachment"))
+                            "\n            " +
+                              _vm._s(
+                                _vm.trans.get("challenges.add_attachment")
+                              ) +
+                              "\n          "
                           )
                         ])
                       ]),
@@ -53474,7 +54010,11 @@ var render = function() {
                                         "icon-pack": "fas"
                                       }
                                     },
-                                    [_vm._v("Web page")]
+                                    [
+                                      _vm._v(
+                                        "\n                Web page\n              "
+                                      )
+                                    ]
                                   ),
                                   _vm._v(" "),
                                   _c("option", { attrs: { value: "2" } }, [
@@ -53624,11 +54164,21 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans.get("general.close")) +
+                                "\n          "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v(_vm._s(_vm.trans.get("general.add")))
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("general.add")) +
+                              "\n          "
+                          )
                         ])
                       ])
                     ]
@@ -53679,7 +54229,9 @@ var render = function() {
                       _c("header", { staticClass: "modal-card-head" }, [
                         _c("p", { staticClass: "modal-card-title" }, [
                           _vm._v(
-                            _vm._s(_vm.trans.get("challenges.add_question"))
+                            "\n            " +
+                              _vm._s(_vm.trans.get("challenges.add_question")) +
+                              "\n          "
                           )
                         ])
                       ]),
@@ -54026,11 +54578,21 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans.get("general.close")) +
+                                "\n          "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v(_vm._s(_vm.trans.get("general.add")))
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("general.add")) +
+                              "\n          "
+                          )
                         ])
                       ])
                     ]
@@ -54139,7 +54701,7 @@ var render = function() {
                     "button",
                     {
                       staticClass: "button is-danger",
-                      staticStyle: { "font-size": ".5em" },
+                      staticStyle: { "font-size": "0.5em" },
                       on: {
                         click: function($event) {
                           return _vm.deleteChallengeGroup(_vm.challengegroup.id)
@@ -54166,7 +54728,11 @@ var render = function() {
                   _c("i", {
                     staticClass: "fas fa-file-import has-margin-right-2"
                   }),
-                  _vm._v(" " + _vm._s(_vm.trans.get("general.import")))
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.trans.get("general.import")) +
+                      "\n        "
+                  )
                 ]
               ),
               _vm._v(" "),
@@ -54291,7 +54857,11 @@ var render = function() {
                 { staticClass: "has-padding-5 rounded has-background-light" },
                 [
                   _c("h1", { staticClass: "is-size-1 has-margin-bottom-3" }, [
-                    _vm._v(_vm._s(_vm.currentChallenge.title))
+                    _vm._v(
+                      "\n        " +
+                        _vm._s(_vm.currentChallenge.title) +
+                        "\n      "
+                    )
                   ]),
                   _vm._v(" "),
                   _vm.currentChallenge.type == 0
@@ -54855,7 +55425,11 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(answer.answer))]
+                      [
+                        _vm._v(
+                          "\n        " + _vm._s(answer.answer) + "\n      "
+                        )
+                      ]
                     )
                   }),
                   0
@@ -56200,7 +56774,11 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-tag" }),
-            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.add_tag")) + "\n    ")
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.trans.get("evaluation.add_tag")) +
+                "\n    "
+            )
           ]
         ),
         _vm._v(" "),
@@ -56213,7 +56791,7 @@ var render = function() {
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-tasks-alt" }),
             _vm._v(
-              " " +
+              "\n      " +
                 _vm._s(_vm.trans.get("evaluation.rubric_management")) +
                 "\n    "
             )
@@ -56232,7 +56810,9 @@ var render = function() {
             _c("i", {
               staticClass: "has-margin-right-2 fas fa-file-chart-line"
             }),
-            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.report")) + "\n    ")
+            _vm._v(
+              "\n      " + _vm._s(_vm.trans.get("evaluation.report")) + "\n    "
+            )
           ]
         ),
         _vm._v(" "),
@@ -56248,7 +56828,9 @@ var render = function() {
           },
           [
             _c("i", { staticClass: "has-margin-right-2 fas fa-cog" }),
-            _vm._v(" " + _vm._s(_vm.trans.get("evaluation.config")) + "\n    ")
+            _vm._v(
+              "\n      " + _vm._s(_vm.trans.get("evaluation.config")) + "\n    "
+            )
           ]
         )
       ]),
@@ -56320,7 +56902,13 @@ var render = function() {
                   }
                 }
               },
-              [_vm._v(_vm._s(_vm.trans.get("evaluation.evaluation_line")))]
+              [
+                _vm._v(
+                  "\n      " +
+                    _vm._s(_vm.trans.get("evaluation.evaluation_line")) +
+                    "\n    "
+                )
+              ]
             )
           : _vm._e()
       ]),
@@ -56448,7 +57036,7 @@ var render = function() {
                   ],
                   null,
                   false,
-                  2215099798
+                  2692358518
                 )
               })
             : _vm._e()
@@ -56492,13 +57080,21 @@ var render = function() {
                   _c("header", { staticClass: "modal-card-head" }, [
                     !_vm.tag.classroom_id
                       ? _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v(_vm._s(_vm.trans.get("evaluation.add")))
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("evaluation.add")) +
+                              "\n          "
+                          )
                         ])
                       : _vm._e(),
                     _vm._v(" "),
                     _vm.tag.classroom_id
                       ? _c("p", { staticClass: "modal-card-title" }, [
-                          _vm._v(_vm._s(_vm.trans.get("evaluation.edit")))
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("evaluation.edit")) +
+                              "\n          "
+                          )
                         ])
                       : _vm._e()
                   ]),
@@ -56591,12 +57187,16 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("Close")]
+                      [_vm._v("\n            Close\n          ")]
                     ),
                     _vm._v(" "),
                     !_vm.tag.classroom_id
                       ? _c("button", { staticClass: "button is-primary" }, [
-                          _vm._v(_vm._s(_vm.trans.get("evaluation.add")))
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("evaluation.add")) +
+                              "\n          "
+                          )
                         ])
                       : _vm._e(),
                     _vm._v(" "),
@@ -56612,7 +57212,13 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans.get("general.edit")))]
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans.get("general.edit")) +
+                                "\n          "
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
@@ -56708,21 +57314,29 @@ var render = function() {
                             [
                               _c("option", { attrs: { value: "0" } }, [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.trans.get("evaluation.number_grade")
-                                  )
+                                  "\n                    " +
+                                    _vm._s(
+                                      _vm.trans.get("evaluation.number_grade")
+                                    ) +
+                                    "\n                  "
                                 )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "1" } }, [
                                 _vm._v(
-                                  _vm._s(_vm.trans.get("evaluation.emoji"))
+                                  "\n                    " +
+                                    _vm._s(_vm.trans.get("evaluation.emoji")) +
+                                    "\n                  "
                                 )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "2" } }, [
                                 _vm._v(
-                                  _vm._s(_vm.trans.get("evaluation.passfail"))
+                                  "\n                    " +
+                                    _vm._s(
+                                      _vm.trans.get("evaluation.passfail")
+                                    ) +
+                                    "\n                  "
                                 )
                               ])
                             ]
@@ -56804,7 +57418,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.trans.get("general.close")) +
+                            "\n          "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -56813,7 +57433,13 @@ var render = function() {
                         staticClass: "button is-primary",
                         on: { click: _vm.updatePrefs }
                       },
-                      [_vm._v(_vm._s(_vm.trans.get("general.update")))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.trans.get("general.update")) +
+                            "\n          "
+                        )
+                      ]
                     )
                   ])
                 ]
@@ -56859,7 +57485,9 @@ var render = function() {
                   _c("header", { staticClass: "modal-card-head" }, [
                     _c("p", { staticClass: "modal-card-title" }, [
                       _vm._v(
-                        _vm._s(_vm.trans.get("evaluation.evaluation_line"))
+                        "\n            " +
+                          _vm._s(_vm.trans.get("evaluation.evaluation_line")) +
+                          "\n          "
                       )
                     ])
                   ]),
@@ -57019,9 +57647,13 @@ var render = function() {
                               _vm._v(" "),
                               _c("option", { attrs: { value: "1" } }, [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.trans.get("evaluation.advanced_rubric")
-                                  )
+                                  "\n                " +
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "evaluation.advanced_rubric"
+                                      )
+                                    ) +
+                                    "\n              "
                                 )
                               ])
                             ]
@@ -57057,7 +57689,7 @@ var render = function() {
                                           "has-margin-right-2 fas fa-tasks-alt"
                                       }),
                                       _vm._v(
-                                        " " +
+                                        "\n              " +
                                           _vm._s(
                                             _vm.trans.get(
                                               "evaluation.rubric_management"
@@ -57089,7 +57721,13 @@ var render = function() {
                                           key: rubric.id,
                                           domProps: { value: rubric.id }
                                         },
-                                        [_vm._v(_vm._s(rubric.name))]
+                                        [
+                                          _vm._v(
+                                            "\n                " +
+                                              _vm._s(rubric.name) +
+                                              "\n              "
+                                          )
+                                        ]
                                       )
                                     }),
                                     0
@@ -57103,7 +57741,11 @@ var render = function() {
                       _vm.line.type == 1 && !_vm.rubrics.length
                         ? _c("p", [
                             _vm._v(
-                              _vm._s(_vm.trans.get("evaluation.rubric_empty"))
+                              "\n            " +
+                                _vm._s(
+                                  _vm.trans.get("evaluation.rubric_empty")
+                                ) +
+                                "\n          "
                             )
                           ])
                         : _vm._e(),
@@ -57116,7 +57758,7 @@ var render = function() {
                                 _c("summary", { staticClass: "is-size-6" }, [
                                   _c("i", { staticClass: "fas fa-gear" }),
                                   _vm._v(
-                                    " " +
+                                    "\n                " +
                                       _vm._s(
                                         _vm.trans.get("evaluation.advanced")
                                       ) +
@@ -57205,12 +57847,20 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.trans.get("general.close")) +
+                            "\n          "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c("button", { staticClass: "button is-primary" }, [
                       _vm._v(
-                        _vm._s(_vm.trans.get("evaluation.evaluation_line"))
+                        "\n            " +
+                          _vm._s(_vm.trans.get("evaluation.evaluation_line")) +
+                          "\n          "
                       )
                     ])
                   ])
@@ -57781,7 +58431,7 @@ var render = function() {
           staticClass: "button is-primary has-margin-y-3",
           on: { click: _vm.showAddModal }
         },
-        [_vm._v(_vm._s(_vm.trans.get("events.add")))]
+        [_vm._v("\n    " + _vm._s(_vm.trans.get("events.add")) + "\n  ")]
       ),
       _vm._v(" "),
       _c(
@@ -57855,7 +58505,7 @@ var render = function() {
                           "a",
                           {
                             directives: [{ name: "tippy", rawName: "v-tippy" }],
-                            staticClass: "button  is-small has-margin-right-3",
+                            staticClass: "button is-small has-margin-right-3",
                             class: {
                               "is-dark": !_vm.isDisabled(props.row.id),
                               "is-light": _vm.isDisabled(props.row.id)
@@ -58022,7 +58672,13 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(_vm.trans.get("events.add")))]
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(_vm.trans.get("events.add")) +
+                              "\n        "
+                          )
+                        ]
                       )
                     : _c(
                         "button",
@@ -58035,7 +58691,13 @@ var render = function() {
                             }
                           }
                         },
-                        [_vm._v(_vm._s(_vm.trans.get("events.edit")))]
+                        [
+                          _vm._v(
+                            "\n          " +
+                              _vm._s(_vm.trans.get("events.edit")) +
+                              "\n        "
+                          )
+                        ]
                       )
                 ],
                 1
@@ -58060,7 +58722,13 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans.get("general.close")))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(_vm.trans.get("general.close")) +
+                            "\n          "
+                        )
+                      ]
                     )
                   ])
                 ]
@@ -59144,7 +59812,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-eye" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
                     ]
                   )
                 ])
@@ -59171,7 +59842,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-clone" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
                     ]
                   )
                 ])
@@ -59204,7 +59878,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-eye" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
                     ]
                   )
                 ])
@@ -59231,7 +59908,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-clone" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
                     ]
                   )
                 ])
@@ -59264,7 +59944,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-eye" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.show_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
                     ]
                   )
                 ])
@@ -59291,7 +59974,10 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fas fa-clone" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("maps.use_template")))
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
                     ]
                   )
                 ])
@@ -59392,7 +60078,7 @@ var render = function() {
                       arrow: true
                     },
                     expression:
-                      "{ theme: 'light bordered' , placement : 'bottom',  arrow: true }"
+                      "{\n          theme: 'light bordered',\n          placement: 'bottom',\n          arrow: true,\n        }"
                   }
                 ],
                 staticStyle: { "margin-top": "-20px" },
@@ -59950,13 +60636,13 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("section", { staticClass: "modal-card-body is-relative" }, [
-                _vm._v("\n        All pet images are from: "),
+                _vm._v("\n        All pet images are from:\n        "),
                 _c(
                   "a",
                   { attrs: { href: "https://github.com/HabitRPG/habitica" } },
                   [_vm._v("https://github.com/HabitRPG/habitica")]
                 ),
-                _vm._v(" and are licensed under "),
+                _vm._v("\n        and are licensed under\n        "),
                 _c(
                   "a",
                   {
@@ -60533,7 +61219,11 @@ var render = function() {
               },
               [
                 _c("i", { staticClass: "far fa-cog has-margin-right-2" }),
-                _vm._v(" " + _vm._s(_vm.trans.get("menu.config")) + " (wizard)")
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.trans.get("menu.config")) +
+                    " (wizard)"
+                )
               ]
             )
           ]),
@@ -60797,7 +61487,13 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v(_vm._s(_vm.trans.get("settings.add_teachers")))]
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.trans.get("settings.add_teachers")) +
+                          "\n        "
+                      )
+                    ]
                   )
                 : _vm._e(),
               _vm._v(" "),
@@ -60822,7 +61518,13 @@ var render = function() {
                         staticClass:
                           "column is-narrow is-flex align-items-center"
                       },
-                      [_vm._v(_vm._s(teacher.name))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(teacher.name) +
+                            "\n          "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -60831,7 +61533,13 @@ var render = function() {
                         staticClass:
                           "column is-narrow is-flex align-items-center"
                       },
-                      [_vm._v(_vm._s(teacher.email))]
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(teacher.email) +
+                            "\n          "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
@@ -60888,7 +61596,11 @@ var render = function() {
             { staticClass: "has-padding-left-4" },
             [
               _c("h3", { staticClass: "has-margin-bottom-4" }, [
-                _vm._v(_vm._s(_vm.trans.get("settings.probability")))
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.trans.get("settings.probability")) +
+                    "\n        "
+                )
               ]),
               _vm._v(" "),
               _c("vue-slider", {
@@ -60978,7 +61690,11 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "has-padding-left-4" }, [
             _c("h3", { staticClass: "has-margin-bottom-4" }, [
-              _vm._v(_vm._s(_vm.trans.get("settings.economic")))
+              _vm._v(
+                "\n          " +
+                  _vm._s(_vm.trans.get("settings.economic")) +
+                  "\n        "
+              )
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "columns" }, [
@@ -83696,7 +84412,10 @@ __webpack_require__.r(__webpack_exports__);
     "add_question": "Afegeix pregunta",
     "question": "Pregunta",
     "correct_answer": "Resposta correcta",
-    "incorrect_answer": "Resposta incorrecta"
+    "incorrect_answer": "Resposta incorrecta",
+    "mark_title": "Marcar com a superat",
+    "mark_confirm": "Confirme superaci\xF3",
+    "mark_text": "Est\xE0s segur/1 que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria."
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -83704,6 +84423,9 @@ __webpack_require__.r(__webpack_exports__);
     "join": "Unir-se a classe",
     "finished": "Acabada",
     "disabled": "Desactivada",
+    "code": "Codi de la classe",
+    "placeholder_code": "Posa el codi :)",
+    "code_invalid": "Codi inv\xE0lid",
     "student": "Estudiant",
     "teacher": "Profe",
     "admin": "Admin",
@@ -84039,7 +84761,11 @@ __webpack_require__.r(__webpack_exports__);
     "card_marked": "Carta marcada per ser utilitzada",
     "select_image": "Selecciona \uD83D\uDCF7 del banc d'imatges",
     "select_image_title": "Selecciona imatge",
-    "last": "Darrer esdeveniment \/ comportament"
+    "last": "Darrer esdeveniment \/ comportament",
+    "highlights": "Destaca en",
+    "change_class": "Canvia subclasse",
+    "basic_equipment": "L'equipament b\xE0sic ser\xE0 assignat, aquesta acci\xF3 no es pot desfer.",
+    "": ""
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -84348,7 +85074,10 @@ __webpack_require__.r(__webpack_exports__);
     "add_question": "Add question",
     "question": "Question",
     "correct_answer": "Correct answer",
-    "incorrect_answer": "Incorrect answer"
+    "incorrect_answer": "Incorrect answer",
+    "mark_title": "Mark as done",
+    "mark_confirm": "Confirm done",
+    "mark_text": "Are you sure you have done all the the work? Trust is needed there."
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -84356,6 +85085,9 @@ __webpack_require__.r(__webpack_exports__);
     "join": "Join classroom",
     "finished": "Finished",
     "disabled": "Disabled",
+    "code": "Classroom code",
+    "placeholder_code": "Just  the code :)",
+    "code_invalid": "Invalid code",
     "student": "Student",
     "teacher": "Teacher",
     "admin": "Admin",
@@ -84683,7 +85415,11 @@ __webpack_require__.r(__webpack_exports__);
     "card_use": "Use card",
     "select_image": "Select \uD83D\uDCF7 from image bank",
     "select_image_title": "Select image",
-    "last": "Last event \/ behaviour"
+    "last": "Last event \/ behaviour",
+    "highlights": "Highlights in",
+    "change_class": "Change subclass",
+    "basic_equipment": "Basic equipment will be assigned. This action can't be undone.",
+    "": ""
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -85008,7 +85744,10 @@ __webpack_require__.r(__webpack_exports__);
     "add_question": "A\xF1ade pregunta",
     "question": "Pregunta",
     "correct_answer": "Respuesta correcta",
-    "incorrect_answer": "Respuesta incorrecta"
+    "incorrect_answer": "Respuesta incorrecta",
+    "mark_title": "Marcar como superado",
+    "mark_confirm": "Confirmo la superaci\xF3n",
+    "mark_text": "\xBFEst\xE1s seguro/a que has superado la tarea? La confianza es necesaria."
   },
   "es.classroom": {
     "add": "A\xF1ade clase",
@@ -85016,6 +85755,9 @@ __webpack_require__.r(__webpack_exports__);
     "join": "Unirse a clase",
     "finished": "Acabada",
     "disabled": "Desactivada",
+    "code": "C\xF3digo de la clase",
+    "placeholder_code": "Pon el c\xF3digo :)",
+    "code_invalid": "C\xF3digo inv\xE1lido",
     "student": "Estudiante",
     "teacher": "Profe",
     "admin": "Admin",
@@ -85351,7 +86093,11 @@ __webpack_require__.r(__webpack_exports__);
     "card_marked": "Carta marcada para ser utilizada",
     "select_image": "Selecciona \uD83D\uDCF7 del banco de im\xE1genes",
     "select_image_title": "Selecciona imagen",
-    "last": "\xDAltimo evento / comportamiento"
+    "last": "\xDAltimo evento / comportamiento",
+    "highlights": "Destaca en",
+    "change_class": "Cambia subclase",
+    "basic_equipment": "El equipamiento b\xE1sico ser\xE1 asignado, esta acci\xF3n no se puede deshacer.",
+    "": ""
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

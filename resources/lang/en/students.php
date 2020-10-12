@@ -43,5 +43,9 @@ return [
 
     'last' => 'Last event / behaviour',
 
+    'highlights' => 'Highlights in',
+    'change_class' => 'Change subclass',
+    'basic_equipment' => 'Basic equipment will be assigned. This action can\'t be undone.',
+    '' => '',
     
 ];

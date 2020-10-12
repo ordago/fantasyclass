@@ -7,6 +7,10 @@ return [
     "finished" => "Acabada",
     "disabled" => "Desactivada",
 
+    "code" => "Código de la clase",
+    "placeholder_code" => "Pon el código :)",
+    "code_invalid" => "Código inválido",
+
     /* Roles */
     "student" => "Estudiante",
     "teacher" => "Profe",

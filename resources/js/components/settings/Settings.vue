@@ -3,11 +3,16 @@
     <div class="has-padding-2">
       <h1>
         <i class="fal fa-chalkboard"></i>
-        {{ trans.get('settings.classroom') }}
+        {{ trans.get("settings.classroom") }}
       </h1>
       <div class="has-padding-left-4 columns">
         <div class="column is-narrow">
-          <a class="button has-margin-right-4" :href="'/classroom/' + classroom.code + '/edit'"><i class="far fa-cog has-margin-right-2"></i> {{ trans.get('menu.config') }} (wizard)</a>
+          <a
+            class="button has-margin-right-4"
+            :href="'/classroom/' + classroom.code + '/edit'"
+            ><i class="far fa-cog has-margin-right-2"></i>
+            {{ trans.get("menu.config") }} (wizard)</a
+          >
         </div>
         <div class="column is-narrow">
           <b-field>
@@ -18,7 +23,7 @@
               type="is-success"
             >
               <b-icon icon="check" icon-pack="fa"></b-icon>
-              <span>{{ trans.get('settings.active') }}</span>
+              <span>{{ trans.get("settings.active") }}</span>
             </b-radio-button>
             <b-radio-button
               v-model="state"
@@ -27,7 +32,7 @@
               type="is-warning"
             >
               <b-icon icon="hourglass-end"></b-icon>
-              <span>{{ trans.get('settings.finished') }}</span>
+              <span>{{ trans.get("settings.finished") }}</span>
             </b-radio-button>
             <b-radio-button
               v-model="state"
@@ -36,15 +41,19 @@
               type="is-danger"
             >
               <b-icon icon="eye-slash"></b-icon>
-              <span>{{ trans.get('settings.disabled') }}</span>
+              <span>{{ trans.get("settings.disabled") }}</span>
             </b-radio-button>
           </b-field>
         </div>
         <div class="column is-narrow">
-          <button class="button has-margin-left-4 is-danger" @click="confirmDelete" v-if="isAdmin">
+          <button
+            class="button has-margin-left-4 is-danger"
+            @click="confirmDelete"
+            v-if="isAdmin"
+          >
             <i class="fas fa-trash"></i>
             <span class="has-margin-x-3">
-              {{ trans.get('general.delete') }}
+              {{ trans.get("general.delete") }}
               <i class="fas fa-radiation-alt"></i>
               <i class="fas fa-exclamation-triangle"></i>
             </span>
@@ -52,15 +61,22 @@
         </div>
       </div>
 
-      <b-field :label="trans.get('settings.enrollment_code')" style="width: 400px">
+      <b-field
+        :label="trans.get('settings.enrollment_code')"
+        style="width: 400px"
+      >
         <div class="field has-addons">
           <p class="control">
-            <b-input type="password" :value="classroom.enrollment_code" password-reveal></b-input>
+            <b-input
+              type="password"
+              :value="classroom.enrollment_code"
+              password-reveal
+            ></b-input>
           </p>
           <p class="control">
             <button class="button is-info" @click="regenerate">
               <i class="fas fa-sync-alt"></i>
-              {{ trans.get('settings.generate') }}
+              {{ trans.get("settings.generate") }}
             </button>
           </p>
         </div>
@@ -68,7 +84,7 @@
       <div class="has-padding-2">
         <h1>
           <i class="fal fa-cog"></i>
-          {{ trans.get('settings.general_preferences') }}
+          {{ trans.get("settings.general_preferences") }}
         </h1>
         <div class="has-margin-y-4">
           <b-switch
@@ -77,7 +93,8 @@
             false-value="0"
             @input="toggleProp('allow_upload')"
             v-model="settings.allow_upload"
-          >{{ trans.get('settings.allow_upload') }}</b-switch>
+            >{{ trans.get("settings.allow_upload") }}</b-switch
+          >
         </div>
         <div class="has-margin-y-4">
           <b-switch
@@ -86,20 +103,23 @@
             false-value="0"
             @input="toggleProp('show_chat')"
             v-model="settings.show_chat"
-          >{{ trans.get('settings.show_chat') }}</b-switch>
+            >{{ trans.get("settings.show_chat") }}</b-switch
+          >
         </div>
       </div>
       <div class="has-padding-2 has-margin-top-4">
         <h1>
           <i class="fal fa-user-graduate"></i>
-          {{ trans.get('settings.teachers') }}
+          {{ trans.get("settings.teachers") }}
         </h1>
         <div class="has-padding-left-4">
           <button
             class="button is-primary"
             v-if="isAdmin"
             @click="promptInvite()"
-          >{{ trans.get('settings.add_teachers') }}</button>
+          >
+            {{ trans.get("settings.add_teachers") }}
+          </button>
           <div
             class="columns box card-shadow-s"
             v-for="(teacher, index) in teachers"
@@ -108,16 +128,26 @@
             <div class="column is-narrow">
               <i
                 class="fal fa-2x"
-                :class="{ 'fa-user-crown' : teacher.pivot.role == 2, 'fa-user-graduate': teacher.pivot.role == 1 }"
+                :class="{
+                  'fa-user-crown': teacher.pivot.role == 2,
+                  'fa-user-graduate': teacher.pivot.role == 1,
+                }"
               ></i>
             </div>
-            <div class="column is-narrow is-flex align-items-center">{{ teacher.name }}</div>
-            <div class="column is-narrow is-flex align-items-center">{{ teacher.email }}</div>
+            <div class="column is-narrow is-flex align-items-center">
+              {{ teacher.name }}
+            </div>
+            <div class="column is-narrow is-flex align-items-center">
+              {{ teacher.email }}
+            </div>
             <div class="column is-narrow is-flex align-items-center">
               <button
                 class="button has-margin-left-4 is-danger"
                 @click="confirmDeleteTeacher(teacher.id, index)"
-                v-if="isAdmin && teacher.id != user || teacher.pivot.role == 1 && teacher.id == user"
+                v-if="
+                  (isAdmin && teacher.id != user) ||
+                  (teacher.pivot.role == 1 && teacher.id == user)
+                "
               >
                 <i class="fas fa-trash"></i> Delete
               </button>
@@ -128,10 +158,12 @@
       <div class="has-padding-2 has-margin-top-4">
         <h1>
           <i class="fal fa-brackets-curly"></i>
-          {{ trans.get('settings.parameters') }}
+          {{ trans.get("settings.parameters") }}
         </h1>
         <div class="has-padding-left-4">
-          <h3 class="has-margin-bottom-4">{{ trans.get('settings.probability') }}</h3>
+          <h3 class="has-margin-bottom-4">
+            {{ trans.get("settings.probability") }}
+          </h3>
           <vue-slider
             class="has-padding-5"
             v-model="value"
@@ -144,56 +176,73 @@
             </template>
           </vue-slider>
           <div class="has-margin-0 is-size-6">
-            <strong>{{ trans.get('settings.common') }}</strong>
+            <strong>{{ trans.get("settings.common") }}</strong>
             : {{ value[1] }}
             <i class="fal fa-ellipsis-v has-margin-x-3"></i>
-            <strong>{{ trans.get('settings.rare') }}</strong>
+            <strong>{{ trans.get("settings.rare") }}</strong>
             : {{ value[2] - value[1] }}
             <i class="fal fa-ellipsis-v has-margin-x-3"></i>
-            <strong>{{ trans.get('settings.epic') }}</strong>
+            <strong>{{ trans.get("settings.epic") }}</strong>
             : {{ value[3] - value[2] }}
             <i class="fal fa-ellipsis-v has-margin-x-3"></i>
-            <strong>{{ trans.get('settings.legendary') }}</strong>
+            <strong>{{ trans.get("settings.legendary") }}</strong>
             : {{ value[4] - value[3] }}
           </div>
-          <button class="button is-primary has-margin-y-4" @click="saveProbabilities()">
+          <button
+            class="button is-primary has-margin-y-4"
+            @click="saveProbabilities()"
+          >
             <i class="fas fa-save has-margin-right-3"></i>
-            {{ trans.get('general.save') }}
+            {{ trans.get("general.save") }}
           </button>
         </div>
         <div class="has-padding-left-4">
-          <h3 class="has-margin-bottom-4">{{ trans.get('settings.economic') }}</h3>
+          <h3 class="has-margin-bottom-4">
+            {{ trans.get("settings.economic") }}
+          </h3>
           <div class="columns">
             <div class="column is-narrow">
-              <input class="input is-narrow" type="number" v-model="settings.card_use" />
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.card_use"
+              />
             </div>
             <div class="column is-flex align-items-center">
               <i class="fas fa-coins colored"></i>
-              {{ trans.get('settings.use_card_gold') }}
+              {{ trans.get("settings.use_card_gold") }}
             </div>
           </div>
           <div class="columns">
             <div class="column is-narrow">
-              <input class="input is-narrow" type="number" v-model="settings.card_delete" />
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.card_delete"
+              />
             </div>
             <div class="column is-flex align-items-center">
               <i class="fas fa-coins colored"></i>
-              {{ trans.get('settings.delete_card_gold') }}
+              {{ trans.get("settings.delete_card_gold") }}
             </div>
           </div>
           <div class="columns">
             <div class="column is-narrow">
-              <input class="input is-narrow" type="number" v-model="settings.num_cards" />
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.num_cards"
+              />
             </div>
             <div class="column is-flex align-items-center">
               <i class="fas fa-club colored"></i>
-              {{ trans.get('settings.cards') }}
+              {{ trans.get("settings.cards") }}
             </div>
           </div>
         </div>
         <button class="button is-primary has-margin-4" @click="saveCards()">
           <i class="fas fa-save has-margin-right-3"></i>
-          {{ trans.get('general.save') }}
+          {{ trans.get("general.save") }}
         </button>
       </div>
       <!-- <div class="has-padding-left-4">
@@ -312,6 +361,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete_class"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -330,6 +380,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -343,7 +394,7 @@ export default {
               if (response.data === 1) {
                 // TODO change to delete teacher from array
                 location.reload(true);
-              } else if(response.data == 2) {
+              } else if (response.data == 2) {
                 location.href = "/classroom";
               }
             });

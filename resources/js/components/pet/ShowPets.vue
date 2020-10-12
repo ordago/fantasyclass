@@ -12,7 +12,17 @@
       v-bind:key="pet.id"
     >
       <div class="column is-narrow is-relative">
-        <img v-tippy="{ theme: 'light bordered' , placement : 'bottom',  arrow: true }" :content="getName(pet.name)" :src="'/img/pets/' + pet.image" class="" style="margin-top: -20px;"/>
+        <img
+          v-tippy="{
+            theme: 'light bordered',
+            placement: 'bottom',
+            arrow: true,
+          }"
+          :content="getName(pet.name)"
+          :src="'/img/pets/' + pet.image"
+          class=""
+          style="margin-top: -20px"
+        />
       </div>
       <div class="column is-narrow">
         <div class="field is-horizontal">
@@ -123,10 +133,7 @@
           >
         </div>
       </div>
-      <button
-        class="button has-margin-left-2"
-        @click="editPet(pet)"
-      >
+      <button class="button has-margin-left-2" @click="editPet(pet)">
         <i class="fas fa-edit"></i>
       </button>
       <button
@@ -235,7 +242,14 @@
             </b-field>
           </section>
           <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isModalActive = false;resetPet();">
+            <button
+              class="button"
+              type="button"
+              @click="
+                isModalActive = false;
+                resetPet();
+              "
+            >
               {{ trans.get("general.close") }}
             </button>
             <button class="button is-primary" v-if="!edit">
@@ -260,7 +274,14 @@
           <p class="modal-card-title">{{ trans.get("pets.image") }}</p>
         </header>
         <section class="modal-card-body is-relative">
-          All pet images are from: <a href="https://github.com/HabitRPG/habitica">https://github.com/HabitRPG/habitica</a> and are licensed under <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">CC-BY-NC-SA 3.0</a>
+          All pet images are from:
+          <a href="https://github.com/HabitRPG/habitica"
+            >https://github.com/HabitRPG/habitica</a
+          >
+          and are licensed under
+          <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/"
+            >CC-BY-NC-SA 3.0</a
+          >
           <div class="columns is-multiline" v-if="images">
             <img
               width="75px"
@@ -324,10 +345,10 @@ export default {
         gold_boost: 0,
         xp_boost: 0,
         price: 0,
-      }
+      };
     },
     selectImage: function (e) {
-      this.$refs.selectbutton.classList.remove('is-danger')
+      this.$refs.selectbutton.classList.remove("is-danger");
       e.target.classList.add("is-loading");
       if (this.images == null)
         axios.get("/classroom/pets/get").then((response) => {
@@ -341,7 +362,7 @@ export default {
       }
     },
     updateForSale: function (id) {
-      axios.get('/classroom/pets/' + id + '/for-sale')
+      axios.get("/classroom/pets/" + id + "/for-sale");
     },
     editPet: function (pet) {
       this.edit = true;
@@ -349,26 +370,28 @@ export default {
       this.isModalActive = true;
     },
     sendEdit: function () {
-      axios.patch("/classroom/" + this.code + "/pets", { pet: this.pet }).then((response) => {
-        this.isModalActive = false;
-        this.resetPet();
-      });
+      axios
+        .patch("/classroom/" + this.code + "/pets", { pet: this.pet })
+        .then((response) => {
+          this.isModalActive = false;
+          this.resetPet();
+        });
     },
     addPet: function () {
-
-      if(this.pet.image == null) {
-        this.$refs.selectbutton.classList.add('is-danger')
+      if (this.pet.image == null) {
+        this.$refs.selectbutton.classList.add("is-danger");
         return false;
       }
-      axios.post("/classroom/" + this.code + "/pets", { pet: this.pet }).then((response) => {
-        this.isModalActive = false;
-        this.pets.push(response.data);
-        this.$forceUpdate();
-      });
+      axios
+        .post("/classroom/" + this.code + "/pets", { pet: this.pet })
+        .then((response) => {
+          this.isModalActive = false;
+          this.pets.push(response.data);
+          this.$forceUpdate();
+        });
     },
     getName(name) {
-      if(name)
-        return name + " 🍅🍖";
+      if (name) return name + " 🍅🍖";
       else return "🍅🍖";
     },
     deleteItem(id) {
@@ -376,6 +399,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",

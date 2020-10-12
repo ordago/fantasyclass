@@ -5,17 +5,23 @@
         <a
           :href="'/classroom/' + this.code + '/behaviours/create'"
           class="button is-link"
-        >{{ trans.get('behaviours.add') }}</a>
+          >{{ trans.get("behaviours.add") }}</a
+        >
         <a
           v-if="behaviours.length < 4"
           :href="'/classroom/' + this.code + '/behaviours/import/default'"
           class="button is-info"
-        >{{ trans.get('behaviours.import_default') }}</a>
+          >{{ trans.get("behaviours.import_default") }}</a
+        >
       </div>
 
       <div class="column is-hidden-mobile"></div>
       <div class="column is-narrow" v-if="data.length">
-        <download-excel style="display:inline" :data="data" :fields="json_fields">
+        <download-excel
+          style="display: inline"
+          :data="data"
+          :fields="json_fields"
+        >
           <b-button type="is-success has-margin-2">
             <i class="fas fa-file-spreadsheet"></i>
           </b-button>
@@ -31,10 +37,18 @@
       sort-icon="arrow-up"
     >
       <template slot-scope="props">
-        <b-table-column field="icon" :label="trans.get('behaviours.icon')" centered>
+        <b-table-column
+          field="icon"
+          :label="trans.get('behaviours.icon')"
+          centered
+        >
           <span
             class="tag"
-            v-bind:class="[ props.row.xp + props.row.hp + props.row.gold >= 0 ? 'is-success' : 'is-danger']"
+            v-bind:class="[
+              props.row.xp + props.row.hp + props.row.gold >= 0
+                ? 'is-success'
+                : 'is-danger',
+            ]"
           >
             <i :class="props.row.icon"></i>
           </span>
@@ -44,37 +58,61 @@
           field="name"
           :label="trans.get('behaviours.name')"
           sortable
-        >{{ trans.get(props.row.name) }}</b-table-column>
+          >{{ trans.get(props.row.name) }}</b-table-column
+        >
 
         <b-table-column
           field="custom_text"
           :label="trans.get('behaviours.custom_text')"
           sortable
-        >{{ trans.get(props.row.custom_text) }}</b-table-column>
+          >{{ trans.get(props.row.custom_text) }}</b-table-column
+        >
 
-        <b-table-column field="hp" :label="trans.get('behaviours.hp')" sortable centered>
+        <b-table-column
+          field="hp"
+          :label="trans.get('behaviours.hp')"
+          sortable
+          centered
+        >
           <i class="fas fa-heart"></i>
           {{ props.row.hp }}
         </b-table-column>
 
-        <b-table-column field="name" :label="trans.get('behaviours.experience')" sortable centered>
+        <b-table-column
+          field="name"
+          :label="trans.get('behaviours.experience')"
+          sortable
+          centered
+        >
           <i class="fas fa-fist-raised"></i>
           {{ props.row.xp }}
         </b-table-column>
 
-        <b-table-column field="name" :label="trans.get('behaviours.gold')" sortable centered>
+        <b-table-column
+          field="name"
+          :label="trans.get('behaviours.gold')"
+          sortable
+          centered
+        >
           <i class="fas fa-coins"></i>
           {{ props.row.gold }}
         </b-table-column>
 
-        <b-table-column field="name" :label="trans.get('menu.settings')" centered>
+        <b-table-column
+          field="name"
+          :label="trans.get('menu.settings')"
+          centered
+        >
           <a
             :href="'/classroom/' + code + '/behaviours/' + props.row.id"
             class="button is-info is-small"
           >
             <i class="fas fa-edit"></i>
           </a>
-          <b-button type="is-danger is-small" @click="confirmDelete(props.row.id)">
+          <b-button
+            type="is-danger is-small"
+            @click="confirmDelete(props.row.id)"
+          >
             <i class="fas fa-trash-alt"></i>
           </b-button>
         </b-table-column>
@@ -113,6 +151,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",

@@ -36,7 +36,10 @@
         </p>
       </div>
       <div class="column is-narrow" v-if="admin">
-        <button class="button is-danger" @click="confirmDelete(reactiveQuestion.id, index)">
+        <button
+          class="button is-danger"
+          @click="confirmDelete(reactiveQuestion.id, index)"
+        >
           <i class="fas fa-trash"></i>
         </button>
       </div>
@@ -51,11 +54,19 @@
           class="has-background-danger-light card-shadow-s has-padding-4 has-margin-3 rounded"
           v-if="reactiveQuestion.answerKO"
         >
-          <i class="fas fa-sad-tear colored has-padding-right-2" v-if="!reactiveQuestion.correct"></i>
+          <i
+            class="fas fa-sad-tear colored has-padding-right-2"
+            v-if="!reactiveQuestion.correct"
+          ></i>
           {{ reactiveQuestion.answerKO.answer.text }}
         </div>
-        <div class="has-background-success-light card-shadow-s has-padding-4 has-margin-3 rounded">
-          <i class="fas fa-smile-beam colored has-padding-right-2" v-if="reactiveQuestion.correct"></i>
+        <div
+          class="has-background-success-light card-shadow-s has-padding-4 has-margin-3 rounded"
+        >
+          <i
+            class="fas fa-smile-beam colored has-padding-right-2"
+            v-if="reactiveQuestion.correct"
+          ></i>
           {{ reactiveQuestion.answerOK.answer.text }}
         </div>
       </div>
@@ -65,7 +76,9 @@
           v-for="answer in reactiveQuestion.answers"
           @click="answerQuestion(answer.id)"
           :key="answer.id"
-        >{{ answer.answer }}</div>
+        >
+          {{ answer.answer }}
+        </div>
       </div>
     </div>
   </div>
@@ -75,12 +88,12 @@ import confetti from "canvas-confetti";
 
 export default {
   props: ["question", "admin", "index"],
-  created: function() {
+  created: function () {
     this.reactiveQuestion = this.question;
   },
-  data: function() {
+  data: function () {
     return {
-      reactiveQuestion: null
+      reactiveQuestion: null,
     };
   },
   methods: {
@@ -89,6 +102,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -96,34 +110,36 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/challenge/question/" + id).then(response => {
-            if (response.data === 1) {
-              this.$parent.challenge.stats.splice(index, 1);
-              // this.$forceUpdate();
-            }
-          });
-        }
+          axios
+            .delete("/classroom/challenge/question/" + id)
+            .then((response) => {
+              if (response.data === 1) {
+                this.$parent.challenge.stats.splice(index, 1);
+                // this.$forceUpdate();
+              }
+            });
+        },
       });
     },
     answerQuestion(answer) {
       axios
         .post("/classroom/question/answer", {
           answer: answer,
-          question: this.reactiveQuestion
+          question: this.reactiveQuestion,
         })
-        .then(response => {
+        .then((response) => {
           if (response.data.correct == true) {
             confetti({
               particleCount: 200,
               spread: 100,
-              origin: { y: 1.0 }
+              origin: { y: 1.0 },
             });
           }
           this.reactiveQuestion = response.data;
         });
-    }
+    },
   },
-  computed: {}
+  computed: {},
 };
 </script>
 <style lang="scss">

@@ -1,21 +1,45 @@
 <template>
   <div class="has-padding-left-0-desktop" ref="topref">
     <div class="panel has-padding-left-0-desktop">
-      <p class="panel-heading is-flex has-space-between align-items-center has-padding-3 show-challenges-title">
+      <p
+        class="panel-heading is-flex has-space-between align-items-center has-padding-3 show-challenges-title"
+      >
         <span>
           <i :class="challengegroup.icon"></i>
           <span class="has-padding-left-3">{{ challengegroup.name }}</span>
           <!-- <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button> -->
-          <button style="font-size: .5em" class="button is-danger" @click="deleteChallengeGroup(challengegroup.id)" v-if="challenges.length == 0"><i class="fas fa-trash"></i></button>
+          <button
+            style="font-size: 0.5em"
+            class="button is-danger"
+            @click="deleteChallengeGroup(challengegroup.id)"
+            v-if="challenges.length == 0"
+          >
+            <i class="fas fa-trash"></i>
+          </button>
         </span>
         <span>
-          <button class="button" @click="isImportModalActive=true"><i class="fas fa-file-import has-margin-right-2"></i> {{ trans.get('general.import') }}</button>
-          <button class="button" @click="challengeEdit=null;addChallenge=!addChallenge" v-html="buttonAddChallege"></button>
+          <button class="button" @click="isImportModalActive = true">
+            <i class="fas fa-file-import has-margin-right-2"></i>
+            {{ trans.get("general.import") }}
+          </button>
+          <button
+            class="button"
+            @click="
+              challengeEdit = null;
+              addChallenge = !addChallenge;
+            "
+            v-html="buttonAddChallege"
+          ></button>
         </span>
       </p>
-      <div class="panel-block" v-if="!addChallenge&&challenges.length > 0">
+      <div class="panel-block" v-if="!addChallenge && challenges.length > 0">
         <p class="control has-icons-left">
-          <input class="input" type="text" v-model="search" placeholder="Search" />
+          <input
+            class="input"
+            type="text"
+            v-model="search"
+            placeholder="Search"
+          />
           <span class="icon is-left">
             <i class="fas fa-search" aria-hidden="true"></i>
           </span>
@@ -36,21 +60,37 @@
       <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
         <h3 class="is-size-3 has-padding-4 w-100 has-text-centered">
           <i class="fal fa-smile-wink"></i>
-          {{ trans.get('challenges.empty') }}
+          {{ trans.get("challenges.empty") }}
         </h3>
       </div>
 
-      <div class="panel-block is-block has-padding-3" v-if="challenges.length > 0 && !addChallenge">
+      <div
+        class="panel-block is-block has-padding-3"
+        v-if="challenges.length > 0 && !addChallenge"
+      >
         <div v-for="challenge in filteredList" v-bind:key="challenge.id">
-          <ShowChallenge :challenge="challenge" :admin="true" :edit="true"></ShowChallenge>
+          <ShowChallenge
+            :challenge="challenge"
+            :admin="true"
+            :edit="true"
+          ></ShowChallenge>
         </div>
       </div>
     </div>
     <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
-      <div v-if="currentChallenge" class="has-padding-5 rounded has-background-light">
-        <h1 class="is-size-1 has-margin-bottom-3">{{ currentChallenge.title }}</h1>
+      <div
+        v-if="currentChallenge"
+        class="has-padding-5 rounded has-background-light"
+      >
+        <h1 class="is-size-1 has-margin-bottom-3">
+          {{ currentChallenge.title }}
+        </h1>
         <div v-if="currentChallenge.type == 0">
-          <div v-for="student in students" class="has-padding-3" :key="student.id">
+          <div
+            v-for="student in students"
+            class="has-padding-3"
+            :key="student.id"
+          >
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
                 <div class="field">
@@ -60,7 +100,8 @@
                     false-value="0"
                     @input="toggleChallenge(student.id)"
                     type="is-info"
-                  >{{ student.name }}</b-switch>
+                    >{{ student.name }}</b-switch
+                  >
                 </div>
               </div>
             </div>
@@ -77,7 +118,8 @@
                     false-value="0"
                     @input="toggleChallenge(group.id)"
                     type="is-info"
-                  >{{ group.name }}</b-switch>
+                    >{{ group.name }}</b-switch
+                  >
                 </div>
               </div>
             </div>
@@ -86,7 +128,10 @@
       </div>
     </b-modal>
     <b-modal :active.sync="isImportModalActive" has-modal-card full-screen>
-      <import-challenge :classroom="code" :challengegroup="challengegroup.id"></import-challenge>
+      <import-challenge
+        :classroom="code"
+        :challengegroup="challengegroup.id"
+      ></import-challenge>
     </b-modal>
   </div>
 </template>
@@ -94,13 +139,12 @@
 import CreateChallenges from "./CreateChallenges.vue";
 import ShowChallenge from "./ShowChallenge.vue";
 
-
 export default {
   props: ["challengegroup", "challenges", "code", "icon"],
-  created: function() {
-    this.$el.scrollTop = 0
+  created: function () {
+    this.$el.scrollTop = 0;
   },
-  data: function() {
+  data: function () {
     return {
       addChallenge: false,
       search: "",
@@ -111,7 +155,7 @@ export default {
       students: null,
       groups: null,
       currentChallenge: null,
-      mark: null
+      mark: null,
     };
   },
   methods: {
@@ -120,6 +164,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -127,10 +172,10 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/challenges/group/" + id).then(response => {
-            location.reload()
+          axios.delete("/classroom/challenges/group/" + id).then((response) => {
+            location.reload();
           });
-        }
+        },
       });
     },
     confirmDelete(id) {
@@ -138,6 +183,7 @@ export default {
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
         confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
         hasIcon: true,
         icon: "times-circle",
@@ -145,12 +191,12 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/challenges/" + id).then(response => {
+          axios.delete("/classroom/challenges/" + id).then((response) => {
             if (response.data === 1) {
               this.$parent.getChallenges(this.challengegroup.id);
             }
           });
-        }
+        },
       });
     },
     showModal(challenge) {
@@ -158,9 +204,9 @@ export default {
       axios
         .post("/classroom/" + this.code + "/challenges/info", {
           type: challenge.type,
-          challenge: challenge.id
+          challenge: challenge.id,
         })
-        .then(response => {
+        .then((response) => {
           if (challenge.type == 0) this.students = response.data;
           else this.groups = response.data;
           this.isModalActive = true;
@@ -169,9 +215,9 @@ export default {
     toggleChallenge($id) {
       axios.post("/classroom/" + this.code + "/challenges/toggle", {
         id: $id,
-        challenge: this.currentChallenge.id
+        challenge: this.currentChallenge.id,
       });
-    }
+    },
   },
   components: {
     CreateChallenges,
@@ -184,20 +230,19 @@ export default {
         : "<i class='far fa-plus has-padding-right-2'></i>" +
             this.trans.get("challenges.add");
     },
-    filteredList: function() {
-      return this.orderedChallenges.filter(challenge => {
+    filteredList: function () {
+      return this.orderedChallenges.filter((challenge) => {
         return challenge.title
           .toLowerCase()
           .includes(this.search.toLowerCase());
       });
     },
-    orderedChallenges: function() {
+    orderedChallenges: function () {
       return _.orderBy(this.challenges, "datetime", "asc");
-    }
+    },
   },
   updated: function () {
     // this.$refs.topref.scrollTop=0;
-    
-  }
+  },
 };
 </script>
