@@ -1,31 +1,34 @@
 <template>
   <div class="has-margin-2">
-    <div style="text-align:center;" v-if="this.use">
+    <div style="text-align: center" v-if="this.use">
       <button
         type="submit"
         class="button is-success"
         @click="markCard(card, 1)"
         v-tippy
         :content="getMessage(card.pivot.marked)"
-        v-bind:class="{ disabled : checkLevel() , 'has-background-dark' : card.pivot.marked == 1 }"
+        v-bind:class="{
+          disabled: checkLevel(),
+          'has-background-dark': card.pivot.marked == 1,
+        }"
       >
-        <i class="fas fa-check"></i> {{ trans.get('cards.use') }}
+        <i class="fas fa-check"></i> {{ trans.get("cards.use") }}
       </button>
       <button
         type="submit"
-        v-if="card.xp >= 0 && card.gold >= 0 && card.hp >= 0 "
+        v-if="card.xp >= 0 && card.gold >= 0 && card.hp >= 0"
         @click="markCard(card, 2)"
         class="button is-danger"
-        v-bind:class="{ 'has-background-dark' : card.pivot.marked == 2 }"
+        v-bind:class="{ 'has-background-dark': card.pivot.marked == 2 }"
       >
-        <i class="fas fa-trash-alt"></i> {{ trans.get('cards.delete') }}
+        <i class="fas fa-trash-alt"></i> {{ trans.get("cards.delete") }}
       </button>
     </div>
     <div
       class="cardContainer cardFunction"
       data-id="1"
       group-id
-      :style="'background-color:'+ card.background + ';'"
+      :style="'background-color:' + card.background + ';'"
     >
       <div class="lvl-top-left" v-if="card.min_lvl">
         <img src="/img/cardgen/lvl.png" class="levelCard" />
@@ -48,7 +51,9 @@
                 xlink:href="#curve"
                 startOffset="50%"
                 text-anchor="middle"
-              >{{ trans.get(card.title) }}</textPath>
+              >
+                {{ trans.get(card.title) }}
+              </textPath>
             </text>
           </svg>
         </h3>
@@ -59,14 +64,14 @@
         v-if="!card.fullscreen"
       />
       <img
-        :src="'/img/cardgen/only_back_'+ card.type_bg +'.png'"
+        :src="'/img/cardgen/only_back_' + card.type_bg + '.png'"
         class="background"
         v-if="!card.special && !card.fullscreen"
       />
       <img
-        :src="'/img/cardgen/only_back_'+ card.type_bg +'_gold.png'"
+        :src="'/img/cardgen/only_back_' + card.type_bg + '_gold.png'"
         class="background"
-        v-if="card.special  && !card.fullscreen"
+        v-if="card.special && !card.fullscreen"
       />
 
       <div class="content-cards text_shadow" v-html="description"></div>
@@ -74,28 +79,47 @@
       <div class="hiding-parent">
         <img
           :src="card.src"
-          :style="'margin-left: '+ card.margin_left + 'px;margin-top:'+ card.margin_top +'px;width:'+card.width+'px;border-radius:'+ card.radius +'px'"
+          :style="
+            'margin-left: ' +
+            card.margin_left +
+            'px;margin-top:' +
+            card.margin_top +
+            'px;width:' +
+            card.width +
+            'px;border-radius:' +
+            card.radius +
+            'px'
+          "
           class="back"
         />
       </div>
-      <div class="xp_modify modifiers" v-if="card.xp!=0">
+      <div class="xp_modify modifiers" v-if="card.xp != 0">
         <img src="/img/cardgen/xp_modify.png" class />
         <span>{{ card.xp }}</span>
       </div>
-      <div class="hp_modify modifiers" v-if="card.hp!=0">
+      <div class="hp_modify modifiers" v-if="card.hp != 0">
         <img src="/img/cardgen/hp_modify.png" class />
         <span>{{ card.hp }}</span>
       </div>
-      <div class="gold_modify modifiers" v-if="card.gold!=0">
+      <div class="gold_modify modifiers" v-if="card.gold != 0">
         <img src="/img/cardgen/gold_modify.png" />
         <span>{{ card.gold }}</span>
       </div>
     </div>
-    <div style="text-align:center;" v-if="this.admin==1 && this.assign">
-      <button class="button is-dark" @click="assignCard"><i class="fas fa-arrow-up"></i> {{ trans.get('general.assign') }}</button>
+    <div style="text-align: center" v-if="this.admin && this.assign">
+      <button class="button is-dark" @click="assignCard">
+        <i class="fas fa-arrow-up"></i> {{ trans.get("general.assign") }}
+      </button>
     </div>
-    <div style="text-align:center;" v-if="this.admin==1 && !this.assign">
-      <a :href="'/classroom/' + code + '/cards/' + card.id" type="submit" class="button is-dark">
+    <div
+      style="text-align: center"
+      v-if="this.admin && this.properties == true && !this.assign"
+    >
+      <a
+        :href="'/classroom/' + code + '/cards/' + card.id"
+        type="submit"
+        class="button is-dark"
+      >
         <i class="fas fa-edit"></i>
       </a>
       <button type="submit" @click="confirmDelete" class="button is-danger">
@@ -113,7 +137,7 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["card", "admin", "code", "use", "student", "assign"],
+  props: ["card", "admin", "properties", "code", "use", "student", "assign"],
   mounted() {
     this.description = Utils.styleText(this.trans.get(this.card.description));
   },
@@ -124,10 +148,24 @@ export default {
   },
   methods: {
     assignCard() {
-      axios.post('/classroom/' + this.code + '/card/assign', {type: 'student', 'id': this.assign, card: this.card.id})
-        .then(response => {
-          location.reload();
+      axios
+        .post("/classroom/" + this.code + "/card/assign", {
+          type: "student",
+          id: this.assign,
+          card: this.card.id,
         })
+        .then((response) => {
+          this.$toasted.show(
+            this.trans.get("success_error.add_success"),
+            {
+              position: "top-center",
+              duration: 3000,
+              type: "success",
+              iconPack: "fontawesome",
+              icon: "tick",
+            }
+          );
+        });
     },
     markCard(card, type) {
       let number = 0;
@@ -135,41 +173,119 @@ export default {
         number = this.$parent.$parent.$parent.student.level.number;
       if (type == 1 && this.card.min_lvl > number) return false;
 
-      this.$buefy.dialog.confirm({
-        title: this.trans.get("cards.use_title"),
-        message: this.trans.get("cards.use_text"),
-        confirmText: this.trans.get("cards.use_confirm"),
-        type: "is-warning",
-        hasIcon: true,
-        icon: "times-circle",
-        iconPack: "fa",
-        ariaRole: "alertdialog",
-        ariaModal: true,
-        onConfirm: () => {
-          axios
-            .post("/classroom/" + this.code + "/card/mark/" + this.card.id, {
-              type: type,
-              student: this.student.id,
-            })
-            .then((response) => {
-              this.$toasted.show(response.data.message, {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: response.data.icon,
-                type: response.data.type,
+      if (this.admin) {
+        this.$buefy.dialog.confirm({
+          title: this.trans.get("cards.use_title"),
+          message: this.trans.get("cards.use_text_bypass"),
+          confirmText: this.trans.get("cards.use_confirm"),
+          type: "is-warning",
+          hasIcon: true,
+          icon: "times-circle",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+          onConfirm: () => {
+            axios
+              .post("/classroom/card/usedelete/bypass/" + this.card.id, {
+                type: type,
+                student: this.student.id,
+              })
+              .then((response) => {
+                // destroy the vue listeners, etc
+                this.$destroy();
+
+                // remove the element from the DOM
+                this.$el.parentNode.removeChild(this.$el);
+                let actions = [
+                  {
+                    text: this.trans.get("general.close"),
+                    onClick: (e, toastObject) => {
+                      toastObject.goAway(0);
+                    },
+                  },
+                ];
+                let gold = response.data.gold;
+                if (gold) {
+                  actions.push({
+                    text: this.trans.get('cards.pay'),
+                    onClick: (e, toastObject) => {
+                      if (response.data.gold > this.student.gold) {
+                        this.$toasted.show(
+                          this.trans.get("success_error.shop_failed_money"),
+                          {
+                            position: "top-center",
+                            duration: 3000,
+                            type: "error",
+                            iconPack: "fontawesome",
+                            icon: "times",
+                          }
+                        );
+                        toastObject.goAway(0);
+                        return false;
+                      }
+                      let options = {
+                        id: this.student.id,
+                        prop: "gold",
+                        value: gold * -1,
+                      };
+                      let student;
+
+                      axios
+                        .post("/classroom/students/update", options)
+                        .then((response) => {
+                          this.student.gold -= gold;
+                          this.$parent.$parent.$parent.$forceUpdate()
+                          toastObject.goAway(0);
+                        });
+                    },
+                  });
+                }
+                this.$toasted.show(response.data.message, {
+                  position: "top-center",
+                  duration: null,
+                  iconPack: "fontawesome",
+                  action: actions,
+                });
               });
-              card.pivot.marked = type;
-              this.$forceUpdate();
-            });
-        },
-      });
+          },
+        });
+      } else {
+        this.$buefy.dialog.confirm({
+          title: this.trans.get("cards.use_title"),
+          message: this.trans.get("cards.use_text"),
+          confirmText: this.trans.get("cards.use_confirm"),
+          type: "is-warning",
+          hasIcon: true,
+          icon: "times-circle",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+          onConfirm: () => {
+            axios
+              .post("/classroom/" + this.code + "/card/mark/" + this.card.id, {
+                type: type,
+                student: this.student.id,
+              })
+              .then((response) => {
+                this.$toasted.show(response.data.message, {
+                  position: "top-center",
+                  duration: 3000,
+                  iconPack: "fontawesome",
+                  icon: response.data.icon,
+                  type: response.data.type,
+                });
+                card.pivot.marked = type;
+                this.$forceUpdate();
+              });
+          },
+        });
+      }
     },
     getMessage(marked) {
-      if (this.checkLevel()) return this.trans.get('students.card_level');
-      else if(marked == 1) {
-        return this.trans.get('students.card_marked')
-      } else return this.trans.get('students.card_use');
+      if (this.checkLevel()) return this.trans.get("students.card_level");
+      else if (marked == 1) {
+        return this.trans.get("students.card_marked");
+      } else return this.trans.get("students.card_use");
     },
     checkLevel() {
       let number = 0;

@@ -55,6 +55,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards/{id}', 'CardsController@show');
         Route::patch('/cards/{id}', 'CardsController@update');
         Route::post('/card/usedelete/{id}', 'CardsController@useDelete');
+        Route::post('/card/usedelete/bypass/{id}', 'CardsController@useDeleteAdmin');
         
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');

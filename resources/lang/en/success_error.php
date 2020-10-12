@@ -28,5 +28,7 @@ return [
 
     'cards_exceded' => 'Cards number exceded',
 
+    'use_delete' => 'Action carried out successfully',
+    'use_delete_gold' => 'This action would have a cost of :gold <i class="fas fa-coins m-2"></i>, click on "pay" to cash it',
 
 ];

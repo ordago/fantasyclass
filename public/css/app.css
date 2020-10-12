@@ -12161,6 +12161,12 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   font-size: 2em;
 }
 
+.bottom-right {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 body,
 html {
   height: 100%;

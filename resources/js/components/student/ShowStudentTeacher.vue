@@ -5,7 +5,7 @@
       class="card-content"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
     >
-      <div class="media has-margin-bottom-0">
+      <div class="media has-margin-bottom-0 is-relative">
         <div class="media-left" v-if="classroom.character_theme != 0">
           <figure class="image is-48x48">
             <img :src="student.avatar" class="rounded" alt />
@@ -20,6 +20,7 @@
             <small>@{{ student.username }}</small>
           </p>
         </div>
+        <span @click="redirect(student.id)" class="tag is-dark bottom-right cursor-pointer">{{ student.numcards[0] }} / {{ student.numcards[1] }}<i class="fas fa-club ml-1"></i></span>
       </div>
 
       <div class="content">

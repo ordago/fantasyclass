@@ -1,11 +1,13 @@
 # Changelog
 
-## v1.08 Beta (XX/10/2020)
+## v1.08 Beta (12/10/2020)
 ### Added
 - Pets! Students can have pets to increase their atributes.
 - Added home page and terms.
+- Show card count in teachers' view.
 
 ### Changed
+- Teacher can use and delete cards directly (free or using gold).
 - Now if a user logins with Google, email is marked as verified.
 - Show challenges scroll to bottom.
 - Better card exceded feedback.

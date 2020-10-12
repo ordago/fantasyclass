@@ -1,6 +1,6 @@
 <template>
 <div class="has-padding-2 is-flex flex-wrap justify-content-center">
-  <show-card v-for="card in this.orderedCards" :code="code" :admin="'1'" :assign="student" :card="card" v-bind:key="card.id"></show-card>
+  <show-card v-for="card in this.orderedCards" :code="code" :properties="false" :admin="true" :assign="student" :card="card" v-bind:key="card.id"></show-card>
 </div>
 </template>
 

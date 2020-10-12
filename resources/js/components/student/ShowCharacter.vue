@@ -132,6 +132,9 @@ export default {
     }
 }
 
+.pet-character:hover {
+  animation: none;
+}
 .pet-character {
   position: absolute;
   bottom: 5px;
@@ -140,4 +143,5 @@ export default {
   animation-duration: 10s;
   animation-iteration-count: infinite;
 }
+
 </style>

@@ -211,7 +211,60 @@ class CardsController extends Controller
                 $student->cards()->attach($card->id);
             }
         }
-        return true;
+        return $card;
+    }
+
+    public function useDeleteAdmin($id)
+    {
+        $card = Card::find($id);
+        $class = Classroom::find($card->classroom_id);
+        $this->authorize('update', $class);
+        
+        $data = request()->validate([
+            'student' => ['numeric', 'required'],
+            'type' => ['numeric'],
+            ]);
+            
+        $student = Student::find($data['student']);
+        if ($student->classroom->classroom_id != $class->id)
+            return false;
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        
+        $cardLine = CardStudent::where('card_id', $card->id)
+            ->where('student_id', $student->id)
+            ->first();
+
+        $cardLine->delete();
+
+        if ($card->special) {
+            $gold = 0;
+        } else {
+            if($data['type'] == 1) {
+                $gold = settings()->get('card_use', 200);
+            } else {
+                $gold = settings()->get('card_delete', 50);
+            }
+        }
+
+        if ($card->gold) $student->setProperty('gold', $card->gold, true);
+        if ($card->xp) $student->setProperty('xp', $card->xp, true);
+        if ($card->hp) $student->setProperty('hp', $card->hp, true);
+
+        if($gold) {
+            $message = __('success_error.use_delete_gold', ['gold' => $gold]);
+        } else {
+            $message = __('success_error.use_delete');
+        }
+
+        return [
+            "message" => " " . $message,
+            "icon" => "check",
+            "type" => "success",
+            "gold" => $gold,
+        ];
+
+
     }
 
     public function useDelete($id)

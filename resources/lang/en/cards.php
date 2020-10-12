@@ -39,15 +39,15 @@ return [
     'favor_description' => 'You can remove a card and you will recover the lost gold. Shhh! Don\'t tell anyone!',
     'back_description' => 'Undo an action where you have lost points.',
     'lottery_title' => 'The Lottery',
-    'lottery_description' => 'You\' won the lottery!',
+    'lottery_description' => 'You\' won the lottery! Use this card to win gold.',
     'taxes_title' => 'Taxes',
-    'taxes_description' => 'It\'s time to pay taxes... No one gets away!',
+    'taxes_description' => 'It\'s time to pay taxes... No one gets away! It\'s mandatory to use this card.',
     'late_title' => 'It won\'t happen again',
     'late_description' => 'It allows you to get into class by being late',
     'second_title' => 'Second chance',
     'second_description' => 'After you have lost an objective, roll a die and if it is greater than 4, it allows you to conquer it.',
     'working_title' => 'Working Hard',
-    'working_description' => 'You\'ve spent the night studying, you gain experience!',
+    'working_description' => 'You\'ve spent the night studying, you gain experience if you use this card!',
     'divine_title' => 'Divine help',
     'divine_description' => 'The professor will give you a valuable clue to solve a problem.',
     'complicated_title' => 'Complicated situation',
@@ -59,7 +59,7 @@ return [
     'garlic_title' => 'The repeating garlic',
     'garlic_description' => 'The points of a conquest are multiplied by two.',
     'deck_title' => 'Master of the Deck',
-    'deck_description' => 'It allows you to have one more card.',
+    'deck_description' => 'It allows you to have one more card. You need to keep this card.',
     'exceptional_title' => 'Exceptional situation',
     'exceptional_description' => 'You deserve a break! The whole class has 15 minutes of free time.',
     'invitation_title' => 'Official invitation',
@@ -85,5 +85,10 @@ return [
     'delete' => 'Delete',
     'use_title' => 'Mark card',
     'use_text' => 'The card will be marked for use or delete. The teacher needs to confirm the action.',
+    'use_text_bypass' => 'The card will be used or deleted. This action can\'t be undone.',
     'use_confirm' => 'Accept',
+    'pay' => 'Pay',
+
 ];
+
+

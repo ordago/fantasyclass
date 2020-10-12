@@ -946,9 +946,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1213,6 +1210,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           });
         }
       });
+    },
+    reload: function reload() {
+      location.reload();
     },
     forceRerender: function forceRerender() {
       this.update += 1;
@@ -1491,7 +1491,10 @@ var render = function() {
     [
       _c(
         "div",
-        { staticClass: "column is-narrow has-padding-right-0 noprint" },
+        {
+          ref: "studentInfo",
+          staticClass: "column is-narrow has-padding-right-0 noprint"
+        },
         [
           _c(
             "div",
@@ -2618,7 +2621,8 @@ var render = function() {
                                   card: card,
                                   code: _vm.classroom.code,
                                   use: true,
-                                  admin: false
+                                  admin: _vm.admin,
+                                  properties: false
                                 }
                               })
                             ],
@@ -3512,11 +3516,7 @@ var render = function() {
                           {
                             staticClass: "button",
                             attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                _vm.isAssignModalActive = false
-                              }
-                            }
+                            on: { click: _vm.reload }
                           },
                           [
                             _vm._v(

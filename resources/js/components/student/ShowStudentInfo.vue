@@ -3,7 +3,7 @@
     class="columns h-100 has-margin-right-0"
     v-bind:class="{ 'has-bg-student': !admin }"
   >
-    <div class="column is-narrow has-padding-right-0 noprint">
+    <div class="column is-narrow has-padding-right-0 noprint" ref="studentInfo">
       <div
         class="card rounded card-shadow-s"
         style="min-width: 275px; overflow: visible"
@@ -480,7 +480,8 @@
                 :card="card"
                 :code="classroom.code"
                 :use="true"
-                :admin="false"
+                :admin="admin"
+                :properties="false"
               ></show-card>
             </div>
           </div>
@@ -876,11 +877,7 @@
           style="overflow-x: auto"
         >
           <div class="column is-narrow">
-            <button
-              class="button"
-              type="button"
-              @click="isAssignModalActive = false"
-            >
+            <button class="button" type="button" @click="reload">
               {{ trans.get("general.close") }}
             </button>
           </div>
@@ -1234,6 +1231,9 @@ export default {
             });
         },
       });
+    },
+    reload() {
+      location.reload();
     },
     forceRerender() {
       this.update += 1;

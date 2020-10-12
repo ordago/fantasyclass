@@ -2842,9 +2842,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["card", "admin", "code", "use", "student", "assign"],
+  props: ["card", "admin", "properties", "code", "use", "student", "assign"],
   mounted: function mounted() {
     this.description = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].styleText(this.trans.get(this.card.description));
   },
@@ -2855,54 +2879,138 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     assignCard: function assignCard() {
-      axios.post('/classroom/' + this.code + '/card/assign', {
-        type: 'student',
-        'id': this.assign,
+      var _this = this;
+
+      axios.post("/classroom/" + this.code + "/card/assign", {
+        type: "student",
+        id: this.assign,
         card: this.card.id
       }).then(function (response) {
-        location.reload();
+        _this.$toasted.show(_this.trans.get("success_error.add_success"), {
+          position: "top-center",
+          duration: 3000,
+          type: "success",
+          iconPack: "fontawesome",
+          icon: "tick"
+        });
       });
     },
     markCard: function markCard(card, type) {
-      var _this = this;
+      var _this2 = this;
 
       var number = 0;
       if (this.$parent.$parent.$parent.student.level != null) number = this.$parent.$parent.$parent.student.level.number;
       if (type == 1 && this.card.min_lvl > number) return false;
-      this.$buefy.dialog.confirm({
-        title: this.trans.get("cards.use_title"),
-        message: this.trans.get("cards.use_text"),
-        confirmText: this.trans.get("cards.use_confirm"),
-        type: "is-warning",
-        hasIcon: true,
-        icon: "times-circle",
-        iconPack: "fa",
-        ariaRole: "alertdialog",
-        ariaModal: true,
-        onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this.code + "/card/mark/" + _this.card.id, {
-            type: type,
-            student: _this.student.id
-          }).then(function (response) {
-            _this.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
-              type: response.data.type
+
+      if (this.admin) {
+        this.$buefy.dialog.confirm({
+          title: this.trans.get("cards.use_title"),
+          message: this.trans.get("cards.use_text_bypass"),
+          confirmText: this.trans.get("cards.use_confirm"),
+          type: "is-warning",
+          hasIcon: true,
+          icon: "times-circle",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+          onConfirm: function onConfirm() {
+            axios.post("/classroom/card/usedelete/bypass/" + _this2.card.id, {
+              type: type,
+              student: _this2.student.id
+            }).then(function (response) {
+              // destroy the vue listeners, etc
+              _this2.$destroy(); // remove the element from the DOM
+
+
+              _this2.$el.parentNode.removeChild(_this2.$el);
+
+              var actions = [{
+                text: _this2.trans.get("general.close"),
+                onClick: function onClick(e, toastObject) {
+                  toastObject.goAway(0);
+                }
+              }];
+              var gold = response.data.gold;
+
+              if (gold) {
+                actions.push({
+                  text: _this2.trans.get('cards.pay'),
+                  onClick: function onClick(e, toastObject) {
+                    if (response.data.gold > _this2.student.gold) {
+                      _this2.$toasted.show(_this2.trans.get("success_error.shop_failed_money"), {
+                        position: "top-center",
+                        duration: 3000,
+                        type: "error",
+                        iconPack: "fontawesome",
+                        icon: "times"
+                      });
+
+                      toastObject.goAway(0);
+                      return false;
+                    }
+
+                    var options = {
+                      id: _this2.student.id,
+                      prop: "gold",
+                      value: gold * -1
+                    };
+                    var student;
+                    axios.post("/classroom/students/update", options).then(function (response) {
+                      _this2.student.gold -= gold;
+
+                      _this2.$parent.$parent.$parent.$forceUpdate();
+
+                      toastObject.goAway(0);
+                    });
+                  }
+                });
+              }
+
+              _this2.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: null,
+                iconPack: "fontawesome",
+                action: actions
+              });
             });
+          }
+        });
+      } else {
+        this.$buefy.dialog.confirm({
+          title: this.trans.get("cards.use_title"),
+          message: this.trans.get("cards.use_text"),
+          confirmText: this.trans.get("cards.use_confirm"),
+          type: "is-warning",
+          hasIcon: true,
+          icon: "times-circle",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+          onConfirm: function onConfirm() {
+            axios.post("/classroom/" + _this2.code + "/card/mark/" + _this2.card.id, {
+              type: type,
+              student: _this2.student.id
+            }).then(function (response) {
+              _this2.$toasted.show(response.data.message, {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: response.data.icon,
+                type: response.data.type
+              });
 
-            card.pivot.marked = type;
+              card.pivot.marked = type;
 
-            _this.$forceUpdate();
-          });
-        }
-      });
+              _this2.$forceUpdate();
+            });
+          }
+        });
+      }
     },
     getMessage: function getMessage(marked) {
-      if (this.checkLevel()) return this.trans.get('students.card_level');else if (marked == 1) {
-        return this.trans.get('students.card_marked');
-      } else return this.trans.get('students.card_use');
+      if (this.checkLevel()) return this.trans.get("students.card_level");else if (marked == 1) {
+        return this.trans.get("students.card_marked");
+      } else return this.trans.get("students.card_use");
     },
     checkLevel: function checkLevel() {
       var number = 0;
@@ -2910,7 +3018,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.card.min_lvl > number ? true : false;
     },
     confirmDelete: function confirmDelete() {
-      var _this2 = this;
+      var _this3 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -2923,9 +3031,9 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/card/" + _this2.card.id).then(function (response) {
+          axios["delete"]("/classroom/card/" + _this3.card.id).then(function (response) {
             if (response.data === 1) {
-              _this2.$el.parentNode.removeChild(_this2.$el);
+              _this3.$el.parentNode.removeChild(_this3.$el);
             }
           });
         }
@@ -9429,6 +9537,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -10529,15 +10638,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["pending"],
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    this.cards = this.pending;
+
+    for (var i = 0; i < this.cards.length; i++) {
+      this.cards[i].cards = Object.values(this.cards[i].cards);
+    }
+  },
   data: function data() {
     return {
       open: false,
       overlay: true,
       fullheight: true,
-      fullwidth: false
+      fullwidth: false,
+      cards: []
     };
   },
   methods: {
@@ -10551,8 +10696,11 @@ __webpack_require__.r(__webpack_exports__);
     setCard: function setCard(id, line, type, action, index, indexC) {
       var _this = this;
 
-      this.pending[index].cards.splice(indexC, 1);
-      if (!this.pending[index].cards.length) this.open = false;
+      if (!action) {
+        this.cards[index].cards.splice(indexC, 1);
+        if (!this.cards[index].cards.length) this.open = false;
+      }
+
       this.$forceUpdate();
       axios.post("/classroom/card/usedelete/" + id, {
         student: line.student.id,
@@ -27016,7 +27164,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@-webkit-keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n@keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n.pet-character {\n  position: absolute;\n  bottom: 5px;\n  left: 50%;\n  -webkit-animation-name: hmovement;\n          animation-name: hmovement;\n  -webkit-animation-duration: 10s;\n          animation-duration: 10s;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n", ""]);
+exports.push([module.i, "\n@-webkit-keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n@keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n.pet-character:hover {\n  -webkit-animation: none;\n          animation: none;\n}\n.pet-character {\n  position: absolute;\n  bottom: 5px;\n  left: 50%;\n  -webkit-animation-name: hmovement;\n          animation-name: hmovement;\n  -webkit-animation-duration: 10s;\n          animation-duration: 10s;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n\n", ""]);
 
 // exports
 
@@ -51421,7 +51569,13 @@ var render = function() {
                       "text-anchor": "middle"
                     }
                   },
-                  [_vm._v(_vm._s(_vm.trans.get(_vm.card.title)))]
+                  [
+                    _vm._v(
+                      "\n              " +
+                        _vm._s(_vm.trans.get(_vm.card.title)) +
+                        "\n            "
+                    )
+                  ]
                 )
               ])
             ])
@@ -51501,20 +51655,20 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    this.admin == 1 && this.assign
+    this.admin && this.assign
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
           _c(
             "button",
             { staticClass: "button is-dark", on: { click: _vm.assignCard } },
             [
               _c("i", { staticClass: "fas fa-arrow-up" }),
-              _vm._v(" " + _vm._s(_vm.trans.get("general.assign")))
+              _vm._v(" " + _vm._s(_vm.trans.get("general.assign")) + "\n    ")
             ]
           )
         ])
       : _vm._e(),
     _vm._v(" "),
-    this.admin == 1 && !this.assign
+    this.admin && this.properties == true && !this.assign
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
           _c(
             "a",
@@ -51585,7 +51739,13 @@ var render = function() {
     _vm._l(this.orderedCards, function(card) {
       return _c("show-card", {
         key: card.id,
-        attrs: { code: _vm.code, admin: "1", assign: _vm.student, card: card }
+        attrs: {
+          code: _vm.code,
+          properties: false,
+          admin: true,
+          assign: _vm.student,
+          card: card
+        }
       })
     }),
     1
@@ -62786,7 +62946,7 @@ var render = function() {
           class: { "has-background-hidden": _vm.student.hidden == 1 }
         },
         [
-          _c("div", { staticClass: "media has-margin-bottom-0" }, [
+          _c("div", { staticClass: "media has-margin-bottom-0 is-relative" }, [
             _vm.classroom.character_theme != 0
               ? _c("div", { staticClass: "media-left" }, [
                   _c("figure", { staticClass: "image is-48x48" }, [
@@ -62821,6 +62981,26 @@ var render = function() {
                 _c("p", { staticClass: "subtitle is-6" }, [
                   _c("small", [_vm._v("@" + _vm._s(_vm.student.username))])
                 ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "tag is-dark bottom-right cursor-pointer",
+                on: {
+                  click: function($event) {
+                    return _vm.redirect(_vm.student.id)
+                  }
+                }
+              },
+              [
+                _vm._v(
+                  _vm._s(_vm.student.numcards[0]) +
+                    " / " +
+                    _vm._s(_vm.student.numcards[1])
+                ),
+                _c("i", { staticClass: "fas fa-club ml-1" })
               ]
             )
           ]),
@@ -65184,7 +65364,7 @@ var render = function() {
                             { staticClass: "column is-narrow" },
                             [
                               _c("show-card", {
-                                staticStyle: { zoom: ".75" },
+                                staticStyle: { zoom: "0.75" },
                                 attrs: { card: card, admin: "false" }
                               })
                             ],
@@ -65250,7 +65430,7 @@ var render = function() {
                                     }
                                   }
                                 },
-                                [_vm._v("Cancel")]
+                                [_vm._v("\n              Cancel\n            ")]
                               )
                             ]
                           )
@@ -83438,15 +83618,15 @@ __webpack_require__.r(__webpack_exports__);
     "favor_description": "Pots eliminar aquesta carta i una altra sense cost. Shhhh! No ho expliques a ning\xFA!",
     "back_description": "Desf\xE9s una acci\xF3 en la que has perdut punts.",
     "lottery_title": "La loteria",
-    "lottery_description": "Has guanyat la loteria!",
+    "lottery_description": "Has guanyat la loteria! Utilitza la carta per guanyar diners.",
     "taxes_title": "Impostos",
-    "taxes_description": "Toca pagar impostos ...  Ning\xFA s'escapa!",
+    "taxes_description": "Toca pagar impostos ...  Ning\xFA s'escapa! \xC9s obligatori utilitzar la carta.",
     "late_title": "No tornar\xE0 a passar",
     "late_description": "Et permet entrar a classe si has arribat tard o desfer els punts perduts.",
     "second_title": "Repesca",
     "second_description": "Despr\xE9s de perdre un repte, tira un dau, si \xE9s major o igual a 5, et permet conquerir-lo ",
     "working_title": "Working Hard",
-    "working_description": "T'has passat el dissabte de nit estudiant, guanyes experi\xE8ncia!",
+    "working_description": "T'has passat el dissabte de nit estudiant, guanyes experi\xE8ncia si utilitzes aquesta carta!",
     "divine_title": "Ajuda divina",
     "divine_description": "El/la profe et donar\xE0 una pista valuosa per resoldre un problema.",
     "complicated_title": "Situaci\xF3 complicada",
@@ -83458,7 +83638,7 @@ __webpack_require__.r(__webpack_exports__);
     "garlic_title": "L'all repetidor",
     "garlic_description": "Els punts d'una conquesta es multipliquen de dos.",
     "deck_title": "Mestre de la baralla",
-    "deck_description": "Et permet tenir una carta m\xE9s.",
+    "deck_description": "Et permet tenir una carta m\xE9s. Conserva aquesta carta.",
     "exceptional_title": "Situaci\xF3 excepcional",
     "exceptional_description": "Mereixeu un descans! Tota la classe tindr\xE0 15 minuts de temps lliure.",
     "invitation_title": "Invitaci\xF3 oficial",
@@ -83481,7 +83661,9 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Eliminar",
     "use_title": "Marcar carta",
     "use_text": "La carta es marcar\xE0 per ser utilitzada o per eliminar-la. El/la profe ha de confirmar l'acci\xF3.",
-    "use_confirm": "Accepta"
+    "use_text_bypass": "La carta ser\xE0 utilitzada o eliminada. Aquesta acci\xF3 no es pot desfer.",
+    "use_confirm": "Accepta",
+    "pay": "Pagar"
   },
   "ca.challenges": {
     "add": "Afegeix hist\xF2ria / repte",
@@ -83872,7 +84054,9 @@ __webpack_require__.r(__webpack_exports__);
     "min_name": "El nom ha de ser de com a m\xEDnim 4 car\xE0cters",
     "taginput": "Selecciona com a m\xEDnim una etiqueta v\xE0lida",
     "challenges_empty": "No hi ha reptes per importar",
-    "cards_exceded": "Total de cartes excedit"
+    "cards_exceded": "Total de cartes excedit",
+    "use_delete": "Acci\xF3 realitzada amb \xE8xit",
+    "use_delete_gold": "Aquesta acci\xF3 tindria un cost de :gold <i class=\"fas fa-coins m-2\"></i>, fes clic a \"pagar\" per cobrar-ho"
   },
   "ca.users_groups": {
     "change_layout": "Toggle layout view",
@@ -84086,15 +84270,15 @@ __webpack_require__.r(__webpack_exports__);
     "favor_description": "You can remove a card and you will recover the lost gold. Shhh! Don't tell anyone!",
     "back_description": "Undo an action where you have lost points.",
     "lottery_title": "The Lottery",
-    "lottery_description": "You' won the lottery!",
+    "lottery_description": "You' won the lottery! Use this card to win gold.",
     "taxes_title": "Taxes",
-    "taxes_description": "It's time to pay taxes... No one gets away!",
+    "taxes_description": "It's time to pay taxes... No one gets away! It's mandatory to use this card.",
     "late_title": "It won't happen again",
     "late_description": "It allows you to get into class by being late",
     "second_title": "Second chance",
     "second_description": "After you have lost an objective, roll a die and if it is greater than 4, it allows you to conquer it.",
     "working_title": "Working Hard",
-    "working_description": "You've spent the night studying, you gain experience!",
+    "working_description": "You've spent the night studying, you gain experience if you use this card!",
     "divine_title": "Divine help",
     "divine_description": "The professor will give you a valuable clue to solve a problem.",
     "complicated_title": "Complicated situation",
@@ -84106,7 +84290,7 @@ __webpack_require__.r(__webpack_exports__);
     "garlic_title": "The repeating garlic",
     "garlic_description": "The points of a conquest are multiplied by two.",
     "deck_title": "Master of the Deck",
-    "deck_description": "It allows you to have one more card.",
+    "deck_description": "It allows you to have one more card. You need to keep this card.",
     "exceptional_title": "Exceptional situation",
     "exceptional_description": "You deserve a break! The whole class has 15 minutes of free time.",
     "invitation_title": "Official invitation",
@@ -84129,7 +84313,9 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Delete",
     "use_title": "Mark card",
     "use_text": "The card will be marked for use or delete. The teacher needs to confirm the action.",
-    "use_confirm": "Accept"
+    "use_text_bypass": "The card will be used or deleted. This action can't be undone.",
+    "use_confirm": "Accept",
+    "pay": "Pay"
   },
   "en.challenges": {
     "add": "Add story \/ challenge",
@@ -84511,7 +84697,9 @@ __webpack_require__.r(__webpack_exports__);
     "shop_failed_exists": "You already have the item or a better one",
     "taginput": "Select at least one valid tag",
     "challenges_empty": "There are not challenges available to import",
-    "cards_exceded": "Cards number exceded"
+    "cards_exceded": "Cards number exceded",
+    "use_delete": "Action carried out successfully",
+    "use_delete_gold": "This action would have a cost of :gold <i class=\"fas fa-coins m-2\"><\/i>, click on \"pay\" to cash it"
   },
   "en.users_groups": {
     "change_layout": "Toggle layout view",
@@ -84742,9 +84930,9 @@ __webpack_require__.r(__webpack_exports__);
     "favor_description": "Puedes eliminar esta carta y otra sin coste. Shhhh! No lo explicas a nadie!",
     "back_description": "Deshaz una acci\xF3n en la que has perdido puntos.",
     "lottery_title": "La loteria",
-    "lottery_description": "Has ganado la loteria!",
+    "lottery_description": "Has ganado la loteria! Usa la carta para obtener el oro.",
     "taxes_title": "Impuestos",
-    "taxes_description": "Toca pagar impuestos ...  Nadie se escapa!",
+    "taxes_description": "Toca pagar impuestos ...  Nadie se escapa! Es obligatorio usar esta carta.",
     "late_title": "No volver\xE1 a pasar",
     "late_description": "Te permite entrar a clase si has llegado tarde o deshacer los puntos perdidos.",
     "second_title": "Repesca",
@@ -84762,7 +84950,7 @@ __webpack_require__.r(__webpack_exports__);
     "garlic_title": "El ajo repetidor",
     "garlic_description": "Los puntos de una conquista se multiplican por dos.",
     "deck_title": "Maestro de la baraja",
-    "deck_description": "Te permite tener una carta m\xE1s.",
+    "deck_description": "Te permite tener una carta m\xE1s. Debes conservar esta carta.",
     "exceptional_title": "Situaci\xF3n excepcional",
     "exceptional_description": "Merec\xE9is un descanso! Toda la clase tendr\xE1 15 minutos de tiempo libre.",
     "invitation_title": "Invitaci\xF3n oficial",
@@ -84785,7 +84973,9 @@ __webpack_require__.r(__webpack_exports__);
     "delete": "Eliminar",
     "use_title": "Marcar carta",
     "use_text": "La carta se marcar\xE1 para ser utilizada o para eliminarla. El/la profe tiene que confirmar la acci\xF3n.",
-    "use_confirm": "Acepta"
+    "use_text_bypass": "La carta ser\xE1 utilizada o eliminada. Esta acci\xF3n no se puede deshacer.",
+    "use_confirm": "Acepta",
+    "pay": "Pagar"
   },
   "es.challenges": {
     "add": "A\xF1ade historia / desaf\xEDo",
@@ -85176,7 +85366,9 @@ __webpack_require__.r(__webpack_exports__);
     "min_name": "El nombre tiene que ser de como m\xEDnimo 4 caracteres",
     "taginput": "Selecciona como m\xEDnimo una etiqueta v\xE1lida",
     "challenges_empty": "No hay desaf\xEDos para importar",
-    "cards_exceded": "Total de cartas excedido"
+    "cards_exceded": "Total de cartas excedido",
+    "use_delete": "Acci\xF3n realizada con \xE9xito",
+    "use_delete_gold": "Esta acci\xF3n tendria un coste de :gold <i class=\"fas fa-coins m-2\"></i>, clica en \"pagar\" para cobrarlo"
   },
   "es.users_groups": {
     "change_layout": "Alternar vista de dise\xF1o",

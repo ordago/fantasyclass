@@ -29,4 +29,7 @@ return [
     
     'cards_exceded' => 'Total de cartes excedit',
 
+    'use_delete' => 'Acció realitzada amb èxit',
+    'use_delete_gold' => 'Aquesta acció tindria un cost de :gold <i class="fas fa-coins m-2"></i>, fes clic a "pagar" per cobrar-ho',
+
 ];
