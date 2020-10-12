@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.09 Beta (XX/10/2020)
+### Added
+- Import students from Excel.
+
+### Changed
+- Added pets when clone classroom.
+
 ## v1.08 Beta (12/10/2020)
 ### Added
 - Pets! Students can have pets to increase their atributes.

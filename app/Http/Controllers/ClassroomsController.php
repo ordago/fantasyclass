@@ -192,6 +192,13 @@ class ClassroomsController extends Controller
             $newTag->push();
         }
 
+        // Clone pets
+        foreach ($class->pets as $pet) {
+            $newPet = $pet->replicate();
+            $newPet->classroom_id = $new->id;
+            $newPet->push();
+        }
+
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $allSettings = settings()->all();
         
