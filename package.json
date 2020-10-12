@@ -52,6 +52,7 @@
         "vue-tippy": "^4.7.1",
         "vue-toasted": "^1.1.28",
         "vue-xlsx": "^0.2.1",
-        "vuetify": "^2.3.12"
+        "vuetify": "^2.3.12",
+        "xlsx": "^0.16.8"
     }
 }
