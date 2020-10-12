@@ -55465,7 +55465,14 @@ var render = function() {
   return _c(
     "span",
     {
-      directives: [{ name: "tippy", rawName: "v-tippy" }],
+      directives: [
+        {
+          name: "tippy",
+          rawName: "v-tippy",
+          value: { theme: "light" },
+          expression: "{theme: 'light'}"
+        }
+      ],
       staticClass: "cursor-pointer",
       attrs: { content: _vm.trans.get("classroom.clone") },
       on: { click: _vm.clone }
