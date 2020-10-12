@@ -3211,7 +3211,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3496,11 +3496,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var Editor = function Editor() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
 
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4207,7 +4207,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var InputEmoji = function InputEmoji() {
-  return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ../utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8120,7 +8120,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var Editor = function Editor() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(7)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -86455,7 +86455,7 @@ Vue.component('show-character', __webpack_require__(/*! ./components/student/Sho
 Vue.component('show-students-student', __webpack_require__(/*! ./components/student/ShowStudentsStudent.vue */ "./resources/js/components/student/ShowStudentsStudent.vue")["default"]);
 Vue.component('show-group-view', __webpack_require__(/*! ./components/student/ShowGroupView.vue */ "./resources/js/components/student/ShowGroupView.vue")["default"]);
 Vue.component('show-student-info', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(10), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
 });
 Vue.component('show-student-map', __webpack_require__(/*! ./components/student/ShowStudentMap.vue */ "./resources/js/components/student/ShowStudentMap.vue")["default"]);
 Vue.component('show-student', __webpack_require__(/*! ./components/student/ShowStudent.vue */ "./resources/js/components/student/ShowStudent.vue")["default"]);
@@ -86464,11 +86464,11 @@ Vue.component('show-card', __webpack_require__(/*! ./components/card/ShowCard.vu
 Vue.component('show-cards', __webpack_require__(/*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue")["default"]);
 Vue.component('create-card', __webpack_require__(/*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue")["default"]);
 Vue.component('create-behaviour', function () {
-  return __webpack_require__.e(/*! import() */ 8).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
+  return __webpack_require__.e(/*! import() */ 11).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
 });
 Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
 Vue.component('create-badge', function () {
-  return __webpack_require__.e(/*! import() */ 7).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
+  return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
 });
 Vue.component('show-badges', __webpack_require__(/*! ./components/badge/ShowBadges.vue */ "./resources/js/components/badge/ShowBadges.vue")["default"]);
 Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
@@ -86502,7 +86502,7 @@ Vue.component('grade', __webpack_require__(/*! ./components/evaluation/Grade.vue
 Vue.component('report', __webpack_require__(/*! ./components/evaluation/Report.vue */ "./resources/js/components/evaluation/Report.vue")["default"]);
 Vue.component('rubric-management', __webpack_require__(/*! ./components/evaluation/RubricManagement.vue */ "./resources/js/components/evaluation/RubricManagement.vue")["default"]);
 Vue.component('rubric-create', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
 }); // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 // Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);
@@ -86513,7 +86513,7 @@ Vue.component('image-bank', __webpack_require__(/*! ./components/utils/ImageBank
 Vue.component('count-down', __webpack_require__(/*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue")["default"]);
 Vue.component('notifications', __webpack_require__(/*! ./components/utils/Notifications.vue */ "./resources/js/components/utils/Notifications.vue")["default"]);
 Vue.component('input-emoji', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
+  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
 });
 Vue.component('volume-meter', __webpack_require__(/*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue")["default"]);
 Vue.component('massive-actions', __webpack_require__(/*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue")["default"]);
