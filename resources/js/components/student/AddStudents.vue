@@ -1,6 +1,6 @@
 <template>
   <div class="has-padding-4">
-    <Xlsx type="addstudent"></Xlsx>
+    <!-- <Xlsx type="addstudent"></Xlsx> -->
     <div class="field is-horizontal">
       <form @submit.prevent="addStudent">
         <div class="field-body">
@@ -71,14 +71,11 @@
 
 <script>
 import Utils from "../../utils.js";
-const Xlsx = () => import("../utils/ImportExcel.vue");
+// const Xlsx = () => import("../utils/ImportExcel.vue");
 
-const addStudentPromise = new Promise( (addStudent,error) => {
-    addStudent();
-});
 export default {
   components: {
-    Xlsx,
+    // Xlsx,
   },
   mounted() {},
   data: function () {
@@ -91,22 +88,14 @@ export default {
     };
   },
   methods: {
-    // error() {
-
-    // },
-    // importExcel() {
-    //     return new Promise((resolve, reject) => {
-    //         this.addStudent();
-    //     })
-    // },
     // addFromExcel(students) {
+    //   this.asyncFunction;
     //   students.forEach((student) => {
-    //     this.stdName = student["Name"];
-    //     this.stdEmail = student["E-mail"];
-    //     this.importExcel().then(function () {
-    //       this.stdName = "";
-    //       this.stdEmail = "";
-    //     });
+    //     // this.stdName = student["Name"];
+    //     // this.stdEmail = student["E-mail"];
+    //     // // await this.addStudent();
+    //     // this.stdName = "";
+    //     // this.stdEmail = "";
     //   });
     // },
     addStudent() {
