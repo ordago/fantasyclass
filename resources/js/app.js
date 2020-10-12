@@ -128,7 +128,7 @@ Vue.component('notifications', require('./components/utils/Notifications.vue').d
 
 Vue.component('input-emoji', () => import('./components/utils/InputEmoji.vue').default);
 
-// Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
+Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
 
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
 

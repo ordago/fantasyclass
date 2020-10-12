@@ -9,6 +9,10 @@ return [
     |
     |
     */
+
+    'excel' => 'Importa del Excel',
+    'excel_template' => 'Descarga la plantilla',
+    'dnd' => 'Arrastra el fichero o haz clic para subir',
     
     'name_surname' => 'Nombre y apellidos',
     'name' => 'Nombre',

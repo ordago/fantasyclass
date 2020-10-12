@@ -21,24 +21,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
     XlsxRead: vue_xlsx__WEBPACK_IMPORTED_MODULE_0__["XlsxRead"],
     XlsxJson: vue_xlsx__WEBPACK_IMPORTED_MODULE_0__["XlsxJson"]
   },
-  props: ['type'],
+  props: ["type"],
   data: function data() {
     return {
-      file: null
+      file: null,
+      showExcel: false
     };
   },
   methods: {
     onChange: function onChange(event) {
-      this.file = event.target.files ? event.target.files[0] : null;
+      this.file = event ? event : null;
+      this.showExcel = false;
     },
     test: function test(data) {
-      if (this.type == 'addstudent') {
+      if (this.type == "addstudent") {
         this.$parent.addFromExcel(data);
       }
     }
@@ -65,9 +81,64 @@ var render = function() {
   return _c(
     "div",
     [
-      _c("h3", [_vm._v("Import XLSX")]),
+      _c(
+        "button",
+        {
+          staticClass: "button is-success mb-3",
+          on: {
+            click: function($event) {
+              _vm.showExcel = true
+            }
+          }
+        },
+        [
+          _c("i", { staticClass: "fad fa-file-spreadsheet mr-2" }),
+          _vm._v(" " + _vm._s(_vm.trans.get("students.excel")) + " \n  ")
+        ]
+      ),
       _vm._v(" "),
-      _c("input", { attrs: { type: "file" }, on: { change: _vm.onChange } }),
+      _c("div", { staticClass: "mb-2" }, [
+        _vm.showExcel
+          ? _c(
+              "a",
+              { attrs: { href: "/templates/students.xlsx", download: "" } },
+              [
+                _c("i", { staticClass: "fas fa-download mr-2" }),
+                _vm._v(" " + _vm._s(_vm.trans.get("students.excel_template")))
+              ]
+            )
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.showExcel
+        ? _c(
+            "b-field",
+            [
+              _c(
+                "b-upload",
+                { attrs: { "drag-drop": "" }, on: { input: _vm.onChange } },
+                [
+                  _c("section", { staticClass: "section" }, [
+                    _c("div", { staticClass: "content has-text-centered" }, [
+                      _c(
+                        "p",
+                        [
+                          _c("b-icon", {
+                            attrs: { icon: "upload", size: "is-large" }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("p", [_vm._v(_vm._s(_vm.trans.get("students.dnd")))])
+                    ])
+                  ])
+                ]
+              )
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "xlsx-read",

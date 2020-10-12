@@ -9,6 +9,10 @@ return [
     |
     |
     */
+
+    'excel' => 'Import from Excel',
+    'excel_template' => 'Download the template',
+    'dnd' => 'Drop your file here or click to upload',
     
     'name_surname' => 'Name and surname',
     'name' => 'Name',

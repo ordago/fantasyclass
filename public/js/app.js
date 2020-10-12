@@ -9361,10 +9361,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
- // const Xlsx = () => import("../utils/ImportExcel.vue");
+
+
+var Xlsx = function Xlsx() {
+  return Promise.all(/*! import() */[__webpack_require__.e(13), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ../utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"));
+};
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {// Xlsx,
+  components: {
+    Xlsx: Xlsx
   },
   mounted: function mounted() {},
   data: function data() {
@@ -9377,50 +9382,53 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    // addFromExcel(students) {
-    //   this.asyncFunction;
-    //   students.forEach((student) => {
-    //     // this.stdName = student["Name"];
-    //     // this.stdEmail = student["E-mail"];
-    //     // // await this.addStudent();
-    //     // this.stdName = "";
-    //     // this.stdEmail = "";
-    //   });
-    // },
-    addStudent: function addStudent() {
+    addFromExcel: function addFromExcel(students) {
       var _this = this;
 
-      if (this.stdEmail && !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].validEmail(this.stdEmail)) {
+      students.forEach(function (student) {
+        _this.addStudent(student["Name"], student["E-mail"]);
+
+        _this.stdName = "";
+        _this.stdEmail = "";
+      });
+    },
+    addStudentForm: function addStudentForm() {
+      this.addStudent(this.stdName, this.stdEmail);
+    },
+    addStudent: function addStudent(name, email) {
+      var _this2 = this;
+
+      if (email && !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].validEmail(email)) {
         _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(this, this.trans.get("validation.email"), 2);
         return false;
       }
 
       var search = this.students.find(function (student) {
-        return student.name === _this.stdName;
+        return student.name === name;
       });
 
-      if (this.stdName && !search) {
+      if (name && !search) {
         axios.post("/classroom/students/getusername", {
-          name: this.stdName,
-          email: this.stdEmail
+          name: name,
+          email: email
         }).then(function (response) {
-          _this.stdUsername = response.data;
+          _this2.stdUsername = response.data;
 
-          _this.students.push({
-            id: _this.nextId++,
-            name: _this.stdName,
-            email: _this.stdEmail,
-            username: _this.stdUsername
+          _this2.students.push({
+            id: _this2.nextId++,
+            name: name,
+            email: email,
+            username: _this2.stdUsername
           });
 
-          _this.stdName = _this.stdEmail = _this.stdUsername = "";
+          name = email = _this2.stdUsername = "";
         });
       } else {
         _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(this, this.trans.get("validation.distinct"), 2);
       }
     },
     sendStudents: function sendStudents() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.students.length) {
         axios.post("/classroom/students", {
@@ -9428,25 +9436,25 @@ __webpack_require__.r(__webpack_exports__);
         }).then(function (response) {
           if (response.data) {
             response.data.forEach(function (element) {
-              _this2.$toasted.show(element, {
+              _this3.$toasted.show(element, {
                 position: "top-right",
                 iconPack: "fontawesome",
                 type: "error",
                 action: {
-                  text: _this2.trans.get("general.close"),
+                  text: _this3.trans.get("general.close"),
                   onClick: function onClick(e, toastObject) {
                     toastObject.goAway(0);
                   }
                 }
               });
             });
-            _this2.students = [];
+            _this3.students = [];
           } else {
             window.location = document.referrer;
           }
         })["catch"](function (error) {
-          _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this2, error, 2);
-          _this2.students = [];
+          _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this3, error, 2);
+          _this3.students = [];
         });
       }
     },
@@ -62980,6 +62988,8 @@ var render = function() {
     "div",
     { staticClass: "has-padding-4" },
     [
+      _c("Xlsx", { attrs: { type: "addstudent" } }),
+      _vm._v(" "),
       _c("div", { staticClass: "field is-horizontal" }, [
         _c(
           "form",
@@ -62987,7 +62997,7 @@ var render = function() {
             on: {
               submit: function($event) {
                 $event.preventDefault()
-                return _vm.addStudent($event)
+                return _vm.addStudentForm($event)
               }
             }
           },
@@ -84790,6 +84800,9 @@ __webpack_require__.r(__webpack_exports__);
     "pet_warning": "Solament pots tenir una mascota, si compres una altra perdr\xE0s la que tenies."
   },
   "ca.students": {
+    "excel": "Importa de l'Excel",
+    "excel_template": "Descarrega la plantilla",
+    "dnd": "Arrossega el fitxer o clica per pujar",
     "name_surname": "Nom i cognoms",
     "name": "Nom",
     "password": "Contrasenya",
@@ -85445,6 +85458,9 @@ __webpack_require__.r(__webpack_exports__);
     "pet_warning": "You can only have one pet, if you buy one, you'll lose the pet you had"
   },
   "en.students": {
+    "excel": "Import from Excel",
+    "excel_template": "Download the template",
+    "dnd": "Drop your file here or click to upload",
     "name_surname": "Name and surname",
     "name": "Nanem",
     "password": "Password",
@@ -86122,6 +86138,9 @@ __webpack_require__.r(__webpack_exports__);
     "pet_warning": "Solo puedes tener una mascota, si compras una perder\xE1s la que ten\xEDas."
   },
   "es.students": {
+    "excel": "Importa del Excel",
+    "excel_template": "Descarga la plantilla",
+    "dnd": "Arrastra el fichero o haz clic para subir",
     "name_surname": "Nombre y apellidos",
     "name": "Nombre",
     "password": "Contrase\xF1a",
@@ -86563,8 +86582,10 @@ Vue.component('count-down', __webpack_require__(/*! ./components/utils/CountDown
 Vue.component('notifications', __webpack_require__(/*! ./components/utils/Notifications.vue */ "./resources/js/components/utils/Notifications.vue")["default"]);
 Vue.component('input-emoji', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(2), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
-}); // Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
-
+});
+Vue.component('import-excel', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(13), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"))["default"];
+});
 Vue.component('volume-meter', __webpack_require__(/*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue")["default"]);
 Vue.component('massive-actions', __webpack_require__(/*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue")["default"]);
 /**
@@ -89226,14 +89247,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/student/AddStudents.vue ***!
   \*********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _AddStudents_vue_vue_type_template_id_16f87a2c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AddStudents.vue?vue&type=template&id=16f87a2c& */ "./resources/js/components/student/AddStudents.vue?vue&type=template&id=16f87a2c&");
 /* harmony import */ var _AddStudents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AddStudents.vue?vue&type=script&lang=js& */ "./resources/js/components/student/AddStudents.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _AddStudents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _AddStudents_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -89263,7 +89285,7 @@ component.options.__file = "resources/js/components/student/AddStudents.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/student/AddStudents.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

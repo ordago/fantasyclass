@@ -1,38 +1,53 @@
 <template>
   <div>
-    <h3>Import XLSX</h3>
-    <input type="file" @change="onChange" />
+    <button class="button is-success mb-3" @click="showExcel = true">
+      <i class="fad fa-file-spreadsheet mr-2"></i> {{ trans.get('students.excel') }} 
+    </button>
+    <div class="mb-2"><a href="/templates/students.xlsx" download v-if="showExcel"><i class="fas fa-download mr-2"></i> {{ trans.get('students.excel_template') }}</a></div>
+    <b-field v-if="showExcel">
+      <b-upload @input="onChange" drag-drop>
+        <section class="section">
+          <div class="content has-text-centered">
+            <p>
+              <b-icon icon="upload" size="is-large"> </b-icon>
+            </p>
+            <p>{{ trans.get('students.dnd') }}</p>
+          </div>
+        </section>
+      </b-upload>
+    </b-field>
+    <!-- <input type="file" @change="onChange"/> -->
     <xlsx-read :file="file">
-      <xlsx-json @parsed="test">
-      </xlsx-json>
+      <xlsx-json @parsed="test"> </xlsx-json>
     </xlsx-read>
   </div>
 </template>
 
 <script>
-import { XlsxRead, XlsxJson } from "vue-xlsx"
+import { XlsxRead, XlsxJson } from "vue-xlsx";
 
 export default {
   components: {
     XlsxRead,
-    XlsxJson
+    XlsxJson,
   },
-  props: ['type'],
+  props: ["type"],
   data() {
     return {
-      file: null
+      file: null,
+      showExcel: false,
     };
   },
   methods: {
     onChange(event) {
-      this.file = event.target.files ? event.target.files[0] : null;
+      this.file = event ? event : null;
+      this.showExcel = false;
     },
     test(data) {
-        if(this.type == 'addstudent') {
-            this.$parent.addFromExcel(data);
-        }
-
-    }
-  }
+      if (this.type == "addstudent") {
+        this.$parent.addFromExcel(data);
+      }
+    },
+  },
 };
 </script>

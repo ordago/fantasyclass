@@ -10,6 +10,10 @@ return [
     |
     */
     
+    'excel' => 'Importa de l\'Excel',
+    'excel_template' => 'Descarrega la plantilla',
+    'dnd' => 'Arrossega el fitxer o clica per pujar',
+
     'name_surname' => 'Nom i cognoms',
     'name' => 'Nom',
     'password' => 'Contrasenya',

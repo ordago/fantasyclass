@@ -1,8 +1,8 @@
 <template>
   <div class="has-padding-4">
-    <!-- <Xlsx type="addstudent"></Xlsx> -->
+    <Xlsx type="addstudent"></Xlsx>
     <div class="field is-horizontal">
-      <form @submit.prevent="addStudent">
+      <form @submit.prevent="addStudentForm">
         <div class="field-body">
           <div class="field is-expanded">
             <div class="field has-addons">
@@ -71,11 +71,11 @@
 
 <script>
 import Utils from "../../utils.js";
-// const Xlsx = () => import("../utils/ImportExcel.vue");
+const Xlsx = () => import("../utils/ImportExcel.vue");
 
 export default {
   components: {
-    // Xlsx,
+    Xlsx,
   },
   mounted() {},
   data: function () {
@@ -88,39 +88,39 @@ export default {
     };
   },
   methods: {
-    // addFromExcel(students) {
-    //   this.asyncFunction;
-    //   students.forEach((student) => {
-    //     // this.stdName = student["Name"];
-    //     // this.stdEmail = student["E-mail"];
-    //     // // await this.addStudent();
-    //     // this.stdName = "";
-    //     // this.stdEmail = "";
-    //   });
-    // },
-    addStudent() {
-      if (this.stdEmail && !Utils.validEmail(this.stdEmail)) {
+    addFromExcel(students) {
+        students.forEach((student) => {
+        this.addStudent(student["Name"], student["E-mail"]);
+        this.stdName = "";
+        this.stdEmail = "";
+      });
+    },
+    addStudentForm() {
+        this.addStudent(this.stdName, this.stdEmail);
+    },
+    addStudent(name, email) {
+      if (email && !Utils.validEmail(email)) {
         Utils.toast(this, this.trans.get("validation.email"), 2);
         return false;
       }
       let search = this.students.find(
-        (student) => student.name === this.stdName
+        (student) => student.name === name
       );
-      if (this.stdName && !search) {
+      if (name && !search) {
         axios
           .post("/classroom/students/getusername", {
-            name: this.stdName,
-            email: this.stdEmail,
+            name: name,
+            email: email,
           })
           .then((response) => {
             this.stdUsername = response.data;
             this.students.push({
               id: this.nextId++,
-              name: this.stdName,
-              email: this.stdEmail,
+              name: name,
+              email: email,
               username: this.stdUsername,
             });
-            this.stdName = this.stdEmail = this.stdUsername = "";
+            name = email = this.stdUsername = "";
           });
       } else {
         Utils.toast(this, this.trans.get("validation.distinct"), 2);
