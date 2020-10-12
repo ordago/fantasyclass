@@ -9394,6 +9394,8 @@ var Xlsx = function Xlsx() {
     },
     addStudentForm: function addStudentForm() {
       this.addStudent(this.stdName, this.stdEmail);
+      this.stdEmail = "";
+      this.stdName = "";
     },
     addStudent: function addStudent(name, email) {
       var _this2 = this;
@@ -10565,6 +10567,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -10584,6 +10600,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       view: 1,
+      search: "",
       mainBehavioursJson: [],
       otherBehavioursJson: [],
       sortKey: "",
@@ -10754,9 +10771,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     orderedStudents: function orderedStudents() {
+      var _this4 = this;
+
       var order = "desc";
       if (this.sortKey == "name") order = "asc";
-      return _.orderBy(_.orderBy(this.students, this.sortKey, order), "hidden", "asc");
+      return _.orderBy(_.orderBy(this.students.filter(function (student) {
+        return student.name.toLowerCase().includes(_this4.search.toLowerCase());
+      }), this.sortKey, order), "hidden", "asc");
     }
   }
 });
@@ -64800,6 +64821,39 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
+      _vm.students.length
+        ? _c("div", { staticClass: "panel-block" }, [
+            _c("p", { staticClass: "control has-icons-left" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.search,
+                    expression: "search"
+                  }
+                ],
+                staticClass: "input",
+                attrs: {
+                  type: "text",
+                  placeholder: _vm.trans.get("students.search")
+                },
+                domProps: { value: _vm.search },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.search = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
       _vm.view == 1
         ? _c(
             "div",
@@ -65502,6 +65556,17 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("span", [_c("i", { staticClass: "fas fa-users outer_glow" })])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "icon is-left" }, [
+      _c("i", {
+        staticClass: "fas fa-search",
+        attrs: { "aria-hidden": "true" }
+      })
+    ])
   }
 ]
 render._withStripped = true
@@ -84803,6 +84868,7 @@ __webpack_require__.r(__webpack_exports__);
     "excel": "Importa de l'Excel",
     "excel_template": "Descarrega la plantilla",
     "dnd": "Arrossega el fitxer o clica per pujar",
+    "search": "Cerca per nom",
     "name_surname": "Nom i cognoms",
     "name": "Nom",
     "password": "Contrasenya",
@@ -85461,6 +85527,7 @@ __webpack_require__.r(__webpack_exports__);
     "excel": "Import from Excel",
     "excel_template": "Download the template",
     "dnd": "Drop your file here or click to upload",
+    "search": "Search by name",
     "name_surname": "Name and surname",
     "name": "Nanem",
     "password": "Password",
@@ -86141,6 +86208,7 @@ __webpack_require__.r(__webpack_exports__);
     "excel": "Importa del Excel",
     "excel_template": "Descarga la plantilla",
     "dnd": "Arrastra el fichero o haz clic para subir",
+    "search": "Busca por nombre",
     "name_surname": "Nombre y apellidos",
     "name": "Nombre",
     "password": "Contrase\xF1a",

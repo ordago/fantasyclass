@@ -164,6 +164,20 @@
       </div>
     </div>
 
+    <div class="panel-block" v-if="students.length">
+        <p class="control has-icons-left">
+          <input
+            class="input"
+            type="text"
+            v-model="search"
+            :placeholder="trans.get('students.search')"
+          />
+          <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+          </span>
+        </p>
+      </div>
+
     <div class="column has-padding-x-1" v-if="view == 1">
       <show-group-view :behaviours="mainBehavioursJson" :behaviourshidden="otherBehavioursJson" :groups="groups" :classroom="classroom" :students="students"></show-group-view>
     </div>
@@ -382,6 +396,7 @@ export default {
   data: function () {
     return {
       view: 1,
+      search: "",
       mainBehavioursJson: [],
       otherBehavioursJson: [],
       sortKey: "",
@@ -557,7 +572,11 @@ export default {
       let order = "desc";
       if (this.sortKey == "name") order = "asc";
       return _.orderBy(
-        _.orderBy(this.students, this.sortKey, order),
+        _.orderBy(this.students.filter((student) => {
+        return student.name
+          .toLowerCase()
+          .includes(this.search.toLowerCase());
+      }), this.sortKey, order),
         "hidden",
         "asc"
       );

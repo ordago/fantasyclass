@@ -97,6 +97,8 @@ export default {
     },
     addStudentForm() {
         this.addStudent(this.stdName, this.stdEmail);
+        this.stdEmail = "";
+        this.stdName = "";
     },
     addStudent(name, email) {
       if (email && !Utils.validEmail(email)) {

@@ -3,6 +3,7 @@
 ## v1.09 Beta (XX/10/2020)
 ### Added
 - Import students from Excel.
+- Filter by name in teachers' view.
 
 ### Changed
 - Added pets when clone classroom.
