@@ -56,6 +56,7 @@
         }
     </script>
 
+    {!! htmlScriptTagJsApi() !!}
 </head>
 
 <body @if(!isset($class) && !isset($themes) && !isset($profile)) class="has-background-gradient" @else class="has-background-white-ter" @endif @yield('bg', '' )>

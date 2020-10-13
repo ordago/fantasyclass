@@ -89,11 +89,13 @@
                 </div>
             </div>
 
-            <article class="message is-warning">
+            <article class="message is-warning mb-3">
                 <div class="message-body">
                     Registrándote aceptas la policita de privacidad y las condiciones de uso: <a target="_blank" href="/policy">Política de privacidad</a>
                 </div>
             </article>
+
+            {!! htmlFormSnippet() !!}
 
             <div class="has-margin-y-4">
                 <a href="/login" class="button is-info">

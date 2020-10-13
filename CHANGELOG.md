@@ -4,6 +4,7 @@
 ### Added
 - Import students from Excel.
 - Filter by name in teachers' view.
+- Added captcha in register.
 
 ### Changed
 - Added pets when clone classroom.

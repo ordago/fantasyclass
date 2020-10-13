@@ -66,6 +66,7 @@ class RegisterController extends Controller
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'locale' => ['required', 'string'],
             'type' => ['required'],
+            recaptchaFieldName() => recaptchaRuleName(),
         ]);
     }
 
