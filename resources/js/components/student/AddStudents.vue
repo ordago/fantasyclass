@@ -105,6 +105,8 @@ export default {
         Utils.toast(this, this.trans.get("validation.email"), 2);
         return false;
       }
+      if(!email)
+        email = "";
       let search = this.students.find(
         (student) => student.name === name
       );

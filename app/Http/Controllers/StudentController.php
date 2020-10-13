@@ -41,28 +41,30 @@ class StudentController extends Controller
             $pass = '';
             if (strlen($student['name']) < 4)
                 return false;
-            if ($student['email'] && $student['username']) {
+            if (isset($student['email']) && $student['username']) {
                 $id = User::select('id')
                     ->where('email', $student['email'])
                     ->where('username', $student['username'])
                     ->first()['id'];
             } else {
                 $verified = null;
-                if (!$student['email']) {
+                
+                if (!isset($student['email'])) {
                     $verified = now();
-                }
+                    $mail = null;
+                } else $mail = $student['email'];
                 $pass = strtolower(Str::random(5));
                 $user = User::create([
                     'name' => $student['name'],
                     'username' => $this->generateUsername($student['name']),
-                    'email' => $student['email'],
+                    'email' => $mail,
                     'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
                     'is_student' => 1,
                     'locale' => auth()->user()->locale,
                 ]);
                 $id = $user->id;
-                if ($student['email'])
+                if (isset($student['email']))
                     $user->sendEmailVerificationNotification();
             }
             try {
