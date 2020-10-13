@@ -18,7 +18,7 @@
     </b-field>
     <!-- <input type="file" @change="onChange"/> -->
     <xlsx-read :file="file">
-      <xlsx-json @parsed="test"> </xlsx-json>
+      <xlsx-json @parsed="importExcel"> </xlsx-json>
     </xlsx-read>
   </div>
 </template>
@@ -43,8 +43,9 @@ export default {
       this.file = event ? event : null;
       this.showExcel = false;
     },
-    test(data) {
+    importExcel(data) {
       if (this.type == "addstudent") {
+        console.log(data);
         this.$parent.addFromExcel(data);
       }
     },

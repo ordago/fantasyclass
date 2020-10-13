@@ -46,7 +46,7 @@
       >
         <span class="has-padding-right-3">{{ index + 1 }}</span>
         {{ student.name }}
-        <i class="fal fa-at pl-2" v-if="student.email.length"></i>
+        <i class="fal fa-at pl-2" v-if="student.email && student.email.length"></i>
         <span class="is-italic"> {{ student.email }}</span>
         <span
           class="tag is-warning has-margin-left-2"
@@ -98,7 +98,7 @@ export default {
     addStudentForm() {
         this.addStudent(this.stdName, this.stdEmail);
         this.stdEmail = "";
-        this.stdName = "";
+        this.stdNameP = "";
     },
     addStudent(name, email) {
       if (email && !Utils.validEmail(email)) {

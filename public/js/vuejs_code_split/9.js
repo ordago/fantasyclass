@@ -53,8 +53,9 @@ __webpack_require__.r(__webpack_exports__);
       this.file = event ? event : null;
       this.showExcel = false;
     },
-    test: function test(data) {
+    importExcel: function importExcel(data) {
       if (this.type == "addstudent") {
+        console.log(data);
         this.$parent.addFromExcel(data);
       }
     }
@@ -143,7 +144,7 @@ var render = function() {
       _c(
         "xlsx-read",
         { attrs: { file: _vm.file } },
-        [_c("xlsx-json", { on: { parsed: _vm.test } })],
+        [_c("xlsx-json", { on: { parsed: _vm.importExcel } })],
         1
       )
     ],

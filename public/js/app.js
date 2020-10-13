@@ -9395,7 +9395,7 @@ var Xlsx = function Xlsx() {
     addStudentForm: function addStudentForm() {
       this.addStudent(this.stdName, this.stdEmail);
       this.stdEmail = "";
-      this.stdName = "";
+      this.stdNameP = "";
     },
     addStudent: function addStudent(name, email) {
       var _this2 = this;
@@ -63114,7 +63114,7 @@ var render = function() {
                 _vm._v(_vm._s(index + 1))
               ]),
               _vm._v("\n      " + _vm._s(student.name) + "\n      "),
-              student.email.length
+              student.email && student.email.length
                 ? _c("i", { staticClass: "fal fa-at pl-2" })
                 : _vm._e(),
               _vm._v(" "),
