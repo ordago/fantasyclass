@@ -1,14 +1,18 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[7],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @zaichaopan/emoji-picker */ "./node_modules/@zaichaopan/emoji-picker/dist/emoji-picker.common.js");
+/* harmony import */ var _zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @zaichaopan/emoji-picker/data/emojis.json */ "./node_modules/@zaichaopan/emoji-picker/data/emojis.json");
+var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! @zaichaopan/emoji-picker/data/emojis.json */ "./node_modules/@zaichaopan/emoji-picker/data/emojis.json", 1);
 //
 //
 //
@@ -27,117 +31,92 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(1), __webpack_require__.e(0)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
-};
+
+Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['code', 'badge'],
-  created: function created() {
-    this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-
-    if (this.badge) {
-      this.title = this.trans.get(this.badge.title);
-      this.description = this.trans.get(this.badge.description);
-      this.hp = this.badge.hp;
-      this.xp = this.badge.xp;
-      this.gold = this.badge.gold;
-      this.icon = this.badge.icon;
-      this.id = this.badge.id;
-    }
-  },
   data: function data() {
     return {
-      icon: null,
-      csrfToken: null,
-      title: null,
-      description: null,
-      xp: 0,
-      hp: 0,
-      gold: 0,
-      id: null
+      data: _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1__,
+      body: ""
     };
   },
-  components: {
-    IconSelector: IconSelector
-  },
   methods: {
-    formSubmit: function formSubmit(e) {
-      e.preventDefault();
+    updateBody: function updateBody(text) {
+      this.body = text;
+      this.$parent.comment = text;
     },
-    update: function update() {
-      var _this = this;
-
-      axios.patch('/classroom/badges/' + this.id, this.$data).then(function (response) {
-        _this.$toasted.show(response.data.message, {
-          position: "top-center",
-          duration: 3000,
-          iconPack: 'fontawesome',
-          icon: response.data.icon,
-          type: response.data.type
-        });
-      });
+    handleEmojiPicked: function handleEmojiPicked(emoji) {
+      this.$refs.textarea.innerHTML = "".concat(this.$refs.textarea.innerHTML, " ").concat(emoji);
+      this.updateBody(this.$refs.textarea.innerHTML);
+    },
+    handleEditorClick: function handleEditorClick() {
+      this.focusEditor();
+    },
+    focusEditor: function focusEditor() {
+      this.$refs.textarea.focus();
     }
+  },
+  mounted: function mounted() {
+    this.focusEditor();
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&":
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss& ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, ".emoji-dropdown .emoji-preview, .emoji-dropdown .title {\n  display: none !important;\n}\n.message {\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n.message .rich-editor-container {\n  width: 100%;\n  border: 1px solid #ddd;\n  padding: 5px 40px 5px 15px;\n}\n.message .rich-editor-container:focus {\n  outline: none;\n}\n.message .message-emoji {\n  position: absolute;\n  right: 50px;\n  top: 9px;\n}\n.message [contenteditable=true]:empty:before {\n  content: attr(placeholder);\n  color: grey;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./InputEmoji.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6&":
+/*!*******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6& ***!
+  \*******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -149,304 +128,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container has-padding-3" }, [
-    _c(
-      "form",
-      {
+  return _c(
+    "div",
+    {
+      staticClass:
+        "message has-margin-top-4 has-margin-bottom-1 is-flex has-all-centered"
+    },
+    [
+      _c("div", {
+        ref: "textarea",
+        staticClass: "rich-editor-container rounded has-padding-4",
         attrs: {
-          method: "post",
-          action: "/classroom/" + this.code + "/badges",
-          enctype: "multipart/form-data"
+          contenteditable: "true",
+          placeholder: _vm.trans.get("general.type_message")
+        },
+        on: {
+          keypress: function($event) {
+            if (
+              !$event.type.indexOf("key") &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            $event.preventDefault()
+          },
+          input: function($event) {
+            return _vm.updateBody($event.target.innerHTML)
+          },
+          click: _vm.handleEditorClick
         }
-      },
-      [
-        _c("input", {
-          attrs: { type: "hidden", name: "_token" },
-          domProps: { value: _vm.csrfToken }
-        }),
-        _vm._v(" "),
-        _c("div", { staticClass: "field has-addons" }, [
-          _c("p", { staticClass: "control" }, [_c("IconSelector")], 1),
-          _vm._v(" "),
-          _c("p", { staticClass: "control" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.icon,
-                  expression: "icon"
-                }
-              ],
-              staticClass: "input",
-              attrs: {
-                name: "icon",
-                required: "",
-                placeholder: _vm.trans.get("badges.icon_select"),
-                type: "text"
-              },
-              domProps: { value: _vm.icon },
+      }),
+      _vm._v(" "),
+      _vm.$parent.comment.length
+        ? _c(
+            "button",
+            {
+              staticClass: "button is-link",
               on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.icon = $event.target.value
+                click: function($event) {
+                  _vm.$parent.sendComment()
+                  _vm.$refs.textarea.innerHTML = ""
                 }
               }
-            })
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "form-group", staticStyle: { "margin-top": "-10px" } },
-          [
-            _c("label", [
-              _c("small", [
-                _vm._v(_vm._s(_vm.trans.get("badges.fontawesome")) + " "),
-                _c(
-                  "a",
-                  {
-                    attrs: {
-                      href: "https://fontawesome.com/icons?d=gallery",
-                      target: "_blank"
-                    }
-                  },
-                  [_vm._v("FontAwesome")]
-                )
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-4" }, [
-          _c("label", { attrs: { for: "name" } }, [
-            _c("span", { staticClass: "help is-danger is-inline" }, [
-              _vm._v("* ")
-            ]),
-            _vm._v(" " + _vm._s(_vm.trans.get("badges.title")))
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.title,
-                expression: "title"
-              }
-            ],
-            staticClass: "input has-margin-y-3",
-            attrs: { type: "text", id: "title", name: "title", required: "" },
-            domProps: { value: _vm.title },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.title = $event.target.value
-              }
-            }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-2" }, [
-          _c("label", { attrs: { for: "custom_text" } }, [
-            _vm._v(_vm._s(_vm.trans.get("badges.description")))
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.description,
-                expression: "description"
-              }
-            ],
-            staticClass: "input",
-            attrs: {
-              type: "text",
-              name: "description",
-              required: "",
-              placeholder: ""
             },
-            domProps: { value: _vm.description },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.description = $event.target.value
-              }
-            }
+            [_c("i", { staticClass: "fas fa-comment" })]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "message-emoji" },
+        [
+          _c("emoji-picker", {
+            attrs: { data: _vm.data },
+            on: { "emoji:picked": _vm.handleEmojiPicked }
           })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-3" }, [
-          _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("badges.attributes")) + " "),
-            _c("small", { staticClass: "font-italic" }, [
-              _vm._v(
-                "(" + _vm._s(_vm.trans.get("badges.attributes_info")) + ")"
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "columns has-margin-y-1" }, [
-            _c("div", { staticClass: "column" }, [
-              _c("div", { staticClass: "field has-addons" }, [
-                _c("p", { staticClass: "control" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "button is-static",
-                      class: {
-                        "has-background-success": _vm.hp > 0,
-                        "has-background-danger": _vm.hp < 0
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-heart colored" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "control is-expanded" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.hp,
-                        expression: "hp"
-                      }
-                    ],
-                    staticClass: "input",
-                    attrs: { type: "number", name: "hp", required: "" },
-                    domProps: { value: _vm.hp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.hp = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column" }, [
-              _c("div", { staticClass: "field has-addons" }, [
-                _c("p", { staticClass: "control" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "button is-static",
-                      class: {
-                        "has-background-success": _vm.xp > 0,
-                        "has-background-danger": _vm.xp < 0
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-fist-raised colored" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "control is-expanded" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.xp,
-                        expression: "xp"
-                      }
-                    ],
-                    staticClass: "input",
-                    attrs: { type: "number", name: "xp", required: "" },
-                    domProps: { value: _vm.xp },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.xp = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "column" }, [
-              _c("div", { staticClass: "field has-addons" }, [
-                _c("p", { staticClass: "control" }, [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "button is-static",
-                      class: {
-                        "has-background-success": _vm.gold > 0,
-                        "has-background-danger": _vm.gold < 0
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-coins colored" })]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("p", { staticClass: "control is-expanded" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.gold,
-                        expression: "gold"
-                      }
-                    ],
-                    staticClass: "input",
-                    attrs: { type: "number", name: "gold", required: "" },
-                    domProps: { value: _vm.gold },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.gold = $event.target.value
-                      }
-                    }
-                  })
-                ])
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", [
-          _vm.badge
-            ? _c(
-                "button",
-                {
-                  staticClass: "button is-link",
-                  attrs: { type: "button" },
-                  on: { click: _vm.update }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("badges.edit")))]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          !_vm.badge
-            ? _c(
-                "button",
-                { staticClass: "button is-success", attrs: { type: "submit" } },
-                [_vm._v(_vm._s(_vm.trans.get("badges.create")))]
-              )
-            : _vm._e()
-        ])
-      ]
-    )
-  ])
+        ],
+        1
+      )
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -455,18 +196,20 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/utils/InputEmoji.vue":
+/*!******************************************************!*\
+  !*** ./resources/js/components/utils/InputEmoji.vue ***!
+  \******************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateBadge.vue?vue&type=template&id=ba865980& */ "./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&");
-/* harmony import */ var _CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateBadge.vue?vue&type=script&lang=js& */ "./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InputEmoji.vue?vue&type=template&id=ca5e47b6& */ "./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6&");
+/* harmony import */ var _InputEmoji_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InputEmoji.vue?vue&type=script&lang=js& */ "./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./InputEmoji.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -474,10 +217,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _InputEmoji_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -487,38 +230,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/badge/CreateBadge.vue"
+component.options.__file = "resources/js/components/utils/InputEmoji.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBadge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./InputEmoji.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss& ***!
+  \****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./InputEmoji.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6& ***!
+  \*************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBadge.vue?vue&type=template&id=ba865980& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./InputEmoji.vue?vue&type=template&id=ca5e47b6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/InputEmoji.vue?vue&type=template&id=ca5e47b6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_InputEmoji_vue_vue_type_template_id_ca5e47b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

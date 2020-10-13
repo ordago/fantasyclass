@@ -43,12 +43,15 @@
 
         <div class="">
             <div class="">
-                <button type="submit" class="button is-link w-100 has-margin-y-2">
+                <button type="submit" class="button is-link w-100 has-margin-y-2 p-5">
                     <i class="far fa-lock-open-alt has-margin-right-2"></i> {{ __('auth.login') }}
                 </button>
-                <a href="{{ url('/auth/redirect/google') }}" class="button is-danger w-100 has-margin-y-2"><i class="fa fa-google has-margin-right-2"></i> Google</a>
+                <a href="{{ url('/auth/redirect/google') }}" class="button is-white w-100 border has-margin-y-2 p-5">
+                    <img src="/img/google-logo.svg"> Sign in with Google
+                    <!-- <i class="fa fa-google has-margin-right-2"></i> Google -->
+                </a>
                 @if (Route::has('register'))
-                <a class="button is-primary w-100 has-margin-y-2" href="{{ route('register') }}/{{ $locale ?? '' }}"><i class="fas fa-user-plus has-margin-right-2"></i> {{ __('auth.register') }}</a>
+                <a class="button is-primary w-100 has-margin-y-2 p-5" href="{{ route('register') }}/{{ $locale ?? '' }}"><i class="fas fa-user-plus has-margin-right-2"></i> {{ __('auth.register') }}</a>
                 @endif
                 <div class="d-flex align-items-center">
                     <i class="fal fa-ellipsis-v has-margin-top-1 has-margin-x-2"></i>

@@ -14651,6 +14651,10 @@ textPath {
   border-radius: 0.25rem !important;
 }
 
+.border {
+  border: 1px solid #cccccc !important;
+}
+
 .rounded-left {
   border-bottom-left-radius: 0.25rem !important;
   border-top-left-radius: 0.25rem !important;
