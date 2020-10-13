@@ -141,6 +141,9 @@ Popper tippy:
 
  Vue-excel
  https://github.com/jecovier/vue-json-excel#readme
+
+ Google captcha:
+ https://laravel-recaptcha-docs.biscolab.com/docs/intro
  
 ## 3rd party Licenses
 
