@@ -45,7 +45,6 @@ export default {
     },
     importExcel(data) {
       if (this.type == "addstudent") {
-        console.log(data);
         this.$parent.addFromExcel(data);
       }
     },
