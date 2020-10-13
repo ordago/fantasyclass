@@ -111,7 +111,7 @@ return [
     'starts_with' => 'El :attribute debe comenzar con uno de los siguientes: :values',
     'string' => 'El :attribute debe ser una cadena de caracteres.',
     'timezone' => 'El :attribute debe ser una zona válida.',
-    'unique' => 'El :attribute ya se ha tomado.',
+    'unique' => 'El :attribute ya existe.',
     'uploaded' => 'El :attribute no se pudo cargar.',
     'url' => 'El :attribute formato es válido.',
     'uuid' => 'El :attribute debe ser una UUID válida.',

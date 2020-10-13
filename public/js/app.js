@@ -86375,7 +86375,7 @@ __webpack_require__.r(__webpack_exports__);
     "starts_with": "El :attribute debe comenzar con uno de los siguientes: :values",
     "string": "El :attribute debe ser una cadena de caracteres.",
     "timezone": "El :attribute debe ser una zona v\xE1lida.",
-    "unique": "El :attribute ya se ha tomado.",
+    "unique": "El :attribute ya existe.",
     "uploaded": "El :attribute no se pudo cargar.",
     "url": "El :attribute formato es v\xE1lido.",
     "uuid": "El :attribute debe ser una UUID v\xE1lida.",
