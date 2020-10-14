@@ -27,6 +27,11 @@
 
     <script src="/js/pace.min.js"></script>
 
+    <!-- Cookies -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+
+
     <!-- PWA -->
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -155,6 +160,30 @@
     @if(isset($showChat) && $showChat == true)
         @stack('scriptchat');
     @endif
+
+    <script>
+     window.onload = window.cookieconsent.initialise({
+       "palette": {
+         "popup": {
+           "background": "#eb6c44",
+           "text": "#ffffff"
+         },
+         "button": {
+           "background": "#f5d948"
+         }
+       },
+       "theme": "classic",
+       "content": {
+         "message": "Este sitio utilitza cookies para guardar preferencias de la plataforma.",
+         "dismiss": "Entiendo",
+         "link": "Más información",
+         "href": "/cookies"
+       }
+
+
+     });
+    </script>
+
 </body>
 
 </html>

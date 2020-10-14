@@ -23,6 +23,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/locale/{locale}', 'HomeController@locale');
     Route::get('/policy', 'HomeController@policy');
+    Route::get('/cookies', 'HomeController@cookies');
 
     // Miscellany
     Route::get('/contribute', 'MiscellanyController@contribute');

@@ -68,7 +68,7 @@
       <div class="field w-100 has-padding-top-3">
         <label class="label">{{ trans.get('challenges.content') }}</label>
         <div class="control content" data-app>
-          <Editor :code="code"></Editor>
+          <Editor height="70vh" :code="code"></Editor>
         </div>
       </div>
       <div class="field">

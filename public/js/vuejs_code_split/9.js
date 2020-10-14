@@ -55,7 +55,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     importExcel: function importExcel(data) {
       if (this.type == "addstudent") {
-        console.log(data);
         this.$parent.addFromExcel(data);
       }
     }

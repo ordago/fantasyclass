@@ -1,4 +1,12 @@
 # Changelog
+## v1.10 Beta (XX/10/2020)
+### Added
+~ Import from Google Classroom.
+~ Reset wizard.
+- Cookie consent improved.
+
+### Changed
+- Now XP and Gold modifiers are hidden by default.
 
 ## v1.09 Beta (13/10/2020)
 ### Added

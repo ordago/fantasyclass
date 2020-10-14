@@ -17,6 +17,11 @@ class HomeController extends Controller
         return view('auth.home', compact('locale'));
     }
 
+    public function cookies()
+    {
+        return view('auth.cookies');
+    }
+
     public function policy()
     {
         return view('auth.policy');
