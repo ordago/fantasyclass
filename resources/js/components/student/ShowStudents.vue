@@ -122,63 +122,87 @@
         </a>
       </div>
       <div
-        class="column is-narrow has-text-right is-center-vertically"
+        class="column is-narrow has-text-right is-center-vertically is-flex"
         v-if="students.length > 0"
       >
-        <span>
-          <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
+        <span class="p-3 mr-2" style="border: 1px solid #999; border-radius: 5px">
+          <span>
+            <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
+          </span>
+          <span
+            v-tippy
+            :content="trans.get('users_groups.order_name')"
+            v-bind:class="{ coloredGray: sortKey != 'name' }"
+            @click="orderBy('name')"
+            style="color: #eee"
+            data-id="0"
+            class="colored cursor-pointer"
+          >
+            <i class="fas fa-user pointer has-margin-right-3"></i>
+          </span>
+          <span
+            v-tippy
+            :content="trans.get('users_groups.order_hp')"
+            v-bind:class="{ coloredGray: sortKey != 'hp' }"
+            @click="orderBy('hp')"
+            class="colored cursor-pointer"
+          >
+            <i class="fas fa-heart pointer has-margin-right-3"></i>
+          </span>
+          <span
+            v-tippy
+            :content="trans.get('users_groups.order_xp')"
+            v-bind:class="{ coloredGray: sortKey != 'xp' }"
+            @click="orderBy('xp')"
+            class="colored cursor-pointer"
+          >
+            <i class="fas fa-fist-raised pointer has-margin-right-3"></i>
+          </span>
+          <span
+            v-tippy
+            :content="trans.get('users_groups.order_gold')"
+            v-bind:class="{ coloredGray: sortKey != 'gold' }"
+            @click="orderBy('gold')"
+            class="colored cursor-pointer"
+          >
+            <i class="fas fa-coins pointer has-margin-right-3"></i>
+          </span>
         </span>
-        <span
-          v-tippy
-          :content="trans.get('users_groups.order_name')"
-          v-bind:class="{ coloredGray: sortKey != 'name' }"
-          @click="orderBy('name')"
-          style="color: #eee"
-          data-id="0"
-          class="colored pointer"
-        >
-          <i class="fas fa-user pointer has-margin-right-3"></i>
-        </span>
-        <span
-          v-tippy
-          :content="trans.get('users_groups.order_hp')"
-          v-bind:class="{ coloredGray: sortKey != 'hp' }"
-          @click="orderBy('hp')"
-          class="colored"
-        >
-          <i class="fas fa-heart pointer has-margin-right-3"></i>
-        </span>
-        <span
-          v-tippy
-          :content="trans.get('users_groups.order_xp')"
-          v-bind:class="{ coloredGray: sortKey != 'xp' }"
-          @click="orderBy('xp')"
-          class="colored"
-        >
-          <i class="fas fa-fist-raised pointer has-margin-right-3"></i>
-        </span>
-        <span
-          v-tippy
-          :content="trans.get('users_groups.order_gold')"
-          v-bind:class="{ coloredGray: sortKey != 'gold' }"
-          @click="orderBy('gold')"
-          class="colored"
-        >
-          <i class="fas fa-coins pointer has-margin-right-3"></i>
-        </span>
-        <span @click="view = 2">
-          <i class="fad fa-th-list fs-1 colored" style="color: white;"></i>
-        </span>
-        <span v-if="groups.length">
-          <span><i class="fas fa-user ml-2 outer_glow"></i></span>
-          <b-switch
-            v-model="view"
-            true-value="1"
-            @input="toggleView"
-            false-value="0"
-            class="has-margin-right-0"
-          ></b-switch>
-          <span><i class="fas fa-users outer_glow"></i></span>
+        <span class="p-3" style="border: 1px solid #999; border-radius: 5px">
+          <span v-if="view == 0 || view == 1">
+            <span
+              class="cursor-pointer"
+              @click="assignView(2)"
+              v-tippy
+              :content="trans.get('menu.view_list')"
+              ><i class="fas fa-th-list colored" style="color: white"></i
+            ></span>
+            <span
+              class="cursor-pointer"
+              @click="assignView(0)"
+              v-tippy
+              :content="trans.get('menu.view_student')"
+              v-if="groups.length && view == 1"
+              ><i class="fas fa-user colored"></i
+            ></span>
+            <span
+              class="cursor-pointer"
+              @click="assignView(1)"
+              v-tippy
+              :content="trans.get('menu.view_group')"
+              v-if="groups.length && view == 0"
+              ><i class="fas fa-users colored has-text-light"></i
+            ></span>
+          </span>
+          <span
+            class="cursor-pointer"
+            @click="view = 0"
+            v-tippy
+            :content="trans.get('menu.view_full')"
+            v-else
+          >
+            <i class="fas fa-th-large colored" style="color: white"></i>
+          </span>
         </span>
       </div>
     </div>
@@ -570,9 +594,9 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom", "groups"],
   created() {
-    if (!this.groups.length) this.view = "0";
-    else this.view = this.$cookies.get("view");
-    if (!this.view) this.view = "2";
+    if (this.$cookies.get("view")) {
+      this.view = this.$cookies.get("view");
+    }
   },
   mounted() {
     this.mainBehavioursJson = this.orderedBehaviours.slice(0, this.numItems);
@@ -582,7 +606,7 @@ export default {
   },
   data: function () {
     return {
-      view: "2",
+      view: "0",
       search: "",
       mainBehavioursJson: [],
       otherBehavioursJson: [],
@@ -614,9 +638,9 @@ export default {
       window.location.href =
         "/classroom/" + this.classroom.code + "/student/" + id;
     },
-    toggleView() {
-      this.$cookies.set("view", this.$cookies.get("view") == 0 ? 1 : 0);
-      this.view = this.$cookies.get("view");
+    assignView(view) {
+      this.$cookies.set("view", view);
+      this.view = view;
     },
     refresh() {
       location.reload();

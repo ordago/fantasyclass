@@ -42,5 +42,9 @@ return [
     'contribute' => 'Buy us coffe or beer!',
     'pets' => 'Pets',
 
+    'view_list' => 'List view',
+    'view_group' => 'Group view',
+    'view_student' => 'Students view',
+    'view_full' => 'Full view',
 
 ];

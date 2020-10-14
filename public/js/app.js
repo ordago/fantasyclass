@@ -10805,13 +10805,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["students", "classroom", "groups"],
   created: function created() {
-    if (!this.groups.length) this.view = "0";else this.view = this.$cookies.get("view");
-    if (!this.view) this.view = "2";
+    if (this.$cookies.get("view")) {
+      this.view = this.$cookies.get("view");
+    }
   },
   mounted: function mounted() {
     var _$cookies$get;
@@ -10822,7 +10847,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      view: "2",
+      view: "0",
       search: "",
       mainBehavioursJson: [],
       otherBehavioursJson: [],
@@ -10853,9 +10878,9 @@ __webpack_require__.r(__webpack_exports__);
     redirect: function redirect(id) {
       window.location.href = "/classroom/" + this.classroom.code + "/student/" + id;
     },
-    toggleView: function toggleView() {
-      this.$cookies.set("view", this.$cookies.get("view") == 0 ? 1 : 0);
-      this.view = this.$cookies.get("view");
+    assignView: function assignView(view) {
+      this.$cookies.set("view", view);
+      this.view = view;
     },
     refresh: function refresh() {
       location.reload();
@@ -65044,143 +65069,231 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "column is-narrow has-text-right is-center-vertically"
+                    "column is-narrow has-text-right is-center-vertically is-flex"
                 },
                 [
-                  _vm._m(2),
-                  _vm._v(" "),
                   _c(
                     "span",
                     {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "colored pointer",
-                      class: { coloredGray: _vm.sortKey != "name" },
-                      staticStyle: { color: "#eee" },
-                      attrs: {
-                        content: _vm.trans.get("users_groups.order_name"),
-                        "data-id": "0"
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.orderBy("name")
-                        }
+                      staticClass: "p-3 mr-2",
+                      staticStyle: {
+                        border: "1px solid #999",
+                        "border-radius": "5px"
                       }
                     },
                     [
-                      _c("i", {
-                        staticClass: "fas fa-user pointer has-margin-right-3"
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "colored",
-                      class: { coloredGray: _vm.sortKey != "hp" },
-                      attrs: {
-                        content: _vm.trans.get("users_groups.order_hp")
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.orderBy("hp")
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fas fa-heart pointer has-margin-right-3"
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "colored",
-                      class: { coloredGray: _vm.sortKey != "xp" },
-                      attrs: {
-                        content: _vm.trans.get("users_groups.order_xp")
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.orderBy("xp")
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass:
-                          "fas fa-fist-raised pointer has-margin-right-3"
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      directives: [{ name: "tippy", rawName: "v-tippy" }],
-                      staticClass: "colored",
-                      class: { coloredGray: _vm.sortKey != "gold" },
-                      attrs: {
-                        content: _vm.trans.get("users_groups.order_gold")
-                      },
-                      on: {
-                        click: function($event) {
-                          return _vm.orderBy("gold")
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fas fa-coins pointer has-margin-right-3"
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "span",
-                    {
-                      on: {
-                        click: function($event) {
-                          _vm.view = 2
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "fad fa-th-list fs-1 colored",
-                        staticStyle: { color: "white" }
-                      })
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _vm.groups.length
-                    ? _c(
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c(
                         "span",
-                        [
-                          _vm._m(3),
-                          _vm._v(" "),
-                          _c("b-switch", {
-                            staticClass: "has-margin-right-0",
-                            attrs: { "true-value": "1", "false-value": "0" },
-                            on: { input: _vm.toggleView },
-                            model: {
-                              value: _vm.view,
-                              callback: function($$v) {
-                                _vm.view = $$v
-                              },
-                              expression: "view"
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "colored cursor-pointer",
+                          class: { coloredGray: _vm.sortKey != "name" },
+                          staticStyle: { color: "#eee" },
+                          attrs: {
+                            content: _vm.trans.get("users_groups.order_name"),
+                            "data-id": "0"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.orderBy("name")
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(4)
-                        ],
-                        1
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass:
+                              "fas fa-user pointer has-margin-right-3"
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "colored cursor-pointer",
+                          class: { coloredGray: _vm.sortKey != "hp" },
+                          attrs: {
+                            content: _vm.trans.get("users_groups.order_hp")
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.orderBy("hp")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass:
+                              "fas fa-heart pointer has-margin-right-3"
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "colored cursor-pointer",
+                          class: { coloredGray: _vm.sortKey != "xp" },
+                          attrs: {
+                            content: _vm.trans.get("users_groups.order_xp")
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.orderBy("xp")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass:
+                              "fas fa-fist-raised pointer has-margin-right-3"
+                          })
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "span",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "colored cursor-pointer",
+                          class: { coloredGray: _vm.sortKey != "gold" },
+                          attrs: {
+                            content: _vm.trans.get("users_groups.order_gold")
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.orderBy("gold")
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass:
+                              "fas fa-coins pointer has-margin-right-3"
+                          })
+                        ]
                       )
-                    : _vm._e()
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "p-3",
+                      staticStyle: {
+                        border: "1px solid #999",
+                        "border-radius": "5px"
+                      }
+                    },
+                    [
+                      _vm.view == 0 || _vm.view == 1
+                        ? _c("span", [
+                            _c(
+                              "span",
+                              {
+                                directives: [
+                                  { name: "tippy", rawName: "v-tippy" }
+                                ],
+                                staticClass: "cursor-pointer",
+                                attrs: {
+                                  content: _vm.trans.get("menu.view_list")
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.assignView(2)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-th-list colored",
+                                  staticStyle: { color: "white" }
+                                })
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.groups.length && _vm.view == 1
+                              ? _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      { name: "tippy", rawName: "v-tippy" }
+                                    ],
+                                    staticClass: "cursor-pointer",
+                                    attrs: {
+                                      content: _vm.trans.get(
+                                        "menu.view_student"
+                                      )
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.assignView(0)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-user colored"
+                                    })
+                                  ]
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.groups.length && _vm.view == 0
+                              ? _c(
+                                  "span",
+                                  {
+                                    directives: [
+                                      { name: "tippy", rawName: "v-tippy" }
+                                    ],
+                                    staticClass: "cursor-pointer",
+                                    attrs: {
+                                      content: _vm.trans.get("menu.view_group")
+                                    },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.assignView(1)
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "fas fa-users colored has-text-light"
+                                    })
+                                  ]
+                                )
+                              : _vm._e()
+                          ])
+                        : _c(
+                            "span",
+                            {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              staticClass: "cursor-pointer",
+                              attrs: {
+                                content: _vm.trans.get("menu.view_full")
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.view = 0
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-th-large colored",
+                                staticStyle: { color: "white" }
+                              })
+                            ]
+                          )
+                    ]
+                  )
                 ]
               )
             : _vm._e()
@@ -65215,7 +65328,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm._m(5)
+              _vm._m(3)
             ])
           ])
         : _vm._e(),
@@ -65336,7 +65449,7 @@ var render = function() {
                             staticStyle: { width: "200px" }
                           },
                           [
-                            _vm._m(6, true),
+                            _vm._m(4, true),
                             _vm._v(
                               "\n                " +
                                 _vm._s(student.xp) +
@@ -65354,7 +65467,7 @@ var render = function() {
                             staticStyle: { width: "200px" }
                           },
                           [
-                            _vm._m(7, true),
+                            _vm._m(5, true),
                             _vm._v(
                               "\n                " +
                                 _vm._s(student.gold) +
@@ -66090,18 +66203,6 @@ var staticRenderFns = [
         staticClass: "fal fa-sort-numeric-down-alt has-margin-right-3"
       })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [_c("i", { staticClass: "fas fa-user ml-2 outer_glow" })])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", [_c("i", { staticClass: "fas fa-users outer_glow" })])
   },
   function() {
     var _vm = this
@@ -85351,7 +85452,11 @@ __webpack_require__.r(__webpack_exports__);
     "massive": "Accions massives",
     "config": "Configura",
     "contribute": "Convida a caf\xE8 o cervesa!",
-    "pets": "Mascotes"
+    "pets": "Mascotes",
+    "view_list": "Vista de llista",
+    "view_group": "Vista de grups",
+    "view_student": "Vista d'estudiants",
+    "view_full": "Vista completa"
   },
   "ca.pagination": {
     "previous": "&laquo; Anterior",
@@ -86010,7 +86115,11 @@ __webpack_require__.r(__webpack_exports__);
     "massive": "Massive actions",
     "config": "Configure",
     "contribute": "Buy us coffe or beer!",
-    "pets": "Pets"
+    "pets": "Pets",
+    "view_list": "List view",
+    "view_group": "Group view",
+    "view_student": "Students view",
+    "view_full": "Full view"
   },
   "en.pagination": {
     "previous": "&laquo; Previous",
@@ -86691,7 +86800,11 @@ __webpack_require__.r(__webpack_exports__);
     "massive": "Acciones masivas",
     "config": "Configura",
     "contribute": "\xA1Invita a caf\xE9 o cerveza!",
-    "pets": "Mascotas"
+    "pets": "Mascotas",
+    "view_list": "Vista de lista",
+    "view_group": "Vista de grupos",
+    "view_student": "Vista de estudiantes",
+    "view_full": "Vista completa"
   },
   "es.pagination": {
     "previous": "&laquo; Anterior",

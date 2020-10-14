@@ -42,4 +42,9 @@ return [
     'contribute' => 'Convida a cafè o cervesa!',
     'pets' => 'Mascotes',
 
+    'view_list' => 'Vista de llista',
+    'view_group' => 'Vista de grups',
+    'view_student' => 'Vista d\'estudiants',
+    'view_full' => 'Vista completa',
+
 ];
