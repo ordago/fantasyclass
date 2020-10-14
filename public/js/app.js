@@ -64815,7 +64815,8 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "column has-padding-x-0 is-12-mobile is-flex",
+              staticClass:
+                "column has-padding-x-0 is-12-mobile is-flex is-center-vertically",
               staticStyle: { "flex-flow": "wrap" }
             },
             [
@@ -65198,7 +65199,7 @@ var render = function() {
                                 directives: [
                                   { name: "tippy", rawName: "v-tippy" }
                                 ],
-                                staticClass: "cursor-pointer",
+                                staticClass: "cursor-pointer colored",
                                 attrs: {
                                   content: _vm.trans.get("menu.view_list")
                                 },
@@ -65210,7 +65211,7 @@ var render = function() {
                               },
                               [
                                 _c("i", {
-                                  staticClass: "fas fa-th-list colored",
+                                  staticClass: "fas fa-th-list",
                                   staticStyle: { color: "white" }
                                 })
                               ]
@@ -65223,7 +65224,7 @@ var render = function() {
                                     directives: [
                                       { name: "tippy", rawName: "v-tippy" }
                                     ],
-                                    staticClass: "cursor-pointer",
+                                    staticClass: "cursor-pointer colored",
                                     attrs: {
                                       content: _vm.trans.get(
                                         "menu.view_student"
@@ -65237,7 +65238,7 @@ var render = function() {
                                   },
                                   [
                                     _c("i", {
-                                      staticClass: "fas fa-user colored"
+                                      staticClass: "fas fa-user has-text-light"
                                     })
                                   ]
                                 )
@@ -65250,7 +65251,7 @@ var render = function() {
                                     directives: [
                                       { name: "tippy", rawName: "v-tippy" }
                                     ],
-                                    staticClass: "cursor-pointer",
+                                    staticClass: "cursor-pointer colored",
                                     attrs: {
                                       content: _vm.trans.get("menu.view_group")
                                     },
@@ -65262,8 +65263,7 @@ var render = function() {
                                   },
                                   [
                                     _c("i", {
-                                      staticClass:
-                                        "fas fa-users colored has-text-light"
+                                      staticClass: "fas fa-users has-text-light"
                                     })
                                   ]
                                 )
@@ -65275,7 +65275,7 @@ var render = function() {
                               directives: [
                                 { name: "tippy", rawName: "v-tippy" }
                               ],
-                              staticClass: "cursor-pointer",
+                              staticClass: "cursor-pointer colored",
                               attrs: {
                                 content: _vm.trans.get("menu.view_full")
                               },
@@ -65287,7 +65287,7 @@ var render = function() {
                             },
                             [
                               _c("i", {
-                                staticClass: "fas fa-th-large colored",
+                                staticClass: "fas fa-th-large",
                                 staticStyle: { color: "white" }
                               })
                             ]

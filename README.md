@@ -144,7 +144,10 @@ Popper tippy:
 
  Google captcha:
  https://laravel-recaptcha-docs.biscolab.com/docs/intro
- 
+
+ Google API
+ https://github.com/pulkitjalan/google-apiclient
+
 ## 3rd party Licenses
 
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

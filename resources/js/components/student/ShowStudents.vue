@@ -7,7 +7,7 @@
         <i class="fal fa-tools"></i>
       </div>
       <div
-        class="column has-padding-x-0 is-12-mobile is-flex"
+        class="column has-padding-x-0 is-12-mobile is-flex is-center-vertically"
         style="flex-flow: wrap"
       >
         <a
@@ -171,37 +171,37 @@
         <span class="p-3" style="border: 1px solid #999; border-radius: 5px">
           <span v-if="view == 0 || view == 1">
             <span
-              class="cursor-pointer"
+              class="cursor-pointer colored"
               @click="assignView(2)"
               v-tippy
               :content="trans.get('menu.view_list')"
-              ><i class="fas fa-th-list colored" style="color: white"></i
+              ><i class="fas fa-th-list" style="color: white"></i
             ></span>
             <span
-              class="cursor-pointer"
+              class="cursor-pointer colored"
               @click="assignView(0)"
               v-tippy
               :content="trans.get('menu.view_student')"
               v-if="groups.length && view == 1"
-              ><i class="fas fa-user colored"></i
+              ><i class="fas fa-user has-text-light"></i
             ></span>
             <span
-              class="cursor-pointer"
+              class="cursor-pointer colored"
               @click="assignView(1)"
               v-tippy
               :content="trans.get('menu.view_group')"
               v-if="groups.length && view == 0"
-              ><i class="fas fa-users colored has-text-light"></i
+              ><i class="fas fa-users has-text-light"></i
             ></span>
           </span>
           <span
-            class="cursor-pointer"
+            class="cursor-pointer colored"
             @click="view = 0"
             v-tippy
             :content="trans.get('menu.view_full')"
             v-else
           >
-            <i class="fas fa-th-large colored" style="color: white"></i>
+            <i class="fas fa-th-large" style="color: white"></i>
           </span>
         </span>
       </div>

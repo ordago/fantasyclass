@@ -4,6 +4,7 @@
 ~ Import from Google Classroom.
 ~ Reset wizard.
 - Cookie consent improved.
+- List view.
 
 ### Changed
 - Now XP and Gold modifiers are hidden by default.
