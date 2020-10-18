@@ -9405,6 +9405,7 @@ var Xlsx = function Xlsx() {
         return false;
       }
 
+      if (!email) email = "";
       var search = this.students.find(function (student) {
         return student.name === name;
       });
@@ -57233,7 +57234,11 @@ var render = function() {
                         },
                         [
                           _c("b-input", {
-                            attrs: { type: "number", required: "" },
+                            attrs: {
+                              type: "number",
+                              step: "0.01",
+                              required: ""
+                            },
                             model: {
                               value: _vm.tag.percent,
                               callback: function($$v) {
@@ -57880,7 +57885,7 @@ var render = function() {
                                               ),
                                               _vm._v(" "),
                                               _c("b-numberinput", {
-                                                attrs: { step: "0.1" },
+                                                attrs: { step: "0.01" },
                                                 model: {
                                                   value:
                                                     _vm.line.weights[tag.id],
