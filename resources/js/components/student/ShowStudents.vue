@@ -125,7 +125,7 @@
         class="column is-narrow has-text-right is-center-vertically is-flex"
         v-if="students.length > 0"
       >
-        <span class="p-3 mr-2" style="border: 1px solid #999; border-radius: 5px">
+        <span class="p-3 mr-2  has-background-white" style="border: 1px solid #999; border-radius: 5px">
           <span>
             <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
           </span>
@@ -168,7 +168,7 @@
             <i class="fas fa-coins pointer has-margin-right-3"></i>
           </span>
         </span>
-        <span class="p-3" style="border: 1px solid #999; border-radius: 5px">
+        <span class="p-3 has-background-white" style="border: 1px solid #999; border-radius: 5px">
           <span v-if="view == 0 || view == 1">
             <span
               class="cursor-pointer colored"
@@ -196,7 +196,7 @@
           </span>
           <span
             class="cursor-pointer colored"
-            @click="view = 0"
+            @click="assignView(0)"
             v-tippy
             :content="trans.get('menu.view_full')"
             v-else

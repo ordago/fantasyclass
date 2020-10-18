@@ -30,6 +30,8 @@ return [
     'epic' => "epic",
     'legendary' => "Legendary",
 
+    'state' => "Classroom state",
+    'config' => "Config",
     'enrollment_code' => "Enrollment code",
     'active' => "Active",
     'finished' => "Finished",

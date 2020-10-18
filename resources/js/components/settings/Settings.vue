@@ -5,47 +5,47 @@
         <i class="fal fa-chalkboard"></i>
         {{ trans.get("settings.classroom") }}
       </h1>
-      <div class="has-padding-left-4 columns">
-        <div class="column is-narrow">
+
+      <b-field :label="trans.get('settings.state')">
+        <b-field class="m-3 p-2">
+          <b-radio-button
+            v-model="state"
+            @input="updateClassState('state', 0)"
+            native-value="0"
+            type="is-success"
+          >
+            <b-icon icon="check" icon-pack="fa"></b-icon>
+            <span>{{ trans.get("settings.active") }}</span>
+          </b-radio-button>
+          <b-radio-button
+            v-model="state"
+            @input="updateClassState('state', 1)"
+            native-value="1"
+            type="is-warning"
+          >
+            <b-icon icon="hourglass-end"></b-icon>
+            <span>{{ trans.get("settings.finished") }}</span>
+          </b-radio-button>
+          <b-radio-button
+            v-model="state"
+            @input="updateClassState('state', 2)"
+            native-value="2"
+            type="is-danger"
+          >
+            <b-icon icon="eye-slash"></b-icon>
+            <span>{{ trans.get("settings.disabled") }}</span>
+          </b-radio-button>
+        </b-field>
+      </b-field>
+      <b-field :label="trans.get('settings.config')">
+        <div class="m-3 p-2">
           <a
             class="button has-margin-right-4"
             :href="'/classroom/' + classroom.code + '/edit'"
             ><i class="far fa-cog has-margin-right-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
-        </div>
-        <div class="column is-narrow">
-          <b-field>
-            <b-radio-button
-              v-model="state"
-              @input="updateClassState('state', 0)"
-              native-value="0"
-              type="is-success"
-            >
-              <b-icon icon="check" icon-pack="fa"></b-icon>
-              <span>{{ trans.get("settings.active") }}</span>
-            </b-radio-button>
-            <b-radio-button
-              v-model="state"
-              @input="updateClassState('state', 1)"
-              native-value="1"
-              type="is-warning"
-            >
-              <b-icon icon="hourglass-end"></b-icon>
-              <span>{{ trans.get("settings.finished") }}</span>
-            </b-radio-button>
-            <b-radio-button
-              v-model="state"
-              @input="updateClassState('state', 2)"
-              native-value="2"
-              type="is-danger"
-            >
-              <b-icon icon="eye-slash"></b-icon>
-              <span>{{ trans.get("settings.disabled") }}</span>
-            </b-radio-button>
-          </b-field>
-        </div>
-        <div class="column is-narrow">
+          <button class="button is-primary">Reset</button>
           <button
             class="button has-margin-left-4 is-danger"
             @click="confirmDelete"
@@ -59,13 +59,12 @@
             </span>
           </button>
         </div>
-      </div>
-
+      </b-field>
       <b-field
         :label="trans.get('settings.enrollment_code')"
         style="width: 400px"
       >
-        <div class="field has-addons">
+        <div class="field has-addons p-2 m-3">
           <p class="control">
             <b-input
               type="password"

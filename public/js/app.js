@@ -8483,7 +8483,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -61542,8 +61541,105 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "has-padding-left-4 columns" }, [
-          _c("div", { staticClass: "column is-narrow" }, [
+        _c(
+          "b-field",
+          { attrs: { label: _vm.trans.get("settings.state") } },
+          [
+            _c(
+              "b-field",
+              { staticClass: "m-3 p-2" },
+              [
+                _c(
+                  "b-radio-button",
+                  {
+                    attrs: { "native-value": "0", type: "is-success" },
+                    on: {
+                      input: function($event) {
+                        return _vm.updateClassState("state", 0)
+                      }
+                    },
+                    model: {
+                      value: _vm.state,
+                      callback: function($$v) {
+                        _vm.state = $$v
+                      },
+                      expression: "state"
+                    }
+                  },
+                  [
+                    _c("b-icon", {
+                      attrs: { icon: "check", "icon-pack": "fa" }
+                    }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.active")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "b-radio-button",
+                  {
+                    attrs: { "native-value": "1", type: "is-warning" },
+                    on: {
+                      input: function($event) {
+                        return _vm.updateClassState("state", 1)
+                      }
+                    },
+                    model: {
+                      value: _vm.state,
+                      callback: function($$v) {
+                        _vm.state = $$v
+                      },
+                      expression: "state"
+                    }
+                  },
+                  [
+                    _c("b-icon", { attrs: { icon: "hourglass-end" } }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.finished")))
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "b-radio-button",
+                  {
+                    attrs: { "native-value": "2", type: "is-danger" },
+                    on: {
+                      input: function($event) {
+                        return _vm.updateClassState("state", 2)
+                      }
+                    },
+                    model: {
+                      value: _vm.state,
+                      callback: function($$v) {
+                        _vm.state = $$v
+                      },
+                      expression: "state"
+                    }
+                  },
+                  [
+                    _c("b-icon", { attrs: { icon: "eye-slash" } }),
+                    _vm._v(" "),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.trans.get("settings.disabled")))
+                    ])
+                  ],
+                  1
+                )
+              ],
+              1
+            )
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c("b-field", { attrs: { label: _vm.trans.get("settings.config") } }, [
+          _c("div", { staticClass: "m-3 p-2" }, [
             _c(
               "a",
               {
@@ -61558,106 +61654,12 @@ var render = function() {
                     " (wizard)"
                 )
               ]
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "column is-narrow" },
-            [
-              _c(
-                "b-field",
-                [
-                  _c(
-                    "b-radio-button",
-                    {
-                      attrs: { "native-value": "0", type: "is-success" },
-                      on: {
-                        input: function($event) {
-                          return _vm.updateClassState("state", 0)
-                        }
-                      },
-                      model: {
-                        value: _vm.state,
-                        callback: function($$v) {
-                          _vm.state = $$v
-                        },
-                        expression: "state"
-                      }
-                    },
-                    [
-                      _c("b-icon", {
-                        attrs: { icon: "check", "icon-pack": "fa" }
-                      }),
-                      _vm._v(" "),
-                      _c("span", [
-                        _vm._v(_vm._s(_vm.trans.get("settings.active")))
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-radio-button",
-                    {
-                      attrs: { "native-value": "1", type: "is-warning" },
-                      on: {
-                        input: function($event) {
-                          return _vm.updateClassState("state", 1)
-                        }
-                      },
-                      model: {
-                        value: _vm.state,
-                        callback: function($$v) {
-                          _vm.state = $$v
-                        },
-                        expression: "state"
-                      }
-                    },
-                    [
-                      _c("b-icon", { attrs: { icon: "hourglass-end" } }),
-                      _vm._v(" "),
-                      _c("span", [
-                        _vm._v(_vm._s(_vm.trans.get("settings.finished")))
-                      ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "b-radio-button",
-                    {
-                      attrs: { "native-value": "2", type: "is-danger" },
-                      on: {
-                        input: function($event) {
-                          return _vm.updateClassState("state", 2)
-                        }
-                      },
-                      model: {
-                        value: _vm.state,
-                        callback: function($$v) {
-                          _vm.state = $$v
-                        },
-                        expression: "state"
-                      }
-                    },
-                    [
-                      _c("b-icon", { attrs: { icon: "eye-slash" } }),
-                      _vm._v(" "),
-                      _c("span", [
-                        _vm._v(_vm._s(_vm.trans.get("settings.disabled")))
-                      ])
-                    ],
-                    1
-                  )
-                ],
-                1
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "column is-narrow" }, [
+            ),
+            _vm._v(" "),
+            _c("button", { staticClass: "button is-primary" }, [
+              _vm._v("Reset")
+            ]),
+            _vm._v(" "),
             _vm.isAdmin
               ? _c(
                   "button",
@@ -61691,7 +61693,7 @@ var render = function() {
             attrs: { label: _vm.trans.get("settings.enrollment_code") }
           },
           [
-            _c("div", { staticClass: "field has-addons" }, [
+            _c("div", { staticClass: "field has-addons p-2 m-3" }, [
               _c(
                 "p",
                 { staticClass: "control" },
@@ -65076,7 +65078,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "p-3 mr-2",
+                      staticClass: "p-3 mr-2  has-background-white",
                       staticStyle: {
                         border: "1px solid #999",
                         "border-radius": "5px"
@@ -65184,7 +65186,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "p-3",
+                      staticClass: "p-3 has-background-white",
                       staticStyle: {
                         border: "1px solid #999",
                         "border-radius": "5px"
@@ -65281,7 +65283,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  _vm.view = 0
+                                  return _vm.assignView(0)
                                 }
                               }
                             },
@@ -85509,7 +85511,9 @@ __webpack_require__.r(__webpack_exports__);
     "common": "Comuna",
     "epic": "\xC8pica",
     "legendary": "Legend\xE0ria",
-    "enrollment_code": "C\xF3digo de matriculaci\xF3n",
+    "state": "Estat de la classe",
+    "config": "Configuraci\xF3",
+    "enrollment_code": "Codi de matriculaci\xF3",
     "active": "Activa",
     "finished": "Finalitzada",
     "disabled": "Deshabilitada"
@@ -86172,6 +86176,8 @@ __webpack_require__.r(__webpack_exports__);
     "common": "Common",
     "epic": "epic",
     "legendary": "Legendary",
+    "state": "Classroom state",
+    "config": "Config",
     "enrollment_code": "Enrollment code",
     "active": "Active",
     "finished": "Finished",
@@ -86857,7 +86863,9 @@ __webpack_require__.r(__webpack_exports__);
     "common": "Com\xFAn",
     "epic": "\xC9pica",
     "legendary": "Legendaria",
-    "enrollment_code": "Codi de matriculaci\xF3",
+    "state": "Estado de la clase",
+    "config": "Configuraci\xF3n",
+    "enrollment_code": "C\xF3digo de matriculaci\xF3n",
     "active": "Activa",
     "finished": "Finalizada",
     "disabled": "Deshabilitada"
