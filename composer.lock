@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "93a8d9ece9085ce4ab4cfcae9ed96b6e",
+    "content-hash": "5320e5cd0380c076a7f432dd8b275dec",
     "packages": [
         {
             "name": "akaunting/language",
