@@ -148,7 +148,7 @@
               <b-input v-model="tag.description" required></b-input>
             </b-field>
             <b-field :label="trans.get('evaluation.percent')">
-              <b-input v-model="tag.percent" type="number" required></b-input>
+              <b-input v-model="tag.percent" type="number" step="0.01" required></b-input>
             </b-field>
           </section>
           <footer class="modal-card-foot">
@@ -352,7 +352,7 @@
                     <b-field grouped class="is-flex has-all-centered">
                       <p class="control">{{ tag.short }}</p>
                       <b-numberinput
-                        step="0.1"
+                        step="0.01"
                         v-model="line.weights[tag.id]"
                       />
                     </b-field>
