@@ -233,6 +233,6 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/callback/{provider}', 'SocialController@callback');
     
     // Google
-    Route::get('/drive', 'ServicesController@drive');
+    Route::get('/gclassroom', 'ServicesController@gclassroom');
     
 });
