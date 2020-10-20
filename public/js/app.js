@@ -52342,7 +52342,7 @@ var render = function() {
         key: card.id,
         attrs: {
           code: _vm.code,
-          properties: false,
+          properties: true,
           admin: true,
           assign: _vm.student,
           card: card
