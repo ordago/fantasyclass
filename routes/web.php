@@ -231,9 +231,9 @@ Route::group(['middleware' => 'language'], function () {
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
-    Route::get('/gclassroom', 'SocialController@gclassroom');
+    Route::get('/google/classroom/link', 'SocialController@googleClassroom');
     
-    // Google
-    Route::get('/gclassroom/callback', 'ServicesController@linkclassroom');
+    // Google Classroom
+    Route::get('/google/classroom/list', 'ServicesController@classroomList');
     
 });

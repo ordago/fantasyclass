@@ -14,7 +14,7 @@ class SocialController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function gclassroom()
+    public function googleClassroom()
     {
         $parameters = ['access_type' => 'offline'];
 	    return Socialite::driver('google')->scopes([
@@ -29,11 +29,10 @@ class SocialController extends Controller
         
         if($auth_user->refreshToken) {
             // dd($auth_user);
-            auth()->user()->update(['refresh_token' => $auth_user->refreshToken ]);
+            auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn ]);
 
         } else {
             $user = User::where('email', $auth_user->email)->first();
-    
             
             if($user) {
                 if(!$user->email_verified_at)

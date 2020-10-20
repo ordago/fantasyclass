@@ -15,6 +15,8 @@ class AddRefreshTokenField extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('refresh_token')->nullable()->after('is_student');
+            $table->string('token')->after('refresh_token')->nullable();
+            $table->integer('expires_in')->after('token')->nullable();
         });
     }
 
