@@ -8,7 +8,7 @@
   <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox">
     <div class="box w-100 h-100 is-flex has-all-centered">
       <h3 class="w-100 has-text-centered">
-        @if($user->is_student == 0)
+        @if($user->is_student == 0 && $user->email)
         <a href="/classroom/create" class="is-rounded text-center pointer">
           <i class="fal fa-chalkboard-teacher mr-2"></i> {{ __('classroom.add') }}
         </a>

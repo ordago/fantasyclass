@@ -61384,7 +61384,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm.user.is_student == 1
+          _vm.user.is_student == 1 && _vm.user.email
             ? _c(
                 "button",
                 {

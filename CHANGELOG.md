@@ -4,10 +4,11 @@
 ~ Import from Google Classroom.
 ~ Reset wizard.
 - Cookie consent improved.
-- List view.
+- List view (informative only).
 
 ### Changed
 - Now XP and Gold modifiers are hidden by default.
+- Users without e-mail can't create classrooms.
 
 ## v1.09 Beta (13/10/2020)
 ### Added

@@ -25,29 +25,29 @@ class SocialController extends Controller
 
     public function callback($provider)
     {
-        $user = Socialite::driver($provider)->user();
-
-        if($user->refreshToken) {
-            dd('Classroom');
-        } else {
-            dd('login');
-        }
-
-        $user = User::where('email', $user->email)->first();
-        // $user = User::updateOrCreate(['email' => $auth_user->email], ['refresh_token' => $auth_user->token, 'name' => $auth_user->name]);
-
+        $auth_user = Socialite::driver($provider)->user();
         
-        if($user) {
-            if(!$user->email_verified_at)
-                $user->update(['email_verified_at' => now()]);
-            Auth::login($user);
-            return redirect()->to('/classroom/');
+        if($auth_user->refreshToken) {
+            // dd($auth_user);
+            auth()->user()->update(['refresh_token' => $auth_user->refreshToken ]);
+
         } else {
-            $errors = new MessageBag();
-            // add your error messages:
-            $errors->add('username', __('auth.provider_failed'));
-            return redirect()->to('/login')->withErrors($errors);
+            $user = User::where('email', $auth_user->email)->first();
+    
+            
+            if($user) {
+                if(!$user->email_verified_at)
+                    $user->update(['email_verified_at' => now()]);
+                Auth::login($user);
+                return redirect()->to('/classroom/');
+            } else {
+                $errors = new MessageBag();
+                // add your error messages:
+                $errors->add('username', __('auth.provider_failed'));
+                return redirect()->to('/login')->withErrors($errors);
+            }
         }
+
     }
 
 }
