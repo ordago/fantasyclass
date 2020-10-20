@@ -9417,6 +9417,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var Xlsx = function Xlsx() {
@@ -9427,8 +9448,10 @@ var Xlsx = function Xlsx() {
   components: {
     Xlsx: Xlsx
   },
-  props: ['code'],
-  mounted: function mounted() {},
+  props: ["code", "modalVisible"],
+  mounted: function mounted() {
+    if (this.modalVisible == true) this.loadGoogleCourses();
+  },
   data: function data() {
     return {
       students: [],
@@ -9438,9 +9461,10 @@ var Xlsx = function Xlsx() {
       stdGoogleUid: "",
       stdUsername: "",
       nextId: 1,
-      isModalActive: false,
       gcourses: [],
-      gstudents: []
+      gstudents: [],
+      isModalActive: false,
+      isLoading: false
     };
   },
   methods: {
@@ -9530,9 +9554,13 @@ var Xlsx = function Xlsx() {
       var _this6 = this;
 
       if (this.students.length) {
+        this.isLoading = true;
+        this.$forceUpdate();
         axios.post("/classroom/students", {
           students: this.students
         }).then(function (response) {
+          _this6.isLoading = false;
+
           if (response.data) {
             response.data.forEach(function (element) {
               _this6.$toasted.show(element, {
@@ -9549,9 +9577,10 @@ var Xlsx = function Xlsx() {
             });
             _this6.students = [];
           } else {
-            window.location = document.referrer;
+            window.location = "/classroom/" + _this6.code;
           }
         })["catch"](function (error) {
+          _this6.isLoading = false;
           _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this6, error, 2);
           _this6.students = [];
         });
@@ -52638,7 +52667,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    this.admin && this.properties == true && !this.assign
+    this.admin && this.properties && !this.assign
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
           _c(
             "a",
@@ -52711,7 +52740,7 @@ var render = function() {
         key: card.id,
         attrs: {
           code: _vm.code,
-          properties: false,
+          properties: true,
           admin: true,
           assign: _vm.student,
           card: card
@@ -63404,7 +63433,7 @@ var render = function() {
             [
               _c("i", { staticClass: "fad fa-chalkboard-teacher mr-2" }),
               _vm._v(
-                "  " +
+                "\n        " +
                   _vm._s(_vm.trans.get("students.import_gclassroom")) +
                   "\n      "
               )
@@ -63568,7 +63597,15 @@ var render = function() {
       _vm.students.length
         ? _c(
             "button",
-            { staticClass: "button is-link", on: { click: _vm.sendStudents } },
+            {
+              staticClass: "button is-link",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.sendStudents($event)
+                }
+              }
+            },
             [
               _vm._v(
                 "\n    " +
@@ -63622,11 +63659,8 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._v(
-                              "\n            " +
-                                _vm._s(course.name) +
-                                "\n          "
-                            )
+                            _c("i", { staticClass: "fad fa-chalkboard mr-2" }),
+                            _vm._v(" " + _vm._s(course.name) + "\n          ")
                           ]
                         )
                       }),
@@ -63670,7 +63704,13 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("\n          Close\n        ")]
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("general.close")) +
+                        "\n        "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 _vm.gstudents && _vm.gstudents.length
@@ -63697,14 +63737,33 @@ var render = function() {
                         attrs: { type: "button" },
                         on: { click: _vm.addFromClassroom }
                       },
-                      [_vm._v("\n          Importar\n        ")]
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(_vm.trans.get("general.import")) +
+                            "\n        "
+                        )
+                      ]
                     )
                   : _vm._e()
               ])
             ]
           )
         ]
-      )
+      ),
+      _vm._v(" "),
+      _c("b-loading", {
+        attrs: {
+          "is-full-page": true,
+          active: _vm.isLoading,
+          "can-cancel": false
+        },
+        on: {
+          "update:active": function($event) {
+            _vm.isLoading = $event
+          }
+        }
+      })
     ],
     2
   )

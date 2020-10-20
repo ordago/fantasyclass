@@ -6,7 +6,8 @@
       </div>
       <div class="column is-narrow p-0 m-1">
         <button class="button is-primary" @click="loadGoogleCourses">
-          <i class="fad fa-chalkboard-teacher mr-2"></i>  {{ trans.get('students.import_gclassroom') }}
+          <i class="fad fa-chalkboard-teacher mr-2"></i>
+          {{ trans.get("students.import_gclassroom") }}
         </button>
       </div>
     </div>
@@ -54,7 +55,9 @@
         class="has-margin-y-2 has-padding-4 has-background-dark has-text-light rounded text-light relative"
       >
         <span class="has-padding-right-3">{{ index + 1 }}</span>
-        <span class="tag is-danger" v-if="student.google_uid"><i class="fab fa-google"></i></span>
+        <span class="tag is-danger" v-if="student.google_uid"
+          ><i class="fab fa-google"></i
+        ></span>
         {{ student.name }}
         <i
           class="fal fa-at pl-2"
@@ -76,7 +79,11 @@
         </button>
       </div>
     </div>
-    <button v-if="students.length" @click="sendStudents" class="button is-link">
+    <button
+      v-if="students.length"
+      @click.prevent="sendStudents"
+      class="button is-link"
+    >
       {{ trans.get("users_groups.create_students") }}
     </button>
 
@@ -98,7 +105,7 @@
               :key="course.id"
               @click="loadGoogleStudents(course.id)"
             >
-              {{ course.name }}
+              <i class="fad fa-chalkboard mr-2"></i> {{ course.name }}
             </div>
           </div>
           <div v-if="gstudents && gstudents.length">
@@ -107,24 +114,38 @@
               v-for="student in gstudents"
               :key="student.profile.id"
             >
-              {{ student.profile.name.fullName }} ({{ student.profile.emailAddress }})
-              <hr>
+              {{ student.profile.name.fullName }} ({{
+                student.profile.emailAddress
+              }})
+              <hr />
             </div>
           </div>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="isModalActive = false">
-            Close
+            {{ trans.get("general.close") }}
           </button>
-          <button class="button is-link" type="button" v-if="gstudents && gstudents.length" @click="gstudents=[]">
+          <button
+            class="button is-link"
+            type="button"
+            v-if="gstudents && gstudents.length"
+            @click="gstudents = []"
+          >
             <i class="fas fa-arrow-left"></i>
           </button>
-          <button class="button is-success" type="button" v-if="gstudents && gstudents.length" @click="addFromClassroom">
-            Importar
+          <button
+            class="button is-success"
+            type="button"
+            v-if="gstudents && gstudents.length"
+            @click="addFromClassroom"
+          >
+            {{ trans.get("general.import") }}
           </button>
         </footer>
       </div>
     </b-modal>
+    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
+
   </div>
 </template>
 
@@ -136,8 +157,10 @@ export default {
   components: {
     Xlsx,
   },
-  props: ['code'],
-  mounted() {},
+  props: ["code", "modalVisible"],
+  mounted() {
+    if (this.modalVisible == true) this.loadGoogleCourses();
+  },
   data: function () {
     return {
       students: [],
@@ -147,32 +170,42 @@ export default {
       stdGoogleUid: "",
       stdUsername: "",
       nextId: 1,
-      isModalActive: false,
       gcourses: [],
       gstudents: [],
+      isModalActive: false,
+      isLoading: false,
     };
   },
   methods: {
     loadGoogleStudents(id) {
-      axios.get("/google/classroom/list/" + id + "/students").then((response) => {
-        this.gstudents = response.data;
-      });
+      axios
+        .get("/google/classroom/list/" + id + "/students")
+        .then((response) => {
+          this.gstudents = response.data;
+        });
     },
     loadGoogleCourses() {
-      axios.get("/google/classroom/list/courses").then((response) => {
-        this.gcourses = response.data;
-        this.isModalActive = true;
-      })      
-      .catch(error => {
-        location.href = "/google/classroom/link/" + this.code ;
-      });
+      axios
+        .get("/google/classroom/list/courses")
+        .then((response) => {
+          this.gcourses = response.data;
+          this.isModalActive = true;
+        })
+        .catch((error) => {
+          location.href = "/google/classroom/link/" + this.code;
+        });
     },
     addFromClassroom() {
       this.gstudents.forEach((student) => {
-        this.addStudent(student.profile.name.fullName, student.profile.emailAddress, student.courseId, student.userId);
+        this.addStudent(
+          student.profile.name.fullName,
+          student.profile.emailAddress,
+          student.courseId,
+          student.userId
+        );
         this.stdName = "";
         this.stdEmail = "";
-      }); 
+      });
       this.gstudents = [];
       this.isModalActive = false;
     },
@@ -210,7 +243,6 @@ export default {
               username: this.stdUsername,
               google_course: gcourse,
               google_uid: guid,
-
             });
             name = email = this.stdUsername = "";
           });
@@ -220,11 +252,14 @@ export default {
     },
     sendStudents() {
       if (this.students.length) {
+        this.isLoading = true;
+        this.$forceUpdate();
         axios
           .post("/classroom/students", {
             students: this.students,
           })
           .then((response) => {
+            this.isLoading = false;
             if (response.data) {
               response.data.forEach((element) => {
                 this.$toasted.show(element, {
@@ -241,10 +276,11 @@ export default {
               });
               this.students = [];
             } else {
-              window.location = document.referrer;
+              window.location = "/classroom/" + this.code;
             }
           })
           .catch((error) => {
+            this.isLoading = false;
             Utils.toast(this, error, 2);
             this.students = [];
           });

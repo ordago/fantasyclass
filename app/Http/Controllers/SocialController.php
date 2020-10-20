@@ -32,12 +32,11 @@ class SocialController extends Controller
 
     public function callback($provider)
     {
-        dump($provider);
         $auth_user = Socialite::driver($provider)->user();
         
         if($auth_user->refreshToken) {
             auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn ]);
-            return redirect()->to('/classroom/'.session()->get('code').'/students/add');
+            return redirect()->to('/classroom/'.session()->get('code').'/students/add/true');
 
         } else {
             $user = User::where('email', $auth_user->email)->first();
@@ -49,7 +48,6 @@ class SocialController extends Controller
                 return redirect()->to('/classroom/');
             } else {
                 $errors = new MessageBag();
-                // add your error messages:
                 $errors->add('username', __('auth.provider_failed'));
                 return redirect()->to('/login')->withErrors($errors);
             }

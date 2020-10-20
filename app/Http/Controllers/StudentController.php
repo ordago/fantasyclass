@@ -21,12 +21,16 @@ class StudentController extends Controller
         $this->middleware('verified');
     }
 
-    public function create($code)
+    public function create($code, $flag = 0)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         session()->put('classroom', $class->id);
-        return view('students.create', compact('class'));
+        $modalVisible = 0;
+        if($flag)
+            $modalVisible = 1;
+
+        return view('students.create', compact('class', 'modalVisible'));
     }
 
     public function store(Request $request)

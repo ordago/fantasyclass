@@ -66,6 +66,7 @@ Route::group(['middleware' => 'language'], function () {
         
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
+        Route::get('/{code}/students/add/{flag}', 'StudentController@create');
         Route::post('/students/', 'StudentController@store');
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update');
