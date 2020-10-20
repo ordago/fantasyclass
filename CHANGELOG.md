@@ -1,12 +1,12 @@
 # Changelog
 ## v1.10 Beta (XX/10/2020)
 ### Added
-~ Import from Google Classroom.
-~ Reset wizard.
+- Import from Google Classroom.
 - Cookie consent improved.
 - List view (informative only).
 
 ### Changed
+- Prevent scrolling when loading challenges and load in reverse order.
 - Now XP and Gold modifiers are hidden by default.
 - Users without e-mail can't create classrooms.
 

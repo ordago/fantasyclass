@@ -238,7 +238,7 @@ export default {
       });
     },
     orderedChallenges: function () {
-      return _.orderBy(this.challenges, "datetime", "asc");
+      return _.orderBy(this.challenges, "datetime", "desc");
     },
   },
   updated: function () {

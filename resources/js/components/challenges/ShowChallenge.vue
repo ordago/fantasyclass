@@ -161,7 +161,8 @@
               </div>
             </div>
           </div>
-          <InputEmoji v-if="edit || full"></InputEmoji>
+          <button class="button" v-if="!allowComment" @click="allowComment = true"><i class="fad fa-comments mr-2"></i> {{ trans.get('challenges.comment') }}</button>
+          <InputEmoji v-if="(edit || full) && allowComment"></InputEmoji>
           <div class="has-margin-top-3 comments">
             <div
               class="comment has-margin-0"
@@ -526,6 +527,7 @@ export default {
   data: function () {
     return {
       challengeReactive: null,
+      allowComment: false,
       isAttachmentModalActive: false,
       isQuestionModalActive: false,
       attachment: {

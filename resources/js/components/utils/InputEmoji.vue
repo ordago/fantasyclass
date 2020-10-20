@@ -3,6 +3,7 @@
         <div contenteditable="true"
              class="rich-editor-container rounded has-padding-4"
              ref="textarea"
+             autofocus="false"
              @keypress.enter.prevent
              @input="updateBody($event.target.innerHTML)"
              @click="handleEditorClick"

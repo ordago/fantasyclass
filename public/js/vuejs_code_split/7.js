@@ -31,6 +31,7 @@ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___names
 //
 //
 //
+//
 
 Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 
@@ -140,6 +141,7 @@ var render = function() {
         staticClass: "rich-editor-container rounded has-padding-4",
         attrs: {
           contenteditable: "true",
+          autofocus: "false",
           placeholder: _vm.trans.get("general.type_message")
         },
         on: {

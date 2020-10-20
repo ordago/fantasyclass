@@ -4203,6 +4203,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4218,6 +4219,7 @@ var InputEmoji = function InputEmoji() {
   data: function data() {
     return {
       challengeReactive: null,
+      allowComment: false,
       isAttachmentModalActive: false,
       isQuestionModalActive: false,
       attachment: {
@@ -4640,7 +4642,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     orderedChallenges: function orderedChallenges() {
-      return _.orderBy(this.challenges, "datetime", "asc");
+      return _.orderBy(this.challenges, "datetime", "desc");
     }
   },
   updated: function updated() {// this.$refs.topref.scrollTop=0;
@@ -54175,7 +54177,27 @@ var render = function() {
                 0
               ),
               _vm._v(" "),
-              _vm.edit || _vm.full ? _c("InputEmoji") : _vm._e(),
+              !_vm.allowComment
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "button",
+                      on: {
+                        click: function($event) {
+                          _vm.allowComment = true
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fad fa-comments mr-2" }),
+                      _vm._v(" " + _vm._s(_vm.trans.get("challenges.comment")))
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              (_vm.edit || _vm.full) && _vm.allowComment
+                ? _c("InputEmoji")
+                : _vm._e(),
               _vm._v(" "),
               _c(
                 "div",
@@ -61805,10 +61827,6 @@ var render = function() {
                 )
               ]
             ),
-            _vm._v(" "),
-            _c("button", { staticClass: "button is-primary" }, [
-              _vm._v("Reset")
-            ]),
             _vm._v(" "),
             _vm.isAdmin
               ? _c(
@@ -85564,7 +85582,8 @@ __webpack_require__.r(__webpack_exports__);
     "incorrect_answer": "Resposta incorrecta",
     "mark_title": "Marcar com a superat",
     "mark_confirm": "Confirme superaci\xF3",
-    "mark_text": "Est\xE0s segur/1 que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria."
+    "mark_text": "Est\xE0s segur/1 que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria.",
+    "comment": "Comenta"
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -86237,7 +86256,8 @@ __webpack_require__.r(__webpack_exports__);
     "incorrect_answer": "Incorrect answer",
     "mark_title": "Mark as done",
     "mark_confirm": "Confirm done",
-    "mark_text": "Are you sure you have done all the the work? Trust is needed there."
+    "mark_text": "Are you sure you have done all the the work? Trust is needed there.",
+    "comment": "Comment"
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -86918,7 +86938,8 @@ __webpack_require__.r(__webpack_exports__);
     "incorrect_answer": "Respuesta incorrecta",
     "mark_title": "Marcar como superado",
     "mark_confirm": "Confirmo la superaci\xF3n",
-    "mark_text": "\xBFEst\xE1s seguro/a que has superado la tarea? La confianza es necesaria."
+    "mark_text": "\xBFEst\xE1s seguro/a que has superado la tarea? La confianza es necesaria.",
+    "comment": "Comenta"
   },
   "es.classroom": {
     "add": "A\xF1ade clase",

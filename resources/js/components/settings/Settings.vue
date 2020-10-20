@@ -45,7 +45,7 @@
             ><i class="far fa-cog has-margin-right-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
-          <button class="button is-primary">Reset</button>
+          <!-- <button class="button is-primary">Reset</button> -->
           <button
             class="button has-margin-left-4 is-danger"
             @click="confirmDelete"
