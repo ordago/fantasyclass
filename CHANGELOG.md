@@ -9,6 +9,7 @@
 - Prevent scrolling when loading challenges and load in reverse order.
 - Now XP and Gold modifiers are hidden by default.
 - Users without e-mail can't create classrooms.
+- Emoji picker style fixed.
 
 ## v1.09 Beta (13/10/2020)
 ### Added

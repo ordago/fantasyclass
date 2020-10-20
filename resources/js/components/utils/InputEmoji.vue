@@ -57,6 +57,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss">
+.emoji-picker .emoji-dropdown {
+  z-index: 100;
+}
 .emoji-dropdown .emoji-preview, .emoji-dropdown .title {
   display: none!important;
 }
