@@ -9566,9 +9566,11 @@ var Xlsx = function Xlsx() {
           if (response.data) {
             response.data.forEach(function (element) {
               _this6.$toasted.show(element, {
-                position: "top-right",
+                position: "top-center",
+                duration: null,
                 iconPack: "fontawesome",
                 type: "error",
+                icon: 'times',
                 action: {
                   text: _this6.trans.get("general.close"),
                   onClick: function onClick(e, toastObject) {

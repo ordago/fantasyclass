@@ -81,7 +81,7 @@ class StudentController extends Controller
                 session()->put('classroom', $classId);
                 if (!isset($error))
                     $error = [];
-                array_push($error, $student['name'] . " can't be created");
+                array_push($error, $student['name'] . " already exists in this classroom");
                 continue;
             }
 

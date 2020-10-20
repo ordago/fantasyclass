@@ -263,9 +263,11 @@ export default {
             if (response.data) {
               response.data.forEach((element) => {
                 this.$toasted.show(element, {
-                  position: "top-right",
+                  position: "top-center",
+                  duration: null,
                   iconPack: "fontawesome",
                   type: "error",
+                  icon: 'times',
                   action: {
                     text: this.trans.get("general.close"),
                     onClick: (e, toastObject) => {
