@@ -12,28 +12,39 @@ class ServicesController extends Controller
     private $classroom;
     public function __construct(Google_Client $client)
     {
-        $this->middleware(function ($request, $next) use ($client) {
+        
+        $this->middleware(function ($request, $next) use ($client) {   
+            if(!auth()->user()->refresh_token) {
+                abort(403);
+            }
             $client->refreshToken(auth()->user()->refresh_token);
             $this->classroom = new Google_Service_Classroom($client);
             return $next($request);
         });
     }
-    
+
+    public function usersList($courseId)
+    {
+
+        $students = [];
+        $response = $this->classroom->courses_students->listCoursesStudents($courseId);
+        foreach ($response->students as $student) {
+            array_push($students, $student);
+        }
+        return $students;
+    }
+
     public function classroomList()
     {
-        // Print the first 10 courses the user has access to.
-        $optParams = array(
-            'pageSize' => 10
-        );
-        $results = $this->classroom->courses->listCourses($optParams);
 
-        if (count($results->getCourses()) == 0) {
-            print "No courses found.\n";
-        } else {
-            print "Courses:\n";
-            foreach ($results->getCourses() as $course) {
-                printf("%s (%s)\n", $course->getName(), $course->getId());
+        $results = $this->classroom->courses->listCourses();
+        $courses = [];
+        $gcourses = $results->getCourses();
+        if (count($gcourses) != 0) {
+            foreach ($gcourses as $course) {
+                array_push($courses, $course);
             }
         }
+        return $courses;
     }
 }

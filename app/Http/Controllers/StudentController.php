@@ -101,6 +101,8 @@ class StudentController extends Controller
                 'name' => $student['name'],
                 'character_id' => $charId,
                 'password_plain' => $pass,
+                'google_uid' => $student['google_uid'],
+                'google_course' => $student['google_course'],
             ]);
 
             if ($class->characterTheme) {

@@ -14,22 +14,30 @@ class SocialController extends Controller
         return Socialite::driver($provider)->redirect();
     }
 
-    public function googleClassroom()
+    public function googleClassroom($code)
     {
+        session()->put('code', $code);
+        if(!auth()->user())
+            abort(403);
         $parameters = ['access_type' => 'offline'];
 	    return Socialite::driver('google')->scopes([
-            "https://www.googleapis.com/auth/classroom.courses.readonly",
+            'https://www.googleapis.com/auth/classroom.courses.readonly',
             "https://www.googleapis.com/auth/classroom.rosters.readonly",
+            'https://www.googleapis.com/auth/classroom.profile.emails',
+            'https://www.googleapis.com/auth/classroom.coursework.students',
+            'https://www.googleapis.com/auth/classroom.student-submissions.students.readonly',
+            'https://www.googleapis.com/auth/classroom.announcements',
             ])->with($parameters)->redirect();
     }
 
     public function callback($provider)
     {
+        dump($provider);
         $auth_user = Socialite::driver($provider)->user();
         
         if($auth_user->refreshToken) {
-            // dd($auth_user);
             auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn ]);
+            return redirect()->to('/classroom/'.session()->get('code').'/students/add');
 
         } else {
             $user = User::where('email', $auth_user->email)->first();

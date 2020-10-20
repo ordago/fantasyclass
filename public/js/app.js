@@ -9358,6 +9358,65 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var Xlsx = function Xlsx() {
@@ -9368,25 +9427,60 @@ var Xlsx = function Xlsx() {
   components: {
     Xlsx: Xlsx
   },
+  props: ['code'],
   mounted: function mounted() {},
   data: function data() {
     return {
       students: [],
       stdName: "",
       stdEmail: "",
+      stdCourse: "",
+      stdGoogleUid: "",
       stdUsername: "",
-      nextId: 1
+      nextId: 1,
+      isModalActive: false,
+      gcourses: [],
+      gstudents: []
     };
   },
   methods: {
-    addFromExcel: function addFromExcel(students) {
+    loadGoogleStudents: function loadGoogleStudents(id) {
       var _this = this;
 
-      students.forEach(function (student) {
-        _this.addStudent(student["Name"], student["E-mail"]);
+      axios.get("/google/classroom/list/" + id + "/students").then(function (response) {
+        _this.gstudents = response.data;
+      });
+    },
+    loadGoogleCourses: function loadGoogleCourses() {
+      var _this2 = this;
 
-        _this.stdName = "";
-        _this.stdEmail = "";
+      axios.get("/google/classroom/list/courses").then(function (response) {
+        _this2.gcourses = response.data;
+        _this2.isModalActive = true;
+      })["catch"](function (error) {
+        location.href = "/google/classroom/link/" + _this2.code;
+      });
+    },
+    addFromClassroom: function addFromClassroom() {
+      var _this3 = this;
+
+      this.gstudents.forEach(function (student) {
+        _this3.addStudent(student.profile.name.fullName, student.profile.emailAddress, student.courseId, student.userId);
+
+        _this3.stdName = "";
+        _this3.stdEmail = "";
+      });
+      this.gstudents = [];
+      this.isModalActive = false;
+    },
+    addFromExcel: function addFromExcel(students) {
+      var _this4 = this;
+
+      students.forEach(function (student) {
+        _this4.addStudent(student["Name"], student["E-mail"]);
+
+        _this4.stdName = "";
+        _this4.stdEmail = "";
       });
     },
     addStudentForm: function addStudentForm() {
@@ -9395,7 +9489,10 @@ var Xlsx = function Xlsx() {
       this.stdNameP = "";
     },
     addStudent: function addStudent(name, email) {
-      var _this2 = this;
+      var _this5 = this;
+
+      var gcourse = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var guid = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : null;
 
       if (email && !_utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].validEmail(email)) {
         _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(this, this.trans.get("validation.email"), 2);
@@ -9412,23 +9509,25 @@ var Xlsx = function Xlsx() {
           name: name,
           email: email
         }).then(function (response) {
-          _this2.stdUsername = response.data;
+          _this5.stdUsername = response.data;
 
-          _this2.students.push({
-            id: _this2.nextId++,
+          _this5.students.push({
+            id: _this5.nextId++,
             name: name,
             email: email,
-            username: _this2.stdUsername
+            username: _this5.stdUsername,
+            google_course: gcourse,
+            google_uid: guid
           });
 
-          name = email = _this2.stdUsername = "";
+          name = email = _this5.stdUsername = "";
         });
       } else {
         _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(this, this.trans.get("validation.distinct"), 2);
       }
     },
     sendStudents: function sendStudents() {
-      var _this3 = this;
+      var _this6 = this;
 
       if (this.students.length) {
         axios.post("/classroom/students", {
@@ -9436,25 +9535,25 @@ var Xlsx = function Xlsx() {
         }).then(function (response) {
           if (response.data) {
             response.data.forEach(function (element) {
-              _this3.$toasted.show(element, {
+              _this6.$toasted.show(element, {
                 position: "top-right",
                 iconPack: "fontawesome",
                 type: "error",
                 action: {
-                  text: _this3.trans.get("general.close"),
+                  text: _this6.trans.get("general.close"),
                   onClick: function onClick(e, toastObject) {
                     toastObject.goAway(0);
                   }
                 }
               });
             });
-            _this3.students = [];
+            _this6.students = [];
           } else {
             window.location = document.referrer;
           }
         })["catch"](function (error) {
-          _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this3, error, 2);
-          _this3.students = [];
+          _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].toast(_this6, error, 2);
+          _this6.students = [];
         });
       }
     },
@@ -9809,6 +9908,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -63269,7 +63386,32 @@ var render = function() {
     "div",
     { staticClass: "has-padding-4" },
     [
-      _c("Xlsx", { attrs: { type: "addstudent" } }),
+      _c("div", { staticClass: "columns" }, [
+        _c(
+          "div",
+          { staticClass: "column is-narrow p-0 m-1" },
+          [_c("Xlsx", { attrs: { type: "addstudent" } })],
+          1
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "column is-narrow p-0 m-1" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button is-primary",
+              on: { click: _vm.loadGoogleCourses }
+            },
+            [
+              _c("i", { staticClass: "fad fa-chalkboard-teacher mr-2" }),
+              _vm._v(
+                "  " +
+                  _vm._s(_vm.trans.get("students.import_gclassroom")) +
+                  "\n      "
+              )
+            ]
+          )
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "field is-horizontal" }, [
         _c(
@@ -63373,6 +63515,12 @@ var render = function() {
               _c("span", { staticClass: "has-padding-right-3" }, [
                 _vm._v(_vm._s(index + 1))
               ]),
+              _vm._v(" "),
+              student.google_uid
+                ? _c("span", { staticClass: "tag is-danger" }, [
+                    _c("i", { staticClass: "fab fa-google" })
+                  ])
+                : _vm._e(),
               _vm._v("\n      " + _vm._s(student.name) + "\n      "),
               student.email && student.email.length
                 ? _c("i", { staticClass: "fal fa-at pl-2" })
@@ -63429,7 +63577,134 @@ var render = function() {
               )
             ]
           )
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.isModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isModalActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v("Google Classroom")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("section", { staticClass: "modal-card-body is-relative" }, [
+                _vm.gcourses && _vm.gcourses.length && !_vm.gstudents.length
+                  ? _c(
+                      "div",
+                      _vm._l(_vm.gcourses, function(course) {
+                        return _c(
+                          "div",
+                          {
+                            key: course.id,
+                            staticClass: "p-5 m-2 card-shadow-s cursor-pointer",
+                            on: {
+                              click: function($event) {
+                                return _vm.loadGoogleStudents(course.id)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(course.name) +
+                                "\n          "
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.gstudents && _vm.gstudents.length
+                  ? _c(
+                      "div",
+                      _vm._l(_vm.gstudents, function(student) {
+                        return _c(
+                          "div",
+                          { key: student.profile.id, staticClass: "p-3 m-1" },
+                          [
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(student.profile.name.fullName) +
+                                " (" +
+                                _vm._s(student.profile.emailAddress) +
+                                ")\n            "
+                            ),
+                            _c("hr")
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  : _vm._e()
+              ]),
+              _vm._v(" "),
+              _c("footer", { staticClass: "modal-card-foot" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.isModalActive = false
+                      }
+                    }
+                  },
+                  [_vm._v("\n          Close\n        ")]
+                ),
+                _vm._v(" "),
+                _vm.gstudents && _vm.gstudents.length
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-link",
+                        attrs: { type: "button" },
+                        on: {
+                          click: function($event) {
+                            _vm.gstudents = []
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-arrow-left" })]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.gstudents && _vm.gstudents.length
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-success",
+                        attrs: { type: "button" },
+                        on: { click: _vm.addFromClassroom }
+                      },
+                      [_vm._v("\n          Importar\n        ")]
+                    )
+                  : _vm._e()
+              ])
+            ]
+          )
+        ]
+      )
     ],
     2
   )
@@ -64050,7 +64325,7 @@ var render = function() {
             _c(
               "span",
               {
-                staticClass: "tag is-dark bottom-right cursor-pointer",
+                staticClass: "bottom-right cursor-pointer",
                 on: {
                   click: function($event) {
                     return _vm.redirect(_vm.student.id)
@@ -64058,12 +64333,21 @@ var render = function() {
                 }
               },
               [
-                _vm._v(
-                  _vm._s(_vm.student.numcards[0]) +
-                    " / " +
-                    _vm._s(_vm.student.numcards[1])
-                ),
-                _c("i", { staticClass: "fas fa-club ml-1" })
+                _vm.student.google_uid
+                  ? _c("span", { staticClass: "tag is-danger" }, [
+                      _c("i", { staticClass: "fab fa-google" })
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("span", { staticClass: "tag is-dark" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.student.numcards[0]) +
+                      " / " +
+                      _vm._s(_vm.student.numcards[1])
+                  ),
+                  _c("i", { staticClass: "fas fa-club ml-1" })
+                ])
               ]
             )
           ]),
@@ -85547,6 +85831,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   "ca.students": {
     "excel": "Importa de l'Excel",
+    "import_gclassroom": "Importa de Google Classroom",
     "excel_template": "Descarrega la plantilla",
     "dnd": "Arrossega el fitxer o clica per pujar",
     "search": "Cerca per nom",
@@ -86212,6 +86497,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   "en.students": {
     "excel": "Import from Excel",
+    "import_gclassroom": "Import from Google Classroom",
     "excel_template": "Download the template",
     "dnd": "Drop your file here or click to upload",
     "search": "Search by name",
@@ -86899,6 +87185,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   "es.students": {
     "excel": "Importa del Excel",
+    "import_gclassroom": "Importa de Google Classroom",
     "excel_template": "Descarga la plantilla",
     "dnd": "Arrastra el fichero o haz clic para subir",
     "search": "Busca por nombre",

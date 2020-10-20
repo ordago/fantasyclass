@@ -11,6 +11,7 @@ return [
     */
 
     'excel' => 'Import from Excel',
+    'import_gclassroom' => 'Import from Google Classroom',
     'excel_template' => 'Download the template',
     'dnd' => 'Drop your file here or click to upload',
     'search' => 'Search by name',

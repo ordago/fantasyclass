@@ -11,6 +11,7 @@ return [
     */
     
     'excel' => 'Importa de l\'Excel',
+    'import_gclassroom' => 'Importa de Google Classroom',
     'excel_template' => 'Descarrega la plantilla',
     'dnd' => 'Arrossega el fitxer o clica per pujar',
     'search' => 'Cerca per nom',

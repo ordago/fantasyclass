@@ -20,12 +20,18 @@
             <small>@{{ student.username }}</small>
           </p>
         </div>
+      
         <span
           @click="redirect(student.id)"
-          class="tag is-dark bottom-right cursor-pointer"
-          >{{ student.numcards[0] }} / {{ student.numcards[1]
-          }}<i class="fas fa-club ml-1"></i
-        ></span>
+          class="bottom-right cursor-pointer"
+          >
+          <span class="tag is-danger" v-if="student.google_uid">
+            <i class="fab fa-google"></i
+          ></span>
+          <span class="tag is-dark">
+            {{ student.numcards[0] }} / {{ student.numcards[1] }}<i class="fas fa-club ml-1"></i>
+          </span>
+        </span>
       </div>
 
       <div class="content">
@@ -149,7 +155,13 @@
                 </span>
                 {{ student.xp }}
                 <span class="bottom-right" style="right: 8px">
-                  <i class="fad" :class="{ 'fa-caret-down' : !visibleXP, 'fa-caret-up' : visibleXP }"></i>
+                  <i
+                    class="fad"
+                    :class="{
+                      'fa-caret-down': !visibleXP,
+                      'fa-caret-up': visibleXP,
+                    }"
+                  ></i>
                 </span>
               </div>
             </div>
@@ -159,7 +171,13 @@
                 <i class="fas fa-coins colored"></i>
                 {{ student.gold }}
                 <span class="bottom-right" style="right: 8px">
-                  <i class="fad" :class="{ 'fa-caret-down' : !visibleGold, 'fa-caret-up' : visibleGold }"></i>
+                  <i
+                    class="fad"
+                    :class="{
+                      'fa-caret-down': !visibleGold,
+                      'fa-caret-up': visibleGold,
+                    }"
+                  ></i>
                 </span>
               </div>
             </div>
@@ -341,12 +359,12 @@ export default {
   },
   methods: {
     enableXPGold(type) {
-      if(type == 0) {
-        this.visibleXP = !this.visibleXP
+      if (type == 0) {
+        this.visibleXP = !this.visibleXP;
         this.visibleGold = false;
       } else {
         this.visibleXP = false;
-        this.visibleGold = ! this.visibleGold;
+        this.visibleGold = !this.visibleGold;
       }
     },
     updateProp: function (id, prop, value) {

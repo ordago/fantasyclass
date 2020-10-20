@@ -18,7 +18,9 @@ class Student extends Model implements HasMedia
         'character_id',
         'password_plain',
         'hidden',
-        'avatar_url'
+        'avatar_url',
+        'google_uid',
+        'google_course',
     ];
 
     protected $appends = ['username', 'level', 'avatar', 'grouplogo'];
