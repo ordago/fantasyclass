@@ -234,6 +234,8 @@
             <a target="_blank" href="https://github.com/climentjoan/fantasyclass"><i class="fab fa-github"></i></a>
             <i class="fal fa-ellipsis-v"></i>
             <a target="_blank" href="https://t.me/joinchat/G9NbVFS50HGQdHpEaawZkA"><i class="fab fa-telegram"></i></a>
+            <i class="fal fa-ellipsis-v"></i>
+            <a target="_blank" href="/policy">Privacy Policy</a>
         </p>
     </div>
     <!-- End Footer -->

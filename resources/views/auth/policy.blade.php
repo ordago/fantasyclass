@@ -19,45 +19,51 @@
     <div id="post-393" class="post-393 page type-page status-publish hentry">
         <div>
             <article id="copytext" class="">
-                <header>
-                    <h2>Aviso legal y términos de uso</h2>
+
+                <h2>Privacy Policy</h2>
                 </header>
                 <div class="">
                     <div class="">
-                        <h3>Términos y condiciones del uso mediante este aviso</h3>
-                        <p class="ng-binding">FantasyClass informa a los usuarios de la página web de su política de protección de datos de carácter personal. La utilización del espacio web de FantasyClass y de cualquiera de los servicios que se incorporan presupone la plena aceptación de las condiciones que se manifiestan en la política de privacidad que se expone.</p>
-                        <h3>Terminos generales</h3>
-                        <p>FantasyClass es una servicio completamente gratuito. Registrándote en la plataforma aceptas que se almacene tu información de registro así como de la información que añadas en esta sin ninguna garantía añadida. En ningún caso FantasyClass se hará responsable de ninguna pérdida de información o del mal funcionamiento de la plataforma.</p>
-                        <p>FantasyClass se reserva el derecho de acceso al panel de administración de las clases creadas para tareas de mantenimiento y comprovación.</p>
-                        <p>El usuario será el único responsable de cualquier daño o perjuicio, directo y indirecto, que ocasione la cuenta creada y la información introducida  , eximiendo a FantasyClass de cualquier responsabilidad. Así mismo, el usuario será el único responsable de la privacidad del sitio y de sus alumnos.</p>
-                        <p>FantasyClass se reserva el derecho a revocar las cuentas por diferentes motivos: inactividad prolongada, material no adecuado, mal uso de la plataforma, etc. En este caso, toda la información será eliminada sin estar obligado a informar sobre este hecho con anterioridad.</p>
+                        <h3>Terms and conditions of use by this notice</h3>
+                        <p class="ng-binding">FantasyClass informs the users of the website of its policy on protection of personal data. The use of the FantasyClass web space and any of the services that are incorporated presupposes the full acceptance of the conditions that are manifested in the privacy policy that is exposed.</p>
+                        <h3>General terms</h3>
+                        <p>FantasyClass is a completely free service. By registering on the platform you accept that your registration information will be stored as well as the information you add to it without any added guarantee. In no case will FantasyClass be responsible for any loss of information or malfunction of the platform.
+                            <p>FantasyClass reserves the right to access the administration panel of the classes created for maintenance and testing tasks.</p>
+                            <p>The user will be the only responsible for any direct or indirect damage or harm caused by the account created and the information introduced, exempting FantasyClass from any responsibility. Likewise, the user will be the only responsible for the privacy of the site and its students.</p>
+                            <p>FantasyClass reserves the right to revoke accounts for various reasons: prolonged inactivity, unsuitable material, misuse of the platform, etc. In this case, all information will be deleted without being obliged to report this fact previously.<br><br></p>
                     </div>
-                    <p>&nbsp;</p>
                 </div>
             </article>
             <article id="copytext" class="">
                 <div class="">
                     <div class="">
-                        <h3>Recogida de datos</h3>
-                        <p class="ng-binding">Dando cumplimiento a la Ley 15/1999, de 13 de diciembre, de protección de datos de carácter personal, se informa que los datos de carácter personal que se solicitan en nuestros formularios se incluirán en un fichero de datos personales el responsable y titular del cual es FantasyClass. Así mismo, cuando una persona rellena cualquiera de los formularios con los datos personales que se solicitan y acepta el envío, autoriza expresamente a FantasyClass a tratar o incorporar en el fichero automatizado de su propiedad los datos personales facilitados en el formulario mencionado y todos los datos que se generen en relación con su participación o uso de los diferentes eventos que se ofrecen en esta página web.</p>
-                        <p class="ng-binding">Salvo que específicamente se establezca lo contrario, se considerará necesario rellenar todos los campos de cada formulario, para ello el usuario deberá rellenar los formularios con datos verdaderos, exactos, completos y actualizados. El usuario será el único responsable de cualquier daño o perjuicio, directo y indirecto, que ocasione a FantasyClass o a cualquier tercero por rellenar los formularios con datos falsos, inexactos, incompletos o no actualizados o con datos de terceros. A través de las diferentes áreas que forman parte de este espacio web, los usuarios pueden obtener información, realizar consultas y participar los diferentes eventos que FantasyClass ofrezca mediante su espacio web.</p>
-                        <h3>Finalidades del tratamiento</h3>
-                        <p>Los datos facilitados nunca serán utilizados con una finalidad diferente de aquella para la cual han sido cedidos, y serán cancelados inmediatamente después de dejar de ser necesarios para esta finalidad, excepto cuando una ley establezca otra cosa.</p>
-                        <p class="ng-binding">Cuando la persona interesada envía los datos personales y la dirección electrónica a FantasyClass, autoriza expresamente la utilización a efectos de comunicaciones periódicas, incluyendo expresamente las que se realicen por correo electrónico que FantasyClass o las entidades pertenecientes a el ámbito empresarial de FantasyClass lleven a término con los usuarios, y posibles interesados, para informarles de las noticias, eventos, etc.</p>
-                        <p class="ng-binding">Al margen de lo que se ha dicho anteriormente, la recogida y el tratamiento automatizado de los datos personales facilitados tienen igualmente como finalidad la gestión administrativa y la ejecución y el desarrollo de toda actividad profesional propia de FantasyClassy la gestión del usuario en los diferentes servicios puestos a su disposición (a efectos meramente informativos: solicitud de información sobre eventos).</p>
-                        <h3>Seguridad</h3>
-                        <p class="ng-binding">Toda la información relativa a datos de carácter personal recibida por FantasyClass es tratada con la máxima confidencialidad, y se procede únicamente a las comunicaciones estrictamente necesarias para la prestación del servicio que interesa en cada caso y las comunicaciones y cesiones autorizadas por el usuario mediante esta política de privacidad.</p>
-                        <p class="ng-binding">FantasyClass ha adoptado los niveles de seguridad de protección de datos personales requeridos legalmente y ha instalado los medios y medidas técnicas a su alcance para evitar la pérdida, el mal uso, la alteración de los datos personales facilitados y el acceso no autorizado a estos datos.</p>
-                        <p class="ng-binding">El usuario tiene derecho a acceder a la información que le concierne recopilada en los ficheros de FantasyClass, rectificarla si es errónea, cancelarla o oponerse a su tratamiento, por la vía del correo electrónico a la dirección&nbsp;<a class="ng-binding" href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>.</p>
-                        <h3>Cesión de datos</h3>
-                        <p class="ng-binding">El usuario acepta que sus datos puedan ser cedidos, exclusivamente para las finalidades descritas anteriormente, a las entidades con las que participa FantasyClass. La aceptación del usuario que sus datos puedan ser tratados o cedidos de la manera establecida en este parágrafo tiene siempre el carácter de revocable, sin efectos retroactivos, de acuerdo con lo que disponen los artículos 6 y 11 de la Ley orgánica 15/1999, de 13 de diciembre.</p>
-                        <h3>Modificación de esta política de privacidad</h3>
-                        <p class="ng-binding">FantasyClass se reserva el derecho de modificar su política de protección de datos de acuerdo con su criterio, o a causa de un cambio legislativo, jurisprudencial o en la práctica empresarial. Si FantasyClass, introduce alguna modificación, el nuevo texto será publicado en esta misma página, donde el usuario podrá tener conocimiento de la política de protección de datos. Sea como sea, la relación con los usuarios se regirá por las normas previstas en el momento preciso en que se accede al espacio web.</p>
+                        <h3>Data collection</h3>
+                        <p class="ng-binding">In compliance with Law 15/1999 of 13 December on the protection of personal data, we inform you that the personal data requested in our forms will be included in a personal data file, the responsible and owner of which is FantasyClass. Likewise, when a person fills in any of the forms with the personal data that is requested and accepts the sending, he or she expressly authorizes FantasyClass to treat or incorporate into the automated file of its property the personal data provided in the mentioned form and all the data that is generated in relation to his or her participation or use of the different events that are offered in this web page.</p>
+                        <p class="ng-binding">Unless the contrary is specifically established, it will be considered necessary to fill in all the fields of each form. To do so, the user must fill in the forms with true, exact, complete and updated data. The user will be solely responsible for any direct or indirect damage or harm caused to FantasyClass or any third party by filling in the forms with false, inaccurate, incomplete or outdated data or with data from third parties. Through the different areas that form part of this web space, users can obtain information, make queries and participate in the different events that FantasyClass offers through its web space.</p>
+                        <h3>Third party providers</h3>
+                        <p class="ng-binding">FantasyClass allows users to export or import data from third party providers. In all cases, this information will be only used to import or export student's data, and it will always be used with the user's consent.</p>
+                        <p>By now, we work with these third party providers:</p>
+                        <ul>
+                            <li>Google Classroom (optional): it's not mandatory, but you can link your account to Google Classroom in order to have access to your lists and classrooms and to view and manage the student's grades. Also, if you link your account, we will have access to your students' infomation such as their name and e-mail, in order to import them to the platform. There is a link to the provider <a href="https://edu.google.com/why-google/privacy-security/?modal_active=none" target="_blank">privacy policy</a>.</li>
+                        </ul>
+                        <h3>Treatment purposes</h3>
+                        <p>The data provided will never be used for a different purpose than the one for which they have been given, and will be cancelled immediately after they are no longer necessary for this purpose, except when a law establishes otherwise.</p>
+                        <p class="ng-binding">When the interested person sends the personal data and the e-mail address to FantasyClass, he/she expressly authorizes the use for the purpose of periodic communications, including expressly those made by e-mail that FantasyClass or the entities belonging to the business area of FantasyClass carry out with the users, and possible interested parties, to inform them of the news, events, etc.</p>
+                        <p class="ng-binding"> Apart from what has been said above, the collection and automated processing of the personal data provided is also intended for the administrative management and the execution and development of all professional activities of FantasyClassy and the management of the user in the different services made available (for information purposes only: request for information on events).</p>
+                        <h3>Safety</h3>
+                        <p class="ng-binding">All information regarding personal data received by FantasyClass is treated with the utmost confidentiality, and only those communications strictly necessary for the provision of the service in question in each case and those communications and transfers authorized by the user through this privacy policy are processed.
+                            <p class="ng-binding">FantasyClass has adopted the legally required personal data protection security levels and has installed the means and technical measures within its reach to avoid the loss, misuse, alteration of the personal data provided and unauthorized access to this data.</p>
+                            <p class="ng-binding">The user has the right to access the information concerning him/her collected in the FantasyClass files, to rectify it if it is wrong, to cancel it or to oppose its treatment, by e-mail to the address&nbsp;<a class="ng-binding" href="mailto:{{ env('EMAIL') }}">{{ env('EMAIL') }}</a>.</p>
+                            <h3>Data transfer</h3>
+                            <p class="ng-binding">The user accepts that their data may be transferred, exclusively for the purposes described above, to the entities with which FantasyClass participates. The user's acceptance that their data can be treated or transferred in the manner established in this paragraph is always revocable, without retroactive effect, in accordance with the provisions of Articles 6 and 11 of Law 15/1999 of 13 December.
+                                <h3>Modification of this privacy policy</h3>
+                                <p class="ng-binding">FantasyClass reserves the right to modify its data protection policy according to its criteria, or due to a change in legislation, jurisprudence or business practice. If FantasyClass, introduces any modification, the new text will be published on this same page, where the user can be aware of the data protection policy. In any case, the relationship with the users will be governed by the rules established at the precise moment in which the web space is accessed.</p>
                     </div>
                 </div>
             </article>
         </div>
     </div>
+
     <!-- <h1>Privacy Policy for FantasyClass</h1>
 
     <p>At FantasyClass, accessible from https://fantasyclass.app, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by FantasyClass and how we use it.</p>
