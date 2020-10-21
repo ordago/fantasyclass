@@ -1,5 +1,5 @@
 <template>
-  <div class="card rounded card-shadow-s" style="overflow: visible">
+  <div class="card rounded card-shadow-s h-100" style="overflow: visible">
     <show-character :student="student" :classroom="classroom"></show-character>
     <div
       class="card-content"
@@ -23,9 +23,9 @@
       
         <span
           @click="redirect(student.id)"
-          class="bottom-right cursor-pointer"
+          class="bottom-right cursor-pointer is-flex has-all-centered"
           >
-          <span class="tag is-danger" v-if="student.google_uid">
+          <span class="tag is-danger mr-1" v-if="student.google_uid">
             <i class="fab fa-google"></i
           ></span>
           <span class="tag is-dark">

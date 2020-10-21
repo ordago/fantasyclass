@@ -345,8 +345,7 @@
         class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
       >
         <div
-          class="box card-shadow-s is-flex has-background-link has-all-centered"
-          style="min-height: 160px"
+          class="box card-shadow-s is-flex has-background-link has-all-centered h-100"
         >
           <a
             :href="'/classroom/' + classroom.code + '/students/add'"

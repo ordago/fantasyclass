@@ -8485,6 +8485,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -8529,17 +8532,34 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    regenerate: function regenerate() {
+    unlink: function unlink() {
       var _this = this;
 
-      axios.get("/classroom/" + this.classroom.code + "/regenerate").then(function (response) {
-        _this.classroom.enrollment_code = response.data;
+      axios.get("/google/classroom/unlink").then(function (response) {
+        _this.$toasted.show(_this.trans.get("success_error.update_success"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "check",
+          type: "success"
+        });
+
+        _this.user.token = null;
 
         _this.$forceUpdate();
       });
     },
-    confirmDelete: function confirmDelete() {
+    regenerate: function regenerate() {
       var _this2 = this;
+
+      axios.get("/classroom/" + this.classroom.code + "/regenerate").then(function (response) {
+        _this2.classroom.enrollment_code = response.data;
+
+        _this2.$forceUpdate();
+      });
+    },
+    confirmDelete: function confirmDelete() {
+      var _this3 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -8553,14 +8573,14 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this2.classroom.code).then(function (response) {
+          axios["delete"]("/classroom/" + _this3.classroom.code).then(function (response) {
             location.href = response.data;
           });
         }
       });
     },
     confirmDeleteTeacher: function confirmDeleteTeacher(id, index) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -8574,7 +8594,7 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this3.classroom.code + "/teacher/" + id).then(function (response) {
+          axios["delete"]("/classroom/" + _this4.classroom.code + "/teacher/" + id).then(function (response) {
             if (response.data === 1) {
               // TODO change to delete teacher from array
               location.reload(true);
@@ -8586,7 +8606,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     promptInvite: function promptInvite() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$buefy.dialog.prompt({
         message: "Email",
@@ -8595,10 +8615,10 @@ __webpack_require__.r(__webpack_exports__);
         },
         trapFocus: true,
         onConfirm: function onConfirm(email) {
-          axios.post("/classroom/" + _this4.classroom.code + "/invite", {
+          axios.post("/classroom/" + _this5.classroom.code + "/invite", {
             email: email
           }).then(function (response) {
-            _this4.$toasted.show(response.data.message, {
+            _this5.$toasted.show(response.data.message, {
               position: "top-center",
               duration: 3000,
               iconPack: "fontawesome",
@@ -10389,7 +10409,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
 /* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
-//
 //
 //
 //
@@ -61900,6 +61919,20 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
+        _vm.user.token
+          ? _c(
+              "button",
+              { staticClass: "button is-link mb-3", on: { click: _vm.unlink } },
+              [
+                _vm._v(
+                  "\n      " +
+                    _vm._s(_vm.trans.get("settings.classroom_unlink")) +
+                    "\n    "
+                )
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "has-padding-2" }, [
           _c("h1", [
             _c("i", { staticClass: "fal fa-cog" }),
@@ -62054,8 +62087,8 @@ var render = function() {
                           "column is-narrow is-flex align-items-center"
                       },
                       [
-                        (_vm.isAdmin && teacher.id != _vm.user) ||
-                        (teacher.pivot.role == 1 && teacher.id == _vm.user)
+                        (_vm.isAdmin && teacher.id != _vm.user.id) ||
+                        (teacher.pivot.role == 1 && teacher.id == _vm.user.id)
                           ? _c(
                               "button",
                               {
@@ -64348,7 +64381,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "card rounded card-shadow-s",
+      staticClass: "card rounded card-shadow-s h-100",
       staticStyle: { overflow: "visible" }
     },
     [
@@ -64404,7 +64437,8 @@ var render = function() {
             _c(
               "span",
               {
-                staticClass: "bottom-right cursor-pointer",
+                staticClass:
+                  "bottom-right cursor-pointer is-flex has-all-centered",
                 on: {
                   click: function($event) {
                     return _vm.redirect(_vm.student.id)
@@ -64413,7 +64447,7 @@ var render = function() {
               },
               [
                 _vm.student.google_uid
-                  ? _c("span", { staticClass: "tag is-danger" }, [
+                  ? _c("span", { staticClass: "tag is-danger mr-1" }, [
                       _c("i", { staticClass: "fab fa-google" })
                     ])
                   : _vm._e(),
@@ -65911,8 +65945,7 @@ var render = function() {
                     "div",
                     {
                       staticClass:
-                        "box card-shadow-s is-flex has-background-link has-all-centered",
-                      staticStyle: { "min-height": "160px" }
+                        "box card-shadow-s is-flex has-background-link has-all-centered h-100"
                     },
                     [
                       _c(
@@ -85884,7 +85917,8 @@ __webpack_require__.r(__webpack_exports__);
     "enrollment_code": "Codi de matriculaci\xF3",
     "active": "Activa",
     "finished": "Finalitzada",
-    "disabled": "Deshabilitada"
+    "disabled": "Deshabilitada",
+    "classroom_unlink": "Desenlla\xE7a Google Classroom"
   },
   "ca.shop": {
     "items": "Objectes",
@@ -86551,7 +86585,8 @@ __webpack_require__.r(__webpack_exports__);
     "enrollment_code": "Enrollment code",
     "active": "Active",
     "finished": "Finished",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "classroom_unlink": "Unlink Google Classroom"
   },
   "en.shop": {
     "items": "Items",
@@ -87240,7 +87275,8 @@ __webpack_require__.r(__webpack_exports__);
     "enrollment_code": "C\xF3digo de matriculaci\xF3n",
     "active": "Activa",
     "finished": "Finalizada",
-    "disabled": "Deshabilitada"
+    "disabled": "Deshabilitada",
+    "classroom_unlink": "Desenlaza Google Classroom"
   },
   "es.shop": {
     "items": "Objetos",

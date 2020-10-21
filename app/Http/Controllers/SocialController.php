@@ -30,6 +30,11 @@ class SocialController extends Controller
             ])->with($parameters)->redirect();
     }
 
+    public function unlinkGoogleClassroom()
+    {
+        auth()->user()->update(['token' => null, 'refresh_token' => null, 'expires_in' => null]);
+    }
+
     public function callback($provider)
     {
         $auth_user = Socialite::driver($provider)->user();

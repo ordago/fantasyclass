@@ -36,5 +36,6 @@ return [
     'active' => "Activa",
     'finished' => "Finalizada",
     'disabled' => "Deshabilitada",
+    'classroom_unlink' => "Desenlaza Google Classroom",
     
 ];

@@ -80,6 +80,9 @@
           </p>
         </div>
       </b-field>
+      <button class="button is-link mb-3" v-if="user.token" @click="unlink">
+        {{ trans.get('settings.classroom_unlink') }}
+      </button>
       <div class="has-padding-2">
         <h1>
           <i class="fal fa-cog"></i>
@@ -144,8 +147,8 @@
                 class="button has-margin-left-4 is-danger"
                 @click="confirmDeleteTeacher(teacher.id, index)"
                 v-if="
-                  (isAdmin && teacher.id != user) ||
-                  (teacher.pivot.role == 1 && teacher.id == user)
+                  (isAdmin && teacher.id != user.id) ||
+                  (teacher.pivot.role == 1 && teacher.id == user.id)
                 "
               >
                 <i class="fas fa-trash"></i> Delete
@@ -347,6 +350,19 @@ export default {
     };
   },
   methods: {
+    unlink() {
+      axios.get("/google/classroom/unlink").then((response) => {
+        this.$toasted.show(this.trans.get("success_error.update_success"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "check",
+          type: "success",
+        });
+        this.user.token = null;
+        this.$forceUpdate();
+      });
+    },
     regenerate() {
       axios
         .get("/classroom/" + this.classroom.code + "/regenerate")

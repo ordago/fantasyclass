@@ -233,6 +233,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
     Route::get('/google/classroom/link/{code}', 'SocialController@googleClassroom');
+    Route::get('/google/classroom/unlink', 'SocialController@unlinkGoogleClassroom');
     
     // Google Classroom
     Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
