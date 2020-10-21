@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="button is-success mb-3" @click="showExcel = true">
+    <button class="button is-success mb-3" @click="showExcel = !showExcel">
       <i class="fad fa-file-spreadsheet mr-2"></i> {{ trans.get('students.excel') }} 
     </button>
     <div class="mb-2"><a href="/templates/students.xlsx" download v-if="showExcel"><i class="fas fa-download mr-2"></i> {{ trans.get('students.excel_template') }}</a></div>

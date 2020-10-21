@@ -87,7 +87,7 @@ var render = function() {
           staticClass: "button is-success mb-3",
           on: {
             click: function($event) {
-              _vm.showExcel = true
+              _vm.showExcel = !_vm.showExcel
             }
           }
         },
