@@ -142,7 +142,7 @@
         </nav>
 
         @yield('breadcrumb')
-        
+
         @endauth
 
         <div id="prompt" class="prompt  has-background-light border-top" style="display: none;">
@@ -158,32 +158,33 @@
         </main>
     </div>
     @if(isset($showChat) && $showChat == true)
-        @stack('scriptchat');
+    @stack('scriptchat');
     @endif
 
     <script>
-     window.onload = window.cookieconsent.initialise({
-       "palette": {
-         "popup": {
-           "background": "#eb6c44",
-           "text": "#ffffff"
-         },
-         "button": {
-           "background": "#f5d948"
-         }
-       },
-       "theme": "classic",
-       "content": {
-         "message": "Este sitio utilitza cookies para guardar preferencias de la plataforma.",
-         "dismiss": "Entiendo",
-         "link": "Más información",
-         "href": "/cookies"
-       }
+        window.onload = window.cookieconsent.initialise({
+            "palette": {
+                "popup": {
+                    "background": "#eb6c44",
+                    "text": "#ffffff"
+                },
+                "button": {
+                    "background": "#f5d948"
+                }
+            },
+            "theme": "classic",
+            "content": {
+                "message": "Este sitio utilitza cookies para guardar preferencias de la plataforma.",
+                "dismiss": "Entiendo",
+                "link": "Más información",
+                "href": "/cookies"
+            }
 
 
-     });
+        });
     </script>
 
+    <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>
 
 </html>

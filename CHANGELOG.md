@@ -4,6 +4,7 @@
 - Import from Google Classroom.
 - Cookie consent improved.
 - List view (informative only).
+- Added H5p attachments.
 
 ### Changed
 - Prevent scrolling when loading challenges and load in reverse order.

@@ -4204,6 +4204,36 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4244,6 +4274,10 @@ var InputEmoji = function InputEmoji() {
     InputEmoji: InputEmoji
   },
   methods: {
+    getHp5: function getHp5(url) {
+      console.log("https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1));
+      return "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1);
+    },
     getContent: function getContent(content) {
       if (!this.admin && content) return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].replaceSpecial(content);
       return content;
@@ -4318,7 +4352,7 @@ var InputEmoji = function InputEmoji() {
       var _this5 = this;
 
       var type = this.attachment.type;
-      if (type == 3 || type == 4 || type == 6 || type == 7 || type == 8) this.attachment.mode = 0;
+      if (type == 3 || type == 4 || type == 6 || type == 7) this.attachment.mode = 0;
       this.attachment.challenge_id = this.challenge.id;
       axios.post("/classroom/challenge/attachment", {
         attachment: this.attachment
@@ -54054,6 +54088,8 @@ var render = function() {
                           ? _c("i", { staticClass: "fad fa-globe" })
                           : attachment.type == 2
                           ? _c("i", { staticClass: "fad fa-icons" })
+                          : attachment.type == 8
+                          ? _c("i", { staticClass: "fad fa-icons" })
                           : attachment.type == 3
                           ? _c("i", { staticClass: "fad fa-graduation-cap" })
                           : attachment.type == 4
@@ -54116,6 +54152,27 @@ var render = function() {
                                     }
                                   },
                                   [
+                                    attachment.type == 8
+                                      ? _c("iframe", {
+                                          staticStyle: {
+                                            position: "absolute",
+                                            top: "0",
+                                            left: "0",
+                                            width: "100%",
+                                            height: "100%"
+                                          },
+                                          attrs: {
+                                            src: _vm.getHp5(attachment.url),
+                                            width: "1090",
+                                            height: "677",
+                                            frameborder: "0",
+                                            allowfullscreen: "allowfullscreen",
+                                            allow:
+                                              "geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                                          }
+                                        })
+                                      : _vm._e(),
+                                    _vm._v(" "),
                                     attachment.type == 2
                                       ? _c("iframe", {
                                           staticClass: "rounded",
@@ -54211,7 +54268,11 @@ var render = function() {
                     },
                     [
                       _c("i", { staticClass: "fad fa-comments mr-2" }),
-                      _vm._v(" " + _vm._s(_vm.trans.get("challenges.comment")))
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.trans.get("challenges.comment")) +
+                          "\n        "
+                      )
                     ]
                   )
                 : _vm._e(),
@@ -54553,6 +54614,10 @@ var render = function() {
                                   _vm._v(" "),
                                   _c("option", { attrs: { value: "7" } }, [
                                     _vm._v("File")
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("option", { attrs: { value: "8" } }, [
+                                    _vm._v("H5p.org")
                                   ])
                                 ]
                               )
@@ -54562,7 +54627,8 @@ var render = function() {
                           _vm._v(" "),
                           _vm.attachment.type == 1 ||
                           _vm.attachment.type == 2 ||
-                          _vm.attachment.type == 5
+                          _vm.attachment.type == 5 ||
+                          _vm.attachment.type == 8
                             ? _c(
                                 "div",
                                 [
