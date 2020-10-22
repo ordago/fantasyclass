@@ -1,9 +1,12 @@
 # Changelog
+## v1.11 Beta (XX/10/2020)
+- Import from Google Classroom.
+- Added H5p attachments.
+
 ## v1.10 Beta (21/10/2020)
 ### Added
 - Cookie consent improved.
 - List view (informative only).
-- Added H5p attachments.
 
 ### Changed
 - Prevent scrolling when loading challenges and load in reverse order.

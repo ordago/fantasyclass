@@ -11,12 +11,14 @@ class SocialController extends Controller
 {
     public function redirect($provider)
     {
+        session()->put('back_url', url()->previous());
         return Socialite::driver($provider)->redirect();
     }
-
+    
     public function googleClassroom($code)
     {
         session()->put('code', $code);
+        session()->put('back_url', url()->previous());
         if(!auth()->user())
             abort(403);
         $parameters = ['access_type' => 'offline'];
@@ -41,7 +43,7 @@ class SocialController extends Controller
         
         if($auth_user->refreshToken) {
             auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn ]);
-            return redirect()->to('/classroom/'.session()->get('code').'/students/add/true');
+            return redirect()->to('/classroom/'.session()->pull('code').'/students/add/true');
 
         } else {
             $user = User::where('email', $auth_user->email)->first();
