@@ -1,7 +1,6 @@
 # Changelog
-## v1.10 Beta (XX/10/2020)
+## v1.10 Beta (21/10/2020)
 ### Added
-- Import from Google Classroom.
 - Cookie consent improved.
 - List view (informative only).
 - Added H5p attachments.

@@ -4,12 +4,12 @@
       <div class="column is-narrow p-0 m-1">
         <Xlsx type="addstudent"></Xlsx>
       </div>
-      <div class="column is-narrow p-0 m-1">
+      <!-- <div class="column is-narrow p-0 m-1">
         <button class="button is-primary" @click="loadGoogleCourses">
           <i class="fad fa-chalkboard-teacher mr-2"></i>
           {{ trans.get("students.import_gclassroom") }}
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="field is-horizontal">
       <form @submit.prevent="addStudentForm">
