@@ -4,13 +4,15 @@
       <div class="column is-narrow p-0 m-1">
         <Xlsx type="addstudent"></Xlsx>
       </div>
-      <!-- <div class="column is-narrow p-0 m-1">
-        <button class="button button is-white border" @click="loadGoogleCourses">
-          <img src="/img/google-logo.svg" width="40px">
+      <div class="column is-narrow p-0 m-1">
+        <button
+          class="button button is-white border"
+          @click="loadGoogleCourses"
+        >
+          <img src="/img/google-logo.svg" width="40px" />
           {{ trans.get("students.import_gclassroom") }}
         </button>
-      </div> -->
-
+      </div>
     </div>
     <div class="field is-horizontal">
       <form @submit.prevent="addStudentForm">
@@ -145,8 +147,11 @@
         </footer>
       </div>
     </b-modal>
-    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading>
-
+    <b-loading
+      :is-full-page="true"
+      :active.sync="isLoading"
+      :can-cancel="false"
+    ></b-loading>
   </div>
 </template>
 
@@ -268,7 +273,7 @@ export default {
                   duration: null,
                   iconPack: "fontawesome",
                   type: "error",
-                  icon: 'times',
+                  icon: "times",
                   action: {
                     text: this.trans.get("general.close"),
                     onClick: (e, toastObject) => {

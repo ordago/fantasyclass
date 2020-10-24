@@ -152,6 +152,18 @@
               >
             </span>
           </p>
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-dark rounded"
+          >
+            <span>
+              <a
+                href="https://twitter.com/soyjujo_juanjo"
+                class="has-text-light"
+                target="_blank"
+                ><i class="fad fa-image"></i> By Jujo</a
+              >
+            </span>
+          </p>
         </footer>
       </div>
       <div class="column">

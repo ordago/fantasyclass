@@ -67323,7 +67323,7 @@ function highlight(name, value, options) {
 
   result = high.highlight(name, value, true)
 
-  high.configure(before)
+  high.configure(before || {})
 
   /* istanbul ignore if - Highlight.js seems to use this (currently) for broken
    * grammars, so let’s keep it in there just to be sure. */
@@ -88474,19 +88474,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prosemirror_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prosemirror-view */ "./node_modules/prosemirror-view/dist/index.es.js");
 /* harmony import */ var prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prosemirror-utils */ "./node_modules/prosemirror-utils/dist/index.js");
 /* harmony import */ var prosemirror_utils__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var prosemirror_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prosemirror-state */ "./node_modules/prosemirror-state/dist/index.es.js");
-/* harmony import */ var prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prosemirror-tables */ "./node_modules/prosemirror-tables/dist/index.es.js");
-/* harmony import */ var tiptap_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tiptap-utils */ "./node_modules/tiptap-utils/dist/utils.esm.js");
-/* harmony import */ var prosemirror_transform__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! prosemirror-transform */ "./node_modules/prosemirror-transform/dist/index.es.js");
-/* harmony import */ var prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prosemirror-collab */ "./node_modules/prosemirror-collab/dist/index.es.js");
-/* harmony import */ var prosemirror_history__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prosemirror-history */ "./node_modules/prosemirror-history/dist/index.es.js");
+/* harmony import */ var prosemirror_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prosemirror-model */ "./node_modules/prosemirror-model/dist/index.es.js");
+/* harmony import */ var prosemirror_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prosemirror-state */ "./node_modules/prosemirror-state/dist/index.es.js");
+/* harmony import */ var prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prosemirror-tables */ "./node_modules/prosemirror-tables/dist/index.es.js");
+/* harmony import */ var tiptap_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tiptap-utils */ "./node_modules/tiptap-utils/dist/utils.esm.js");
+/* harmony import */ var prosemirror_transform__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prosemirror-transform */ "./node_modules/prosemirror-transform/dist/index.es.js");
+/* harmony import */ var prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prosemirror-collab */ "./node_modules/prosemirror-collab/dist/index.es.js");
+/* harmony import */ var prosemirror_history__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! prosemirror-history */ "./node_modules/prosemirror-history/dist/index.es.js");
 
     /*!
-    * tiptap-extensions v1.33.0
+    * tiptap-extensions v1.33.1
     * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
   
+
 
 
 
@@ -89131,8 +89133,8 @@ function SuggestionsPlugin({
     return searchItems.filter(item => JSON.stringify(item).toLowerCase().includes(query.toLowerCase()));
   }
 }) {
-  return new prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["Plugin"]({
-    key: new prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["PluginKey"]('suggestions'),
+  return new prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["Plugin"]({
+    key: new prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["PluginKey"]('suggestions'),
 
     view() {
       return {
@@ -89309,6 +89311,10 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
     };
   }
 
+  getLabel(dom) {
+    return dom.innerText.split(this.options.matcher.char).join('');
+  }
+
   get schema() {
     return {
       attrs: {
@@ -89317,6 +89323,7 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
       },
       group: 'inline',
       inline: true,
+      content: 'inline*',
       selectable: false,
       atom: true,
       toDOM: node => ['span', {
@@ -89327,11 +89334,18 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
         tag: 'span[data-mention-id]',
         getAttrs: dom => {
           const id = dom.getAttribute('data-mention-id');
-          const label = dom.innerText.split(this.options.matcher.char).join('');
+          const label = this.getLabel(dom);
           return {
             id,
             label
           };
+        },
+        getContent: (dom, schema) => {
+          const label = this.getLabel(dom);
+          return prosemirror_model__WEBPACK_IMPORTED_MODULE_5__["Fragment"].fromJSON(schema, [{
+            type: 'text',
+            text: "".concat(this.options.matcher.char).concat(label)
+          }]);
         }
       }]
     };
@@ -89416,7 +89430,7 @@ class OrderedList extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
 
 }
 
-var TableNodes = Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["tableNodes"])({
+var TableNodes = Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["tableNodes"])({
   tableGroup: 'block',
   cellContent: 'block+',
   cellAttributes: {
@@ -89468,42 +89482,42 @@ class Table extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
         const nodes = Object(prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__["createTable"])(schema, rowsCount, colsCount, withHeaderRow);
         const tr = state.tr.replaceSelectionWith(nodes).scrollIntoView();
         const resolvedPos = tr.doc.resolve(offset);
-        tr.setSelection(prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["TextSelection"].near(resolvedPos));
+        tr.setSelection(prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["TextSelection"].near(resolvedPos));
         dispatch(tr);
       },
-      addColumnBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addColumnBefore"],
-      addColumnAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addColumnAfter"],
-      deleteColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteColumn"],
-      addRowBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addRowBefore"],
-      addRowAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addRowAfter"],
-      deleteRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteRow"],
-      deleteTable: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteTable"],
+      addColumnBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addColumnBefore"],
+      addColumnAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addColumnAfter"],
+      deleteColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteColumn"],
+      addRowBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addRowBefore"],
+      addRowAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addRowAfter"],
+      deleteRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteRow"],
+      deleteTable: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteTable"],
       toggleCellMerge: () => (state, dispatch) => {
-        if (Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["mergeCells"])(state, dispatch)) {
+        if (Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["mergeCells"])(state, dispatch)) {
           return;
         }
 
-        Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["splitCell"])(state, dispatch);
+        Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["splitCell"])(state, dispatch);
       },
-      mergeCells: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["mergeCells"],
-      splitCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["splitCell"],
-      toggleHeaderColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderColumn"],
-      toggleHeaderRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderRow"],
-      toggleHeaderCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderCell"],
-      setCellAttr: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["setCellAttr"],
-      fixTables: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["fixTables"]
+      mergeCells: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["mergeCells"],
+      splitCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["splitCell"],
+      toggleHeaderColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderColumn"],
+      toggleHeaderRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderRow"],
+      toggleHeaderCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderCell"],
+      setCellAttr: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["setCellAttr"],
+      fixTables: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["fixTables"]
     };
   }
 
   keys() {
     return {
-      Tab: Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["goToNextCell"])(1),
-      'Shift-Tab': Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["goToNextCell"])(-1)
+      Tab: Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["goToNextCell"])(1),
+      'Shift-Tab': Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["goToNextCell"])(-1)
     };
   }
 
   get plugins() {
-    return [...(this.options.resizable ? [Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["columnResizing"])()] : []), Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["tableEditing"])()];
+    return [...(this.options.resizable ? [Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["columnResizing"])()] : []), Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["tableEditing"])()];
   }
 
 }
@@ -89851,7 +89865,7 @@ class Link extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Mark"] {
           const {
             schema
           } = view.state;
-          const attrs = Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["getMarkAttrs"])(view.state, schema.marks.link);
+          const attrs = Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["getMarkAttrs"])(view.state, schema.marks.link);
 
           if (attrs.href && event.target instanceof HTMLAnchorElement) {
             event.stopPropagation();
@@ -89953,7 +89967,7 @@ class Collaboration extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   init() {
     this.getSendableSteps = this.debounce(state => {
-      const sendable = Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["sendableSteps"])(state);
+      const sendable = Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["sendableSteps"])(state);
 
       if (sendable) {
         this.options.onSendable({
@@ -89989,17 +90003,17 @@ class Collaboration extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
           schema
         } = this.editor;
 
-        if (Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["getVersion"])(state) > version) {
+        if (Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["getVersion"])(state) > version) {
           return;
         }
 
-        view.dispatch(Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["receiveTransaction"])(state, steps.map(item => prosemirror_transform__WEBPACK_IMPORTED_MODULE_8__["Step"].fromJSON(schema, item.step)), steps.map(item => item.clientID)));
+        view.dispatch(Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["receiveTransaction"])(state, steps.map(item => prosemirror_transform__WEBPACK_IMPORTED_MODULE_9__["Step"].fromJSON(schema, item.step)), steps.map(item => item.clientID)));
       }
     };
   }
 
   get plugins() {
-    return [Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["collab"])({
+    return [Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["collab"])({
       version: this.options.version,
       clientID: this.options.clientID
     })];
@@ -90090,18 +90104,18 @@ class History extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   keys() {
     const keymap = {
-      'Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      'Mod-y': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
-      'Shift-Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
+      'Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      'Mod-y': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
+      'Shift-Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
       // Russian language
-      'Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      'Shift-Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"]
+      'Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      'Shift-Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"]
     };
     return keymap;
   }
 
   get plugins() {
-    return [Object(prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["history"])({
+    return [Object(prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["history"])({
       depth: this.options.depth,
       newGroupDelay: this.options.newGroupDelay
     })];
@@ -90109,10 +90123,10 @@ class History extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   commands() {
     return {
-      undo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      redo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
-      undoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undoDepth"],
-      redoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redoDepth"]
+      undo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      redo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
+      undoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undoDepth"],
+      redoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redoDepth"]
     };
   }
 
@@ -90431,7 +90445,7 @@ class TrailingNode extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
       state: {
         init: (_, state) => {
           const lastNode = state.tr.doc.lastChild;
-          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["nodeEqualsType"])({
+          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["nodeEqualsType"])({
             node: lastNode,
             types: disabledNodes
           });
@@ -90442,7 +90456,7 @@ class TrailingNode extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
           }
 
           const lastNode = tr.doc.lastChild;
-          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["nodeEqualsType"])({
+          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["nodeEqualsType"])({
             node: lastNode,
             types: disabledNodes
           });
