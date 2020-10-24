@@ -1,4 +1,7 @@
 # Changelog
+## v1.12 Beta (XX/10/2020)
+- Import students from Google Classroom
+
 ## v1.11 Beta (24/10/2020)
 - Added H5p attachments.
 - Fortune wheel.
