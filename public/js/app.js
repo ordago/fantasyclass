@@ -3495,6 +3495,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var Editor = function Editor() {
   return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(8)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
@@ -3689,6 +3736,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
 //
 //
 //
@@ -12155,7 +12203,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -12247,7 +12294,6 @@ __webpack_require__.r(__webpack_exports__);
           value: value,
           bgColor: color,
           color: "#ffffff",
-          probability: 100 / this.numberPrizes,
           weight: 1
         });
       }
@@ -12258,8 +12304,7 @@ __webpack_require__.r(__webpack_exports__);
         value: this.max,
         bgColor: "#ffd700",
         color: "#ffffff",
-        probability: 100 / this.numberPrizes,
-        weight: 100
+        weight: 1
       });
       this.prizes = _.shuffle(this.prizes);
       this.showWheel = true;
@@ -53574,9 +53619,25 @@ var render = function() {
                       },
                       _vm._l(_vm.challengegroups, function(group) {
                         return _c(
-                          "option",
-                          { key: group.id, domProps: { value: group.id } },
-                          [_vm._v(_vm._s(group.name))]
+                          "optgroup",
+                          { key: group.id, attrs: { label: group.name } },
+                          [
+                            _c("option", { domProps: { value: group.id } }, [
+                              _vm._v(_vm._s(group.name))
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(group.children, function(child) {
+                              return _c(
+                                "option",
+                                {
+                                  key: child.id,
+                                  domProps: { value: child.id }
+                                },
+                                [_vm._v(_vm._s(child.name))]
+                              )
+                            })
+                          ],
+                          2
                         )
                       }),
                       0
@@ -54034,21 +54095,25 @@ var render = function() {
                             [
                               _c("option", { attrs: { value: "0" } }, [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.trans.get(
-                                      "challenges.completion_teacher"
-                                    )
-                                  )
+                                  "\n                  " +
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "challenges.completion_teacher"
+                                      )
+                                    ) +
+                                    "\n                "
                                 )
                               ]),
                               _vm._v(" "),
                               _c("option", { attrs: { value: "1" } }, [
                                 _vm._v(
-                                  _vm._s(
-                                    _vm.trans.get(
-                                      "challenges.completion_student"
-                                    )
-                                  )
+                                  "\n                  " +
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "challenges.completion_student"
+                                      )
+                                    ) +
+                                    "\n                "
                                 )
                               ])
                             ]
@@ -54123,12 +54188,24 @@ var render = function() {
           ? _c(
               "button",
               { staticClass: "button is-primary", attrs: { type: "submit" } },
-              [_vm._v(_vm._s(_vm.trans.get("challenges.create_challenge")))]
+              [
+                _vm._v(
+                  "\n      " +
+                    _vm._s(_vm.trans.get("challenges.create_challenge")) +
+                    "\n    "
+                )
+              ]
             )
           : _c(
               "button",
               { staticClass: "button is-info", attrs: { type: "submit" } },
-              [_vm._v(_vm._s(_vm.trans.get("challenges.edit")))]
+              [
+                _vm._v(
+                  "\n      " +
+                    _vm._s(_vm.trans.get("challenges.edit")) +
+                    "\n    "
+                )
+              ]
             )
       ]
     )
@@ -54461,6 +54538,23 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
+              !_vm.full && !_vm.admin
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "button",
+                      attrs: {
+                        href:
+                          "/classroom/show/" +
+                          this.code +
+                          "/challenges/" +
+                          _vm.challengeReactive.permalink
+                      }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("challenges.show_challenge")))]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
               _vm.edit || _vm.full
                 ? _c("div", {
                     domProps: {
@@ -54685,7 +54779,7 @@ var render = function() {
                 0
               ),
               _vm._v(" "),
-              !_vm.allowComment
+              !_vm.allowComment && (_vm.full || _vm.edit)
                 ? _c(
                     "button",
                     {
@@ -68460,8 +68554,7 @@ var render = function() {
             staticStyle: { width: "100%" },
             attrs: {
               borderColor: "#584b43",
-              borderWidth: 1,
-              textLength: 3,
+              borderWidth: 2,
               useWeight: true,
               fontSize: _vm.fontSize,
               textRadius: 230,
@@ -86598,7 +86691,9 @@ __webpack_require__.r(__webpack_exports__);
     "mark_title": "Marcar com a superat",
     "mark_confirm": "Confirme superaci\xF3",
     "mark_text": "Est\xE0s segur/1 que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria.",
-    "comment": "Comenta"
+    "comment": "Comenta",
+    "show_challenge": "Mostra repte",
+    "show_all": "Mostra tots"
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -87281,7 +87376,9 @@ __webpack_require__.r(__webpack_exports__);
     "mark_title": "Mark as done",
     "mark_confirm": "Confirm done",
     "mark_text": "Are you sure you have done all the the work? Trust is needed there.",
-    "comment": "Comment"
+    "comment": "Comment",
+    "show_challenge": "Show challenge",
+    "show_all": "Show all"
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -87972,7 +88069,9 @@ __webpack_require__.r(__webpack_exports__);
     "mark_title": "Marcar como superado",
     "mark_confirm": "Confirmo la superaci\xF3n",
     "mark_text": "\xBFEst\xE1s seguro/a que has superado la tarea? La confianza es necesaria.",
-    "comment": "Comenta"
+    "comment": "Comenta",
+    "show_challenge": "Muestra desaf\xEDo",
+    "show_all": "Muestra todos"
   },
   "es.classroom": {
     "add": "A\xF1ade clase",

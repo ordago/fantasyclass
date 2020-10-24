@@ -128,7 +128,7 @@ class Student extends Model implements HasMedia
 
     public function challenges()
     {
-        return $this->belongsToMany(Challenge::class)->withPivot('count');
+        return $this->belongsToMany(Challenge::class)->withPivot('count', 'rating');
     }
 
     public function cards()

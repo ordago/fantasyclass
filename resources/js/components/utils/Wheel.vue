@@ -4,8 +4,7 @@
       v-if="showWheel"
       style="width: 100%"
       borderColor="#584b43"
-      :borderWidth="1"
-      :textLength="3"
+      :borderWidth="2"
       :useWeight="true"
       :fontSize="fontSize"
       :textRadius="230"
@@ -195,7 +194,6 @@ export default {
           value: value,
           bgColor: color,
           color: "#ffffff",
-          probability: 100 / this.numberPrizes,
           weight: 1,
         });
       }
@@ -205,8 +203,7 @@ export default {
         value: this.max,
         bgColor: "#ffd700",
         color: "#ffffff",
-        probability: 100 / this.numberPrizes,
-        weight: 100,
+        weight: 1,
       });
 
       this.prizes = _.shuffle(this.prizes);

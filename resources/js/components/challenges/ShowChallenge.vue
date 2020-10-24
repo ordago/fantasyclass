@@ -49,6 +49,7 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
+          <a class="button" :href="'/classroom/show/' + this.code + '/challenges/' + challengeReactive.permalink" v-if="!full && !admin">{{ trans.get('challenges.show_challenge') }}</a>
           <div
             v-if="edit || full"
             v-html="getContent(challengeReactive.content)"
@@ -184,7 +185,7 @@
           </div>
           <button
             class="button"
-            v-if="!allowComment"
+            v-if="!allowComment && (full || edit)"
             @click="allowComment = true"
           >
             <i class="fad fa-comments mr-2"></i>

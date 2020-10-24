@@ -44,5 +44,7 @@ return [
     'mark_text' => 'Estàs segur/1 que has superat la tasca? La confiança és necessària.',
 
     'comment' => 'Comenta',
+    'show_challenge' => 'Mostra repte',
+    'show_all' => 'Mostra tots',
 
 ];

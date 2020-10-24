@@ -1,9 +1,12 @@
 # Changelog
 ## v1.12 Beta (XX/10/2020)
-- Import students from Google Classroom
+- Import students from Google Classroom.
 
 ### Changed
 - Authory of map in maps.
+- Added subcategories in edit challenge.
+- Hide comment button in challenge information.
+- Wheel now use weights.
 
 ## v1.11 Beta (24/10/2020)
 - Added H5p attachments.

@@ -49,7 +49,7 @@
         "vue-drag-n-drop": "^1.2.1",
         "vue-fortune-wheel": "^0.3.4",
         "vue-json-excel": "^0.2.99",
-        "vue-slider-component": "^3.2.7",
+        "vue-slider-component": "^3.2.9",
         "vue-tippy": "^4.7.1",
         "vue-toasted": "^1.1.28",
         "vue-xlsx": "^0.2.1",

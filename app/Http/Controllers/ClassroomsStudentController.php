@@ -16,6 +16,7 @@ use App\Pet;
 use App\Rules;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -140,6 +141,22 @@ class ClassroomsStudentController extends Controller
         return view('studentsview.challenges', compact('class', 'student', 'challenges'));
     }
 
+    public function getChallenge($code, $permalink)
+    {
+        $challenge = Challenge::find(Crypt::decryptString($permalink))->with('attachments', 'comments', 'group');
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $student = Functions::getCurrentStudent($class, []);
+        $this->checkVisibility($class->id);
+        $this->authorize('study', $class);
+
+        $challenge = Challenge::find(Crypt::decryptString($permalink))->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            return collect($challenge->toArray())
+                ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
+                ->all();
+        })[0];
+        
+        return view('studentsview.challenge', compact('challenge', 'class', 'student'));
+    }
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -199,6 +216,7 @@ class ClassroomsStudentController extends Controller
             ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
             ->get();
 
+  
         $groups = $student->groups->pluck('id');
 
         $groupChallenges = DB::table('groups')
@@ -221,6 +239,10 @@ class ClassroomsStudentController extends Controller
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
+        foreach ($challenges as $challenge) {
+            $challenge->permalink = Crypt::encryptString($challenge->id);
+        }
+
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');

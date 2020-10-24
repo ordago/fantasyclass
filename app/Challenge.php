@@ -5,6 +5,7 @@ namespace App;
 use App\Http\Classes\Functions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Crypt;
 
 class Challenge extends Model
 {
@@ -28,6 +29,14 @@ class Challenge extends Model
         'challenges_group_id',
     ];
 
+    protected $appends = ['permalink'];
+
+    public function getPermalinkAttribute() {
+
+        return Crypt::encryptString($this->id);
+
+    }
+
     public function getQuestioninfoAttribute()
     {
         ChallengesGroup::$withoutAppends = true;
@@ -49,7 +58,7 @@ class Challenge extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class)->withPivot('count');
+        return $this->belongsToMany(Student::class)->withPivot('count', 'rating');
     }
     public function groups()
     {
