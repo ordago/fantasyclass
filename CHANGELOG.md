@@ -1,7 +1,8 @@
 # Changelog
-## v1.11 Beta (XX/10/2020)
-- Import from Google Classroom.
+## v1.11 Beta (24/10/2020)
 - Added H5p attachments.
+- Fortune wheel.
+- New fortune wheel event.
 
 ## v1.10 Beta (21/10/2020)
 ### Added

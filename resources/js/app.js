@@ -130,6 +130,8 @@ Vue.component('input-emoji', () => import('./components/utils/InputEmoji.vue').d
 
 Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
 
+Vue.component('wheel', require('./components/utils/Wheel.vue').default);
+
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
 
 Vue.component('massive-actions', require('./components/utils/MassiveActions.vue').default);

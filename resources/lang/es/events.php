@@ -61,4 +61,9 @@ return [
     'kiwi_content' => 'Parece inofensivo pero quien sabe... Intentamos pasar?',
     'kiwi_content_ok' => 'Le pedimos con buenas maneras y nos deja pasar, encontramos además un tesoro!',
     'kiwi_content_ko' => 'Salimos corriendo! Es muy poderoso y nos ha atacado!!!',
+    'wheel' => 'Ruleta de la fortuna', 
+    'wheel_content' => '¡Juguemos a la ruleta de la fortuna!',
+    'wheel_btn' => 'Abre la ruleta',
+    'go_ahead' => '¡Adelante!',
+
 ];

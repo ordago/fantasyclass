@@ -68,6 +68,10 @@
               <i class="fad fa-club has-margin-right-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.card") }}
             </a>
+            <a class="dropdown-item" @click="isWheelModalActive = true">
+              <i class="fad fa-treasure-chest has-margin-right-2"></i>
+              {{ trans.get("utils.fortune") }}
+            </a>
           </div>
         </div>
         <a
@@ -125,7 +129,10 @@
         class="column is-narrow has-text-right is-center-vertically is-flex"
         v-if="students.length > 0"
       >
-        <span class="p-3 mr-2  has-background-white" style="border: 1px solid #999; border-radius: 5px">
+        <span
+          class="p-3 mr-2 has-background-white"
+          style="border: 1px solid #999; border-radius: 5px"
+        >
           <span>
             <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
           </span>
@@ -168,7 +175,10 @@
             <i class="fas fa-coins pointer has-margin-right-3"></i>
           </span>
         </span>
-        <span class="p-3 has-background-white" style="border: 1px solid #999; border-radius: 5px">
+        <span
+          class="p-3 has-background-white"
+          style="border: 1px solid #999; border-radius: 5px"
+        >
           <span v-if="view == 0 || view == 1">
             <span
               class="cursor-pointer colored"
@@ -443,7 +453,7 @@
     <b-modal :active.sync="dice" has-modal-card full-screen :can-cancel="false">
       <div class="modal-card" style="width: auto">
         <button class="button" type="button" @click="dice = false">
-          Close
+          {{ trans.get("general.close") }}
         </button>
         <iframe :src="diceUrl" width="100%" style="height: 100vh"></iframe>
       </div>
@@ -484,7 +494,7 @@
               type="button"
               @click="isCardModalActive = false"
             >
-              Close
+              {{ trans.get("general.close") }}
             </button>
             <button
               class="button is-link"
@@ -575,7 +585,27 @@
             type="button"
             @click="isCountDownModalActive = false"
           >
-            Close
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
+    <b-modal
+      :active.sync="isWheelModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("utils.fortune") }}</p>
+        </header>
+        <section class="modal-card-body is-flex has-all-centered">
+          <wheel :students="students"></wheel>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="refresh">
+            {{ trans.get("general.close") }}
           </button>
         </footer>
       </div>
@@ -619,6 +649,7 @@ export default {
       isCardModalActive: false,
       isCountDownModalActive: false,
       isMassiveModalActive: false,
+      isWheelModalActive: false,
       dice: false,
       image: null,
       currentStudent: null,

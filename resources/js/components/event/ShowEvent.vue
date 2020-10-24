@@ -105,6 +105,7 @@
             </div>
           </div>
         </h4>
+        <button @click="isWheelModalActive = true" v-if="info.event.type == 14" class="button is-primary">{{ trans.get('events.wheel_btn') }}</button>
         <show-card
           v-if="info.event.type == 11 && showInfo"
           :card="info.card"
@@ -118,7 +119,7 @@
         >Show / hide card</button>
         <div class="columns" v-if="info.event.type==12">
           <div class="column" v-if="!showInfo">
-            <button class="button is-success" @click="showInfo = true">Go ahead!</button>
+            <button class="button is-success" @click="showInfo = true">{{ trans.get('events.go_ahead') }}</button>
           </div>
           <div class="column" v-if="!showInfo">
             <button class="button is-danger" @click="close()">Nope ...</button>
@@ -142,6 +143,26 @@
         </button>
       </div>
     </transition>
+     <b-modal
+      :active.sync="isWheelModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("utils.fortune") }}</p>
+        </header>
+        <section class="modal-card-body is-flex has-all-centered">
+          <wheel :students="info.students"></wheel>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="isWheelModalActive = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -153,6 +174,7 @@ export default {
   },
   data: function() {
     return {
+      isWheelModalActive: false,
       show: false,
       selectedStudent: 0,
       isCountDownModalActive: false,

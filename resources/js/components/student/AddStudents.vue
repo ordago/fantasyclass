@@ -4,12 +4,13 @@
       <div class="column is-narrow p-0 m-1">
         <Xlsx type="addstudent"></Xlsx>
       </div>
-      <div class="column is-narrow p-0 m-1">
-        <button class="button is-primary" @click="loadGoogleCourses">
-          <i class="fad fa-chalkboard-teacher mr-2"></i>
+      <!-- <div class="column is-narrow p-0 m-1">
+        <button class="button button is-white border" @click="loadGoogleCourses">
+          <img src="/img/google-logo.svg" width="40px">
           {{ trans.get("students.import_gclassroom") }}
         </button>
-      </div>
+      </div> -->
+
     </div>
     <div class="field is-horizontal">
       <form @submit.prevent="addStudentForm">
@@ -52,7 +53,7 @@
 
     <div v-for="(student, index) in students" v-bind:key="student.name">
       <div
-        class="has-margin-y-2 has-padding-4 has-background-dark has-text-light rounded text-light relative"
+        class="has-margin-y-2 p-5 border has-background-white rounded relative"
       >
         <span class="has-padding-right-3">{{ index + 1 }}</span>
         <span class="tag is-danger" v-if="student.google_uid"
