@@ -69,7 +69,7 @@ class LoginController extends Controller
         ]);
   
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']),$remember))
+        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']), true))
         {
             return redirect()->route('classrooms');
         } else {
