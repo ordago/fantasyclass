@@ -14,7 +14,7 @@ class AddRatingField extends Migration
     public function up()
     {
         Schema::table('challenge_student', function (Blueprint $table) {
-            $table->string('token')->after('count')->nullable();
+            $table->string('rating')->after('count')->nullable();
         });
     }
 
@@ -25,6 +25,6 @@ class AddRatingField extends Migration
      */
     public function down()
     {
-        
+
     }
 }

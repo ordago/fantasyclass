@@ -39,7 +39,7 @@
             @enderror
         </div>
 
-        <input class="form-check-input" type="checkbox" checked name="remember" style="display: none" id="remember">
+        <input class="form-check-input mb-2" name="remember" type="checkbox" id="remember"> Remember
 
         <div class="">
             <div class="">
