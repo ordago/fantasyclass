@@ -11,6 +11,7 @@ return [
     */
 
     'excel' => 'Importa del Excel',
+    'import_gclassroom' => 'Importa de Google Classroom',
     'excel_template' => 'Descarga la plantilla',
     'dnd' => 'Arrastra el fichero o haz clic para subir',
     'search' => 'Busca por nombre',
@@ -52,6 +53,7 @@ return [
     'highlights' => 'Destaca en',
     'change_class' => 'Cambia subclase',
     'basic_equipment' => 'El equipamiento básico será asignado, esta acción no se puede deshacer.',
-    '' => '',
+    'online' => 'El/la estudiante está activo/a (online)',
+
 
 ];

@@ -16,7 +16,7 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'email_verified_at', 'is_student', 'locale'
+        'name', 'email', 'password', 'username', 'email_verified_at', 'is_student', 'locale', 'refresh_token', 'expires_in', 'token'
     ];
 
     /**
@@ -37,12 +37,13 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function classrooms() {
+    public function classrooms()
+    {
         return $this->belongsToMany(Classroom::class)->using(ClassroomUser::class)->withPivot('role', 'id');
     }
 
-    public function comments() {
+    public function comments()
+    {
         return $this->hasMany(Comment::class);
     }
-
 }

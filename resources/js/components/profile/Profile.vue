@@ -93,7 +93,7 @@
         </div>
         <button
           class="button is-dark"
-          v-if="user.is_student == 1"
+          v-if="user.is_student == 1 && user.email"
           @click.prevent="promote"
         >{{ trans.get('profile.upgrade') }}</button>
 

@@ -375,7 +375,7 @@ class ClassroomsController extends Controller
         $chat['chatbro_id'] = env('CHATBRO_ID');
         $chat['id'] = '999999-'.auth()->user()->id;
         $chat['name'] = 'Teacher';
-        $chat['avatar'] = env('APP_URL').'/img/teacher.svg';
+        $chat['avatar'] = env('APP_URL').'/img/icons/teacher.svg';
 
         $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].'delete'.env('CHATBRO_KEY')); 
 

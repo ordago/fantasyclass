@@ -1,4 +1,37 @@
 # Changelog
+## v1.12 Beta (25/10/2020)
+### Added
+- Button to go to challenge in students challenge summary.
+- Licenses added and folder organization.
+- Authory of map in maps.
+- Google Analytics.
+- Show student's active.
+
+### Changed
+- Added sounds to wheel.
+- Wheel now use weights (for now all probabilities are equal).
+- Added subcategories in edit challenge.
+- Hide comment button in challenge information.
+- Changes in remember user.
+- Updates in policy.
+- Deck image logo.
+
+## v1.11 Beta (24/10/2020)
+### Added
+- Added H5p attachments.
+- Fortune wheel.
+- New fortune wheel event.
+
+## v1.10 Beta (21/10/2020)
+### Added
+- Cookie consent improved.
+- List view (informative only).
+
+### Changed
+- Prevent scrolling when loading challenges and load in reverse order.
+- Now XP and Gold modifiers are hidden by default.
+- Users without e-mail can't create classrooms.
+- Emoji picker style fixed.
 
 ## v1.09 Beta (13/10/2020)
 ### Added

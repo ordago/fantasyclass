@@ -21,12 +21,16 @@ class StudentController extends Controller
         $this->middleware('verified');
     }
 
-    public function create($code)
+    public function create($code, $flag = 0)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         session()->put('classroom', $class->id);
-        return view('students.create', compact('class'));
+        $modalVisible = 0;
+        if($flag)
+            $modalVisible = 1;
+
+        return view('students.create', compact('class', 'modalVisible'));
     }
 
     public function store(Request $request)
@@ -77,7 +81,7 @@ class StudentController extends Controller
                 session()->put('classroom', $classId);
                 if (!isset($error))
                     $error = [];
-                array_push($error, $student['name'] . " can't be created");
+                array_push($error, $student['name'] . " already exists in this classroom");
                 continue;
             }
 
@@ -101,6 +105,8 @@ class StudentController extends Controller
                 'name' => $student['name'],
                 'character_id' => $charId,
                 'password_plain' => $pass,
+                'google_uid' => $student['google_uid'],
+                'google_course' => $student['google_course'],
             ]);
 
             if ($class->characterTheme) {

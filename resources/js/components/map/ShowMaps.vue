@@ -90,7 +90,7 @@
     <div class="columns">
       <div class="column">
         <div class="card-content has-text-centered">
-          <img src="/img/templates/FantasyClass-1.png" />
+          <img src="/img/maps/FantasyClass-1.png" />
         </div>
         <footer class="card-footer">
           <p
@@ -123,7 +123,7 @@
       </div>
       <div class="column">
         <div class="card-content has-text-centered">
-          <img src="/img/templates/FantasyClass-2.png" />
+          <img src="/img/maps/FantasyClass-2.png" />
         </div>
         <footer class="card-footer">
           <p
@@ -152,11 +152,23 @@
               >
             </span>
           </p>
+          <p
+            class="card-footer-item has-margin-bottom-0 has-background-dark rounded"
+          >
+            <span>
+              <a
+                href="https://twitter.com/soyjujo_juanjo"
+                class="has-text-light"
+                target="_blank"
+                ><i class="fad fa-image"></i> By Jujo</a
+              >
+            </span>
+          </p>
         </footer>
       </div>
       <div class="column">
         <div class="card-content has-text-centered">
-          <img src="/img/templates/FantasyClass-3.png" />
+          <img src="/img/maps/FantasyClass-3.png" />
         </div>
         <footer class="card-footer">
           <p

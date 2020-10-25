@@ -11,6 +11,7 @@ return [
     */
 
     'excel' => 'Import from Excel',
+    'import_gclassroom' => 'Import from Google Classroom',
     'excel_template' => 'Download the template',
     'dnd' => 'Drop your file here or click to upload',
     'search' => 'Search by name',
@@ -51,6 +52,6 @@ return [
     'highlights' => 'Highlights in',
     'change_class' => 'Change subclass',
     'basic_equipment' => 'Basic equipment will be assigned. This action can\'t be undone.',
-    '' => '',
+    'online' => 'Student is active (online)',
     
 ];

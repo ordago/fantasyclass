@@ -2,29 +2,37 @@
   <div class="w-100">
     <form action="#" method="post" @submit.prevent="createChallenge">
       <div class="has-margin-y-3" v-if="edit && !importFlag">
-        <label for="name">{{ trans.get('challenges.categories') }}</label>
+        <label for="name">{{ trans.get("challenges.categories") }}</label>
         <div class="field has-margin-top-3">
           <div class="control">
             <div class="select is-fullwidth">
-              <select @input="reload=true" v-model="challenge.challenges_group_id">
-                <option
-                  v-for="group in challengegroups"
-                  :key="group.id"
-                  :value="group.id"
-                >{{ group.name }}</option>
+              <select
+                @input="reload = true"
+                v-model="challenge.challenges_group_id"
+              >
+                <optgroup v-for="group in challengegroups" :label="group.name" :key="group.id">
+                  <option :value="group.id">{{ group.name }}</option>
+                  <option v-for="child in group.children" :key="child.id" :value="child.id">{{ child.name }}</option>
+                </optgroup>
               </select>
             </div>
           </div>
         </div>
       </div>
       <div class="field w-100">
-        <label class="label">{{ trans.get('challenges.title') }} *</label>
+        <label class="label">{{ trans.get("challenges.title") }} *</label>
         <div class="control">
-          <input class="input" type="text" v-model="challenge.title" required placeholder />
+          <input
+            class="input"
+            type="text"
+            v-model="challenge.title"
+            required
+            placeholder
+          />
         </div>
       </div>
       <div class="field w-100">
-        <label class="label">{{ trans.get('challenges.description')}}</label>
+        <label class="label">{{ trans.get("challenges.description") }}</label>
         <div class="control">
           <input
             class="input"
@@ -66,9 +74,9 @@
         </b-field>
       </div>
       <div class="field w-100 has-padding-top-3">
-        <label class="label">{{ trans.get('challenges.content') }}</label>
+        <label class="label">{{ trans.get("challenges.content") }}</label>
         <div class="control content" data-app>
-          <Editor :code="code"></Editor>
+          <Editor height="70vh" :code="code"></Editor>
         </div>
       </div>
       <div class="field">
@@ -77,11 +85,15 @@
           v-model="challenge.is_conquer"
           true-value="1"
           false-value="0"
-        >{{ trans.get('challenges.conquer') }}</b-switch>
+          >{{ trans.get("challenges.conquer") }}</b-switch
+        >
       </div>
-      <div v-if="challenge.is_conquer==1" class="has-padding-4 has-border rounded">
+      <div
+        v-if="challenge.is_conquer == 1"
+        class="has-padding-4 has-border rounded"
+      >
         <div class="field w-100 has-padding-top-3">
-          <label class="label">{{ trans.get('challenges.icon') }}</label>
+          <label class="label">{{ trans.get("challenges.icon") }}</label>
           <div class="field has-addons">
             <p class="control">
               <IconSelector></IconSelector>
@@ -103,23 +115,24 @@
                 name="color"
                 class="input"
                 type="color"
-                style="padding:0;min-width: 50px;"
+                style="padding: 0; min-width: 50px"
               />
             </p>
           </div>
-          <div class="form-group" style="margin-top: -10px;">
+          <div class="form-group" style="margin-top: -10px">
             <label>
               <small>
-                {{ trans.get('behaviours.fontawesome') }}
+                {{ trans.get("behaviours.fontawesome") }}
                 <a
                   href="https://fontawesome.com/icons?d=gallery"
                   target="_blank"
-                >FontAwesome</a>
+                  >FontAwesome</a
+                >
               </small>
             </label>
           </div>
         </div>
-        <label class="label">{{ trans.get('challenges.rewards') }}</label>
+        <label class="label">{{ trans.get("challenges.rewards") }}</label>
         <div class="columns">
           <div class="column">
             <div class="field has-addons">
@@ -129,7 +142,13 @@
                 </span>
               </p>
               <p class="control is-expanded">
-                <input type="number" name="xp" class="input" v-model="challenge.xp" required />
+                <input
+                  type="number"
+                  name="xp"
+                  class="input"
+                  v-model="challenge.xp"
+                  required
+                />
               </p>
             </div>
           </div>
@@ -141,7 +160,13 @@
                 </span>
               </p>
               <p class="control is-expanded">
-                <input type="number" name="hp" class="input" v-model="challenge.hp" required />
+                <input
+                  type="number"
+                  name="hp"
+                  class="input"
+                  v-model="challenge.hp"
+                  required
+                />
               </p>
             </div>
           </div>
@@ -155,7 +180,13 @@
                 </span>
               </p>
               <p class="control is-expanded">
-                <input type="number" name="gold" class="input" v-model="challenge.gold" required />
+                <input
+                  type="number"
+                  name="gold"
+                  class="input"
+                  v-model="challenge.gold"
+                  required
+                />
               </p>
             </div>
           </div>
@@ -168,19 +199,29 @@
                 </span>
               </p>
               <p class="control is-expanded">
-                <input type="number" name="cards" class="input" v-model="challenge.cards" required />
+                <input
+                  type="number"
+                  name="cards"
+                  class="input"
+                  v-model="challenge.cards"
+                  required
+                />
               </p>
             </div>
           </div>
         </div>
         <div class="has-margin-top-3" v-if="challenge.type == 0">
-          <label for="name">{{ trans.get('challenges.completion') }}</label>
+          <label for="name">{{ trans.get("challenges.completion") }}</label>
           <div class="field has-margin-top-3">
             <div class="control">
               <div class="select is-fullwidth">
                 <select v-model="challenge.completion">
-                  <option value="0">{{ trans.get('challenges.completion_teacher') }}</option>
-                  <option value="1">{{ trans.get('challenges.completion_student') }}</option>
+                  <option value="0">
+                    {{ trans.get("challenges.completion_teacher") }}
+                  </option>
+                  <option value="1">
+                    {{ trans.get("challenges.completion_student") }}
+                  </option>
                   <!-- <option value="2">{{ trans.get('challenges.completion_both') }}</option> -->
                 </select>
               </div>
@@ -193,8 +234,9 @@
             v-model="challenge.auto_assign"
             true-value="1"
             false-value="0"
-            v-if="challenge.cards>0"
-          >{{ trans.get('challenges.auto_assign') }}</b-switch>
+            v-if="challenge.cards > 0"
+            >{{ trans.get("challenges.auto_assign") }}</b-switch
+          >
         </div>
         <div class="field">
           <b-switch
@@ -202,7 +244,8 @@
             v-model="challenge.type"
             true-value="1"
             false-value="0"
-          >{{ trans.get('challenges.group') }}</b-switch>
+            >{{ trans.get("challenges.group") }}</b-switch
+          >
         </div>
         <!-- <div class="field">
           <b-switch
@@ -217,8 +260,12 @@
         type="submit"
         v-if="!edit || importFlag"
         class="button is-primary"
-      >{{ trans.get('challenges.create_challenge') }}</button>
-      <button type="submit" v-else class="button is-info">{{ trans.get('challenges.edit') }}</button>
+      >
+        {{ trans.get("challenges.create_challenge") }}
+      </button>
+      <button type="submit" v-else class="button is-info">
+        {{ trans.get("challenges.edit") }}
+      </button>
     </form>
   </div>
 </template>

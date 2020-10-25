@@ -46,6 +46,7 @@ Vue.use(Buefy, {
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
+import Axios from 'axios';
 
 Vue.use(Croppa)
 
@@ -130,6 +131,8 @@ Vue.component('input-emoji', () => import('./components/utils/InputEmoji.vue').d
 
 Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
 
+Vue.component('wheel', require('./components/utils/Wheel.vue').default);
+
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
 
 Vue.component('massive-actions', require('./components/utils/MassiveActions.vue').default);
@@ -208,4 +211,13 @@ const app = new Vue({
     data: {
         showNav: false
     },
+    mounted: function () {
+        axios.get('/utils/online');
+        this.$nextTick(function () {
+            window.setInterval(() => {
+                console.log('updating online status');
+                axios.get('/utils/online');
+            },290000);
+        })
+    }
 });

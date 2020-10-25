@@ -8,6 +8,7 @@ use App\Theme;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\MessageBag;
 
 class LoginController extends Controller
@@ -39,6 +40,7 @@ class LoginController extends Controller
      */
     public function __construct()
     {
+        Auth::viaRemember();
         $this->middleware('guest')->except('logout');
     }
     
@@ -57,6 +59,8 @@ class LoginController extends Controller
      */
     public function login(Request $request)
     {   
+        $remember =$request->has('remember');
+
         $input = $request->all();
   
         $this->validate($request, [
@@ -65,7 +69,7 @@ class LoginController extends Controller
         ]);
   
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']),$request->remember))
+        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']), true))
         {
             return redirect()->route('classrooms');
         } else {

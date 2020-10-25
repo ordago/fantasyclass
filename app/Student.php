@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -18,14 +19,25 @@ class Student extends Model implements HasMedia
         'character_id',
         'password_plain',
         'hidden',
-        'avatar_url'
+        'avatar_url',
+        'google_uid',
+        'google_course',
     ];
 
-    protected $appends = ['username', 'level', 'avatar', 'grouplogo'];
+    protected $appends = ['username', 'level', 'avatar', 'grouplogo', 'online'];
+
+    public function getOnlineAttribute()
+    {
+        $id = $this->getUserId();
+        if (Cache::has('user-is-online-' . $id))
+            return true;
+        else
+            return false;
+    }
 
     public function getAvatarAttribute()
     {
-        if($this->avatar_url)
+        if ($this->avatar_url)
             return $this->avatar_url;
 
         $media = $this->getMedia('avatar')->first();
@@ -35,12 +47,12 @@ class Student extends Model implements HasMedia
 
         return "/img/no_avatar.png";
     }
-    
+
     public function getGrouplogoAttribute()
     {
         $group = $this->groups->first();
-        if($group) {
-            if($group->logo)
+        if ($group) {
+            if ($group->logo)
                 return $group->logo;
             return "/img/no_group_avatar.png";
         }
@@ -50,14 +62,14 @@ class Student extends Model implements HasMedia
     public function getNumcardsAttribute()
     {
         settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
-        
+
         $num = 0;
         $max = settings()->get('num_cards', 5);
-        
+
         foreach ($this->cards as $card) {
-            if($card->special != 1)
+            if ($card->special != 1)
                 $num++;
-            if($card->slot != 0)
+            if ($card->slot != 0)
                 $max += $card->slot;
         }
         return [$num, $max];
@@ -90,12 +102,18 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Pet::class)->withPivot('hp');
     }
 
+    public function getUserId()
+    {
+        return $this->classroom->user->id;
+    }
+
     public function getUsernameAttribute()
     {
         return $this->classroom->user->username;
     }
 
-    public function pet() {
+    public function pet()
+    {
         return $this->hasOne(Pet::class);
     }
 
@@ -126,7 +144,7 @@ class Student extends Model implements HasMedia
 
     public function challenges()
     {
-        return $this->belongsToMany(Challenge::class)->withPivot('count');
+        return $this->belongsToMany(Challenge::class)->withPivot('count', 'rating');
     }
 
     public function cards()
@@ -139,11 +157,13 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Question::class)->withPivot('answer');
     }
 
-    public function badges() {
+    public function badges()
+    {
         return $this->belongsToMany(Badge::class);
     }
 
-    public function grades() {
+    public function grades()
+    {
         return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback');
     }
 
@@ -152,7 +172,8 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(RubricRow::class, 'rubric_row_student', 'student_id', 'rubric_row_id')->withPivot('rubric_row_item_id');
     }
 
-    public function addBehaviour($behaviourId) {
+    public function addBehaviour($behaviourId)
+    {
         $behaviour = Behaviour::findOrFail($behaviourId);
         $behaviour->update(['count_number' => $behaviour->count_number + 1]);
         $this->behaviours()->attach($behaviourId);
@@ -175,9 +196,9 @@ class Student extends Model implements HasMedia
             $gold += $item->gold;
             $hp += $item->hp;
         }
-        
+
         $pet = $this->pets->first();
-        if($pet) {
+        if ($pet) {
             $xp += $pet->xp_boost;
             $gold += $pet->gold_boost;
             $hp += $pet->hp_boost;
@@ -200,14 +221,14 @@ class Student extends Model implements HasMedia
             if ($value >= 0) {
                 $value = min($this->$prop + $value, 100);
             } else {
-                if(!$byPassBoost)
-                    $old = $value - $value * $boost["hp"]/100;
+                if (!$byPassBoost)
+                    $old = $value - $value * $boost["hp"] / 100;
                 $value = max($this->$prop + $old, 0);
             }
         } else {
             if ($value >= 0) {
-                if(!$byPassBoost)
-                    $old = $value + $value * $boost[$prop]/100;
+                if (!$byPassBoost)
+                    $old = $value + $value * $boost[$prop] / 100;
                 $value = $this->$prop + $old;
             } else {
                 $value = max($this->$prop + $value, 0);
@@ -218,11 +239,11 @@ class Student extends Model implements HasMedia
             $prop => $value,
         ])->save();
 
-        
-        if($prop == 'hp') {
+
+        if ($prop == 'hp') {
             $checkAlive = $this->hp == 0 ? false : true;
-            if($isAlive != $checkAlive) {
-                if($isAlive) {
+            if ($isAlive != $checkAlive) {
+                if ($isAlive) {
                     $this->setUndead();
                     $this->setProperty('xp', $this->xp * -1);
                     $this->setProperty('gold', $this->gold * -1);
@@ -232,7 +253,7 @@ class Student extends Model implements HasMedia
             }
         }
 
-        if($log && $old != 0) {
+        if ($log && $old != 0) {
             LogEntry::create([
                 'type' => $prop,
                 'value' => $old,
@@ -247,12 +268,11 @@ class Student extends Model implements HasMedia
         }
         return $value;
     }
-    
+
     public function setUndead()
     {
         $this->equipment()->detach($this->equipment);
         $this->equipment()->attach([300, 301, 302, 303, 304]);
-        
     }
     public function setBasicEquipment()
     {
@@ -300,7 +320,6 @@ class Student extends Model implements HasMedia
             case '14':
                 $ids = [280, 284, 288];
                 break;
-
         }
 
         $this->equipment()->attach($ids);

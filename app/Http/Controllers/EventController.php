@@ -135,7 +135,13 @@ class EventController extends Controller
                 $return = [
                     'event' => $event,
                 ];
-                break;
+            break;
+            case 14:
+                $return = [
+                    'students' => $class->students,
+                    'event' => $event,
+                ];
+            break;
             case 1:
                 $options = json_decode($event->options);
                 $return = [

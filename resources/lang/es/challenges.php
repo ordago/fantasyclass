@@ -43,4 +43,8 @@ return [
     'mark_confirm' => 'Confirmo la superación',
     'mark_text' => '¿Estás seguro/a que has superado la tarea? La confianza es necesaria.',
 
+    'comment' => 'Comenta',
+    'show_challenge' => 'Muestra desafío',
+    'show_all' => 'Muestra todos',
+
 ];

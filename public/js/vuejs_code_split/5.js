@@ -65220,11 +65220,11 @@ function mergeStreams(original, highlighted, value) {
    */
   function open(node) {
     /** @param {Attr} attr */
-    function attr_str(attr) {
+    function attributeString(attr) {
       return ' ' + attr.nodeName + '="' + escapeHTML(attr.value) + '"';
     }
     // @ts-ignore
-    result += '<' + tag(node) + [].map.call(node.attributes, attr_str).join('') + '>';
+    result += '<' + tag(node) + [].map.call(node.attributes, attributeString).join('') + '>';
   }
 
   /**
@@ -66121,9 +66121,9 @@ function compileLanguage(language) {
 
     mode.keywords = mode.keywords || mode.beginKeywords;
 
-    let kw_pattern = null;
+    let keywordPattern = null;
     if (typeof mode.keywords === "object") {
-      kw_pattern = mode.keywords.$pattern;
+      keywordPattern = mode.keywords.$pattern;
       delete mode.keywords.$pattern;
     }
 
@@ -66132,13 +66132,13 @@ function compileLanguage(language) {
     }
 
     // both are not allowed
-    if (mode.lexemes && kw_pattern) {
+    if (mode.lexemes && keywordPattern) {
       throw new Error("ERR: Prefer `keywords.$pattern` to `mode.lexemes`, BOTH are not allowed. (see mode reference) ");
     }
 
     // `mode.lexemes` was the old standard before we added and now recommend
     // using `keywords.$pattern` to pass the keyword pattern
-    cmode.keywordPatternRe = langRe(mode.lexemes || kw_pattern || /\w+/, true);
+    cmode.keywordPatternRe = langRe(mode.lexemes || keywordPattern || /\w+/, true);
 
     if (parent) {
       if (mode.beginKeywords) {
@@ -66166,7 +66166,7 @@ function compileLanguage(language) {
     if (!mode.contains) mode.contains = [];
 
     mode.contains = [].concat(...mode.contains.map(function(c) {
-      return expand_or_clone_mode(c === 'self' ? mode : c);
+      return expandOrCloneMode(c === 'self' ? mode : c);
     }));
     mode.contains.forEach(function(c) { compileMode(/** @type Mode */ (c), cmode); });
 
@@ -66212,7 +66212,7 @@ function dependencyOnParent(mode) {
  * @param {Mode} mode
  * @returns {Mode | Mode[]}
  * */
-function expand_or_clone_mode(mode) {
+function expandOrCloneMode(mode) {
   if (mode.variants && !mode.cached_variants) {
     mode.cached_variants = mode.variants.map(function(variant) {
       return inherit(mode, { variants: null }, variant);
@@ -66250,11 +66250,11 @@ function expand_or_clone_mode(mode) {
  * Given raw keywords from a language definition, compile them.
  *
  * @param {string | Record<string,string>} rawKeywords
- * @param {boolean} case_insensitive
+ * @param {boolean} caseInsensitive
  */
-function compileKeywords(rawKeywords, case_insensitive) {
+function compileKeywords(rawKeywords, caseInsensitive) {
   /** @type KeywordDict */
-  var compiled_keywords = {};
+  var compiledKeywords = {};
 
   if (typeof rawKeywords === 'string') { // string
     splitAndCompile('keyword', rawKeywords);
@@ -66263,7 +66263,7 @@ function compileKeywords(rawKeywords, case_insensitive) {
       splitAndCompile(className, rawKeywords[className]);
     });
   }
-  return compiled_keywords;
+  return compiledKeywords;
 
   // ---
 
@@ -66276,12 +66276,12 @@ function compileKeywords(rawKeywords, case_insensitive) {
    * @param {string} keywordList
    */
   function splitAndCompile(className, keywordList) {
-    if (case_insensitive) {
+    if (caseInsensitive) {
       keywordList = keywordList.toLowerCase();
     }
     keywordList.split(' ').forEach(function(keyword) {
       var pair = keyword.split('|');
-      compiled_keywords[pair[0]] = [className, scoreForKeyword(pair[0], pair[1])];
+      compiledKeywords[pair[0]] = [className, scoreForKeyword(pair[0], pair[1])];
     });
   }
 }
@@ -66312,7 +66312,7 @@ function commonKeyword(keyword) {
   return COMMON_KEYWORDS.includes(keyword.toLowerCase());
 }
 
-var version = "10.2.1";
+var version = "10.3.1";
 
 // @ts-nocheck
 
@@ -66525,17 +66525,17 @@ const HLJS = function(hljs) {
 
     function processKeywords() {
       if (!top.keywords) {
-        emitter.addText(mode_buffer);
+        emitter.addText(modeBuffer);
         return;
       }
 
-      let last_index = 0;
+      let lastIndex = 0;
       top.keywordPatternRe.lastIndex = 0;
-      let match = top.keywordPatternRe.exec(mode_buffer);
+      let match = top.keywordPatternRe.exec(modeBuffer);
       let buf = "";
 
       while (match) {
-        buf += mode_buffer.substring(last_index, match.index);
+        buf += modeBuffer.substring(lastIndex, match.index);
         const data = keywordData(top, match);
         if (data) {
           const [kind, keywordRelevance] = data;
@@ -66547,27 +66547,27 @@ const HLJS = function(hljs) {
         } else {
           buf += match[0];
         }
-        last_index = top.keywordPatternRe.lastIndex;
-        match = top.keywordPatternRe.exec(mode_buffer);
+        lastIndex = top.keywordPatternRe.lastIndex;
+        match = top.keywordPatternRe.exec(modeBuffer);
       }
-      buf += mode_buffer.substr(last_index);
+      buf += modeBuffer.substr(lastIndex);
       emitter.addText(buf);
     }
 
     function processSubLanguage() {
-      if (mode_buffer === "") return;
+      if (modeBuffer === "") return;
       /** @type HighlightResult */
       var result = null;
 
       if (typeof top.subLanguage === 'string') {
         if (!languages[top.subLanguage]) {
-          emitter.addText(mode_buffer);
+          emitter.addText(modeBuffer);
           return;
         }
-        result = _highlight(top.subLanguage, mode_buffer, true, continuations[top.subLanguage]);
+        result = _highlight(top.subLanguage, modeBuffer, true, continuations[top.subLanguage]);
         continuations[top.subLanguage] = result.top;
       } else {
-        result = highlightAuto(mode_buffer, top.subLanguage.length ? top.subLanguage : null);
+        result = highlightAuto(modeBuffer, top.subLanguage.length ? top.subLanguage : null);
       }
 
       // Counting embedded language score towards the host language may be disabled
@@ -66586,7 +66586,7 @@ const HLJS = function(hljs) {
       } else {
         processKeywords();
       }
-      mode_buffer = '';
+      modeBuffer = '';
     }
 
     /**
@@ -66639,7 +66639,7 @@ const HLJS = function(hljs) {
       if (top.matcher.regexIndex === 0) {
         // no more regexs to potentially match here, so we move the cursor forward one
         // space
-        mode_buffer += lexeme[0];
+        modeBuffer += lexeme[0];
         return 1;
       } else {
         // no need to move the cursor, we still have additional regexes to try and
@@ -66657,38 +66657,38 @@ const HLJS = function(hljs) {
      */
     function doBeginMatch(match) {
       var lexeme = match[0];
-      var new_mode = match.rule;
+      var newMode = match.rule;
 
-      const resp = new Response(new_mode);
+      const resp = new Response(newMode);
       // first internal before callbacks, then the public ones
-      const beforeCallbacks = [new_mode.__beforeBegin, new_mode["on:begin"]];
+      const beforeCallbacks = [newMode.__beforeBegin, newMode["on:begin"]];
       for (const cb of beforeCallbacks) {
         if (!cb) continue;
         cb(match, resp);
         if (resp.ignore) return doIgnore(lexeme);
       }
 
-      if (new_mode && new_mode.endSameAsBegin) {
-        new_mode.endRe = escape(lexeme);
+      if (newMode && newMode.endSameAsBegin) {
+        newMode.endRe = escape(lexeme);
       }
 
-      if (new_mode.skip) {
-        mode_buffer += lexeme;
+      if (newMode.skip) {
+        modeBuffer += lexeme;
       } else {
-        if (new_mode.excludeBegin) {
-          mode_buffer += lexeme;
+        if (newMode.excludeBegin) {
+          modeBuffer += lexeme;
         }
         processBuffer();
-        if (!new_mode.returnBegin && !new_mode.excludeBegin) {
-          mode_buffer = lexeme;
+        if (!newMode.returnBegin && !newMode.excludeBegin) {
+          modeBuffer = lexeme;
         }
       }
-      startNewMode(new_mode);
+      startNewMode(newMode);
       // if (mode["after:begin"]) {
       //   let resp = new Response(mode);
       //   mode["after:begin"](match, resp);
       // }
-      return new_mode.returnBegin ? 0 : lexeme.length;
+      return newMode.returnBegin ? 0 : lexeme.length;
     }
 
     /**
@@ -66700,19 +66700,19 @@ const HLJS = function(hljs) {
       var lexeme = match[0];
       var matchPlusRemainder = codeToHighlight.substr(match.index);
 
-      var end_mode = endOfMode(top, match, matchPlusRemainder);
-      if (!end_mode) { return NO_MATCH; }
+      var endMode = endOfMode(top, match, matchPlusRemainder);
+      if (!endMode) { return NO_MATCH; }
 
       var origin = top;
       if (origin.skip) {
-        mode_buffer += lexeme;
+        modeBuffer += lexeme;
       } else {
         if (!(origin.returnEnd || origin.excludeEnd)) {
-          mode_buffer += lexeme;
+          modeBuffer += lexeme;
         }
         processBuffer();
         if (origin.excludeEnd) {
-          mode_buffer = lexeme;
+          modeBuffer = lexeme;
         }
       }
       do {
@@ -66723,12 +66723,12 @@ const HLJS = function(hljs) {
           relevance += top.relevance;
         }
         top = top.parent;
-      } while (top !== end_mode.parent);
-      if (end_mode.starts) {
-        if (end_mode.endSameAsBegin) {
-          end_mode.starts.endRe = end_mode.endRe;
+      } while (top !== endMode.parent);
+      if (endMode.starts) {
+        if (endMode.endSameAsBegin) {
+          endMode.starts.endRe = endMode.endRe;
         }
-        startNewMode(end_mode.starts);
+        startNewMode(endMode.starts);
       }
       return origin.returnEnd ? 0 : lexeme.length;
     }
@@ -66756,7 +66756,7 @@ const HLJS = function(hljs) {
       var lexeme = match && match[0];
 
       // add non-matched text to the current mode buffer
-      mode_buffer += textBeforeMatch;
+      modeBuffer += textBeforeMatch;
 
       if (lexeme == null) {
         processBuffer();
@@ -66769,7 +66769,7 @@ const HLJS = function(hljs) {
       // Ref: https://github.com/highlightjs/highlight.js/issues/2140
       if (lastMatch.type === "begin" && match.type === "end" && lastMatch.index === match.index && lexeme === "") {
         // spit the "skipped" character that our regex choked on back into the output sequence
-        mode_buffer += codeToHighlight.slice(match.index, match.index + 1);
+        modeBuffer += codeToHighlight.slice(match.index, match.index + 1);
         if (!SAFE_MODE) {
           /** @type {AnnotatedError} */
           const err = new Error('0 width match regex');
@@ -66825,7 +66825,7 @@ const HLJS = function(hljs) {
       This causes no real harm other than stopping a few times too many.
       */
 
-      mode_buffer += lexeme;
+      modeBuffer += lexeme;
       return lexeme.length;
     }
 
@@ -66843,7 +66843,7 @@ const HLJS = function(hljs) {
     var continuations = {}; // keep continuations for sub-languages
     var emitter = new options.__emitter(options);
     processContinuations();
-    var mode_buffer = '';
+    var modeBuffer = '';
     var relevance = 0;
     var index = 0;
     var iterations = 0;
@@ -67075,6 +67075,10 @@ const HLJS = function(hljs) {
    * @param {{}} userOptions
    */
   function configure(userOptions) {
+    if (userOptions.useBR) {
+      console.warn("'useBR' option is deprecated and will be removed entirely in v11.0");
+      console.warn("Please see https://github.com/highlightjs/highlight.js/issues/2559");
+    }
     options = inherit$1(options, userOptions);
   }
 
@@ -67202,19 +67206,24 @@ const HLJS = function(hljs) {
     });
   }
 
-  /* fixMarkup is deprecated and will be removed entirely in v11 */
-  function deprecate_fixMarkup(arg) {
+  /**
+  Note: fixMarkup is deprecated and will be removed entirely in v11
+
+  @param {string} arg
+  @returns {string}
+  */
+  function deprecateFixMarkup(arg) {
     console.warn("fixMarkup is deprecated and will be removed entirely in v11.0");
     console.warn("Please see https://github.com/highlightjs/highlight.js/issues/2534");
 
-    return fixMarkup(arg)
+    return fixMarkup(arg);
   }
 
   /* Interface definition */
   Object.assign(hljs, {
     highlight,
     highlightAuto,
-    fixMarkup: deprecate_fixMarkup,
+    fixMarkup: deprecateFixMarkup,
     highlightBlock,
     configure,
     initHighlighting,
@@ -67314,7 +67323,7 @@ function highlight(name, value, options) {
 
   result = high.highlight(name, value, true)
 
-  high.configure(before)
+  high.configure(before || {})
 
   /* istanbul ignore if - Highlight.js seems to use this (currently) for broken
    * grammars, so let’s keep it in there just to be sure. */
@@ -88465,19 +88474,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var prosemirror_view__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! prosemirror-view */ "./node_modules/prosemirror-view/dist/index.es.js");
 /* harmony import */ var prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! prosemirror-utils */ "./node_modules/prosemirror-utils/dist/index.js");
 /* harmony import */ var prosemirror_utils__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var prosemirror_state__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prosemirror-state */ "./node_modules/prosemirror-state/dist/index.es.js");
-/* harmony import */ var prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prosemirror-tables */ "./node_modules/prosemirror-tables/dist/index.es.js");
-/* harmony import */ var tiptap_utils__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tiptap-utils */ "./node_modules/tiptap-utils/dist/utils.esm.js");
-/* harmony import */ var prosemirror_transform__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! prosemirror-transform */ "./node_modules/prosemirror-transform/dist/index.es.js");
-/* harmony import */ var prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prosemirror-collab */ "./node_modules/prosemirror-collab/dist/index.es.js");
-/* harmony import */ var prosemirror_history__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prosemirror-history */ "./node_modules/prosemirror-history/dist/index.es.js");
+/* harmony import */ var prosemirror_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! prosemirror-model */ "./node_modules/prosemirror-model/dist/index.es.js");
+/* harmony import */ var prosemirror_state__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! prosemirror-state */ "./node_modules/prosemirror-state/dist/index.es.js");
+/* harmony import */ var prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! prosemirror-tables */ "./node_modules/prosemirror-tables/dist/index.es.js");
+/* harmony import */ var tiptap_utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tiptap-utils */ "./node_modules/tiptap-utils/dist/utils.esm.js");
+/* harmony import */ var prosemirror_transform__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! prosemirror-transform */ "./node_modules/prosemirror-transform/dist/index.es.js");
+/* harmony import */ var prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! prosemirror-collab */ "./node_modules/prosemirror-collab/dist/index.es.js");
+/* harmony import */ var prosemirror_history__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! prosemirror-history */ "./node_modules/prosemirror-history/dist/index.es.js");
 
     /*!
-    * tiptap-extensions v1.33.0
+    * tiptap-extensions v1.33.1
     * (c) 2020 überdosis GbR (limited liability)
     * @license MIT
     */
   
+
 
 
 
@@ -89122,8 +89133,8 @@ function SuggestionsPlugin({
     return searchItems.filter(item => JSON.stringify(item).toLowerCase().includes(query.toLowerCase()));
   }
 }) {
-  return new prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["Plugin"]({
-    key: new prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["PluginKey"]('suggestions'),
+  return new prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["Plugin"]({
+    key: new prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["PluginKey"]('suggestions'),
 
     view() {
       return {
@@ -89300,6 +89311,10 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
     };
   }
 
+  getLabel(dom) {
+    return dom.innerText.split(this.options.matcher.char).join('');
+  }
+
   get schema() {
     return {
       attrs: {
@@ -89308,6 +89323,7 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
       },
       group: 'inline',
       inline: true,
+      content: 'inline*',
       selectable: false,
       atom: true,
       toDOM: node => ['span', {
@@ -89318,11 +89334,18 @@ class Mention extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
         tag: 'span[data-mention-id]',
         getAttrs: dom => {
           const id = dom.getAttribute('data-mention-id');
-          const label = dom.innerText.split(this.options.matcher.char).join('');
+          const label = this.getLabel(dom);
           return {
             id,
             label
           };
+        },
+        getContent: (dom, schema) => {
+          const label = this.getLabel(dom);
+          return prosemirror_model__WEBPACK_IMPORTED_MODULE_5__["Fragment"].fromJSON(schema, [{
+            type: 'text',
+            text: "".concat(this.options.matcher.char).concat(label)
+          }]);
         }
       }]
     };
@@ -89407,7 +89430,7 @@ class OrderedList extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
 
 }
 
-var TableNodes = Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["tableNodes"])({
+var TableNodes = Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["tableNodes"])({
   tableGroup: 'block',
   cellContent: 'block+',
   cellAttributes: {
@@ -89459,42 +89482,42 @@ class Table extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Node"] {
         const nodes = Object(prosemirror_utils__WEBPACK_IMPORTED_MODULE_4__["createTable"])(schema, rowsCount, colsCount, withHeaderRow);
         const tr = state.tr.replaceSelectionWith(nodes).scrollIntoView();
         const resolvedPos = tr.doc.resolve(offset);
-        tr.setSelection(prosemirror_state__WEBPACK_IMPORTED_MODULE_5__["TextSelection"].near(resolvedPos));
+        tr.setSelection(prosemirror_state__WEBPACK_IMPORTED_MODULE_6__["TextSelection"].near(resolvedPos));
         dispatch(tr);
       },
-      addColumnBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addColumnBefore"],
-      addColumnAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addColumnAfter"],
-      deleteColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteColumn"],
-      addRowBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addRowBefore"],
-      addRowAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["addRowAfter"],
-      deleteRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteRow"],
-      deleteTable: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["deleteTable"],
+      addColumnBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addColumnBefore"],
+      addColumnAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addColumnAfter"],
+      deleteColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteColumn"],
+      addRowBefore: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addRowBefore"],
+      addRowAfter: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["addRowAfter"],
+      deleteRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteRow"],
+      deleteTable: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["deleteTable"],
       toggleCellMerge: () => (state, dispatch) => {
-        if (Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["mergeCells"])(state, dispatch)) {
+        if (Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["mergeCells"])(state, dispatch)) {
           return;
         }
 
-        Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["splitCell"])(state, dispatch);
+        Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["splitCell"])(state, dispatch);
       },
-      mergeCells: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["mergeCells"],
-      splitCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["splitCell"],
-      toggleHeaderColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderColumn"],
-      toggleHeaderRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderRow"],
-      toggleHeaderCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["toggleHeaderCell"],
-      setCellAttr: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["setCellAttr"],
-      fixTables: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["fixTables"]
+      mergeCells: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["mergeCells"],
+      splitCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["splitCell"],
+      toggleHeaderColumn: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderColumn"],
+      toggleHeaderRow: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderRow"],
+      toggleHeaderCell: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["toggleHeaderCell"],
+      setCellAttr: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["setCellAttr"],
+      fixTables: () => prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["fixTables"]
     };
   }
 
   keys() {
     return {
-      Tab: Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["goToNextCell"])(1),
-      'Shift-Tab': Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["goToNextCell"])(-1)
+      Tab: Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["goToNextCell"])(1),
+      'Shift-Tab': Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["goToNextCell"])(-1)
     };
   }
 
   get plugins() {
-    return [...(this.options.resizable ? [Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["columnResizing"])()] : []), Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_6__["tableEditing"])()];
+    return [...(this.options.resizable ? [Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["columnResizing"])()] : []), Object(prosemirror_tables__WEBPACK_IMPORTED_MODULE_7__["tableEditing"])()];
   }
 
 }
@@ -89842,7 +89865,7 @@ class Link extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Mark"] {
           const {
             schema
           } = view.state;
-          const attrs = Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["getMarkAttrs"])(view.state, schema.marks.link);
+          const attrs = Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["getMarkAttrs"])(view.state, schema.marks.link);
 
           if (attrs.href && event.target instanceof HTMLAnchorElement) {
             event.stopPropagation();
@@ -89944,7 +89967,7 @@ class Collaboration extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   init() {
     this.getSendableSteps = this.debounce(state => {
-      const sendable = Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["sendableSteps"])(state);
+      const sendable = Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["sendableSteps"])(state);
 
       if (sendable) {
         this.options.onSendable({
@@ -89980,17 +90003,17 @@ class Collaboration extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
           schema
         } = this.editor;
 
-        if (Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["getVersion"])(state) > version) {
+        if (Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["getVersion"])(state) > version) {
           return;
         }
 
-        view.dispatch(Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["receiveTransaction"])(state, steps.map(item => prosemirror_transform__WEBPACK_IMPORTED_MODULE_8__["Step"].fromJSON(schema, item.step)), steps.map(item => item.clientID)));
+        view.dispatch(Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["receiveTransaction"])(state, steps.map(item => prosemirror_transform__WEBPACK_IMPORTED_MODULE_9__["Step"].fromJSON(schema, item.step)), steps.map(item => item.clientID)));
       }
     };
   }
 
   get plugins() {
-    return [Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_9__["collab"])({
+    return [Object(prosemirror_collab__WEBPACK_IMPORTED_MODULE_10__["collab"])({
       version: this.options.version,
       clientID: this.options.clientID
     })];
@@ -90081,18 +90104,18 @@ class History extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   keys() {
     const keymap = {
-      'Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      'Mod-y': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
-      'Shift-Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
+      'Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      'Mod-y': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
+      'Shift-Mod-z': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
       // Russian language
-      'Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      'Shift-Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"]
+      'Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      'Shift-Mod-я': prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"]
     };
     return keymap;
   }
 
   get plugins() {
-    return [Object(prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["history"])({
+    return [Object(prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["history"])({
       depth: this.options.depth,
       newGroupDelay: this.options.newGroupDelay
     })];
@@ -90100,10 +90123,10 @@ class History extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
 
   commands() {
     return {
-      undo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undo"],
-      redo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redo"],
-      undoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["undoDepth"],
-      redoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_10__["redoDepth"]
+      undo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undo"],
+      redo: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redo"],
+      undoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["undoDepth"],
+      redoDepth: () => prosemirror_history__WEBPACK_IMPORTED_MODULE_11__["redoDepth"]
     };
   }
 
@@ -90422,7 +90445,7 @@ class TrailingNode extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
       state: {
         init: (_, state) => {
           const lastNode = state.tr.doc.lastChild;
-          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["nodeEqualsType"])({
+          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["nodeEqualsType"])({
             node: lastNode,
             types: disabledNodes
           });
@@ -90433,7 +90456,7 @@ class TrailingNode extends tiptap__WEBPACK_IMPORTED_MODULE_0__["Extension"] {
           }
 
           const lastNode = tr.doc.lastChild;
-          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_7__["nodeEqualsType"])({
+          return !Object(tiptap_utils__WEBPACK_IMPORTED_MODULE_8__["nodeEqualsType"])({
             node: lastNode,
             types: disabledNodes
           });

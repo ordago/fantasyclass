@@ -113,7 +113,7 @@
     </div>
     <div
       style="text-align: center"
-      v-if="this.admin && this.properties == true && !this.assign"
+      v-if="this.admin && this.properties && !this.assign"
     >
       <a
         :href="'/classroom/' + code + '/cards/' + card.id"

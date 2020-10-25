@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Behaviour;
 use App\Classroom;
 use App\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class UtilsController extends Controller
@@ -52,22 +54,27 @@ class UtilsController extends Controller
     }
     public function iconPack($category)
     {
-        $path = public_path() . '/img/icon-packs/' . $category;
-        $images = array_diff(scandir($path), array('..', '.'));
+        $images = preg_grep('~\.(svg)$~', scandir(public_path() . '/img/icon-packs/'.$category));
         array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );      
         return json_encode($images);
     }
 
     public function iconPacks()
     {   
-        $array = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.'));
+        $array = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.', 'LICENSE'));
         return json_encode($array);
     }
+    
+    public function online()
+    {
+        $expiresAt = Carbon::now()->addMinutes(5);
+        Cache::put('user-is-online-' . auth()->user()->id, true, $expiresAt);
+    }
+
     public function music()
     {
         $directory = "/music/";
         $music = [];
-        // $sounds = glob($directory . "/*.*", GLOB_BRACE);
 
         $sounds = Storage::disk('music')->files();
 

@@ -30,10 +30,13 @@ return [
     'epic' => "Èpica",
     'legendary' => "Legendària",
 
-    'enrollment_code' => "Código de matriculación",
+    'state' => "Estat de la classe",
+    'config' => "Configuració",
+    'enrollment_code' => "Codi de matriculació",
     'active' => "Activa",
     'finished' => "Finalitzada",
     'disabled' => "Deshabilitada",
+    'classroom_unlink' => "Desenllaça Google Classroom",
 
 
     

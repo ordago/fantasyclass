@@ -31,6 +31,7 @@ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___names
 //
 //
 //
+//
 
 Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
 
@@ -76,7 +77,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".emoji-dropdown .emoji-preview, .emoji-dropdown .title {\n  display: none !important;\n}\n.message {\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n.message .rich-editor-container {\n  width: 100%;\n  border: 1px solid #ddd;\n  padding: 5px 40px 5px 15px;\n}\n.message .rich-editor-container:focus {\n  outline: none;\n}\n.message .message-emoji {\n  position: absolute;\n  right: 50px;\n  top: 9px;\n}\n.message [contenteditable=true]:empty:before {\n  content: attr(placeholder);\n  color: grey;\n}", ""]);
+exports.push([module.i, ".emoji-picker .emoji-dropdown {\n  z-index: 100;\n}\n.emoji-dropdown .emoji-preview, .emoji-dropdown .title {\n  display: none !important;\n}\n.message {\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n.message .rich-editor-container {\n  width: 100%;\n  border: 1px solid #ddd;\n  padding: 5px 40px 5px 15px;\n}\n.message .rich-editor-container:focus {\n  outline: none;\n}\n.message .message-emoji {\n  position: absolute;\n  right: 50px;\n  top: 9px;\n}\n.message [contenteditable=true]:empty:before {\n  content: attr(placeholder);\n  color: grey;\n}", ""]);
 
 // exports
 
@@ -140,6 +141,7 @@ var render = function() {
         staticClass: "rich-editor-container rounded has-padding-4",
         attrs: {
           contenteditable: "true",
+          autofocus: "false",
           placeholder: _vm.trans.get("general.type_message")
         },
         on: {

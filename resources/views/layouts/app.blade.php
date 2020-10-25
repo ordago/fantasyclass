@@ -25,7 +25,26 @@
     <!-- Mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
 
+    <!-- Pace loader -->
     <script src="/js/pace.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS') }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', "{{ env('GOOGLE_ANALYTICS') }}");
+    </script>
+
+    <!-- Cookies -->
+    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+
 
     <!-- PWA -->
 
@@ -137,7 +156,7 @@
         </nav>
 
         @yield('breadcrumb')
-        
+
         @endauth
 
         <div id="prompt" class="prompt  has-background-light border-top" style="display: none;">
@@ -153,8 +172,34 @@
         </main>
     </div>
     @if(isset($showChat) && $showChat == true)
-        @stack('scriptchat');
+    @stack('scriptchat');
     @endif
+
+    <script>
+        window.onload = window.cookieconsent.initialise({
+            "palette": {
+                "popup": {
+                    "background": "#eb6c44",
+                    "text": "#ffffff"
+                },
+                "button": {
+                    "background": "#f5d948"
+                }
+            },
+            "theme": "classic",
+            "content": {
+                "message": "Este sitio utilitza cookies para guardar preferencias de la plataforma.",
+                "dismiss": "Entiendo",
+                "link": "Más información",
+                "href": "/cookies"
+            }
+
+
+        });
+    </script>
+
+
+    <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>
 
 </html>

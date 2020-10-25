@@ -49,6 +49,7 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
+          <a class="button" :href="'/classroom/show/' + this.code + '/challenges/' + challengeReactive.permalink" v-if="!full && !admin">{{ trans.get('challenges.show_challenge') }}</a>
           <div
             v-if="edit || full"
             v-html="getContent(challengeReactive.content)"
@@ -76,6 +77,7 @@
               <div class="column is-narrow">
                 <i class="fad fa-globe" v-if="attachment.type == 1"></i>
                 <i class="fad fa-icons" v-else-if="attachment.type == 2"></i>
+                <i class="fad fa-icons" v-else-if="attachment.type == 8"></i>
                 <i
                   class="fad fa-graduation-cap"
                   v-else-if="attachment.type == 3"
@@ -111,6 +113,26 @@
                       height: 0;
                     "
                   >
+                    <iframe
+                      v-if="attachment.type == 8"
+                      :src="getHp5(attachment.url)"
+                      width="1090"
+                      height="677"
+                      style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                      "
+                      frameborder="0"
+                      allowfullscreen="allowfullscreen"
+                      allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                    ></iframe>
+                    <!-- <script
+                      src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js"
+                      charset="UTF-8"
+                    ></script> -->
                     <iframe
                       v-if="attachment.type == 2"
                       frameborder="0"
@@ -161,7 +183,15 @@
               </div>
             </div>
           </div>
-          <InputEmoji v-if="edit || full"></InputEmoji>
+          <button
+            class="button"
+            v-if="!allowComment && (full || edit)"
+            @click="allowComment = true"
+          >
+            <i class="fad fa-comments mr-2"></i>
+            {{ trans.get("challenges.comment") }}
+          </button>
+          <InputEmoji v-if="(edit || full) && allowComment"></InputEmoji>
           <div class="has-margin-top-3 comments">
             <div
               class="comment has-margin-0"
@@ -217,7 +247,7 @@
               <span class="icon is-small">
                 <i class="fas fa-check"></i>
               </span>
-              <span>{{ trans.get('challenges.mark_title') }}</span>
+              <span>{{ trans.get("challenges.mark_title") }}</span>
             </button>
             <button
               v-if="admin"
@@ -311,13 +341,15 @@
                 <option value="5">Youtube</option>
                 <option value="6">Dropbox</option>
                 <option value="7">File</option>
+                <option value="8">H5p.org</option>
               </b-select>
             </b-field>
             <div
               v-if="
                 attachment.type == 1 ||
                 attachment.type == 2 ||
-                attachment.type == 5
+                attachment.type == 5 ||
+                attachment.type == 8
               "
             >
               <b-radio-button
@@ -526,6 +558,7 @@ export default {
   data: function () {
     return {
       challengeReactive: null,
+      allowComment: false,
       isAttachmentModalActive: false,
       isQuestionModalActive: false,
       attachment: {
@@ -550,6 +583,14 @@ export default {
     InputEmoji,
   },
   methods: {
+    getHp5(url) {
+      console.log(
+        "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1)
+      );
+      return (
+        "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1)
+      );
+    },
     getContent(content) {
       if (!this.admin && content) return Utils.replaceSpecial(content);
       return content;
@@ -618,7 +659,7 @@ export default {
     },
     addAttachment() {
       let type = this.attachment.type;
-      if (type == 3 || type == 4 || type == 6 || type == 7 || type == 8)
+      if (type == 3 || type == 4 || type == 6 || type == 7)
         this.attachment.mode = 0;
       this.attachment.challenge_id = this.challenge.id;
       axios

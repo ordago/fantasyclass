@@ -1,5 +1,5 @@
 <template>
-  <div class="card rounded card-shadow-s" style="overflow: visible">
+  <div class="card rounded card-shadow-s h-100" style="overflow: visible">
     <show-character :student="student" :classroom="classroom"></show-character>
     <div
       class="card-content"
@@ -20,7 +20,30 @@
             <small>@{{ student.username }}</small>
           </p>
         </div>
-        <span @click="redirect(student.id)" class="tag is-dark bottom-right cursor-pointer">{{ student.numcards[0] }} / {{ student.numcards[1] }}<i class="fas fa-club ml-1"></i></span>
+
+        <span
+          @click="redirect(student.id)"
+          class="bottom-right cursor-pointer is-flex has-all-centered"
+        >
+          <span
+            class="tag is-success"
+            v-if="student.online"
+            v-tippy
+            :content="trans.get('students.online')"
+          >
+            <i class="fad fa-wifi"></i>
+          </span>
+          <span v-else class="tag is-light border" v-tippy content="Offline">
+            <i class="fas fa-wifi-slash"></i>
+          </span>
+          <span class="tag is-danger ml-1" v-if="student.google_uid">
+            <i class="fab fa-google"></i
+          ></span>
+          <span class="tag is-dark ml-1">
+            {{ student.numcards[0] }} / {{ student.numcards[1]
+            }}<i class="fas fa-club"></i>
+          </span>
+        </span>
       </div>
 
       <div class="content">
@@ -32,16 +55,15 @@
             <article class="message is-danger">
               <div class="message-body">
                 <i class="fas fa-exclamation-square"></i>
-                {{ trans.get('success_error.cards_exceded') }} {{ student.numcards[0] }} /
+                {{ trans.get("success_error.cards_exceded") }}
+                {{ student.numcards[0] }} /
                 {{ student.numcards[1] }}
               </div>
             </article>
           </div>
-          <div
-            class="centered-attribute has-padding-2 has-margin-top-4 has-margin-bottom-3"
-          >
+          <div class="centered-attribute mt-5 mb-4 mx-1 p-1">
             <span
-              class="attribute has-background-white-ter has-padding-y-2 rounded"
+              class="attribute has-background-white-ter p-2 rounded"
               style="width: 100%"
             >
               <span>
@@ -52,7 +74,7 @@
               }}</span>
             </span>
             <span
-              class="attribute has-background-danger has-padding-y-2 rounded-left"
+              class="attribute has-background-danger p-2 rounded-left"
               v-bind:class="{ rounded: student.hp == 100 }"
               :style="'width: ' + student.hp + '%'"
               v-if="student.hp > 0"
@@ -134,13 +156,45 @@
               </button>
             </div>
           </div>
-          <div class="score has-padding-3 has-margin-1">
-            <span>
-              <i class="fas fa-fist-raised colored"></i>
-            </span>
-            {{ student.xp }}
+          <div class="columns p-0 m-0">
+            <div class="column p-0 m-0">
+              <div
+                class="score p-3 m-1 cursor-pointer"
+                @click="enableXPGold(0)"
+              >
+                <span>
+                  <i class="fas fa-fist-raised colored"></i>
+                </span>
+                {{ student.xp }}
+                <span class="bottom-right" style="right: 8px">
+                  <i
+                    class="fad"
+                    :class="{
+                      'fa-caret-down': !visibleXP,
+                      'fa-caret-up': visibleXP,
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
+
+            <div class="column p-0 m-0">
+              <div class="gold p-3 m-1 cursor-pointer" @click="enableXPGold(1)">
+                <i class="fas fa-coins colored"></i>
+                {{ student.gold }}
+                <span class="bottom-right" style="right: 8px">
+                  <i
+                    class="fad"
+                    :class="{
+                      'fa-caret-down': !visibleGold,
+                      'fa-caret-up': visibleGold,
+                    }"
+                  ></i>
+                </span>
+              </div>
+            </div>
           </div>
-          <div class="has-margin-y-2 has-text-centered">
+          <div class="has-margin-y-2 has-text-centered" v-if="visibleXP">
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', 100)"
@@ -215,11 +269,8 @@
               -100
             </button>
           </div>
-          <div class="gold has-padding-3 has-margin-y-1">
-            <i class="fas fa-coins colored"></i>
-            {{ student.gold }}
-          </div>
-          <div class="has-margin-y-2 has-text-centered">
+
+          <div class="has-margin-y-2 has-text-centered" v-if="visibleGold">
             <div class>
               <button
                 type="submit"
@@ -314,9 +365,20 @@ export default {
     return {
       show2l: false,
       custom: 0,
+      visibleXP: false,
+      visibleGold: false,
     };
   },
   methods: {
+    enableXPGold(type) {
+      if (type == 0) {
+        this.visibleXP = !this.visibleXP;
+        this.visibleGold = false;
+      } else {
+        this.visibleXP = false;
+        this.visibleGold = !this.visibleGold;
+      }
+    },
     updateProp: function (id, prop, value) {
       let options = { id: id, prop: prop, value: value };
       let student;

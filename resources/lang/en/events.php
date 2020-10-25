@@ -60,4 +60,9 @@ return [
     'kiwi_content' => 'It seems harmless but who knows ... Do we try to pass?',
     'kiwi_content_ok' => 'We asked with good manners and it let us pass, we found a treasure that contains',
     'kiwi_content_ko' => 'We ran away! It\'s very powerful! We lose',
+    'wheel' => 'Fortune wheel!', 
+    'wheel_content' => 'Let\'s spin the wheel!',
+    'wheel_btn' => 'Show the wheel',
+    'go_ahead' => 'Go ahead!',
 ];
+

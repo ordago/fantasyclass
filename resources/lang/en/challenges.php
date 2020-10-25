@@ -43,5 +43,9 @@ return [
     'mark_confirm' => 'Confirm done',
     'mark_text' => 'Are you sure you have done all the the work? Trust is needed there.',
 
+    'comment' => 'Comment',
+    'show_challenge' => 'Show challenge',
+    'show_all' => 'Show all',
+
 
 ];

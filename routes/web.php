@@ -23,6 +23,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/locale/{locale}', 'HomeController@locale');
     Route::get('/policy', 'HomeController@policy');
+    Route::get('/cookies', 'HomeController@cookies');
 
     // Miscellany
     Route::get('/contribute', 'MiscellanyController@contribute');
@@ -65,6 +66,7 @@ Route::group(['middleware' => 'language'], function () {
         
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
+        Route::get('/{code}/students/add/{flag}', 'StudentController@create');
         Route::post('/students/', 'StudentController@store');
         Route::post('/students/getusername', 'StudentController@getUsername');
         Route::post('/students/update', 'StudentController@update');
@@ -82,6 +84,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
         Route::get('/show/{code}/challenges', 'ClassroomsStudentController@challenges');
+        Route::get('/show/{code}/challenges/{permalink}', 'ClassroomsStudentController@getChallenge');
         Route::get('/show/{code}/map', 'ClassroomsStudentController@map');
         Route::get('/show/{code}/rules', 'ClassroomsStudentController@rules');
         Route::get('/show/{code}/licenses', 'ClassroomsStudentController@licenses');
@@ -214,9 +217,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
     });
-
+    
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
+    Route::get('/utils/online', 'UtilsController@online');
 
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
@@ -230,4 +234,11 @@ Route::group(['middleware' => 'language'], function () {
     // Socialite
     Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
     Route::get('/callback/{provider}', 'SocialController@callback');
+    Route::get('/google/classroom/link/{code}', 'SocialController@googleClassroom');
+    Route::get('/google/classroom/unlink', 'SocialController@unlinkGoogleClassroom');
+    
+    // Google Classroom
+    Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
+    Route::get('/google/classroom/list/{courseId}/students', 'ServicesController@usersList');
+    
 });

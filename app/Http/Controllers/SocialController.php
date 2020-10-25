@@ -11,26 +11,52 @@ class SocialController extends Controller
 {
     public function redirect($provider)
     {
+        session()->put('back_url', url()->previous());
         return Socialite::driver($provider)->redirect();
-    
     }
+    
+    public function googleClassroom($code)
+    {
+        session()->put('code', $code);
+        session()->put('back_url', url()->previous());
+        if(!auth()->user())
+            abort(403);
+        $parameters = ['access_type' => 'offline'];
+	    return Socialite::driver('google')->scopes([
+            'https://www.googleapis.com/auth/classroom.courses.readonly',
+            "https://www.googleapis.com/auth/classroom.rosters.readonly",
+            'https://www.googleapis.com/auth/classroom.profile.emails'
+            ])->with($parameters)->redirect();
+    }
+
+    public function unlinkGoogleClassroom()
+    {
+        auth()->user()->update(['token' => null, 'refresh_token' => null, 'expires_in' => null]);
+    }
+
     public function callback($provider)
     {
-            
-        $getInfo = Socialite::driver($provider)->user();
-        $user = User::where('email', $getInfo->email)->first();
+        $auth_user = Socialite::driver($provider)->user();
         
-        if($user) {
-            if(!$user->email_verified_at)
-                $user->update(['email_verified_at' => now()]);
-            Auth::login($user);
-            return redirect()->to('/classroom/');
+        if($auth_user->refreshToken) {
+            auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn ]);
+            return redirect()->to('/classroom/'.session()->pull('code').'/students/add/true');
+
         } else {
-            $errors = new MessageBag();
-            // add your error messages:
-            $errors->add('username', __('auth.provider_failed'));
-            return redirect()->to('/login')->withErrors($errors);
+            $user = User::where('email', $auth_user->email)->first();
+            
+            if($user) {
+                if(!$user->email_verified_at)
+                    $user->update(['email_verified_at' => now()]);
+                Auth::login($user);
+                return redirect()->to('/classroom/');
+            } else {
+                $errors = new MessageBag();
+                $errors->add('username', __('auth.provider_failed'));
+                return redirect()->to('/login')->withErrors($errors);
+            }
         }
+
     }
 
 }

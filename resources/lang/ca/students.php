@@ -11,6 +11,7 @@ return [
     */
     
     'excel' => 'Importa de l\'Excel',
+    'import_gclassroom' => 'Importa de Google Classroom',
     'excel_template' => 'Descarrega la plantilla',
     'dnd' => 'Arrossega el fitxer o clica per pujar',
     'search' => 'Cerca per nom',
@@ -52,5 +53,5 @@ return [
     'highlights' => 'Destaca en',
     'change_class' => 'Canvia subclasse',
     'basic_equipment' => 'L\'equipament bàsic serà assignat, aquesta acció no es pot desfer.',
-    '' => '',
+    'online' => 'L\'estudiant està actiu (online)',
 ];
