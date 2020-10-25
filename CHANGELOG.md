@@ -2,18 +2,19 @@
 ## v1.12 Beta (XX/10/2020)
 ### Added
 - Import students from Google Classroom.
-- Added button to go to challenge in students challenge summary.
+- Button to go to challenge in students challenge summary.
 - Licenses added and folder organization.
+- Authory of map in maps.
 - Google Analytics.
 
 ### Changed
 - Added sounds to wheel.
 - Wheel now use weights (for now all probabilities are equal).
-- Authory of map in maps.
 - Added subcategories in edit challenge.
 - Hide comment button in challenge information.
 - Changes in remember user.
 - Updates in policy.
+- Deck image logo.
 
 ## v1.11 Beta (24/10/2020)
 ### Added
