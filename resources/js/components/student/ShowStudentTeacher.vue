@@ -33,8 +33,11 @@
           >
             <i class="fad fa-wifi"></i>
           </span>
+          <span v-else class="tag is-light mr-1">
+            <i class="fas fa-wifi-slash"></i>
+          </span>
           <span class="tag is-danger mr-1" v-if="student.google_uid">
-            <i class="fab fa-google"></i
+            <i class="fab fa-google ml-1"></i
           ></span>
           <span class="tag is-dark">
             {{ student.numcards[0] }} / {{ student.numcards[1]

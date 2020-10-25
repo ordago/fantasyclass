@@ -10441,6 +10441,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -65169,11 +65172,13 @@ var render = function() {
                       },
                       [_c("i", { staticClass: "fad fa-wifi" })]
                     )
-                  : _vm._e(),
+                  : _c("span", { staticClass: "tag is-light mr-1" }, [
+                      _c("i", { staticClass: "fas fa-wifi-slash" })
+                    ]),
                 _vm._v(" "),
                 _vm.student.google_uid
                   ? _c("span", { staticClass: "tag is-danger mr-1" }, [
-                      _c("i", { staticClass: "fab fa-google" })
+                      _c("i", { staticClass: "fab fa-google ml-1" })
                     ])
                   : _vm._e(),
                 _vm._v(" "),
