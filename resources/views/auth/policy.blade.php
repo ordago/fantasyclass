@@ -45,6 +45,7 @@
                         <p>By now, we work with these third party providers:</p>
                         <ul>
                             <li>Google Classroom (optional): it's not mandatory, but you can link your account to Google Classroom in order to have access to your lists and classrooms and to view and manage the student's grades. Also, if you link your account, we will have access to your students' infomation such as their name and e-mail, in order to import them to the platform. There is a link to the provider <a href="https://edu.google.com/why-google/privacy-security/?modal_active=none" target="_blank">privacy policy</a>.</li>
+                            <li>Google Analytics: we use Google Analytics in order to get statistics about the platform users.</li>
                         </ul>
                         <h3>Treatment purposes</h3>
                         <p>The data provided will never be used for a different purpose than the one for which they have been given, and will be cancelled immediately after they are no longer necessary for this purpose, except when a law establishes otherwise.</p>

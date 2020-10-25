@@ -33,7 +33,8 @@
                           <img :src="'/img/bg/thumb_' + theme.name" v-if="theme.type == 1">                      
                           <img src="/img/bg/empty.png" v-else> 
                         </div>
-                </label>                  
+                </label>
+                <div class="my-3"><a href="https://www.freepik.es/fotos-vectores-gratis/fondo">Vector de fondo creado por freepik - www.freepik.es</a></div>                  
             </div>
             </b-tab-item>
 

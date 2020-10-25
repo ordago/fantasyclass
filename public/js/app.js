@@ -5166,6 +5166,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["goals", "themes", "classroom"],
   mounted: function mounted() {
@@ -56854,48 +56855,67 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "themes" },
-                _vm._l(_vm.themesJson, function(theme, index) {
-                  return _c("label", { key: theme.id }, [
-                    _c("input", {
-                      directives: [
+                [
+                  _vm._l(_vm.themesJson, function(theme, index) {
+                    return _c("label", { key: theme.id }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.classForm.bg_theme,
+                            expression: "classForm.bg_theme"
+                          }
+                        ],
+                        staticClass: "hide-radios",
+                        attrs: { type: "radio", name: "bgtheme" },
+                        domProps: {
+                          checked: index === 0,
+                          value: theme.id,
+                          checked: _vm._q(_vm.classForm.bg_theme, theme.id)
+                        },
+                        on: {
+                          change: function($event) {
+                            return _vm.$set(_vm.classForm, "bg_theme", theme.id)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "div",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.classForm.bg_theme,
-                          expression: "classForm.bg_theme"
-                        }
-                      ],
-                      staticClass: "hide-radios",
-                      attrs: { type: "radio", name: "bgtheme" },
-                      domProps: {
-                        checked: index === 0,
-                        value: theme.id,
-                        checked: _vm._q(_vm.classForm.bg_theme, theme.id)
-                      },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.classForm, "bg_theme", theme.id)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
+                          staticClass: "theme bg_color_theme",
+                          style: "background-color:" + theme.color
+                        },
+                        [
+                          theme.type == 1
+                            ? _c("img", {
+                                attrs: { src: "/img/bg/thumb_" + theme.name }
+                              })
+                            : _c("img", { attrs: { src: "/img/bg/empty.png" } })
+                        ]
+                      )
+                    ])
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "my-3" }, [
                     _c(
-                      "div",
+                      "a",
                       {
-                        staticClass: "theme bg_color_theme",
-                        style: "background-color:" + theme.color
+                        attrs: {
+                          href:
+                            "https://www.freepik.es/fotos-vectores-gratis/fondo"
+                        }
                       },
                       [
-                        theme.type == 1
-                          ? _c("img", {
-                              attrs: { src: "/img/bg/thumb_" + theme.name }
-                            })
-                          : _c("img", { attrs: { src: "/img/bg/empty.png" } })
+                        _vm._v(
+                          "Vector de fondo creado por freepik - www.freepik.es"
+                        )
                       ]
                     )
                   ])
-                }),
-                0
+                ],
+                2
               )
             ]
           ),

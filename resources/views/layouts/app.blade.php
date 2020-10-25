@@ -25,7 +25,21 @@
     <!-- Mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
 
+    <!-- Pace loader -->
     <script src="/js/pace.min.js"></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS') }}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', "{{ env('GOOGLE_ANALYTICS') }}");
+    </script>
 
     <!-- Cookies -->
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
@@ -183,6 +197,7 @@
 
         });
     </script>
+
 
     <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>
