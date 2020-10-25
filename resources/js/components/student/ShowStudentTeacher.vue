@@ -20,16 +20,25 @@
             <small>@{{ student.username }}</small>
           </p>
         </div>
-      
+
         <span
           @click="redirect(student.id)"
           class="bottom-right cursor-pointer is-flex has-all-centered"
+        >
+          <span
+            class="tag is-success mr-1"
+            v-if="student.online"
+            v-tippy
+            :content="trans.get('students.online')"
           >
+            <i class="fad fa-wifi"></i>
+          </span>
           <span class="tag is-danger mr-1" v-if="student.google_uid">
             <i class="fab fa-google"></i
           ></span>
           <span class="tag is-dark">
-            {{ student.numcards[0] }} / {{ student.numcards[1] }}<i class="fas fa-club ml-1"></i>
+            {{ student.numcards[0] }} / {{ student.numcards[1]
+            }}<i class="fas fa-club ml-1"></i>
           </span>
         </span>
       </div>

@@ -6,6 +6,7 @@
 - Licenses added and folder organization.
 - Authory of map in maps.
 - Google Analytics.
+- Show student's active.
 
 ### Changed
 - Added sounds to wheel.

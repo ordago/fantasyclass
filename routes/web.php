@@ -217,9 +217,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
     });
-
+    
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
+    Route::get('/utils/online', 'UtilsController@online');
 
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');

@@ -53,6 +53,7 @@ return [
     'highlights' => 'Destaca en',
     'change_class' => 'Cambia subclase',
     'basic_equipment' => 'El equipamiento básico será asignado, esta acción no se puede deshacer.',
-    '' => '',
+    'online' => 'El/la estudiante está activo/a (online)',
+
 
 ];

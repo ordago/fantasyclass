@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Behaviour;
 use App\Classroom;
 use App\Student;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class UtilsController extends Controller
@@ -63,6 +65,12 @@ class UtilsController extends Controller
         return json_encode($array);
     }
     
+    public function online()
+    {
+        $expiresAt = Carbon::now()->addMinutes(5);
+        Cache::put('user-is-online-' . auth()->user()->id, true, $expiresAt);
+    }
+
     public function music()
     {
         $directory = "/music/";

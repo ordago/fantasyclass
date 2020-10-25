@@ -10432,6 +10432,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -65170,6 +65179,18 @@ var render = function() {
                 }
               },
               [
+                _vm.student.online
+                  ? _c(
+                      "span",
+                      {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "tag is-success mr-1",
+                        attrs: { content: _vm.trans.get("students.online") }
+                      },
+                      [_c("i", { staticClass: "fad fa-wifi" })]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
                 _vm.student.google_uid
                   ? _c("span", { staticClass: "tag is-danger mr-1" }, [
                       _c("i", { staticClass: "fab fa-google" })
@@ -87125,7 +87146,7 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Destaca en",
     "change_class": "Canvia subclasse",
     "basic_equipment": "L'equipament b\xE0sic ser\xE0 assignat, aquesta acci\xF3 no es pot desfer.",
-    "": ""
+    "online": "L'estudiant est\xE0 actiu (online)"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -87802,7 +87823,7 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Highlights in",
     "change_class": "Change subclass",
     "basic_equipment": "Basic equipment will be assigned. This action can't be undone.",
-    "": ""
+    "online": "Student is active (online)"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -88503,7 +88524,7 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Destaca en",
     "change_class": "Cambia subclase",
     "basic_equipment": "El equipamiento b\xE1sico ser\xE1 asignado, esta acci\xF3n no se puede deshacer.",
-    "": ""
+    "online": "El/la estudiante est\xE1 activo/a (online)"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",
@@ -88809,6 +88830,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_croppa__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(vue_croppa__WEBPACK_IMPORTED_MODULE_7__);
 /* harmony import */ var vue_croppa_dist_vue_croppa_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vue-croppa/dist/vue-croppa.css */ "./node_modules/vue-croppa/dist/vue-croppa.css");
 /* harmony import */ var vue_croppa_dist_vue_croppa_css__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(vue_croppa_dist_vue_croppa_css__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_9__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -88845,6 +88868,7 @@ Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_5___default.a); // Buefy
 Vue.use(buefy__WEBPACK_IMPORTED_MODULE_6__["default"], {
   defaultIconPack: 'fas'
 }); // Crop plugin
+
 
 
 
@@ -88990,6 +89014,15 @@ var app = new Vue({
   el: '#app',
   data: {
     showNav: false
+  },
+  mounted: function mounted() {
+    axios.get('/utils/online');
+    this.$nextTick(function () {
+      window.setInterval(function () {
+        console.log('updating online status');
+        axios.get('/utils/online');
+      }, 290000);
+    });
   }
 });
 

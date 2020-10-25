@@ -52,6 +52,6 @@ return [
     'highlights' => 'Highlights in',
     'change_class' => 'Change subclass',
     'basic_equipment' => 'Basic equipment will be assigned. This action can\'t be undone.',
-    '' => '',
+    'online' => 'Student is active (online)',
     
 ];

@@ -46,6 +46,7 @@ Vue.use(Buefy, {
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
+import Axios from 'axios';
 
 Vue.use(Croppa)
 
@@ -210,4 +211,13 @@ const app = new Vue({
     data: {
         showNav: false
     },
+    mounted: function () {
+        axios.get('/utils/online');
+        this.$nextTick(function () {
+            window.setInterval(() => {
+                console.log('updating online status');
+                axios.get('/utils/online');
+            },290000);
+        })
+    }
 });
