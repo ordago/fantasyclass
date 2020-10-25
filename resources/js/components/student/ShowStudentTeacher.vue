@@ -33,15 +33,15 @@
           >
             <i class="fad fa-wifi"></i>
           </span>
-          <span v-else class="tag is-light mr-1" v-tippy content="Offline">
+          <span v-else class="tag is-light border" v-tippy content="Offline">
             <i class="fas fa-wifi-slash"></i>
           </span>
-          <span class="tag is-danger mr-1" v-if="student.google_uid">
-            <i class="fab fa-google ml-1"></i
+          <span class="tag is-danger ml-1" v-if="student.google_uid">
+            <i class="fab fa-google"></i
           ></span>
-          <span class="tag is-dark">
+          <span class="tag is-dark ml-1">
             {{ student.numcards[0] }} / {{ student.numcards[1]
-            }}<i class="fas fa-club ml-1"></i>
+            }}<i class="fas fa-club mx-1"></i>
           </span>
         </span>
       </div>

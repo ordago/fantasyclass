@@ -65176,26 +65176,26 @@ var render = function() {
                       "span",
                       {
                         directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "tag is-light mr-1",
+                        staticClass: "tag is-light border",
                         attrs: { content: "Offline" }
                       },
                       [_c("i", { staticClass: "fas fa-wifi-slash" })]
                     ),
                 _vm._v(" "),
                 _vm.student.google_uid
-                  ? _c("span", { staticClass: "tag is-danger mr-1" }, [
-                      _c("i", { staticClass: "fab fa-google ml-1" })
+                  ? _c("span", { staticClass: "tag is-danger ml-1" }, [
+                      _c("i", { staticClass: "fab fa-google" })
                     ])
                   : _vm._e(),
                 _vm._v(" "),
-                _c("span", { staticClass: "tag is-dark" }, [
+                _c("span", { staticClass: "tag is-dark ml-1" }, [
                   _vm._v(
                     "\n          " +
                       _vm._s(_vm.student.numcards[0]) +
                       " / " +
                       _vm._s(_vm.student.numcards[1])
                   ),
-                  _c("i", { staticClass: "fas fa-club ml-1" })
+                  _c("i", { staticClass: "fas fa-club mx-1" })
                 ])
               ]
             )
