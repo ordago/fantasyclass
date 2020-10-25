@@ -10,6 +10,7 @@ return [
     'config' => 'Configuració',
     'report' => 'Informe d\'avaluació',
     'evaluation_line' => 'Afegir línia d\'avaluació',
+    'evaluation_report' => 'Informe d’avaluació',
     'tags' => 'Etiquetes',
     'grade' => 'Avalua',
     'abbreviation' => 'Abreviació',
