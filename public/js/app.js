@@ -64205,27 +64205,7 @@ var render = function() {
           { staticClass: "column is-narrow p-0 m-1" },
           [_c("Xlsx", { attrs: { type: "addstudent" } })],
           1
-        ),
-        _vm._v(" "),
-        _c("div", { staticClass: "column is-narrow p-0 m-1" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button button is-white border",
-              on: { click: _vm.loadGoogleCourses }
-            },
-            [
-              _c("img", {
-                attrs: { src: "/img/google-logo.svg", width: "40px" }
-              }),
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.trans.get("students.import_gclassroom")) +
-                  "\n      "
-              )
-            ]
-          )
-        ])
+        )
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field is-horizontal" }, [

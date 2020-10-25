@@ -4,7 +4,7 @@
       <div class="column is-narrow p-0 m-1">
         <Xlsx type="addstudent"></Xlsx>
       </div>
-      <div class="column is-narrow p-0 m-1">
+      <!-- <div class="column is-narrow p-0 m-1">
         <button
           class="button button is-white border"
           @click="loadGoogleCourses"
@@ -12,7 +12,7 @@
           <img src="/img/google-logo.svg" width="40px" />
           {{ trans.get("students.import_gclassroom") }}
         </button>
-      </div>
+      </div> -->
     </div>
     <div class="field is-horizontal">
       <form @submit.prevent="addStudentForm">
