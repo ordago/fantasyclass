@@ -12316,7 +12316,10 @@ __webpack_require__.r(__webpack_exports__);
       audio.play();
     },
     onRotateEnd: function onRotateEnd(prize) {
+      var audio;
+
       if (prize.value > 0) {
+        audio = new Audio("/sound/clap.mp3");
         Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_2__["default"])({
           particleCount: 200,
           spread: 100,
@@ -12324,8 +12327,11 @@ __webpack_require__.r(__webpack_exports__);
             y: 1.0
           }
         });
+      } else {
+        audio = new Audio("/sound/bad.mp3");
       }
 
+      audio.play();
       this.prizeSelected = prize;
       this.$forceUpdate();
     }

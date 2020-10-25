@@ -216,13 +216,18 @@ export default {
       audio.play();
     },
     onRotateEnd(prize) {
+      var audio;
       if (prize.value > 0) {
+        audio = new Audio("/sound/clap.mp3");
         confetti({
           particleCount: 200,
           spread: 100,
           origin: { y: 1.0 },
         });
+      } else {
+        audio = new Audio("/sound/bad.mp3");
       }
+      audio.play();
       this.prizeSelected = prize;
       this.$forceUpdate();
     },

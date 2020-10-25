@@ -4,10 +4,11 @@
 - Added button to go to challenge in students challenge summary.
 
 ### Changed
+- Added sound to wheel.
+- Wheel now use weights.
 - Authory of map in maps.
 - Added subcategories in edit challenge.
 - Hide comment button in challenge information.
-- Wheel now use weights.
 - Changes in remember user.
 
 ## v1.11 Beta (24/10/2020)
