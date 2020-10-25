@@ -65172,9 +65172,15 @@ var render = function() {
                       },
                       [_c("i", { staticClass: "fad fa-wifi" })]
                     )
-                  : _c("span", { staticClass: "tag is-light mr-1" }, [
-                      _c("i", { staticClass: "fas fa-wifi-slash" })
-                    ]),
+                  : _c(
+                      "span",
+                      {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "tag is-light mr-1",
+                        attrs: { content: "Offline" }
+                      },
+                      [_c("i", { staticClass: "fas fa-wifi-slash" })]
+                    ),
                 _vm._v(" "),
                 _vm.student.google_uid
                   ? _c("span", { staticClass: "tag is-danger mr-1" }, [
