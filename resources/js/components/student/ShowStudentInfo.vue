@@ -209,7 +209,7 @@
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="has-padding-2 has-margin-2 rounded"
-              :src="'/img/character/' + charclass.id + '.png'"
+              :src="'/img/character/characters/' + charclass.id + '.png'"
               v-for="charclass in classroom.character_theme.characters"
               v-bind:key="charclass.id"
             />

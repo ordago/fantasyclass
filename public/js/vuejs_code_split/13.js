@@ -1955,7 +1955,10 @@ var render = function() {
                                   " <i class='" +
                                   charclass.property +
                                   " colored'></i>",
-                                src: "/img/character/" + charclass.id + ".png"
+                                src:
+                                  "/img/character/characters/" +
+                                  charclass.id +
+                                  ".png"
                               },
                               on: {
                                 click: function($event) {

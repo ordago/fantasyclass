@@ -11596,6 +11596,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["code", "admin", "student"],
   created: function created() {
@@ -61193,7 +61194,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/FantasyClass-1.png" } })
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-1.png" } })
     ])
   },
   function() {
@@ -61201,7 +61202,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/FantasyClass-2.png" } })
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-2.png" } })
     ])
   },
   function() {
@@ -61236,7 +61237,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-content has-text-centered" }, [
-      _c("img", { attrs: { src: "/img/templates/FantasyClass-3.png" } })
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-3.png" } })
     ])
   }
 ]
@@ -67703,7 +67704,44 @@ var render = function() {
                         )
                       }),
                       0
-                    )
+                    ),
+                _vm._v(" "),
+                _c("div", { staticClass: "my-3" }, [
+                  _vm._v("Icons made by "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "http://www.freepik.com",
+                        title: "Freepik"
+                      }
+                    },
+                    [_vm._v("Freepik")]
+                  ),
+                  _vm._v(" from "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "https://www.flaticon.com/",
+                        title: "Flaticon"
+                      }
+                    },
+                    [_vm._v("www.flaticon.com")]
+                  ),
+                  _vm._v(" is licensed by "),
+                  _c(
+                    "a",
+                    {
+                      attrs: {
+                        href: "http://creativecommons.org/licenses/by/3.0/",
+                        title: "Creative Commons BY 3.0",
+                        target: "_blank"
+                      }
+                    },
+                    [_vm._v("CC 3.0 BY")]
+                  )
+                ])
               ]),
               _vm._v(" "),
               _c(
