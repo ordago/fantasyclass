@@ -65167,7 +65167,7 @@ var render = function() {
                       "span",
                       {
                         directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "tag is-success mr-1",
+                        staticClass: "tag is-success",
                         attrs: { content: _vm.trans.get("students.online") }
                       },
                       [_c("i", { staticClass: "fad fa-wifi" })]
@@ -65195,7 +65195,7 @@ var render = function() {
                       " / " +
                       _vm._s(_vm.student.numcards[1])
                   ),
-                  _c("i", { staticClass: "fas fa-club mx-1" })
+                  _c("i", { staticClass: "fas fa-club" })
                 ])
               ]
             )

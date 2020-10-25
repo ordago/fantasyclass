@@ -26,7 +26,7 @@
           class="bottom-right cursor-pointer is-flex has-all-centered"
         >
           <span
-            class="tag is-success mr-1"
+            class="tag is-success"
             v-if="student.online"
             v-tippy
             :content="trans.get('students.online')"
@@ -41,7 +41,7 @@
           ></span>
           <span class="tag is-dark ml-1">
             {{ student.numcards[0] }} / {{ student.numcards[1]
-            }}<i class="fas fa-club mx-1"></i>
+            }}<i class="fas fa-club"></i>
           </span>
         </span>
       </div>
