@@ -70,6 +70,7 @@
               type="password"
               :value="classroom.enrollment_code"
               password-reveal
+              readonly
             ></b-input>
           </p>
           <p class="control">

@@ -8605,6 +8605,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62611,7 +62612,8 @@ var render = function() {
                     attrs: {
                       type: "password",
                       value: _vm.classroom.enrollment_code,
-                      "password-reveal": ""
+                      "password-reveal": "",
+                      readonly: ""
                     }
                   })
                 ],
