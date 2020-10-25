@@ -1,5 +1,5 @@
 [{
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target" : { "namespace": "android_app", "package_name": "app.fantasyclass.climentjoan",
-                   "sha256_cert_fingerprints": ["F7:71:DB:BF:C9:26:A1:8A:B7:AE:D8:2B:6A:11:67:8F:0E:A8:0E:22:5C:58:E7:05:C6:AC:45:0F:A2:51:EB:CE"] }
+                   "sha256_cert_fingerprints": ["34:1D:99:B0:CF:A7:B6:99:38:AE:70:31:9A:8C:7B:AB:9E:9A:BF:2B:FD:50:06:DE:7E:8B:25:46:47:F8:49:61"] }
     }]
