@@ -54556,23 +54556,6 @@ var render = function() {
                   ])
                 : _vm._e(),
               _vm._v(" "),
-              !_vm.full && !_vm.admin
-                ? _c(
-                    "a",
-                    {
-                      staticClass: "button",
-                      attrs: {
-                        href:
-                          "/classroom/show/" +
-                          this.code +
-                          "/challenges/" +
-                          _vm.challengeReactive.permalink
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.trans.get("challenges.show_challenge")))]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
               _vm.edit || _vm.full
                 ? _c("div", {
                     domProps: {

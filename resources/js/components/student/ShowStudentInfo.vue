@@ -82,6 +82,7 @@
           icon-pack="fad"
         >
           <div class>
+            <h3 class="title is-4 ml-2 mb-0">Avatar</h3>
             <div
               class="has-margin-3"
               v-if="admin || settings.allow_upload != 0"
