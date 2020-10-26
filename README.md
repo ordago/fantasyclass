@@ -13,6 +13,7 @@ Coders
 - Joan Climent.
 - Jose García.
 - Xavi Franch.
+- Ignacio Salazar.  
 
 Help and sponsors
 - [Xavier Climent.](https://twitter.com/xavier_climent) 
@@ -20,7 +21,6 @@ Help and sponsors
 - Guillermo Guerrero. 
 - [Maria Ghirardi (graphics).](http://leideedimari.com/)  
 - [Jujo (graphics).](https://twitter.com/soyjujo_juanjo) 
-- Nacho.  
 - Carlos.
 - [Ander García.](https://aprendecoreano.com/) 
 - Isabel Hernández.

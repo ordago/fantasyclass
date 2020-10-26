@@ -10,6 +10,7 @@ return [
     'config' => 'Configuration',
     'report' => 'Evaluation report',
     'evaluation_line' => 'Add evaluation line',
+    'evaluation_report' => 'Evaluation report',
     'tags' => 'Tags',
     'grade' => 'Grade',
     'abbreviation' => 'Abbreviation',

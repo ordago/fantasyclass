@@ -1,10 +1,7 @@
 # Changelog
-## v1.13 Beta (XX/10/2020)
+## v1.12 Beta (26/10/2020)
 ### Added
-- Import from Google Classroom.
-
-## v1.12 Beta (25/10/2020)
-### Added
+- Added Google Classroom students import.
 - Button to go to challenge in students challenge summary.
 - Licenses added and folder organization.
 - Authory of map in maps.
