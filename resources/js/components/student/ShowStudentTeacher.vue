@@ -41,7 +41,7 @@
           ></span>
           <span class="tag is-dark ml-1">
             {{ student.numcards[0] }} / {{ student.numcards[1]
-            }}<i class="fas fa-club"></i>
+            }}<i class="fas fa-club ml-1"></i>
           </span>
         </span>
       </div>
