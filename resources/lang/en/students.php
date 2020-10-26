@@ -28,7 +28,6 @@ return [
     'cards' => 'Cards',
     'behaviours' => 'Behaviours',
     'icon' => 'Icon',
-    'name' => 'Nanem',
     'created_at' => 'Created at',
     'hp' => 'Health points',
     'xp' => 'Experience',
