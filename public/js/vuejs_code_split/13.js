@@ -947,6 +947,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1676,6 +1677,10 @@ var render = function() {
                     "div",
                     {},
                     [
+                      _c("h3", { staticClass: "title is-4 ml-2 mb-0" }, [
+                        _vm._v("Avatar")
+                      ]),
+                      _vm._v(" "),
                       _vm.admin || _vm.settings.allow_upload != 0
                         ? _c(
                             "div",
