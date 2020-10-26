@@ -63,8 +63,8 @@ class CardsController extends Controller
             'hp' => ['required', 'numeric'],
             'slot' => ['required', 'numeric'],
             'image' => ['image', 'max:10240'],
-            'special' => ['numeric'],
-            'fullscreen' => ['numeric'],
+            'special' => ['string'],
+            'fullscreen' => ['string'],
             'background' => ['string'],
         ]);
     }
@@ -74,6 +74,7 @@ class CardsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $classId = $class->id;
+
         $data = $this->validateFormat(request());
 
         if (!isset($data['image']) || !$data['image']) {
@@ -92,7 +93,7 @@ class CardsController extends Controller
             'min_lvl' => $data['minLvl'],
             'type' => $data['type'],
             'type_bg' => $data['bgType'],
-            'special' => isset($data['special']) ? $data['special'] : 0,
+            'special' => isset($data['special']) ? 1 : 0,
             'width' => $data['width'],
             'margin_top' => $data['marginTop'],
             'margin_left' => $data['marginLeft'],
@@ -102,7 +103,7 @@ class CardsController extends Controller
             'hp' => $data['hp'],
             'gold' => $data['gold'],
             'slot' => $data['slot'],
-            'fullscreen' => isset($data['fullscreen']) ? $data['fullscreen'] : 0,
+            'fullscreen' => isset($data['fullscreen']) ? 1 : 0,
             'classroom_id' => $classId,
         ]);
 

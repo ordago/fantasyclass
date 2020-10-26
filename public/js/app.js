@@ -2685,9 +2685,293 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['code', 'card'],
+  props: ["code", "card"],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -2726,19 +3010,19 @@ __webpack_require__.r(__webpack_exports__);
       hp: 0,
       gold: 0,
       min_lvl: 0,
-      special: false,
+      special: 0,
       fullscreen: false,
       slot: 0,
-      title: '',
-      description: '',
-      src: '/img/cards/card_bg.png',
-      background: '#000000',
+      title: "",
+      description: "",
+      src: "/img/cards/card_bg.png",
+      background: "#000000",
       csrfToken: null
     };
   },
   methods: {
     formSubmit: function formSubmit(e) {
-      if (this.title == '' && this.content == '' && !this.fullscreen) {
+      if (this.title == "" && this.content == "" && !this.fullscreen) {
         if (confirm(this.trans.get("cards.confirm_empty"))) {
           return true;
         } else e.preventDefault();
@@ -2750,12 +3034,12 @@ __webpack_require__.r(__webpack_exports__);
       var imageU = e.target.files[0];
 
       if (imageU.size > 10000000) {
-        e.target.value = '';
+        e.target.value = "";
         this.$toasted.show("File size error. Max file size 10MB", {
           position: "top-center",
           duration: 3000,
-          iconPack: 'fontawesome',
-          type: 'error'
+          iconPack: "fontawesome",
+          type: "error"
         });
       } else {
         var reader = new FileReader();
@@ -2769,11 +3053,11 @@ __webpack_require__.r(__webpack_exports__);
     updateCard: function updateCard() {
       var _this2 = this;
 
-      axios.patch('/classroom/cards/' + this.id, this.$data).then(function (response) {
+      axios.patch("/classroom/cards/" + this.id, this.$data).then(function (response) {
         _this2.$toasted.show(response.data.message, {
           position: "top-center",
           duration: 3000,
-          iconPack: 'fontawesome',
+          iconPack: "fontawesome",
           icon: response.data.icon,
           type: response.data.type
         });
@@ -51892,9 +52176,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        " +
+                              "\n                    " +
                                 _vm._s(this.title) +
-                                "\n                      "
+                                "\n                  "
                             )
                           ]
                         )
@@ -51937,9 +52221,9 @@ var render = function() {
                   { staticClass: "content-cards text_shadow editable_card" },
                   [
                     _vm._v(
-                      "\n                " +
+                      "\n            " +
                         _vm._s(this.description) +
-                        "\n                "
+                        "\n          "
                     )
                   ]
                 ),
@@ -52144,9 +52428,9 @@ var render = function() {
                     [
                       _c("i", { staticClass: "fa fa-cloud-upload" }),
                       _vm._v(
-                        " " +
+                        "\n          " +
                           _vm._s(_vm.trans.get("cards.custom_image")) +
-                          "\n              "
+                          "\n        "
                       )
                     ]
                   )
@@ -52365,9 +52649,9 @@ var render = function() {
                       _c("p", { staticClass: "control" }, [
                         _c("a", { staticClass: "button is-static" }, [
                           _vm._v(
-                            "\n                          " +
+                            "\n                    " +
                               _vm._s(_vm.trans.get("cards.description")) +
-                              "\n                        "
+                              "\n                  "
                           )
                         ])
                       ]),
@@ -52411,9 +52695,9 @@ var render = function() {
                       _c("p", { staticClass: "control" }, [
                         _c("a", { staticClass: "button is-static" }, [
                           _vm._v(
-                            "\n                          " +
+                            "\n                    " +
                               _vm._s(_vm.trans.get("cards.background_color")) +
-                              "\n                        "
+                              "\n                  "
                           )
                         ])
                       ]),
@@ -52461,7 +52745,9 @@ var render = function() {
                             }
                           },
                           [
-                            _vm._v("\n                          Radius "),
+                            _vm._v(
+                              "\n                    Radius\n                    "
+                            ),
                             _c("i", {
                               staticClass:
                                 "fas fa-question-circle has-margin-left-2"
@@ -52522,9 +52808,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                          " +
+                              "\n                    " +
                                 _vm._s(_vm.trans.get("cards.min_lvl")) +
-                                " "
+                                "\n                    "
                             ),
                             _c("i", {
                               staticClass:
@@ -52582,9 +52868,9 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                          " +
+                              "\n                    " +
                                 _vm._s(_vm.trans.get("cards.type")) +
-                                " "
+                                "\n                    "
                             ),
                             _c("i", {
                               staticClass:
@@ -52626,20 +52912,34 @@ var render = function() {
                           },
                           [
                             _c("option", { attrs: { value: "1" } }, [
-                              _vm._v(_vm._s(_vm.trans.get("settings.common")))
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.trans.get("settings.common")) +
+                                  "\n                    "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "2" } }, [
-                              _vm._v(_vm._s(_vm.trans.get("settings.rare")))
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.trans.get("settings.rare")) +
+                                  "\n                    "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "3" } }, [
-                              _vm._v(_vm._s(_vm.trans.get("settings.epic")))
+                              _vm._v(
+                                "\n                      " +
+                                  _vm._s(_vm.trans.get("settings.epic")) +
+                                  "\n                    "
+                              )
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "4" } }, [
                               _vm._v(
-                                _vm._s(_vm.trans.get("settings.legendary"))
+                                "\n                      " +
+                                  _vm._s(_vm.trans.get("settings.legendary")) +
+                                  "\n                    "
                               )
                             ])
                           ]
@@ -52659,8 +52959,8 @@ var render = function() {
                     {
                       staticClass: "has-margin-3",
                       attrs: {
-                        value: "1",
                         name: "special",
+                        value: "1",
                         id: "checkspecial",
                         type: "is-info"
                       },
@@ -52683,7 +52983,10 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._v(_vm._s(_vm.trans.get("cards.special")) + " "),
+                          _vm._v(
+                            _vm._s(_vm.trans.get("cards.special")) +
+                              "\n              "
+                          ),
                           _c("i", {
                             staticClass:
                               "fas fa-question-circle has-margin-left-2"
@@ -52729,7 +53032,7 @@ var render = function() {
                           }
                         },
                         [
-                          _vm._v("Fullscreen "),
+                          _vm._v("Fullscreen\n              "),
                           _c("i", {
                             staticClass:
                               "fas fa-question-circle has-margin-left-2"
@@ -52979,13 +53282,23 @@ var render = function() {
                       attrs: { type: "button" },
                       on: { click: _vm.updateCard }
                     },
-                    [_vm._v(_vm._s(_vm.trans.get("cards.edit_card")))]
+                    [
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.trans.get("cards.edit_card")) +
+                          "\n        "
+                      )
+                    ]
                   )
                 : _vm._e(),
               _vm._v(" "),
               !_vm.card
                 ? _c("button", { staticClass: "button is-success" }, [
-                    _vm._v(_vm._s(_vm.trans.get("cards.create_card")))
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("cards.create_card")) +
+                        "\n        "
+                    )
                   ])
                 : _vm._e()
             ]
@@ -53001,13 +53314,13 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("p", [
-      _vm._v("\n            *"),
+      _vm._v("\n          *"),
       _c("strong", [_vm._v("Bold")]),
       _vm._v("* // ^"),
       _c("em", [_vm._v("Italic")]),
       _vm._v("^ // _ "),
       _c("u", [_vm._v("Underline")]),
-      _vm._v(" _ // [BR]\n          ")
+      _vm._v(" _\n          // [BR]\n        ")
     ])
   }
 ]
