@@ -15,7 +15,7 @@
         <span class="icon is-small">
             <i class="fad fa-analytics" aria-hidden="true"></i>
         </span>
-        <span>Evaluation</span>
+        <span>{{ __('menu.evaluation') }}</span>
     </a>
 </li>
 <li class="is-active">
@@ -23,7 +23,7 @@
         <span class="icon is-small">
             <i class="fad fa-file-chart-line" aria-hidden="true"></i>
         </span>
-        <span>Evaluation report</span>
+        <span>{{ __('evaluation.evaluation_report') }}</span>
     </a>
 </li>
 @include('layouts.breadcrumbend')
