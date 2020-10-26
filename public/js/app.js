@@ -65215,7 +65215,7 @@ var render = function() {
                       " / " +
                       _vm._s(_vm.student.numcards[1])
                   ),
-                  _c("i", { staticClass: "fas fa-club" })
+                  _c("i", { staticClass: "fas fa-club ml-1" })
                 ])
               ]
             )

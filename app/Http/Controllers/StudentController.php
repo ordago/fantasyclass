@@ -6,10 +6,12 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
+use App\Mail\RegisterStudent;
 use App\Student;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use TaylorNetwork\UsernameGenerator\Generator;
 use Illuminate\Support\Str;
 use PhpParser\Node\Stmt\TryCatch;
@@ -68,8 +70,10 @@ class StudentController extends Controller
                     'locale' => auth()->user()->locale,
                 ]);
                 $id = $user->id;
-                if (isset($student['email']))
+                if (isset($student['email'])) {
+                    Mail::to($student['email'])->send(new RegisterStudent($user, $pass));
                     $user->sendEmailVerificationNotification();
+                }
             }
             try {
                 $tmp = ClassroomUser::create([

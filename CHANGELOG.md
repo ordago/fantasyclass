@@ -1,4 +1,9 @@
 # Changelog
+## v1.13 Beta (XX/10/2020)
+### Added
+- Send credentials to students when teacher creates them.
+
+
 ## v1.12 Beta (26/10/2020)
 ### Added
 - Added Google Classroom students import.
