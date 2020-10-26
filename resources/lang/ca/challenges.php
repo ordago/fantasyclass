@@ -41,7 +41,7 @@ return [
 
     'mark_title' => 'Marcar com a superat',
     'mark_confirm' => 'Confirme superació',
-    'mark_text' => 'Estàs segur/1 que has superat la tasca? La confiança és necessària.',
+    'mark_text' => 'Estàs segur/a que has superat la tasca? La confiança és necessària.',
 
     'comment' => 'Comenta',
     'show_challenge' => 'Mostra repte',
