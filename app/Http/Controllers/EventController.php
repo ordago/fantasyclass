@@ -190,7 +190,7 @@ class EventController extends Controller
                 break;
             case 7:
                 $return = [
-                    'class' => '/img/character/' . $class->characterTheme->characters->random(1)->first()->id . ".png",
+                    'class' => '/img/character/characters/' . $class->characterTheme->characters->random(1)->first()->id . ".png",
                     'event' => $event,
                 ];
                 break;
