@@ -241,4 +241,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
     Route::get('/google/classroom/list/{courseId}/students', 'ServicesController@usersList');
     
+    // Google Classroom
+    Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
+    
 });

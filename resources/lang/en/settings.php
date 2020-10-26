@@ -23,6 +23,7 @@ return [
     'general_preferences' => 'General preferences',
     'allow_upload' => 'Allow students to upload custom images',
     'show_chat' => 'Enable classroom chat',
+    'allow_change_class' => 'Allow students to change subclass',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

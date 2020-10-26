@@ -23,6 +23,7 @@ return [
     'general_preferences' => 'Preferencias generales',
     'allow_upload' => 'Permite a los y las estudiantes subir imágenes propias',
     'show_chat' => 'Habilita el chat de la clase',
+    'allow_change_class' => 'Permite cambiar la subclase',
     
     'cards' => 'Máximo de cartas por estudiante',
     'rare' => 'Rara',

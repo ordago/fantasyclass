@@ -1,7 +1,1 @@
-@extends('layouts.app')
-
-@section('content')
-
-    <h1>You are currently not connected to any networks.</h1>
-
-@endsection
+    <h1>You are currently not connected to any networks. Pull down to refresh when you have connection.</h1>

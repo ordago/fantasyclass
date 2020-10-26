@@ -255,6 +255,7 @@ class ClassroomsStudentController extends Controller
 
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
+        $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
 
         $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
         $chat['url'] = env('APP_URL_SHORT'); 

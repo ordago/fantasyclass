@@ -196,7 +196,7 @@
           </div>
           <div
             class="has-padding-4"
-            v-if="classroom.character_theme && student.hp > 0"
+            v-if="(classroom.character_theme && student.hp > 0) && (admin || settings.allow_change_class == 1)"
           >
             <img
               v-tippy

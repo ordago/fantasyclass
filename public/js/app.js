@@ -8606,6 +8606,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62688,6 +62698,34 @@ var render = function() {
                   attrs: { "true-value": "1", "false-value": "0" },
                   on: {
                     input: function($event) {
+                      return _vm.toggleProp("allow_change_class")
+                    }
+                  },
+                  model: {
+                    value: _vm.settings.allow_change_class,
+                    callback: function($$v) {
+                      _vm.$set(_vm.settings, "allow_change_class", $$v)
+                    },
+                    expression: "settings.allow_change_class"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.trans.get("settings.allow_change_class")))]
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "has-margin-y-4" },
+            [
+              _c(
+                "b-switch",
+                {
+                  staticClass: "has-margin-left-4",
+                  attrs: { "true-value": "1", "false-value": "0" },
+                  on: {
+                    input: function($event) {
                       return _vm.toggleProp("allow_upload")
                     }
                   },
@@ -86837,6 +86875,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuraci\xF3",
     "report": "Informe d'avaluaci\xF3",
     "evaluation_line": "Afegir l\xEDnia d'avaluaci\xF3",
+    "evaluation_report": "Informe d\u2019avaluaci\xF3",
     "tags": "Etiquetes",
     "grade": "Avalua",
     "abbreviation": "Abreviaci\xF3",
@@ -87084,6 +87123,7 @@ __webpack_require__.r(__webpack_exports__);
     "general_preferences": "Prefer\xE8ncies generals",
     "allow_upload": "Permet als i les estudiants pujar imatges pr\xF2pies",
     "show_chat": "Habilita el xat de la classe",
+    "allow_change_class": "Permet canviar la subclasse",
     "cards": "M\xE0xim de cartes per estudiant",
     "rare": "Rara",
     "common": "Comuna",
@@ -87525,6 +87565,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuration",
     "report": "Evaluation report",
     "evaluation_line": "Add evaluation line",
+    "evaluation_report": "Evaluation report",
     "tags": "Tags",
     "grade": "Grade",
     "abbreviation": "Abbreviation",
@@ -87762,6 +87803,7 @@ __webpack_require__.r(__webpack_exports__);
     "general_preferences": "General preferences",
     "allow_upload": "Allow students to upload custom images",
     "show_chat": "Enable classroom chat",
+    "allow_change_class": "Allow students to change subclass",
     "cards": "Max number of cards for students",
     "rare": "Rare",
     "common": "Common",
@@ -88215,6 +88257,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuraci\xF3n",
     "report": "Informe de evaluaci\xF3n",
     "evaluation_line": "A\xF1adir l\xEDnea de evaluaci\xF3n",
+    "evaluation_report": "Informe de evaluaci\xF3n",
     "tags": "Etiquetas",
     "grade": "Eval\xFAa",
     "abbreviation": "Abreviaci\xF3n",
@@ -88462,6 +88505,7 @@ __webpack_require__.r(__webpack_exports__);
     "general_preferences": "Preferencias generales",
     "allow_upload": "Permite a los y las estudiantes subir im\xE1genes propias",
     "show_chat": "Habilita el chat de la clase",
+    "allow_change_class": "Permete cambiar la subclase",
     "cards": "M\xE1ximo de cartas por estudiante",
     "rare": "Rara",
     "common": "Com\xFAn",

@@ -1932,7 +1932,9 @@ var render = function() {
                       ])
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.classroom.character_theme && _vm.student.hp > 0
+                  _vm.classroom.character_theme &&
+                  _vm.student.hp > 0 &&
+                  (_vm.admin || _vm.settings.allow_change_class == 1)
                     ? _c(
                         "div",
                         { staticClass: "has-padding-4" },

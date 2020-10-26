@@ -94,6 +94,16 @@
             class="has-margin-left-4"
             true-value="1"
             false-value="0"
+            @input="toggleProp('allow_change_class')"
+            v-model="settings.allow_change_class"
+            >{{ trans.get("settings.allow_change_class") }}</b-switch
+          >
+        </div>
+        <div class="has-margin-y-4">
+          <b-switch
+            class="has-margin-left-4"
+            true-value="1"
+            false-value="0"
             @input="toggleProp('allow_upload')"
             v-model="settings.allow_upload"
             >{{ trans.get("settings.allow_upload") }}</b-switch
