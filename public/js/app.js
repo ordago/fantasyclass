@@ -64208,7 +64208,27 @@ var render = function() {
           { staticClass: "column is-narrow p-0 m-1" },
           [_c("Xlsx", { attrs: { type: "addstudent" } })],
           1
-        )
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "column is-narrow p-0 m-1" }, [
+          _c(
+            "button",
+            {
+              staticClass: "button button is-white border",
+              on: { click: _vm.loadGoogleCourses }
+            },
+            [
+              _c("img", {
+                attrs: { src: "/img/google-logo.svg", width: "40px" }
+              }),
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("students.import_gclassroom")) +
+                  "\n      "
+              )
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "field is-horizontal" }, [
@@ -86817,7 +86837,6 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuraci\xF3",
     "report": "Informe d'avaluaci\xF3",
     "evaluation_line": "Afegir l\xEDnia d'avaluaci\xF3",
-    "evaluation_report": "Informe d'avaluaci\xF3",
     "tags": "Etiquetes",
     "grade": "Avalua",
     "abbreviation": "Abreviaci\xF3",
@@ -87506,7 +87525,6 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuration",
     "report": "Evaluation report",
     "evaluation_line": "Add evaluation line",
-    "evaluation_report": "Evaluation report",
     "tags": "Tags",
     "grade": "Grade",
     "abbreviation": "Abbreviation",
@@ -88197,7 +88215,6 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configuraci\xF3n",
     "report": "Informe de evaluaci\xF3n",
     "evaluation_line": "A\xF1adir l\xEDnea de evaluaci\xF3n",
-    "evaluation_report": "Informe de evaluaci\xF3n",
     "tags": "Etiquetas",
     "grade": "Eval\xFAa",
     "abbreviation": "Abreviaci\xF3n",
