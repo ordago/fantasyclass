@@ -28,8 +28,8 @@ class SettingsController extends Controller
         $settings['num_cards'] = settings()->get('num_cards', 5);
         $settings['allow_upload'] = settings()->get('allow_upload', false);
         $settings['show_chat'] = settings()->get('show_chat', false);
-        $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
-
+        $settings['allow_change_class'] = settings()->get('allow_change_class', 0);
+        
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
         $user = auth()->user()->id;      
