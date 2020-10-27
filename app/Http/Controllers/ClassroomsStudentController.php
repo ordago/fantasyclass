@@ -143,17 +143,18 @@ class ClassroomsStudentController extends Controller
 
     public function getChallenge($code, $permalink)
     {
-        $challenge = Challenge::find(Crypt::decryptString($permalink))->with('attachments', 'comments', 'group');
-        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first();
+	$class = Classroom::where('code', '=', $code)->firstOrFail();
         $student = Functions::getCurrentStudent($class, []);
         $this->checkVisibility($class->id);
         $this->authorize('study', $class);
 
-        $challenge = Challenge::find(Crypt::decryptString($permalink))->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
-            return collect($challenge->toArray())
-                ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
-                ->all();
-        })[0];
+        //$challenge = Challenge::find(Crypt::decryptString($permalink))->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+        //    return collect($challenge->toArray())
+        //        ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
+        //        ->all();
+        //})[0];
+	//dump($challenge);
         
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }

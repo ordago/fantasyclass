@@ -41,10 +41,10 @@ class Challenge extends Model
     {
         ChallengesGroup::$withoutAppends = true;
         $questions = collect();
-        // if($this->questions)
-        // foreach ($this->questions as $question) {
-        //     $questions->add($question->getStudentInfo());
-        // }
+        if($this->questions)
+         foreach ($this->questions as $question) {
+             $questions->add($question->getStudentInfo());
+        }
         return $questions;
     }
 
