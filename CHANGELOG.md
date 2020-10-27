@@ -1,10 +1,14 @@
 # Changelog
+## v1.14 Beta (XX/10/2020)
+### Added
+- Better session management (testing).
+
+
 ## v1.13 Beta (26/10/2020)
 ### Added
 - Send credentials to students when teacher creates them.
 - Added Google Classroom students import.
 - Allow or disallow students to change their subclass (in settings)
-- Better session management (testing).
 
 ## v1.12 Beta (25/10/2020)
 ### Added
