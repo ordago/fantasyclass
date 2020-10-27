@@ -38,6 +38,7 @@ return [
     'finished' => "Finished",
     'disabled' => "Disabled",
     'classroom_unlink' => "Unlink Google Classroom",
+    'classroom_unlink_info' => "Revoke permissions before in your <a target='_blank' href='https://myaccount.google.com/permissions'>Google account</a>",
 
     
 ];

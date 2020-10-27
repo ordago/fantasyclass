@@ -84,6 +84,9 @@
       <button class="button is-link mb-3" v-if="user.token" @click="unlink">
         {{ trans.get('settings.classroom_unlink') }}
       </button>
+      <div class="mt-0 mb-2">
+        <small v-if="user.token" v-html="trans.get('settings.classroom_unlink_info')"></small>
+      </div>
       <div class="has-padding-2">
         <h1>
           <i class="fal fa-cog"></i>

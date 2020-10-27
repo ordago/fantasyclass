@@ -38,6 +38,7 @@ return [
     'finished' => "Finalitzada",
     'disabled' => "Deshabilitada",
     'classroom_unlink' => "Desenllaça Google Classroom",
+    'classroom_unlink_info' => "Treu abans els permissos des del teu <a target='_blank' href='https://myaccount.google.com/permissions'>compte de Google</a>",
 
 
     

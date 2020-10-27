@@ -8900,6 +8900,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -62973,6 +62976,18 @@ var render = function() {
             )
           : _vm._e(),
         _vm._v(" "),
+        _c("div", { staticClass: "mt-0 mb-2" }, [
+          _vm.user.token
+            ? _c("small", {
+                domProps: {
+                  innerHTML: _vm._s(
+                    _vm.trans.get("settings.classroom_unlink_info")
+                  )
+                }
+              })
+            : _vm._e()
+        ]),
+        _vm._v(" "),
         _c("div", { staticClass: "has-padding-2" }, [
           _c("h1", [
             _c("i", { staticClass: "fal fa-cog" }),
@@ -87122,7 +87137,7 @@ __webpack_require__.r(__webpack_exports__);
     "incorrect_answer": "Resposta incorrecta",
     "mark_title": "Marcar com a superat",
     "mark_confirm": "Confirme superaci\xF3",
-    "mark_text": "Est\xE0s segur/1 que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria.",
+    "mark_text": "Est\xE0s segur/a que has superat la tasca? La confian\xE7a \xE9s necess\xE0ria.",
     "comment": "Comenta",
     "show_challenge": "Mostra repte",
     "show_all": "Mostra tots"
@@ -87431,7 +87446,8 @@ __webpack_require__.r(__webpack_exports__);
     "active": "Activa",
     "finished": "Finalitzada",
     "disabled": "Deshabilitada",
-    "classroom_unlink": "Desenlla\xE7a Google Classroom"
+    "classroom_unlink": "Desenlla\xE7a Google Classroom",
+    "classroom_unlink_info": "Treu abans els permissos des del teu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>compte de Google<\/a>"
   },
   "ca.shop": {
     "items": "Objectes",
@@ -88111,7 +88127,8 @@ __webpack_require__.r(__webpack_exports__);
     "active": "Active",
     "finished": "Finished",
     "disabled": "Disabled",
-    "classroom_unlink": "Unlink Google Classroom"
+    "classroom_unlink": "Unlink Google Classroom",
+    "classroom_unlink_info": "Revoke permissions before in your <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>Google account<\/a>"
   },
   "en.shop": {
     "items": "Items",
@@ -88143,7 +88160,7 @@ __webpack_require__.r(__webpack_exports__);
     "dnd": "Drop your file here or click to upload",
     "search": "Search by name",
     "name_surname": "Name and surname",
-    "name": "Nanem",
+    "name": "Name",
     "password": "Password",
     "hide": "Hide student",
     "show": "Show student",
@@ -88813,7 +88830,8 @@ __webpack_require__.r(__webpack_exports__);
     "active": "Activa",
     "finished": "Finalizada",
     "disabled": "Deshabilitada",
-    "classroom_unlink": "Desenlaza Google Classroom"
+    "classroom_unlink": "Desenlaza Google Classroom",
+    "classroom_unlink_info": "Elimina antes los permisos des de tu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>cuenta de Google<\/a>"
   },
   "es.shop": {
     "items": "Objetos",
