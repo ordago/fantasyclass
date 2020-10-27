@@ -49,7 +49,7 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <!-- <a class="button" :href="'/classroom/show/' + this.code + '/challenges/' + challengeReactive.permalink" v-if="!full && !admin">{{ trans.get('challenges.show_challenge') }}</a> -->
+          <a class="button" :href="'/classroom/show/' + this.code + '/challenges/' + challengeReactive.permalink" v-if="!full && !admin">{{ trans.get('challenges.show_challenge') }}</a>
           <div
             v-if="edit || full"
             v-html="getContent(challengeReactive.content)"

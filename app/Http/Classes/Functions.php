@@ -6,11 +6,12 @@ use App\Student;
 
 class Functions
 {
-  
+
   /***
    * Replace special chars
    */
-  public static function replaceSpecial($text, $class = null) {
+  public static function replaceSpecial($text, $class = null)
+  {
     // $text = str_replace('[tex]', '\[', $text);
     // $text = str_replace('[/tex]', '\]', $text);
     $text = str_replace('%XP%', "<i class='fas fa-fist-raised colored'></i>", $text);
@@ -18,17 +19,16 @@ class Functions
     $text = str_replace('%HP%', "<i class='fas fa-heart colored'></i>", $text);
     $text = str_replace('%BR%', "<br>", $text);
     $text = str_replace('%br%', "<br>", $text);
-    
-    if($class) {
+
+    if ($class) {
       settings()->setExtraColumns(['classroom_id' => $class->id]);
 
       $text = str_replace('%GAME_NAME%', $class->adventure_name, $text);
       $text = str_replace('%GOLD_USE%', settings()->get('card_use', 200), $text);
       $text = str_replace('%GOLD_DELETE%', settings()->get('card_delete', 50), $text);
       $text = str_replace('%NUM_CARDS%', settings()->get('num_cards', 5), $text);
-
     }
-  
+
     return $text;
   }
 
@@ -37,12 +37,16 @@ class Functions
    */
   public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])
   {
-    return Student::where('id', '=', auth()->user()->classrooms
-      ->where('pivot.classroom_id', '=', $classroom->id)
-      ->where('pivot.role', '=', 0)
-      ->first()
-      ->pivot
-      ->student->id)->with($with)->first();
+    return Student::where(
+      'id',
+      '=',
+      auth()->user()->classrooms
+        ->where('pivot.classroom_id', '=', $classroom->id)
+        ->where('pivot.role', '=', 0)
+        ->first()
+        ->pivot
+        ->student->id
+    )->with($with)->first();
   }
 
   /**
