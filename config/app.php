@@ -41,7 +41,7 @@ return [
     */
 
     // 'debug' => (bool) env('APP_DEBUG', false),
-    'debug' => (bool) env('APP_DEBUG', $_SERVER['REMOTE_ADDR'] == env('ALLOWED_IP') ? true : false)
+    'debug' => (bool) env('APP_DEBUG', $_SERVER['REMOTE_ADDR'] == env('ALLOWED_IP') ? true : false),
 
     /*
     |--------------------------------------------------------------------------
