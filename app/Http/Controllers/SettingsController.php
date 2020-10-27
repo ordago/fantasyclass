@@ -28,7 +28,7 @@ class SettingsController extends Controller
         $settings['num_cards'] = settings()->get('num_cards', 5);
         $settings['allow_upload'] = settings()->get('allow_upload', false);
         $settings['show_chat'] = settings()->get('show_chat', false);
-        $settings['allow_change_class'] = settings()->get('allow_change_class', 0);
+        $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
         
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
@@ -92,7 +92,11 @@ class SettingsController extends Controller
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         if (request()->action == 'toggle') {
-            $value = !settings()->get(request()->prop, 0);
+            $old = 0;
+            if(request()->prop == 'allow_change_class') {
+                $old = 1;
+            }
+            $value = !settings()->get(request()->prop, $old);
             settings()->set(request()->prop, $value);
         } else if(request()->action == 'update') {
             if(request()->prop == "card_probabilities") {
