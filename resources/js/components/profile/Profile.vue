@@ -4,11 +4,13 @@
       <section class="has-padding-x-3">
         <h1 class="is-size-2">
           <i class="fal fa-cog faa-spin animated faa-slow"></i>
-          {{ trans.get('profile.profile') }}
+          {{ trans.get("profile.profile") }}
         </h1>
 
         <div class="has-margin-y-4">
-          <label for="name" class="has-margin-y-2">{{trans.get('profile.name') }}</label>
+          <label for="name" class="has-margin-y-2">{{
+            trans.get("profile.name")
+          }}</label>
           <input
             id="name"
             type="text"
@@ -21,36 +23,44 @@
             v-model="name"
           />
         </div>
+        <span v-if="user.email">
+          <div class="has-margin-y-4">
+            <label for="new-password" class="has-margin-y-2">{{
+              trans.get("profile.new_password")
+            }}</label>
+            <input
+              type="password"
+              class="input has-margin-y-2 is-info"
+              name="password"
+              ref="new_password"
+              minlength="8"
+              v-model="password"
+              autocomplete="new-password"
+            />
+          </div>
 
-        <div class="has-margin-y-4">
-          <label for="new-password" class="has-margin-y-2">{{trans.get('profile.new_password') }}</label>
-          <input
-            type="password"
-            class="input has-margin-y-2 is-info"
-            name="password"
-            ref="new_password"
-            minlength="8"
-            v-model="password"
-            autocomplete="new-password"
-          />
-        </div>
-
-        <div class="has-margin-y-4">
-          <label
-            for="password_confirmation"
-            class="has-margin-y-2"
-            v-if="password.length"
-          >{{trans.get('profile.confirm_new_password') }}</label>
-          <input
-            type="password"
-            ref="password_confirm"
-            minlength="8"
-            class="input has-margin-y-2 is-info"
-            name="password_confirmation"
-            autocomplete="new-password"
-            v-if="password.length"
-            v-model="password_confirm"
-          />
+          <div class="has-margin-y-4">
+            <label
+              for="password_confirmation"
+              class="has-margin-y-2"
+              v-if="password.length"
+              >{{ trans.get("profile.confirm_new_password") }}</label
+            >
+            <input
+              type="password"
+              ref="password_confirm"
+              minlength="8"
+              class="input has-margin-y-2 is-info"
+              name="password_confirmation"
+              autocomplete="new-password"
+              v-if="password.length"
+              v-model="password_confirm"
+            />
+          </div>
+        </span>
+        <div class="notification is-warning is-light" v-else>
+          <i class="fas fa-exclamation-triangle mr-1"></i>
+          {{ trans.get("profile.password_email") }}
         </div>
 
         <div class="has-margin-top-4">
@@ -62,14 +72,15 @@
             @input="email_change = true"
           />
         </div>
-        <small>{{ trans.get('profile.info_email') }}</small>
+        <small>{{ trans.get("profile.info_email") }}</small>
 
         <div class="has-margin-y-4">
           <label
             for="current-password"
             class="has-margin-y-2"
             v-if="password.length || email_change"
-          >{{trans.get('profile.current_password') }}</label>
+            >{{ trans.get("profile.current_password") }}</label
+          >
           <input
             type="password"
             class="input has-margin-y-2 is-info"
@@ -82,26 +93,38 @@
         </div>
 
         <div class="has-margin-y-4 form-group">
-          <label for="language" class="has-margin-y-2">{{trans.get('profile.language') }}</label>
-          <select v-model="user_lang" class="form-control input has-margin-y-2 is-info" id="locale">
+          <label for="language" class="has-margin-y-2">{{
+            trans.get("profile.language")
+          }}</label>
+          <select
+            v-model="user_lang"
+            class="form-control input has-margin-y-2 is-info"
+            id="locale"
+          >
             <option
               :value="code"
               v-for="(language, code) in lang"
               v-bind:key="language"
-            >{{ language }}</option>
+            >
+              {{ language }}
+            </option>
           </select>
         </div>
         <button
           class="button is-dark"
           v-if="user.is_student == 1 && user.email"
           @click.prevent="promote"
-        >{{ trans.get('profile.upgrade') }}</button>
+        >
+          {{ trans.get("profile.upgrade") }}
+        </button>
 
         <div
           class="is-flex has-padding-x-4 has-padding-y-4"
-          style="position: fixed; bottom: 0; right: 0;"
+          style="position: fixed; bottom: 0; right: 0"
         >
-          <button class="button is-link">{{trans.get('profile.edit') }}</button>
+          <button class="button is-link">
+            {{ trans.get("profile.edit") }}
+          </button>
         </div>
       </section>
     </form>
@@ -130,8 +153,22 @@ export default {
   },
   methods: {
     promote: function () {
-      axios.get("/profile/promote").then((response) => {
-        location.href = "/classroom";
+      this.$buefy.dialog.confirm({
+        title: this.trans.get('profile.only_teachers_title'),
+        message: this.trans.get("profile.only_teachers"),
+        confirmText: this.trans.get("profile.only_teachers_accept"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "exclamation-triangle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.get("/profile/promote").then((response) => {
+            location.href = "/classroom";
+          });
+        },
       });
     },
     axiosSend: function () {

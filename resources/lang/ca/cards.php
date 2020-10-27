@@ -79,7 +79,9 @@ return [
     'walking_description' => 'Si mors, recuperes automàticament 20 de vida.',
     'first_title' => 'El primer de la classe',
     'first_description' => 'Començaràs una prova 5 minuts abans que els i les companyes.',
-
+    
+    'import' => 'Banc de cartes',
+    'import_empty' => 'No hi ha cartes per importar',
     
     /* Use cards */
     'use' => 'Utilitzar',

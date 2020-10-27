@@ -1,4 +1,10 @@
 # Changelog
+## v1.14 Beta (XX/10/2020)
+- Import cards from other classrooms.
+
+### Changed
+- Only users with email are allowed to change password.
+
 ## v1.13 Beta (27/10/2020)
 ### Added
 - Send credentials to students when teacher creates them.

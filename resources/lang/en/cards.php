@@ -78,7 +78,9 @@ return [
     'walking_description' => 'When you die, you get 20 HP back instantly.',
     'first_title' => 'The first one',
     'first_description' => 'You\'re the fastest! You start the test 5 minutes before the partners.',
-
+    
+    'import' => 'Card bank',
+    'import_empty' => 'There are no cards to import',
     
     /* Use cards */
     'use' => 'Use',

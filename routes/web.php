@@ -50,6 +50,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/cards', 'CardsController@index');
         Route::get('/{code}/card/random', 'CardsController@random');
         Route::post('/{code}/card/assign', 'CardsController@assign');
+        Route::post('/{code}/card/import', 'CardsController@import');
         Route::get('/{code}/cards/import/default', 'CardsController@importDefault');
         Route::get('/{code}/cards/create', 'CardsController@create');
         Route::post('/{code}/cards', 'CardsController@store');
@@ -225,6 +226,7 @@ Route::group(['middleware' => 'language'], function () {
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
     Route::post('/user/challenges/import/{id}', 'ChallengesController@importChallenge');
+    Route::get('/user/cards', 'CardsController@getUserCards');
     
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

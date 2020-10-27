@@ -80,7 +80,9 @@ return [
     'first_title' => 'El primer de la clase',
     'first_description' => 'Empezarás una prueba 5 minutos antes de que los y las compañeras.',
 
-    
+    'import' => 'Banco de cartas',
+    'import_empty' => 'No hay cartas para importar',
+
     /* Use cards */
     'use' => 'Usar',
     'delete' => 'Eliminar',

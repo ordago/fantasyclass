@@ -69,6 +69,12 @@ class CardsController extends Controller
         ]);
     }
 
+    public function getUserCards()
+    {
+        $ids = auth()->user()->classrooms()->where('role', '>', 0)->get()->pluck('id');
+        return Card::where('own', '=', 1)->whereIn('classroom_id', $ids)->get();
+    }
+
     public function store($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
@@ -105,6 +111,7 @@ class CardsController extends Controller
             'slot' => $data['slot'],
             'fullscreen' => isset($data['fullscreen']) ? 1 : 0,
             'classroom_id' => $classId,
+            'own' => 1,
         ]);
 
         if ($image == null) {
@@ -157,6 +164,7 @@ class CardsController extends Controller
 
         try {
             $card->update(request()->all());
+            $card->update(['own' => 1]);
             return [
                 "message" => __('success_error.update_success'),
                 "type" => "success",
@@ -170,6 +178,21 @@ class CardsController extends Controller
             ];
             return $th;
         }
+    }
+
+    public function import($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $card = Card::find($data['id']);
+        $cardClass = Classroom::find($card->classroom_id);
+        $this->authorize('view', $cardClass);
+        $newCard = $card->replicate();
+        $class->cards()->save($newCard);
+        $newCard->update(['own' => 0]);
     }
 
     // Add default cards
@@ -220,18 +243,18 @@ class CardsController extends Controller
         $card = Card::find($id);
         $class = Classroom::find($card->classroom_id);
         $this->authorize('update', $class);
-        
+
         $data = request()->validate([
             'student' => ['numeric', 'required'],
             'type' => ['numeric'],
-            ]);
-            
+        ]);
+
         $student = Student::find($data['student']);
         if ($student->classroom->classroom_id != $class->id)
             return false;
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        
+
         $cardLine = CardStudent::where('card_id', $card->id)
             ->where('student_id', $student->id)
             ->first();
@@ -241,7 +264,7 @@ class CardsController extends Controller
         if ($card->special) {
             $gold = 0;
         } else {
-            if($data['type'] == 1) {
+            if ($data['type'] == 1) {
                 $gold = settings()->get('card_use', 200);
             } else {
                 $gold = settings()->get('card_delete', 50);
@@ -252,7 +275,7 @@ class CardsController extends Controller
         if ($card->xp) $student->setProperty('xp', $card->xp, true);
         if ($card->hp) $student->setProperty('hp', $card->hp, true);
 
-        if($gold) {
+        if ($gold) {
             $message = __('success_error.use_delete_gold', ['gold' => $gold]);
         } else {
             $message = __('success_error.use_delete');
@@ -264,8 +287,6 @@ class CardsController extends Controller
             "type" => "success",
             "gold" => $gold,
         ];
-
-
     }
 
     public function useDelete($id)
@@ -348,12 +369,12 @@ class CardsController extends Controller
     public static function getRandomCard($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        if(!$class->cards->count())
+        if (!$class->cards->count())
             return false;
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
-        
+
         do {
             $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
             $card = Card::where('type', $typeValue)->where('classroom_id', $class->id)->inRandomOrder()->first();

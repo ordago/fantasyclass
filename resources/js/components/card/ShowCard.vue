@@ -111,6 +111,11 @@
         <i class="fas fa-arrow-up"></i> {{ trans.get("general.assign") }}
       </button>
     </div>
+    <div style="text-align: center" v-if="this.admin && this.import">
+      <button class="button is-success" @click="importCard">
+        <i class="fas fa-arrow-up"></i> {{ trans.get("general.import") }}
+      </button>
+    </div>
     <div
       style="text-align: center"
       v-if="this.admin && this.properties && !this.assign"
@@ -137,7 +142,16 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["card", "admin", "properties", "code", "use", "student", "assign"],
+  props: [
+    "card",
+    "admin",
+    "properties",
+    "code",
+    "use",
+    "student",
+    "assign",
+    "import",
+  ],
   mounted() {
     this.description = Utils.styleText(this.trans.get(this.card.description));
   },
@@ -147,6 +161,21 @@ export default {
     };
   },
   methods: {
+    importCard() {
+      axios
+        .post("/classroom/" + this.code + "/card/import", {
+          id: this.card.id,
+        })
+        .then((response) => {
+          this.$toasted.show(this.trans.get("success_error.add_success"), {
+            position: "top-center",
+            duration: 3000,
+            iconPack: "fontawesome",
+            icon: "check",
+            type: "success",
+          });
+        });
+    },
     assignCard() {
       axios
         .post("/classroom/" + this.code + "/card/assign", {

@@ -3213,9 +3213,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["card", "admin", "properties", "code", "use", "student", "assign"],
+  props: ["card", "admin", "properties", "code", "use", "student", "assign", "import"],
   mounted: function mounted() {
     this.description = _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].styleText(this.trans.get(this.card.description));
   },
@@ -3225,15 +3230,30 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    assignCard: function assignCard() {
+    importCard: function importCard() {
       var _this = this;
+
+      axios.post("/classroom/" + this.code + "/card/import", {
+        id: this.card.id
+      }).then(function (response) {
+        _this.$toasted.show(_this.trans.get("success_error.add_success"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "check",
+          type: "success"
+        });
+      });
+    },
+    assignCard: function assignCard() {
+      var _this2 = this;
 
       axios.post("/classroom/" + this.code + "/card/assign", {
         type: "student",
         id: this.assign,
         card: this.card.id
       }).then(function (response) {
-        _this.$toasted.show(_this.trans.get("success_error.add_success"), {
+        _this2.$toasted.show(_this2.trans.get("success_error.add_success"), {
           position: "top-center",
           duration: 3000,
           type: "success",
@@ -3243,7 +3263,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     markCard: function markCard(card, type) {
-      var _this2 = this;
+      var _this3 = this;
 
       var number = 0;
       if (this.$parent.$parent.$parent.student.level != null) number = this.$parent.$parent.$parent.student.level.number;
@@ -3262,18 +3282,18 @@ __webpack_require__.r(__webpack_exports__);
           ariaRole: "alertdialog",
           ariaModal: true,
           onConfirm: function onConfirm() {
-            axios.post("/classroom/card/usedelete/bypass/" + _this2.card.id, {
+            axios.post("/classroom/card/usedelete/bypass/" + _this3.card.id, {
               type: type,
-              student: _this2.student.id
+              student: _this3.student.id
             }).then(function (response) {
               // destroy the vue listeners, etc
-              _this2.$destroy(); // remove the element from the DOM
+              _this3.$destroy(); // remove the element from the DOM
 
 
-              _this2.$el.parentNode.removeChild(_this2.$el);
+              _this3.$el.parentNode.removeChild(_this3.$el);
 
               var actions = [{
-                text: _this2.trans.get("general.close"),
+                text: _this3.trans.get("general.close"),
                 onClick: function onClick(e, toastObject) {
                   toastObject.goAway(0);
                 }
@@ -3282,10 +3302,10 @@ __webpack_require__.r(__webpack_exports__);
 
               if (gold) {
                 actions.push({
-                  text: _this2.trans.get("cards.pay"),
+                  text: _this3.trans.get("cards.pay"),
                   onClick: function onClick(e, toastObject) {
-                    if (response.data.gold > _this2.student.gold) {
-                      _this2.$toasted.show(_this2.trans.get("success_error.shop_failed_money"), {
+                    if (response.data.gold > _this3.student.gold) {
+                      _this3.$toasted.show(_this3.trans.get("success_error.shop_failed_money"), {
                         position: "top-center",
                         duration: 3000,
                         type: "error",
@@ -3298,15 +3318,15 @@ __webpack_require__.r(__webpack_exports__);
                     }
 
                     var options = {
-                      id: _this2.student.id,
+                      id: _this3.student.id,
                       prop: "gold",
                       value: gold * -1
                     };
                     var student;
                     axios.post("/classroom/students/update", options).then(function (response) {
-                      _this2.student.gold -= gold;
+                      _this3.student.gold -= gold;
 
-                      _this2.$parent.$parent.$parent.$forceUpdate();
+                      _this3.$parent.$parent.$parent.$forceUpdate();
 
                       toastObject.goAway(0);
                     });
@@ -3314,7 +3334,7 @@ __webpack_require__.r(__webpack_exports__);
                 });
               }
 
-              _this2.$toasted.show(response.data.message, {
+              _this3.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: null,
                 iconPack: "fontawesome",
@@ -3336,11 +3356,11 @@ __webpack_require__.r(__webpack_exports__);
           ariaRole: "alertdialog",
           ariaModal: true,
           onConfirm: function onConfirm() {
-            axios.post("/classroom/" + _this2.code + "/card/mark/" + _this2.card.id, {
+            axios.post("/classroom/" + _this3.code + "/card/mark/" + _this3.card.id, {
               type: type,
-              student: _this2.student.id
+              student: _this3.student.id
             }).then(function (response) {
-              _this2.$toasted.show(response.data.message, {
+              _this3.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: 3000,
                 iconPack: "fontawesome",
@@ -3350,7 +3370,7 @@ __webpack_require__.r(__webpack_exports__);
 
               card.pivot.marked = type;
 
-              _this2.$forceUpdate();
+              _this3.$forceUpdate();
             });
           }
         });
@@ -3367,7 +3387,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.card.min_lvl > number ? true : false;
     },
     confirmDelete: function confirmDelete() {
-      var _this3 = this;
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -3381,9 +3401,9 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/card/" + _this3.card.id).then(function (response) {
+          axios["delete"]("/classroom/card/" + _this4.card.id).then(function (response) {
             if (response.data === 1) {
-              _this3.$el.parentNode.removeChild(_this3.$el);
+              _this4.$el.parentNode.removeChild(_this4.$el);
             }
           });
         }
@@ -3410,23 +3430,99 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['cards', 'code', 'student'],
+  props: ["cards", "code", "student"],
   mounted: function mounted() {
     this.cardsJson = JSON.parse(this.cards);
   },
   data: function data() {
     return {
       custom: 0,
-      sortKey: 'type',
-      cardsJson: []
+      sortKey: "type",
+      isModalActive: false,
+      cardsJson: [],
+      ownCards: []
     };
   },
-  methods: {},
+  methods: {
+    refresh: function refresh() {
+      location.reload();
+    },
+    getOwnCards: function getOwnCards() {
+      var _this = this;
+
+      axios.get("/user/cards").then(function (response) {
+        _this.ownCards = response.data;
+        _this.isModalActive = true;
+      });
+    }
+  },
   computed: {
     orderedCards: function orderedCards() {
-      return _.orderBy(this.cardsJson, this.sortKey, 'asc');
+      return _.orderBy(this.cardsJson, this.sortKey, "asc");
     }
   }
 });
@@ -8400,6 +8496,29 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["user", "lang"],
   mounted: function mounted() {
@@ -8421,8 +8540,22 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     promote: function promote() {
-      axios.get("/profile/promote").then(function (response) {
-        location.href = "/classroom";
+      this.$buefy.dialog.confirm({
+        title: this.trans.get('profile.only_teachers_title'),
+        message: this.trans.get("profile.only_teachers"),
+        confirmText: this.trans.get("profile.only_teachers_accept"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "exclamation-triangle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios.get("/profile/promote").then(function (response) {
+            location.href = "/classroom";
+          });
+        }
       });
     },
     axiosSend: function axiosSend() {
@@ -53546,6 +53679,19 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
+    this.admin && this.import
+      ? _c("div", { staticStyle: { "text-align": "center" } }, [
+          _c(
+            "button",
+            { staticClass: "button is-success", on: { click: _vm.importCard } },
+            [
+              _c("i", { staticClass: "fas fa-arrow-up" }),
+              _vm._v(" " + _vm._s(_vm.trans.get("general.import")) + "\n    ")
+            ]
+          )
+        ])
+      : _vm._e(),
+    _vm._v(" "),
     this.admin && this.properties && !this.assign
       ? _c("div", { staticStyle: { "text-align": "center" } }, [
           _c(
@@ -53613,19 +53759,150 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "has-padding-2 is-flex flex-wrap justify-content-center" },
-    _vm._l(this.orderedCards, function(card) {
-      return _c("show-card", {
-        key: card.id,
-        attrs: {
-          code: _vm.code,
-          properties: true,
-          admin: true,
-          assign: _vm.student,
-          card: card
-        }
-      })
-    }),
+    [
+      _c("div", { staticClass: "has-margin-2" }, [
+        _c(
+          "a",
+          {
+            staticClass: "button is-success",
+            attrs: { href: "/classroom/" + _vm.code + "/cards/create" }
+          },
+          [
+            _vm._v(
+              "\n      " + _vm._s(_vm.trans.get("cards.create_card")) + "\n    "
+            )
+          ]
+        ),
+        _vm._v(" "),
+        _vm.cardsJson.length < 10
+          ? _c(
+              "a",
+              {
+                staticClass: "button is-info",
+                attrs: {
+                  href: "/classroom/" + _vm.code + "/cards/import/default"
+                }
+              },
+              [
+                _vm._v(
+                  "\n      " +
+                    _vm._s(_vm.trans.get("cards.import_default")) +
+                    "\n    "
+                )
+              ]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "button",
+          { staticClass: "button", on: { click: _vm.getOwnCards } },
+          [
+            _vm._v(
+              "\n      " + _vm._s(_vm.trans.get("cards.import")) + "\n    "
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "has-padding-2 is-flex flex-wrap justify-content-center"
+        },
+        _vm._l(_vm.orderedCards, function(card) {
+          return _c("show-card", {
+            key: card.id,
+            attrs: {
+              code: _vm.code,
+              properties: true,
+              admin: true,
+              assign: _vm.student,
+              card: card
+            }
+          })
+        }),
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.isModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isModalActive = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v(_vm._s(_vm.trans.get("general.import")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "section",
+                { staticClass: "modal-card-body is-flex has-all-centered" },
+                [
+                  !_vm.ownCards.length
+                    ? _c("div", [
+                        _vm._v(_vm._s(_vm.trans.get("cards.import_empty")))
+                      ])
+                    : _c(
+                        "div",
+                        {
+                          staticClass:
+                            "has-padding-2 is-flex flex-wrap justify-content-center"
+                        },
+                        _vm._l(_vm.ownCards, function(card) {
+                          return _c("show-card", {
+                            key: card.id,
+                            attrs: {
+                              code: _vm.code,
+                              properties: false,
+                              admin: true,
+                              import: true,
+                              card: card
+                            }
+                          })
+                        }),
+                        1
+                      )
+                ]
+              ),
+              _vm._v(" "),
+              _c("footer", { staticClass: "modal-card-foot" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    attrs: { type: "button" },
+                    on: { click: _vm.refresh }
+                  },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("general.close")) +
+                        "\n        "
+                    )
+                  ]
+                )
+              ])
+            ]
+          )
+        ]
+      )
+    ],
     1
   )
 }
@@ -62423,88 +62700,104 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "has-margin-y-4" }, [
-            _c(
-              "label",
-              { staticClass: "has-margin-y-2", attrs: { for: "new-password" } },
-              [_vm._v(_vm._s(_vm.trans.get("profile.new_password")))]
-            ),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.password,
-                  expression: "password"
-                }
-              ],
-              ref: "new_password",
-              staticClass: "input has-margin-y-2 is-info",
-              attrs: {
-                type: "password",
-                name: "password",
-                minlength: "8",
-                autocomplete: "new-password"
-              },
-              domProps: { value: _vm.password },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.password = $event.target.value
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "has-margin-y-4" }, [
-            _vm.password.length
-              ? _c(
-                  "label",
-                  {
-                    staticClass: "has-margin-y-2",
-                    attrs: { for: "password_confirmation" }
-                  },
-                  [
-                    _vm._v(
-                      _vm._s(_vm.trans.get("profile.confirm_new_password"))
-                    )
-                  ]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.password.length
-              ? _c("input", {
-                  directives: [
+          _vm.user.email
+            ? _c("span", [
+                _c("div", { staticClass: "has-margin-y-4" }, [
+                  _c(
+                    "label",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.password_confirm,
-                      expression: "password_confirm"
-                    }
-                  ],
-                  ref: "password_confirm",
-                  staticClass: "input has-margin-y-2 is-info",
-                  attrs: {
-                    type: "password",
-                    minlength: "8",
-                    name: "password_confirmation",
-                    autocomplete: "new-password"
-                  },
-                  domProps: { value: _vm.password_confirm },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
+                      staticClass: "has-margin-y-2",
+                      attrs: { for: "new-password" }
+                    },
+                    [_vm._v(_vm._s(_vm.trans.get("profile.new_password")))]
+                  ),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.password,
+                        expression: "password"
                       }
-                      _vm.password_confirm = $event.target.value
+                    ],
+                    ref: "new_password",
+                    staticClass: "input has-margin-y-2 is-info",
+                    attrs: {
+                      type: "password",
+                      name: "password",
+                      minlength: "8",
+                      autocomplete: "new-password"
+                    },
+                    domProps: { value: _vm.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.password = $event.target.value
+                      }
                     }
-                  }
-                })
-              : _vm._e()
-          ]),
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "has-margin-y-4" }, [
+                  _vm.password.length
+                    ? _c(
+                        "label",
+                        {
+                          staticClass: "has-margin-y-2",
+                          attrs: { for: "password_confirmation" }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(
+                              _vm.trans.get("profile.confirm_new_password")
+                            )
+                          )
+                        ]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.password.length
+                    ? _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.password_confirm,
+                            expression: "password_confirm"
+                          }
+                        ],
+                        ref: "password_confirm",
+                        staticClass: "input has-margin-y-2 is-info",
+                        attrs: {
+                          type: "password",
+                          minlength: "8",
+                          name: "password_confirmation",
+                          autocomplete: "new-password"
+                        },
+                        domProps: { value: _vm.password_confirm },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.password_confirm = $event.target.value
+                          }
+                        }
+                      })
+                    : _vm._e()
+                ])
+              ])
+            : _c("div", { staticClass: "notification is-warning is-light" }, [
+                _c("i", { staticClass: "fas fa-exclamation-triangle mr-1" }),
+                _vm._v(
+                  "\n        " +
+                    _vm._s(_vm.trans.get("profile.password_email")) +
+                    "\n      "
+                )
+              ]),
           _vm._v(" "),
           _c("div", { staticClass: "has-margin-top-4" }, [
             _c(
@@ -62625,7 +62918,7 @@ var render = function() {
                 return _c(
                   "option",
                   { key: language, domProps: { value: code } },
-                  [_vm._v(_vm._s(language))]
+                  [_vm._v("\n            " + _vm._s(language) + "\n          ")]
                 )
               }),
               0
@@ -62644,7 +62937,13 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v(_vm._s(_vm.trans.get("profile.upgrade")))]
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("profile.upgrade")) +
+                      "\n      "
+                  )
+                ]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -62656,7 +62955,11 @@ var render = function() {
             },
             [
               _c("button", { staticClass: "button is-link" }, [
-                _vm._v(_vm._s(_vm.trans.get("profile.edit")))
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.trans.get("profile.edit")) +
+                    "\n        "
+                )
               ])
             ]
           )
@@ -87112,6 +87415,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "Si mors, recuperes autom\xE0ticament 20 de vida.",
     "first_title": "El primer de la classe",
     "first_description": "Comen\xE7ar\xE0s una prova 5 minuts abans que els i les companyes.",
+    "import": "Banc de cartes",
+    "import_empty": "No hi ha cartes per importar",
     "use": "Utilitzar",
     "delete": "Eliminar",
     "use_title": "Marcar carta",
@@ -87435,7 +87740,11 @@ __webpack_require__.r(__webpack_exports__);
     "update_success": "El perfil s'ha actualitzat correctament",
     "incorrect_password": "La contrasenya del compte \xE9s incorrecta, torna a intentar-ho",
     "info_email": "Si canvies el correu haur\xE0s de confirmar el nou i haur\xE0s de tornar a accedir",
-    "upgrade": "Vull crear les meues pr\xF2pies classes!"
+    "upgrade": "Vull crear les meues pr\xF2pies classes!",
+    "password_email": "Per canviar la contrasenya has d'enregistrar un correu electr\xF2nic v\xE0lid",
+    "only_teachers": "Aquesta funci\xF3 \xE9s solament per a profes, s'aplica un codi d'honor ... Si ets estudiant clica en cancel\xB7lar \uD83E\uDD7A\uD83D\uDE22",
+    "only_teachers_accept": "S\xED, s\xF3c profe",
+    "only_teachers_title": "Ets profe?"
   },
   "ca.settings": {
     "classroom": "Gesti\xF3 de classe",
@@ -87800,6 +88109,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "When you die, you get 20 HP back instantly.",
     "first_title": "The first one",
     "first_description": "You're the fastest! You start the test 5 minutes before the partners.",
+    "import": "Card bank",
+    "import_empty": "There are no cards to import",
     "use": "Use",
     "delete": "Delete",
     "use_title": "Mark card",
@@ -88116,7 +88427,11 @@ __webpack_require__.r(__webpack_exports__);
     "update_success": "The profile has been updated successfully",
     "incorrect_password": "Account's password not valid",
     "info_email": "If you change the e-mail you'll be logged out and you'll need to confirm the new one.",
-    "upgrade": "I want to create my own classrooms!"
+    "upgrade": "I want to create my own classrooms!",
+    "password_email": "In order to change the password you'll need to register a valid email",
+    "only_teachers": "This function is only for teachers, an honor code applies ... If you are a student, click on cancel \uD83E\uDD7A\uD83D\uDE22",
+    "only_teachers_accept": "Yes, I'm a teacher",
+    "only_teachers_title": "Are you a teacher?"
   },
   "en.settings": {
     "classroom": "Classroom Management",
@@ -88496,6 +88811,8 @@ __webpack_require__.r(__webpack_exports__);
     "walking_description": "Si mueres, recuperas autom\xE1ticamente 20 de vida.",
     "first_title": "El primer de la clase",
     "first_description": "Empezar\xE1s una prueba 5 minutos antes de que los y las compa\xF1eras.",
+    "import": "Banco de cartas",
+    "import_empty": "No hay cartas para importar",
     "use": "Usar",
     "delete": "Eliminar",
     "use_title": "Marcar carta",
@@ -88819,7 +89136,11 @@ __webpack_require__.r(__webpack_exports__);
     "update_success": "El perfil se ha actualitzado correctamente",
     "incorrect_password": "La contrase\xF1a de la cuenta es incorrecta, vuelve a intentarlo",
     "info_email": "Si cambias el correo tendr\xE1s que confirmar el nuevo y tendr\xE1s que volver a acceder",
-    "upgrade": "\xA1Quiero crear mis propias clases!"
+    "upgrade": "\xA1Quiero crear mis propias clases!",
+    "password_email": "Para cambiar la contrase\xF1a tienes que registrar un correo electr\xF3nico v\xE1lido",
+    "only_teachers": "Esta funci\xF3n es solo para profes, se aplica un c\xF3digo de honor ... Si eres estudiante clica en cancelar \uD83E\uDD7A\uD83D\uDE22",
+    "only_teachers_accept": "S\xED, soy profe",
+    "only_teachers_title": "\xBFEres profe?"
   },
   "es.settings": {
     "classroom": "Gesti\xF3n de clase",
