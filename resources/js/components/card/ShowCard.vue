@@ -130,9 +130,9 @@
       <button type="submit" @click="confirmDelete" class="button is-danger">
         <i class="fas fa-trash-alt"></i>
       </button>
-      <button type="submit" disabled class="button is-primary">
+      <!-- <button type="submit" @click="share" v-tippy :content="trans.get('cards.share')" class="button is-primary">
         <i class="fas fa-share-alt"></i>
-      </button>
+      </button> -->
     </div>
   </div>
 </template>
@@ -161,6 +161,16 @@ export default {
     };
   },
   methods: {
+    share() {
+      axios
+        .post("/card/share", {
+          id: this.card.id,
+        })
+        .then((response) => {
+
+        });
+
+    },
     importCard() {
       axios
         .post("/classroom/" + this.code + "/card/import", {

@@ -226,7 +226,10 @@ Route::group(['middleware' => 'language'], function () {
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
     Route::post('/user/challenges/import/{id}', 'ChallengesController@importChallenge');
+    
+    // User card
     Route::get('/user/cards', 'CardsController@getUserCards');
+    Route::post('/card/share', 'CardsController@share');
     
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

@@ -14,7 +14,7 @@
       >
         {{ trans.get("cards.import_default") }}
       </a>
-      <button class="button" @click="getOwnCards">
+      <button class="button is-dark is-outlined" @click="getOwnCards">
         {{ trans.get('cards.import') }}
       </button>
     </div>

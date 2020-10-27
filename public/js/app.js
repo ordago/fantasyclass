@@ -3230,6 +3230,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    share: function share() {
+      axios.post("/card/share", {
+        id: this.card.id
+      }).then(function (response) {});
+    },
     importCard: function importCard() {
       var _this = this;
 
@@ -53714,28 +53719,12 @@ var render = function() {
               on: { click: _vm.confirmDelete }
             },
             [_c("i", { staticClass: "fas fa-trash-alt" })]
-          ),
-          _vm._v(" "),
-          _vm._m(0)
+          )
         ])
       : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      {
-        staticClass: "button is-primary",
-        attrs: { type: "submit", disabled: "" }
-      },
-      [_c("i", { staticClass: "fas fa-share-alt" })]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -53795,7 +53784,10 @@ var render = function() {
         _vm._v(" "),
         _c(
           "button",
-          { staticClass: "button", on: { click: _vm.getOwnCards } },
+          {
+            staticClass: "button is-dark is-outlined",
+            on: { click: _vm.getOwnCards }
+          },
           [
             _vm._v(
               "\n      " + _vm._s(_vm.trans.get("cards.import")) + "\n    "
@@ -87347,6 +87339,7 @@ __webpack_require__.r(__webpack_exports__);
     "create_card": "Crea carta",
     "edit_card": "Edita carta",
     "assign": "Assigna carta manualment",
+    "share": "Comparteix amb altres docents",
     "title": "T\xEDtol",
     "description": "Descripci\xF3",
     "background_color": "Color de fons",
@@ -88042,6 +88035,7 @@ __webpack_require__.r(__webpack_exports__);
     "create_card": "Create card",
     "edit_card": "Edit card",
     "assign": "Assign card manually",
+    "share": "Share with other teachers",
     "title": "Title",
     "background_color": "Background color",
     "min_lvl": "Min level",
@@ -88743,6 +88737,7 @@ __webpack_require__.r(__webpack_exports__);
     "create_card": "Crea carta",
     "edit_card": "Edita carta",
     "assign": "Asigna carta manualmente",
+    "share": "Comparte con otros docentes",
     "title": "T\xEDtulo",
     "description": "Descripci\xF3n",
     "background_color": "Color de fondo",

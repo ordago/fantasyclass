@@ -180,6 +180,20 @@ class CardsController extends Controller
         }
     }
 
+    public function share()
+    {
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $card = Card::find($data['id']);
+        $cardClass = Classroom::find($card->classroom_id);
+        $this->authorize('update', $cardClass);
+        $newCard = $card->replicate();
+        $newCard->update(['own' => 0, 'share' => 1]);
+        $newCard->save();
+        
+    }
+
     public function import($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

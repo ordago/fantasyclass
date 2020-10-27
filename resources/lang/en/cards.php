@@ -6,6 +6,7 @@ return [
     'create_card' => 'Create card',
     'edit_card' => 'Edit card',
     'assign' => 'Assign card manually',
+    'share' => 'Share with other teachers',
     
     'title' => 'Title',
     'background_color' => 'Background color',

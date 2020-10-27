@@ -6,6 +6,7 @@ return [
     'create_card' => 'Crea carta',
     'edit_card' => 'Edita carta',
     'assign' => 'Assigna carta manualment',
+    'share' => 'Comparteix amb altres docents',
     
     'title' => 'Títol',
     'description' => 'Descripció',
