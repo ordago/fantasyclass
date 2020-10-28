@@ -48,7 +48,7 @@ class SocialController extends Controller
             if($user) {
                 if(!$user->email_verified_at)
                     $user->update(['email_verified_at' => now()]);
-                Auth::login($user);
+                Auth::login($user, true);
                 return redirect()->to('/classroom/');
             } else {
                 $errors = new MessageBag();
