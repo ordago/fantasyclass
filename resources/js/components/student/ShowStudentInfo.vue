@@ -531,7 +531,7 @@
                 centered
               >
                 <span
-                  class="tag"
+                  class="tag is-light"
                   v-bind:class="[
                     props.row.xp + props.row.hp + props.row.gold >= 0
                       ? 'is-success'
@@ -806,14 +806,14 @@
                 centered
               >
                 <span
-                  class="tag"
+                  class="tag is-light"
                   v-bind:class="[
                     props.row.value >= 0 ? 'is-success' : 'is-danger',
                   ]"
                 >
-                  <span v-if="props.row.type == 'xp'">✊</span>
-                  <span v-if="props.row.type == 'gold'">💰</span>
-                  <span v-if="props.row.type == 'hp'">❤️</span>
+                  <span v-if="props.row.type == 'xp'"><i class='fas fa-fist-raised colored'></i></span>
+                  <span v-if="props.row.type == 'gold'"><i class='fas fa-coins colored'></i></span>
+                  <span v-if="props.row.type == 'hp'"><i class='fas fa-heart colored'></i></span>
                 </span>
               </b-table-column>
 

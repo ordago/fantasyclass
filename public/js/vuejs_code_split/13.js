@@ -2765,7 +2765,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             {
-                                              staticClass: "tag",
+                                              staticClass: "tag is-light",
                                               class: [
                                                 props.row.xp +
                                                   props.row.hp +
@@ -2940,7 +2940,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              907439787
+                              876688098
                             )
                           })
                         : _vm._e()
@@ -3353,7 +3353,7 @@ var render = function() {
                                           _c(
                                             "span",
                                             {
-                                              staticClass: "tag",
+                                              staticClass: "tag is-light",
                                               class: [
                                                 props.row.value >= 0
                                                   ? "is-success"
@@ -3362,15 +3362,30 @@ var render = function() {
                                             },
                                             [
                                               props.row.type == "xp"
-                                                ? _c("span", [_vm._v("✊")])
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-fist-raised colored"
+                                                    })
+                                                  ])
                                                 : _vm._e(),
                                               _vm._v(" "),
                                               props.row.type == "gold"
-                                                ? _c("span", [_vm._v("💰")])
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-coins colored"
+                                                    })
+                                                  ])
                                                 : _vm._e(),
                                               _vm._v(" "),
                                               props.row.type == "hp"
-                                                ? _c("span", [_vm._v("❤️")])
+                                                ? _c("span", [
+                                                    _c("i", {
+                                                      staticClass:
+                                                        "fas fa-heart colored"
+                                                    })
+                                                  ])
                                                 : _vm._e()
                                             ]
                                           )
@@ -3461,7 +3476,7 @@ var render = function() {
                               ],
                               null,
                               false,
-                              1762162791
+                              3924513189
                             )
                           })
                         : _vm._e()
