@@ -67,7 +67,7 @@
                 <div>
                 <h1 class="is-size-2 has-text-centered"><i class="fal fa-laugh-beam  faa-wrench animated"></i> {{ trans.get('classroom.finish_title') }}</h1>
                 <h4 class="is-size-4 has-margin-y-3 has-text-centered">{{ trans.get('classroom.info_wizard_0') }}</h4>
-                <ol class="has-margin-6 has-margin-left-8">
+                <ol class="p-4 pl-5">
                     <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_1') }} <i class="fal fa-users"></i></li>
                     <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_2') }} <i class="fal fa-tasks"></i></li>
                     <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_3') }} <i class="fal fa-treasure-chest"></i></li>
@@ -78,11 +78,11 @@
             </b-tab-item>
         </b-tabs>
         <div class="has-padding-x-4 columns" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
-            <div class="column has-margin-0 buttons has-addons">
+            <div class="column mx-2 my-2 buttons has-addons">
                 <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
                 <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<3"><i class="fas fa-chevron-right"></i></button>
             </div>
-            <div class="column has-margin-0 has-text-right" v-if="classroom">
+            <div class="column mx-0 my-2 has-text-right" v-if="classroom">
                 <button class="button has-margin-left-4 is-danger" @click.prevent="confirmDelete">
                     <i class="fas fa-trash"></i>
                     <span class="has-margin-x-3">

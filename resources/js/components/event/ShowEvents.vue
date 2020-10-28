@@ -88,6 +88,7 @@
               type="text"
               minlength="5"
               maxlength="50"
+              required
               v-model="event.title"
             >
             </b-input>
@@ -97,6 +98,7 @@
               type="textarea"
               minlength="5"
               maxlength="200"
+              required
               v-model="event.content"
             >
             </b-input>
@@ -154,6 +156,7 @@ export default {
   methods: {
     addEvent(type) {
       if (type == 0) {
+        if(this.event.title != '' && this.event.content != '')
         axios
           .post("/classroom/events/add", { event: this.event })
           .then((response) => {

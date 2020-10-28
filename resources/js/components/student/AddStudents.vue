@@ -18,7 +18,7 @@
       <form @submit.prevent="addStudentForm">
         <div class="field-body">
           <div class="field is-expanded">
-            <div class="field has-addons">
+            <div class="field has-addons mobile">
               <p class="control">
                 <a class="button is-static">
                   <i class="far fa-user-plus"></i>

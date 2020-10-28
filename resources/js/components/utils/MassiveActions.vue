@@ -15,7 +15,7 @@
             >{{ trans.get(behaviour.name) }} {{ getText(behaviour) }}</option>
           </select>
         </div>
-        <div class="has-margin-top-3">
+        <div class="buttons mt-3 has-all-centered">
           <button class="button is-info" @click="changeAll(true)">
             <i class="fas fa-ballot-check"></i>
             <i class="far fa-users"></i> {{ trans.get('utils.select_all') }}

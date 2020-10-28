@@ -1,6 +1,6 @@
 <template>
   <div class="w-100 content">
-    <div>
+    <div class="buttons">
       <button class="button is-link" @click="isTagModalActive = true">
         <i class="has-margin-right-2 fas fa-tag"></i>
         {{ trans.get("evaluation.add_tag") }}

@@ -130,7 +130,7 @@
         v-if="students.length > 0"
       >
         <span
-          class="p-3 mr-2 has-background-white"
+          class="p-2 py-3 mr-2 has-background-white"
           style="border: 1px solid #999; border-radius: 5px"
         >
           <span>
@@ -176,7 +176,7 @@
           </span>
         </span>
         <span
-          class="p-3 has-background-white"
+          class="p-2 py-3 has-background-white"
           style="border: 1px solid #999; border-radius: 5px"
         >
           <span v-if="view == 0 || view == 1">

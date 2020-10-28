@@ -7039,6 +7039,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["classroom", "events", "disabled"],
   mounted: function mounted() {},
@@ -7059,7 +7061,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addEvent: function addEvent(type) {
       if (type == 0) {
-        axios.post("/classroom/events/add", {
+        if (this.event.title != '' && this.event.content != '') axios.post("/classroom/events/add", {
           event: this.event
         }).then(function (response) {
           location.reload();
@@ -8744,12 +8746,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -57905,7 +57901,7 @@ var render = function() {
                   [_vm._v(_vm._s(_vm.trans.get("classroom.info_wizard_0")))]
                 ),
                 _vm._v(" "),
-                _c("ol", { staticClass: "has-margin-6 has-margin-left-8" }, [
+                _c("ol", { staticClass: "p-4 pl-5" }, [
                   _c("li", { staticClass: "is-size-5 has-margin-3" }, [
                     _vm._v(
                       _vm._s(_vm.trans.get("classroom.info_wizard_1")) + " "
@@ -57961,7 +57957,7 @@ var render = function() {
           }
         },
         [
-          _c("div", { staticClass: "column has-margin-0 buttons has-addons" }, [
+          _c("div", { staticClass: "column mx-2 my-2 buttons has-addons" }, [
             _vm.activeTab > 0
               ? _c(
                   "button",
@@ -57996,7 +57992,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _vm.classroom
-            ? _c("div", { staticClass: "column has-margin-0 has-text-right" }, [
+            ? _c("div", { staticClass: "column mx-0 my-2 has-text-right" }, [
                 _c(
                   "button",
                   {
@@ -58674,7 +58670,7 @@ var render = function() {
     "div",
     { staticClass: "w-100 content" },
     [
-      _c("div", [
+      _c("div", { staticClass: "buttons" }, [
         _c(
           "button",
           {
@@ -60615,7 +60611,8 @@ var render = function() {
                         attrs: {
                           type: "text",
                           minlength: "5",
-                          maxlength: "50"
+                          maxlength: "50",
+                          required: ""
                         },
                         model: {
                           value: _vm.event.title,
@@ -60637,7 +60634,8 @@ var render = function() {
                         attrs: {
                           type: "textarea",
                           minlength: "5",
-                          maxlength: "200"
+                          maxlength: "200",
+                          required: ""
                         },
                         model: {
                           value: _vm.event.content,
@@ -63216,51 +63214,45 @@ var render = function() {
     "div",
     { staticClass: "w-100 content" },
     [
-      _c("div", { staticClass: "columns" }, [
-        _c("div", { staticClass: "column is-narrow" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary",
-              on: {
-                click: function($event) {
-                  return _vm.getRules("en")
-                }
+      _c("div", { staticClass: "buttons" }, [
+        _c(
+          "button",
+          {
+            staticClass: "button is-primary",
+            on: {
+              click: function($event) {
+                return _vm.getRules("en")
               }
-            },
-            [_vm._v("\n        Import default (EN)\n      ")]
-          )
-        ]),
+            }
+          },
+          [_vm._v("\n        Import default (EN)\n      ")]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "column is-narrow" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-link",
-              on: {
-                click: function($event) {
-                  return _vm.getRules("es")
-                }
+        _c(
+          "button",
+          {
+            staticClass: "button is-link",
+            on: {
+              click: function($event) {
+                return _vm.getRules("es")
               }
-            },
-            [_vm._v("\n        Importa por defecto (ES)\n      ")]
-          )
-        ]),
+            }
+          },
+          [_vm._v("\n        Importa por defecto (ES)\n      ")]
+        ),
         _vm._v(" "),
-        _c("div", { staticClass: "column is-narrow" }, [
-          _c(
-            "button",
-            {
-              staticClass: "button is-info",
-              on: {
-                click: function($event) {
-                  return _vm.getRules("ca")
-                }
+        _c(
+          "button",
+          {
+            staticClass: "button is-info",
+            on: {
+              click: function($event) {
+                return _vm.getRules("ca")
               }
-            },
-            [_vm._v("\n        Importa per defecte (CA)\n      ")]
-          )
-        ])
+            }
+          },
+          [_vm._v("\n        Importa per defecte (CA)\n      ")]
+        )
       ]),
       _vm._v(" "),
       _c("Editor", { attrs: { height: "70vh", code: _vm.code } }),
@@ -63324,7 +63316,7 @@ var render = function() {
           [
             _c(
               "b-field",
-              { staticClass: "m-3 p-2" },
+              { staticClass: "my-3" },
               [
                 _c(
                   "b-radio-button",
@@ -63416,11 +63408,11 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("b-field", { attrs: { label: _vm.trans.get("settings.config") } }, [
-          _c("div", { staticClass: "m-3 p-2" }, [
+          _c("div", { staticClass: "buttons" }, [
             _c(
               "a",
               {
-                staticClass: "button has-margin-right-4",
+                staticClass: "button",
                 attrs: { href: "/classroom/" + _vm.classroom.code + "/edit" }
               },
               [
@@ -63437,7 +63429,7 @@ var render = function() {
               ? _c(
                   "button",
                   {
-                    staticClass: "button has-margin-left-4 is-danger",
+                    staticClass: "button is-danger",
                     on: { click: _vm.confirmDelete }
                   },
                   [
@@ -63466,7 +63458,7 @@ var render = function() {
             attrs: { label: _vm.trans.get("settings.enrollment_code") }
           },
           [
-            _c("div", { staticClass: "field has-addons p-2 m-3" }, [
+            _c("div", { staticClass: "field has-addons my-3" }, [
               _c(
                 "p",
                 { staticClass: "control" },
@@ -65136,7 +65128,7 @@ var render = function() {
           [
             _c("div", { staticClass: "field-body" }, [
               _c("div", { staticClass: "field is-expanded" }, [
-                _c("div", { staticClass: "field has-addons" }, [
+                _c("div", { staticClass: "field has-addons mobile" }, [
                   _vm._m(0),
                   _vm._v(" "),
                   _c("p", { staticClass: "control is-expanded" }, [
@@ -67227,7 +67219,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "p-3 mr-2 has-background-white",
+                      staticClass: "p-2 py-3 mr-2 has-background-white",
                       staticStyle: {
                         border: "1px solid #999",
                         "border-radius": "5px"
@@ -67335,7 +67327,7 @@ var render = function() {
                   _c(
                     "span",
                     {
-                      staticClass: "p-3 has-background-white",
+                      staticClass: "p-2 py-3 has-background-white",
                       staticStyle: {
                         border: "1px solid #999",
                         "border-radius": "5px"
@@ -68908,7 +68900,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "has-margin-top-3" }, [
+            _c("div", { staticClass: "buttons mt-3 has-all-centered" }, [
               _c(
                 "button",
                 {

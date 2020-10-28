@@ -13486,6 +13486,20 @@ textPath {
   .form {
     padding: 20px;
   }
+
+  .field.has-addons.mobile,
+.field.is-grouped.mobile {
+    display: block;
+  }
+  .field.has-addons.mobile .control:not(:last-child),
+.field.is-grouped.mobile .control:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 1em;
+  }
+  .field.has-addons.mobile .control:not(:last-child) button,
+.field.is-grouped.mobile .control:not(:last-child) button {
+    width: 100%;
+  }
 }
 @media print {
   .noprint {

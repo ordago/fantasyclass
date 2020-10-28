@@ -1,21 +1,15 @@
 <template>
   <div class="w-100 content">
-    <div class="columns">
-      <div class="column is-narrow">
+    <div class="buttons">
         <button @click="getRules('en')" class="button is-primary">
           Import default (EN)
         </button>
-      </div>
-      <div class="column is-narrow">
         <button @click="getRules('es')" class="button is-link">
           Importa por defecto (ES)
         </button>
-      </div>
-      <div class="column is-narrow">
         <button @click="getRules('ca')" class="button is-info">
           Importa per defecte (CA)
         </button>
-      </div>
     </div>
     <Editor height="70vh" :code="code"></Editor>
     <div>

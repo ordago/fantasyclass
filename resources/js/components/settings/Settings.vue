@@ -7,7 +7,7 @@
       </h1>
 
       <b-field :label="trans.get('settings.state')">
-        <b-field class="m-3 p-2">
+        <b-field class="my-3">
           <b-radio-button
             v-model="state"
             @input="updateClassState('state', 0)"
@@ -38,16 +38,16 @@
         </b-field>
       </b-field>
       <b-field :label="trans.get('settings.config')">
-        <div class="m-3 p-2">
+        <div class="buttons">
           <a
-            class="button has-margin-right-4"
+            class="button"
             :href="'/classroom/' + classroom.code + '/edit'"
             ><i class="far fa-cog has-margin-right-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
           <!-- <button class="button is-primary">Reset</button> -->
           <button
-            class="button has-margin-left-4 is-danger"
+            class="button is-danger"
             @click="confirmDelete"
             v-if="isAdmin"
           >
@@ -64,7 +64,7 @@
         :label="trans.get('settings.enrollment_code')"
         style="width: 400px"
       >
-        <div class="field has-addons p-2 m-3">
+        <div class="field has-addons my-3">
           <p class="control">
             <b-input
               type="password"
