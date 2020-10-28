@@ -246,7 +246,7 @@ class ClassroomsController extends Controller
         }
 
         // Assign cards
-        foreach (Card::whereNull('classroom_id')->get() as $card) {
+        foreach (Card::whereNull('classroom_id')->where('shared', '=', 0)->get() as $card) {
             $newCard = $card->replicate();
             $classroom->cards()->save($newCard);
         }
