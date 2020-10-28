@@ -108,10 +108,8 @@ export default {
     },
     remove: function() {
       axios.delete("/classroom/level/" + this.level.id).then(response => {
-        //   if(response.data === 1) {
-        //     this.data.splice(index, 1);
-        location.reload();
-        //   }
+        this.$parent.levels.pop();
+        this.$parent.$forceUpdate();
       });
     }
   }

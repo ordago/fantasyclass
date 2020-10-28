@@ -7556,10 +7556,12 @@ __webpack_require__.r(__webpack_exports__);
       }, "image/png", 0.8);
     },
     remove: function remove() {
+      var _this2 = this;
+
       axios["delete"]("/classroom/level/" + this.level.id).then(function (response) {
-        //   if(response.data === 1) {
-        //     this.data.splice(index, 1);
-        location.reload(); //   }
+        _this2.$parent.levels.pop();
+
+        _this2.$parent.$forceUpdate();
       });
     }
   }
