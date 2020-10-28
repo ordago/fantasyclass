@@ -77,6 +77,7 @@ Vue.component('show-badges', require('./components/badge/ShowBadges.vue').defaul
 
 Vue.component('create-levels', require('./components/level/CreateLevels.vue').default);
 Vue.component('show-level', require('./components/level/ShowLevel.vue').default);
+Vue.component('show-levels', require('./components/level/ShowLevels.vue').default);
 Vue.component('show-level-student', require('./components/level/ShowLevelStudent.vue').default);
 
 Vue.component('show-challenges-group', require('./components/challenges/ShowChallengesGroup.vue').default);

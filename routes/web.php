@@ -115,6 +115,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/badges/{id}', 'BadgeController@update');
         
         // Levels
+        Route::post('/{code}/level/add', 'LevelsController@createNew');
         Route::get('/{code}/levels', 'LevelsController@index');
         Route::post('/{code}/levels', 'LevelsController@store');
         Route::patch('/levels/{level}', 'LevelsController@update');
