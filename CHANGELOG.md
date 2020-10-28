@@ -1,6 +1,7 @@
 # Changelog
 ## v1.14 Beta (XX/10/2020)
 - Import cards from other classrooms.
+- Share and import cards between users.
 
 ### Changed
 - Only users with email are allowed to change password.

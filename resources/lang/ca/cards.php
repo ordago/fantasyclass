@@ -7,6 +7,8 @@ return [
     'edit_card' => 'Edita carta',
     'assign' => 'Assigna carta manualment',
     'share' => 'Comparteix amb altres docents',
+    'share_btn' => 'Comparteix',
+    'share_message' => 'El contingut de la carta ha de ser adequat, si es considera, s\'eliminarà la carta compartida.',
     
     'title' => 'Títol',
     'description' => 'Descripció',

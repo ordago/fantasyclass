@@ -124,16 +124,25 @@
         :href="'/classroom/' + code + '/cards/' + card.id"
         type="submit"
         class="button is-dark"
+        v-tippy
+        :content="trans.get('general.edit')"
       >
         <i class="fas fa-edit"></i>
       </a>
-      <button type="submit" @click="confirmDelete" class="button is-danger">
+      <button
+        type="submit"
+        @click="confirmDelete"
+        v-tippy
+        :content="trans.get('general.delete')"
+        class="button is-danger"
+      >
         <i class="fas fa-trash-alt"></i>
       </button>
       <button
         type="submit"
         @click="share"
         v-tippy
+        v-if="card.own"
         :content="trans.get('cards.share')"
         class="button is-primary"
       >
@@ -168,19 +177,33 @@ export default {
   },
   methods: {
     share() {
-      axios
-        .post("/card/share", {
-          id: this.card.id,
-        })
-        .then((response) => {
-          this.$toasted.show(this.trans.get("success_error.add_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
-            type: "success",
-          });
-        });
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("cards.share"),
+        message: this.trans.get("cards.share_message"),
+        confirmText: this.trans.get("cards.share_btn"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/card/share", {
+              id: this.card.id,
+            })
+            .then((response) => {
+              this.$toasted.show(this.trans.get("success_error.add_success"), {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: "check",
+                type: "success",
+              });
+            });
+        },
+      });
     },
     importCard() {
       axios

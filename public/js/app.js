@@ -3224,6 +3224,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["card", "admin", "properties", "code", "use", "student", "assign", "import"],
@@ -3239,16 +3248,30 @@ __webpack_require__.r(__webpack_exports__);
     share: function share() {
       var _this = this;
 
-      axios.post("/card/share", {
-        id: this.card.id
-      }).then(function (response) {
-        _this.$toasted.show(_this.trans.get("success_error.add_success"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "check",
-          type: "success"
-        });
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("cards.share"),
+        message: this.trans.get("cards.share_message"),
+        confirmText: this.trans.get("cards.share_btn"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios.post("/card/share", {
+            id: _this.card.id
+          }).then(function (response) {
+            _this.$toasted.show(_this.trans.get("success_error.add_success"), {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: "check",
+              type: "success"
+            });
+          });
+        }
       });
     },
     importCard: function importCard() {
@@ -3445,6 +3468,10 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
 //
 //
 //
@@ -53723,10 +53750,12 @@ var render = function() {
           _c(
             "a",
             {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "button is-dark",
               attrs: {
                 href: "/classroom/" + _vm.code + "/cards/" + _vm.card.id,
-                type: "submit"
+                type: "submit",
+                content: _vm.trans.get("general.edit")
               }
             },
             [_c("i", { staticClass: "fas fa-edit" })]
@@ -53735,23 +53764,32 @@ var render = function() {
           _c(
             "button",
             {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
               staticClass: "button is-danger",
-              attrs: { type: "submit" },
+              attrs: {
+                type: "submit",
+                content: _vm.trans.get("general.delete")
+              },
               on: { click: _vm.confirmDelete }
             },
             [_c("i", { staticClass: "fas fa-trash-alt" })]
           ),
           _vm._v(" "),
-          _c(
-            "button",
-            {
-              directives: [{ name: "tippy", rawName: "v-tippy" }],
-              staticClass: "button is-primary",
-              attrs: { type: "submit", content: _vm.trans.get("cards.share") },
-              on: { click: _vm.share }
-            },
-            [_c("i", { staticClass: "fas fa-share-alt" })]
-          )
+          _vm.card.own
+            ? _c(
+                "button",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "button is-primary",
+                  attrs: {
+                    type: "submit",
+                    content: _vm.trans.get("cards.share")
+                  },
+                  on: { click: _vm.share }
+                },
+                [_c("i", { staticClass: "fas fa-share-alt" })]
+              )
+            : _vm._e()
         ])
       : _vm._e()
   ])
@@ -53782,50 +53820,56 @@ var render = function() {
     "div",
     [
       _c("div", { staticClass: "has-margin-2" }, [
-        _c(
-          "a",
-          {
-            staticClass: "button is-success",
-            attrs: { href: "/classroom/" + _vm.code + "/cards/create" }
-          },
-          [
-            _vm._v(
-              "\n      " + _vm._s(_vm.trans.get("cards.create_card")) + "\n    "
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _vm.cardsJson.length < 10
-          ? _c(
-              "a",
-              {
-                staticClass: "button is-info",
-                attrs: {
-                  href: "/classroom/" + _vm.code + "/cards/import/default"
-                }
-              },
-              [
-                _vm._v(
-                  "\n      " +
-                    _vm._s(_vm.trans.get("cards.import_default")) +
-                    "\n    "
-                )
-              ]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "button is-dark is-outlined",
-            on: { click: _vm.getOwnCards }
-          },
-          [
-            _vm._v(
-              "\n      " + _vm._s(_vm.trans.get("cards.import")) + "\n    "
-            )
-          ]
-        )
+        _c("div", { staticClass: "buttons" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button is-success",
+              attrs: { href: "/classroom/" + _vm.code + "/cards/create" }
+            },
+            [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("cards.create_card")) +
+                  "\n      "
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _vm.cardsJson.length < 10
+            ? _c(
+                "a",
+                {
+                  staticClass: "button is-info",
+                  attrs: {
+                    href: "/classroom/" + _vm.code + "/cards/import/default"
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("cards.import_default")) +
+                      "\n      "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              staticClass: "button is-dark is-outlined",
+              on: { click: _vm.getOwnCards }
+            },
+            [
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("cards.import")) +
+                  "\n      "
+              )
+            ]
+          )
+        ])
       ]),
       _vm._v(" "),
       _c(
@@ -53877,7 +53921,11 @@ var render = function() {
               _c("section", { staticClass: "modal-card-body is-flex" }, [
                 !_vm.ownCards.length
                   ? _c("div", [
-                      _vm._v(_vm._s(_vm.trans.get("cards.import_empty")))
+                      _vm._v(
+                        "\n          " +
+                          _vm._s(_vm.trans.get("cards.import_empty")) +
+                          "\n        "
+                      )
                     ])
                   : _c(
                       "div",
@@ -87368,6 +87416,8 @@ __webpack_require__.r(__webpack_exports__);
     "edit_card": "Edita carta",
     "assign": "Assigna carta manualment",
     "share": "Comparteix amb altres docents",
+    "share_btn": "Comparteix",
+    "share_message": "El contingut de la carta ha de ser adequat, si es considera, s'eliminar\xE0 la carta compartida.",
     "title": "T\xEDtol",
     "description": "Descripci\xF3",
     "background_color": "Color de fons",
@@ -88064,6 +88114,8 @@ __webpack_require__.r(__webpack_exports__);
     "edit_card": "Edit card",
     "assign": "Assign card manually",
     "share": "Share with other teachers",
+    "share_btn": "Share",
+    "share_message": "The content of the card has to be appropriate, if considered, the shared card will be deleted",
     "title": "Title",
     "background_color": "Background color",
     "min_lvl": "Min level",
@@ -88766,6 +88818,8 @@ __webpack_require__.r(__webpack_exports__);
     "edit_card": "Edita carta",
     "assign": "Asigna carta manualmente",
     "share": "Comparte con otros docentes",
+    "share_btn": "Comparte",
+    "share_message": "El contenido de la carta tiene que ser adecuado, si se considera, se eliminar\xE1 la carta compartida",
     "title": "T\xEDtulo",
     "description": "Descripci\xF3n",
     "background_color": "Color de fondo",

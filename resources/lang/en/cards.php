@@ -7,6 +7,9 @@ return [
     'edit_card' => 'Edit card',
     'assign' => 'Assign card manually',
     'share' => 'Share with other teachers',
+    'share_btn' => 'Share',
+    'share_message' => 'The content of the card has to be appropriate, if considered, the shared card will be deleted',
+
     
     'title' => 'Title',
     'background_color' => 'Background color',

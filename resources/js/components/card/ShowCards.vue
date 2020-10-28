@@ -1,22 +1,24 @@
 <template>
   <div>
     <div class="has-margin-2">
-      <a
-        :href="'/classroom/' + code + '/cards/create'"
-        class="button is-success"
-      >
-        {{ trans.get("cards.create_card") }}
-      </a>
-      <a
-        v-if="cardsJson.length < 10"
-        :href="'/classroom/' + code + '/cards/import/default'"
-        class="button is-info"
-      >
-        {{ trans.get("cards.import_default") }}
-      </a>
-      <button class="button is-dark is-outlined" @click="getOwnCards">
-        {{ trans.get('cards.import') }}
-      </button>
+      <div class="buttons">
+        <a
+          :href="'/classroom/' + code + '/cards/create'"
+          class="button is-success"
+        >
+          {{ trans.get("cards.create_card") }}
+        </a>
+        <a
+          v-if="cardsJson.length < 10"
+          :href="'/classroom/' + code + '/cards/import/default'"
+          class="button is-info"
+        >
+          {{ trans.get("cards.import_default") }}
+        </a>
+        <button class="button is-dark is-outlined" @click="getOwnCards">
+          {{ trans.get("cards.import") }}
+        </button>
+      </div>
     </div>
     <div class="has-padding-2 is-flex flex-wrap justify-content-center">
       <show-card
@@ -40,7 +42,9 @@
           <p class="modal-card-title">{{ trans.get("general.import") }}</p>
         </header>
         <section class="modal-card-body is-flex">
-          <div v-if="!ownCards.length">{{ trans.get('cards.import_empty') }}</div>
+          <div v-if="!ownCards.length">
+            {{ trans.get("cards.import_empty") }}
+          </div>
           <div
             class="has-padding-2 is-flex flex-wrap justify-content-center"
             v-else
@@ -91,7 +95,7 @@ export default {
       axios.get("/user/cards").then((response) => {
         this.ownCards = response.data;
         axios.get("/card/share/get").then((response) => {
-          response.data.forEach(card => {
+          response.data.forEach((card) => {
             this.ownCards.push(card);
           });
           this.isModalActive = true;
