@@ -143,7 +143,7 @@
           </div>
           <div class="field is-horizontal" v-if="student.classroom.user.email">
             <div class="field-label is-normal">
-              <label class="label">E-mail</label>
+              <label class="label">Email</label>
             </div>
             <div class="field-body">
               <div class="field">

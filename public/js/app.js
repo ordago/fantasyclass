@@ -87727,7 +87727,8 @@ __webpack_require__.r(__webpack_exports__);
     "create": "Crear",
     "xp": "Experi\xE8ncia necess\xE0ria",
     "title": "T\xEDtol (opcional)",
-    "description": "Descripci\xF3 (opcional)"
+    "description": "Descripci\xF3 (opcional)",
+    "add": "Afegeix nou nivell"
   },
   "ca.maps": {
     "add": "Afegeix mapa",
@@ -87780,6 +87781,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Vista de grups",
     "view_student": "Vista d'estudiants",
     "view_full": "Vista completa"
+  },
+  "ca.offline": {
+    "connection": "Sembla que no tens connexi\xF3. Actualitza per intentar-ho de nou.",
+    "try": "Intenta-ho de nou"
   },
   "ca.pagination": {
     "previous": "&laquo; Anterior",
@@ -88419,6 +88424,17 @@ __webpack_require__.r(__webpack_exports__);
     "classes_text": "Nothing will be like before, have fun learning or teaching.",
     "": ""
   },
+  "en.levels": {
+    "level": "Level",
+    "number_levels": "How many levels do you want to create?",
+    "xp_increment": "Increment in XP",
+    "increment_info": "Don't worry, you will be able to change later",
+    "create": "Create",
+    "xp": "Needed experience",
+    "title": "Title (optional)",
+    "description": "Description (optional)",
+    "add": "Add new level"
+  },
   "en.maps": {
     "add": "Add map",
     "name": "Name",
@@ -88470,6 +88486,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Group view",
     "view_student": "Students view",
     "view_full": "Full view"
+  },
+  "en.offline": {
+    "connection": "It seems that you don't have connection. Please, pull to refresh when it's ready.",
+    "try": "Try again"
   },
   "en.pagination": {
     "previous": "&laquo; Previous",
@@ -89129,7 +89149,8 @@ __webpack_require__.r(__webpack_exports__);
     "create": "Crear",
     "xp": "Experiencia necesaria",
     "title": "T\xEDtulo (opcional)",
-    "description": "Descripci\xF3n (opcional)"
+    "description": "Descripci\xF3n (opcional)",
+    "add": "A\xF1ade nuevo nivel"
   },
   "es.maps": {
     "add": "A\xF1ade mapa",
@@ -89182,6 +89203,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Vista de grupos",
     "view_student": "Vista de estudiantes",
     "view_full": "Vista completa"
+  },
+  "es.offline": {
+    "connection": "Parece que no tienes conexi\xF3n. Actualiza para intentarlo de nuevo.",
+    "try": "Intenta de nuevo"
   },
   "es.pagination": {
     "previous": "&laquo; Anterior",

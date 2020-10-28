@@ -18,6 +18,7 @@ return [
     'xp' => 'Experiència necessària',
     'title' => 'Títol (opcional)',
     'description' => 'Descripció (opcional)',
+    'add' => 'Afegeix nou nivell',
 
 
 ];

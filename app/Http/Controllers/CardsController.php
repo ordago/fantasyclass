@@ -202,7 +202,6 @@ class CardsController extends Controller
             $props = $media->toArray();
             unset($props['uuid']);
             unset($props['id']);
-            dump($media);
             $newCard->addMedia($media->getPath())
                 ->preservingOriginal()
                 ->withProperties($props)

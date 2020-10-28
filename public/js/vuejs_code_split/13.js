@@ -1812,7 +1812,7 @@ var render = function() {
                     ? _c("div", { staticClass: "field is-horizontal" }, [
                         _c("div", { staticClass: "field-label is-normal" }, [
                           _c("label", { staticClass: "label" }, [
-                            _vm._v("E-mail")
+                            _vm._v("Email")
                           ])
                         ]),
                         _vm._v(" "),
