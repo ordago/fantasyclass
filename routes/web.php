@@ -230,6 +230,7 @@ Route::group(['middleware' => 'language'], function () {
     // User card
     Route::get('/user/cards', 'CardsController@getUserCards');
     Route::post('/card/share', 'CardsController@share');
+    Route::get('/card/share/get', 'CardsController@getSharedCards');
     
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

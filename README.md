@@ -70,8 +70,7 @@ GOOGLE_REDIRECT=http://localhost:8000/callback/google
 ```
  composer install
  npm install
- php artisan migrate:fresh
- php artisan db:seed
+ php artisan migrate
 ```
 These commands will recreate the DB, wipe all the data and create a user admin/admin
 

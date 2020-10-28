@@ -7,22 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class RegisterStudent extends Mailable
+class NewCardNotification extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $student;
-    public $pass;
- 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($student, $pass)
+    public function __construct()
     {
-        $this->student = $student;
-        $this->pass = $pass;
     }
 
     /**
@@ -33,7 +28,6 @@ class RegisterStudent extends Mailable
     public function build()
     {
         return $this->from(env('MAIL_FROM_ADDRESS'))
-                    ->view('mails.student')
-                    ->text('mails.student_plain');
+                    ->view('mails.newcard');
     }
 }

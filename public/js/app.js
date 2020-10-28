@@ -3218,6 +3218,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["card", "admin", "properties", "code", "use", "student", "assign", "import"],
@@ -3231,14 +3237,9 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     share: function share() {
-      axios.post("/card/share", {
-        id: this.card.id
-      }).then(function (response) {});
-    },
-    importCard: function importCard() {
       var _this = this;
 
-      axios.post("/classroom/" + this.code + "/card/import", {
+      axios.post("/card/share", {
         id: this.card.id
       }).then(function (response) {
         _this.$toasted.show(_this.trans.get("success_error.add_success"), {
@@ -3250,15 +3251,30 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    assignCard: function assignCard() {
+    importCard: function importCard() {
       var _this2 = this;
+
+      axios.post("/classroom/" + this.code + "/card/import", {
+        id: this.card.id
+      }).then(function (response) {
+        _this2.$toasted.show(_this2.trans.get("success_error.add_success"), {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: "check",
+          type: "success"
+        });
+      });
+    },
+    assignCard: function assignCard() {
+      var _this3 = this;
 
       axios.post("/classroom/" + this.code + "/card/assign", {
         type: "student",
         id: this.assign,
         card: this.card.id
       }).then(function (response) {
-        _this2.$toasted.show(_this2.trans.get("success_error.add_success"), {
+        _this3.$toasted.show(_this3.trans.get("success_error.add_success"), {
           position: "top-center",
           duration: 3000,
           type: "success",
@@ -3268,7 +3284,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     markCard: function markCard(card, type) {
-      var _this3 = this;
+      var _this4 = this;
 
       var number = 0;
       if (this.$parent.$parent.$parent.student.level != null) number = this.$parent.$parent.$parent.student.level.number;
@@ -3287,18 +3303,18 @@ __webpack_require__.r(__webpack_exports__);
           ariaRole: "alertdialog",
           ariaModal: true,
           onConfirm: function onConfirm() {
-            axios.post("/classroom/card/usedelete/bypass/" + _this3.card.id, {
+            axios.post("/classroom/card/usedelete/bypass/" + _this4.card.id, {
               type: type,
-              student: _this3.student.id
+              student: _this4.student.id
             }).then(function (response) {
               // destroy the vue listeners, etc
-              _this3.$destroy(); // remove the element from the DOM
+              _this4.$destroy(); // remove the element from the DOM
 
 
-              _this3.$el.parentNode.removeChild(_this3.$el);
+              _this4.$el.parentNode.removeChild(_this4.$el);
 
               var actions = [{
-                text: _this3.trans.get("general.close"),
+                text: _this4.trans.get("general.close"),
                 onClick: function onClick(e, toastObject) {
                   toastObject.goAway(0);
                 }
@@ -3307,10 +3323,10 @@ __webpack_require__.r(__webpack_exports__);
 
               if (gold) {
                 actions.push({
-                  text: _this3.trans.get("cards.pay"),
+                  text: _this4.trans.get("cards.pay"),
                   onClick: function onClick(e, toastObject) {
-                    if (response.data.gold > _this3.student.gold) {
-                      _this3.$toasted.show(_this3.trans.get("success_error.shop_failed_money"), {
+                    if (response.data.gold > _this4.student.gold) {
+                      _this4.$toasted.show(_this4.trans.get("success_error.shop_failed_money"), {
                         position: "top-center",
                         duration: 3000,
                         type: "error",
@@ -3323,15 +3339,15 @@ __webpack_require__.r(__webpack_exports__);
                     }
 
                     var options = {
-                      id: _this3.student.id,
+                      id: _this4.student.id,
                       prop: "gold",
                       value: gold * -1
                     };
                     var student;
                     axios.post("/classroom/students/update", options).then(function (response) {
-                      _this3.student.gold -= gold;
+                      _this4.student.gold -= gold;
 
-                      _this3.$parent.$parent.$parent.$forceUpdate();
+                      _this4.$parent.$parent.$parent.$forceUpdate();
 
                       toastObject.goAway(0);
                     });
@@ -3339,7 +3355,7 @@ __webpack_require__.r(__webpack_exports__);
                 });
               }
 
-              _this3.$toasted.show(response.data.message, {
+              _this4.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: null,
                 iconPack: "fontawesome",
@@ -3361,11 +3377,11 @@ __webpack_require__.r(__webpack_exports__);
           ariaRole: "alertdialog",
           ariaModal: true,
           onConfirm: function onConfirm() {
-            axios.post("/classroom/" + _this3.code + "/card/mark/" + _this3.card.id, {
+            axios.post("/classroom/" + _this4.code + "/card/mark/" + _this4.card.id, {
               type: type,
-              student: _this3.student.id
+              student: _this4.student.id
             }).then(function (response) {
-              _this3.$toasted.show(response.data.message, {
+              _this4.$toasted.show(response.data.message, {
                 position: "top-center",
                 duration: 3000,
                 iconPack: "fontawesome",
@@ -3375,7 +3391,7 @@ __webpack_require__.r(__webpack_exports__);
 
               card.pivot.marked = type;
 
-              _this3.$forceUpdate();
+              _this4.$forceUpdate();
             });
           }
         });
@@ -3392,7 +3408,7 @@ __webpack_require__.r(__webpack_exports__);
       return this.card.min_lvl > number ? true : false;
     },
     confirmDelete: function confirmDelete() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -3406,9 +3422,9 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/card/" + _this4.card.id).then(function (response) {
+          axios["delete"]("/classroom/card/" + _this5.card.id).then(function (response) {
             if (response.data === 1) {
-              _this4.$el.parentNode.removeChild(_this4.$el);
+              _this5.$el.parentNode.removeChild(_this5.$el);
             }
           });
         }
@@ -3521,7 +3537,12 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.get("/user/cards").then(function (response) {
         _this.ownCards = response.data;
-        _this.isModalActive = true;
+        axios.get("/card/share/get").then(function (response) {
+          response.data.forEach(function (card) {
+            _this.ownCards.push(card);
+          });
+          _this.isModalActive = true;
+        });
       });
     }
   },
@@ -53719,6 +53740,17 @@ var render = function() {
               on: { click: _vm.confirmDelete }
             },
             [_c("i", { staticClass: "fas fa-trash-alt" })]
+          ),
+          _vm._v(" "),
+          _c(
+            "button",
+            {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
+              staticClass: "button is-primary",
+              attrs: { type: "submit", content: _vm.trans.get("cards.share") },
+              on: { click: _vm.share }
+            },
+            [_c("i", { staticClass: "fas fa-share-alt" })]
           )
         ])
       : _vm._e()
@@ -53842,36 +53874,32 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c(
-                "section",
-                { staticClass: "modal-card-body is-flex has-all-centered" },
-                [
-                  !_vm.ownCards.length
-                    ? _c("div", [
-                        _vm._v(_vm._s(_vm.trans.get("cards.import_empty")))
-                      ])
-                    : _c(
-                        "div",
-                        {
-                          staticClass:
-                            "has-padding-2 is-flex flex-wrap justify-content-center"
-                        },
-                        _vm._l(_vm.ownCards, function(card) {
-                          return _c("show-card", {
-                            key: card.id,
-                            attrs: {
-                              code: _vm.code,
-                              properties: false,
-                              admin: true,
-                              import: true,
-                              card: card
-                            }
-                          })
-                        }),
-                        1
-                      )
-                ]
-              ),
+              _c("section", { staticClass: "modal-card-body is-flex" }, [
+                !_vm.ownCards.length
+                  ? _c("div", [
+                      _vm._v(_vm._s(_vm.trans.get("cards.import_empty")))
+                    ])
+                  : _c(
+                      "div",
+                      {
+                        staticClass:
+                          "has-padding-2 is-flex flex-wrap justify-content-center"
+                      },
+                      _vm._l(_vm.ownCards, function(card) {
+                        return _c("show-card", {
+                          key: card.id,
+                          attrs: {
+                            code: _vm.code,
+                            properties: false,
+                            admin: true,
+                            import: true,
+                            card: card
+                          }
+                        })
+                      }),
+                      1
+                    )
+              ]),
               _vm._v(" "),
               _c("footer", { staticClass: "modal-card-foot" }, [
                 _c(
@@ -89721,7 +89749,6 @@ var app = new Vue({
     axios.get('/utils/online');
     this.$nextTick(function () {
       window.setInterval(function () {
-        console.log('updating online status');
         axios.get('/utils/online');
       }, 290000);
     });
@@ -93385,6 +93412,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   replaceSpecial: function replaceSpecial(text) {
+    if (!text) return "";
     text = text.replace("%XP%", "<i class='fas fa-fist-raised colored'></i>");
     text = text.replace("%GOLD%", "<i class='fas fa-coins colored'></i>");
     text = text.replace("%HP%", "<i class='fas fa-heart colored'></i>");
@@ -93454,6 +93482,7 @@ __webpack_require__.r(__webpack_exports__);
     return re.test(email);
   },
   styleText: function styleText(original) {
+    if (!original) return "";
     var text;
     text = original.replace(/\*(.*?)\*/g, "<b>$1</b>");
     text = text.replace(/\_(.*?)\_/g, "<u>$1</u>");

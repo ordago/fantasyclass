@@ -28,6 +28,7 @@ class Card extends Model implements HasMedia
             'fullscreen',
             'classroom_id',
             'type_bg',
+            'shared',
             'own',
         ];
         public function registerMediaCollections() : void 

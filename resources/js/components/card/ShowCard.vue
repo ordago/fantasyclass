@@ -130,9 +130,15 @@
       <button type="submit" @click="confirmDelete" class="button is-danger">
         <i class="fas fa-trash-alt"></i>
       </button>
-      <!-- <button type="submit" @click="share" v-tippy :content="trans.get('cards.share')" class="button is-primary">
+      <button
+        type="submit"
+        @click="share"
+        v-tippy
+        :content="trans.get('cards.share')"
+        class="button is-primary"
+      >
         <i class="fas fa-share-alt"></i>
-      </button> -->
+      </button>
     </div>
   </div>
 </template>
@@ -167,9 +173,14 @@ export default {
           id: this.card.id,
         })
         .then((response) => {
-
+          this.$toasted.show(this.trans.get("success_error.add_success"), {
+            position: "top-center",
+            duration: 3000,
+            iconPack: "fontawesome",
+            icon: "check",
+            type: "success",
+          });
         });
-
     },
     importCard() {
       axios

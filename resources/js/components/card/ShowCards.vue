@@ -39,7 +39,7 @@
         <header class="modal-card-head">
           <p class="modal-card-title">{{ trans.get("general.import") }}</p>
         </header>
-        <section class="modal-card-body is-flex has-all-centered">
+        <section class="modal-card-body is-flex">
           <div v-if="!ownCards.length">{{ trans.get('cards.import_empty') }}</div>
           <div
             class="has-padding-2 is-flex flex-wrap justify-content-center"
@@ -90,7 +90,12 @@ export default {
     getOwnCards() {
       axios.get("/user/cards").then((response) => {
         this.ownCards = response.data;
-        this.isModalActive = true;
+        axios.get("/card/share/get").then((response) => {
+          response.data.forEach(card => {
+            this.ownCards.push(card);
+          });
+          this.isModalActive = true;
+        });
       });
     },
   },

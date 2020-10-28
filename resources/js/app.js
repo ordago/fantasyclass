@@ -215,7 +215,6 @@ const app = new Vue({
         axios.get('/utils/online');
         this.$nextTick(function () {
             window.setInterval(() => {
-                console.log('updating online status');
                 axios.get('/utils/online');
             },290000);
         })

@@ -4,6 +4,7 @@ import Toasted from 'vue-toasted';
 export default {
 
     replaceSpecial(text) {
+        if (!text) return "";
         text = text.replace("%XP%", "<i class='fas fa-fist-raised colored'></i>");
         text = text.replace("%GOLD%", "<i class='fas fa-coins colored'></i>");
         text = text.replace("%HP%", "<i class='fas fa-heart colored'></i>");
@@ -29,14 +30,14 @@ export default {
     },
 
     getGradeClass(grade, max) {
-        if(grade >= max / 2) {
+        if (grade >= max / 2) {
             return 'is-success';
         }
         return 'is-danger';
     },
 
     getPassFail(grade, max) {
-        if (grade < max/2) {
+        if (grade < max / 2) {
             return "fa-times"
         }
         return "fa-check";
@@ -68,6 +69,7 @@ export default {
     },
 
     styleText: function (original) {
+        if (!original) return "";
         let text
         text = original.replace(/\*(.*?)\*/g, "<b>$1</b>");
         text = text.replace(/\_(.*?)\_/g, "<u>$1</u>");

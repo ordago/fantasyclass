@@ -7,10 +7,12 @@ use App\CardStudent;
 use App\Classroom;
 use App\Group;
 use App\Http\Classes\Functions;
+use App\Mail\NewCardNotification;
 use App\Student;
 use Intervention\Image\Facades\Image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class CardsController extends Controller
@@ -73,6 +75,11 @@ class CardsController extends Controller
     {
         $ids = auth()->user()->classrooms()->where('role', '>', 0)->get()->pluck('id');
         return Card::where('own', '=', 1)->whereIn('classroom_id', $ids)->get();
+    }
+
+    public function getSharedCards()
+    {
+        return Card::where('shared', '=', 1)->get();
     }
 
     public function store($code)
@@ -189,8 +196,11 @@ class CardsController extends Controller
         $cardClass = Classroom::find($card->classroom_id);
         $this->authorize('update', $cardClass);
         $newCard = $card->replicate();
-        $newCard->update(['own' => 0, 'share' => 1]);
         $newCard->save();
+        $newCard->update(['classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
+        
+        Mail::to(env('EMAIL'))->send(new NewCardNotification());
+
         
     }
 
@@ -203,10 +213,11 @@ class CardsController extends Controller
         ]);
         $card = Card::find($data['id']);
         $cardClass = Classroom::find($card->classroom_id);
-        $this->authorize('view', $cardClass);
+        if($cardClass != null)
+            $this->authorize('view', $cardClass);
         $newCard = $card->replicate();
         $class->cards()->save($newCard);
-        $newCard->update(['own' => 0]);
+        $newCard->update(['own' => 0, 'shared' => 0]);
     }
 
     // Add default cards
@@ -214,7 +225,7 @@ class CardsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        foreach (Card::whereNull('classroom_id')->get() as $card) {
+        foreach (Card::where('shared', '=', 0)->whereNull('classroom_id')->get() as $card) {
 
             $newCard = $card->replicate();
             $class->cards()->save($newCard);
