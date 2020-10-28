@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CardsController extends Controller
 {
@@ -197,7 +198,20 @@ class CardsController extends Controller
         $this->authorize('update', $cardClass);
         $newCard = $card->replicate();
         $newCard->save();
-        $newCard->update(['classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
+        $card->media->each(function (Media $media) use ($newCard) {
+            $props = $media->toArray();
+            unset($props['uuid']);
+            unset($props['id']);
+            dump($media);
+            $newCard->addMedia($media->getPath())
+                ->preservingOriginal()
+                ->withProperties($props)
+                ->toMediaCollection($media->collection_name);
+        });
+        $cardPath = $newCard->getMedia('card')->first();
+        $imgPath = $cardPath->collection_name . "/" . $cardPath->uuid . '/' . $cardPath->file_name;
+        
+        $newCard->update(['src' => '/storage/' . $imgPath, 'classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
         
         Mail::to(env('EMAIL'))->send(new NewCardNotification());
 
@@ -217,7 +231,7 @@ class CardsController extends Controller
             $this->authorize('view', $cardClass);
         $newCard = $card->replicate();
         $class->cards()->save($newCard);
-        $newCard->update(['own' => 0, 'shared' => 0]);
+        $newCard->update(['own' => 0, 'shared' => 0]);    
     }
 
     // Add default cards
