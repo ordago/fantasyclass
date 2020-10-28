@@ -2,9 +2,27 @@
   <div class="card rounded card-shadow-s h-100" style="overflow: visible">
     <show-character :student="student" :classroom="classroom"></show-character>
     <div
-      class="card-content"
+      class="card-content is-relative"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
     >
+      <div class="dropdown is-right top-right is-hoverable" style="right: 10px;">
+        <div class="dropdown-trigger fs-2">
+          <span class="pl-5 py-2">
+            <i class="far fa-bars"></i>
+          </span>
+        </div>
+        <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
+          <div class="dropdown-content">
+            <a class="dropdown-item" @click="redirect(student.id)">
+              <i class="fal fa-info-square" style="width:20px"></i> {{ trans.get('students.student_area') }}
+            </a>
+            <a class="dropdown-item" @click="byPassStudent(student.id)">
+              <i class="fal fa-eye"  style="width:20px"></i> {{ trans.get('students.student_view') }}
+            </a>
+            <!-- <hr class="dropdown-divider" /> -->
+          </div>
+        </div>
+      </div>
       <div class="media has-margin-bottom-0 is-relative">
         <div class="media-left" v-if="classroom.character_theme != 0">
           <figure class="image is-48x48">
@@ -370,6 +388,13 @@ export default {
     };
   },
   methods: {
+    byPassStudent(id) {
+      axios
+        .post("/classroom/" + this.classroom.code + "/student/show", { id: id })
+        .then((response) => {
+          location.href = response.data;
+        });
+    },
     enableXPGold(type) {
       if (type == 0) {
         this.visibleXP = !this.visibleXP;

@@ -339,6 +339,7 @@ class ClassroomsController extends Controller
     public function index()
     {
         $user = auth()->user();
+        session()->forget('bypass_student');
         return view('classrooms.index', compact('user'));
     }
 

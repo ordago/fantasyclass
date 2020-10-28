@@ -3,6 +3,7 @@
 namespace App\Http\Classes;
 
 use App\Student;
+use Google_Service_Drive_AboutDriveThemes;
 
 class Functions
 {
@@ -37,16 +38,26 @@ class Functions
    */
   public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])
   {
-    return Student::where(
-      'id',
-      '=',
-      auth()->user()->classrooms
-        ->where('pivot.classroom_id', '=', $classroom->id)
-        ->where('pivot.role', '=', 0)
-        ->first()
-        ->pivot
-        ->student->id
-    )->with($with)->first();
+    if (session()->get('bypass_student')) {
+      $student = Student::where('id', '=', session()->get('bypass_student'))->with($with)->first();
+      if($student->classroom->classroom_id == $classroom->id)
+        return $student;
+      abort(403);
+    }
+
+    $class = auth()->user()->classrooms
+      ->where('pivot.classroom_id', '=', $classroom->id)
+      ->where('pivot.role', '=', 0)
+      ->first();
+
+    if($class) {
+      return Student::where(
+        'id',
+        '=',
+        $class->pivot->student->id
+      )->with($with)->first();
+    }
+    abort(403);
   }
 
   /**

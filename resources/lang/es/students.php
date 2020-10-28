@@ -55,5 +55,6 @@ return [
     'basic_equipment' => 'El equipamiento básico será asignado, esta acción no se puede deshacer.',
     'online' => 'El/la estudiante está activo/a (online)',
 
-
+    'student_area' => 'Area del estudiante',
+    'student_view' => 'Ver como estudiante',
 ];

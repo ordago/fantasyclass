@@ -10993,6 +10993,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -11005,6 +11023,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    byPassStudent: function byPassStudent(id) {
+      axios.post("/classroom/" + this.classroom.code + "/student/show", {
+        id: id
+      }).then(function (response) {
+        location.href = response.data;
+      });
+    },
     enableXPGold: function enableXPGold(type) {
       if (type == 0) {
         this.visibleXP = !this.visibleXP;
@@ -65994,10 +66019,78 @@ var render = function() {
       _c(
         "div",
         {
-          staticClass: "card-content",
+          staticClass: "card-content is-relative",
           class: { "has-background-hidden": _vm.student.hidden == 1 }
         },
         [
+          _c(
+            "div",
+            {
+              staticClass: "dropdown is-right top-right is-hoverable",
+              staticStyle: { right: "10px" }
+            },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu has-text-left",
+                  attrs: { id: "dropdown-menu", role: "menu" }
+                },
+                [
+                  _c("div", { staticClass: "dropdown-content" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.redirect(_vm.student.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fal fa-info-square",
+                          staticStyle: { width: "20px" }
+                        }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.trans.get("students.student_area")) +
+                            "\n          "
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.byPassStudent(_vm.student.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fal fa-eye",
+                          staticStyle: { width: "20px" }
+                        }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.trans.get("students.student_view")) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "media has-margin-bottom-0 is-relative" }, [
             _vm.classroom.character_theme != 0
               ? _c("div", { staticClass: "media-left" }, [
@@ -66126,7 +66219,7 @@ var render = function() {
                       staticStyle: { width: "100%" }
                     },
                     [
-                      _vm._m(0),
+                      _vm._m(1),
                       _vm._v(" "),
                       _vm.student.hp < 20
                         ? _c("span", { staticClass: "has-text-grey-light" }, [
@@ -66299,7 +66392,7 @@ var render = function() {
                       }
                     },
                     [
-                      _vm._m(1),
+                      _vm._m(2),
                       _vm._v(
                         "\n              " +
                           _vm._s(_vm.student.xp) +
@@ -66789,6 +66882,16 @@ var render = function() {
   )
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "dropdown-trigger fs-2" }, [
+      _c("span", { staticClass: "pl-5 py-2" }, [
+        _c("i", { staticClass: "far fa-bars" })
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -88040,7 +88143,9 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Destaca en",
     "change_class": "Canvia subclasse",
     "basic_equipment": "L'equipament b\xE0sic ser\xE0 assignat, aquesta acci\xF3 no es pot desfer.",
-    "online": "L'estudiant est\xE0 actiu (online)"
+    "online": "L'estudiant est\xE0 actiu (online)",
+    "student_area": "\xC0rea de l'estudiant",
+    "student_view": "Veure com l'estudiant"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -88744,7 +88849,9 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Highlights in",
     "change_class": "Change subclass",
     "basic_equipment": "Basic equipment will be assigned. This action can't be undone.",
-    "online": "Student is active (online)"
+    "online": "Student is active (online)",
+    "student_area": "Student area",
+    "student_view": "View as the student"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -88752,7 +88859,7 @@ __webpack_require__.r(__webpack_exports__);
     "error": "Something went wrong :(",
     "email_not_recognised": "User is not registered, please, ask they to register before invite them.",
     "user_already_invited": "User is already teacher of the class.",
-    "equipment_succes": "Equipment added successfully",
+    "equipment_success": "Equipment added successfully",
     "shop_failed_money": "You don't have enough money",
     "shop_failed_level": "You don't have enough level",
     "shop_failed_exists": "You already have the item or a better one",
@@ -89462,7 +89569,9 @@ __webpack_require__.r(__webpack_exports__);
     "highlights": "Destaca en",
     "change_class": "Cambia subclase",
     "basic_equipment": "El equipamiento b\xE1sico ser\xE1 asignado, esta acci\xF3n no se puede deshacer.",
-    "online": "El/la estudiante est\xE1 activo/a (online)"
+    "online": "El/la estudiante est\xE1 activo/a (online)",
+    "student_area": "Area del estudiante",
+    "student_view": "Ver como estudiante"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

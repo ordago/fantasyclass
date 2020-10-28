@@ -80,6 +80,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/student/logentry', 'StudentController@deleteLog');
         Route::patch('/student/inventory', 'InventoryController@update');
         Route::delete('/{code}/student/{id}', 'StudentController@destroy');
+        Route::post('/{code}/student/show', 'StudentController@showAsStudent');
         
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');

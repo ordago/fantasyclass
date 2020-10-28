@@ -53,4 +53,6 @@ return [
     'basic_equipment' => 'Basic equipment will be assigned. This action can\'t be undone.',
     'online' => 'Student is active (online)',
     
+    'student_area' => 'Student area',
+    'student_view' => 'View as the student',
 ];

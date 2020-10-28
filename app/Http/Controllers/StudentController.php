@@ -35,6 +35,17 @@ class StudentController extends Controller
         return view('students.create', compact('class', 'modalVisible'));
     }
 
+    public function showAsStudent(){
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $student = Student::find($data['id']);
+        $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+        session()->put('bypass_student', $student->id);
+        return '/classroom/show/'.$class->code;
+    }
+
     public function store(Request $request)
     {
         $class = Classroom::where('id', '=', session()->pull('classroom'))->firstOrFail();

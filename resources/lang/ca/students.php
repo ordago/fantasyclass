@@ -54,4 +54,7 @@ return [
     'change_class' => 'Canvia subclasse',
     'basic_equipment' => 'L\'equipament bàsic serà assignat, aquesta acció no es pot desfer.',
     'online' => 'L\'estudiant està actiu (online)',
+
+    'student_area' => 'Àrea de l\'estudiant',
+    'student_view' => 'Veure com l\'estudiant',
 ];
