@@ -1,8 +1,10 @@
 # Changelog
 ## v1.14 Beta (28/10/2020)
+### Added
 - Import cards from other classrooms.
 - Share and import cards between users.
 - Added button to add new levels.
+- Redirect to /classroom if logged in from main domain.
 
 ### Changed
 - Only users with email are allowed to change password.
