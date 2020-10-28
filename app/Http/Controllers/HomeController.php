@@ -12,6 +12,8 @@ class HomeController extends Controller
 
     public function index()
     {
+        if(auth()->user())
+            return redirect('/classroom');
         $locale = session('locale', 'es');
         App::setLocale($locale);
         return view('auth.home', compact('locale'));
