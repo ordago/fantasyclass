@@ -7631,9 +7631,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["levels", "code"],
-  created: function created() {
-    console.log(this.levels[this.levels.length - 1].xp);
-  },
+  created: function created() {},
   data: function data() {
     return {
       newXp: 0
@@ -7657,7 +7655,9 @@ __webpack_require__.r(__webpack_exports__);
           axios.post("/classroom/".concat(_this.code, "/level/add"), {
             xp: value
           }).then(function (response) {
-            location.reload();
+            _this.levels.push(response.data);
+
+            _this.$forceUpdate();
           });
         }
       });
@@ -61417,7 +61417,7 @@ var render = function() {
   return _c(
     "div",
     [
-      !_vm.levels && !_vm.levels.length
+      !_vm.levels.length
         ? _c("create-levels")
         : _c(
             "div",

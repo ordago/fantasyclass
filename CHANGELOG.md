@@ -2,6 +2,7 @@
 ## v1.14 Beta (XX/10/2020)
 - Import cards from other classrooms.
 - Share and import cards between users.
+- Added button to add new levels.
 
 ### Changed
 - Only users with email are allowed to change password.

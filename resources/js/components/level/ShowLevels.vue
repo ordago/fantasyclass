@@ -1,6 +1,6 @@
 <template>
   <div>
-    <create-levels v-if="!levels && !levels.length"></create-levels>
+    <create-levels v-if="!levels.length"></create-levels>
     <div class="columns is-multiline is-variable has-margin-top-3" v-else>
       <show-level
         v-for="(level, index) in levels"
@@ -19,7 +19,6 @@
 export default {
   props: ["levels", "code"],
   created() {
-    console.log(this.levels[this.levels.length - 1].xp)
   },
   data: function () {
     return {
@@ -40,7 +39,8 @@ export default {
         trapFocus: true,
         onConfirm: (value) => {
           axios.post(`/classroom/${this.code}/level/add`, { xp: value }).then((response) => {
-            location.reload();
+            this.levels.push(response.data);
+            this.$forceUpdate();
           });
         },
       });
