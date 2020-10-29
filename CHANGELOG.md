@@ -1,12 +1,7 @@
 # Changelog
-## v1.15 Beta (XX/10/2020)
+## v1.14.1 Beta (29/10/2020)
 ### Added
 - View as student.
-
-### Changed
-
-## v1.14 Beta (28/10/2020)
-### Added
 - Import cards from other classrooms.
 - Share and import cards between users.
 - Added button to add new levels.
