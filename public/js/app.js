@@ -11006,7 +11006,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -66125,20 +66124,51 @@ var render = function() {
               "span",
               {
                 staticClass:
-                  "bottom-right cursor-pointer is-flex has-all-centered",
-                on: {
-                  click: function($event) {
-                    return _vm.redirect(_vm.student.id)
-                  }
-                }
+                  "bottom-right cursor-pointer is-flex has-all-centered"
               },
               [
+                _vm.student.google_uid
+                  ? _c(
+                      "span",
+                      {
+                        staticClass: "tag is-danger",
+                        on: {
+                          click: function($event) {
+                            return _vm.redirect(_vm.student.id)
+                          }
+                        }
+                      },
+                      [_c("i", { staticClass: "fab fa-google" })]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass: "tag is-dark ml-1",
+                    on: {
+                      click: function($event) {
+                        return _vm.redirect(_vm.student.id)
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.student.numcards[0]) +
+                        " / " +
+                        _vm._s(_vm.student.numcards[1])
+                    ),
+                    _c("i", { staticClass: "fas fa-club ml-1" })
+                  ]
+                ),
+                _vm._v(" "),
                 _vm.student.online
                   ? _c(
                       "span",
                       {
                         directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "tag is-success",
+                        staticClass: "tag is-success ml-1",
                         attrs: { content: _vm.trans.get("students.online") }
                       },
                       [_c("i", { staticClass: "fad fa-wifi" })]
@@ -66147,27 +66177,11 @@ var render = function() {
                       "span",
                       {
                         directives: [{ name: "tippy", rawName: "v-tippy" }],
-                        staticClass: "tag is-light border",
+                        staticClass: "tag is-light border ml-1",
                         attrs: { content: "Offline" }
                       },
                       [_c("i", { staticClass: "fas fa-wifi-slash" })]
-                    ),
-                _vm._v(" "),
-                _vm.student.google_uid
-                  ? _c("span", { staticClass: "tag is-danger ml-1" }, [
-                      _c("i", { staticClass: "fab fa-google" })
-                    ])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("span", { staticClass: "tag is-dark ml-1" }, [
-                  _vm._v(
-                    "\n          " +
-                      _vm._s(_vm.student.numcards[0]) +
-                      " / " +
-                      _vm._s(_vm.student.numcards[1])
-                  ),
-                  _c("i", { staticClass: "fas fa-club ml-1" })
-                ])
+                    )
               ]
             )
           ]),

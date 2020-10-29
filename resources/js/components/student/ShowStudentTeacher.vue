@@ -40,26 +40,25 @@
         </div>
 
         <span
-          @click="redirect(student.id)"
           class="bottom-right cursor-pointer is-flex has-all-centered"
         >
+          <span class="tag is-danger" v-if="student.google_uid" @click="redirect(student.id)">
+            <i class="fab fa-google"></i
+          ></span>
+          <span class="tag is-dark ml-1" @click="redirect(student.id)">
+            {{ student.numcards[0] }} / {{ student.numcards[1]
+            }}<i class="fas fa-club ml-1"></i>
+          </span>
           <span
-            class="tag is-success"
+            class="tag is-success ml-1"
             v-if="student.online"
             v-tippy
             :content="trans.get('students.online')"
           >
             <i class="fad fa-wifi"></i>
           </span>
-          <span v-else class="tag is-light border" v-tippy content="Offline">
+          <span v-else class="tag is-light border ml-1" v-tippy content="Offline">
             <i class="fas fa-wifi-slash"></i>
-          </span>
-          <span class="tag is-danger ml-1" v-if="student.google_uid">
-            <i class="fab fa-google"></i
-          ></span>
-          <span class="tag is-dark ml-1">
-            {{ student.numcards[0] }} / {{ student.numcards[1]
-            }}<i class="fas fa-club ml-1"></i>
           </span>
         </span>
       </div>
