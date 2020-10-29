@@ -13464,7 +13464,7 @@ textPath {
   z-index: 12;
 }
 
-.lang {
+.lang, .group-logo {
   position: absolute;
   width: 75px;
   z-index: 2;
@@ -13510,10 +13510,6 @@ textPath {
     display: none;
   }
 }
-* :focus {
-  outline: none !important;
-}
-
 /* PWA */
 @media screen and (max-width: 1024px) {
   div {

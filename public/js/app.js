@@ -65504,7 +65504,7 @@ var render = function() {
                   expression: "{ arrow: true }"
                 }
               ],
-              staticClass: "top-right is-full-rounded",
+              staticClass: "top-right group-logo is-full-rounded",
               attrs: {
                 content:
                   "<i class='fas fa-users'></i> " + _vm.student.groups[0].name
