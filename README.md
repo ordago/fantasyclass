@@ -151,6 +151,12 @@ Popper tippy:
  Fortune wheel
  https://github.com/XiaoLin1995/vue-fortune-wheel
 
+ Long click
+ https://github.com/ittus/vue-long-click (not implemented yet)
+
+ Web push
+ https://github.com/laravel-notification-channels/webpush
+
 ## 3rd party Licenses
 
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

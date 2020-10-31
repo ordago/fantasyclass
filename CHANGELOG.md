@@ -1,4 +1,7 @@
 # Changelog
+## v1.15 Beta (XX/10/2020)
+- User notifications.
+
 ## v1.14.1 Beta (29/10/2020)
 ### Added
 - View as student.

@@ -251,5 +251,10 @@ Route::group(['middleware' => 'language'], function () {
     
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
-    
+
+    // Notifications
+    Route::post('/push','NotificationController@store');
+    Route::post('/notification/delete','NotificationController@destroy');
+    Route::post('/notification/delete/all','NotificationController@destroyAll');
+ 
 });

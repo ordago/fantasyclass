@@ -5,10 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable;
+    use Notifiable, HasPushSubscriptions;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +19,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name', 'email', 'password', 'username', 'email_verified_at', 'is_student', 'locale', 'refresh_token', 'expires_in', 'token'
     ];
+    
 
     /**
      * The attributes that should be hidden for arrays.

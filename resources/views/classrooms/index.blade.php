@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<button class="js-push-btn float has-all-centered" style="display: none!important" v-tippy content="Enable notifications"><i class="fa fa-bell my-float fs-2"></i></button>
 <div class="columns is-multiline is-variable is-1 has-margin-y-2">
 
   <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox">

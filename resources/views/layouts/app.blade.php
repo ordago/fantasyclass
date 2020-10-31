@@ -59,22 +59,6 @@
     <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
 
-    <script type="text/javascript">
-        // Initialize the service worker
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/serviceworker.js', {
-                registrationStrategy: 'registerImmediately',
-                scope: '/'
-            }).then(function(registration) {
-                // Registration was successful
-                // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
-            }, function(err) {
-                // registration failed :(
-                console.log('Laravel PWA: ServiceWorker registration failed: ', err);
-            });
-        }
-    </script>
-
     {!! htmlScriptTagJsApi() !!}
 </head>
 
@@ -89,11 +73,14 @@
                         @yield('title','FantasyClass')
                     </label>
                 </a>
-                <a role="button" class="navbar-burger burger" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
+                <div class="is-flex has-all-centered left-auto is-hidden-desktop">
+                    @yield('notifications')
+                    <a role="button" class="navbar-burger burger ml-2" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
             </div>
 
             <div id="navbar" class="navbar-menu" :class="{ 'is-active': showNav }">
@@ -105,7 +92,9 @@
 
                 <div class="navbar-end has-text-right">
                     <div class="navbar-item">
-                        @yield('notifications')
+                        <span class="is-hidden-touch mr-2">
+                            @yield('notifications')
+                        </span>
                         <div class="dropdown is-right is-hoverable">
                             <div class="dropdown-trigger">
                                 <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
@@ -193,11 +182,13 @@
                 "link": "Más información",
                 "href": "/cookies"
             }
-
-
         });
     </script>
-
+    W
+    @auth
+        <script src="{{ asset('js/config.js') }}" defer></script>
+        <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    @endauth
 
     <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>

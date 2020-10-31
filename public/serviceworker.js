@@ -2,16 +2,16 @@ var staticCacheName = "pwa-v" + new Date().getTime();
 var filesToCache = [
     '/offline',
     '/css/app.css'
-    ];
+];
 
 // Cache on install
 self.addEventListener("install", event => {
     this.skipWaiting();
     event.waitUntil(
         caches.open(staticCacheName)
-            .then(cache => {
-                return cache.addAll(filesToCache);
-            })
+        .then(cache => {
+            return cache.addAll(filesToCache);
+        })
     )
 });
 
@@ -21,9 +21,9 @@ self.addEventListener('activate', event => {
         caches.keys().then(cacheNames => {
             return Promise.all(
                 cacheNames
-                    .filter(cacheName => (cacheName.startsWith("pwa-")))
-                    .filter(cacheName => (cacheName !== staticCacheName))
-                    .map(cacheName => caches.delete(cacheName))
+                .filter(cacheName => (cacheName.startsWith("pwa-")))
+                .filter(cacheName => (cacheName !== staticCacheName))
+                .map(cacheName => caches.delete(cacheName))
             );
         })
     );
@@ -33,11 +33,44 @@ self.addEventListener('activate', event => {
 self.addEventListener("fetch", event => {
     event.respondWith(
         caches.match(event.request)
-            .then(response => {
-                return response || fetch(event.request);
-            })
-            .catch(() => {
-                return caches.match('offline');
-            })
+        .then(response => {
+            return response || fetch(event.request);
+        })
+        .catch(() => {
+            return caches.match('offline');
+        })
     )
+});
+
+self.addEventListener('notificationclick', function (event) {
+    event.notification.close();
+    
+    switch (event.action) {
+        case 'open_fantasyclass_teacher':
+        default:
+            self.clients.openWindow("/classroom/" + event.notification.data.code + "/" + event.notification.data.section)
+            break;
+        case 'open_fantasyclass':
+            self.clients.openWindow("/classroom/show/" + event.notification.data.code + "/" + event.notification.data.section)
+            break;    
+            self.clients.openWindow("/")
+            break;
+    }
+});
+
+self.addEventListener('push', function (e) {
+    if (!(self.Notification && self.Notification.permission === 'granted')) {
+        //notifications aren't supported or permission not granted!
+        return;
+    }
+
+    if (e.data) {
+        var msg = e.data.json();
+        e.waitUntil(self.registration.showNotification(msg.title, {
+            body: msg.body,
+            icon: msg.icon,
+            actions: msg.actions,
+            data: msg.data,
+        }));
+    }
 });

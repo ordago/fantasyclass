@@ -4756,7 +4756,6 @@ var InputEmoji = function InputEmoji() {
   },
   methods: {
     getHp5: function getHp5(url) {
-      console.log("https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1));
       return "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1);
     },
     getContent: function getContent(content) {
@@ -12353,142 +12352,257 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-/* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["pending"],
-  mounted: function mounted() {
-    this.cards = this.pending;
+var _props$props$mounted$;
 
-    for (var i = 0; i < this.cards.length; i++) {
-      this.cards[i].cards = Object.values(this.cards[i].cards);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = (_props$props$mounted$ = {
+  props: ["pending"]
+}, _defineProperty(_props$props$mounted$, "props", {
+  pending: {
+    type: Array,
+    "default": function _default() {
+      return [];
     }
   },
-  data: function data() {
-    return {
-      open: false,
-      overlay: true,
-      fullheight: true,
-      fullwidth: false,
-      cards: []
-    };
-  },
-  methods: {
-    getText: function getText(type) {
-      if (type == 1) {
-        return "Use";
-      } else {
-        return "Delete";
-      }
-    },
-    setCard: function setCard(id, line, type, action, index, indexC) {
-      var _this = this;
+  notifications: {
+    type: Array,
+    "default": function _default() {
+      return [];
+    }
+  }
+}), _defineProperty(_props$props$mounted$, "mounted", function mounted() {
+  this.cards = this.pending;
 
-      if (!action) {
-        this.cards[index].cards.splice(indexC, 1);
-        if (!this.cards[index].cards.length) this.open = false;
-      }
+  for (var i = 0; i < this.cards.length; i++) {
+    this.cards[i].cards = Object.values(this.cards[i].cards);
+  }
+}), _defineProperty(_props$props$mounted$, "data", function data() {
+  return {
+    open: false,
+    show: 0,
+    overlay: true,
+    fullheight: true,
+    fullwidth: false,
+    cards: []
+  };
+}), _defineProperty(_props$props$mounted$, "methods", {
+  deleteNotification: function deleteNotification(type) {
+    var _this = this;
 
-      this.$forceUpdate();
-      axios.post("/classroom/card/usedelete/" + id, {
-        student: line.student.id,
-        action: action,
-        type: type
-      }).then(function (response) {
-        _this.$toasted.show(response.data.message, {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: response.data.icon,
-          type: response.data.type
+    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+    this.open = false;
+    this.$buefy.dialog.confirm({
+      title: this.trans.get("general.delete"),
+      message: this.trans.get("general.confirm_delete"),
+      confirmText: this.trans.get("general.delete"),
+      cancelText: this.trans.get("general.cancel"),
+      type: "is-danger",
+      hasIcon: true,
+      icon: "times-circle",
+      iconPack: "fa",
+      ariaRole: "alertdialog",
+      ariaModal: true,
+      onConfirm: function onConfirm() {
+        var action = '';
+        if (type === 1) action = '/all';
+        axios.post("/notification/delete" + action, {
+          id: id
+        }).then(function (response) {
+          if (type === 0) {
+            _this.notifications.splice(index, 1);
+          } else {
+            _this.notifications.splice(0, _this.notifications.length);
+          }
+
+          _this.$forceUpdate();
         });
-
-        if (action) {
-          if (response.data.type == "success") location.reload();
-        }
-      });
-    },
-    countCards: function countCards() {
-      var count = 0;
-      this.pending.forEach(function (element) {
-        count += _.size(element.cards);
-      });
-      return count;
+      }
+    });
+  },
+  getText: function getText(type) {
+    if (type == 1) {
+      return "Use";
+    } else {
+      return "Delete";
     }
   },
-  computed: {}
-});
+  setCard: function setCard(id, line, type, action, index, indexC) {
+    var _this2 = this;
+
+    if (!action) {
+      this.cards[index].cards.splice(indexC, 1);
+      if (!this.cards[index].cards.length) this.open = false;
+    }
+
+    this.$forceUpdate();
+    axios.post("/classroom/card/usedelete/" + id, {
+      student: line.student.id,
+      action: action,
+      type: type
+    }).then(function (response) {
+      _this2.$toasted.show(response.data.message, {
+        position: "top-center",
+        duration: 3000,
+        iconPack: "fontawesome",
+        icon: response.data.icon,
+        type: response.data.type
+      });
+
+      if (action) {
+        if (response.data.type == "success") location.reload();
+      }
+    });
+  },
+  countCards: function countCards() {
+    var count = 0;
+    this.pending.forEach(function (element) {
+      count += _.size(element.cards);
+    });
+    return count;
+  }
+}), _defineProperty(_props$props$mounted$, "computed", {}), _props$props$mounted$);
 
 /***/ }),
 
@@ -69071,63 +69185,242 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.countCards()
-    ? _c(
-        "div",
-        {
-          staticClass: "has-margin-3 cursor-pointer",
-          on: {
-            click: function($event) {
-              _vm.open = true
-            }
-          }
-        },
-        [
-          _c("i", {
-            staticClass: "fad fa-bell",
-            staticStyle: { "font-size": "1.25em" }
-          }),
-          _vm._v(" "),
-          _c("span", {
-            staticClass: "tag is-danger",
-            staticStyle: { "font-size": "0.7em" },
-            domProps: { innerHTML: _vm._s(_vm.countCards()) }
-          }),
-          _vm._v(" "),
-          _c(
-            "b-sidebar",
+  return _c(
+    "div",
+    { staticClass: "is-flex has-all-centered left-auto" },
+    [
+      _vm.countCards()
+        ? _c(
+            "div",
             {
-              attrs: {
-                type: "is-light",
-                fullheight: _vm.fullheight,
-                fullwidth: false,
-                overlay: _vm.overlay,
-                right: true,
-                open: _vm.open,
-                "icon-pack": "fa",
-                mobile: "fullwidth"
-              },
+              staticClass: "has-margin-3 cursor-pointer",
+              staticStyle: { display: "initial !important" },
               on: {
-                "update:open": function($event) {
-                  _vm.open = $event
+                click: function($event) {
+                  _vm.show = 1
+                  _vm.open = true
                 }
               }
             },
             [
-              _c(
-                "div",
-                {
-                  staticClass: "close-button",
-                  on: {
-                    click: function($event) {
-                      _vm.open = false
-                    }
-                  }
-                },
-                [_c("button", { staticClass: "button is-dark" }, [_vm._v("x")])]
-              ),
+              _c("i", {
+                staticClass: "fad fa-club",
+                staticStyle: { "font-size": "1.25em" }
+              }),
               _vm._v(" "),
-              _c(
+              _c("span", {
+                staticClass: "tag is-danger",
+                staticStyle: { "font-size": "0.7em" },
+                domProps: { innerHTML: _vm._s(_vm.countCards()) }
+              })
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.notifications && _vm.notifications.length
+        ? _c("div", [
+            _c(
+              "span",
+              {
+                on: {
+                  click: function($event) {
+                    _vm.show = 0
+                    _vm.open = true
+                  }
+                }
+              },
+              [
+                _c("i", {
+                  staticClass: "fad fa-bell",
+                  staticStyle: { "font-size": "1.25em" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass: "tag is-danger",
+                    staticStyle: { "font-size": "0.7em" }
+                  },
+                  [_vm._v(_vm._s(_vm.notifications.length))]
+                )
+              ]
+            )
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "b-sidebar",
+        {
+          attrs: {
+            type: "is-light",
+            fullheight: _vm.fullheight,
+            fullwidth: false,
+            overlay: _vm.overlay,
+            right: true,
+            open: _vm.open,
+            "icon-pack": "fa",
+            mobile: "fullwidth"
+          },
+          on: {
+            "update:open": function($event) {
+              _vm.open = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            {
+              staticClass: "close-button",
+              on: {
+                click: function($event) {
+                  _vm.open = false
+                }
+              }
+            },
+            [
+              _vm.show == 0
+                ? _c(
+                    "button",
+                    {
+                      staticClass: "button is-danger is-light border",
+                      on: {
+                        click: function($event) {
+                          return _vm.deleteNotification(1)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fal fa-trash-alt" }),
+                      _vm._v(
+                        " " +
+                          _vm._s(_vm.trans.get("general.delete_all")) +
+                          "\n      "
+                      )
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c("button", { staticClass: "button" }, [
+                _c("i", { staticClass: "fal fa-times" })
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.show == 0
+            ? _c(
+                "div",
+                { staticClass: "pt-6" },
+                _vm._l(_vm.notifications, function(notification, index) {
+                  return _c(
+                    "div",
+                    { key: notification.id, staticClass: "card my-1" },
+                    [
+                      _c("header", { staticClass: "card-header" }, [
+                        _c("p", { staticClass: "card-header-title" }, [
+                          _c("i", {
+                            staticClass: "fad mr-2",
+                            class: {
+                              "fa-comment": notification.data.type == "comment"
+                            }
+                          }),
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(notification.data.from.title) +
+                              "\n            "
+                          ),
+                          _c("span", { staticClass: "left-auto" }, [
+                            _c(
+                              "time",
+                              {
+                                staticClass: "tag is-light",
+                                attrs: {
+                                  datetime: notification.data.from.datetime
+                                }
+                              },
+                              [_vm._v(_vm._s(notification.data.from.datetime))]
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "card-content" }, [
+                        _c("div", { staticClass: "content" }, [
+                          notification.data.from.type == "student"
+                            ? _c("img", {
+                                attrs: {
+                                  src: notification.data.from.avatar,
+                                  width: "12px",
+                                  alt: "avatar"
+                                }
+                              })
+                            : _c("span", {
+                                domProps: {
+                                  innerHTML: _vm._s(
+                                    notification.data.from.avatar
+                                  )
+                                }
+                              }),
+                          _vm._v(" "),
+                          _c("strong", [
+                            _vm._v(_vm._s(notification.data.from.name))
+                          ]),
+                          _vm._v(
+                            ": " +
+                              _vm._s(notification.data.content) +
+                              "\n          "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("footer", { staticClass: "card-footer" }, [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-footer-item has-background-link-light has-text-dark",
+                            attrs: { href: notification.data.url }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans.get("notifications.go_to")) +
+                                "\n            " +
+                                _vm._s(
+                                  _vm.trans.get(
+                                    "menu." + notification.data.section
+                                  )
+                                )
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "card-footer-item has-background-danger-light has-text-dark",
+                            on: {
+                              click: function($event) {
+                                return _vm.deleteNotification(
+                                  0,
+                                  notification.id,
+                                  index
+                                )
+                              }
+                            }
+                          },
+                          [_vm._v(_vm._s(_vm.trans.get("general.delete")))]
+                        )
+                      ])
+                    ]
+                  )
+                }),
+                0
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.show == 1
+            ? _c(
                 "div",
                 _vm._l(_vm.pending, function(line, index) {
                   return _c(
@@ -69224,12 +69517,12 @@ var render = function() {
                 }),
                 0
               )
-            ]
-          )
-        ],
-        1
+            : _vm._e()
+        ]
       )
-    : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -87911,6 +88204,7 @@ __webpack_require__.r(__webpack_exports__);
     "edit": "Edita",
     "save": "Guarda",
     "delete": "Elimina",
+    "delete_all": "Elimina totes",
     "close": "Tanca",
     "cancel": "Cancel\xB7la",
     "create": "Crea",
@@ -88019,6 +88313,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Vista de grups",
     "view_student": "Vista d'estudiants",
     "view_full": "Vista completa"
+  },
+  "ca.notifications": {
+    "new_comment": "Nou comentari",
+    "go_to": "Anar a"
   },
   "ca.offline": {
     "connection": "Sembla que no tens connexi\xF3. Actualitza per intentar-ho de nou.",
@@ -88618,6 +88916,7 @@ __webpack_require__.r(__webpack_exports__);
     "edit": "Edit",
     "save": "Save",
     "delete": "Delete",
+    "delete_all": "Delete all",
     "close": "Close",
     "cancel": "Cancel",
     "create": "Create",
@@ -88726,6 +89025,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Group view",
     "view_student": "Students view",
     "view_full": "Full view"
+  },
+  "en.notifications": {
+    "new_comment": "New comment",
+    "go_to": "Go to"
   },
   "en.offline": {
     "connection": "It seems that you don't have connection. Please, pull to refresh when it's ready.",
@@ -89337,6 +89640,7 @@ __webpack_require__.r(__webpack_exports__);
     "edit": "Edita",
     "save": "Guarda",
     "delete": "Elimina",
+    "delete_all": "Elimina todas",
     "close": "Cierra",
     "cancel": "Cancela",
     "create": "Crea",
@@ -89445,6 +89749,10 @@ __webpack_require__.r(__webpack_exports__);
     "view_group": "Vista de grupos",
     "view_student": "Vista de estudiantes",
     "view_full": "Vista completa"
+  },
+  "es.notifications": {
+    "new_comment": "Nuevo comentario",
+    "go_to": "Ir a"
   },
   "es.offline": {
     "connection": "Parece que no tienes conexi\xF3n. Actualiza para intentarlo de nuevo.",

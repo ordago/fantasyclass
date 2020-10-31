@@ -584,9 +584,6 @@ export default {
   },
   methods: {
     getHp5(url) {
-      console.log(
-        "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1)
-      );
       return (
         "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1)
       );

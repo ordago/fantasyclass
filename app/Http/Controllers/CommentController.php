@@ -21,10 +21,19 @@ class CommentController extends Controller
             'text' => ['string', 'required'],
         ]);
 
-        $class = Classroom::findOrFail(Challenge::find($data['challenge_id'])->group->classroom_id);
+        $challenge = Challenge::find($data['challenge_id']);
+        $class = Classroom::findOrFail($challenge->group->classroom_id);
         $this->authorize('studyOrTeach', $class);
+
+        $comment = Comment::create(['user_id' => auth()->user()->id, 'challenge_id' => $data['challenge_id'], 'text' => $data['text']]);
+        $comment->append('info');
+        $info = array_merge($comment->info, ['title' => $challenge->title]);
+
+        // if($comment->info['type'] != 'teacher') {
+            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.new_comment", $data['text'] , $info,"comment", "challenges");
+        // }
         
-        return Comment::create(['user_id' => auth()->user()->id, 'challenge_id' => $data['challenge_id'], 'text' => $data['text']]);
+        return $comment;
 
     }
     

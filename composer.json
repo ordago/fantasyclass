@@ -20,6 +20,7 @@
         "guzzlehttp/guzzle": "^6.3",
         "intervention/image": "^2.5",
         "kg-bot/laravel-localization-to-vue": "^1.6",
+        "laravel-notification-channels/webpush": "^5.0",
         "laravel/framework": "^7.0",
         "laravel/socialite": "^4.3",
         "laravel/telescope": "^3.3",

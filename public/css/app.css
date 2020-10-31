@@ -13511,11 +13511,11 @@ textPath {
   }
 }
 /* PWA */
-@media screen and (max-width: 600px) {
-  
-
-}
 /***************************/
+.left-auto {
+  margin-left: auto;
+}
+
 .required {
   color: red;
   font-weight: bold;
@@ -14566,6 +14566,21 @@ textPath {
   opacity: 0;
 }
 
+.float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #0C9;
+  color: #FFF;
+  border-radius: 50px;
+  text-align: center;
+  box-shadow: 2px 2px 3px #999;
+  border: none;
+  display: none;
+}
+
 /* Menu fix */
 /*  Displays menu when toggler is checked only on mobile/tablet */
 @media screen and (max-width: 1024px) {
@@ -14584,21 +14599,6 @@ textPath {
   .show-challenges-title {
     position: relative;
     top: 0;
-  }
-
-  * {
-    -webkit-touch-callout: none;
-    /* iOS Safari */
-    -webkit-user-select: none;
-    /* Safari */
-    /* Konqueror HTML */
-    -moz-user-select: none;
-    /* Old versions of Firefox */
-    -ms-user-select: none;
-    /* Internet Explorer/Edge */
-    user-select: none;
-    /* Non-prefixed version, currently
-     supported by Chrome, Opera and Firefox */
   }
 }
 .has-background-gradient {

@@ -1,16 +1,34 @@
 <template>
-  <div
-    class="has-margin-3 cursor-pointer"
-    @click="open = true"
-    v-if="countCards()"
-  >
-    <i class="fad fa-bell" style="font-size: 1.25em"></i>
-    <span
-      class="tag is-danger"
-      style="font-size: 0.7em"
-      v-html="countCards()"
-    ></span>
-
+  <div class="is-flex has-all-centered left-auto">
+    <div
+      class="has-margin-3 cursor-pointer"
+      style="display: initial !important"
+      @click="
+        show = 1;
+        open = true;
+      "
+      v-if="countCards()"
+    >
+      <i class="fad fa-club" style="font-size: 1.25em"></i>
+      <span
+        class="tag is-danger"
+        style="font-size: 0.7em"
+        v-html="countCards()"
+      ></span>
+    </div>
+    <div v-if="notifications && notifications.length">
+      <span
+        @click="
+          show = 0;
+          open = true;
+        "
+      >
+        <i class="fad fa-bell" style="font-size: 1.25em"></i>
+        <span class="tag is-danger" style="font-size: 0.7em">{{
+          notifications.length
+        }}</span>
+      </span>
+    </div>
     <b-sidebar
       type="is-light"
       :fullheight="fullheight"
@@ -22,9 +40,58 @@
       mobile="fullwidth"
     >
       <div class="close-button" @click="open = false">
-        <button class="button is-dark">x</button>
+        <button class="button is-danger is-light border" @click="deleteNotification(1)" v-if="show == 0">
+          <i class="fal fa-trash-alt"></i> {{ trans.get('general.delete_all') }}
+        </button>
+        <button class="button"><i class="fal fa-times"></i></button>
       </div>
-      <div>
+      <div class="pt-6" v-if="show == 0">
+        <div
+          class="card my-1"
+          v-for="(notification, index) in notifications"
+          :key="notification.id"
+        >
+          <header class="card-header">
+            <p class="card-header-title">
+              <i
+                class="fad mr-2"
+                :class="{
+                  'fa-comment': notification.data.type == 'comment',
+                }"
+              ></i>
+              {{ notification.data.from.title }}
+              <span class="left-auto"
+                ><time
+                  :datetime="notification.data.from.datetime"
+                  class="tag is-light"
+                  >{{ notification.data.from.datetime }}</time
+                ></span
+              >
+            </p>
+          </header>
+          <div class="card-content">
+            <div class="content">
+              <img :src="notification.data.from.avatar" v-if="notification.data.from.type == 'student'" width="12px" alt="avatar">
+              <span v-else v-html="notification.data.from.avatar"></span>
+              <strong>{{ notification.data.from.name }}</strong>: {{ notification.data.content }}
+            </div>
+          </div>
+          <footer class="card-footer">
+            <a
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              {{ trans.get("menu." + notification.data.section) }}</a
+            >
+            <a
+              @click="deleteNotification(0, notification.id, index)"
+              class="card-footer-item has-background-danger-light has-text-dark"
+              >{{ trans.get("general.delete") }}</a
+            >
+          </footer>
+        </div>
+      </div>
+      <div v-if="show == 1">
         <div v-for="(line, index) in pending" :key="index">
           <div
             class="columns has-all-centered"
@@ -74,6 +141,20 @@
 <script>
 export default {
   props: ["pending"],
+  props: {
+    pending: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    notifications: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+  },
   mounted() {
     this.cards = this.pending;
     for (let i = 0; i < this.cards.length; i++) {
@@ -83,6 +164,7 @@ export default {
   data: function () {
     return {
       open: false,
+      show: 0,
       overlay: true,
       fullheight: true,
       fullwidth: false,
@@ -90,6 +172,34 @@ export default {
     };
   },
   methods: {
+    deleteNotification(type, id = null, index = null) {
+      this.open = false
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          let action = '';
+          if(type === 1)
+            action = '/all'
+          axios.post("/notification/delete" + action, { id: id }).then((response) => {
+            if(type === 0) {
+              this.notifications.splice(index, 1);
+            } else {
+              this.notifications.splice(0,this.notifications.length)
+            }
+            this.$forceUpdate();
+          }); 
+        },
+      });
+    },
     getText(type) {
       if (type == 1) {
         return "Use";

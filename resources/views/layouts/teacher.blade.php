@@ -7,8 +7,8 @@
 @endsection
 
 @section('notifications')
-@if(isset($pending) && count($pending) > 0)
-<notifications :pending="{{ $pending }}"></notifications>
+@if(isset($pending) && count($pending) > 0 || isset($notifications) && count($notifications))
+<notifications :notifications="{{ $notifications }}" :pending="{{ $pending }}"></notifications>
 @endif
 @endsection
 

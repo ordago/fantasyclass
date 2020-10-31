@@ -15,6 +15,7 @@ return [
     'edit' => "Edita",
     'save' => "Guarda",
     'delete' => "Elimina",
+    'delete_all' => "Elimina todas",
     'close' => "Cierra",
     'cancel' => "Cancela",
     'create' => "Crea",

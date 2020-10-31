@@ -356,6 +356,8 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
+        $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->get();
+
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $students = $class->students()->with('equipment', 'pets')->get();
@@ -382,6 +384,6 @@ class ClassroomsController extends Controller
 
         $showChat = settings()->get('show_chat', false);
 
-        return view('classrooms.show', compact('class', 'students', 'pending', 'groups', 'chat', 'showChat'));
+        return view('classrooms.show', compact('class', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
     }
 }
