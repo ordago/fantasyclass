@@ -184,7 +184,6 @@
             }
         });
     </script>
-    W
     @auth
         <script src="{{ asset('js/config.js') }}" defer></script>
         <script src="{{ asset('js/enable-push.js') }}" defer></script>
