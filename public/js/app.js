@@ -11005,6 +11005,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
   mounted: function mounted() {},
@@ -11731,6 +11734,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11778,6 +11790,38 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    sendMessage: function sendMessage(type) {
+      var _this = this;
+
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      this.$buefy.dialog.prompt({
+        message: this.trans.get('students.send_message'),
+        inputAttrs: {},
+        cancelText: this.trans.get('general.cancel'),
+        confirmText: this.trans.get('general.send'),
+        trapFocus: true,
+        onConfirm: function onConfirm(message) {
+          var action = "/classroom/" + _this.classroom.code + "/push";
+
+          if (type === 1) {
+            action += "/all";
+          }
+
+          axios.post(action, {
+            message: message,
+            id: id
+          }).then(function (response) {
+            _this.$toasted.show(_this.trans.get('success_error.add_success'), {
+              position: "top-center",
+              duration: 3000,
+              iconPack: "fontawesome",
+              icon: 'check',
+              type: 'success'
+            });
+          });
+        }
+      });
+    },
     redirect: function redirect(id) {
       window.location.href = "/classroom/" + this.classroom.code + "/student/" + id;
     },
@@ -11789,7 +11833,7 @@ __webpack_require__.r(__webpack_exports__);
       location.reload();
     },
     assignCard: function assignCard(to) {
-      var _this = this;
+      var _this2 = this;
 
       var card = this.randomCard.id;
       var target;
@@ -11833,13 +11877,13 @@ __webpack_require__.r(__webpack_exports__);
         id: target,
         card: card
       }).then(function (response) {
-        _this.getRandomCard();
+        _this2.getRandomCard();
 
-        _this.showCard = false;
+        _this2.showCard = false;
       });
     },
     revealCard: function revealCard() {
-      var _this2 = this;
+      var _this3 = this;
 
       var audio = new Audio("/sound/victory.mp3");
       audio.play();
@@ -11873,7 +11917,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         })();
 
-        _this2.showCard = true;
+        _this3.showCard = true;
       }, 300);
     },
     rollTheDice: function rollTheDice() {
@@ -11897,11 +11941,11 @@ __webpack_require__.r(__webpack_exports__);
       this.isRandomGroupActive = true;
     },
     getRandomCard: function getRandomCard() {
-      var _this3 = this;
+      var _this4 = this;
 
       axios.get("/classroom/" + this.classroom.code + "/card/random").then(function (response) {
-        _this3.randomCard = response.data;
-        _this3.isCardModalActive = true;
+        _this4.randomCard = response.data;
+        _this4.isCardModalActive = true;
       });
     },
     showClassCode: function showClassCode() {
@@ -11928,12 +11972,12 @@ __webpack_require__.r(__webpack_exports__);
       return _.orderBy(this.classroom.behaviours, "count_number", "desc");
     },
     orderedStudents: function orderedStudents() {
-      var _this4 = this;
+      var _this5 = this;
 
       var order = "desc";
       if (this.sortKey == "name") order = "asc";
       return _.orderBy(_.orderBy(this.students.filter(function (student) {
-        return student.name.toLowerCase().includes(_this4.search.toLowerCase());
+        return student.name.toLowerCase().includes(_this5.search.toLowerCase());
       }), this.sortKey, order), "hidden", "asc");
     }
   }
@@ -12352,10 +12396,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-var _props$props$mounted$;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 //
 //
 //
@@ -12496,113 +12536,150 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = (_props$props$mounted$ = {
-  props: ["pending"]
-}, _defineProperty(_props$props$mounted$, "props", {
-  pending: {
-    type: Array,
-    "default": function _default() {
-      return [];
-    }
-  },
-  notifications: {
-    type: Array,
-    "default": function _default() {
-      return [];
-    }
-  }
-}), _defineProperty(_props$props$mounted$, "mounted", function mounted() {
-  this.cards = this.pending;
-
-  for (var i = 0; i < this.cards.length; i++) {
-    this.cards[i].cards = Object.values(this.cards[i].cards);
-  }
-}), _defineProperty(_props$props$mounted$, "data", function data() {
-  return {
-    open: false,
-    show: 0,
-    overlay: true,
-    fullheight: true,
-    fullwidth: false,
-    cards: []
-  };
-}), _defineProperty(_props$props$mounted$, "methods", {
-  deleteNotification: function deleteNotification(type) {
-    var _this = this;
-
-    var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-    var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    this.open = false;
-    this.$buefy.dialog.confirm({
-      title: this.trans.get("general.delete"),
-      message: this.trans.get("general.confirm_delete"),
-      confirmText: this.trans.get("general.delete"),
-      cancelText: this.trans.get("general.cancel"),
-      type: "is-danger",
-      hasIcon: true,
-      icon: "times-circle",
-      iconPack: "fa",
-      ariaRole: "alertdialog",
-      ariaModal: true,
-      onConfirm: function onConfirm() {
-        var action = '';
-        if (type === 1) action = '/all';
-        axios.post("/notification/delete" + action, {
-          id: id
-        }).then(function (response) {
-          if (type === 0) {
-            _this.notifications.splice(index, 1);
-          } else {
-            _this.notifications.splice(0, _this.notifications.length);
-          }
-
-          _this.$forceUpdate();
-        });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    pending: {
+      type: Array,
+      "default": function _default() {
+        return [];
       }
-    });
-  },
-  getText: function getText(type) {
-    if (type == 1) {
-      return "Use";
-    } else {
-      return "Delete";
+    },
+    notifications: {
+      type: Array,
+      "default": function _default() {
+        return [];
+      }
+    },
+    type: {
+      type: String,
+      "default": function _default() {
+        return "student";
+      }
     }
   },
-  setCard: function setCard(id, line, type, action, index, indexC) {
-    var _this2 = this;
+  mounted: function mounted() {
+    this.cards = this.pending;
 
-    if (!action) {
-      this.cards[index].cards.splice(indexC, 1);
-      if (!this.cards[index].cards.length) this.open = false;
+    for (var i = 0; i < this.cards.length; i++) {
+      this.cards[i].cards = Object.values(this.cards[i].cards);
     }
+  },
+  data: function data() {
+    return {
+      open: false,
+      show: 0,
+      overlay: true,
+      fullheight: true,
+      fullwidth: false,
+      cards: []
+    };
+  },
+  methods: {
+    deleteNotification: function deleteNotification(type) {
+      var _this = this;
 
-    this.$forceUpdate();
-    axios.post("/classroom/card/usedelete/" + id, {
-      student: line.student.id,
-      action: action,
-      type: type
-    }).then(function (response) {
-      _this2.$toasted.show(response.data.message, {
-        position: "top-center",
-        duration: 3000,
-        iconPack: "fontawesome",
-        icon: response.data.icon,
-        type: response.data.type
+      var id = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+      var index = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      this.open = false;
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          var action = "";
+          if (type === 1) action = "/all";
+          axios.post("/notification/delete" + action, {
+            id: id,
+            type: _this.type
+          }).then(function (response) {
+            if (type === 0) {
+              _this.notifications.splice(index, 1);
+            } else {
+              _this.notifications.splice(0, _this.notifications.length);
+            }
+
+            _this.$forceUpdate();
+          });
+        }
       });
-
-      if (action) {
-        if (response.data.type == "success") location.reload();
+    },
+    getText: function getText(type) {
+      if (type == 1) {
+        return "Use";
+      } else {
+        return "Delete";
       }
-    });
+    },
+    setCard: function setCard(id, line, type, action, index, indexC) {
+      var _this2 = this;
+
+      if (!action) {
+        this.cards[index].cards.splice(indexC, 1);
+        if (!this.cards[index].cards.length) this.open = false;
+      }
+
+      this.$forceUpdate();
+      axios.post("/classroom/card/usedelete/" + id, {
+        student: line.student.id,
+        action: action,
+        type: type
+      }).then(function (response) {
+        _this2.$toasted.show(response.data.message, {
+          position: "top-center",
+          duration: 3000,
+          iconPack: "fontawesome",
+          icon: response.data.icon,
+          type: response.data.type
+        });
+
+        if (action) {
+          if (response.data.type == "success") location.reload();
+        }
+      });
+    },
+    countCards: function countCards() {
+      var count = 0;
+      this.pending.forEach(function (element) {
+        count += _.size(element.cards);
+      });
+      return count;
+    }
   },
-  countCards: function countCards() {
-    var count = 0;
-    this.pending.forEach(function (element) {
-      count += _.size(element.cards);
-    });
-    return count;
-  }
-}), _defineProperty(_props$props$mounted$, "computed", {}), _props$props$mounted$);
+  computed: {}
+});
 
 /***/ }),
 
@@ -66189,6 +66266,29 @@ var render = function() {
                             "\n          "
                         )
                       ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        on: {
+                          click: function($event) {
+                            return _vm.$parent.sendMessage(0, _vm.student.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", {
+                          staticClass: "fal fa-paper-plane",
+                          staticStyle: { width: "20px" }
+                        }),
+                        _vm._v(
+                          " " +
+                            _vm._s(_vm.trans.get("students.send_message")) +
+                            "\n          "
+                        )
+                      ]
                     )
                   ])
                 ]
@@ -67332,7 +67432,32 @@ var render = function() {
                     staticStyle: { "font-size": "2em" }
                   })
                 ]
-              )
+              ),
+              _vm._v(" "),
+              _vm.students && _vm.students.length
+                ? _c(
+                    "a",
+                    {
+                      directives: [{ name: "tippy", rawName: "v-tippy" }],
+                      staticClass:
+                        "link outer_glow has-padding-x-2 cursor-pointer has-text-dark",
+                      attrs: {
+                        content: _vm.trans.get("menu.send_message_all")
+                      },
+                      on: {
+                        click: function($event) {
+                          return _vm.sendMessage(1)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fad fa-paper-plane",
+                        staticStyle: { "font-size": "2em" }
+                      })
+                    ]
+                  )
+                : _vm._e()
             ]
           ),
           _vm._v(" "),
@@ -69291,7 +69416,7 @@ var render = function() {
                       }
                     },
                     [
-                      _c("i", { staticClass: "fal fa-trash-alt" }),
+                      _c("i", { staticClass: "fal fa-trash-alt mr-1" }),
                       _vm._v(
                         " " +
                           _vm._s(_vm.trans.get("general.delete_all")) +
@@ -69321,7 +69446,9 @@ var render = function() {
                           _c("i", {
                             staticClass: "fad mr-2",
                             class: {
-                              "fa-comment": notification.data.type == "comment"
+                              "fa-comment": notification.data.type == "comment",
+                              "fa-paper-plane":
+                                notification.data.type == "message"
                             }
                           }),
                           _vm._v(
@@ -69340,7 +69467,16 @@ var render = function() {
                               },
                               [_vm._v(_vm._s(notification.data.from.datetime))]
                             )
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas ml-1",
+                            class: {
+                              "fa-user-graduate":
+                                notification.data.user == "teacher",
+                              "fa-user": notification.data.user == "student"
+                            }
+                          })
                         ])
                       ]),
                       _vm._v(" "),
@@ -69362,9 +69498,20 @@ var render = function() {
                                 }
                               }),
                           _vm._v(" "),
-                          _c("strong", [
-                            _vm._v(_vm._s(notification.data.from.name))
-                          ]),
+                          _c(
+                            "strong",
+                            {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              attrs: { content: notification.data.from.name }
+                            },
+                            [
+                              _vm._v(
+                                "@" + _vm._s(notification.data.from.username)
+                              )
+                            ]
+                          ),
                           _vm._v(
                             ": " +
                               _vm._s(notification.data.content) +
@@ -69374,25 +69521,46 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("footer", { staticClass: "card-footer" }, [
-                        _c(
-                          "a",
-                          {
-                            staticClass:
-                              "card-footer-item has-background-link-light has-text-dark",
-                            attrs: { href: notification.data.url }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.trans.get("notifications.go_to")) +
-                                "\n            " +
-                                _vm._s(
-                                  _vm.trans.get(
-                                    "menu." + notification.data.section
-                                  )
+                        notification.data.user == "student"
+                          ? _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "card-footer-item has-background-link-light has-text-dark",
+                                attrs: { href: notification.data.url }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("notifications.go_to")) +
+                                    "\n            " +
+                                    _vm._s(_vm.trans.get("general.classroom")) +
+                                    "\n          "
                                 )
+                              ]
                             )
-                          ]
-                        ),
+                          : _vm._e(),
+                        _vm._v(" "),
+                        notification.data.user == "teacher"
+                          ? _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "card-footer-item has-background-link-light has-text-dark",
+                                attrs: { href: notification.data.url }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("notifications.go_to")) +
+                                    "\n            " +
+                                    _vm._s(
+                                      _vm.trans.get(
+                                        "menu." + notification.data.section
+                                      )
+                                    )
+                                )
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         _c(
                           "a",
@@ -88220,7 +88388,9 @@ __webpack_require__.r(__webpack_exports__);
     "confirm_delete": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer.",
     "confirm_delete_class": "Est\xE0s segur/a d'eliminar aquest element? Aquesta acci\xF3 no es pot desfer. S'ELIMINAR\xC0 TOTA LA INFORMACI\xD3 DELS ESTUDIANTS.",
     "type_message": "Escriu un missatge...",
-    "logout": "Tanca sessi\xF3"
+    "logout": "Tanca sessi\xF3",
+    "classroom": "classe",
+    "send": "Envia"
   },
   "ca.groups": {
     "group_name": "Nom del grup",
@@ -88312,11 +88482,13 @@ __webpack_require__.r(__webpack_exports__);
     "view_list": "Vista de llista",
     "view_group": "Vista de grups",
     "view_student": "Vista d'estudiants",
-    "view_full": "Vista completa"
+    "view_full": "Vista completa",
+    "send_message_all": "Envia missatge a tots els estudiants"
   },
   "ca.notifications": {
     "new_comment": "Nou comentari",
-    "go_to": "Anar a"
+    "go_to": "Anar a",
+    "message": "Nou missatge"
   },
   "ca.offline": {
     "connection": "Sembla que no tens connexi\xF3. Actualitza per intentar-ho de nou.",
@@ -88449,7 +88621,8 @@ __webpack_require__.r(__webpack_exports__);
     "basic_equipment": "L'equipament b\xE0sic ser\xE0 assignat, aquesta acci\xF3 no es pot desfer.",
     "online": "L'estudiant est\xE0 actiu (online)",
     "student_area": "\xC0rea de l'estudiant",
-    "student_view": "Veure com l'estudiant"
+    "student_view": "Veure com l'estudiant",
+    "send_message": "Envia un missatge"
   },
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
@@ -88932,7 +89105,9 @@ __webpack_require__.r(__webpack_exports__);
     "confirm_delete": "Are you sure you want to delete this element? This action can't be undone.",
     "confirm_delete_class": "Are you sure you want to delete this element? This action can't be undone. THIS WILL DESTROY ALL THE STUDENT INFORMATION.",
     "type_message": "Type a message...",
-    "logout": "Logout"
+    "logout": "Logout",
+    "classroom": "classroom",
+    "send": "Send"
   },
   "en.groups": {
     "group_name": "Group name",
@@ -89024,11 +89199,13 @@ __webpack_require__.r(__webpack_exports__);
     "view_list": "List view",
     "view_group": "Group view",
     "view_student": "Students view",
-    "view_full": "Full view"
+    "view_full": "Full view",
+    "send_message_all": "Send message to all students"
   },
   "en.notifications": {
     "new_comment": "New comment",
-    "go_to": "Go to"
+    "go_to": "Go to",
+    "message": "New message"
   },
   "en.offline": {
     "connection": "It seems that you don't have connection. Please, pull to refresh when it's ready.",
@@ -89160,7 +89337,8 @@ __webpack_require__.r(__webpack_exports__);
     "basic_equipment": "Basic equipment will be assigned. This action can't be undone.",
     "online": "Student is active (online)",
     "student_area": "Student area",
-    "student_view": "View as the student"
+    "student_view": "View as the student",
+    "send_message": "Send a message"
   },
   "en.success_error": {
     "add_success": "The element has been added successfully",
@@ -89656,7 +89834,9 @@ __webpack_require__.r(__webpack_exports__);
     "confirm_delete": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer.",
     "confirm_delete_class": "Est\xE1s seguro/en de eliminar este elemento? Esta acci\xF3n no se puede deshacer. Se ELIMINAR\xC1 TODA LA INFORMACI\xD3N DE LOS ESTUDIANTES.",
     "type_message": "Escribe un mensaje..",
-    "logout": "Cerrar sesi\xF3n"
+    "logout": "Cerrar sesi\xF3n",
+    "classroom": "clase",
+    "send": "Env\xEDa"
   },
   "es.groups": {
     "group_name": "Nombre del grupo",
@@ -89748,11 +89928,13 @@ __webpack_require__.r(__webpack_exports__);
     "view_list": "Vista de lista",
     "view_group": "Vista de grupos",
     "view_student": "Vista de estudiantes",
-    "view_full": "Vista completa"
+    "view_full": "Vista completa",
+    "send_message_all": "Envia mensaje a todos los estudiantes"
   },
   "es.notifications": {
     "new_comment": "Nuevo comentario",
-    "go_to": "Ir a"
+    "go_to": "Ir a",
+    "message": "Nuevo mensaje"
   },
   "es.offline": {
     "connection": "Parece que no tienes conexi\xF3n. Actualiza para intentarlo de nuevo.",
@@ -89885,7 +90067,8 @@ __webpack_require__.r(__webpack_exports__);
     "basic_equipment": "El equipamiento b\xE1sico ser\xE1 asignado, esta acci\xF3n no se puede deshacer.",
     "online": "El/la estudiante est\xE1 activo/a (online)",
     "student_area": "Area del estudiante",
-    "student_view": "Ver como estudiante"
+    "student_view": "Ver como estudiante",
+    "send_message": "Env\xEDa un mensaje"
   },
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",

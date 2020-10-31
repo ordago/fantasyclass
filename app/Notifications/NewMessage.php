@@ -8,43 +8,38 @@ use Illuminate\Notifications\Notification;
 use NotificationChannels\WebPush\WebPushMessage;
 use NotificationChannels\WebPush\WebPushChannel;
 
-class NewInteraction extends Notification
+class NewMessage extends Notification
 {
 
     use Queueable;
-    public $title;
     public $content;
     public $classroom;
-    public $action;
-    public $section;
+    public $from;
+    public $data;
 
 
     /**
-     * Create a new message instance.
+     * Create a new content instance.
      *
      * @return void
      */
-    public function __construct($title, $content, $from, $action, $classroom = null, $section = null)
+    public function __construct($content, $from, $classroom, $user = 'student')
     {
-        $this->title = $title;
         $this->content = $content;
         $this->classroom = $classroom;
-        $this->action = $action;
-        $this->section = $section;
         $this->from = $from;
+        $this->user = $user;
     }
 
     public function toArray($notifiable)
     {
         return [
-            'title' => $this->title,
             'from' => $this->from,
             'content' => $this->content,
-            'url' => '/classroom/'. $this->classroom.'/'.$this->section,
-            'type' => $this->action,
-            'section' => $this->section,
+            'url' => '/classroom/show/'. $this->classroom,
+            'type' => 'message',
+            'user' => $this->user,
             'classroom' => $this->classroom,
-            'user' => 'teacher',
             'created' => Carbon::now('Europe/Madrid')->toIso8601String()
         ];
     }
@@ -56,24 +51,16 @@ class NewInteraction extends Notification
     
     public function toWebPush($notifiable, $notification)
     {
-
-        $action = "open_fantasyclass_teacher";
-        if($this->action == "notify_students") {
-            $action = "open_fantasyclass";
-        }
         $data = ['id' => $notification->id];
         if($this->classroom) {
             $data['code'] = $this->classroom;
         }
-        if($this->section) {
-            $data['section'] = $this->section;
-        }
 
         return (new WebPushMessage)
-        ->title($this->title)
+        ->title('New message')
         ->icon('/mono.svg')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
-        ->action('Open FantasyClass', $action);
+        ->action('FantasyClass', 'open_fantasyclass');
     }
 }

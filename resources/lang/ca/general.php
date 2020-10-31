@@ -39,4 +39,8 @@ return [
     'type_message' => "Escriu un missatge...",
     
     'logout' => "Tanca sessió",
+    'classroom' => "classe",
+    
+    'send' => "Envia",
+
 ];

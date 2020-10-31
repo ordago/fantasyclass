@@ -21,21 +21,29 @@
   @foreach ($user->classrooms->sortByDesc('id')->sortBy('state') as $classroom)
 
   @if($classroom->state == 1)
-    @php
-      $icon = "<i class='far fa-hourglass-end' v-tippy :content='trans.get(\"classroom.finished\")'></i>";
-    @endphp
+  @php
+  $icon = "<i class='far fa-hourglass-end' v-tippy :content='trans.get(\"classroom.finished\")'></i>";
+  @endphp
   @elseif($classroom->state == 2)
-    @php
-      $icon= "<i class='far fa-eye-slash' v-tippy :content='trans.get(\"classroom.disabled\")'></i>";
-    @endphp
+  @php
+  $icon= "<i class='far fa-eye-slash' v-tippy :content='trans.get(\"classroom.disabled\")'></i>";
+  @endphp
   @else
-    @php
-      $icon = "";
-    @endphp
+  @php
+  $icon = "";
+  @endphp
   @endif
   @php
   $theme = $classroom->theme;
   @endphp
+
+
+  @section('notifications')
+  @if(isset($pending) && count($pending) > 0 || isset($notifications) && count($notifications))
+  <notifications :notifications="{{ $notifications }}" type="both"></notifications>
+  @endif
+  @endsection
+
   <div class="column has-padding-y-2 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox has-margin-bottom-0 is-flex has-all-centered">
     <div class="box w-100 h-100 d-flex is-relative rounded classroom-round text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/thumb_{{ $theme->name }}');background-size: cover" @endif>
       <h3 class="is-size-4 has-text-light">

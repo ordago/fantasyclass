@@ -55,4 +55,5 @@ return [
     
     'student_area' => 'Student area',
     'student_view' => 'View as the student',
+    'send_message' => 'Send a message',
 ];

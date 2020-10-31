@@ -124,6 +124,15 @@
         >
           <i class="fad fa-poll-people" style="font-size: 2em"></i>
         </a>
+        <a
+          v-tippy
+          v-if="students && students.length"
+          :content="trans.get('menu.send_message_all')"
+          @click="sendMessage(1)"
+          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+        >
+          <i class="fad fa-paper-plane" style="font-size: 2em"></i>
+        </a>
       </div>
       <div
         class="column is-narrow has-text-right is-center-vertically is-flex"
@@ -664,6 +673,35 @@ export default {
     };
   },
   methods: {
+    sendMessage(type, id = null) {
+      this.$buefy.dialog.prompt({
+        message: this.trans.get('students.send_message'),
+        inputAttrs: {},
+        cancelText: this.trans.get('general.cancel'),
+        confirmText: this.trans.get('general.send'),
+        trapFocus: true,
+        onConfirm: (message) => {
+          let action = "/classroom/" + this.classroom.code + "/push";
+          if (type === 1) {
+            action += "/all";
+          }
+          axios
+            .post(action, {
+              message: message,
+              id: id,
+            })
+            .then((response) => {
+              this.$toasted.show(this.trans.get('success_error.add_success'), {
+                position: "top-center",
+                duration: 3000,
+                iconPack: "fontawesome",
+                icon: 'check',
+                type: 'success',
+              });
+            });
+        },
+      });
+    },
     redirect(id) {
       window.location.href =
         "/classroom/" + this.classroom.code + "/student/" + id;

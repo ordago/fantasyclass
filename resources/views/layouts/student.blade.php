@@ -1,5 +1,12 @@
 @extends('layouts.app')
 
+@section('notifications')
+@if(isset($notifications) && count($notifications))
+<notifications :notifications="{{ $notifications }}" type="student"></notifications>
+@endif
+@endsection
+
+
 @section('title')
 <span style="display:initial" class="pointer" title="{{ $class->adventure_name }}">
     <i class="fal fa-chalkboard"></i> {{ Str::limit($class->adventure_name, 8, $end='...') }}

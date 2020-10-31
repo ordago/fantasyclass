@@ -254,6 +254,8 @@ Route::group(['middleware' => 'language'], function () {
 
     // Notifications
     Route::post('/push','NotificationController@store');
+    Route::post('/classroom/{code}/push/all','NotificationController@sendAll');
+    Route::post('/classroom/{code}/push','NotificationController@send');
     Route::post('/notification/delete','NotificationController@destroy');
     Route::post('/notification/delete/all','NotificationController@destroyAll');
  

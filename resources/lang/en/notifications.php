@@ -12,5 +12,6 @@ return [
     
     'new_comment' => 'New comment',
     'go_to' => 'Go to',
+    'message' => 'New message',
 
 ];

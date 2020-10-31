@@ -57,4 +57,5 @@ return [
 
     'student_area' => 'Area del estudiante',
     'student_view' => 'Ver como estudiante',
+    'send_message' => 'Envía un mensaje',
 ];

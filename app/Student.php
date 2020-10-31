@@ -35,6 +35,8 @@ class Student extends Model implements HasMedia
             return false;
     }
 
+   
+
     public function getAvatarAttribute()
     {
         if ($this->avatar_url)

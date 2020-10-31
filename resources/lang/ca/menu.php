@@ -46,5 +46,6 @@ return [
     'view_group' => 'Vista de grups',
     'view_student' => 'Vista d\'estudiants',
     'view_full' => 'Vista completa',
-
+    
+    'send_message_all' => 'Envia missatge a tots els estudiants',
 ];

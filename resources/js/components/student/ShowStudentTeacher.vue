@@ -19,6 +19,9 @@
             <a class="dropdown-item" @click="byPassStudent(student.id)">
               <i class="fal fa-eye"  style="width:20px"></i> {{ trans.get('students.student_view') }}
             </a>
+            <a class="dropdown-item" @click="$parent.sendMessage(0, student.id)">
+              <i class="fal fa-paper-plane"  style="width:20px"></i> {{ trans.get('students.send_message') }}
+            </a>
             <!-- <hr class="dropdown-divider" /> -->
           </div>
         </div>

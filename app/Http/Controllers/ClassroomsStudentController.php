@@ -263,7 +263,9 @@ class ClassroomsStudentController extends Controller
         $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].env('CHATBRO_KEY'));         
         $showChat = settings()->get('show_chat', false);
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets'));
+        $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'student')->get();
+
+        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
     public function rules($code)

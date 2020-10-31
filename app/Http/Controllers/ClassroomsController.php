@@ -339,8 +339,11 @@ class ClassroomsController extends Controller
     public function index()
     {
         $user = auth()->user();
+
+        $notifications = auth()->user()->unreadNotifications()->get();
+
         session()->forget('bypass_student');
-        return view('classrooms.index', compact('user'));
+        return view('classrooms.index', compact('user', 'notifications'));
     }
 
     public function destroy($code)
@@ -356,7 +359,7 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
-        $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->get();
+        $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'teacher')->get();
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 

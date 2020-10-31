@@ -29,9 +29,7 @@ class CommentController extends Controller
         $comment->append('info');
         $info = array_merge($comment->info, ['title' => $challenge->title]);
 
-        // if($comment->info['type'] != 'teacher') {
-            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.new_comment", $data['text'] , $info,"comment", "challenges");
-        // }
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.new_comment", $data['text'] , $info,"comment", "challenges");
         
         return $comment;
 

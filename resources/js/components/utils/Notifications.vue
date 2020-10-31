@@ -40,8 +40,12 @@
       mobile="fullwidth"
     >
       <div class="close-button" @click="open = false">
-        <button class="button is-danger is-light border" @click="deleteNotification(1)" v-if="show == 0">
-          <i class="fal fa-trash-alt"></i> {{ trans.get('general.delete_all') }}
+        <button
+          class="button is-danger is-light border"
+          @click="deleteNotification(1)"
+          v-if="show == 0"
+        >
+          <i class="fal fa-trash-alt mr-1"></i> {{ trans.get("general.delete_all") }}
         </button>
         <button class="button"><i class="fal fa-times"></i></button>
       </div>
@@ -57,6 +61,7 @@
                 class="fad mr-2"
                 :class="{
                   'fa-comment': notification.data.type == 'comment',
+                  'fa-paper-plane': notification.data.type == 'message',
                 }"
               ></i>
               {{ notification.data.from.title }}
@@ -67,17 +72,38 @@
                   >{{ notification.data.from.datetime }}</time
                 ></span
               >
+              <i
+                class="fas ml-1"
+                :class="{
+                  'fa-user-graduate': notification.data.user == 'teacher',
+                  'fa-user': notification.data.user == 'student',
+                }"
+              ></i>
             </p>
           </header>
           <div class="card-content">
             <div class="content">
-              <img :src="notification.data.from.avatar" v-if="notification.data.from.type == 'student'" width="12px" alt="avatar">
+              <img
+                :src="notification.data.from.avatar"
+                v-if="notification.data.from.type == 'student'"
+                width="12px"
+                alt="avatar"
+              />
               <span v-else v-html="notification.data.from.avatar"></span>
-              <strong>{{ notification.data.from.name }}</strong>: {{ notification.data.content }}
+              <strong v-tippy :content="notification.data.from.name">@{{ notification.data.from.username }}</strong
+              >: {{ notification.data.content }}
             </div>
           </div>
           <footer class="card-footer">
             <a
+              v-if="notification.data.user == 'student'"
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              {{ trans.get("general.classroom") }}
+            </a>
+            <a
+              v-if="notification.data.user == 'teacher'"
               :href="notification.data.url"
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}
@@ -140,7 +166,6 @@
 </template>
 <script>
 export default {
-  props: ["pending"],
   props: {
     pending: {
       type: Array,
@@ -152,6 +177,12 @@ export default {
       type: Array,
       default() {
         return [];
+      },
+    },
+    type: {
+      type: String,
+      default() {
+        return "student";
       },
     },
   },
@@ -173,7 +204,7 @@ export default {
   },
   methods: {
     deleteNotification(type, id = null, index = null) {
-      this.open = false
+      this.open = false;
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
@@ -186,17 +217,21 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          let action = '';
-          if(type === 1)
-            action = '/all'
-          axios.post("/notification/delete" + action, { id: id }).then((response) => {
-            if(type === 0) {
-              this.notifications.splice(index, 1);
-            } else {
-              this.notifications.splice(0,this.notifications.length)
-            }
-            this.$forceUpdate();
-          }); 
+          let action = "";
+          if (type === 1) action = "/all";
+          axios
+            .post("/notification/delete" + action, {
+              id: id,
+              type: this.type,
+            })
+            .then((response) => {
+              if (type === 0) {
+                this.notifications.splice(index, 1);
+              } else {
+                this.notifications.splice(0, this.notifications.length);
+              }
+              this.$forceUpdate();
+            });
         },
       });
     },

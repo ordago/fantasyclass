@@ -47,4 +47,7 @@ return [
     'view_student' => 'Students view',
     'view_full' => 'Full view',
 
+    'send_message_all' => 'Send message to all students',
+
+
 ];

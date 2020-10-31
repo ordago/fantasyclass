@@ -39,5 +39,8 @@ return [
     'type_message' => "Type a message...",
     
     'logout' => "Logout",
+    'classroom' => "classroom",
+
+    'send' => "Send",
 
 ];

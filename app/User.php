@@ -2,9 +2,12 @@
 
 namespace App;
 
+use App\Notifications\NewMessage;
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Notification;
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class User extends Authenticatable implements MustVerifyEmail
@@ -62,5 +65,14 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getRememberTokenName()
     {
         return 'remember_token';
+    }
+
+    public function sendMessage($content, $classroom) {
+        $from['title'] = __('notifications.message');
+        $from['name'] = auth()->user()->name;
+        $from['username'] = auth()->user()->username;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        Notification::send($this, new NewMessage($content, $from, $classroom));
     }
 }

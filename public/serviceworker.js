@@ -44,16 +44,15 @@ self.addEventListener("fetch", event => {
 
 self.addEventListener('notificationclick', function (event) {
     event.notification.close();
-    
     switch (event.action) {
         case 'open_fantasyclass_teacher':
-        default:
             self.clients.openWindow("/classroom/" + event.notification.data.code + "/" + event.notification.data.section)
             break;
         case 'open_fantasyclass':
-            self.clients.openWindow("/classroom/show/" + event.notification.data.code + "/" + event.notification.data.section)
-            break;    
-            self.clients.openWindow("/")
+            self.clients.openWindow("/classroom/show/" + event.notification.data.code)
+            break;
+        default:
+            self.clients.openWindow("/classroom")
             break;
     }
 });
