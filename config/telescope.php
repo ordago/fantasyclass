@@ -62,7 +62,7 @@ return [
     |
     */
 
-    'enabled' => (bool) env('TELESCOPE_ENABLED', false),
+    'enabled' => (bool) env('TELESCOPE_ENABLED', isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == env('ALLOWED_IP') ? true : false),
 
     /*
     |--------------------------------------------------------------------------
