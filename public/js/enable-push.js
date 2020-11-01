@@ -127,7 +127,7 @@ function updateBtn() {
     let pushButton = document.querySelector('.js-push-btn');
     if(pushButton)
     if (Notification.permission !== "granted") {
-        pushButton.style = "display: flex;"
+        pushButton.style = "display: flex; z-index: 10"
     } else {
         pushButton.style = "display: none";
     }
