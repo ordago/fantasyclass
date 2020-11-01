@@ -46,5 +46,6 @@ return [
     'comment' => 'Comenta',
     'show_challenge' => 'Mostra repte',
     'show_all' => 'Mostra tots',
-
+    
+    'rating_feedback' => 'Què penses de l\'activitat?',
 ];

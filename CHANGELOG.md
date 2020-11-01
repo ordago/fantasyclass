@@ -1,7 +1,9 @@
 # Changelog
-## v1.15 Beta (31/10/2020)
+## v1.15 Beta (1/11/2020)
+### Added
 - User notifications.
 - Send message to one student or to all of them.
+- Student feedback.
 
 ## v1.14.1 Beta (29/10/2020)
 ### Added

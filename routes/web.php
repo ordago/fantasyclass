@@ -96,6 +96,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
+        Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
         
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -251,12 +252,16 @@ Route::group(['middleware' => 'language'], function () {
     
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
-
+    
+    
     // Notifications
     Route::post('/push','NotificationController@store');
     Route::post('/classroom/{code}/push/all','NotificationController@sendAll');
     Route::post('/classroom/{code}/push','NotificationController@send');
     Route::post('/notification/delete','NotificationController@destroy');
     Route::post('/notification/delete/all','NotificationController@destroyAll');
- 
+    
+    // Chat
+    // Route::get('/chat', function () {return view('utils.chat');});
+    
 });

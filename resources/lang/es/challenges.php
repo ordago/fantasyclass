@@ -47,4 +47,6 @@ return [
     'show_challenge' => 'Muestra desafío',
     'show_all' => 'Muestra todos',
 
+    'rating_feedback' => '¿Qué piensas de la actividad?',
+
 ];

@@ -36,12 +36,13 @@ class ChallengesGroup extends Model
 
     public function getnumChallengesAttribute()
     {
-        $total = $this->challenges->count();
-        foreach ($this->children as $collection) {
-            $total += $collection->challenges->count();
-        }
+        // Disabled for now.
+        // $total = $this->challenges->count();
+        // foreach ($this->children as $collection) {
+        //     $total += $collection->challenges->count();
+        // }
 
-        return $total;
+        // return $total;
     }
 
     public function challenges()

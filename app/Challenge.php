@@ -29,22 +29,30 @@ class Challenge extends Model
         'challenges_group_id',
     ];
 
-    protected $appends = ['permalink'];
+    protected $appends = ['permalink', 'rating'];
 
-    public function getPermalinkAttribute() {
+    public function getPermalinkAttribute()
+    {
 
         return Crypt::encryptString($this->id);
+    }
 
+    public function getRatingAttribute()
+    {
+        $query = Rating::where('challenge_id', $this->id);
+        if ($query->count())
+            return $query->sum('rating') / $query->count();
+        return 0;
     }
 
     public function getQuestioninfoAttribute()
     {
         ChallengesGroup::$withoutAppends = true;
         $questions = collect();
-        if($this->questions)
-         foreach ($this->questions as $question) {
-             $questions->add($question->getStudentInfo());
-        }
+        if ($this->questions)
+            foreach ($this->questions as $question) {
+                $questions->add($question->getStudentInfo());
+            }
         return $questions;
     }
 
@@ -52,15 +60,21 @@ class Challenge extends Model
     {
         $questions = collect();
         foreach ($this->questions as $question) {
-            $questions->add(['id' => $question->id ,'question' => $question->name , 'stats' => $question->getTeacherInfo()]);
+            $questions->add(['id' => $question->id, 'question' => $question->name, 'stats' => $question->getTeacherInfo()]);
         }
         return $questions;
     }
 
     public function students()
     {
-        return $this->belongsToMany(Student::class)->withPivot('count', 'rating');
+        return $this->belongsToMany(Student::class)->withPivot('count');
     }
+
+    public function ratings()
+    {
+        return $this->belongsToMany(Student::class, 'ratings', 'challenge_id', 'student_id')->withPivot('rating');
+    }
+
     public function groups()
     {
         return $this->belongsToMany(Group::class)->withPivot('count');
@@ -88,15 +102,13 @@ class Challenge extends Model
 
     public static function boot()
     {
-        parent::boot();    
-    
+        parent::boot();
+
         // cause a delete of a product to cascade to children so they are also deleted
-        static::deleted(function($challenge)
-        {
+        static::deleted(function ($challenge) {
             $challenge->attachments()->delete();
             $challenge->comments()->delete();
-            $challenge->questions()->delete();     
-
+            $challenge->questions()->delete();
         });
-    } 
+    }
 }

@@ -13,6 +13,7 @@ use App\Student;
 use App\User;
 use App\Map;
 use App\Pet;
+use App\Rating;
 use App\Rules;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
@@ -56,17 +57,17 @@ class ClassroomsStudentController extends Controller
             $student = Functions::getCurrentStudent($class, []);
         }
 
-        if(isset($data['url'])) {
+        if (isset($data['url'])) {
             $student->update(['avatar_url' => $data['url']]);
             $avatar = $student->getMedia('avatar');
-            if(count($avatar))
+            if (count($avatar))
                 $avatar[0]->delete();
         } else {
             settings()->setExtraColumns(['classroom_id' => $class->id]);
             $student->update(['avatar_url' => null]);
             $student->addMedia(request()->file('avatar'))
                 ->toMediaCollection('avatar');
-    
+
             $avatarPath = $student->getMedia('avatar')->first();
             $imgPath = $avatarPath->collection_name . "/" . $avatarPath->uuid . '/' . $avatarPath->file_name;
             $path = Storage::disk('public')->path('/') . $imgPath;
@@ -79,9 +80,9 @@ class ClassroomsStudentController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
         if (settings()->get('state', 0) == 2)
-        abort(403);
+            abort(403);
     }
-    
+
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.pets', 'students.groups', 'theme')->firstOrFail();
@@ -97,16 +98,16 @@ class ClassroomsStudentController extends Controller
                 ->all();
         });
 
-        $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
-        $chat['url'] = env('APP_URL_SHORT'); 
+        $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
+        $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
-        $chat['id'] = auth()->user()->id.'-'.$student->id;
+        $chat['id'] = auth()->user()->id . '-' . $student->id;
         $chat['name'] = $student->name;
-        if(strpos($student->avatar, "http") !== false)
+        if (strpos($student->avatar, "http") !== false)
             $chat['avatar'] = $student->avatar;
-        else $chat['avatar'] = env('APP_URL').$student->avatar;
+        else $chat['avatar'] = env('APP_URL') . $student->avatar;
 
-        $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].env('CHATBRO_KEY'));         
+        $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . env('CHATBRO_KEY'));
         $showChat = settings()->get('show_chat', false);
 
         return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'showChat'));
@@ -131,13 +132,16 @@ class ClassroomsStudentController extends Controller
         $all = [];
         foreach ($challenges as $section) {
             foreach ($section as $value) {
+                if (Rating::where('student_id', $student->id)->where('challenge_id', $value['id'])->get()->count()) {
+                    $value['rated'] = 1;
+                } else $value['rated'] = 0;
                 array_push($all, $value);
             }
         }
-                
         $challenges = Arr::sort($all, function ($story) {
             return $story['datetime'];
         });
+
         return view('studentsview.challenges', compact('class', 'student', 'challenges'));
     }
 
@@ -148,7 +152,7 @@ class ClassroomsStudentController extends Controller
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
         $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first();
-        
+
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
     public function show($code)
@@ -179,7 +183,7 @@ class ClassroomsStudentController extends Controller
         }
 
         $pets = Pet::where('classroom_id', $class->id)->where('for_sale', 1)->get();
-        
+
         $shop = [
             'items' => json_encode($items),
             'eq1' => json_encode($eq1),
@@ -210,7 +214,7 @@ class ClassroomsStudentController extends Controller
             ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
             ->get();
 
-  
+
         $groups = $student->groups->pluck('id');
 
         $groupChallenges = DB::table('groups')
@@ -241,9 +245,9 @@ class ClassroomsStudentController extends Controller
         $student->append('boost');
         $student->load('badges');
         $student->load('pets');
-        
+
         $evaluation = null;
-        if (settings()->get('eval_visible', false)){
+        if (settings()->get('eval_visible', false)) {
             $evaluation[0] = EvaluationController::individualReport($class, $student);
         }
 
@@ -251,16 +255,16 @@ class ClassroomsStudentController extends Controller
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
 
-        $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
-        $chat['url'] = env('APP_URL_SHORT'); 
+        $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
+        $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
-        $chat['id'] = auth()->user()->id.'-'.$student->id;
+        $chat['id'] = auth()->user()->id . '-' . $student->id;
         $chat['name'] = $student->name;
-        if(strpos($student->avatar, "http") !== false)
+        if (strpos($student->avatar, "http") !== false)
             $chat['avatar'] = $student->avatar;
-        else $chat['avatar'] = env('APP_URL').$student->avatar;
+        else $chat['avatar'] = env('APP_URL') . $student->avatar;
 
-        $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].env('CHATBRO_KEY'));         
+        $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . env('CHATBRO_KEY'));
         $showChat = settings()->get('show_chat', false);
 
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'student')->get();
@@ -279,11 +283,25 @@ class ClassroomsStudentController extends Controller
         return view('studentsview.rules', compact('class', 'rules', 'student'));
     }
 
+    public function addRating()
+    {
+        $data = request()->validate([
+            'rating' => ['numeric', 'required'],
+            'challenge' => ['numeric', 'required'],
+        ]);
+
+        $challenge = Challenge::findOrFail($data['challenge']);
+
+        $class = Classroom::where('id', $challenge->classroom())->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
+        dump($student->ratings()->count());
+        return $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
+    }
     public function licenses($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
-        $student = Functions::getCurrentStudent($class, []);
 
         return view('studentsview.licenses', compact('class', 'student'));
     }
@@ -363,12 +381,12 @@ class ClassroomsStudentController extends Controller
         $data = request()->validate([
             'pet' => ['numeric', 'required'],
         ]);
-        
+
         $student = Functions::getCurrentStudent($class, []);
-        
+
         if ($student->hp == 0)
-        return false;
-        
+            return false;
+
         $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->where('for_sale', 1)->firstOrFail();
 
         if ($pet->price > $student->gold) {
@@ -389,7 +407,6 @@ class ClassroomsStudentController extends Controller
             "pets" => $student->fresh()->pets,
             "boost" => $student->fresh()->getBoost(),
         ];
-
     }
     public function buyItem($code)
     {

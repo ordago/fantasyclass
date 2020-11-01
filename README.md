@@ -157,6 +157,12 @@ Popper tippy:
  Web push
  https://github.com/laravel-notification-channels/webpush
 
+ Chat
+ https://github.com/antoine92190/vue-advanced-chat (not implemented yet)
+
+ Feedback
+ https://github.com/IvanSotelo/VueFeedbackReaction
+
 ## 3rd party Licenses
 
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

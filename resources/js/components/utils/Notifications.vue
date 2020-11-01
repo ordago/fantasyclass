@@ -18,15 +18,18 @@
     </div>
     <div v-if="notifications && notifications.length">
       <span
+        class="cursor-pointer"
         @click="
           show = 0;
           open = true;
         "
       >
         <i class="fad fa-bell" style="font-size: 1.25em"></i>
-        <span class="tag is-danger" style="font-size: 0.7em">{{
-          notifications.length
-        }}</span>
+        <span
+          class="tag is-danger"
+          style="font-size: 0.65em; margin-left: -4px"
+          >{{ notifications.length }}</span
+        >
       </span>
     </div>
     <b-sidebar
@@ -45,7 +48,8 @@
           @click="deleteNotification(1)"
           v-if="show == 0"
         >
-          <i class="fal fa-trash-alt mr-1"></i> {{ trans.get("general.delete_all") }}
+          <i class="fal fa-trash-alt mr-1"></i>
+          {{ trans.get("general.delete_all") }}
         </button>
         <button class="button"><i class="fal fa-times"></i></button>
       </div>
@@ -90,7 +94,8 @@
                 alt="avatar"
               />
               <span v-else v-html="notification.data.from.avatar"></span>
-              <strong v-tippy :content="notification.data.from.name">@{{ notification.data.from.username }}</strong
+              <strong v-tippy :content="notification.data.from.name"
+                >@{{ notification.data.from.username }}</strong
               >: {{ notification.data.content }}
             </div>
           </div>

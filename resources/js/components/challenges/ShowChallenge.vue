@@ -49,7 +49,17 @@
               {{ challengeReactive.cards }}
             </small>
           </p>
-          <a class="button" :href="'/classroom/show/' + this.code + '/challenges/' + challengeReactive.permalink" v-if="!full && !admin">{{ trans.get('challenges.show_challenge') }}</a>
+          <a
+            class="button"
+            :href="
+              '/classroom/show/' +
+              this.code +
+              '/challenges/' +
+              challengeReactive.permalink
+            "
+            v-if="!full && !admin"
+            >{{ trans.get("challenges.show_challenge") }}</a
+          >
           <div
             v-if="edit || full"
             v-html="getContent(challengeReactive.content)"
@@ -229,6 +239,30 @@
                 <div class="flexVertical has-padding-2">{{ comment.text }}</div>
               </div>
             </div>
+          </div>
+          <div v-if="!prevRating && !rating && !admin">
+            <div class="mt-4 mb-0">
+              <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i> {{ trans.get("challenges.rating_feedback") }}
+            </div>
+            <vue-feedback-reaction
+              containerWidth="50px"
+              containerHeight="50px"
+              emojiWidth="50px"
+              emojiHeight="50px"
+              @input="sendRating"
+              class="mt-2"
+              :labels="['', '', '', '', '']"
+              v-model="rating"
+              v-if="!admin && challengeReactive.is_conquer"
+            />
+          </div>
+          <div class="mt-2 is-flex is-center-vertically" v-if="admin && challengeReactive.rating">
+            <vue-reaction-emoji
+              :reaction="returnEmoji(challengeReactive.rating)"
+              :is-active="true"
+              :is-disabled="false"
+            />
+            Feedback: {{ challengeReactive.rating }} / 5
           </div>
           <div
             class="has-padding-3 has-text-right"
@@ -549,14 +583,16 @@ import confetti from "canvas-confetti";
 import Utils from "../../utils.js";
 
 const InputEmoji = () => import("../utils/InputEmoji.vue");
+import { VueReactionEmoji } from "vue-feedback-reaction";
 
 export default {
-  props: ["challenge", "edit", "admin", "code", "full"],
+  props: ["challenge", "edit", "admin", "code", "full", "prevRating"],
   created: function () {
     this.challengeReactive = this.challenge;
   },
   data: function () {
     return {
+      rating: "",
       challengeReactive: null,
       allowComment: false,
       isAttachmentModalActive: false,
@@ -581,8 +617,32 @@ export default {
   },
   components: {
     InputEmoji,
+    VueReactionEmoji,
   },
   methods: {
+    returnEmoji(rating) {
+      if (rating < 1.8) return "hate";
+      else if ((rating < 2.5)) return "disappointed";
+      else if ((rating < 3.4)) return "natural";
+      else if ((rating < 4.2)) return "good";
+      else return "excellent";
+    },
+    sendRating() {
+      axios
+        .post("/classroom/challenge/rate", {
+          rating: this.rating,
+          challenge: this.challenge.id,
+        })
+        .then((response) => {
+          this.$toasted.show(this.trans.get("general.thanks"), {
+            position: "top-center",
+            duration: 3000,
+            iconPack: "fontawesome",
+            icon: "thumbs-up",
+            type: "success",
+          });
+        });
+    },
     getHp5(url) {
       return (
         "https://h5p.org/h5p/embed/" + url.substring(url.lastIndexOf("/") + 1)

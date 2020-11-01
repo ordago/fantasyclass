@@ -42,6 +42,8 @@ return [
     'classroom' => "clase",
 
     'send' => "Envía",
+    'thanks' => "¡Gracias!",
+
 
 
 ];

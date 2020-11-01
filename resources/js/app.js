@@ -37,16 +37,20 @@ Vue.component("tippy", TippyComponent);
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies)
 
+import VueFeedbackReaction from "vue-feedback-reaction";
+Vue.use(VueFeedbackReaction);
+
+
 // Buefy
 import Buefy from 'buefy'
 Vue.use(Buefy, {
     defaultIconPack: 'fas',
 })
 
+
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
-import Axios from 'axios';
 
 Vue.use(Croppa)
 
@@ -137,6 +141,9 @@ Vue.component('wheel', require('./components/utils/Wheel.vue').default);
 Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').default);
 
 Vue.component('massive-actions', require('./components/utils/MassiveActions.vue').default);
+
+Vue.component('chat', require('./components/utils/Chat.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

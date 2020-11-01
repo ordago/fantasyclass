@@ -47,5 +47,7 @@ return [
     'show_challenge' => 'Show challenge',
     'show_all' => 'Show all',
 
+    'rating_feedback' => 'What do you think about the activity?',
+
 
 ];
