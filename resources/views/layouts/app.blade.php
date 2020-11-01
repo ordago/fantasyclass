@@ -188,6 +188,24 @@
         <script src="{{ asset('js/config.js') }}" defer></script>
         <script src="{{ asset('js/enable-push.js') }}" defer></script>
     @endauth
+    @guest
+    <script type="text/javascript">
+        // Initialize the service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/serviceworker.js', {
+                registrationStrategy: 'registerImmediately',
+                scope: '/'
+            }).then(function(registration) {
+                // Registration was successful
+                // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+            });
+        }
+    </script>
+    @endguest
+
 
     <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>

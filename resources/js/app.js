@@ -14,7 +14,7 @@ import messages from '../assets/js/ll_messages';
 const default_locale = window.default_locale;
 const fallback_locale = window.fallback_locale;
 
-Vue.prototype.trans = new Lang( {
+Vue.prototype.trans = new Lang({
     messages,
     locale: default_locale,
     fallback: fallback_locale
@@ -27,7 +27,9 @@ import Toasted from 'vue-toasted';
 Vue.use(Toasted)
 
 // Tippy poppover
-import VueTippy, { TippyComponent } from "vue-tippy";
+import VueTippy, {
+    TippyComponent
+} from "vue-tippy";
 import "tippy.js/themes/light.css";
 
 Vue.use(VueTippy);
@@ -220,11 +222,18 @@ const app = new Vue({
         showNav: false
     },
     mounted: function () {
-        axios.get('/utils/online');
-        this.$nextTick(function () {
-            window.setInterval(() => {
-                axios.get('/utils/online');
-            },290000);
-        })
-    }
+        // axios.get('/utils/online')
+        //     .then(response => {
+        //         this.$nextTick(function () {
+        //             window.setInterval(() => {
+        //                 axios.get('/utils/online');
+        //             }, 290000);
+        //         })
+        //     })
+        //     .catch(
+        //         function (error) {
+        //             console.log('Show error notification!')
+        //             return Promise.reject(error)
+        //         })
+    },
 });

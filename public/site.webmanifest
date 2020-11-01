@@ -2,7 +2,7 @@
     "name": "FantasyClass - An adventure learning app",
     "short_name": "FantasyClass",
     "scope": "/",
-    "start_url": "/classroom",
+    "start_url": "/login",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",
