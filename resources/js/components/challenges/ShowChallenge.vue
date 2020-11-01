@@ -240,7 +240,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!prevRating && !rating && !admin">
+          <div v-if="!prevRating && !rating && !admin && challengeReactive.is_conquer">
             <div class="mt-4 mb-0">
               <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i> {{ trans.get("challenges.rating_feedback") }}
             </div>
@@ -253,7 +253,6 @@
               class="mt-2"
               :labels="['', '', '', '', '']"
               v-model="rating"
-              v-if="!admin && challengeReactive.is_conquer"
             />
           </div>
           <div class="mt-2 is-flex is-center-vertically" v-if="admin && challengeReactive.rating">
