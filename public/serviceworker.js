@@ -118,6 +118,10 @@
                     '/js/app.js',
                     '/img/logo.svg',
                     '/img/google-logo.svg',
+                    '/js/pace.min.js',
+                    'https://kit.fontawesome.com/90342cb187.js',
+                    '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css',
+                    '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js',
                 ]);
             });
     };
