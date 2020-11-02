@@ -2,7 +2,7 @@
   <div class="card rounded card-shadow-s" style="overflow: visible;">
     <show-character :student="student" :classroom="classroom"></show-character>
     <div class="card-content">
-      <div class="media has-margin-bottom-0">
+      <div class="media mb-0">
         <div class="media-left" v-if="characterTheme">
           <figure class="image is-48x48">
             <img :src="student.avatar" class="rounded" alt />
@@ -14,7 +14,7 @@
             class="subtitle is-6"
             :v-tippy="student.group"
             v-tippy
-            :content="'Proud member 😄 <br><img style=\'background-color: #e6e6e6\' class=\'has-padding-2 card-shadow-s is-full-rounded\' src=' + student.groups[0].logo + '>'"
+            :content="'Proud member 😄 <br><img style=\'background-color: #e6e6e6\' class=\'p-2 card-shadow-s is-full-rounded\' src=' + student.groups[0].logo + '>'"
             v-if="student.groups && student.groups.length"
           >
             <small v-if="student.groups && student.groups.length">
@@ -24,7 +24,7 @@
           </p>
         </div>
       </div>
-      <div class="content has-margin-top-3">
+      <div class="content mt-3">
         <div class="is-flex has-all-centered">
           <div class="w-100 is-relative">
             <div class="attribute-info has-all-centered">
@@ -32,11 +32,11 @@
               <i class="fas fa-heart colored is-absolute" style="left: 10px"></i>
             </div>
             <div
-              class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
+              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
               style="border: none"
             >
               <span
-                class="attribute has-background-white-ter has-padding-y-3 rounded"
+                class="attribute has-background-white-ter py-3 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span
@@ -45,7 +45,7 @@
                 >{{ student.hp }}</span>
               </span>
               <span
-                class="attribute has-background-danger has-padding-y-3 rounded-left"
+                class="attribute has-background-danger py-3 rounded-left"
                 v-bind:class="{ rounded: student.hp==100 }"
                 :style="'width: ' + student.hp + '%'"
               >
@@ -64,11 +64,11 @@
               <i class="fas fa-fist-raised colored is-absolute" style="left: 13px"></i>
             </div>
             <div
-              class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
+              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
               style="border: none"
             >
               <span
-                class="attribute has-background-dark has-padding-y-3 rounded"
+                class="attribute has-background-dark py-3 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span class="has-text-light">{{ student.xp }}</span>
@@ -83,10 +83,10 @@
               <i class="fas fa-coins colored is-absolute" style="left: 10px"></i>
             </div>
             <div
-              class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
+              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
             >
               <span
-                class="attribute has-background-warning has-padding-y-3 rounded"
+                class="attribute has-background-warning py-3 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span class="has-text-dark">{{ student.gold }}</span>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="has-margin-2">
+    <div class="m-2">
       <div class="buttons">
         <a
           :href="'/classroom/' + code + '/cards/create'"
@@ -20,7 +20,7 @@
         </button>
       </div>
     </div>
-    <div class="has-padding-2 is-flex flex-wrap justify-content-center">
+    <div class="p-2 is-flex flex-wrap justify-content-center">
       <show-card
         v-for="card in orderedCards"
         :code="code"
@@ -46,7 +46,7 @@
             {{ trans.get("cards.import_empty") }}
           </div>
           <div
-            class="has-padding-2 is-flex flex-wrap justify-content-center"
+            class="p-2 is-flex flex-wrap justify-content-center"
             v-else
           >
             <show-card

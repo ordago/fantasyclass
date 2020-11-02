@@ -1,8 +1,8 @@
 <template>
-  <div class="box card-shadow-s has-padding-3 has-margin-y-3">
+  <div class="box card-shadow-s p-3 my-3">
     <div v-if="admin" class="columns">
       <div class="column">
-        <p class="has-padding-4">
+        <p class="p-4">
           <i class="fas fa-question-circle"></i>
           {{ reactiveQuestion.question }}
           <span
@@ -45,26 +45,26 @@
       </div>
     </div>
     <div v-if="!admin">
-      <h3 class="has-padding-4">
+      <h3 class="p-4">
         <i class="fas fa-question-circle"></i>
         {{ reactiveQuestion.question }}
       </h3>
       <div v-if="reactiveQuestion.answered">
         <div
-          class="has-background-danger-light card-shadow-s has-padding-4 has-margin-3 rounded"
+          class="has-background-danger-light card-shadow-s p-4 m-3 rounded"
           v-if="reactiveQuestion.answerKO"
         >
           <i
-            class="fas fa-sad-tear colored has-padding-right-2"
+            class="fas fa-sad-tear colored pr-2"
             v-if="!reactiveQuestion.correct"
           ></i>
           {{ reactiveQuestion.answerKO.answer.text }}
         </div>
         <div
-          class="has-background-success-light card-shadow-s has-padding-4 has-margin-3 rounded"
+          class="has-background-success-light card-shadow-s p-4 m-3 rounded"
         >
           <i
-            class="fas fa-smile-beam colored has-padding-right-2"
+            class="fas fa-smile-beam colored pr-2"
             v-if="reactiveQuestion.correct"
           ></i>
           {{ reactiveQuestion.answerOK.answer.text }}
@@ -72,7 +72,7 @@
       </div>
       <div v-if="!reactiveQuestion.answered">
         <div
-          class="card-shadow-s has-padding-4 has-margin-3 rounded answer cursor-pointer"
+          class="card-shadow-s p-4 m-3 rounded answer cursor-pointer"
           v-for="answer in reactiveQuestion.answers"
           @click="answerQuestion(answer.id)"
           :key="answer.id"

@@ -1,9 +1,9 @@
 <template>
   <div class="w-100">
     <form action="#" method="post" @submit.prevent="createChallenge">
-      <div class="has-margin-y-3" v-if="edit && !importFlag">
+      <div class="my-3" v-if="edit && !importFlag">
         <label for="name">{{ trans.get("challenges.categories") }}</label>
-        <div class="field has-margin-top-3">
+        <div class="field mt-3">
           <div class="control">
             <div class="select is-fullwidth">
               <select
@@ -73,7 +73,7 @@
           </b-datetimepicker>
         </b-field>
       </div>
-      <div class="field w-100 has-padding-top-3">
+      <div class="field w-100 pt-3">
         <label class="label">{{ trans.get("challenges.content") }}</label>
         <div class="control content" data-app>
           <Editor height="70vh" :code="code"></Editor>
@@ -90,9 +90,9 @@
       </div>
       <div
         v-if="challenge.is_conquer == 1"
-        class="has-padding-4 has-border rounded"
+        class="p-4 has-border rounded"
       >
-        <div class="field w-100 has-padding-top-3">
+        <div class="field w-100 pt-3">
           <label class="label">{{ trans.get("challenges.icon") }}</label>
           <div class="field has-addons">
             <p class="control">
@@ -210,9 +210,9 @@
             </div>
           </div>
         </div>
-        <div class="has-margin-top-3" v-if="challenge.type == 0">
+        <div class="mt-3" v-if="challenge.type == 0">
           <label for="name">{{ trans.get("challenges.completion") }}</label>
-          <div class="field has-margin-top-3">
+          <div class="field mt-3">
             <div class="control">
               <div class="select is-fullwidth">
                 <select v-model="challenge.completion">
@@ -228,7 +228,7 @@
             </div>
           </div>
         </div>
-        <div class="field has-margin-top-3">
+        <div class="field mt-3">
           <b-switch
             type="is-info"
             v-model="challenge.auto_assign"

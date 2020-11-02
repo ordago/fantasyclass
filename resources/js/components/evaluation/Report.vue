@@ -1,7 +1,7 @@
 <template>
   <div class="w-100 content">
     <!-- <download-excel style="display:inline" :data="jsonGrades">
-      <b-button type="is-success has-margin-2">
+      <b-button type="is-success m-2">
         <i class="fas fa-file-spreadsheet"></i>
       </b-button>
     </download-excel>-->

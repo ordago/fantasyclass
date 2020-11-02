@@ -27,9 +27,9 @@
             <i class="fas fa-random"></i> {{ trans.get('utils.random') }}
           </button>
         </div>
-        <div class="columns is-multiline is-variable has-margin-top-3">
+        <div class="columns is-multiline is-variable mt-3">
           <div
-            class="column has-padding-3 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+            class="column p-3 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
             v-for="student in classroom.students"
             :key="student.id"
             v-bind:class="{ 'hidden' : student.hidden == 1 }"
@@ -38,9 +38,9 @@
               v-if="student.hidden != 1"
               :id="student.id"
               @click="toggle(student.id)"
-              class="student-massive has-padding-3 is-flex has-all-centered rounded"
+              class="student-massive p-3 is-flex has-all-centered rounded"
             >
-              <img :src="student.avatar" width="64px" class="has-margin-right-3" />
+              <img :src="student.avatar" width="64px" class="mr-3" />
               {{ student.name }}
             </div>
           </div>

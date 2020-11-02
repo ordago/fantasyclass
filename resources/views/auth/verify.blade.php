@@ -11,13 +11,13 @@
                     </div>
                 </div>
 
-                <div class="card-body has-padding-3">
+                <div class="card-body p-3">
                     @if (session('resent'))
-                        <div class="alert alert-success has-margin-y-3" role="alert">
+                        <div class="alert alert-success my-3" role="alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
-                    <p class="has-padding-4">
+                    <p class="p-4">
                         {{ __('Before proceeding, please check your email for a verification link.') }}
                         {{ __('If you did not receive the email') }},
                     </p>

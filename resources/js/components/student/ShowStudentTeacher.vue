@@ -5,7 +5,7 @@
       class="card-content is-relative"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
     >
-      <div class="dropdown is-right top-right is-hoverable" style="right: 10px;">
+      <div class="dropdown is-right topr is-hoverable" style="right: 10px;">
         <div class="dropdown-trigger fs-2">
           <span class="pl-5 py-2">
             <i class="far fa-bars"></i>
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="media has-margin-bottom-0 is-relative">
+      <div class="media mb-0 is-relative">
         <div class="media-left" v-if="classroom.character_theme != 0">
           <figure class="image is-48x48">
             <img :src="student.avatar" class="rounded" alt />
@@ -69,7 +69,7 @@
       <div class="content">
         <div>
           <div
-            class="has-margin-bottom-2 has-margin-top-3"
+            class="mb-2 mt-3"
             v-if="student.numcards[0] > student.numcards[1]"
           >
             <article class="message is-danger">
@@ -121,7 +121,7 @@
                   behaviour.gold +
                   ')</small>'
                 "
-                class="button has-margin-1 has-padding-x-4 is-light"
+                class="button m-1 px-3 is-light"
                 @click="addBehaviour(student.id, behaviour.id)"
                 v-bind:class="[
                   behaviour.xp + behaviour.hp + behaviour.gold >= 0
@@ -133,7 +133,7 @@
                 <i :class="behaviour.icon"></i>
               </button>
               <div
-                class="button is-link is-light has-margin-1 has-padding-x-4"
+                class="button is-link is-light m-1 px-4"
                 @click="show2l = !show2l"
                 v-if="behaviourshidden.length"
               >
@@ -141,7 +141,7 @@
               </div>
               <a
                 :href="'/classroom/' + classroom.code + '/behaviours/'"
-                class="button is-link is-light has-margin-1 has-padding-x-4"
+                class="button is-link is-light m-1 px-4"
                 v-tippy
                 :content="trans.get('users_groups.add_behaviours')"
                 v-if="behaviours.length == 0"
@@ -163,7 +163,7 @@
                   behaviour.gold +
                   ')</small>'
                 "
-                class="button has-margin-1 is-light has-padding-x-4"
+                class="button m-1 is-light px-4"
                 v-bind:class="[
                   behaviour.xp + behaviour.hp + behaviour.gold >= 0
                     ? 'is-success'
@@ -214,25 +214,25 @@
               </div>
             </div>
           </div>
-          <div class="has-margin-y-2 has-text-centered" v-if="visibleXP">
+          <div class="my-2 has-text-centered" v-if="visibleXP">
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', 100)"
-              class="button is-dark has-padding-x-3"
+              class="button is-dark px-3"
             >
               100
             </button>
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', 50)"
-              class="button is-dark has-padding-x-3"
+              class="button is-dark px-3"
             >
               50
             </button>
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', 10)"
-              class="button is-dark has-padding-x-3"
+              class="button is-dark px-3"
             >
               10
             </button>
@@ -247,7 +247,7 @@
               arrow
             >
               <template v-slot:trigger>
-                <button type="submit" class="button is-primary has-padding-x-3">
+                <button type="submit" class="button is-primary px-3">
                   <i class="fas fa-hashtag"></i>
                 </button>
               </template>
@@ -256,7 +256,7 @@
                   <input
                     type="number"
                     v-model="custom"
-                    class="input has-margin-right-1"
+                    class="input mr-1"
                   />
                   <button
                     @click="updateProp(student.id, 'xp', custom)"
@@ -270,46 +270,46 @@
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', -10)"
-              class="button is-dark is-outlined has-padding-x-2"
+              class="button is-dark is-outlined px-2"
             >
               -10
             </button>
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', -50)"
-              class="button is-dark is-outlined has-padding-x-2"
+              class="button is-dark is-outlined px-2"
             >
               -50
             </button>
             <button
               type="submit"
               @click="updateProp(student.id, 'xp', -100)"
-              class="button is-dark is-outlined has-padding-x-2"
+              class="button is-dark is-outlined px-2"
             >
               -100
             </button>
           </div>
 
-          <div class="has-margin-y-2 has-text-centered" v-if="visibleGold">
+          <div class="my-2 has-text-centered" v-if="visibleGold">
             <div class>
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', 100)"
-                class="button is-warning has-padding-x-3"
+                class="button is-warning px-3"
               >
                 100
               </button>
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', 50)"
-                class="button is-warning has-padding-x-3"
+                class="button is-warning px-3"
               >
                 50
               </button>
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', 10)"
-                class="button is-warning has-padding-x-3"
+                class="button is-warning px-3"
               >
                 10
               </button>
@@ -326,7 +326,7 @@
                 <template v-slot:trigger>
                   <button
                     type="submit"
-                    class="button is-primary has-padding-x-3"
+                    class="button is-primary px-3"
                   >
                     <i class="fas fa-hashtag"></i>
                   </button>
@@ -337,7 +337,7 @@
                     <input
                       type="number"
                       v-model="custom"
-                      class="input has-margin-right-1"
+                      class="input mr-1"
                     />
                     <button
                       @click="updateProp(student.id, 'gold', custom)"
@@ -351,21 +351,21 @@
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', -10)"
-                class="button is-dark is-outlined has-padding-x-2"
+                class="button is-dark is-outlined px-2"
               >
                 -10
               </button>
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', -50)"
-                class="button is-dark is-outlined has-padding-x-2"
+                class="button is-dark is-outlined px-2"
               >
                 -50
               </button>
               <button
                 type="submit"
                 @click="updateProp(student.id, 'gold', -100)"
-                class="button is-dark is-outlined has-padding-x-2"
+                class="button is-dark is-outlined px-2"
               >
                 -100
               </button>

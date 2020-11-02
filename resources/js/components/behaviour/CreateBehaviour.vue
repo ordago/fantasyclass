@@ -1,5 +1,5 @@
 <template>
-    <div class="container has-padding-3">
+    <div class="container p-3">
       <form method="post" :action="'/classroom/' + this.code + '/behaviours'" enctype="multipart/form-data">
         <input :value="csrfToken" type="hidden" name="_token"/>
 
@@ -31,17 +31,17 @@
           <label><small>{{ trans.get('behaviours.fontawesome') }} <a href="https://fontawesome.com/icons?d=gallery" target="_blank">FontAwesome</a></small></label>
         </div>
 
-        <div class="has-margin-top-4">
+        <div class="mt-4">
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('behaviours.name') }} <small class="font-italic">({{ trans.get('behaviours.name_info') }})</small></label>
-          <input type="text" id="name" v-model="name" name="name" required class="input has-margin-y-3">
+          <input type="text" id="name" v-model="name" name="name" required class="input my-3">
         </div>
-        <div class="has-margin-top-2">
+        <div class="mt-2">
           <label for="custom_text">{{ trans.get('behaviours.custom_text') }} <small class="font-italic">({{ trans.get('behaviours.custom_text_info') }})</small></label>
           <input type="text" id="custom_text" v-model="custom_text" name="custom_text" class="input" placeholder="">
         </div>
-        <div class="has-margin-top-3">
+        <div class="mt-3">
           <label>{{ trans.get('behaviours.attributes') }} <small class="font-italic">({{ trans.get('behaviours.attributes_info') }})</small></label>
-          <div class="columns has-margin-y-1">
+          <div class="columns my-1">
             <div class="column">
               <div class="field has-addons">
                 <p class="control">

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="box card-shadow-s has-margin-bottom-3"
+    class="box card-shadow-s mb-3"
     v-bind:class="getBackground"
   >
     <section class="media">
@@ -78,9 +78,9 @@
               :question="question"
             ></show-question>
           </div>
-          <div class="has-margin-top-5">
+          <div class="mt-5">
             <div
-              class="columns has-padding-4 has-margin-3 card rounded card-shadow-s"
+              class="columns p-4 m-3 card rounded card-shadow-s"
               v-for="(attachment, index) in challenge.attachments"
               :key="attachment.id"
             >
@@ -100,7 +100,7 @@
                 <i class="fab fa-dropbox" v-else-if="attachment.type == 6"></i>
                 <i class="fad fa-file" v-else-if="attachment.type == 7"></i>
                 <i
-                  class="fad has-margin-left-3"
+                  class="fad ml-3"
                   v-bind:class="{
                     'fa-link': attachment.mode == 0,
                     'fa-expand': attachment.mode == 1,
@@ -202,9 +202,9 @@
             {{ trans.get("challenges.comment") }}
           </button>
           <InputEmoji v-if="(edit || full) && allowComment"></InputEmoji>
-          <div class="has-margin-top-3 comments">
+          <div class="mt-3 comments">
             <div
-              class="comment has-margin-0"
+              class="comment m-0"
               v-for="(comment, index) in orderedComments"
               :key="index"
             >
@@ -220,27 +220,27 @@
                   class="fas fa-user-graduate text-light textshadow"
                 ></i>
               </div>
-              <div class="commentInfo has-padding-2">
+              <div class="commentInfo p-2">
                 <div>
-                  <span class="tag is-info has-padding-2">{{
+                  <span class="tag is-info p-2">{{
                     comment.info.name
                   }}</span>
-                  <span class="tag is-link has-padding-2">{{
+                  <span class="tag is-link p-2">{{
                     comment.info.datetime
                   }}</span>
                   <button
-                    class="button tag is-danger has-text-light has-padding-2"
+                    class="button tag is-danger has-text-light p-2"
                     @click="deleteComment(comment.id, index)"
                     v-if="admin"
                   >
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </div>
-                <div class="flexVertical has-padding-2">{{ comment.text }}</div>
+                <div class="flexVertical p-2">{{ comment.text }}</div>
               </div>
             </div>
           </div>
-          <div v-if="!prevRating && !rating && !admin && challengeReactive.is_conquer">
+          <div v-if="!prevRating && full && !rating && !admin && challengeReactive.is_conquer">
             <div class="mt-4 mb-0">
               <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i> {{ trans.get("challenges.rating_feedback") }}
             </div>
@@ -264,7 +264,7 @@
             Feedback: {{ challengeReactive.rating }} / 5
           </div>
           <div
-            class="has-padding-3 has-text-right"
+            class="p-3 has-text-right"
             v-if="(edit && admin) || !admin"
           >
             <button
@@ -403,7 +403,7 @@
                 <span>Embedded</span>
               </b-radio-button>
             </div>
-            <b-field class="has-margin-top-3">
+            <b-field class="mt-3">
               <b-input
                 v-model="attachment.name"
                 :placeholder="
@@ -463,7 +463,7 @@
                 required
               ></b-input>
             </b-field>
-            <div class="field is-horizontal has-margin-bottom-3">
+            <div class="field is-horizontal mb-3">
               <div class="field-body">
                 <div class="field is-expanded">
                   <div class="field has-addons">
@@ -486,7 +486,7 @@
                 </div>
               </div>
             </div>
-            <div class="field is-horizontal has-margin-bottom-3">
+            <div class="field is-horizontal mb-3">
               <div class="field-body">
                 <div class="field is-expanded">
                   <div class="field has-addons">
@@ -511,7 +511,7 @@
                 </div>
               </div>
             </div>
-            <div class="field is-horizontal has-margin-bottom-3">
+            <div class="field is-horizontal mb-3">
               <div class="field-body">
                 <div class="field is-expanded">
                   <div class="field has-addons">
@@ -535,7 +535,7 @@
                 </div>
               </div>
             </div>
-            <div class="field is-horizontal has-margin-bottom-3">
+            <div class="field is-horizontal mb-3">
               <div class="field-body">
                 <div class="field is-expanded">
                   <div class="field has-addons">

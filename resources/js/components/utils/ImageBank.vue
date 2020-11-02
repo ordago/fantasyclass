@@ -19,7 +19,7 @@
           </div>
           <div class="columns is-multiline" v-else>
             <div
-              class="column img-categories has-padding-4 has-margin-2 is-flex has-all-centered rounded"
+              class="column img-categories p-4 m-2 is-flex has-all-centered rounded"
               v-for="category in categories"
               :key="category"
               @click="populate(category)"

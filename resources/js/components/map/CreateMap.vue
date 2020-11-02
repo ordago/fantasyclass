@@ -1,13 +1,13 @@
 <template>
-    <div class="container has-padding-3">
+    <div class="container">
       <form method="post" :action="'/classroom/' + this.code + '/maps'" enctype="multipart/form-data">
         <input :value="csrfToken" type="hidden" name="_token"/>
 
-        <div class="has-margin-top-4">
+        <div class="mt-4">
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.name') }}</label>
-          <input type="text" id="name" v-model="name" name="name" required class="input has-margin-y-3">
+          <input type="text" id="name" v-model="name" name="name" required class="input my-3">
         </div>
-        <div class="has-margin-y-2">
+        <div class="my-2">
           <label for="url"><span class="help is-danger is-inline">* </span> {{ trans.get('maps.url') }} <small class="font-italic">({{ trans.get('maps.url_info') }})</small></label>
           <input type="url" v-model="url" name="url" class="input" required placeholder="">
         </div>

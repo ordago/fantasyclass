@@ -27,7 +27,7 @@
         <hr style="background-color: black" />
       </div>
       <button class="button is-primary">
-        <i class="fas fa-save has-margin-right-3"></i>
+        <i class="fas fa-save mr-3"></i>
         {{ trans.get('general.save') }}
       </button>
     </form>
@@ -74,7 +74,7 @@
           <input
             type="number"
             v-model="grade"
-            class="input has-margin-right-3"
+            class="input mr-3"
             style="width: 100px;"
           />
           <button class="button is-primary" @click="gradeRubric">Grade</button>

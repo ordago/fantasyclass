@@ -2,47 +2,47 @@
   <div class="w-100 content">
     <div class="buttons">
       <button class="button is-link" @click="isTagModalActive = true">
-        <i class="has-margin-right-2 fas fa-tag"></i>
+        <i class="mr-2 fas fa-tag"></i>
         {{ trans.get("evaluation.add_tag") }}
       </button>
       <a
         :href="'/classroom/' + classroom.code + '/rubrics'"
         class="button is-warning"
       >
-        <i class="has-margin-right-2 fas fa-tasks-alt"></i>
+        <i class="mr-2 fas fa-tasks-alt"></i>
         {{ trans.get("evaluation.rubric_management") }}
       </a>
       <a
         :href="'/classroom/' + classroom.code + '/evaluation/report'"
         class="button is-primary"
       >
-        <i class="has-margin-right-2 fas fa-file-chart-line"></i>
+        <i class="mr-2 fas fa-file-chart-line"></i>
         {{ trans.get("evaluation.report") }}
       </a>
       <button class="button is-dark" @click="isPrefsModalActive = true">
-        <i class="has-margin-right-2 fas fa-cog"></i>
+        <i class="mr-2 fas fa-cog"></i>
         {{ trans.get("evaluation.config") }}
       </button>
     </div>
-    <div class="has-margin-y-3">
+    <div class="my-3">
       <span
-        class="tag is-dark is-medium has-margin-right-2"
+        class="tag is-dark is-medium mr-2"
         v-for="(tag, index) in tagsReactive"
         :key="tag.id"
         v-tippy
         :content="tag.description"
       >
-        <i class="fas fa-tag has-margin-right-2"></i>
+        <i class="fas fa-tag mr-2"></i>
         {{ tag.short }} ({{ tag.percent }}%)
         <small>
           <i
-            class="fas fa-edit has-background-info rounded pointer has-padding-2 has-margin-left-3"
+            class="fas fa-edit has-background-info rounded pointer p-2 ml-3"
             @click="showEditTag(tag)"
           ></i>
         </small>
         <small @click="deleteTag(tag.id, index)">
           <i
-            class="fas fa-trash-alt has-background-danger rounded pointer has-padding-2 has-margin-left-3"
+            class="fas fa-trash-alt has-background-danger rounded pointer p-2 ml-3"
           ></i>
         </small>
       </span>
@@ -56,7 +56,7 @@
         {{ trans.get("evaluation.evaluation_line") }}
       </button>
     </div>
-    <div class="has-margin-3">
+    <div class="m-3">
       <b-table
         v-if="linesReactive.length"
         :data="linesReactive"
@@ -78,7 +78,7 @@
             sortable
           >
             <span
-              class="tag is-dark has-margin-right-2"
+              class="tag is-dark mr-2"
               v-for="tag in props.row.tags"
               :key="tag.id"
               v-tippy
@@ -97,7 +97,7 @@
           >
             <a
               :href="'/classroom/evaluation/' + props.row.id + '/grade'"
-              class="button is-dark is-small has-margin-right-3"
+              class="button is-dark is-small mr-3"
             >
               <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }}
             </a>
@@ -297,7 +297,7 @@
               </b-field>
             </section>
             <b-field
-              class="has-margin-top-3"
+              class="mt-3"
               :label="trans.get('evaluation.description')"
             >
               <b-input v-model="line.description" required></b-input>
@@ -319,7 +319,7 @@
                 :href="'/classroom/' + classroom.code + '/rubrics'"
                 class="button is-warning"
               >
-                <i class="has-margin-right-2 fas fa-tasks-alt"></i>
+                <i class="mr-2 fas fa-tasks-alt"></i>
                 {{ trans.get("evaluation.rubric_management") }}
               </a>
               <b-select v-if="rubrics.length" v-model="line.rubric" expanded>
@@ -344,7 +344,7 @@
                 </summary>
                 <h3>{{ trans.get("evaluation.weight_info") }}</h3>
                 <div
-                  class="is-block w-100 has-margin-y-2"
+                  class="is-block w-100 my-2"
                   v-for="tag in line.tags"
                   :key="tag.id"
                 >

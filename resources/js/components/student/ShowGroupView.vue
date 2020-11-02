@@ -1,20 +1,20 @@
 <template>
-  <div class="has-margin-0">
+  <div class="m-0">
     <div class="">
       <div
-        class="column has-padding-y-2 has-padding-x-0 w-100"
+        class="column py-2 px-0 w-100"
         v-for="group in groups"
         v-bind:key="group.id"
       >
         <div class="card rounded card-shadow-s w-100">
           <div
-            class="has-padding-4"
+            class="p-4"
           >
-            <h1 class="is-size-2 has-margin-bottom-4">{{ group.name }}</h1>
+            <h1 class="is-size-2 mb-4">{{ group.name }}</h1>
             <div class="">
-            <div class="columns is-multiline is-variable is-1 has-margin-y-2">
+            <div class="columns is-multiline is-variable is-1 my-2">
               <div
-                class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+                class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
                 v-for="student in getStudents(group.id)"
                 v-bind:key="student.id"
               >               

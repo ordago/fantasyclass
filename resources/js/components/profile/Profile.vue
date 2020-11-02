@@ -1,20 +1,20 @@
 <template>
   <div>
     <form @submit.prevent="send">
-      <section class="has-padding-x-3">
+      <section class="px-3">
         <h1 class="is-size-2">
           <i class="fal fa-cog faa-spin animated faa-slow"></i>
           {{ trans.get("profile.profile") }}
         </h1>
 
-        <div class="has-margin-y-4">
-          <label for="name" class="has-margin-y-2">{{
+        <div class="my-4">
+          <label for="name" class="my-2">{{
             trans.get("profile.name")
           }}</label>
           <input
             id="name"
             type="text"
-            class="input has-margin-y-2 is-info"
+            class="input my-2 is-info"
             minlength="2"
             name="name"
             required
@@ -24,13 +24,13 @@
           />
         </div>
         <span v-if="user.email">
-          <div class="has-margin-y-4">
-            <label for="new-password" class="has-margin-y-2">{{
+          <div class="my-4">
+            <label for="new-password" class="my-2">{{
               trans.get("profile.new_password")
             }}</label>
             <input
               type="password"
-              class="input has-margin-y-2 is-info"
+              class="input my-2 is-info"
               name="password"
               ref="new_password"
               minlength="8"
@@ -39,10 +39,10 @@
             />
           </div>
 
-          <div class="has-margin-y-4">
+          <div class="my-4">
             <label
               for="password_confirmation"
-              class="has-margin-y-2"
+              class="my-2"
               v-if="password.length"
               >{{ trans.get("profile.confirm_new_password") }}</label
             >
@@ -50,7 +50,7 @@
               type="password"
               ref="password_confirm"
               minlength="8"
-              class="input has-margin-y-2 is-info"
+              class="input my-2 is-info"
               name="password_confirmation"
               autocomplete="new-password"
               v-if="password.length"
@@ -63,27 +63,27 @@
           {{ trans.get("profile.password_email") }}
         </div>
 
-        <div class="has-margin-top-4">
-          <label for="new-password" class="has-margin-y-2">E-mail</label>
+        <div class="mt-4">
+          <label for="new-password" class="my-2">E-mail</label>
           <input
             type="email"
-            class="input has-margin-y-2 is-info"
+            class="input my-2 is-info"
             v-model="email"
             @input="email_change = true"
           />
         </div>
         <small>{{ trans.get("profile.info_email") }}</small>
 
-        <div class="has-margin-y-4">
+        <div class="my-4">
           <label
             for="current-password"
-            class="has-margin-y-2"
+            class="my-2"
             v-if="password.length || email_change"
             >{{ trans.get("profile.current_password") }}</label
           >
           <input
             type="password"
-            class="input has-margin-y-2 is-info"
+            class="input my-2 is-info"
             name="current_password"
             required
             autocomplete="current-password"
@@ -92,13 +92,13 @@
           />
         </div>
 
-        <div class="has-margin-y-4 form-group">
-          <label for="language" class="has-margin-y-2">{{
+        <div class="my-4 form-group">
+          <label for="language" class="my-2">{{
             trans.get("profile.language")
           }}</label>
           <select
             v-model="user_lang"
-            class="form-control input has-margin-y-2 is-info"
+            class="form-control input my-2 is-info"
             id="locale"
           >
             <option
@@ -119,7 +119,7 @@
         </button>
 
         <div
-          class="is-flex has-padding-x-4 has-padding-y-4"
+          class="is-flex px-4 py-4"
           style="position: fixed; bottom: 0; right: 0"
         >
           <button class="button is-link">

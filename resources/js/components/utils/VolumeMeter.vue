@@ -2,7 +2,7 @@
   <div>
     <div>
       <div>
-        <div class="rounded has-background-warning has-padding-4 has-margin-bottom-3">
+        <div class="rounded has-background-warning p-4 mb-3">
           <strong>
             <i class="fas fa-flask"></i> Función experimental
           </strong>
@@ -10,19 +10,19 @@
         </div>
         <div class="columns">
           <div class="column">
-            <div class="propertyMeter has-padding-3">
+            <div class="propertyMeter p-3">
               <b-switch v-model="countGold" true-value="1" false-value="0">
                 <i class="fas fa-coins colored"></i>
               </b-switch>
               <input type="number" v-model="gold" class="input" />
             </div>
-            <div class="propertyMeter has-padding-3">
+            <div class="propertyMeter p-3">
               <b-switch v-model="countXp" true-value="1" false-value="0">
                 <i class="fas fa-fist-raised colored"></i>
               </b-switch>
               <input type="number" v-model="xp" class="input" />
             </div>
-            <div class="propertyMeter has-padding-3">
+            <div class="propertyMeter p-3">
               <b-switch v-model="countHp" true-value="1" false-value="0">
                 <i class="fas fa-heart colored"></i>
               </b-switch>
@@ -31,24 +31,24 @@
           </div>
           <div class="column">
             <div id="info">
-              <span class="tag tag fa-2x has-margin-2 is-size-5 has-padding-4">
+              <span class="tag tag fa-2x m-2 is-size-5 p-4">
                 <span>{{ alarmCount }}</span>
                 <i class="fas fa-siren-on colored"></i>
               </span>
-              <span class="tag tag is-warning fa-2x has-margin-2 is-size-5 has-padding-4">
+              <span class="tag tag is-warning fa-2x m-2 is-size-5 p-4">
                 <span>{{ gold * alarmCount * countGold * -1 }}</span>
                 <i class="fas fa-coins colored"></i>
               </span>
-              <span class="tag tag is-dark fa-2x has-margin-2 is-size-5 has-padding-4">
+              <span class="tag tag is-dark fa-2x m-2 is-size-5 p-4">
                 <span>{{ xp * alarmCount * countXp * -1 }}</span>
                 <i class="fas fa-fist-raised colored"></i>
               </span>
-              <span class="tag tag is-danger fa-2x has-margin-2 is-size-5 has-padding-4">
+              <span class="tag tag is-danger fa-2x m-2 is-size-5 p-4">
                 <span>{{ hp * alarmCount * countHp * -1 }}</span>
                 <i class="fas fa-heart colored"></i>
               </span>
               <span
-                class="button is-size-6 acceptDestiny has-margin-left-2"
+                class="button is-size-6 acceptDestiny ml-2"
                 style="margin-top:0!important"
                 @click="accept"
               >
@@ -68,17 +68,17 @@
         <!-- The canvas that will be used to render the input level -->
         <canvas ref="meter" id="meter" style="width:100%;" height="30" class="mt-3"></canvas>
         <button @click="start" class="button is-primary mt-3 start">
-          <i class="fas fa-play has-margin-right-2"></i> Start
+          <i class="fas fa-play mr-2"></i> Start
         </button>
         <button class="button is-dark" @click="stopped = true">
-          <i class="fas fa-stop has-margin-right-2"></i> Stop
+          <i class="fas fa-stop mr-2"></i> Stop
         </button>
       </div>
 
       <div id="log">
-        <div class="has-padding-4 has-margin-3 itemLog" v-for="index in alarmCount" :key="index">
+        <div class="p-4 m-3 itemLog" v-for="index in alarmCount" :key="index">
           <span class="tag is-dark">{{ index }}</span> Ruido detectado
-          <div class="has-background-danger has-padding-4 delLog" @click="deleteLog" style>
+          <div class="has-background-danger p-4 delLog" @click="deleteLog" style>
             <i class="fas fa-trash"></i>
           </div>
         </div>

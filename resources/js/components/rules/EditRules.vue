@@ -13,8 +13,8 @@
     </div>
     <Editor height="70vh" :code="code"></Editor>
     <div>
-      <button class="button is-primary has-margin-top-4" @click="saveRules">
-        <i class="fas fa-save has-margin-right-2"></i>
+      <button class="button is-primary mt-4" @click="saveRules">
+        <i class="fas fa-save mr-2"></i>
         {{ trans.get("general.save") }}
       </button>
     </div>

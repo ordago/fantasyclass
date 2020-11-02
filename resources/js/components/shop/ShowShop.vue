@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-tabs v-model="activeTab">
-      <b-tab-item label="Items" icon-pack="fa" class="has-padding-x-4">
+      <b-tab-item label="Items" icon-pack="fa" class="p-4">
         <div class="field">
           <b-switch
             :value="true"
@@ -21,7 +21,7 @@
 
         <div
           v-for="item in items"
-          class="columns is-multiline is-variable is-1 has-all-centered has-padding-3"
+          class="columns is-multiline is-variable is-1 has-all-centered p-3"
           style="border-bottom: 1px dashed #999"
           v-bind:key="item.id"
         >
@@ -130,7 +130,7 @@
             <i class="fas fa-edit"></i>
           </a>
           <button
-            class="button is-danger has-margin-left-2"
+            class="button is-danger ml-2"
             @click="deleteItem(item.id)"
           >
             <i class="fas fa-trash-alt"></i>
@@ -142,7 +142,7 @@
         v-if="character"
         :label="trans.get('shop.eq1')"
         icon-pack="fa"
-        class="has-padding-x-4"
+        class="p-4"
       >
         <div class="field">
           <b-switch
@@ -156,7 +156,7 @@
 
           <b-field
             :label="trans.get('shop.multiplier')"
-            class="has-margin-top-4"
+            class="mt-4"
           >
             <b-numberinput
               @input="$forceUpdate()"
@@ -166,22 +166,22 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(1)">
-            <i class="fas fa-save has-margin-right-2"></i>
+            <i class="fas fa-save mr-2"></i>
             {{ trans.get("general.save") }}
           </button>
         </div>
         <div
           v-for="(char, index) in shop['eq1']"
           :key="index"
-          class="is-flex has-border-dark has-margin-2"
+          class="is-flex has-border-dark m-2"
         >
           <div
             v-for="item in char"
             :key="index + '-' + item.id"
-            class="is-flex has-all-centered has-margin-4 has-border"
+            class="is-flex has-all-centered m-4 has-border"
           >
             <img
-              class="has-margin-right-3"
+              class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"
               height="50px"
@@ -196,7 +196,7 @@
         v-if="character"
         :label="trans.get('shop.eq2')"
         icon-pack="fa"
-        class="has-padding-x-4"
+        class="p-4"
       >
         <div class="field">
           <b-switch
@@ -207,7 +207,7 @@
             @input="toggleVisibility('equipment_2_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
           >
-          <b-field label="Multiplier" class="has-margin-top-4">
+          <b-field label="Multiplier" class="mt-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -216,22 +216,22 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(2)">
-            <i class="fas fa-save has-margin-right-2"></i>
+            <i class="fas fa-save mr-2"></i>
             {{ trans.get("general.save") }}
           </button>
         </div>
         <div
           v-for="(char, index) in shop['eq2']"
           :key="index"
-          class="is-flex has-border-dark has-margin-2"
+          class="is-flex has-border-dark m-2"
         >
           <div
             v-for="item in char"
             :key="index + '-' + item.id"
-            class="is-flex has-all-centered has-margin-4 has-border"
+            class="is-flex has-all-centered m-4 has-border"
           >
             <img
-              class="has-margin-right-3"
+              class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"
               height="50px"
@@ -246,7 +246,7 @@
         v-if="character"
         :label="trans.get('shop.eq3')"
         icon-pack="fa"
-        class="has-padding-x-4"
+        class="p-4"
       >
         <div class="field">
           <b-switch
@@ -257,7 +257,7 @@
             @input="toggleVisibility('equipment_3_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
           >
-          <b-field label="Multiplier" class="has-margin-top-4">
+          <b-field label="Multiplier" class="mt-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -266,22 +266,22 @@
             ></b-numberinput>
           </b-field>
           <button class="button is-primary" @click="save(3)">
-            <i class="fas fa-save has-margin-right-2"></i>
+            <i class="fas fa-save mr-2"></i>
             {{ trans.get("general.save") }}
           </button>
         </div>
         <div
           v-for="(char, index) in shop['eq3']"
           :key="index"
-          class="is-flex has-border-dark has-margin-2"
+          class="is-flex has-border-dark m-2"
         >
           <div
             v-for="item in char"
             :key="index + '-' + item.id"
-            class="is-flex has-all-centered has-margin-4 has-border"
+            class="is-flex has-all-centered m-4 has-border"
           >
             <img
-              class="has-margin-right-3"
+              class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"
               height="50px"
@@ -383,23 +383,23 @@ export default {
   computed: {
     visibilityItems() {
       if (this.items_visibility)
-        return "<i class='fas fa-eye-slash'></i> <span class='has-padding-left-2'>Make invisible</span>";
-      return "<i class='fas fa-eye'></i> <span class='has-padding-left-2'>Make visible</span>";
+        return "<i class='fas fa-eye-slash'></i> <span class='pl-2'>Make invisible</span>";
+      return "<i class='fas fa-eye'></i> <span class='pl-2'>Make visible</span>";
     },
     visibilityEq1() {
       if (this.equipment_1_visibility)
-        return "<i class='fas fa-eye-slash'></i> <span class='has-padding-left-2'>Make invisible</span>";
-      return "<i class='fas fa-eye'></i> <span class='has-padding-left-2'>Make visible</span>";
+        return "<i class='fas fa-eye-slash'></i> <span class='pl-2'>Make invisible</span>";
+      return "<i class='fas fa-eye'></i> <span class='pl-2'>Make visible</span>";
     },
     visibilityEq2() {
       if (this.equipment_2_visibility)
-        return "<i class='fas fa-eye-slash'></i> <span class='has-padding-left-2'>Make invisible</span>";
-      return "<i class='fas fa-eye'></i> <span class='has-padding-left-2'>Make visible</span>";
+        return "<i class='fas fa-eye-slash'></i> <span class='pl-2'>Make invisible</span>";
+      return "<i class='fas fa-eye'></i> <span class='pl-2'>Make visible</span>";
     },
     visibilityEq3() {
       if (this.equipment_3_visibility)
-        return "<i class='fas fa-eye-slash'></i> <span class='has-padding-left-2'>Make invisible</span>";
-      return "<i class='fas fa-eye'></i> <span class='has-padding-left-2'>Make visible</span>";
+        return "<i class='fas fa-eye-slash'></i> <span class='pl-2'>Make invisible</span>";
+      return "<i class='fas fa-eye'></i> <span class='pl-2'>Make visible</span>";
     },
     getIconItem() {
       return this.items_visibility ? "eye-slash" : "eye";

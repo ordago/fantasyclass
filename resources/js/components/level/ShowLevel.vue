@@ -1,16 +1,16 @@
 <template>
   <div
     v-if="level"
-    :class="{ 'column is-6-tablet is-12-mobile is-3-desktop has-margin-bottom-0 is-flex has-all-centered' : edit, 'column': !edit}"
+    :class="{ 'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered' : edit, 'column': !edit}"
   >
 
   
-    <div :class="{ 'min-width' : !edit }" class="columns w-100 is-variable is-0 has-padding-y-2">
-      <div class="column is-narrow has-padding-y-0 card-shadow-s rounded-left has-background-light">
+    <div :class="{ 'min-width' : !edit }" class="columns w-100 is-variable is-0 py-2">
+      <div class="column is-narrow py-0 card-shadow-s rounded-left has-background-light">
         <figure class="image is-128x128">
           <label class="cursor-pointer" :for="'file' + level.id">
             <croppa
-              class="has-padding-2 card-shadow-s is-full-rounded"
+              class="p-2 card-shadow-s is-full-rounded"
               v-model="image"
               :width="128"
               :height="128"
@@ -27,25 +27,25 @@
               :initial-image="prevImage"
               v-if="edit"
             ></croppa>
-            <img v-else class="has-padding-2 card-shadow-s is-full-rounded" :src="prevImage">
+            <img v-else class="p-2 card-shadow-s is-full-rounded" :src="prevImage">
           </label>
         </figure>
       </div>
-      <div class="column content card has-padding-4 rounded-right card-shadow-s">
+      <div class="column content card p-4 rounded-right card-shadow-s">
         <p class="is-size-4">{{ trans.get('levels.level') }} {{ level.number }}</p>
-        <p class="has-margin-y-2" v-if="edit">
+        <p class="my-2" v-if="edit">
           <i class="fas fa-fist-raised colored"></i> {{ trans.get('levels.xp') }}
         </p>
         <h2 v-if="!edit">{{ level.title }}</h2>
         <p v-if="!edit">{{ level.description }}</p>
         <input type="number" v-if="edit" v-model="level.xp" class="input w-100" />
-        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.title') }}</p>
+        <p class="my-2" v-if="edit">{{ trans.get('levels.title') }}</p>
         <input v-model="level.title" v-if="edit" type="text" class="input w-100" />
-        <p class="has-margin-y-2" v-if="edit">{{ trans.get('levels.description') }}</p>
+        <p class="my-2" v-if="edit">{{ trans.get('levels.description') }}</p>
         <p v-if="edit">
           <textarea style="resize: none;" class="input" v-model="level.description"></textarea>
         </p>
-        <div v-if="edit" class="has-text-right has-margin-top-2">
+        <div v-if="edit" class="has-text-right mt-2">
           <button class="button is-dark" @click="update">
             <i class="fas fa-edit"></i>
           </button>

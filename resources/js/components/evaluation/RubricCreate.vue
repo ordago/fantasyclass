@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="createRubric" class="has-padding-3">
+  <form @submit.prevent="createRubric" class="p-3">
     <div class="field">
       <label class="label">{{ trans.get('evaluation.name') }}</label>
       <div class="control">
@@ -9,7 +9,7 @@
     <div class="field">
       <label class="label">{{ trans.get('evaluation.rows') }}</label>
       <div class="control">
-        <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row has-margin-y-2">
+        <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row my-2">
           <div class="description">
             <textarea
               style="height:100%"
@@ -19,7 +19,7 @@
             ></textarea>
           </div>
           <div
-            class="button is-success has-margin-x-2"
+            class="button is-success mx-2"
             v-tippy
             :content="trans.get('evaluation.add_column')"
             @click="addColumn(index)"
@@ -29,10 +29,10 @@
           </div>
           <div class="subItems">
             <div class="subItem" v-for="(column, indexCol) in row.items" :key="indexCol">
-              <div class="message has-margin-bottom-1 is-flex has-all-centered">
+              <div class="message mb-1 is-flex has-all-centered">
                 <textarea
                   required
-                  class="rich-editor-container rounded has-padding-4"
+                  class="rich-editor-container rounded p-4"
                   :ref="'textarea' + index + indexCol"
                   @keypress.enter.prevent
                   @click="handleEditorClick('textarea' + index + indexCol)"

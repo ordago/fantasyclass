@@ -13,7 +13,7 @@
       @rotateEnd="onRotateEnd"
     />
     <div class="column is-narrow has-all-centered is-flex" v-if="prizeSelected">
-      <div class="field has-margin-0 is-flex">
+      <div class="field m-0 is-flex">
         <button class="button is-link" @click="randomStudent()">
           <i class="fad fa-random mr-2"></i> {{ trans.get('utils.random') }}
         </button>

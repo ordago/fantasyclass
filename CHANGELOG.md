@@ -1,4 +1,12 @@
 # Changelog
+## v1.16 Beta (XX/11/2020)
+### Added
+- Restyling.
+
+### Changed
+- Optimized CSS.
+- Improved service worker.
+
 ## v1.15 Beta (1/11/2020)
 ### Added
 - User notifications.

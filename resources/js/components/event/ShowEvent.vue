@@ -1,11 +1,11 @@
 <template>
-  <div class="has-margin-0">
+  <div class="m-0">
     <transition name="fade">
-      <h1 class="firstAppear" v-if="show" v-html="trans.get(info.event.title)"></h1>
+      <h1 class="first-appear" v-if="show" v-html="trans.get(info.event.title)"></h1>
     </transition>
     <transition name="fadesecond">
-      <div class="secondAppear" v-if="show">
-        <h2 class="has-padding-y-3 is-size-3 has-text-centered">
+      <div class="second-appear" v-if="show">
+        <h2 class="py-3 is-size-3 has-text-centered">
           <span v-if="!(info.event.type && showInfo)" v-html="trans.get(info.event.content)"></span>
           <span v-if="info.event.type == 1 || info.event.type == 2 || info.event.type == 5">
             ({{info.hp}}
@@ -18,7 +18,7 @@
           <img :src="info.class" v-if="info.event.type == 7" />
         </h2>
         <h2
-          class="has-padding-y-3 is-size-3 has-text-centered"
+          class="py-3 is-size-3 has-text-centered"
           v-if="info.event.type == 1 || info.event.type == 3 || info.event.type == 4 || info.event.type == 6 || info.event.type == 8 || info.event.type == 9 || info.event.type == 10 || info.event.type == 11"
         >
           <div class="hiddenName">
@@ -27,7 +27,7 @@
           </div>
         </h2>
         <h4
-          class="has-padding-y-3 has-margin-top-2 is-flex is-size-4 has-all-centered"
+          class="py-3 mt-2 is-flex is-size-4 has-all-centered"
           v-if="info.event.type == 8 || info.event.type == 9"
         >
           <div class="columns">
@@ -55,7 +55,7 @@
             </div>
           </div>
         </h4>
-        <h4 class="has-padding-y-3 is-flex is-size-4 has-all-centered" v-if="info.event.type == 5">
+        <h4 class="py-3 is-flex is-size-4 has-all-centered" v-if="info.event.type == 5">
           <b-modal
             :active.sync="isCountDownModalActive"
             has-modal-card
@@ -80,7 +80,7 @@
           <div class="columns">
             <div class="column is-narrow is-flex has-all-centered">
               {{ info.student.name }}
-              <i class="fal has-margin-left-3 fa-arrow-right"></i>
+              <i class="fal ml-3 fa-arrow-right"></i>
             </div>
             <div class="column is-flex has-all-centered">
               <div class="field">
@@ -109,11 +109,11 @@
         <show-card
           v-if="info.event.type == 11 && showInfo"
           :card="info.card"
-          class="has-margin-top-2"
+          class="mt-2"
           style="zoom: 0.5"
         ></show-card>
         <button
-          class="button has-margin-top-3"
+          class="button mt-3"
           v-if="info.event.type == 11"
           @click="showInfo = !showInfo"
         >Show / hide card</button>
@@ -125,7 +125,7 @@
             <button class="button is-danger" @click="close()">Nope ...</button>
           </div>
           <div class="column" v-if="showInfo">
-            <span class="is-size-3 has-margin-top-3">
+            <span class="is-size-3 mt-3">
               {{ trans.get(info.text) }} ({{ info.value }}
               <i
                 class="fas colored"
@@ -135,7 +135,7 @@
           </div>
         </div>
         <button
-          class="button is-dark has-margin-top-5"
+          class="button is-dark mt-5"
           @click="accept()"
           v-if="info.event.type != 8 && info.event.type != 9 && (info.event.type != 12 || showInfo)"
         >
@@ -293,7 +293,7 @@ export default {
   opacity: 0;
 }
 
-.firstAppear {
+.first-appear {
   height: 30vh;
   background-color: rgba(255, 255, 255, 0.9);
   display: flex;
@@ -302,18 +302,18 @@ export default {
   font-family: logo;
   font-size: 8em;
   word-spacing: 0.2em;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   position: relative;
   padding: 40px;
   z-index: 5;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
   overflow: auto;
 }
-.secondAppear {
+.second-appear {
   height: 70vh;
-  border-bottom-left-radius: 50px;
-  border-bottom-right-radius: 50px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
   background-color: rgba(255, 255, 255, 0.75);
   display: flex;
   flex-direction: column;
@@ -329,7 +329,7 @@ export default {
 .final {
   opacity: 0;
 }
-h2.secondAppear > * {
+h2.second-appear > * {
   margin: 5px;
 }
 .hiddenName {

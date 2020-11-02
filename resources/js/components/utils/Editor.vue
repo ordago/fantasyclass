@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="tag is-warning has-margin-y-2">
+    <div class="tag is-warning my-2">
       %HP% <i class="fas fa-heart colored"></i>
-      <i class="fal fa-ellipsis-v has-margin-x-3"></i> %XP%
+      <i class="fal fa-ellipsis-v mx-3"></i> %XP%
       <i class="fas fa-fist-raised colored"></i>
-      <i class="fal fa-ellipsis-v has-margin-x-3"></i> %GOLD%
+      <i class="fal fa-ellipsis-v mx-3"></i> %GOLD%
       <i class="fas fa-coins colored"></i>
     </div>
     <el-tiptap

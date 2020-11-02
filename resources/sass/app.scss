@@ -7,10 +7,19 @@
 // Bootstrap
 // @import '~bootstrap/scss/bootstrap';
 
-//   @import "~bulma/bulma.sass";
-@import "~bulma/bulma.sass";
-@import "~buefy/dist/buefy.min.css";
-@import "~bulma-helper-spacing/spacing";
+// @import "~bulma/bulma.sass";
+// @import "~bulma/sass/utilities/_all";
+// @import "~bulma/sass/components/_all";
+// @import "~bulma/sass/elements/_all";
+// @import "~buefy/dist/buefy.min.css";
+// @import "~bulma/sass/helpers/spacing.sass";
+
+// Import Bulma's core
+// @import "~bulma/sass/utilities/_all";
+
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
 // Fontawesome animation
 @import '~font-awesome-animation/dist/font-awesome-animation.min.css';

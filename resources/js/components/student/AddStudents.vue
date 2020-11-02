@@ -1,5 +1,5 @@
 <template>
-  <div class="has-padding-4">
+  <div class="p-4">
     <div class="columns">
       <div class="column is-narrow p-0 m-1">
         <Xlsx type="addstudent"></Xlsx>
@@ -55,9 +55,9 @@
 
     <div v-for="(student, index) in students" v-bind:key="student.name">
       <div
-        class="has-margin-y-2 p-5 border has-background-white rounded relative"
+        class="my-2 p-5 border has-background-white rounded relative"
       >
-        <span class="has-padding-right-3">{{ index + 1 }}</span>
+        <span class="pr-3">{{ index + 1 }}</span>
         <span class="tag is-danger" v-if="student.google_uid"
           ><i class="fab fa-google"></i
         ></span>
@@ -68,7 +68,7 @@
         ></i>
         <span class="is-italic"> {{ student.email }}</span>
         <span
-          class="tag is-warning has-margin-left-2"
+          class="tag is-warning ml-2"
           v-if="student.username.length"
           v-tippy
           content="User already exists in FantasyClass, it'll be registered in the classroom"

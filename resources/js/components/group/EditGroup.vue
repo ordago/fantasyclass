@@ -1,9 +1,9 @@
 <template>
-  <div class="box has-padding-4 has-margin-3">
+  <div class="box p-4 m-3">
     <figure class="image is-128x128">
       <label class="cursor-pointer">
         <croppa
-          class="has-padding-2 card-shadow-s is-full-rounded"
+          class="p-2 card-shadow-s is-full-rounded"
           v-model="image"
           :width="128"
           :height="128"
@@ -22,8 +22,8 @@
     </figure>
     <label>{{ trans.get('groups.group_name') }}</label>
     <input type="text" class="input" v-model="group.name" />
-    <button class="button is-dark has-margin-3" @click="edit">{{ trans.get('general.edit') }}</button>
-    <button class="button is-danger has-margin-3" @click="remove">{{ trans.get('general.delete') }}</button>
+    <button class="button is-dark m-3" @click="edit">{{ trans.get('general.edit') }}</button>
+    <button class="button is-danger m-3" @click="remove">{{ trans.get('general.delete') }}</button>
   </div>
 </template>
 

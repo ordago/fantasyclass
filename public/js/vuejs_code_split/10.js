@@ -240,7 +240,7 @@ var render = function() {
   return _c(
     "form",
     {
-      staticClass: "has-padding-3",
+      staticClass: "p-3",
       on: {
         submit: function($event) {
           $event.preventDefault()
@@ -288,188 +288,176 @@ var render = function() {
           "div",
           { staticClass: "control" },
           _vm._l(_vm.rubric.rows, function(row, index) {
-            return _c(
-              "div",
-              { key: index, staticClass: "rubric-row has-margin-y-2" },
-              [
-                _c("div", { staticClass: "description" }, [
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: row.description,
-                        expression: "row.description"
-                      }
-                    ],
-                    staticStyle: { height: "100%" },
-                    attrs: {
-                      placeholder: _vm.trans.get(
-                        "evaluation.general_description"
-                      ),
-                      required: ""
-                    },
-                    domProps: { value: row.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(row, "description", $event.target.value)
-                      }
+            return _c("div", { key: index, staticClass: "rubric-row my-2" }, [
+              _c("div", { staticClass: "description" }, [
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: row.description,
+                      expression: "row.description"
                     }
-                  })
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    directives: [{ name: "tippy", rawName: "v-tippy" }],
-                    staticClass: "button is-success has-margin-x-2",
-                    attrs: {
-                      content: _vm.trans.get("evaluation.add_column"),
-                      tabindex: "0"
-                    },
-                    on: {
-                      click: function($event) {
-                        return _vm.addColumn(index)
-                      }
-                    }
+                  ],
+                  staticStyle: { height: "100%" },
+                  attrs: {
+                    placeholder: _vm.trans.get(
+                      "evaluation.general_description"
+                    ),
+                    required: ""
                   },
-                  [_c("i", { staticClass: "fas fa-plus" })]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "subItems" },
-                  _vm._l(row.items, function(column, indexCol) {
-                    return _c(
+                  domProps: { value: row.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(row, "description", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "button is-success mx-2",
+                  attrs: {
+                    content: _vm.trans.get("evaluation.add_column"),
+                    tabindex: "0"
+                  },
+                  on: {
+                    click: function($event) {
+                      return _vm.addColumn(index)
+                    }
+                  }
+                },
+                [_c("i", { staticClass: "fas fa-plus" })]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "subItems" },
+                _vm._l(row.items, function(column, indexCol) {
+                  return _c("div", { key: indexCol, staticClass: "subItem" }, [
+                    _c(
                       "div",
-                      { key: indexCol, staticClass: "subItem" },
+                      { staticClass: "message mb-1 is-flex has-all-centered" },
                       [
-                        _c(
+                        _c("textarea", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: column.description,
+                              expression: "column.description"
+                            }
+                          ],
+                          ref: "textarea" + index + indexCol,
+                          refInFor: true,
+                          staticClass: "rich-editor-container rounded p-4",
+                          attrs: { required: "" },
+                          domProps: { value: column.description },
+                          on: {
+                            keypress: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              $event.preventDefault()
+                            },
+                            click: function($event) {
+                              return _vm.handleEditorClick(
+                                "textarea" + index + indexCol
+                              )
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                column,
+                                "description",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("emoji-picker", {
+                          attrs: { data: _vm.data },
+                          on: {
+                            "emoji:picked": function($event) {
+                              return _vm.handleEmojiPicked(
+                                $event,
+                                "textarea" + index + indexCol
+                              )
+                            }
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c("div", { attrs: { id: "container" } }),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "pointsItem" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: column.points,
+                            expression: "column.points"
+                          }
+                        ],
+                        staticStyle: { width: "4em" },
+                        attrs: { type: "number", value: "0", min: "0" },
+                        domProps: { value: column.points },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(column, "points", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("evaluation.points")) +
+                          "\n            "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    !_vm.rubricEdit
+                      ? _c(
                           "div",
                           {
-                            staticClass:
-                              "message has-margin-bottom-1 is-flex has-all-centered"
-                          },
-                          [
-                            _c("textarea", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: column.description,
-                                  expression: "column.description"
-                                }
-                              ],
-                              ref: "textarea" + index + indexCol,
-                              refInFor: true,
-                              staticClass:
-                                "rich-editor-container rounded has-padding-4",
-                              attrs: { required: "" },
-                              domProps: { value: column.description },
-                              on: {
-                                keypress: function($event) {
-                                  if (
-                                    !$event.type.indexOf("key") &&
-                                    _vm._k(
-                                      $event.keyCode,
-                                      "enter",
-                                      13,
-                                      $event.key,
-                                      "Enter"
-                                    )
-                                  ) {
-                                    return null
-                                  }
-                                  $event.preventDefault()
-                                },
-                                click: function($event) {
-                                  return _vm.handleEditorClick(
-                                    "textarea" + index + indexCol
-                                  )
-                                },
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    column,
-                                    "description",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("emoji-picker", {
-                              attrs: { data: _vm.data },
-                              on: {
-                                "emoji:picked": function($event) {
-                                  return _vm.handleEmojiPicked(
-                                    $event,
-                                    "textarea" + index + indexCol
-                                  )
-                                }
-                              }
-                            })
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { attrs: { id: "container" } }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "pointsItem" }, [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: column.points,
-                                expression: "column.points"
-                              }
-                            ],
-                            staticStyle: { width: "4em" },
-                            attrs: { type: "number", value: "0", min: "0" },
-                            domProps: { value: column.points },
+                            staticClass: "button is-danger delSubItem",
                             on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(column, "points", $event.target.value)
+                              click: function($event) {
+                                return _vm.delSubItem(index, indexCol)
                               }
                             }
-                          }),
-                          _vm._v(
-                            "\n              " +
-                              _vm._s(_vm.trans.get("evaluation.points")) +
-                              "\n            "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        !_vm.rubricEdit
-                          ? _c(
-                              "div",
-                              {
-                                staticClass: "button is-danger delSubItem",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.delSubItem(index, indexCol)
-                                  }
-                                }
-                              },
-                              [_c("i", { staticClass: "far fa-trash-alt" })]
-                            )
-                          : _vm._e()
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ]
-            )
+                          },
+                          [_c("i", { staticClass: "far fa-trash-alt" })]
+                        )
+                      : _vm._e()
+                  ])
+                }),
+                0
+              )
+            ])
           }),
           0
         )

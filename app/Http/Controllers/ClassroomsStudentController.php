@@ -302,6 +302,7 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
 
         return view('studentsview.licenses', compact('class', 'student'));
     }

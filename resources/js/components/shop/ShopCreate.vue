@@ -1,5 +1,5 @@
 <template>
-  <div class="has-padding-3">
+  <div class="p-3">
     <div class="rounded">
       <croppa
         v-model="image"
@@ -17,7 +17,7 @@
         :initial-image="prevImage"
       ></croppa>
     </div>
-    <div class="columns has-margin-top-2">
+    <div class="columns mt-2">
       <div class="column">
         <div class="field is-horizontal">
           <div class="field-body">

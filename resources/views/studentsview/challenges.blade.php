@@ -2,7 +2,7 @@
 
 @section('content')
        @if(!count($challenges))
-              <div class="content rounded has-margin-3 is-flex has-all-centered has-padding-4 has-background-warning">
+              <div class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning">
                      <h1><i class="fas fa-dungeon"></i> The adventure hasn't started yet...</h1>
               </div>
        @endif

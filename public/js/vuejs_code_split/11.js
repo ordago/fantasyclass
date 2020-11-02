@@ -149,7 +149,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container has-padding-3" }, [
+  return _c("div", { staticClass: "container p-3" }, [
     _c(
       "form",
       {
@@ -220,7 +220,7 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-4" }, [
+        _c("div", { staticClass: "mt-4" }, [
           _c("label", { attrs: { for: "name" } }, [
             _c("span", { staticClass: "help is-danger is-inline" }, [
               _vm._v("* ")
@@ -237,7 +237,7 @@ var render = function() {
                 expression: "title"
               }
             ],
-            staticClass: "input has-margin-y-3",
+            staticClass: "input my-3",
             attrs: { type: "text", id: "title", name: "title", required: "" },
             domProps: { value: _vm.title },
             on: {
@@ -251,7 +251,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-2" }, [
+        _c("div", { staticClass: "mt-2" }, [
           _c("label", { attrs: { for: "custom_text" } }, [
             _vm._v(_vm._s(_vm.trans.get("badges.description")))
           ]),
@@ -284,7 +284,7 @@ var render = function() {
           })
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "has-margin-top-3" }, [
+        _c("div", { staticClass: "mt-3" }, [
           _c("label", [
             _vm._v(_vm._s(_vm.trans.get("badges.attributes")) + " "),
             _c("small", { staticClass: "font-italic" }, [
@@ -294,7 +294,7 @@ var render = function() {
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "columns has-margin-y-1" }, [
+          _c("div", { staticClass: "columns my-1" }, [
             _c("div", { staticClass: "column" }, [
               _c("div", { staticClass: "field has-addons" }, [
                 _c("p", { staticClass: "control" }, [

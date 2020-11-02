@@ -1,14 +1,14 @@
 <template>
-<div class="has-padding-left-0-desktop">
-    <div class="panel has-padding-left-0">
-        <p class="panel-heading is-flex has-space-between align-items-center has-padding-4">
-                <span class="has-padding-left-3">Create </span>
+<div class="pl-0-desktop">
+    <div class="panel pl-0">
+        <p class="panel-heading is-flex has-space-between align-items-center p-4">
+                <span class="pl-3">Create </span>
         </p>
-        <div class="has-padding-4 panel-block">
+        <div class="p-4 panel-block">
       <form method="post" @submit.prevent="formSubmit" class="w-100" :action="'/classroom/' + this.code + '/challenge'">
         <input :value="csrfToken" type="hidden" name="_token"/>
 
-      <div class="has-margin-y-3">
+      <div class="my-3">
               <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('challenges.icon') }}</label>
       </div>
         <div class="field has-addons">
@@ -23,11 +23,11 @@
           <label><small>{{ trans.get('behaviours.fontawesome') }} <a href="https://fontawesome.com/icons?d=gallery" target="_blank">FontAwesome</a></small></label>
         </div>
 
-        <div class="has-margin-top-3">
+        <div class="mt-3">
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('challenges.name') }}</label>
-          <input type="text" id="name" v-model="challengeInfo.name" name="name" required class="input has-margin-y-3">
+          <input type="text" id="name" v-model="challengeInfo.name" name="name" required class="input my-3">
         </div>         
-        <div class="has-margin-top-3" v-if="$parent.challengesgroup.length">
+        <div class="mt-3" v-if="$parent.challengesgroup.length">
             <label for="name">{{ trans.get('challenges.parent') }}</label>
             <div class="field">
               <div class="control">
@@ -40,7 +40,7 @@
               </div>
             </div>
           </div>
-          <div class="has-margin-top-3">
+          <div class="mt-3">
           <button class="button is-link" @click="update" v-if="challenge" type="button">{{ trans.get('challenges.edit') }}</button>
           <button class="button is-success" type="submit" v-if="!challenge">{{ trans.get('challenges.create') }}</button>
         </div>

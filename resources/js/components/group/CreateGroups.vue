@@ -2,12 +2,12 @@
   <div class="content">
     <form @submit.prevent="createGroups()" method="post" action v-if="!groups.length">
       <input :value="csrfToken" type="hidden" name="_token" />
-      <div class="has-padding-4">
+      <div class="p-4">
         <div>
-          <span class="has-margin-y-2">{{ trans.get('groups.number_groups') }}</span>
-          <input type="number" class="input has-margin-top-3" v-model="groupsNumber" />
+          <span class="my-2">{{ trans.get('groups.number_groups') }}</span>
+          <input type="number" class="input mt-3" v-model="groupsNumber" />
         </div>
-        <button class="button is-primary has-margin-top-3">{{ trans.get('groups.create') }}</button>
+        <button class="button is-primary mt-3">{{ trans.get('groups.create') }}</button>
       </div>
     </form>
     <div v-if="groups.length">
@@ -20,7 +20,7 @@
         :originalData="students"
         :originalTitle="'Students'"
         :inPlace="true"
-        class="has-margin-top-3"
+        class="mt-3"
         ref="dnditems"
         @save="save"
         @cancel="cancel"
@@ -31,7 +31,7 @@
       </drag-drop>
 
       <div v-else>
-        <div class="has-margin-3 columns is-multiline is-variable">
+        <div class="m-3 columns is-multiline is-variable">
           <div class="column is-6-tablet is-12-mobile is-3-desktop" v-for="group in dropGroups" v-bind:key="group.id">
             <edit-group :group="group" :code="code"></edit-group>
           </div>

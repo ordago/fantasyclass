@@ -1,9 +1,9 @@
 <template>
   <div
-    class="columns h-100 has-margin-right-0"
+    class="columns h-100 mr-0"
     v-bind:class="{ 'has-bg-student': !admin }"
   >
-    <div class="column is-narrow has-padding-right-0 noprint" ref="studentInfo">
+    <div class="column is-narrow pr-0 noprint" ref="studentInfo">
       <div
         class="card rounded card-shadow-s"
         style="min-width: 275px; overflow: visible"
@@ -14,7 +14,7 @@
           :classroom="classroom"
         ></show-character>
         <div class="card-content">
-          <div class="media has-margin-bottom-0 has-all-centered">
+          <div class="media mb-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
                 <img :src="student.avatar" class="rounded" alt />
@@ -29,11 +29,11 @@
           </div>
 
           <div
-            class="score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered"
+            class="score p-3 centered-attribute m-1 my-4 has-all-centered"
             style="border: none"
           >
             <span
-              class="attribute has-background-white-ter has-padding-y-3 rounded"
+              class="attribute has-background-white-ter py-3 rounded"
               style="width: 100%"
             >
               <span>
@@ -47,7 +47,7 @@
               }}</span>
             </span>
             <span
-              class="attribute has-background-danger has-padding-y-3 rounded-left"
+              class="attribute has-background-danger py-3 rounded-left"
               v-bind:class="{ rounded: student.hp == 100 }"
               :style="'width: ' + student.hp + '%'"
               v-if="student.hp > 0"
@@ -59,13 +59,13 @@
               <span v-if="student.hp >= 30">{{ student.hp }}</span>
             </span>
           </div>
-          <div class="score has-padding-3 has-margin-1 has-margin-top-3">
+          <div class="score p-3 m-1 mt-3">
             <span>
               <i class="fas fa-fist-raised colored"></i>
             </span>
             {{ student.xp }}
           </div>
-          <div class="gold has-padding-3 has-margin-1 has-margin-top-2">
+          <div class="gold p-3 m-1 mt-2">
             <span>
               <i class="fas fa-coins colored"></i>
             </span>
@@ -74,17 +74,17 @@
         </div>
       </div>
     </div>
-    <div class="column has-padding-right-0">
+    <div class="column pr-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item
           :label="trans.get('students.information')"
           icon="info-circle"
           icon-pack="fad"
         >
-          <div class>
+          <div class="p-2">
             <h3 class="title is-4 ml-2 mb-0">Avatar</h3>
             <div
-              class="has-margin-3"
+              class="m-3"
               v-if="admin || settings.allow_upload != 0"
             >
               <croppa
@@ -102,7 +102,7 @@
                 class="rounded"
               ></croppa>
             </div>
-            <div class="has-margin-3">
+            <div class="m-3">
               <button
                 class="button is-link"
                 v-if="image && image.chosenFile"
@@ -112,7 +112,7 @@
               </button>
             </div>
             <image-bank
-              class="has-margin-3"
+              class="m-3"
               :admin="admin"
               :student="student"
               :code="classroom.code"
@@ -196,7 +196,7 @@
             </div>
           </div>
           <div
-            class="has-padding-4"
+            class="p-4"
             v-if="(classroom.character_theme && student.hp > 0) && (admin || settings.allow_change_class == 1)"
           >
             <img
@@ -209,7 +209,7 @@
               "
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
-              class="has-padding-2 has-margin-2 rounded"
+              class="p-2 m-2 rounded"
               :src="'/img/character/characters/' + charclass.id + '.png'"
               v-for="charclass in classroom.character_theme.characters"
               v-bind:key="charclass.id"
@@ -229,7 +229,7 @@
               {{ trans.get("students.hide") }}
             </button>
             <button class="button is-danger" @click="deleteStudent">
-              <i class="fas fa-trash has-margin-right-2"></i>
+              <i class="fas fa-trash mr-2"></i>
               {{ trans.get("students.delete") }}
             </button>
           </div>
@@ -237,11 +237,11 @@
 
         <b-tab-item
           :label="trans.get('students.inventory')"
-          class="has-padding-0"
+          class="p-2"
           icon="backpack"
           icon-pack="fad"
         >
-          <!-- <div  class="notification is-light cursor-default has-margin-bottom-3 has-margin-top-0">
+          <!-- <div  class="notification is-light cursor-default mb-3 mt-0">
           </div> -->
 
           <article
@@ -272,7 +272,7 @@
           <div class="columns is-multiline is-variable" v-if="admin">
             <div
               v-for="item in items"
-              class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+              class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
               v-bind:key="item.id"
             >
               <b-field>
@@ -379,10 +379,10 @@
             </div>
             <div class style="clear: both"></div>
           </div>
-          <div class="shop has-padding-top-3" v-if="itemsJson">
+          <div class="shop pt-3" v-if="itemsJson">
             <h2 class="is-size-2"><i class="fas fa-store"></i> Shop</h2>
             <div
-              class="columns has-padding-4 has-margin-2 rounded"
+              class="columns p-4 m-2 rounded"
               v-for="item in itemsJson"
               :key="item.id"
             >
@@ -415,6 +415,7 @@
           v-if="!admin && pets.length"
           icon="dog"
           icon-pack="fad"
+           class="p-2"
         >
           <article class="message is-danger">
             <div class="message-body">
@@ -462,9 +463,10 @@
           v-if="admin || cards.length"
           icon="club"
           icon-pack="fad"
+
         >
           <button
-            class="button is-link has-margin-left-3"
+            class="button is-link ml-3 mt-1"
             v-if="admin"
             @click="isAssignModalActive = true"
           >
@@ -477,7 +479,7 @@
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
               <show-card
-                class="has-margin-4"
+                class="m-4"
                 :student="student"
                 :card="card"
                 :code="classroom.code"
@@ -493,6 +495,7 @@
           v-if="behaviours && behaviours.length"
           icon="heart"
           icon-pack="fad"
+          class="p-2"
         >
           <div class="is-flex justify-content-center">
             <apexchart
@@ -619,6 +622,7 @@
           v-if="challenges && challenges.length"
           icon="pen-fancy"
           icon-pack="fad"
+          class="p-2"
         >
           <div v-for="challenge in orderedChallenges" :key="challenge.id">
             <show-challenge
@@ -633,6 +637,7 @@
         <b-tab-item
           :label="trans.get('students.evaluation')"
           v-if="evaluation"
+          class="p-2"
           icon="analytics"
           icon-pack="fad"
         >
@@ -671,7 +676,7 @@
                             grade.pivot.grade < settings.eval_max / 2,
                         }"
                         ><i
-                          class="fas fa-external-link-alt has-margin-right-2"
+                          class="fas fa-external-link-alt mr-2"
                         ></i>
                         {{ grade.pivot.grade }}</span
                       >
@@ -710,7 +715,7 @@
                 <td>
                   <span
                     v-for="(tag, index) in grade.tags"
-                    class="tag is-dark cursor-default has-margin-x-1"
+                    class="tag is-dark cursor-default mx-1"
                     v-tippy
                     :content="
                       tag.description +
@@ -738,8 +743,9 @@
           "
           icon="award"
           icon-pack="fad"
+          class="p-2"
         >
-          <div v-if="admin" class="has-padding-left-4">
+          <div v-if="admin" class="pl-4">
             <div v-for="badge in classroom.badges" :key="badge.id">
               <div
                 @click="toggle(badge.id)"
@@ -758,7 +764,7 @@
               </div>
             </div>
           </div>
-          <div v-if="!admin" class="has-padding-left-4">
+          <div v-if="!admin" class="pl-4">
             <div v-for="badge in student.badges" :key="badge.id">
               <div
                 class="personalBadge type0"
@@ -782,6 +788,7 @@
           v-if="student.log_entries.length"
           icon="file"
           icon-pack="fad"
+          class="p-2"
         >
           <div class="columns">
             <div class="column">
@@ -1012,7 +1019,7 @@ export default {
           "</span>" +
           "<i class='" +
           behaviour.icon +
-          " has-margin-x-2'></i>" +
+          " mx-2'></i>" +
           this.trans.get(text)
         );
       return "";

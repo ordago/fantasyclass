@@ -1,9 +1,9 @@
 <template>
   <div>
-    <button class="button is-primary has-margin-y-3" @click="showAddModal">
+    <button class="button is-primary my-3" @click="showAddModal">
       {{ trans.get("events.add") }}
     </button>
-    <div class="has-margin-0 w-100">
+    <div class="m-0 w-100">
       <b-table
         :data="events"
         :default-sort="['id']"
@@ -41,7 +41,7 @@
                   : trans.get('general.disable')
               "
               @click.prevent="toggle(props.row.id)"
-              class="button is-small has-margin-right-3"
+              class="button is-small mr-3"
               :class="{
                 'is-dark': !isDisabled(props.row.id),
                 'is-light': isDisabled(props.row.id),
@@ -55,7 +55,7 @@
               :content="trans.get('general.edit')"
               v-if="props.row.classroom_id != null"
               @click="editModal(props.row)"
-              class="button is-info is-small has-margin-right-3"
+              class="button is-info is-small mr-3"
             >
               <i class="fas fa-edit"></i>
             </button>

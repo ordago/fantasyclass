@@ -948,6 +948,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -999,7 +1006,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
       var behaviour = this.student.behaviours[this.student.behaviours.length - 1];
       var text;
       if (behaviour.custom_text == null) text = behaviour.name;else text = behaviour.custom_text;
-      if (behaviour) return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='" + behaviour.icon + " has-margin-x-2'></i>" + this.trans.get(text);
+      if (behaviour) return "<span class='tag is-dark'>" + new Date(behaviour.created_at).toLocaleDateString() + "</span>" + "<i class='" + behaviour.icon + " mx-2'></i>" + this.trans.get(text);
       return "";
     },
     getPassFail: function getPassFail(grade) {
@@ -1493,16 +1500,13 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "columns h-100 has-margin-right-0",
+      staticClass: "columns h-100 mr-0",
       class: { "has-bg-student": !_vm.admin }
     },
     [
       _c(
         "div",
-        {
-          ref: "studentInfo",
-          staticClass: "column is-narrow has-padding-right-0 noprint"
-        },
+        { ref: "studentInfo", staticClass: "column is-narrow pr-0 noprint" },
         [
           _c(
             "div",
@@ -1517,40 +1521,34 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-content" }, [
-                _c(
-                  "div",
-                  { staticClass: "media has-margin-bottom-0 has-all-centered" },
-                  [
-                    _vm.classroom.character_theme
-                      ? _c("div", { staticClass: "media-left" }, [
-                          _c("figure", { staticClass: "image is-48x48" }, [
-                            _c("img", {
-                              staticClass: "rounded",
-                              attrs: { src: _vm.student.avatar, alt: "" }
-                            })
-                          ])
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "media-content" }, [
-                      _c("p", { staticClass: "title is-4" }, [
-                        _vm._v(_vm._s(_vm.student.name))
-                      ]),
-                      _vm._v(" "),
-                      _c("p", { staticClass: "subtitle is-6" }, [
-                        _c("small", [
-                          _vm._v("@" + _vm._s(_vm.student.username))
+                _c("div", { staticClass: "media mb-0 has-all-centered" }, [
+                  _vm.classroom.character_theme
+                    ? _c("div", { staticClass: "media-left" }, [
+                        _c("figure", { staticClass: "image is-48x48" }, [
+                          _c("img", {
+                            staticClass: "rounded",
+                            attrs: { src: _vm.student.avatar, alt: "" }
+                          })
                         ])
                       ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "media-content" }, [
+                    _c("p", { staticClass: "title is-4" }, [
+                      _vm._v(_vm._s(_vm.student.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "subtitle is-6" }, [
+                      _c("small", [_vm._v("@" + _vm._s(_vm.student.username))])
                     ])
-                  ]
-                ),
+                  ])
+                ]),
                 _vm._v(" "),
                 _c(
                   "div",
                   {
                     staticClass:
-                      "score has-padding-3 centered-attribute has-margin-1 has-margin-y-4 has-all-centered",
+                      "score p-3 centered-attribute m-1 my-4 has-all-centered",
                     staticStyle: { border: "none" }
                   },
                   [
@@ -1558,7 +1556,7 @@ var render = function() {
                       "span",
                       {
                         staticClass:
-                          "attribute has-background-white-ter has-padding-y-3 rounded",
+                          "attribute has-background-white-ter py-3 rounded",
                         staticStyle: { width: "100%" }
                       },
                       [
@@ -1593,7 +1591,7 @@ var render = function() {
                           "span",
                           {
                             staticClass:
-                              "attribute has-background-danger has-padding-y-3 rounded-left",
+                              "attribute has-background-danger py-3 rounded-left",
                             class: { rounded: _vm.student.hp == 100 },
                             style: "width: " + _vm.student.hp + "%"
                           },
@@ -1612,33 +1610,17 @@ var render = function() {
                   ]
                 ),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "score has-padding-3 has-margin-1 has-margin-top-3"
-                  },
-                  [
-                    _vm._m(0),
-                    _vm._v(
-                      "\n          " + _vm._s(_vm.student.xp) + "\n        "
-                    )
-                  ]
-                ),
+                _c("div", { staticClass: "score p-3 m-1 mt-3" }, [
+                  _vm._m(0),
+                  _vm._v("\n          " + _vm._s(_vm.student.xp) + "\n        ")
+                ]),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "gold has-padding-3 has-margin-1 has-margin-top-2"
-                  },
-                  [
-                    _vm._m(1),
-                    _vm._v(
-                      "\n          " + _vm._s(_vm.student.gold) + "\n        "
-                    )
-                  ]
-                )
+                _c("div", { staticClass: "gold p-3 m-1 mt-2" }, [
+                  _vm._m(1),
+                  _vm._v(
+                    "\n          " + _vm._s(_vm.student.gold) + "\n        "
+                  )
+                ])
               ])
             ],
             1
@@ -1648,7 +1630,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "column has-padding-right-0" },
+        { staticClass: "column pr-0" },
         [
           _c(
             "b-tabs",
@@ -1675,7 +1657,7 @@ var render = function() {
                 [
                   _c(
                     "div",
-                    {},
+                    { staticClass: "p-2" },
                     [
                       _c("h3", { staticClass: "title is-4 ml-2 mb-0" }, [
                         _vm._v("Avatar")
@@ -1684,7 +1666,7 @@ var render = function() {
                       _vm.admin || _vm.settings.allow_upload != 0
                         ? _c(
                             "div",
-                            { staticClass: "has-margin-3" },
+                            { staticClass: "m-3" },
                             [
                               _c("croppa", {
                                 staticClass: "rounded",
@@ -1713,7 +1695,7 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      _c("div", { staticClass: "has-margin-3" }, [
+                      _c("div", { staticClass: "m-3" }, [
                         _vm.image && _vm.image.chosenFile
                           ? _c(
                               "button",
@@ -1735,7 +1717,7 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("image-bank", {
-                        staticClass: "has-margin-3",
+                        staticClass: "m-3",
                         attrs: {
                           admin: _vm.admin,
                           student: _vm.student,
@@ -1942,7 +1924,7 @@ var render = function() {
                   (_vm.admin || _vm.settings.allow_change_class == 1)
                     ? _c(
                         "div",
-                        { staticClass: "has-padding-4" },
+                        { staticClass: "p-4" },
                         _vm._l(
                           _vm.classroom.character_theme.characters,
                           function(charclass) {
@@ -1951,7 +1933,7 @@ var render = function() {
                                 { name: "tippy", rawName: "v-tippy" }
                               ],
                               key: charclass.id,
-                              staticClass: "has-padding-2 has-margin-2 rounded",
+                              staticClass: "p-2 m-2 rounded",
                               class: {
                                 selected:
                                   charclass.id == _vm.student.character_id
@@ -2020,9 +2002,7 @@ var render = function() {
                             on: { click: _vm.deleteStudent }
                           },
                           [
-                            _c("i", {
-                              staticClass: "fas fa-trash has-margin-right-2"
-                            }),
+                            _c("i", { staticClass: "fas fa-trash mr-2" }),
                             _vm._v(
                               "\n            " +
                                 _vm._s(_vm.trans.get("students.delete")) +
@@ -2038,7 +2018,7 @@ var render = function() {
               _c(
                 "b-tab-item",
                 {
-                  staticClass: "has-padding-0",
+                  staticClass: "p-2",
                   attrs: {
                     label: _vm.trans.get("students.inventory"),
                     icon: "backpack",
@@ -2100,7 +2080,7 @@ var render = function() {
                             {
                               key: item.id,
                               staticClass:
-                                "column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+                                "column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
                             },
                             [
                               _c(
@@ -2373,7 +2353,7 @@ var render = function() {
                   _vm.itemsJson
                     ? _c(
                         "div",
-                        { staticClass: "shop has-padding-top-3" },
+                        { staticClass: "shop pt-3" },
                         [
                           _c("h2", { staticClass: "is-size-2" }, [
                             _c("i", { staticClass: "fas fa-store" }),
@@ -2385,8 +2365,7 @@ var render = function() {
                               "div",
                               {
                                 key: item.id,
-                                staticClass:
-                                  "columns has-padding-4 has-margin-2 rounded"
+                                staticClass: "columns p-4 m-2 rounded"
                               },
                               [
                                 _c(
@@ -2479,6 +2458,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("menu.pets"),
                         icon: "dog",
@@ -2603,7 +2583,7 @@ var render = function() {
                         ? _c(
                             "button",
                             {
-                              staticClass: "button is-link has-margin-left-3",
+                              staticClass: "button is-link ml-3 mt-1",
                               on: {
                                 click: function($event) {
                                   _vm.isAssignModalActive = true
@@ -2633,7 +2613,7 @@ var render = function() {
                             },
                             [
                               _c("show-card", {
-                                staticClass: "has-margin-4",
+                                staticClass: "m-4",
                                 attrs: {
                                   student: _vm.student,
                                   card: card,
@@ -2657,6 +2637,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("students.behaviours"),
                         icon: "heart",
@@ -2953,6 +2934,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("students.challenges"),
                         icon: "pen-fancy",
@@ -2984,6 +2966,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("students.evaluation"),
                         icon: "analytics",
@@ -3069,7 +3052,7 @@ var render = function() {
                                                   [
                                                     _c("i", {
                                                       staticClass:
-                                                        "fas fa-external-link-alt has-margin-right-2"
+                                                        "fas fa-external-link-alt mr-2"
                                                     }),
                                                     _vm._v(
                                                       "\n                      " +
@@ -3150,7 +3133,7 @@ var render = function() {
                                         ],
                                         key: index,
                                         staticClass:
-                                          "tag is-dark cursor-default has-margin-x-1",
+                                          "tag is-dark cursor-default mx-1",
                                         attrs: {
                                           content:
                                             tag.description +
@@ -3184,6 +3167,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("students.badges"),
                         icon: "award",
@@ -3194,7 +3178,7 @@ var render = function() {
                       _vm.admin
                         ? _c(
                             "div",
-                            { staticClass: "has-padding-left-4" },
+                            { staticClass: "pl-4" },
                             _vm._l(_vm.classroom.badges, function(badge) {
                               return _c("div", { key: badge.id }, [
                                 _c(
@@ -3232,7 +3216,7 @@ var render = function() {
                       !_vm.admin
                         ? _c(
                             "div",
-                            { staticClass: "has-padding-left-4" },
+                            { staticClass: "pl-4" },
                             _vm._l(_vm.student.badges, function(badge) {
                               return _c("div", { key: badge.id }, [
                                 _c(
@@ -3266,6 +3250,7 @@ var render = function() {
                 ? _c(
                     "b-tab-item",
                     {
+                      staticClass: "p-2",
                       attrs: {
                         label: _vm.trans.get("students.log"),
                         icon: "file",

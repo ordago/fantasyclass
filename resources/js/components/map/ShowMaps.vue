@@ -1,6 +1,6 @@
 <template>
-  <section class="has-padding-2 content">
-    <div class="columns has-margin-bottom-0">
+  <section class="p-2 content">
+    <div class="columns mb-0">
       <div class="column is-narrow">
         <a
           :href="'/classroom/' + this.code + '/maps/create'"
@@ -10,7 +10,7 @@
       </div>
       <div class="column is-hidden-mobile"></div>
     </div>
-    <div class="has-margin-0 w-100">
+    <div class="m-0 w-100">
       <b-table
         v-if="data.length"
         :data="data"
@@ -51,18 +51,18 @@
             <b-button
               v-tippy
               :content="trans.get('maps.set_active')"
-              type="is-primary is-small has-margin-left-3"
+              type="is-primary is-small ml-3"
               v-if="props.row.id != mapSelected"
               @click="confirmActive(props.row.id)"
             >
               <i class="fas fa-map-marker-check"></i>
             </b-button>
-            <i class="fal fa-ellipsis-v fas fa-lg has-padding-x-3"></i>
+            <i class="fal fa-ellipsis-v fas fa-lg px-3"></i>
             <a
               v-tippy
               :content="trans.get('general.edit')"
               :href="'/classroom/' + code + '/maps/' + props.row.id"
-              class="button is-info is-small has-margin-right-3"
+              class="button is-info is-small mr-3"
             >
               <i class="fas fa-edit"></i>
             </a>
@@ -94,7 +94,7 @@
         </div>
         <footer class="card-footer">
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+            class="card-footer-item mb-0 has-background-primary rounded"
           >
             <span>
               <a
@@ -107,7 +107,7 @@
             </span>
           </p>
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+            class="card-footer-item mb-0 has-background-info rounded"
           >
             <span>
               <a
@@ -127,7 +127,7 @@
         </div>
         <footer class="card-footer">
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+            class="card-footer-item mb-0 has-background-primary rounded"
           >
             <span>
               <a
@@ -140,7 +140,7 @@
             </span>
           </p>
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+            class="card-footer-item mb-0 has-background-info rounded"
           >
             <span>
               <a
@@ -153,7 +153,7 @@
             </span>
           </p>
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-dark rounded"
+            class="card-footer-item mb-0 has-background-dark rounded"
           >
             <span>
               <a
@@ -172,7 +172,7 @@
         </div>
         <footer class="card-footer">
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-primary rounded"
+            class="card-footer-item mb-0 has-background-primary rounded"
           >
             <span>
               <a
@@ -185,7 +185,7 @@
             </span>
           </p>
           <p
-            class="card-footer-item has-margin-bottom-0 has-background-info rounded"
+            class="card-footer-item mb-0 has-background-info rounded"
           >
             <span>
               <a
@@ -210,7 +210,7 @@ const ModalForm = {
   props: ["name", "url"],
   template: `
             <div class="modal-card" style="width: auto">
-                <header class="modal-card-head has-padding-2">
+                <header class="modal-card-head p-2">
                     <p class="modal-card-title">{{ name }}</p>
                     <button class="button" type="button" @click="$parent.close()">{{ trans.get('general.close') }}</button>
                 </header>

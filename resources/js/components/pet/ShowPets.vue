@@ -1,7 +1,7 @@
 <template>
   <div>
     <button class="button is-link mb-5" @click="isModalActive = true">
-      <i class="fas fa-dog has-margin-right-2"></i>
+      <i class="fas fa-dog mr-2"></i>
       {{ trans.get("pets.new_pet") }}
     </button>
 
@@ -133,11 +133,11 @@
           >
         </div>
       </div>
-      <button class="button has-margin-left-2" @click="editPet(pet)">
+      <button class="button ml-2" @click="editPet(pet)">
         <i class="fas fa-edit"></i>
       </button>
       <button
-        class="button is-danger has-margin-left-2"
+        class="button is-danger ml-2"
         @click="deleteItem(pet.id)"
       >
         <i class="fas fa-trash-alt"></i>
@@ -156,7 +156,7 @@
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
             <p class="modal-card-title">
-              <i class="fas fa-dog has-margin-right-2"></i
+              <i class="fas fa-dog mr-2"></i
               >{{ trans.get("pets.new_pet") }}
             </p>
           </header>
@@ -177,7 +177,7 @@
                 class="pet-selector"
               />
             </b-field>
-            <b-field :label="trans.get('pets.name')" class="has-margin-top-4">
+            <b-field :label="trans.get('pets.name')" class="mt-4">
               <b-input
                 v-model="pet.name"
                 maxlength="40"

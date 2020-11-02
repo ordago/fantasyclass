@@ -1,5 +1,5 @@
 <template>
-  <div class="cc-card box has-margin-2">
+  <div class="cc-card box m-2">
     <h5>{{data.name}}</h5>
   </div>
 </template>

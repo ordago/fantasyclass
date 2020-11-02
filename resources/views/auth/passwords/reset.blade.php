@@ -10,7 +10,7 @@
                     </p>
                 </header>
 
-                <div class="card-body has-padding-4">
+                <div class="card-body p-4">
                     <form method="POST" action="{{ route('password.update') }}">
                         @csrf
 
@@ -28,7 +28,7 @@
                             </div>
                         </div>
 
-                            <div class="has-margin-3">
+                            <div class="m-3">
                                 <input id="password" placeholder="{{ __('Password') }}"  type="password" class="input @error('password') is-danger @enderror" name="password" required autocomplete="new-password">
 
                                 @error('password')
@@ -38,10 +38,10 @@
                                 @enderror
                             </div>
 
-                            <div class="has-margin-3">
+                            <div class="m-3">
                                 <input id="password-confirm" placeholder="{{ __('Confirm Password') }}" type="password" class="input" name="password_confirmation" required autocomplete="new-password">
                             </div>
-                            <div class="has-margin-3">
+                            <div class="m-3">
                                 <button type="submit" class="button is-primary">
                                     {{ __('Reset Password') }}
                                 </button>

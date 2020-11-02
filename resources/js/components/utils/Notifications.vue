@@ -1,7 +1,7 @@
 <template>
   <div class="is-flex has-all-centered left-auto">
     <div
-      class="has-margin-3 cursor-pointer"
+      class="m-3 cursor-pointer"
       style="display: initial !important"
       @click="
         show = 1;
@@ -148,7 +148,7 @@
                 v-text="getText(card.pivot.marked)"
               ></button>
               <button
-                class="button is-danger has-margin-left-2"
+                class="button is-danger ml-2"
                 @click="
                   setCard(
                     card.id,

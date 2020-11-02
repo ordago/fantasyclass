@@ -68,8 +68,8 @@
         <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation" @yield('navbarhide')>
             <div class="navbar-brand">
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
-                    <img src="/img/logo.png" width="36px" height="38px" class="has-margin-x-3">
-                    <label class="label-title has-padding-x-2 cursor-pointer">
+                    <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
+                    <label class="label-title px-2 cursor-pointer">
                         @yield('title','FantasyClass')
                     </label>
                 </a>
@@ -134,7 +134,7 @@
                                     </form>
                                     <hr class="dropdown-divider">
                                     <div class="has-text-right">
-                                        <small class="has-padding-3"><em><a href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md" target="_blank">FantasyClass {{ config('app.version') }}</a></em></small>
+                                        <small class="p-3"><em><a href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md" target="_blank">FantasyClass {{ config('app.version') }}</a></em></small>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,7 @@
                 <button id="buttonAdd" type="button" class="font-weight-bold text-primary btn-sm btn btn-link">ADD</button>
             </div>
         </div>
-        <main class="main-content has-padding-3">
+        <main class="p-2 m-0">
             @yield('content')
         </main>
     </div>
@@ -185,8 +185,8 @@
         });
     </script>
     @auth
-        <script src="{{ asset('js/config.js') }}" defer></script>
-        <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    <script src="{{ asset('js/config.js') }}" defer></script>
+    <script src="{{ asset('js/enable-push.js') }}" defer></script>
     @endauth
     @guest
     <script type="text/javascript">

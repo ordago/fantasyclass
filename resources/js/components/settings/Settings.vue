@@ -1,6 +1,6 @@
 <template>
-  <div class="content has-padding-3">
-    <div class="has-padding-2">
+  <div class="content p-3">
+    <div class="p-2">
       <h1>
         <i class="fal fa-chalkboard"></i>
         {{ trans.get("settings.classroom") }}
@@ -42,7 +42,7 @@
           <a
             class="button"
             :href="'/classroom/' + classroom.code + '/edit'"
-            ><i class="far fa-cog has-margin-right-2"></i>
+            ><i class="far fa-cog mr-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
           <!-- <button class="button is-primary">Reset</button> -->
@@ -52,7 +52,7 @@
             v-if="isAdmin"
           >
             <i class="fas fa-trash"></i>
-            <span class="has-margin-x-3">
+            <span class="mx-3">
               {{ trans.get("general.delete") }}
               <i class="fas fa-radiation-alt"></i>
               <i class="fas fa-exclamation-triangle"></i>
@@ -87,14 +87,14 @@
       <div class="mt-0 mb-2">
         <small v-if="user.token" v-html="trans.get('settings.classroom_unlink_info')"></small>
       </div>
-      <div class="has-padding-2">
+      <div class="p-2">
         <h1>
           <i class="fal fa-cog"></i>
           {{ trans.get("settings.general_preferences") }}
         </h1>
-        <div class="has-margin-y-4">
+        <div class="my-4">
           <b-switch
-            class="has-margin-left-4"
+            class="ml-4"
             true-value="1"
             false-value="0"
             @input="toggleProp('allow_change_class')"
@@ -102,9 +102,9 @@
             >{{ trans.get("settings.allow_change_class") }}</b-switch
           >
         </div>
-        <div class="has-margin-y-4">
+        <div class="my-4">
           <b-switch
-            class="has-margin-left-4"
+            class="ml-4"
             true-value="1"
             false-value="0"
             @input="toggleProp('allow_upload')"
@@ -112,9 +112,9 @@
             >{{ trans.get("settings.allow_upload") }}</b-switch
           >
         </div>
-        <div class="has-margin-y-4">
+        <div class="my-4">
           <b-switch
-            class="has-margin-left-4"
+            class="ml-4"
             true-value="1"
             false-value="0"
             @input="toggleProp('show_chat')"
@@ -123,12 +123,12 @@
           >
         </div>
       </div>
-      <div class="has-padding-2 has-margin-top-4">
+      <div class="p-2 mt-4">
         <h1>
           <i class="fal fa-user-graduate"></i>
           {{ trans.get("settings.teachers") }}
         </h1>
-        <div class="has-padding-left-4">
+        <div class="pl-4">
           <button
             class="button is-primary"
             v-if="isAdmin"
@@ -158,7 +158,7 @@
             </div>
             <div class="column is-narrow is-flex align-items-center">
               <button
-                class="button has-margin-left-4 is-danger"
+                class="button ml-4 is-danger"
                 @click="confirmDeleteTeacher(teacher.id, index)"
                 v-if="
                   (isAdmin && teacher.id != user.id) ||
@@ -171,17 +171,17 @@
           </div>
         </div>
       </div>
-      <div class="has-padding-2 has-margin-top-4">
+      <div class="p-2 mt-4">
         <h1>
           <i class="fal fa-brackets-curly"></i>
           {{ trans.get("settings.parameters") }}
         </h1>
-        <div class="has-padding-left-4">
-          <h3 class="has-margin-bottom-4">
+        <div class="pl-4">
+          <h3 class="mb-5">
             {{ trans.get("settings.probability") }}
           </h3>
           <vue-slider
-            class="has-padding-5"
+            class="p-5"
             v-model="value"
             :process="process"
             :tooltip="'always'"
@@ -191,29 +191,29 @@
               <div :class="['custom-dot', { focus }]"></div>
             </template>
           </vue-slider>
-          <div class="has-margin-0 is-size-6">
+          <div class="m-0 is-size-6">
             <strong>{{ trans.get("settings.common") }}</strong>
             : {{ value[1] }}
-            <i class="fal fa-ellipsis-v has-margin-x-3"></i>
+            <i class="fal fa-ellipsis-v mx-3"></i>
             <strong>{{ trans.get("settings.rare") }}</strong>
             : {{ value[2] - value[1] }}
-            <i class="fal fa-ellipsis-v has-margin-x-3"></i>
+            <i class="fal fa-ellipsis-v mx-3"></i>
             <strong>{{ trans.get("settings.epic") }}</strong>
             : {{ value[3] - value[2] }}
-            <i class="fal fa-ellipsis-v has-margin-x-3"></i>
+            <i class="fal fa-ellipsis-v mx-3"></i>
             <strong>{{ trans.get("settings.legendary") }}</strong>
             : {{ value[4] - value[3] }}
           </div>
           <button
-            class="button is-primary has-margin-y-4"
+            class="button is-primary my-4"
             @click="saveProbabilities()"
           >
-            <i class="fas fa-save has-margin-right-3"></i>
+            <i class="fas fa-save mr-3"></i>
             {{ trans.get("general.save") }}
           </button>
         </div>
-        <div class="has-padding-left-4">
-          <h3 class="has-margin-bottom-4">
+        <div class="pl-4">
+          <h3 class="mb-4">
             {{ trans.get("settings.economic") }}
           </h3>
           <div class="columns">
@@ -256,19 +256,19 @@
             </div>
           </div>
         </div>
-        <button class="button is-primary has-margin-4" @click="saveCards()">
-          <i class="fas fa-save has-margin-right-3"></i>
+        <button class="button is-primary m-4" @click="saveCards()">
+          <i class="fas fa-save mr-3"></i>
           {{ trans.get("general.save") }}
         </button>
       </div>
-      <!-- <div class="has-padding-left-4">
-      <h3 class="has-margin-bottom-4">{{ trans.get('settings.weather_management') }}</h3>
-      <div class="columns has-padding-2">
+      <!-- <div class="pl-4">
+      <h3 class="mb-4">{{ trans.get('settings.weather_management') }}</h3>
+      <div class="columns p-2">
         <b-switch
           :value="true"
           type="is-success"
           v-model="settings.night"
-          class="has-margin-x-4"
+          class="mx-4"
           passive-type="is-danger"
           true-value="1"
           false-value="0"
@@ -280,7 +280,7 @@
           :value="true"
           type="is-success"
           v-model="settings.rain"
-          class="has-margin-x-4"
+          class="mx-4"
           passive-type="is-danger"
           true-value="1"
           false-value="0"
@@ -292,7 +292,7 @@
           :value="true"
           type="is-success"
           v-model="settings.snow"
-          class="has-margin-x-4"
+          class="mx-4"
           passive-type="is-danger"
           true-value="1"
           false-value="0"
@@ -304,7 +304,7 @@
           :value="true"
           type="is-success"
           v-model="settings.fog"
-          class="has-margin-x-4"
+          class="mx-4"
           passive-type="is-danger"
           true-value="1"
           false-value="0"

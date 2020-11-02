@@ -1,14 +1,14 @@
 <template>
     <form method="post" action="">
         <input :value="csrfToken" type="hidden" name="_token"/>
-        <div class="has-padding-4">
+        <div class="p-4">
             <div>
                 <span>
                     {{ trans.get('levels.number_levels') }}
                 </span> 
                 <input type="number" class="input" name="levels" value="10">
             </div>
-            <div class="has-margin-top-4">
+            <div class="mt-4">
                 <span>
                     {{ trans.get('levels.xp_increment') }}
                 </span> 
@@ -17,7 +17,7 @@
                     {{ trans.get('levels.increment_info') }}
                 </small>
             </div>
-            <button class="button is-primary has-margin-top-3">{{ trans.get('levels.create') }}</button>
+            <button class="button is-primary mt-3">{{ trans.get('levels.create') }}</button>
         </div>
     </form>
 </template>

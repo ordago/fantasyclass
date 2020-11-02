@@ -1,5 +1,5 @@
 <template>
-  <div class="container w-100 has-padding-3">
+  <div class="container w-100 p-3">
     <form
       method="post"
       @submit="formSubmit"
@@ -110,7 +110,7 @@
         <!-- END CARD -->
 
         <div class="column" id="propertiesCard">
-          <div class="is-flex has-margin-bottom-0">
+          <div class="is-flex mb-0">
             <div class="field has-addons">
               <p class="control">
                 <button
@@ -131,7 +131,7 @@
                 </button>
               </p>
             </div>
-            <div class="field has-addons has-margin-left-2">
+            <div class="field has-addons ml-2">
               <p class="control">
                 <button
                   type="button"
@@ -187,7 +187,7 @@
             v-if="!card"
             for="file-upload"
             style="display: block"
-            class="button is-link has-margin-bottom-2 has-margin-top-0"
+            class="button is-link mb-2 mt-0"
           >
             <i class="fa fa-cloud-upload"></i>
             {{ trans.get("cards.custom_image") }}
@@ -203,7 +203,7 @@
             @change="getImage"
           />
 
-          <div class="has-margin-top-3">
+          <div class="mt-3">
             <label>
               <input
                 type="radio"
@@ -215,7 +215,7 @@
               />
               <img src="/img/cardgen/only_back_0_prev.png" />
             </label>
-            <label class="has-margin-left-2">
+            <label class="ml-2">
               <input
                 type="radio"
                 class="hide-radios"
@@ -229,7 +229,7 @@
                 content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
               />
             </label>
-            <label class="has-margin-left-2">
+            <label class="ml-2">
               <input
                 type="radio"
                 class="hide-radios"
@@ -243,7 +243,7 @@
                 content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
               />
             </label>
-            <label class="has-margin-left-2">
+            <label class="ml-2">
               <input
                 type="radio"
                 class="hide-radios"
@@ -257,7 +257,7 @@
                 content="By <i class='fab fa-twitter'></i> @soyjujo_juanjo"
               />
             </label>
-            <label class="has-margin-left-2">
+            <label class="ml-2">
               <input
                 type="radio"
                 class="hide-radios"
@@ -273,7 +273,7 @@
             </label>
           </div>
 
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -295,7 +295,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -317,7 +317,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -331,14 +331,14 @@
                       type="color"
                       name="background"
                       v-model="background"
-                      class="input has-padding-1"
+                      class="input p-1"
                     />
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -349,7 +349,7 @@
                       :content="trans.get('cards.radius_help')"
                     >
                       Radius
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">
@@ -369,7 +369,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -380,7 +380,7 @@
                       :content="trans.get('cards.min_lvl_help')"
                     >
                       {{ trans.get("cards.min_lvl") }}
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">
@@ -398,7 +398,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -409,7 +409,7 @@
                       :content="trans.get('cards.type_help')"
                     >
                       {{ trans.get("cards.type") }}
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control select is-fullwidth">
@@ -438,7 +438,7 @@
               name="special"
               value="1"
               id="checkspecial"
-              class="has-margin-3"
+              class="m-3"
               type="is-info"
             >
               <label
@@ -446,7 +446,7 @@
                 v-tippy
                 :content="trans.get('cards.special_help')"
                 >{{ trans.get("cards.special") }}
-                <i class="fas fa-question-circle has-margin-left-2"></i
+                <i class="fas fa-question-circle ml-2"></i
               ></label>
             </b-switch>
           </div>
@@ -456,7 +456,7 @@
               value="1"
               name="fullscreen"
               id="fullscreenCard"
-              class="has-margin-left-3"
+              class="ml-3"
               type="is-info"
             >
               <label
@@ -464,14 +464,14 @@
                 v-tippy
                 :content="trans.get('cards.fullscreen_help')"
                 >Fullscreen
-                <i class="fas fa-question-circle has-margin-left-2"></i
+                <i class="fas fa-question-circle ml-2"></i
               ></label>
             </b-switch>
           </div>
         </div>
 
         <div class="column" id="properties2Card">
-          <div class="field is-horizontal has-margin-bottom-3">
+          <div class="field is-horizontal mb-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -482,7 +482,7 @@
                       :content="trans.get('cards.xp_help')"
                     >
                       <i class="fas fa-fist-raised colored"></i>
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">
@@ -499,7 +499,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -510,7 +510,7 @@
                       :content="trans.get('cards.gold_help')"
                     >
                       <i class="fas fa-coins colored"></i>
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">
@@ -526,7 +526,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -537,7 +537,7 @@
                       :content="trans.get('cards.hp_help')"
                     >
                       <i class="fas fa-heart colored"></i>
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">
@@ -553,7 +553,7 @@
               </div>
             </div>
           </div>
-          <div class="field is-horizontal has-margin-y-3">
+          <div class="field is-horizontal my-3">
             <div class="field-body">
               <div class="field is-expanded">
                 <div class="field has-addons">
@@ -564,7 +564,7 @@
                       :content="trans.get('cards.slot_help')"
                     >
                       <i class="fas fa-club colored"></i>
-                      <i class="fas fa-question-circle has-margin-left-2"></i>
+                      <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>
                   <p class="control is-expanded">

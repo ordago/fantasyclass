@@ -1,6 +1,6 @@
 <template>
-  <section class="has-padding-2">
-    <div class="columns has-margin-bottom-0">
+  <section class="p-2">
+    <div class="columns mb-0">
       <div class="column is-narrow">
         <a
           :href="'/classroom/' + this.code + '/badges/create'"

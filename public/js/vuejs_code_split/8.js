@@ -126,15 +126,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "tag is-warning has-margin-y-2" }, [
+    return _c("div", { staticClass: "tag is-warning my-2" }, [
       _vm._v("\n    %HP% "),
       _c("i", { staticClass: "fas fa-heart colored" }),
       _vm._v(" "),
-      _c("i", { staticClass: "fal fa-ellipsis-v has-margin-x-3" }),
+      _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
       _vm._v(" %XP%\n    "),
       _c("i", { staticClass: "fas fa-fist-raised colored" }),
       _vm._v(" "),
-      _c("i", { staticClass: "fal fa-ellipsis-v has-margin-x-3" }),
+      _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
       _vm._v(" %GOLD%\n    "),
       _c("i", { staticClass: "fas fa-coins colored" })
     ])

@@ -1,12 +1,12 @@
 <template>
-  <div class="has-padding-left-0-desktop" ref="topref">
-    <div class="panel has-padding-left-0-desktop">
+  <div class="pl-0" ref="topref">
+    <div class="panel is-primary pl-0">
       <p
-        class="panel-heading is-flex has-space-between align-items-center has-padding-3"
+        class="panel-heading is-flex has-space-between align-items-center p-3"
       >
         <span>
           <i :class="challengegroup.icon"></i>
-          <span class="has-padding-left-3">{{ challengegroup.name }}</span>
+          <span class="pl-3">{{ challengegroup.name }}</span>
           <!-- <button style="font-size: .5em" class="button is-info"><i class="fas fa-edit"></i></button> -->
           <button
             style="font-size: 0.5em"
@@ -19,7 +19,7 @@
         </span>
         <span>
           <button class="button" @click="isImportModalActive = true">
-            <i class="fas fa-file-import has-margin-right-2"></i>
+            <i class="fas fa-file-import mr-2"></i>
             {{ trans.get("general.import") }}
           </button>
           <button
@@ -58,14 +58,14 @@
       </div>
 
       <div class="panel-block" v-if="challenges.length == 0 && !addChallenge">
-        <h3 class="is-size-3 has-padding-4 w-100 has-text-centered">
+        <h3 class="is-size-3 p-4 w-100 has-text-centered">
           <i class="fal fa-smile-wink"></i>
           {{ trans.get("challenges.empty") }}
         </h3>
       </div>
 
       <div
-        class="panel-block is-block has-padding-3"
+        class="panel-block is-block p-3"
         v-if="challenges.length > 0 && !addChallenge"
       >
         <div v-for="challenge in filteredList" v-bind:key="challenge.id">
@@ -80,15 +80,15 @@
     <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
       <div
         v-if="currentChallenge"
-        class="has-padding-5 rounded has-background-light"
+        class="p-5 rounded has-background-light"
       >
-        <h1 class="is-size-1 has-margin-bottom-3">
+        <h1 class="is-size-1 mb-3">
           {{ currentChallenge.title }}
         </h1>
         <div v-if="currentChallenge.type == 0">
           <div
             v-for="student in students"
-            class="has-padding-3"
+            class="p-3"
             :key="student.id"
           >
             <div class="columns">
@@ -108,7 +108,7 @@
           </div>
         </div>
         <div v-if="currentChallenge.type == 1">
-          <div v-for="group in groups" class="has-padding-3" :key="group.id">
+          <div v-for="group in groups" class="p-3" :key="group.id">
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
                 <div class="field">
@@ -227,7 +227,7 @@ export default {
     buttonAddChallege() {
       return this.addChallenge
         ? this.trans.get("general.cancel")
-        : "<i class='far fa-plus has-padding-right-2'></i>" +
+        : "<i class='far fa-plus pr-2'></i>" +
             this.trans.get("challenges.add");
     },
     filteredList: function () {

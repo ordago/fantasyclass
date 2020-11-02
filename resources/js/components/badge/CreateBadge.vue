@@ -1,5 +1,5 @@
 <template>
-    <div class="container has-padding-3">
+    <div class="container p-3">
       <form method="post" :action="'/classroom/' + this.code + '/badges'" enctype="multipart/form-data">
         <input :value="csrfToken" type="hidden" name="_token"/>
 
@@ -15,17 +15,17 @@
           <label><small>{{ trans.get('badges.fontawesome') }} <a href="https://fontawesome.com/icons?d=gallery" target="_blank">FontAwesome</a></small></label>
         </div>
 
-        <div class="has-margin-top-4">
+        <div class="mt-4">
           <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('badges.title') }}</label>
-          <input type="text" id="title" v-model="title" name="title" required class="input has-margin-y-3">
+          <input type="text" id="title" v-model="title" name="title" required class="input my-3">
         </div>
-        <div class="has-margin-top-2">
+        <div class="mt-2">
           <label for="custom_text">{{ trans.get('badges.description') }}</label>
           <input type="text" v-model="description" name="description" class="input" required placeholder="">
         </div>
-        <div class="has-margin-top-3">
+        <div class="mt-3">
           <label>{{ trans.get('badges.attributes') }} <small class="font-italic">({{ trans.get('badges.attributes_info') }})</small></label>
-          <div class="columns has-margin-y-1">
+          <div class="columns my-1">
             <div class="column">
               <div class="field has-addons">
                 <p class="control">

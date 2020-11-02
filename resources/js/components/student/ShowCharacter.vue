@@ -1,7 +1,7 @@
 <template>
-  <span>
+  <span class="rounded">
     <span
-      class="level-top rounded has-padding-4 has-background-light"
+      class="level-top rounded p-4 has-background-light"
       v-if="student.level"
     >
       {{ student.level.number }}
@@ -16,7 +16,7 @@
       v-if="student.grouplogo"
       v-tippy="{ arrow: true }"
       :content="'<i class=\'fas fa-users\'></i> ' + student.groups[0].name"
-      class="top-right group-logo is-full-rounded"
+      class="topr group-logo is-full-rounded"
     >
       <img :src="student.grouplogo" class="is-full-rounded" />
     </span>
@@ -59,7 +59,7 @@
           v-bind:key="element.id"
         />
       </div>
-      <div v-else class="is-flex has-all-centered has-padding-y-3">
+      <div v-else class="is-flex has-all-centered py-3">
         <img
           :src="student.avatar"
           width="128px"

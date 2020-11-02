@@ -1,5 +1,5 @@
 <template>
-  <div class="has-margin-2">
+  <div class="m-2">
     <div style="text-align: center" v-if="this.use">
       <button
         type="submit"

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <a :href="'/classroom/' + classroom.code + '/rubric/create'" class="button is-link has-margin-bottom-3">{{ trans.get('evaluation.create_rubric') }}</a>
+    <a :href="'/classroom/' + classroom.code + '/rubric/create'" class="button is-link mb-3">{{ trans.get('evaluation.create_rubric') }}</a>
     <b-table v-if="rubrics.length"
             :data="rubrics"
             :default-sort="['name']"
@@ -15,7 +15,7 @@
                 </b-table-column>
                 
                 <b-table-column field="settings" :label="trans.get('menu.settings')" centered class="w-100 is-flex has-all-centered">
-                    <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + classroom.code + '/rubric/' + props.row.id" class="button is-info is-small has-margin-right-3"><i class="fas fa-edit"></i></a>
+                    <a v-tippy :content="trans.get('general.edit')" :href="'/classroom/' + classroom.code + '/rubric/' + props.row.id" class="button is-info is-small mr-3"><i class="fas fa-edit"></i></a>
                     <b-button v-tippy :content="trans.get('general.delete')" type="is-danger is-small" @click="confirmDelete(props.row.id)"><i class="fas fa-trash-alt"></i></b-button>
                 </b-table-column>
                 

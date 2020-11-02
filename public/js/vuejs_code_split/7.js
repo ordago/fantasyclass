@@ -131,14 +131,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    {
-      staticClass:
-        "message has-margin-top-4 has-margin-bottom-1 is-flex has-all-centered"
-    },
+    { staticClass: "message mt-4 mb-1 is-flex has-all-centered" },
     [
       _c("div", {
         ref: "textarea",
-        staticClass: "rich-editor-container rounded has-padding-4",
+        staticClass: "rich-editor-container rounded p-4",
         attrs: {
           contenteditable: "true",
           autofocus: "false",

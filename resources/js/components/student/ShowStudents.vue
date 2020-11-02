@@ -1,17 +1,17 @@
 <template>
   <div>
     <div
-      class="utilities columns is-multiline is-flex rounded card-shadow-s has-padding-y-2 has-margin-2 has-margin-left-0 mb-2"
+      class="utilities columns is-multiline is-flex rounded card-shadow-s m-0 mt-1"
     >
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
       </div>
       <div
-        class="column has-padding-x-0 is-12-mobile is-flex is-center-vertically"
+        class="column px-0 is-12-mobile is-flex is-center-vertically"
         style="flex-flow: wrap"
       >
         <a
-          class="link outer_glow has-text-dark has-padding-x-2"
+          class="link outer_glow has-text-dark px-1"
           v-tippy
           :content="trans.get('menu.groups')"
           :href="'/classroom/' + classroom.code + '/groups'"
@@ -19,23 +19,23 @@
           <i class="fad fa-users outer_glow" style="font-size: 2em"></i>
         </a>
         <a
-          class="link outer_glow has-text-dark has-padding-x-2"
+          class="link outer_glow has-text-dark px-1"
           v-tippy
           :content="trans.get('menu.event') + ' ' + trans.get('utils.random')"
           :href="'/classroom/' + classroom.code + '/event/random'"
         >
           <i
-            class="fad fa-scroll-old has-margin-right-2"
+            class="fad fa-scroll-old mr-2"
             style="font-size: 2em"
           ></i>
         </a>
 
         <div
           class="dropdown is-hoverable"
-          style="display: inline-block; padding: 3px; margin-top: 3px"
+          style="display: inline-block;"
         >
           <span
-            class="dropdown-trigger link outer_glow has-margin-y-0 has-padding-y-0 has-padding-x-1"
+            class="dropdown-trigger link outer_glow my-0 py-0 px-1"
           >
             <i class="fad fa-random outer_glow" style="font-size: 2em"></i>
             <span class="icon is-small">
@@ -43,13 +43,13 @@
             </span>
           </span>
 
-          <div class="dropdown-menu has-background-white rounded has-padding-3">
+          <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
               @click="randomStudents"
               v-if="students.length"
             >
-              <i class="fad fa-user has-margin-right-2"></i>
+              <i class="fad fa-user mr-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.students") }}
             </a>
             <a
@@ -57,7 +57,7 @@
               @click="randomGroups"
               v-if="classroom.grouping[0].groups.length > 0"
             >
-              <i class="fad fa-users has-margin-right-2"></i>
+              <i class="fad fa-users mr-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.groups") }}
             </a>
             <a
@@ -65,17 +65,17 @@
               @click="getRandomCard"
               v-if="students.length || classroom.grouping[0].groups.length"
             >
-              <i class="fad fa-club has-margin-right-2"></i>
+              <i class="fad fa-club mr-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.card") }}
             </a>
             <a class="dropdown-item" @click="isWheelModalActive = true">
-              <i class="fad fa-treasure-chest has-margin-right-2"></i>
+              <i class="fad fa-treasure-chest mr-2"></i>
               {{ trans.get("utils.fortune") }}
             </a>
           </div>
         </div>
         <a
-          class="link outer_glow has-text-dark has-padding-x-2"
+          class="link outer_glow has-text-dark px-1"
           v-tippy
           :content="trans.get('menu.classcode')"
           @click="showClassCode"
@@ -95,12 +95,12 @@
           target="_blank"
           v-tippy
           :content="trans.get('menu.music')"
-          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
           <i class="fad fa-music outer_glow" style="font-size: 2em"></i>
         </a>
         <span
-          class="link outer_glow has-padding-x-2 cursor-pointer"
+          class="link outer_glow px-1 cursor-pointer"
           v-tippy
           :content="trans.get('menu.countdown')"
           @click="isCountDownModalActive = true"
@@ -112,7 +112,7 @@
           target="_blank"
           v-tippy
           :content="trans.get('menu.noise')"
-          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
           <i class="fad fa-microphone outer_glow" style="font-size: 2em"></i>
         </a>
@@ -120,7 +120,7 @@
           @click="isMassiveModalActive = true"
           v-tippy
           :content="trans.get('menu.massive')"
-          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
           <i class="fad fa-poll-people" style="font-size: 2em"></i>
         </a>
@@ -129,7 +129,7 @@
           v-if="students && students.length"
           :content="trans.get('menu.send_message_all')"
           @click="sendMessage(1)"
-          class="link outer_glow has-padding-x-2 cursor-pointer has-text-dark"
+          class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
           <i class="fad fa-paper-plane" style="font-size: 2em"></i>
         </a>
@@ -139,11 +139,10 @@
         v-if="students.length > 0"
       >
         <span
-          class="p-2 py-3 mr-2 has-background-white"
-          style="border: 1px solid #999; border-radius: 5px"
+          class="p-2 py-3 mr-2 has-background-white border rounded"
         >
           <span>
-            <i class="fal fa-sort-numeric-down-alt has-margin-right-3"></i>
+            <i class="fal fa-sort-numeric-down-alt mr-3"></i>
           </span>
           <span
             v-tippy
@@ -154,7 +153,7 @@
             data-id="0"
             class="colored cursor-pointer"
           >
-            <i class="fas fa-user pointer has-margin-right-3"></i>
+            <i class="fas fa-user pointer mr-3"></i>
           </span>
           <span
             v-tippy
@@ -163,7 +162,7 @@
             @click="orderBy('hp')"
             class="colored cursor-pointer"
           >
-            <i class="fas fa-heart pointer has-margin-right-3"></i>
+            <i class="fas fa-heart pointer mr-3"></i>
           </span>
           <span
             v-tippy
@@ -172,7 +171,7 @@
             @click="orderBy('xp')"
             class="colored cursor-pointer"
           >
-            <i class="fas fa-fist-raised pointer has-margin-right-3"></i>
+            <i class="fas fa-fist-raised pointer mr-3"></i>
           </span>
           <span
             v-tippy
@@ -181,12 +180,11 @@
             @click="orderBy('gold')"
             class="colored cursor-pointer"
           >
-            <i class="fas fa-coins pointer has-margin-right-3"></i>
+            <i class="fas fa-coins pointer mr-3"></i>
           </span>
         </span>
         <span
-          class="p-2 py-3 has-background-white"
-          style="border: 1px solid #999; border-radius: 5px"
+          class="p-2 py-3 has-background-white border rounded"
         >
           <span v-if="view == 0 || view == 1">
             <span
@@ -226,7 +224,7 @@
       </div>
     </div>
 
-    <div class="panel-block mt-2 mb-0" v-if="students.length && view != 1">
+    <div class="panel-block mt-1 mb-0 px-1" v-if="students.length && view != 1">
       <p class="control has-icons-left">
         <input
           class="input"
@@ -240,7 +238,7 @@
       </p>
     </div>
 
-    <div class="column has-padding-x-1" v-if="view == 2">
+    <div class="column px-1" v-if="view == 2">
       <article
         class="media"
         v-for="student in orderedStudents"
@@ -253,20 +251,20 @@
         </figure>
         <div class="media-content">
           <div class="content">
-            <div class="columns cursor-pointer" @click="redirect(student.id)">
-              <div class="column is-narrow">
+            <div class=" cursor-pointer" @click="redirect(student.id)">
+              <div class="">
                 <strong>{{ student.name }}</strong>
                 <small>@{{ student.username }}</small>
               </div>
             </div>
-            <div class="columns">
-              <div class="column is-narrow p-0 m-0">
+            <div class="buttons">
+              <div class="">
                 <div
-                  class="score p-3 centered-attribute m-2 has-all-centered"
-                  style="border: none; width: 200px"
+                  class="score p-1 centered-attribute m-1 mt-0 has-all-centered"
+                  style="border: none; width: 150px"
                 >
                   <span
-                    class="attribute has-background-white has-padding-y-3 rounded"
+                    class="attribute has-background-white py-2 rounded"
                     style="width: 100%; margin-top: 3px"
                   >
                     <span>
@@ -282,7 +280,7 @@
                     >
                   </span>
                   <span
-                    class="attribute has-background-danger has-padding-y-3 rounded-left"
+                    class="attribute has-background-danger py-2 rounded-left"
                     v-bind:class="{ rounded: student.hp == 100 }"
                     :style="'width: ' + student.hp + '%;margin-top: 3px;'"
                     v-if="student.hp > 0"
@@ -295,8 +293,8 @@
                   </span>
                 </div>
               </div>
-              <div class="column is-narrow p-0 m-0">
-                <div class="score p-2 m-1" style="width: 200px">
+              <div class="">
+                <div class="score p-2 m-1">
                   <span
                     ><i
                       class="fas fa-fist-raised colored"
@@ -306,8 +304,8 @@
                   {{ student.xp }}
                 </div>
               </div>
-              <div class="column is-narrow p-0 m-0">
-                <div class="gold p-2 m-1" style="width: 200px">
+              <div class="">
+                <div class="gold p-2 m-1">
                   <span
                     ><i class="fas fa-coins colored" aria-hidden="true"></i
                   ></span>
@@ -336,7 +334,7 @@
       </article>
     </div>
 
-    <div class="column has-padding-x-1" v-else-if="view == 1">
+    <div class="column px-1" v-else-if="view == 1">
       <show-group-view
         :behaviours="mainBehavioursJson"
         :behaviourshidden="otherBehavioursJson"
@@ -346,9 +344,9 @@
       ></show-group-view>
     </div>
 
-    <div class="columns is-multiline is-variable is-1 has-margin-y-2" v-else>
+    <div class="columns is-multiline is-variable is-1 my-2" v-else>
       <div
-        class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+        class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
         v-for="student in orderedStudents"
         v-bind:key="student.id"
       >
@@ -361,7 +359,7 @@
       </div>
 
       <div
-        class="column has-padding-y-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+        class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
       >
         <div
           class="box card-shadow-s is-flex has-background-link has-all-centered h-100"
@@ -370,7 +368,7 @@
             :href="'/classroom/' + classroom.code + '/students/add'"
             style="color: white"
           >
-            <img src="/img/new_std.svg" class="has-margin-left-1" />
+            <img src="/img/new_std.svg" class="ml-1" />
             <strong>{{ trans.get("users_groups.add_students") }}</strong>
           </a>
         </div>
@@ -380,7 +378,7 @@
     <!-- Modals -->
     <b-modal :active.sync="isQrModalActive" :width="640" scroll="keep">
       <div class="card rounded">
-        <div class="card-image has-padding-4">
+        <div class="card-image p-4">
           <figure class="image is-4by3">
             <img :src="image" alt="Image" />
           </figure>
@@ -405,7 +403,7 @@
       :width="640"
       scroll="keep"
       :can-cancel="false"
-      class="has-text-centered"
+      class="has-text-centered overflow-show"
     >
       <show-student-teacher
         :behaviours="mainBehavioursJson"
@@ -416,15 +414,15 @@
         :random="true"
       ></show-student-teacher>
       <button
-        class="button is-link has-margin-2"
+        class="button is-link m-2"
         v-if="shuffledStudents && shuffledStudents.length"
         @click="uppdateCurrentStudent"
       >
-        <i class="fad fa-random has-margin-right-3"></i>
+        <i class="fad fa-random mr-3"></i>
         {{ trans.get("utils.random") }}
       </button>
-      <button class="button has-margin-2" @click="refresh">
-        <i class="fas fa-times has-margin-right-3"></i>
+      <button class="button m-2" @click="refresh">
+        <i class="fas fa-times mr-3"></i>
         {{ trans.get("general.close") }}
       </button>
     </b-modal>
@@ -434,7 +432,7 @@
       scroll="keep"
       class="has-text-centered has-background-light"
     >
-      <div class="columns has-background-light rounded has-padding-2">
+      <div class="columns has-background-light rounded p-2">
         <div class="column is-narrow is-flex has-all-centered">
           <img
             :src="currentGroup.logo"
@@ -443,7 +441,7 @@
         </div>
         <div class="column is-flex has-all-centered">
           <h1
-            class="is-size-1 has-padding-4 has-margin-3"
+            class="is-size-1 p-4 m-3"
             v-if="isRandomGroupActive"
           >
             {{ currentGroup.name }}
@@ -452,7 +450,7 @@
       </div>
 
       <button
-        class="button is-link has-margin-2"
+        class="button is-link m-2"
         v-if="shuffledGroups && shuffledGroups.length"
         @click="currentGroup = shuffledGroups.shift()"
       >
@@ -519,7 +517,7 @@
             v-if="showCard"
             class="column is-narrow is-flex has-all-centered"
           >
-            <div class="field has-margin-0">
+            <div class="field m-0">
               <p class="control has-icons-left">
                 <span class="select">
                   <select v-model="studentSelected">
@@ -546,7 +544,7 @@
             v-if="showCard"
             class="column is-narrow is-flex has-all-centered"
           >
-            <div class="field has-margin-0">
+            <div class="field m-0">
               <p class="control has-icons-left">
                 <span class="select">
                   <select v-model="groupSelected">

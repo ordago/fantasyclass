@@ -1,17 +1,17 @@
 <template>
-       <section class="has-padding-x-3">
+       <section class="px-2 pt-3">
          <b-tabs v-model="activeTab" size="is-small">
             <b-tab-item :label="trans.get('classroom.name_and_goals')" icon="scroll" icon-pack="far">         
-                <h1 class="is-size-2"><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ trans.get('classroom.prepare') }}</h1>
-                <div class="has-margin-y-4">
-                    <label for="wizardName" class="has-margin-y-2">{{ trans.get('classroom.wizard_name') }} <small><i>{{ trans.get('classroom.wizard_name_example') }}</i></small></label>
-                    <input type="text" name="name" v-model="classForm.name" required minlength="2" class="input has-margin-y-2">
+                <h1 class="is-size-2 mt-4"><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ trans.get('classroom.prepare') }}</h1>
+                <div class="my-4">
+                    <label for="wizardName" class="my-2">{{ trans.get('classroom.wizard_name') }} <small><i>{{ trans.get('classroom.wizard_name_example') }}</i></small></label>
+                    <input type="text" name="name" v-model="classForm.name" required minlength="2" class="input my-2">
                 </div>
-                <div class="has-margin-y-4">
-                    <label for="adventureName" class="has-margin-y-4">{{ trans.get('classroom.adventure_name') }} <small><i>{{ trans.get('classroom.adventure_name_example') }}</i></small></label>
-                    <input type="text" v-model="classForm.adventure_name" required minlength="3" value="FantasyClass" class="input has-margin-y-2" name="adventureName" id='adventureName'></input>
+                <div class="my-4">
+                    <label for="adventureName" class="my-4">{{ trans.get('classroom.adventure_name') }} <small><i>{{ trans.get('classroom.adventure_name_example') }}</i></small></label>
+                    <input type="text" v-model="classForm.adventure_name" required minlength="3" value="FantasyClass" class="input my-2" name="adventureName" id='adventureName'></input>
                 </div>
-                <div class="has-margin-y-4">
+                <div class="my-4">
                     {{ trans.get('classroom.goal_type') }} <small><i>{{ trans.get('classroom.goal_type_example') }}</i></small>
                 </div>
                 <div class="field has-addons" data-toggle="buttons" style="width: 100%; overflow-x: auto">
@@ -24,8 +24,8 @@
            </b-tab-item>
 
             <b-tab-item :label="trans.get('classroom.theme')" icon="palette" icon-pack="far">
-            <h1 class="is-size-2">{{ trans.get('classroom.theme') }}</h1>
-            <h6 class="has-margin-y-3">{{ trans.get('classroom.theme_text') }}</h6>
+            <h1 class="is-size-2 mt-4">{{ trans.get('classroom.theme') }}</h1>
+            <h6 class="my-3">{{ trans.get('classroom.theme_text') }}</h6>
             <div class="themes">
                 <label v-for="(theme, index) in themesJson" v-bind:key="theme.id">
                       <input type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios" :checked="index === 0" :value="theme.id">
@@ -39,7 +39,7 @@
             </b-tab-item>
 
             <b-tab-item :label="trans.get('classroom.char_theme')" icon="mask" icon-pack="far">
-                <h1 class="is-size-2 has-margin-bottom-4"><i class="fal fa-ghost faa-float animated"></i> {{ trans.get('classroom.char_theme') }}</h1>
+                <h1 class="is-size-2 my-4"><i class="fal fa-ghost faa-float animated"></i> {{ trans.get('classroom.char_theme') }}</h1>
                 <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="1">
                     <img  src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
@@ -64,36 +64,38 @@
             </b-tab-item>
 
             <b-tab-item label="+ Info" icon="info" icon-pack="far">
-                <div>
+                <div class="mt-4">
                 <h1 class="is-size-2 has-text-centered"><i class="fal fa-laugh-beam  faa-wrench animated"></i> {{ trans.get('classroom.finish_title') }}</h1>
-                <h4 class="is-size-4 has-margin-y-3 has-text-centered">{{ trans.get('classroom.info_wizard_0') }}</h4>
+                <h4 class="is-size-4 my-3 has-text-centered">{{ trans.get('classroom.info_wizard_0') }}</h4>
                 <ol class="p-4 pl-5">
-                    <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_1') }} <i class="fal fa-users"></i></li>
-                    <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_2') }} <i class="fal fa-tasks"></i></li>
-                    <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_3') }} <i class="fal fa-treasure-chest"></i></li>
-                    <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_4') }} <i class="fal fa-hands-helping"></i></li>
-                    <li class="is-size-5 has-margin-3">{{ trans.get('classroom.info_wizard_5') }} <i class="fal fa-swords"></i></li>
+                    <li class="is-size-5 m-3">{{ trans.get('classroom.info_wizard_1') }} <i class="fal fa-users"></i></li>
+                    <li class="is-size-5 m-3">{{ trans.get('classroom.info_wizard_2') }} <i class="fal fa-tasks"></i></li>
+                    <li class="is-size-5 m-3">{{ trans.get('classroom.info_wizard_3') }} <i class="fal fa-treasure-chest"></i></li>
+                    <li class="is-size-5 m-3">{{ trans.get('classroom.info_wizard_4') }} <i class="fal fa-hands-helping"></i></li>
+                    <li class="is-size-5 m-3">{{ trans.get('classroom.info_wizard_5') }} <i class="fal fa-swords"></i></li>
                 </ol>
                 </div>
             </b-tab-item>
         </b-tabs>
-        <div class="has-padding-x-4 columns" style="justify-content: space-between; position: fixed; bottom: 0; left: 0;width: 100%">
-            <div class="column mx-2 my-2 buttons has-addons">
-                <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
-                <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<3"><i class="fas fa-chevron-right"></i></button>
+        <div class="px-1" style="position: fixed; bottom: 0; left: 0;width: 100%">
+            <div class="buttons">
+              <div class="mb-1 buttons has-addons">
+                  <button type="button" class="button" v-if="activeTab>0" @click="activeTab--"><i class="fas fa-chevron-left"></i></button>
+                  <button type="button" class="button is-info is-selected" @click="activeTab++" v-if="activeTab<3"><i class="fas fa-chevron-right"></i></button>
+              </div>
+              <div class="mb-1 has-text-right left-auto" v-if="classroom">
+                  <button class="button ml-4 is-danger" @click.prevent="confirmDelete">
+                      <i class="fas fa-trash"></i>
+                      <span class="mx-3 is-hidden-mobile">
+                      {{ trans.get('general.delete') }}
+                      <i class="fas fa-radiation-alt"></i>
+                      <i class="fas fa-exclamation-triangle"></i>
+                      </span>
+                  </button>
+                  <button class="button is-link"><i class="fas fa-edit mr-2"></i> {{ trans.get('classroom.edit') }}</button>
+              </div>
+              <button class="button is-success mb-3 left-auto" v-else>{{ trans.get('classroom.end_wizard') }}</button>
             </div>
-            <div class="column mx-0 my-2 has-text-right" v-if="classroom">
-                <button class="button has-margin-left-4 is-danger" @click.prevent="confirmDelete">
-                    <i class="fas fa-trash"></i>
-                    <span class="has-margin-x-3">
-                    {{ trans.get('general.delete') }}
-                    <i class="fas fa-radiation-alt"></i>
-                    <i class="fas fa-exclamation-triangle"></i>
-                    </span>
-                </button>
-                <button class="button is-link"><i class="fas fa-edit has-margin-right-2"></i> {{ trans.get('classroom.edit') }}</button>
-            </div>
-            <button class="button is-success" v-else>{{ trans.get('classroom.end_wizard') }}</button>
         </div>
     </section>
 </template>

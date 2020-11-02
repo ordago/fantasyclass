@@ -11,7 +11,7 @@
                     </div>
                 </div>
 
-                <div class="card-body has-padding-4">
+                <div class="card-body p-4">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
@@ -35,7 +35,7 @@
                             </div>
                         </div>
                     
-                        <div class="has-margin-y-3">
+                        <div class="my-3">
                                 <button type="submit" class="button is-primary">
                                     {{ __('Send Password Reset Link') }}
                                 </button>

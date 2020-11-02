@@ -1,7 +1,7 @@
 <template>
-  <div class="message has-margin-top-4 has-margin-bottom-1 is-flex has-all-centered">
+  <div class="message mt-4 mb-1 is-flex has-all-centered">
         <div contenteditable="true"
-             class="rich-editor-container rounded has-padding-4"
+             class="rich-editor-container rounded p-4"
              ref="textarea"
              autofocus="false"
              @keypress.enter.prevent
