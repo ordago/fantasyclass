@@ -164,6 +164,7 @@
     @stack('scriptchat');
     @endif
 
+    @auth
     <script>
         window.onload = window.cookieconsent.initialise({
             "palette": {
@@ -184,7 +185,6 @@
             }
         });
     </script>
-    @auth
     <script src="{{ asset('js/config.js') }}" defer></script>
     <script src="{{ asset('js/enable-push.js') }}" defer></script>
     @endauth
