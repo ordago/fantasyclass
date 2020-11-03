@@ -20,7 +20,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
 
     <!-- Pace loader -->
-    <script src="/js/pace.min.js"></script>
+    <script src="/js/pace.min.js" defer></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ env('GOOGLE_ANALYTICS') }}"></script>
@@ -37,7 +37,7 @@
 
     <!-- Cookies -->
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
+    <script defer src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
 
 
     <!-- PWA -->
