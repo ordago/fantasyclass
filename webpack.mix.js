@@ -23,8 +23,10 @@ mix.sass('resources/sass/app.scss', 'public/css').options({
     .version();
 
 if (mix.inProduction()) {
+    // mix.minify('public/js/index.js');
     mix.version();
 }
+
 
 require('laravel-mix-bundle-analyzer');
 
