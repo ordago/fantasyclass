@@ -37,7 +37,6 @@
 
     <!-- Cookies -->
     <link media="all" rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css" />
-    <script defer src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
 
 
     <!-- PWA -->
@@ -159,6 +158,7 @@
     @endif
 
     @auth
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js"></script>
     <script>
         window.onload = window.cookieconsent.initialise({
             "palette": {
