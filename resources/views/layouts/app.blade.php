@@ -10,17 +10,11 @@
 
     <title>{{ config('app.name', 'FantasyClass') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
-
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
     <!-- Styles -->
     <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
     <!-- Mobile -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
@@ -206,6 +200,11 @@
     </script>
     @endguest
 
+    <!-- Scripts -->
+    <script src="{{ mix('js/app.js') }}" defer></script>
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
 
     <!-- <script src="https://h5p.org/sites/all/modules/h5p/library/js/h5p-resizer.js" charset="UTF-8"></script> -->
 </body>
