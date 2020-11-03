@@ -201,7 +201,7 @@
     @endguest
 
     <!-- Scripts -->
-    <script src="{{ mix('js/app.js') }}" defer></script>
+    <script defer src="{{ mix('js/app.js') }}"></script>
 
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
