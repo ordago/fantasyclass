@@ -1,5 +1,5 @@
 # Changelog
-## v1.16 Beta (XX/11/2020)
+## v1.16 Beta (03/11/2020)
 ### Added
 - Restyling.
 
