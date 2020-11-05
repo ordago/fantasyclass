@@ -295,7 +295,6 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('id', $challenge->classroom())->firstOrFail();
         $this->authorize('studyOrTeach', $class);
         $student = Functions::getCurrentStudent($class, []);
-        dump($student->ratings()->count());
         return $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
     }
     public function licenses($code)

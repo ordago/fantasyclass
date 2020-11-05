@@ -50,7 +50,6 @@ class StudentController extends Controller
     {
         $class = Classroom::where('id', '=', session()->pull('classroom'))->firstOrFail();
         $this->authorize('update', $class);
-
         $classId = $class->id;
         if (!$classId)
             return false;

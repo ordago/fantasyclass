@@ -365,7 +365,6 @@ class ClassroomsController extends Controller
 
         $students = $class->students()->with('equipment', 'pets')->get();
         $groups = $class->grouping->first()->groups;
-
         $students->each->append('numcards');
         $students->each->append('boost');
 

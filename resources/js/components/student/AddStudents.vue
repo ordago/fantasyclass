@@ -250,7 +250,8 @@ export default {
               google_course: gcourse,
               google_uid: guid,
             });
-            name = email = this.stdUsername = "";
+            name = email = this.stdEmail = this.stdName = this.stdUsername = "";
+            
           });
       } else {
         Utils.toast(this, this.trans.get("validation.distinct"), 2);

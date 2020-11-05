@@ -57,6 +57,10 @@
                     <img  src="/img/character/themes-preview/pirateanimals.png" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
                 </label>
                 <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="6">
+                    <img  src="/img/character/themes-preview/aquatic.png" class="themePreview" v-tippy :content="trans.get('classroom.custom_theme')">
+                </label>
+                <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="0">
                     <img  src="/img/character/themes-preview/custom.png" class="themePreview" v-tippy :content="trans.get('classroom.custom_theme')">
                 </label>

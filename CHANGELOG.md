@@ -1,4 +1,9 @@
 # Changelog
+
+## v1.17 Beta (XX/11/2020)
+### Added
+- New theme: aquatic characters.
+
 ## v1.16 Beta (03/11/2020)
 ### Added
 - Restyling.
