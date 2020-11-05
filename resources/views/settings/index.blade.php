@@ -13,7 +13,7 @@
 <li class="is-active">
     <a href="#">
         <span class="icon is-small">
-            <i class="fad fa-file-chart-line" aria-hidden="true"></i>
+            <i class="fad fa-sliders-v-square mr-2" aria-hidden="true"></i>
         </span>
         <span>{{ __('menu.settings') }}</span>
     </a>
