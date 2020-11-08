@@ -7,6 +7,9 @@
 - Breadcrumb in all sections.
 - Yes, we've skipped one version, ¡ups!
 
+### Changed
+- Fixed name not showing on notifications.
+
 ## v1.16 Beta (03/11/2020)
 ### Added
 - Restyling.

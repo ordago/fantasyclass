@@ -95,7 +95,7 @@
               />
               <span v-else v-html="notification.data.from.avatar"></span>
               <strong v-tippy :content="notification.data.from.name"
-                >@{{ notification.data.from.username }}</strong
+                >{{ notification.data.from.name }}</strong
               >: {{ notification.data.content }}
             </div>
           </div>
