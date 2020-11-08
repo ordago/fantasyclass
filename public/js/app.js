@@ -4846,6 +4846,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4864,6 +4867,7 @@ var InputEmoji = function InputEmoji() {
       rating: "",
       challengeReactive: null,
       allowComment: false,
+      maxComments: 3,
       isAttachmentModalActive: false,
       isQuestionModalActive: false,
       attachment: {
@@ -5042,7 +5046,7 @@ var InputEmoji = function InputEmoji() {
   },
   computed: {
     orderedComments: function orderedComments() {
-      return _.orderBy(this.challenge.comments, "created_at", "desc");
+      return _.orderBy(this.challenge.comments, "created_at", "desc").splice(0, this.maxComments);
     },
     checkCompletion: function checkCompletion() {
       if (this.challengeReactive.completion == 1) return this.challengeReactive.count == 1;
@@ -59312,61 +59316,92 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "mt-3 comments" },
-                _vm._l(_vm.orderedComments, function(comment, index) {
-                  return _c("div", { key: index, staticClass: "comment m-0" }, [
-                    _c("div", { staticClass: "flexCenter imgTeacher" }, [
-                      comment.info.type == "student"
-                        ? _c("img", {
-                            attrs: {
-                              width: "32px",
-                              height: "32px",
-                              src: comment.info.avatar
-                            }
-                          })
-                        : _vm._e(),
-                      _vm._v(" "),
-                      comment.info.type == "teacher"
-                        ? _c("i", {
-                            staticClass:
-                              "fas fa-user-graduate text-light textshadow"
-                          })
-                        : _vm._e()
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "commentInfo p-2" }, [
-                      _c("div", [
-                        _c("span", { staticClass: "tag is-info p-2" }, [
-                          _vm._v(_vm._s(comment.info.name))
-                        ]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "tag is-link p-2" }, [
-                          _vm._v(_vm._s(comment.info.datetime))
-                        ]),
-                        _vm._v(" "),
-                        _vm.admin
-                          ? _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "button tag is-danger has-text-light p-2",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteComment(comment.id, index)
-                                  }
+                [
+                  _vm._l(_vm.orderedComments, function(comment, index) {
+                    return _c(
+                      "div",
+                      { key: index, staticClass: "comment m-0" },
+                      [
+                        _c("div", { staticClass: "flexCenter imgTeacher" }, [
+                          comment.info.type == "student"
+                            ? _c("img", {
+                                attrs: {
+                                  width: "32px",
+                                  height: "32px",
+                                  src: comment.info.avatar
                                 }
-                              },
-                              [_c("i", { staticClass: "far fa-trash-alt" })]
+                              })
+                            : _vm._e(),
+                          _vm._v(" "),
+                          comment.info.type == "teacher"
+                            ? _c("i", {
+                                staticClass:
+                                  "fas fa-user-graduate text-light textshadow"
+                              })
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "commentInfo p-2" }, [
+                          _c("div", [
+                            _c("span", { staticClass: "tag is-info p-2" }, [
+                              _vm._v(_vm._s(comment.info.name))
+                            ]),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "tag is-link p-2" }, [
+                              _vm._v(_vm._s(comment.info.datetime))
+                            ]),
+                            _vm._v(" "),
+                            _vm.admin
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass:
+                                      "button tag is-danger has-text-light p-2",
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.deleteComment(
+                                          comment.id,
+                                          index
+                                        )
+                                      }
+                                    }
+                                  },
+                                  [_c("i", { staticClass: "far fa-trash-alt" })]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "flexVertical p-2" }, [
+                            _vm._v(_vm._s(comment.text))
+                          ])
+                        ])
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "mt-3" }, [
+                    _vm.challenge.comments.length > 3 &&
+                    _vm.maxComments != _vm.challenge.comments.length
+                      ? _c(
+                          "a",
+                          {
+                            staticClass: "has-text-dark",
+                            on: {
+                              click: function($event) {
+                                _vm.maxComments = _vm.challenge.comments.length
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans.get("challenges.load_comments"))
                             )
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "flexVertical p-2" }, [
-                        _vm._v(_vm._s(comment.text))
-                      ])
-                    ])
+                          ]
+                        )
+                      : _vm._e()
                   ])
-                }),
-                0
+                ],
+                2
               ),
               _vm._v(" "),
               !_vm.prevRating &&
@@ -91619,7 +91654,8 @@ __webpack_require__.r(__webpack_exports__);
     "rating_feedback": "Qu\xE8 penses de l'activitat?",
     "available_all": "Disponible per tot l'alumnat",
     "available_some": "Disponible per ",
-    "available_students": "estudiants"
+    "available_students": "estudiants",
+    "load_comments": "Carrega m\xE9s comentaris..."
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -92354,7 +92390,8 @@ __webpack_require__.r(__webpack_exports__);
     "rating_feedback": "What do you think about the activity?",
     "available_all": "Available to all students",
     "available_some": "Available to",
-    "available_students": "students"
+    "available_students": "students",
+    "load_comments": "Load more comments..."
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -93092,7 +93129,8 @@ __webpack_require__.r(__webpack_exports__);
     "rating_feedback": "\xBFQu\xE9 piensas de la actividad?",
     "available_all": "Disponible para todo el alumnado",
     "available_some": "Disponible para ",
-    "available_students": "estudiantes"
+    "available_students": "estudiantes",
+    "load_comments": "Carga m\xE1s comentarios..."
   },
   "es.classroom": {
     "add": "A\xF1ade clase",

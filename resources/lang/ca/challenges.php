@@ -53,4 +53,6 @@ return [
     'available_all' => 'Disponible per tot l\'alumnat',
     'available_some' => 'Disponible per ',
     'available_students' => 'estudiants',
+    
+    'load_comments' => 'Carrega més comentaris...',
 ];

@@ -54,4 +54,5 @@ return [
     'available_some' => 'Disponible para ',
     'available_students' => 'estudiantes',
 
+    'load_comments' => 'Carga más comentarios...',
 ];

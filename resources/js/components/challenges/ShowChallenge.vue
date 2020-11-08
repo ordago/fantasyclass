@@ -234,6 +234,9 @@
                 <div class="flexVertical p-2">{{ comment.text }}</div>
               </div>
             </div>
+            <div class="mt-3">
+              <a class="has-text-dark" @click="maxComments = challenge.comments.length" v-if="challenge.comments.length > 3 && maxComments != challenge.comments.length">{{ trans.get('challenges.load_comments') }}</a>
+            </div>
           </div>
           <div
             v-if="
@@ -595,6 +598,7 @@ export default {
       rating: "",
       challengeReactive: null,
       allowComment: false,
+      maxComments: 3,
       isAttachmentModalActive: false,
       isQuestionModalActive: false,
       attachment: {
@@ -773,7 +777,7 @@ export default {
   },
   computed: {
     orderedComments: function () {
-      return _.orderBy(this.challenge.comments, "created_at", "desc");
+      return _.orderBy(this.challenge.comments, "created_at", "desc").splice(0, this.maxComments);
     },
     checkCompletion() {
       if (this.challengeReactive.completion == 1)
