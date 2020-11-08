@@ -59380,6 +59380,7 @@ var render = function() {
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "mt-3" }, [
+                    _vm.challenge.comments &&
                     _vm.challenge.comments.length > 3 &&
                     _vm.maxComments != _vm.challenge.comments.length
                       ? _c(

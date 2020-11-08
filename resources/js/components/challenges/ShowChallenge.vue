@@ -235,7 +235,7 @@
               </div>
             </div>
             <div class="mt-3">
-              <a class="has-text-dark" @click="maxComments = challenge.comments.length" v-if="challenge.comments.length > 3 && maxComments != challenge.comments.length">{{ trans.get('challenges.load_comments') }}</a>
+              <a class="has-text-dark" @click="maxComments = challenge.comments.length" v-if="challenge.comments && challenge.comments.length > 3 && maxComments != challenge.comments.length">{{ trans.get('challenges.load_comments') }}</a>
             </div>
           </div>
           <div
