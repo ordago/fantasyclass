@@ -1,13 +1,13 @@
 <template>
   <div class="content p-3">
-    <div class="p-2">
-      <h1>
+    <div class="p-2 pl-4">
+      <h1 class="mb-5">
         <i class="fal fa-chalkboard"></i>
         {{ trans.get("settings.classroom") }}
       </h1>
 
-      <b-field :label="trans.get('settings.state')">
-        <b-field class="my-3">
+      <b-field class="mt-4" :label="trans.get('settings.state')">
+        <b-field class="mb-3 pl-4">
           <b-radio-button
             v-model="state"
             @input="updateClassState('state', 0)"
@@ -38,7 +38,7 @@
         </b-field>
       </b-field>
       <b-field :label="trans.get('settings.config')">
-        <div class="buttons">
+        <div class="buttons pl-4">
           <a
             class="button"
             :href="'/classroom/' + classroom.code + '/edit'"
@@ -64,7 +64,7 @@
         :label="trans.get('settings.enrollment_code')"
         style="width: 400px"
       >
-        <div class="field has-addons my-3">
+        <div class="field has-addons my-3  pl-4">
           <p class="control">
             <b-input
               type="password"
@@ -87,7 +87,7 @@
       <div class="mt-0 mb-2">
         <small v-if="user.token" v-html="trans.get('settings.classroom_unlink_info')"></small>
       </div>
-      <div class="p-2">
+      <div class="">
         <h1>
           <i class="fal fa-cog"></i>
           {{ trans.get("settings.general_preferences") }}
@@ -123,7 +123,7 @@
           >
         </div>
       </div>
-      <div class="p-2 mt-4">
+      <div class="mt-4">
         <h1>
           <i class="fal fa-user-graduate"></i>
           {{ trans.get("settings.teachers") }}
@@ -171,7 +171,7 @@
           </div>
         </div>
       </div>
-      <div class="p-2 mt-4">
+      <div class="mt-5">
         <h1>
           <i class="fal fa-brackets-curly"></i>
           {{ trans.get("settings.parameters") }}
@@ -225,7 +225,7 @@
               />
             </div>
             <div class="column is-flex align-items-center">
-              <i class="fas fa-coins colored"></i>
+              <i class="fas fa-coins colored mr-2"></i>
               {{ trans.get("settings.use_card_gold") }}
             </div>
           </div>
@@ -238,7 +238,7 @@
               />
             </div>
             <div class="column is-flex align-items-center">
-              <i class="fas fa-coins colored"></i>
+              <i class="fas fa-coins colored mr-2"></i>
               {{ trans.get("settings.delete_card_gold") }}
             </div>
           </div>
@@ -251,7 +251,7 @@
               />
             </div>
             <div class="column is-flex align-items-center">
-              <i class="fas fa-club colored"></i>
+              <i class="fas fa-club colored mr-2"></i>
               {{ trans.get("settings.cards") }}
             </div>
           </div>

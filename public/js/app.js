@@ -67047,9 +67047,9 @@ var render = function() {
   return _c("div", { staticClass: "content p-3" }, [
     _c(
       "div",
-      { staticClass: "p-2" },
+      { staticClass: "p-2 pl-4" },
       [
-        _c("h1", [
+        _c("h1", { staticClass: "mb-5" }, [
           _c("i", { staticClass: "fal fa-chalkboard" }),
           _vm._v(
             "\n      " + _vm._s(_vm.trans.get("settings.classroom")) + "\n    "
@@ -67058,11 +67058,14 @@ var render = function() {
         _vm._v(" "),
         _c(
           "b-field",
-          { attrs: { label: _vm.trans.get("settings.state") } },
+          {
+            staticClass: "mt-4",
+            attrs: { label: _vm.trans.get("settings.state") }
+          },
           [
             _c(
               "b-field",
-              { staticClass: "my-3" },
+              { staticClass: "mb-3 pl-4" },
               [
                 _c(
                   "b-radio-button",
@@ -67154,7 +67157,7 @@ var render = function() {
         ),
         _vm._v(" "),
         _c("b-field", { attrs: { label: _vm.trans.get("settings.config") } }, [
-          _c("div", { staticClass: "buttons" }, [
+          _c("div", { staticClass: "buttons pl-4" }, [
             _c(
               "a",
               {
@@ -67204,7 +67207,7 @@ var render = function() {
             attrs: { label: _vm.trans.get("settings.enrollment_code") }
           },
           [
-            _c("div", { staticClass: "field has-addons my-3" }, [
+            _c("div", { staticClass: "field has-addons my-3  pl-4" }, [
               _c(
                 "p",
                 { staticClass: "control" },
@@ -67268,7 +67271,7 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2" }, [
+        _c("div", {}, [
           _c("h1", [
             _c("i", { staticClass: "fal fa-cog" }),
             _vm._v(
@@ -67363,7 +67366,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 mt-4" }, [
+        _c("div", { staticClass: "mt-4" }, [
           _c("h1", [
             _c("i", { staticClass: "fal fa-user-graduate" }),
             _vm._v(
@@ -67481,7 +67484,7 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "p-2 mt-4" }, [
+        _c("div", { staticClass: "mt-5" }, [
           _c("h1", [
             _c("i", { staticClass: "fal fa-brackets-curly" }),
             _vm._v(
@@ -67623,7 +67626,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-coins colored" }),
+                _c("i", { staticClass: "fas fa-coins colored mr-2" }),
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.trans.get("settings.use_card_gold")) +
@@ -67658,7 +67661,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-coins colored" }),
+                _c("i", { staticClass: "fas fa-coins colored mr-2" }),
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.trans.get("settings.delete_card_gold")) +
@@ -67693,7 +67696,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-club colored" }),
+                _c("i", { staticClass: "fas fa-club colored mr-2" }),
                 _vm._v(
                   "\n            " +
                     _vm._s(_vm.trans.get("settings.cards")) +

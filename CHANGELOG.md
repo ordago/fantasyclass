@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.18 Beta (XX/11/2020)
+### Added
+- 
+
+### Changed
+- Show 3 comments by default.
+
 ## v1.18 Beta (08/11/2020)
 ### Added
 - New theme: aquatic characters.
