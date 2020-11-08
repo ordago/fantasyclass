@@ -262,6 +262,6 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/notification/delete/all','NotificationController@destroyAll');
     
     // Chat
-    // Route::get('/chat', function () {return view('utils.chat');});
+    Route::get('/chat', function () {return view('utils.chat');});
     
 });
