@@ -21,7 +21,7 @@
 <li class="is-active">
     <a href="#">
         <span class="icon is-small">
-            <i class="fad fa-file-chart-line" aria-hidden="true"></i>
+            <i class="fad fa-analytics" aria-hidden="true"></i>
         </span>
         <span>{{ __('evaluation.evaluation_report') }}</span>
     </a>
