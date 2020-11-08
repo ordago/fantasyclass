@@ -10,16 +10,26 @@
                 @input="reload = true"
                 v-model="challenge.challenges_group_id"
               >
-                <optgroup v-for="group in challengegroups" :label="group.name" :key="group.id">
+                <optgroup
+                  v-for="group in challengegroups"
+                  :label="group.name"
+                  :key="group.id"
+                >
                   <option :value="group.id">{{ group.name }}</option>
-                  <option v-for="child in group.children" :key="child.id" :value="child.id">{{ child.name }}</option>
+                  <option
+                    v-for="child in group.children"
+                    :key="child.id"
+                    :value="child.id"
+                  >
+                    {{ child.name }}
+                  </option>
                 </optgroup>
               </select>
             </div>
           </div>
         </div>
       </div>
-      <div class="field w-100">
+      <div class="field w-100 mt-2">
         <label class="label">{{ trans.get("challenges.title") }} *</label>
         <div class="control">
           <input
@@ -51,29 +61,51 @@
           password-reveal
         ></b-input>
       </b-field>-->
-      <div class="w-100">
-        <b-field :label="trans.get('challenges.avaliability')">
-          <b-datetimepicker
-            v-model="datepicker"
-            :placeholder="trans.get('challenges.click_select')"
-            icon-pack="fa"
+      <b-field :label="trans.get('challenges.avaliability')"> </b-field>
+      <div class="w-100 buttons mb-2">
+        <b-datetimepicker
+          v-model="datepicker"
+          :placeholder="trans.get('challenges.click_select')"
+          icon-pack="fa"
+          class="button is-rounded"
+          style="height: 40px !important"
+        >
+          <template slot="left">
+            <button
+              class="button is-primary"
+              @click.prevent="datetime = new Date()"
+            >
+              <b-icon icon="clock"></b-icon>
+              <span>Now</span>
+            </button>
+          </template>
+          <template slot="right">
+            <button class="button is-danger" @click.prevent="datetime = null">
+              <b-icon icon="close"></b-icon>
+              <span>Clear</span>
+            </button>
+          </template>
+        </b-datetimepicker>
+        <button
+          @click.prevent="selectStudents"
+          class="button is-rounded"
+          v-if="challenge.type == 0"
+        >
+          <span
+            v-if="
+              !challenge.students ||
+              (challenge.students && challenge.students.length == 0)
+            "
           >
-            <template slot="left">
-              <button class="button is-primary" @click="datetime = new Date()">
-                <b-icon icon="clock"></b-icon>
-                <span>Now</span>
-              </button>
-            </template>
-            <template slot="right">
-              <button class="button is-danger" @click="datetime = null">
-                <b-icon icon="close"></b-icon>
-                <span>Clear</span>
-              </button>
-            </template>
-          </b-datetimepicker>
-        </b-field>
+            <i class="fas fa-user m-2"></i> {{ trans.get('challenges.available_all') }}
+          </span>
+          <span v-else-if="students && challenge.students">
+            <i class="fas fa-user m-2"></i> {{ trans.get('challenges.available_some') }}
+            {{ students.length - challenge.students.length }} {{ trans.get('challenges.available_students') }}
+          </span>
+        </button>
       </div>
-      <div class="field w-100 pt-3">
+      <div class="field w-100 pt-1">
         <label class="label">{{ trans.get("challenges.content") }}</label>
         <div class="control content" data-app>
           <Editor height="70vh" :code="code"></Editor>
@@ -88,10 +120,7 @@
           >{{ trans.get("challenges.conquer") }}</b-switch
         >
       </div>
-      <div
-        v-if="challenge.is_conquer == 1"
-        class="p-4 has-border rounded"
-      >
+      <div v-if="challenge.is_conquer == 1" class="p-4 has-border rounded">
         <div class="field w-100 pt-3">
           <label class="label">{{ trans.get("challenges.icon") }}</label>
           <div class="field has-addons">
@@ -267,6 +296,30 @@
         {{ trans.get("challenges.edit") }}
       </button>
     </form>
+    <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
+      <div class="p-5 rounded has-background-light">
+        <button class="button is-info" @click="disableAll">
+          <i class="fas fa-eraser mr-2"></i>
+          {{ trans.get("utils.remove_selection") }}
+        </button>
+        <div v-for="student in students" class="p-3" :key="student.id">
+          <div class="columns">
+            <div class="column is-narrow is-flex has-all-centered">
+              <div class="field">
+                <b-switch
+                  :value="getVisibility(student.id)"
+                  true-value="1"
+                  false-value="0"
+                  @input="toggleVisibility(student.id)"
+                  type="is-info"
+                  >{{ student.name }}</b-switch
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 <script>
@@ -282,10 +335,20 @@ export default {
     "importFlag",
     "groups",
     "challengegroups",
+    "studentsLoaded",
   ],
   mounted: function () {
     if (this.edit) {
+      if (this.studentsLoaded) this.students = this.studentsLoaded;
       this.challenge = this.edit;
+
+      if (this.challenge.students) {
+        if (typeof this.challenge.students == "string")
+          this.challenge.students = JSON.parse(this.challenge.students);
+      }
+
+      if (this.challenge.students == null) this.challenge.students = [];
+
       this.icon = this.challenge.icon;
       this.content = this.edit.content;
       this.datepicker = new Date(this.edit.datetime);
@@ -294,6 +357,7 @@ export default {
       this.challenge.color = this.iconPrev.color;
       this.datepicker = new Date();
     }
+    this.$forceUpdate();
   },
   data: function () {
     return {
@@ -301,6 +365,8 @@ export default {
       datepicker: null,
       reload: false,
       icon: null,
+      isModalActive: false,
+      students: null,
       challenge: {
         icon: null,
         color: null,
@@ -319,11 +385,39 @@ export default {
         type: 0,
         password: null,
         challenges_group_id: null,
+        students: [],
         _method: "post",
       },
     };
   },
   methods: {
+    disableAll() {
+      this.challenge.students = [];
+      this.students.forEach((student) => {
+        this.challenge.students.push(student.id);
+      });
+    },
+    getVisibility(id) {
+      return this.challenge.students.indexOf(id) === -1 ? 1 : 0;
+    },
+    toggleVisibility(id) {
+      var index = this.challenge.students.indexOf(id);
+      if (index === -1) {
+        this.challenge.students.push(id);
+      } else {
+        this.challenge.students.splice(index, 1);
+      }
+    },
+    selectStudents() {
+      axios
+        .post("/classroom/" + this.code + "/challenges/info", {
+          type: 2,
+        })
+        .then((response) => {
+          this.students = response.data;
+          this.isModalActive = true;
+        });
+    },
     createChallenge() {
       this.challenge.content = this.content;
       this.challenge.icon = this.icon;
@@ -379,3 +473,10 @@ export default {
   computed: {},
 };
 </script>
+<style>
+.button .input {
+  border: none !important;
+  text-align: center;
+  background-color: transparent;
+}
+</style>

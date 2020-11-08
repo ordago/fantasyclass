@@ -1,7 +1,7 @@
 <template>
   <div class="columns">
     <div class="column is-narrow pr-0" style="min-width: 400px">
-      <article class="panel is-sticky-panel is-info pb-4">
+      <article class="panel is-sticky-panel is-info">
         <p
           class="panel-heading is-flex has-space-between align-items-center p-3"
         >

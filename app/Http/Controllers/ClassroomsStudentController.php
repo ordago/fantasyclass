@@ -121,10 +121,11 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
         $challenges = [];
 
+
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'attachments', 'comments', 'group', 'questioninfo'])
+                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'attachments', 'comments', 'group', 'questioninfo'])
                     ->all();
             }));
         }
@@ -135,7 +136,9 @@ class ClassroomsStudentController extends Controller
                 if (Rating::where('student_id', $student->id)->where('challenge_id', $value['id'])->get()->count()) {
                     $value['rated'] = 1;
                 } else $value['rated'] = 0;
-                array_push($all, $value);
+                $students = json_decode($value['students']);
+                if(!$students || array_search ($student->id , $students) === false)
+                    array_push($all, $value);
             }
         }
         $challenges = Arr::sort($all, function ($story) {
@@ -198,6 +201,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
+            ->whereRaw('not JSON_CONTAINS(challenges.students, ?)', [json_encode($student->id)])
             ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')

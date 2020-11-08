@@ -26,6 +26,7 @@ class Challenge extends Model
         'optional',
         'type',
         'password',
+        'students',
         'challenges_group_id',
     ];
 
@@ -33,7 +34,6 @@ class Challenge extends Model
 
     public function getPermalinkAttribute()
     {
-
         return Crypt::encryptString($this->id);
     }
 

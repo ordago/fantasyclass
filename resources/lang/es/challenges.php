@@ -21,7 +21,7 @@ return [
 
     'title' => 'Título',
     'description' => 'Descripción',
-    'avaliability' => '¿Cuándo estará visible?',
+    'avaliability' => 'Configuración de visibilidad',
     'description_info' => 'Esto es información del mundo real. P.e. Prueba de trigonometría',
     'click_select' => 'Clic para seleccionar...',
     'content' => 'Contenido',
@@ -39,6 +39,7 @@ return [
     'correct_answer' => 'Respuesta correcta',
     'incorrect_answer' => 'Respuesta incorrecta',
 
+    'mark' => 'Marcar compleción',
     'mark_title' => 'Marcar como superado',
     'mark_confirm' => 'Confirmo la superación',
     'mark_text' => '¿Estás seguro/a que has superado la tarea? La confianza es necesaria.',
@@ -48,5 +49,9 @@ return [
     'show_all' => 'Muestra todos',
 
     'rating_feedback' => '¿Qué piensas de la actividad?',
+
+    'available_all' => 'Disponible para todo el alumnado',
+    'available_some' => 'Disponible para ',
+    'available_students' => 'estudiantes',
 
 ];

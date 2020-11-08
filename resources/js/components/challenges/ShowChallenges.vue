@@ -1,9 +1,7 @@
 <template>
   <div class="pl-0" ref="topref">
     <div class="panel is-primary pl-0">
-      <p
-        class="panel-heading is-flex has-space-between align-items-center p-3"
-      >
+      <p class="panel-heading is-flex has-space-between align-items-center p-3">
         <span>
           <i :class="challengegroup.icon"></i>
           <span class="pl-3">{{ challengegroup.name }}</span>
@@ -54,6 +52,7 @@
           :challengegroups="$parent.challengesgroup"
           :code="code"
           :challengegroup="challengegroup.id"
+          :students-loaded="students"
         ></CreateChallenges>
       </div>
 
@@ -70,31 +69,27 @@
       >
         <div v-for="challenge in filteredList" v-bind:key="challenge.id">
           <ShowChallenge
+            :code="code"
             :challenge="challenge"
             :admin="true"
             :edit="true"
+            :students="students"
           ></ShowChallenge>
         </div>
       </div>
     </div>
     <b-modal :active.sync="isModalActive" width="95%" scroll="keep">
-      <div
-        v-if="currentChallenge"
-        class="p-5 rounded has-background-light"
-      >
+      <div v-if="currentChallenge" class="p-5 rounded has-background-light">
         <h1 class="is-size-1 mb-3">
           {{ currentChallenge.title }}
         </h1>
         <div v-if="currentChallenge.type == 0">
-          <div
-            v-for="student in students"
-            class="p-3"
-            :key="student.id"
-          >
+          <div v-for="student in students" class="p-3" :key="student.id">
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
                 <div class="field">
                   <b-switch
+                    v-if="student.challenges"
                     :value="student.challenges.length ? 1 : 0"
                     true-value="1"
                     false-value="0"
@@ -141,9 +136,7 @@ import ShowChallenge from "./ShowChallenge.vue";
 
 export default {
   props: ["challengegroup", "challenges", "code", "icon"],
-  created: function () {
-
-  },
+  created: function () {},
   data: function () {
     return {
       addChallenge: false,
@@ -227,8 +220,7 @@ export default {
     buttonAddChallege() {
       return this.addChallenge
         ? this.trans.get("general.cancel")
-        : "<i class='far fa-plus pr-2'></i>" +
-            this.trans.get("challenges.add");
+        : "<i class='far fa-plus pr-2'></i>" + this.trans.get("challenges.add");
     },
     filteredList: function () {
       return this.orderedChallenges.filter((challenge) => {

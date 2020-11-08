@@ -21,7 +21,7 @@ return [
 
     'title' => 'Title',
     'description' => 'Description',
-    'avaliability' => 'When it will be available?',
+    'avaliability' => 'Visibility configuration',
     'description_info' => 'That\'s real world information. E.g. Trigonometry test',
     'click_select' => 'Click to select...',
     'content' => 'Content',
@@ -39,6 +39,7 @@ return [
     'correct_answer' => 'Correct answer',
     'incorrect_answer' => 'Incorrect answer',
 
+    'mark' => 'Mark completion',
     'mark_title' => 'Mark as done',
     'mark_confirm' => 'Confirm done',
     'mark_text' => 'Are you sure you have done all the the work? Trust is needed there.',
@@ -49,5 +50,8 @@ return [
 
     'rating_feedback' => 'What do you think about the activity?',
 
+    'available_all' => 'Available to all students',
+    'available_some' => 'Available to',
+    'available_students' => 'students',
 
 ];

@@ -21,7 +21,7 @@ return [
 
     'title' => 'Títol',
     'description' => 'Descripció',
-    'avaliability' => 'Quant estarà visible?',
+    'avaliability' => 'Configuració de visibilitat',
     'description_info' => 'Això és informació del món real. P.e. Prova de trigonometria',
     'click_select' => 'Clic per seleccionar...',
     'content' => 'Contingut',
@@ -39,6 +39,7 @@ return [
     'correct_answer' => 'Resposta correcta',
     'incorrect_answer' => 'Resposta incorrecta',
 
+    'mark' => 'Marcar compleció',
     'mark_title' => 'Marcar com a superat',
     'mark_confirm' => 'Confirme superació',
     'mark_text' => 'Estàs segur/a que has superat la tasca? La confiança és necessària.',
@@ -48,4 +49,8 @@ return [
     'show_all' => 'Mostra tots',
     
     'rating_feedback' => 'Què penses de l\'activitat?',
+    
+    'available_all' => 'Disponible per tot l\'alumnat',
+    'available_some' => 'Disponible per ',
+    'available_students' => 'estudiants',
 ];

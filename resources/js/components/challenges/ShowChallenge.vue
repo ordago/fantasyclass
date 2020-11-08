@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="box card-shadow-s mb-3"
-    v-bind:class="getBackground"
-  >
+  <div class="box card-shadow-s mb-3" v-bind:class="getBackground">
     <section class="media">
       <div class="media-content is-relative">
         <div
@@ -222,9 +219,7 @@
               </div>
               <div class="commentInfo p-2">
                 <div>
-                  <span class="tag is-info p-2">{{
-                    comment.info.name
-                  }}</span>
+                  <span class="tag is-info p-2">{{ comment.info.name }}</span>
                   <span class="tag is-link p-2">{{
                     comment.info.datetime
                   }}</span>
@@ -240,9 +235,18 @@
               </div>
             </div>
           </div>
-          <div v-if="!prevRating && full && !rating && !admin && challengeReactive.is_conquer">
+          <div
+            v-if="
+              !prevRating &&
+              full &&
+              !rating &&
+              !admin &&
+              challengeReactive.is_conquer
+            "
+          >
             <div class="mt-4 mb-0">
-              <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i> {{ trans.get("challenges.rating_feedback") }}
+              <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i>
+              {{ trans.get("challenges.rating_feedback") }}
             </div>
             <vue-feedback-reaction
               containerWidth="50px"
@@ -255,7 +259,10 @@
               v-model="rating"
             />
           </div>
-          <div class="mt-2 is-flex is-center-vertically" v-if="admin && challengeReactive.rating">
+          <div
+            class="mt-2 is-flex is-center-vertically"
+            v-if="admin && challengeReactive.rating"
+          >
             <vue-reaction-emoji
               :reaction="returnEmoji(challengeReactive.rating)"
               :is-active="true"
@@ -263,10 +270,7 @@
             />
             Feedback: {{ challengeReactive.rating }} / 5
           </div>
-          <div
-            class="p-3 has-text-right"
-            v-if="(edit && admin) || !admin"
-          >
+          <div class="p-3 has-text-right" v-if="(edit && admin) || !admin">
             <button
               v-if="
                 !admin &&
@@ -310,14 +314,11 @@
               <span class="icon is-small">
                 <i class="fas fa-check"></i>
               </span>
-              <span>Mark</span>
+              <span>{{ trans.get("challenges.mark") }}</span>
             </button>
             <button
               class="button is-dark is-outlined"
-              @click="
-                $parent.challengeEdit = challenge;
-                $parent.addChallenge = true;
-              "
+              @click="editChallenge"
               v-if="admin"
             >
               <span class="icon is-small">
@@ -585,7 +586,7 @@ const InputEmoji = () => import("../utils/InputEmoji.vue");
 import { VueReactionEmoji } from "vue-feedback-reaction";
 
 export default {
-  props: ["challenge", "edit", "admin", "code", "full", "prevRating"],
+  props: ["challenge", "edit", "admin", "code", "full", "prevRating", "students"],
   created: function () {
     this.challengeReactive = this.challenge;
   },
@@ -619,11 +620,22 @@ export default {
     VueReactionEmoji,
   },
   methods: {
+    editChallenge(challenge) {
+      axios
+        .post("/classroom/" + this.code + "/challenges/info", {
+          type: 2,
+        })
+        .then((response) => {
+          this.$parent.students = response.data;
+          this.$parent.challengeEdit = this.challenge;
+          this.$parent.addChallenge = true;
+        });
+    },
     returnEmoji(rating) {
       if (rating < 1.8) return "hate";
-      else if ((rating < 2.5)) return "disappointed";
-      else if ((rating < 3.4)) return "natural";
-      else if ((rating < 4.2)) return "good";
+      else if (rating < 2.5) return "disappointed";
+      else if (rating < 3.4) return "natural";
+      else if (rating < 4.2) return "good";
       else return "excellent";
     },
     sendRating() {

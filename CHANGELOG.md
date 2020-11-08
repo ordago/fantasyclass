@@ -1,8 +1,10 @@
 # Changelog
 
-## v1.17 Beta (XX/11/2020)
+## v1.17 Beta (08/11/2020)
 ### Added
 - New theme: aquatic characters.
+- Assign challenges to students.
+- Breadcrumb in all sections.
 
 ## v1.16 Beta (03/11/2020)
 ### Added

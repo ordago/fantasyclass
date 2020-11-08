@@ -54,11 +54,9 @@
         },
         methods: {
             getGradeClass: function (grade) {
-                debugger;
                 return Utils.getGradeClass(grade, this.settings.eval_max);
             },
             getPassFail: function (grade) {
-                debugger;
                 return Utils.getPassFail(grade, this.settings.eval_max);
             },
             getEmoji: function (grade) {

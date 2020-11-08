@@ -18,13 +18,13 @@
         <div class="buttons mt-3 has-all-centered">
           <button class="button is-info" @click="changeAll(true)">
             <i class="fas fa-ballot-check"></i>
-            <i class="far fa-users"></i> {{ trans.get('utils.select_all') }}
+            <i class="far fa-users mr-2"></i> {{ trans.get('utils.select_all') }}
           </button>
           <button class="button is-info" @click="changeAll(false)">
-            <i class="fas fa-eraser"></i> {{ trans.get('utils.remove_selection') }}
+            <i class="fas fa-eraser mr-2"></i> {{ trans.get('utils.remove_selection') }}
           </button>
           <button class="button is-info" @click="random">
-            <i class="fas fa-random"></i> {{ trans.get('utils.random') }}
+            <i class="fas fa-random mr-2"></i> {{ trans.get('utils.random') }}
           </button>
         </div>
         <div class="columns is-multiline is-variable mt-3">

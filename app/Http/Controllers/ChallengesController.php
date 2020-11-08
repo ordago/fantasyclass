@@ -122,6 +122,7 @@ class ChallengesController extends Controller
             'password' => ['string', 'nullable'],
             'challenges_group_id' => ['numeric'],
             'datetime' => ['string'],
+            'students' => ['array'],
         ]);
     }
 
@@ -136,15 +137,19 @@ class ChallengesController extends Controller
         ]);
 
         if ($data['type'] == 0) {
-            $students = $class->students()->with(['challenges' => function ($query) use ($data) {
-                $query->where('challenges.id', '=', $data['challenge']);
+            $challenge = Challenge::find($data['challenge']);
+            $students = $class->students()->whereNotIn('students.id', json_decode($challenge->students))->with(['challenges' => function ($query) use ($data) {
+                $query
+                    ->where('challenges.id', '=', $data['challenge']);
             }])->get();
             return $students;
-        } else {
+        } else if($data['type'] == 1) {
             $groups = $class->grouping()->first()->groups()->with(['challenges' => function ($query) use ($data) {
                 $query->where('challenges.id', '=', $data['challenge']);
             }])->get();
             return $groups;
+        } else {
+            return $class->students()->get();
         }
     }
 
@@ -200,11 +205,11 @@ class ChallengesController extends Controller
 
     public function store($code)
     {
-
         $data = $this->validateInput();
         $challengeGroup = ChallengesGroup::findOrFail(request()->challenges_group_id);
         $class = Classroom::where('id', '=', $challengeGroup->classroom_id)->first();
-        $this->authorize('view', $class);
+        $this->authorize('update', $class);
+        $data['students'] = json_encode($data['students']);
         try {
             $challenge = Challenge::create($data);
 
@@ -220,7 +225,6 @@ class ChallengesController extends Controller
                 "icon" => "times",
                 "type" => "error"
             ];
-            return $th;
         }
     }
 }
