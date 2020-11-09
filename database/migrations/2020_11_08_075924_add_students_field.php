@@ -14,7 +14,7 @@ class AddStudentsField extends Migration
     public function up()
     {
         Schema::table('challenges', function (Blueprint $table) {
-            $table->json('students')->nullable(0)->after('password');
+            $table->json('students')->nullable()->after('password');
         });
     }
 

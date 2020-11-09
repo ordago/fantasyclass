@@ -44,6 +44,7 @@ class ChallengesController extends Controller
 
         $newChallenge = $challenge->replicate();
         $newChallenge->challenges_group_id = $group->id;
+        $newChallenge->students = null;
         $newChallenge->push();
 
         return $newChallenge;
