@@ -11304,8 +11304,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
-/* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
+/* harmony import */ var canvas_confetti__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! canvas-confetti */ "./node_modules/canvas-confetti/dist/confetti.module.mjs");
 //
 //
 //
@@ -11823,115 +11822,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["students", "classroom", "groups"],
@@ -11945,7 +11835,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.mainBehavioursJson = this.orderedBehaviours.slice(0, this.numItems);
     this.otherBehavioursJson = this.orderedBehaviours.slice(this.numItems);
-    this.sortKey = (_$cookies$get = $cookies.get("order")) !== null && _$cookies$get !== void 0 ? _$cookies$get : "name"; // this.viewGrid = $cookies.get("viewGrid") ?? 0;
+    this.sortKey = (_$cookies$get = $cookies.get("order")) !== null && _$cookies$get !== void 0 ? _$cookies$get : "name";
   },
   data: function data() {
     return {
@@ -12081,7 +11971,7 @@ __webpack_require__.r(__webpack_exports__);
         var colors = ["#bb0000", "#00bb00", "#0000bb", "#bbbb00"];
 
         (function frame() {
-          Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_1__["default"])({
+          Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_0__["default"])({
             particleCount: 4,
             angle: 60,
             spread: 105,
@@ -12090,7 +11980,7 @@ __webpack_require__.r(__webpack_exports__);
             },
             colors: colors
           });
-          Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_1__["default"])({
+          Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_0__["default"])({
             particleCount: 4,
             angle: 120,
             spread: 105,
@@ -70746,11 +70636,11 @@ var render = function() {
                             [
                               _c("i", { staticClass: "fad fa-user mr-2" }),
                               _vm._v(
-                                "\n            " +
+                                "\n                        " +
                                   _vm._s(_vm.trans.get("utils.random")) +
                                   ": " +
                                   _vm._s(_vm.trans.get("menu.students")) +
-                                  "\n          "
+                                  "\n                    "
                               )
                             ]
                           )
@@ -70766,11 +70656,11 @@ var render = function() {
                             [
                               _c("i", { staticClass: "fad fa-users mr-2" }),
                               _vm._v(
-                                "\n            " +
+                                "\n                        " +
                                   _vm._s(_vm.trans.get("utils.random")) +
                                   ": " +
                                   _vm._s(_vm.trans.get("menu.groups")) +
-                                  "\n          "
+                                  "\n                    "
                               )
                             ]
                           )
@@ -70787,11 +70677,11 @@ var render = function() {
                             [
                               _c("i", { staticClass: "fad fa-club mr-2" }),
                               _vm._v(
-                                "\n            " +
+                                "\n                        " +
                                   _vm._s(_vm.trans.get("utils.random")) +
                                   ": " +
                                   _vm._s(_vm.trans.get("menu.card")) +
-                                  "\n          "
+                                  "\n                    "
                               )
                             ]
                           )
@@ -70812,9 +70702,9 @@ var render = function() {
                             staticClass: "fad fa-treasure-chest mr-2"
                           }),
                           _vm._v(
-                            "\n            " +
+                            "\n                        " +
                               _vm._s(_vm.trans.get("utils.fortune")) +
-                              "\n          "
+                              "\n                    "
                           )
                         ]
                       )
@@ -70959,7 +70849,54 @@ var render = function() {
                       })
                     ]
                   )
-                : _vm._e()
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown is-hoverable",
+                  staticStyle: { display: "inline-block" }
+                },
+                [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "dropdown-menu has-background-white rounded p-3"
+                    },
+                    [
+                      _vm.students.length ||
+                      _vm.classroom.grouping[0].groups.length
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: {
+                                href: "/utils/exportConfidentialDataStudent/"
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fas fa-file-excel mr-2"
+                              }),
+                              _vm._v(
+                                "\n                        " +
+                                  _vm._s(
+                                    _vm.trans.get(
+                                      "utils.download_confidential_data_students"
+                                    )
+                                  ) +
+                                  "\n                    "
+                              )
+                            ]
+                          )
+                        : _vm._e()
+                    ]
+                  )
+                ]
+              )
             ]
           ),
           _vm._v(" "),
@@ -70978,7 +70915,7 @@ var render = function() {
                         "p-2 py-3 mr-2 has-background-white border rounded"
                     },
                     [
-                      _vm._m(2),
+                      _vm._m(3),
                       _vm._v(" "),
                       _c(
                         "span",
@@ -71204,7 +71141,7 @@ var render = function() {
                 }
               }),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(4)
             ])
           ])
         : _vm._e(),
@@ -71319,22 +71256,22 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", {}, [
                         _c("div", { staticClass: "score p-2 m-1" }, [
-                          _vm._m(4, true),
+                          _vm._m(5, true),
                           _vm._v(
-                            "\n                " +
+                            "\n                                " +
                               _vm._s(student.xp) +
-                              "\n              "
+                              "\n                            "
                           )
                         ])
                       ]),
                       _vm._v(" "),
                       _c("div", {}, [
                         _c("div", { staticClass: "gold p-2 m-1" }, [
-                          _vm._m(5, true),
+                          _vm._m(6, true),
                           _vm._v(
-                            "\n                " +
+                            "\n                                " +
                               _vm._s(student.gold) +
-                              "\n              "
+                              "\n                            "
                           )
                         ])
                       ])
@@ -71467,9 +71404,9 @@ var render = function() {
                   _vm._v(" "),
                   _c("h3", { staticClass: "subtitle is-1 has-text-centered" }, [
                     _vm._v(
-                      "\n              " +
+                      "\n                            " +
                         _vm._s(_vm.classroom.enrollment_code) +
-                        "\n            "
+                        "\n                        "
                     )
                   ])
                 ])
@@ -71517,9 +71454,9 @@ var render = function() {
                 [
                   _c("i", { staticClass: "fad fa-random mr-3" }),
                   _vm._v(
-                    "\n      " +
+                    "\n            " +
                       _vm._s(_vm.trans.get("utils.random")) +
-                      "\n    "
+                      "\n        "
                   )
                 ]
               )
@@ -71531,7 +71468,9 @@ var render = function() {
             [
               _c("i", { staticClass: "fas fa-times mr-3" }),
               _vm._v(
-                "\n      " + _vm._s(_vm.trans.get("general.close")) + "\n    "
+                "\n            " +
+                  _vm._s(_vm.trans.get("general.close")) +
+                  "\n        "
               )
             ]
           )
@@ -71573,9 +71512,9 @@ var render = function() {
                 _vm.isRandomGroupActive
                   ? _c("h1", { staticClass: "is-size-1 p-4 m-3" }, [
                       _vm._v(
-                        "\n          " +
+                        "\n                    " +
                           _vm._s(_vm.currentGroup.name) +
-                          "\n        "
+                          "\n                "
                       )
                     ])
                   : _vm._e()
@@ -71633,9 +71572,9 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n        " +
+                    "\n                " +
                       _vm._s(_vm.trans.get("general.close")) +
-                      "\n      "
+                      "\n            "
                   )
                 ]
               ),
@@ -71731,9 +71670,9 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n            " +
+                            "\n                        " +
                               _vm._s(_vm.trans.get("general.close")) +
-                              "\n          "
+                              "\n                    "
                           )
                         ]
                       ),
@@ -71810,9 +71749,9 @@ var render = function() {
                                         },
                                         [
                                           _vm._v(
-                                            "\n                    " +
+                                            "\n                                        " +
                                               _vm._s(student.name) +
-                                              "\n                  "
+                                              "\n                                    "
                                           )
                                         ]
                                       )
@@ -71904,9 +71843,9 @@ var render = function() {
                                           },
                                           [
                                             _vm._v(
-                                              "\n                    " +
+                                              "\n                                        " +
                                                 _vm._s(group.name) +
-                                                "\n                  "
+                                                "\n                                    "
                                             )
                                           ]
                                         )
@@ -71997,9 +71936,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n          " +
+                      "\n                    " +
                         _vm._s(_vm.trans.get("general.close")) +
-                        "\n        "
+                        "\n                "
                     )
                   ]
                 )
@@ -72052,9 +71991,9 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      "\n          " +
+                      "\n                    " +
                         _vm._s(_vm.trans.get("general.close")) +
-                        "\n        "
+                        "\n                "
                     )
                   ]
                 )
@@ -72104,6 +72043,28 @@ var staticRenderFns = [
       [
         _c("i", {
           staticClass: "fad fa-random outer_glow",
+          staticStyle: { "font-size": "2em" }
+        }),
+        _vm._v(" "),
+        _c("span", { staticClass: "icon is-small" }, [
+          _c("i", {
+            staticClass: "fas fa-angle-down",
+            attrs: { "aria-hidden": "true" }
+          })
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "span",
+      { staticClass: "dropdown-trigger link outer_glow my-0 py-0 px-1" },
+      [
+        _c("i", {
+          staticClass: "fas fa-tools outer_glow",
           staticStyle: { "font-size": "2em" }
         }),
         _vm._v(" "),
@@ -92088,7 +92049,9 @@ __webpack_require__.r(__webpack_exports__);
     "reward": "Recompensa",
     "wheel": "Gira la ruleta!",
     "fortune": "Ruleta de la fortuna",
-    "quantity_rewards": "Quantitat de premis"
+    "quantity_rewards": "Quantitat de premis",
+    "reports": "Informes",
+    "download_confidential_data_students": "Descarregar contrasenyes estudiants"
   },
   "ca.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -92825,7 +92788,9 @@ __webpack_require__.r(__webpack_exports__);
     "reward": "Reward",
     "wheel": "Spin the wheel!",
     "fortune": "Fortune wheel",
-    "quantity_rewards": "Quantity of prizes"
+    "quantity_rewards": "Quantity of prizes",
+    "reports": "Reports",
+    "download_confidential_data_students": "Download student passwords"
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -93563,7 +93528,9 @@ __webpack_require__.r(__webpack_exports__);
     "reward": "Recompensa",
     "wheel": "\xA1Gira la ruleta!",
     "fortune": "Ruleta de la fortuna",
-    "quantity_rewards": "Cantidad de premios"
+    "quantity_rewards": "Cantidad de premios",
+    "reports": "Informes",
+    "download_confidential_data_students": "Descargar contrase\xF1as estudiantes"
   },
   "es.validation": {
     "accepted": "El :attribute debe ser aceptado.",
