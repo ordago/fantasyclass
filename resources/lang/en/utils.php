@@ -11,4 +11,6 @@ return [
     'fortune' => 'Fortune wheel',
     'quantity_rewards' => 'Quantity of prizes',
 
+    'reports' => 'Reports',
+    'download_confidential_data_students' => 'Download student passwords'
 ];

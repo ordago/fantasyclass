@@ -7,8 +7,10 @@ return [
     'remove_selection' => 'Elimina selección',
     'random' => 'Aleatorio',
     'reward' => 'Recompensa',
-    'wheel' => '¡Gira la ruleta!',   
+    'wheel' => '¡Gira la ruleta!',
     'fortune' => 'Ruleta de la fortuna',
-    'quantity_rewards' => 'Cantidad de premios', 
+    'quantity_rewards' => 'Cantidad de premios',
 
+    'reports' => 'Informes',
+    'download_confidential_data_students' => 'Descargar contraseñas estudiantes'    
 ];
