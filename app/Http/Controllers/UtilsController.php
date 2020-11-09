@@ -8,6 +8,7 @@ use App\Student;
 use App\Exports\Export;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -89,11 +90,10 @@ class UtilsController extends Controller
     public function exportConfidentialDataStudent()
     {
         $headings = [
-            'name',
-            'password'
+            Lang::get("students.name"),
+            Lang::get("students.password")
         ];
 
-        
         $students = Student::all()->map(function($item){
             return array('name' => $item->name, 'password_plain' => $item->password_plain);
         });

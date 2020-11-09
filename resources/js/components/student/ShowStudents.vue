@@ -12,14 +12,6 @@
                    :href="'/classroom/' + classroom.code + '/groups'">
                     <i class="fad fa-users outer_glow" style="font-size: 2em"></i>
                 </a>
-                <a class="link outer_glow has-text-dark px-1"
-                   v-tippy
-                   :content="trans.get('menu.event') + ' ' + trans.get('utils.random')"
-                   :href="'/classroom/' + classroom.code + '/event/random'">
-                    <i class="fad fa-scroll-old mr-2"
-                       style="font-size: 2em"></i>
-                </a>
-
                 <div class="dropdown is-hoverable"
                      style="display: inline-block;">
                     <span class="dropdown-trigger link outer_glow my-0 py-0 px-1">
@@ -30,6 +22,12 @@
                     </span>
 
                     <div class="dropdown-menu has-background-white rounded p-3">
+                        <a class="dropdown-item"
+                           :href="'/classroom/' + classroom.code + '/event/random'"
+                           v-if="students.length">
+                            <i class="fad fa-scroll-old mr-2"></i>
+                            {{ trans.get("utils.random") }}: {{ trans.get("menu.events") }}
+                        </a>
                         <a class="dropdown-item"
                            @click="randomStudents"
                            v-if="students.length">
@@ -54,37 +52,44 @@
                         </a>
                     </div>
                 </div>
+                <div class="dropdown is-hoverable"
+                     style="display: inline-block;">
+                    <span class="dropdown-trigger link outer_glow my-0 py-0 px-1">
+                        <i class="fad fa-tools outer_glow" style="font-size: 2em"></i>
+                        <span class="icon is-small">
+                            <i class="fas fa-angle-down" aria-hidden="true"></i>
+                        </span>
+                    </span>
+
+                    <div class="dropdown-menu has-background-white rounded p-3">
+                        <a class="dropdown-item"
+                           @click="rollTheDice">
+                            <i class="fad fa-dice mr-2"></i>
+                            {{ trans.get("menu.dice") }}
+                        </a>
+                        <a class="dropdown-item"
+                           href="/utils/music"
+                           target="_blank">
+                            <i class="fad fa-music mr-2"></i>
+                            {{ trans.get("menu.music") }}
+                        </a>
+                        <a class="dropdown-item"
+                           :href="'/classroom/' + classroom.code + '/utils/meter'">
+                            <i class="fad fa-stopwatch mr-2"></i>
+                            {{ trans.get("menu.countdown") }}
+                        </a>
+                        <a class="dropdown-item"
+                           @click="isCountDownModalActive = true">
+                            <i class="fad fa-microphone mr-2"></i>
+                            {{ trans.get("menu.noise") }}
+                        </a>
+                    </div>
+                </div>
                 <a class="link outer_glow has-text-dark px-1"
                    v-tippy
                    :content="trans.get('menu.classcode')"
                    @click="showClassCode">
                     <i class="fad fa-qrcode outer_glow" style="font-size: 2em"></i>
-                </a>
-                <span class="link outer_glow cursor-pointer"
-                      @click="rollTheDice"
-                      v-tippy
-                      :content="trans.get('menu.dice')">
-                    <i class="fad fa-dice" style="font-size: 2em"></i>
-                </span>
-                <a href="/utils/music"
-                   target="_blank"
-                   v-tippy
-                   :content="trans.get('menu.music')"
-                   class="link outer_glow px-1 cursor-pointer has-text-dark">
-                    <i class="fad fa-music outer_glow" style="font-size: 2em"></i>
-                </a>
-                <span class="link outer_glow px-1 cursor-pointer"
-                      v-tippy
-                      :content="trans.get('menu.countdown')"
-                      @click="isCountDownModalActive = true">
-                    <i class="fad fa-stopwatch outer_glow" style="font-size: 2em"></i>
-                </span>
-                <a :href="'/classroom/' + classroom.code + '/utils/meter'"
-                   target="_blank"
-                   v-tippy
-                   :content="trans.get('menu.noise')"
-                   class="link outer_glow px-1 cursor-pointer has-text-dark">
-                    <i class="fad fa-microphone outer_glow" style="font-size: 2em"></i>
                 </a>
                 <a @click="isMassiveModalActive = true"
                    v-tippy
@@ -102,7 +107,7 @@
                 <div class="dropdown is-hoverable"
                      style="display: inline-block;">
                     <span class="dropdown-trigger link outer_glow my-0 py-0 px-1">
-                        <i class="fas fa-tools outer_glow" style="font-size: 2em"></i>
+                        <i class="fad fa-file-download outer_glow" style="font-size: 2em"></i>
                         <span class="icon is-small">
                             <i class="fas fa-angle-down" aria-hidden="true"></i>
                         </span>
@@ -111,6 +116,7 @@
                     <div class="dropdown-menu has-background-white rounded p-3">
                         <a class="dropdown-item"
                            href="/utils/exportConfidentialDataStudent/"
+                           target="_blank"
                            v-if="students.length || classroom.grouping[0].groups.length">
                             <i class="fas fa-file-excel mr-2"></i>
                             {{ trans.get("utils.download_confidential_data_students") }}
