@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Behaviour;
 use App\Classroom;
 use App\Student;
+use App\Exports\Export;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class UtilsController extends Controller
 {
@@ -37,7 +38,7 @@ class UtilsController extends Controller
         }
     }
     public function massive($code)
-    {   
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $data = request()->validate([
@@ -55,16 +56,16 @@ class UtilsController extends Controller
     public function iconPack($category)
     {
         $images = preg_grep('~\.(svg)$~', scandir(public_path() . '/img/icon-packs/'.$category));
-        array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );      
+        array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );
         return json_encode($images);
     }
 
     public function iconPacks()
-    {   
+    {
         $array = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.', 'LICENSE'));
         return json_encode($array);
     }
-    
+
     public function online()
     {
         $expiresAt = Carbon::now()->addMinutes(5);
@@ -83,5 +84,20 @@ class UtilsController extends Controller
             $music[$soundName] = $sound;
         }
         return view('utils.music', compact('music'));
+    }
+
+    public function exportConfidentialDataStudent()
+    {
+        $headings = [
+            'name',
+            'password'
+        ];
+
+        
+        $students = Student::all()->map(function($item){
+            return array('name' => $item->name, 'password_plain' => $item->password_plain);
+        });
+
+        return Excel::download(new Export($headings, $students), 'Students.xlsx');
     }
 }
