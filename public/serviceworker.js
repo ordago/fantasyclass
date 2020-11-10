@@ -112,16 +112,11 @@
                 return cache.addAll([
                     '/',
                     '/offline',
-                    '/css/app.css',
-                    '/classroom',
-                    '/js/app.js',
+                    '/css/home.css',
                     '/img/logo.svg',
                     '/img/google-logo.svg',
-                    '/js/pace.min.js',
+                    'https://unpkg.com/bulma@0.9.1/css/bulma.min.css',
                     'https://kit.fontawesome.com/90342cb187.js',
-                    '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.css',
-                    '//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.1.0/cookieconsent.min.js',
-                    '/login',
                 ]);
             });
     };
