@@ -133,7 +133,7 @@
                             <hr />
                             <h2>
                                 {!! __('home.feature_open') !!}
-                                 <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass" target="_blank">Github</a>
+                                <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass" target="_blank">Github</a>
                             </h2>
                         </div>
                     </div>
@@ -158,7 +158,7 @@
                             <hr />
                             <h2>
                                 {!! __('home.feature_changelog') !!}
-                                 <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md">CHANGELOG</a>
+                                <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md">CHANGELOG</a>
                             </h2>
                         </div>
                     </div>
@@ -269,6 +269,22 @@
             easing: "ease-out",
             duration: 800,
         });
+    </script>
+
+    <script type="text/javascript">
+        // Initialize the service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/serviceworker.js', {
+                registrationStrategy: 'registerImmediately',
+                scope: '/'
+            }).then(function(registration) {
+                // Registration was successful
+                // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+            });
+        }
     </script>
 </body>
 
