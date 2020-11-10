@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<chat></chat>
+<chat current-user-id="{{ auth()->user()->id }}"></chat>
 @endsection

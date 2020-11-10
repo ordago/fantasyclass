@@ -4,10 +4,15 @@ import 'firebase/firestore'
 import 'firebase/database'
 import 'firebase/storage'
 
-const config = 
-    process.env.NODE_ENV === 'development' ?
-    JSON.parse(process.env.VUE_APP_FIREBASE_CONFIG) :
-    JSON.parse(process.env.VUE_APP_FIREBASE_CONFIG_PUBLIC);
+var config = {
+    apiKey: process.env.MIX_FIREBASE_API,
+    authDomain: process.env.MIX_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.MIX_FIREBASE_DATABASE,
+    projectId: process.env.MIX_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.MIX_FIREBASE_BUCKET,
+    messagingSenderId: process.env.MIX_FIREBASE_SENDER,
+    appId: process.env.MIX_FIREBASE_APPID,
+  };
 
 firebaseApp.initializeApp(config)
 

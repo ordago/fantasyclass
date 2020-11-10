@@ -1,5 +1,5 @@
 <template>
-  <div class="is-flex has-all-centered left-auto">
+  <div class="is-flex has-all-centered left-auto button">
     <div
       class="m-3 cursor-pointer"
       style="display: initial !important"

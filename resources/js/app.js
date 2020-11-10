@@ -144,7 +144,7 @@ Vue.component('volume-meter', require('./components/utils/VolumeMeter.vue').defa
 
 Vue.component('massive-actions', require('./components/utils/MassiveActions.vue').default);
 
-Vue.component('chat', () => import('./components/utils/Chat.vue').default);
+Vue.component('chat', require('./components/utils/Chat.vue').default);
 
 
 /**

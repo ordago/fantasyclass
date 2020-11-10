@@ -1,6 +1,6 @@
 <template>
   <chat-window
-    height="calc(100vh - 73px)"
+    height="calc(100vh - 56px)"
     :styles="styles"
     :currentUserId="currentUserId"
     :rooms="rooms"
@@ -33,42 +33,13 @@ import {
   filesRef,
   deleteDbField,
 } from "./firestore";
-import { parseTimestamp, isSameDay } from './functions/dates'
+require("firebase/auth");
+import { parseTimestamp, isSameDay } from "./functions/dates";
 
 export default {
-  props: [""],
+  props: ["currentUserId"],
   components: {
     ChatWindow,
-  },
-  methods: {
-    typingMessage(event) {
-      // console.log(event);
-    },
-    sendMessageReaction(event) {
-      console.log(event);
-    },
-    messageActionHandler(event) {
-      console.log(event);
-    },
-    menuActionHandler(event) {
-      console.log(event);
-    },
-    addRoom() {},
-    openFile(event) {
-      console.log(event);
-    },
-    deleteMessage(event) {
-      console.log(event);
-    },
-    editMessage(event) {
-      console.log(event);
-    },
-    fetchMessages(event) {
-      console.log(event);
-    },
-    sendMessage(event) {
-      console.log(event);
-    },
   },
   data() {
     return {
@@ -97,12 +68,21 @@ export default {
       styles: { container: { borderRadius: "4px" } },
       rooms: [],
       messages: [],
-      currentUserId: "1",
     };
   },
-  mounted() {    
-    this.fetchRooms();
-    this.updateUserOnlineStatus();
+  mounted() {
+    axios.get("/inbox/token").then((response) => {
+      firebase
+        .auth()
+        .signInWithCustomToken(response.data)
+        .then(response => {
+          this.fetchRooms();
+          this.updateUserOnlineStatus();
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    });
   },
   destroyed() {
     this.resetRooms();
@@ -467,17 +447,41 @@ export default {
         });
       });
     },
+
     addRoom() {
       this.resetForms();
-      this.addNewRoom = true;
+      this.$buefy.dialog.prompt({
+        message: "Username",
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get("general.cancel"),
+        inputAttrs: {
+          placeholder: "username",
+        },
+        trapFocus: true,
+        onConfirm: (value) => {
+          axios
+            .post("/users/chat", { username: value })
+            .then((response) => {
+              this.createRoom(response.data.id, response.data.username);
+              console.log(response.data);
+            })
+            .catch((error) => {
+              console.log("error");
+              // Utils.toast(this, "The user don't exist", 2, 5000, "toasted-primary", "times");
+            });
+        },
+      });
     },
-    async createRoom() {
+
+    async createRoom(uid, username) {
       this.disableForm = true;
-      const { id } = await usersRef.add({ username: this.addRoomUsername });
-      await usersRef.doc(id).update({ _id: id });
-      await roomsRef.add({ users: [id, this.currentUserId] });
-      this.addNewRoom = false;
-      this.addRoomUsername = "";
+      // const { id } = await usersRef.add({ _id: uid, username: this.addRoomUsername });
+
+
+      await usersRef.doc("" + uid).set({ _id: uid, username: username });
+      
+      // await usersRef.doc(id).update({ _id: id });
+      await roomsRef.add({ users: ["" + uid, this.currentUserId] });
       this.fetchRooms();
     },
     inviteUser(roomId) {
@@ -485,15 +489,15 @@ export default {
       this.inviteRoomId = roomId;
     },
     async addRoomUser() {
-      this.disableForm = true;
-      const { id } = await usersRef.add({ username: this.invitedUsername });
-      await usersRef.doc(id).update({ _id: id });
-      await roomsRef
-        .doc(this.inviteRoomId)
-        .update({ users: firebase.firestore.FieldValue.arrayUnion(id) });
-      this.inviteRoomId = null;
-      this.invitedUsername = "";
-      this.fetchRooms();
+      // this.disableForm = true;
+      // const { id } = await usersRef.add({ username: this.invitedUsername });
+      // await usersRef.doc(id).update({ _id: id });
+      // await roomsRef
+      //   .doc(this.inviteRoomId)
+      //   .update({ users: firebase.firestore.FieldValue.arrayUnion(id) });
+      // this.inviteRoomId = null;
+      // this.invitedUsername = "";
+      // this.fetchRooms();
     },
     removeUser(roomId) {
       this.resetForms();

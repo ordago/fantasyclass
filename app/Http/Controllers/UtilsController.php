@@ -6,10 +6,13 @@ use App\Behaviour;
 use App\Classroom;
 use App\Student;
 use App\Exports\Export;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use Firebase\JWT\JWT;
+
 
 class UtilsController extends Controller
 {
@@ -58,6 +61,35 @@ class UtilsController extends Controller
         $images = preg_grep('~\.(svg)$~', scandir(public_path() . '/img/icon-packs/'.$category));
         array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );
         return json_encode($images);
+    }
+
+    public function getUserChatInfo()
+    {
+        $data = request()->validate([
+            'username' => ['string', 'required', 'min:3'],
+        ]);
+
+        $user = User::where('username', '=', $data['username'])->firstOrFail();
+        return ['id' => $user->id, 'username' => $user->username];
+    }
+
+    public function getFirebaseToken()
+    {
+        $service_account_email = env('FIREBASE_ACCOUNT_EMAIL');
+        $private_key = env('FIREBASE_SECRET');
+
+        $now_seconds = time();
+        $payload = array(
+          "iss" => $service_account_email,
+          "sub" => $service_account_email,
+          "aud" => "https://identitytoolkit.googleapis.com/google.identity.identitytoolkit.v1.IdentityToolkit",
+          "iat" => $now_seconds,
+          "exp" => $now_seconds+(60*60),  // Maximum expiration time is one hour
+          "uid" => auth()->user()->id,
+        );
+        $token = JWT::encode($payload, $private_key, "RS256");
+        return $token;
+        
     }
 
     public function iconPacks()

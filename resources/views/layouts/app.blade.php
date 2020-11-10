@@ -67,8 +67,11 @@
                     </label>
                 </a>
                 <div class="is-flex has-all-centered left-auto is-hidden-desktop">
+                    <a href="/inbox" class="button mr-1"><i class="fad fa-comments-alt" style="font-size: 1.25em"></i></a>
+
                     @yield('notifications')
-                    <a role="button" class="navbar-burger burger ml-2" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
+
+                    <a role="button" class="navbar-burger burger ml-1" @click="showNav = !showNav" :class="{ 'is-active': showNav }" aria-label="menu" aria-expanded="false" data-target="navbar">
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
                         <span aria-hidden="true"></span>
@@ -86,7 +89,10 @@
                 <div class="navbar-end has-text-right">
                     <div class="navbar-item">
                         <span class="is-hidden-touch mr-2">
-                            @yield('notifications')
+                            <div class="is-flex">
+                                <a href="/inbox" class="button mr-2"><i class="fad fa-comments-alt" style="font-size: 1.25em"></i></a>
+                                @yield('notifications')
+                            </div>
                         </span>
                         <div class="dropdown is-right is-hoverable">
                             <div class="dropdown-trigger">
@@ -149,7 +155,7 @@
                 <button id="buttonAdd" type="button" class="font-weight-bold text-primary btn-sm btn btn-link">ADD</button>
             </div>
         </div>
-        <main class="p-2 m-0">
+        <main class="p-0 m-0">
             @yield('content')
         </main>
     </div>
