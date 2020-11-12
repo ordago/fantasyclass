@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 content">
+  <div class="w-100 p-2 content">
     <div class="buttons">
       <button class="button is-link" @click="isTagModalActive = true">
         <i class="mr-2 fas fa-tag"></i>

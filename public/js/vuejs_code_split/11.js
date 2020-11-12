@@ -253,7 +253,10 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-2" }, [
           _c("label", { attrs: { for: "custom_text" } }, [
-            _vm._v(_vm._s(_vm.trans.get("badges.description")))
+            _c("span", { staticClass: "help is-danger is-inline" }, [
+              _vm._v("* ")
+            ]),
+            _vm._v(" " + _vm._s(_vm.trans.get("badges.description")))
           ]),
           _vm._v(" "),
           _c("input", {
@@ -266,12 +269,7 @@ var render = function() {
               }
             ],
             staticClass: "input",
-            attrs: {
-              type: "text",
-              name: "description",
-              required: "",
-              placeholder: ""
-            },
+            attrs: { type: "text", name: "description", placeholder: "" },
             domProps: { value: _vm.description },
             on: {
               input: function($event) {

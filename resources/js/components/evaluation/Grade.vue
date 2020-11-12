@@ -1,37 +1,50 @@
 <template>
-  <div class="w-100 content">
+  <div class="w-100 p-2 content">
     <form @submit.prevent="save">
-      <div class="columns" v-for="student in students" :key="student.id">
-        <div v-if="evaluable.type == 1" class="column is-narrow">
-          <button class="button is-info" @click.prevent="loadRubric(student)">Rubric</button>
-        </div>
-        <div class="column is-narrow">
-          <div class="field">
-            <div class="control">
-              <input
-                v-model="student.grade"
-                class="input"
-                step="0.01"
-                type="number"
-                min="0"
-                :max="settings.eval_max"
-                placeholder="Grade"
-              />
+      <div v-for="student in students" :key="student.id">
+        <div class="column is-flex align-items-center is-size-4">{{ student.name }}</div>
+
+        <div class="columns">
+          <div v-if="evaluable.type == 1" class="column is-narrow">
+            <button class="button is-info" @click.prevent="loadRubric(student)">
+              Rubric
+            </button>
+          </div>
+          <div class="column is-narrow">
+            <div class="field">
+              <div class="control">
+                <input
+                  v-model="student.grade"
+                  class="input"
+                  step="0.01"
+                  type="number"
+                  min="0"
+                  :max="settings.eval_max"
+                  placeholder="Grade"
+                />
+              </div>
             </div>
           </div>
+          <div class="column">
+            <textarea
+              v-model="student.feedback"
+              class="input"
+              placeholder="Feedback"
+            ></textarea>
+          </div>
+          <hr style="background-color: black" />
         </div>
-        <div class="column">
-          <textarea v-model="student.feedback" class="input" placeholder="Feedback"></textarea>
-        </div>
-        <div class="column is-flex align-items-center">{{ student.name }}</div>
-        <hr style="background-color: black" />
       </div>
-      <button class="button is-primary">
+      <button class="button is-primary mt-4">
         <i class="fas fa-save mr-3"></i>
-        {{ trans.get('general.save') }}
+        {{ trans.get("general.save") }}
       </button>
     </form>
-    <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="true" ></b-loading>
+    <b-loading
+      :is-full-page="true"
+      :active.sync="isLoading"
+      :can-cancel="true"
+    ></b-loading>
 
     <b-modal
       :active.sync="showRubric"
@@ -41,7 +54,7 @@
       aria-role="dialog"
       aria-modal
       full-screen
-      v-if="studentActive!=null"
+      v-if="studentActive != null"
     >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
@@ -70,12 +83,21 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="studentActive=null;showRubric=false">Close</button>
+          <button
+            class="button"
+            type="button"
+            @click="
+              studentActive = null;
+              showRubric = false;
+            "
+          >
+            Close
+          </button>
           <input
             type="number"
             v-model="grade"
             class="input mr-3"
-            style="width: 100px;"
+            style="width: 100px"
           />
           <button class="button is-primary" @click="gradeRubric">Grade</button>
         </footer>
@@ -143,7 +165,10 @@ export default {
 
       this.grade = Math.min(
         this.settings.eval_max,
-        Math.round(((totalSelected / total) * this.settings.eval_max + totalOptional) * 100) / 100
+        Math.round(
+          ((totalSelected / total) * this.settings.eval_max + totalOptional) *
+            100
+        ) / 100
       );
     },
     loadRubric: function (student) {
@@ -197,12 +222,12 @@ export default {
         })
         .then((response) => {
           this.$toasted.show(this.trans.get("success_error.update_success"), {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: "check",
-              type: "success",
-            });
+            position: "top-center",
+            duration: 3000,
+            iconPack: "fontawesome",
+            icon: "check",
+            type: "success",
+          });
         });
     },
   },

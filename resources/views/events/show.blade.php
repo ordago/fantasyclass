@@ -1,8 +1,5 @@
-@extends('layouts.app')
+@extends('layouts.teacher')
 
-@section('navbarhide')
-style="display:none"
-@endsection
 
 @section('content')
 <show-event :info="{{ json_encode($return) }}" code="{{ $class->code }}"></settings>

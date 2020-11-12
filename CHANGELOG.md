@@ -1,11 +1,15 @@
 # Changelog
 
-## v1.18 Beta (XX/11/2020)
+## v1.19 Beta (XX/11/2020)
 ### Added
-- 
+- Android app.
+- Chat between users.
+- Reports: passwords and evaluation.
 
 ### Changed
 - Show 3 comments by default.
+- Reorganized icons in utilities.
+- Better mobile random events.
 
 ## v1.18 Beta (08/11/2020)
 ### Added

@@ -20,8 +20,8 @@
           <input type="text" id="title" v-model="title" name="title" required class="input my-3">
         </div>
         <div class="mt-2">
-          <label for="custom_text">{{ trans.get('badges.description') }}</label>
-          <input type="text" v-model="description" name="description" class="input" required placeholder="">
+          <label for="custom_text"><span class="help is-danger is-inline">* </span> {{ trans.get('badges.description') }}</label>
+          <input type="text" v-model="description" name="description" class="input" placeholder="">
         </div>
         <div class="mt-3">
           <label>{{ trans.get('badges.attributes') }} <small class="font-italic">({{ trans.get('badges.attributes_info') }})</small></label>

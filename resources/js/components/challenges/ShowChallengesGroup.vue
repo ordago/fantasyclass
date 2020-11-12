@@ -1,5 +1,5 @@
 <template>
-  <div class="columns">
+  <div class="columns p-2">
     <div class="column is-narrow pr-0" style="min-width: 400px">
       <article class="panel is-sticky-panel is-info">
         <p

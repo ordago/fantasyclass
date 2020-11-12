@@ -37,7 +37,7 @@ require("firebase/auth");
 import { parseTimestamp, isSameDay } from "./functions/dates";
 
 export default {
-  props: ["currentUserId"],
+  props: ["currentUserId", "currentUsername"],
   components: {
     ChatWindow,
   },
@@ -75,9 +75,11 @@ export default {
       firebase
         .auth()
         .signInWithCustomToken(response.data)
-        .then(response => {
-          this.fetchRooms();
-          this.updateUserOnlineStatus();
+        .then((response) => {
+          this.createUser().then((response) => {
+            this.fetchRooms();
+            this.updateUserOnlineStatus();
+          });
         })
         .catch(function (error) {
           console.log(error);
@@ -88,6 +90,11 @@ export default {
     this.resetRooms();
   },
   methods: {
+    async createUser() {
+      await usersRef
+        .doc(this.currentUserId)
+        .set({ _id: this.currentUserId, username: this.currentUsername });
+    },
     messagesRef(roomId) {
       return roomsRef.doc(roomId).collection("messages");
     },
@@ -463,7 +470,6 @@ export default {
             .post("/users/chat", { username: value })
             .then((response) => {
               this.createRoom(response.data.id, response.data.username);
-              console.log(response.data);
             })
             .catch((error) => {
               console.log("error");
@@ -477,9 +483,8 @@ export default {
       this.disableForm = true;
       // const { id } = await usersRef.add({ _id: uid, username: this.addRoomUsername });
 
-
       await usersRef.doc("" + uid).set({ _id: uid, username: username });
-      
+
       // await usersRef.doc(id).update({ _id: id });
       await roomsRef.add({ users: ["" + uid, this.currentUserId] });
       this.fetchRooms();

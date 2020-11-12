@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <a :href="'/classroom/' + classroom.code + '/rubric/create'" class="button is-link mb-3">{{ trans.get('evaluation.create_rubric') }}</a>
     <b-table v-if="rubrics.length"
             :data="rubrics"

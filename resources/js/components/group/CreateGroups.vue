@@ -1,5 +1,5 @@
 <template>
-  <div class="content">
+  <div class="content p-2">
     <form @submit.prevent="createGroups()" method="post" action v-if="!groups.length">
       <input :value="csrfToken" type="hidden" name="_token" />
       <div class="p-4">

@@ -1,7 +1,7 @@
 <template>
-  <div class="m-0">
+  <div class="m-0 content">
     <transition name="fade">
-      <h1 class="first-appear" v-if="show" v-html="trans.get(info.event.title)"></h1>
+      <h1 class="first-appear is-size-1" v-if="show" v-html="trans.get(info.event.title)"></h1>
     </transition>
     <transition name="fadesecond">
       <div class="second-appear" v-if="show">
@@ -299,8 +299,6 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: logo;
-  font-size: 8em;
   word-spacing: 0.2em;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;

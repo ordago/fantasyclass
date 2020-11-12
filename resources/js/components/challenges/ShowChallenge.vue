@@ -10,6 +10,14 @@
         >
           <i :class="challengeReactive.group.icon"></i>
         </div>
+        <div
+          class="challenge-category has-background-light"
+          v-if="admin && isHidden"
+          v-tippy
+          :content="trans.get('challenges.hidden_until') + ' ' + challenge.datetime.split(':00')[0] "
+        >
+          <i class="fas fa-eye-slash"></i>
+        </div>
         <div class="content">
           <h1>
             <i
@@ -23,7 +31,9 @@
               class="fas fa-users is-size-4 colored"
             ></i>
             {{ challengeReactive.title }}
-            <span class="tag is-light">{{ challengeReactive.datetime }}</span>
+            <span class="tag is-light">{{
+              challengeReactive.datetime.split(":00")[0]
+            }}</span>
           </h1>
           <p>
             <small>{{ challengeReactive.description }}</small>
@@ -235,7 +245,16 @@
               </div>
             </div>
             <div class="mt-3">
-              <a class="has-text-dark" @click="maxComments = challenge.comments.length" v-if="challenge.comments && challenge.comments.length > 3 && maxComments != challenge.comments.length">{{ trans.get('challenges.load_comments') }}</a>
+              <a
+                class="has-text-dark"
+                @click="maxComments = challenge.comments.length"
+                v-if="
+                  challenge.comments &&
+                  challenge.comments.length > 3 &&
+                  maxComments != challenge.comments.length
+                "
+                >{{ trans.get("challenges.load_comments") }}</a
+              >
             </div>
           </div>
           <div
@@ -273,7 +292,7 @@
             />
             Feedback: {{ challengeReactive.rating }} / 5
           </div>
-          <div class="p-3 has-text-right" v-if="(edit && admin) || !admin">
+          <div class="buttons" v-if="(edit && admin) || !admin">
             <button
               v-if="
                 !admin &&
@@ -589,7 +608,15 @@ const InputEmoji = () => import("../utils/InputEmoji.vue");
 import { VueReactionEmoji } from "vue-feedback-reaction";
 
 export default {
-  props: ["challenge", "edit", "admin", "code", "full", "prevRating", "students"],
+  props: [
+    "challenge",
+    "edit",
+    "admin",
+    "code",
+    "full",
+    "prevRating",
+    "students",
+  ],
   created: function () {
     this.challengeReactive = this.challenge;
   },
@@ -777,13 +804,24 @@ export default {
   },
   computed: {
     orderedComments: function () {
-      return _.orderBy(this.challenge.comments, "created_at", "desc").splice(0, this.maxComments);
+      return _.orderBy(this.challenge.comments, "created_at", "desc").splice(
+        0,
+        this.maxComments
+      );
     },
     checkCompletion() {
       if (this.challengeReactive.completion == 1)
         return this.challengeReactive.count == 1;
       if (this.challengeReactive.completion == 2)
         return this.challengeReactive.count == 2;
+    },
+    isHidden() {
+      let now = new Date();
+      now = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes();
+      if (this.challengeReactive.datetime.split(":00")[0] > now) {
+        return true;
+      }
+      return false;
     },
     getBackground() {
       if (this.full) {
@@ -793,6 +831,7 @@ export default {
           return "has-background-story";
         }
       } else if (this.edit) {
+        if (this.isHidden) return "has-background-light";
         return "";
       } else {
         switch (this.challengeReactive.completion) {

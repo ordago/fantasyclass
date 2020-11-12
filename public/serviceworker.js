@@ -233,6 +233,7 @@
             e.waitUntil(self.registration.showNotification(msg.title, {
                 body: msg.body,
                 icon: msg.icon,
+                badge: msg.icon,
                 actions: msg.actions,
                 data: msg.data,
             }));

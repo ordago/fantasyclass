@@ -1500,7 +1500,7 @@ var render = function() {
   return _c(
     "div",
     {
-      staticClass: "columns h-100 mr-0",
+      staticClass: "columns p-2 h-100 mr-0",
       class: { "has-bg-student": !_vm.admin }
     },
     [

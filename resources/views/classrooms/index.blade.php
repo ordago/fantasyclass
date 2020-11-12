@@ -2,7 +2,7 @@
 
 @section('content')
 <button class="js-push-btn float has-all-centered" style="display: none!important" v-tippy content="Enable notifications"><i class="fa fa-bell my-float fs-2"></i></button>
-<div class="columns is-multiline is-variable is-1 mt-0">
+<div class="columns p-2 is-multiline is-variable is-1 mt-0">
 
   <div class="column py-1 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox">
     <div class="box w-100 h-100 is-flex has-all-centered">

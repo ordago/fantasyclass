@@ -32,7 +32,7 @@ return [
     "char_theme_info" => "Si cambias el tema de personajes de una clase, tendrás que cambiar los personajes de los y las estudiantes.",
     "custom_theme" => "Para crear una gamificación independiente de los temas propuestos. Quieres hacer una gamificación de Pokemon o d\'algún tema concreto? Esta es tu opción.",
     "finish_title" => "Estás a punto de hacer cosas maravillosas!",
-    "info_wizard_0" => "Ya tenso configurada una parte de la clase, ahora:",
+    "info_wizard_0" => "Ya tienes configurada una parte de la clase, ahora:",
     "info_wizard_1" => "Crea estudiantes y agrupalos en grups.",
     "info_wizard_2" => "Crea desafíos.",
     "info_wizard_3" => "Configura recompensas para los estudiantes.",

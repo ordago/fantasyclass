@@ -1,5 +1,5 @@
 <template>
-  <div class="w-100 content">
+  <div class="w-100 p-2 content">
     <div class="buttons">
         <button @click="getRules('en')" class="button is-primary">
           Import default (EN)

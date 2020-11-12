@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <button class="button is-primary my-3" @click="showAddModal">
       {{ trans.get("events.add") }}
     </button>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <create-levels v-if="!levels.length"></create-levels>
     <div class="columns is-multiline is-variable mt-3" v-else>
       <show-level

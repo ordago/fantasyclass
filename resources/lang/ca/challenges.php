@@ -55,4 +55,5 @@ return [
     'available_students' => 'estudiants',
     
     'load_comments' => 'Carrega més comentaris...',
+    'hidden_until' => 'Ocult fins',
 ];

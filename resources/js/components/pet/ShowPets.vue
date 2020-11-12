@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <button class="button is-link mb-5" @click="isModalActive = true">
       <i class="fas fa-dog mr-2"></i>
       {{ trans.get("pets.new_pet") }}

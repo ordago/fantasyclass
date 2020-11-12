@@ -1,6 +1,6 @@
 <template>
   <div
-    class="columns h-100 mr-0"
+    class="columns p-2 h-100 mr-0"
     v-bind:class="{ 'has-bg-student': !admin }"
   >
     <div class="column is-narrow pr-0 noprint" ref="studentInfo">
