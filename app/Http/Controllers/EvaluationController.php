@@ -7,8 +7,10 @@ use App\Evaluable;
 use App\Rubric;
 use App\Student;
 use App\Tag;
+use App\Exports\Export;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class EvaluationController extends Controller
 {
@@ -41,7 +43,7 @@ class EvaluationController extends Controller
                         if ($item['id'] == $evalTag->id) {
                             $evalTag->grade = $grade->pivot->grade;
                             $item['evaluables']->push($evalTag);
-                        } 
+                        }
                         return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'evaluables' => $item['evaluables']];
                     });
                 }
@@ -58,7 +60,7 @@ class EvaluationController extends Controller
         $grades = collect();
         $students = $class->students;
         foreach ($students as $student) {
-            
+
             $grades->push(EvaluationController::individualReport($class, $student));
         }
         $settings = EvaluationController::getEvalSettings($class->id);
@@ -148,7 +150,7 @@ class EvaluationController extends Controller
         $rubric = Rubric::find($data['rubric']);
         $rubric->load('rows.items');
 
-        return $rubric;  
+        return $rubric;
 
     }
 
@@ -214,5 +216,13 @@ class EvaluationController extends Controller
         }
         $evaluable->load('tags');
         return $evaluable;
+    }
+
+    public function exportEvaluationReport(Request $request)
+    {
+        $headings = $request->get('headings');
+        $values = $request->get('values');
+
+        return Excel::download(new Export($headings, $values), 'Evaluation Report.xlsx');
     }
 }

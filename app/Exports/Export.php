@@ -14,7 +14,7 @@ class Export implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings
     public function __construct($headings, $collection)
     {
         $this->headings = $headings;
-        $this->collection = $collection;
+        $this->collection = collect($collection);
     }
 
     public function collection()
@@ -30,7 +30,7 @@ class Export implements FromCollection, ShouldAutoSize, WithEvents, WithHeadings
     public function registerEvents(): array
     {
         return [
-            AfterSheet::class    => function(AfterSheet $event) {
+            AfterSheet::class => function(AfterSheet $event) {
                 $event->sheet->getDelegate()->getStyle('A1:'.$event->sheet->getHighestColumn().'1')->getFont()->setBold(true);
             },
         ];

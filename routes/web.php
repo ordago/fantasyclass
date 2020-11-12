@@ -200,6 +200,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/rubric', 'RubricController@store');
         Route::patch('/{code}/rubric/{id}', 'RubricController@update');
         Route::get('/{code}/rubric/{id}', 'RubricController@edit');
+        Route::post('/evaluation/exportEvaluationReport/', 'EvaluationController@exportEvaluationReport');
 
         //Tags
         Route::post('/{code}/tag', 'TagController@store');
