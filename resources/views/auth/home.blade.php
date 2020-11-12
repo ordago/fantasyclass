@@ -12,19 +12,30 @@
     <!-- <link rel="stylesheet" type="text/css" href="/css/app.css" /> -->
     <script src="https://kit.fontawesome.com/90342cb187.js" crossorigin="anonymous"></script>
     <link rel="icon" type="image/png" href="favicon.png" />
+
+    <!-- Mobile -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2, user-scalable=1">
+
+    <!-- PWA -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <meta name="apple-mobile-web-app-title" content="FantasyClass">
+    <meta name="application-name" content="FantasyClass">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
 </head>
 
 <body>
-    <div class="topr lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
+    <div class="top-right lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
         <i class="fal fa-globe"></i> <a href="/locale/es">es</a> <i class="fal fa-ellipsis-v"></i> <a href="/locale/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a href="/locale/en">en</a>
     </div>
-    <!-- Begin Preloader -->
-    <div class="preloader-wrapper">
-        <div class="preloader">
-            <img src="img/preloader.gif" alt="" />
-        </div>
-    </div>
-    <!-- End Preloader-->
+
     <!-- Begin Scroll Up Button -->
 
     <form action="#home">
@@ -114,7 +125,7 @@
                             <hr />
                             <h2>
                                 {!! __('home.feature_open') !!}
-                                 <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass" target="_blank">Github</a>
+                                <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass" target="_blank">Github</a>
                             </h2>
                         </div>
                     </div>
@@ -139,7 +150,7 @@
                             <hr />
                             <h2>
                                 {!! __('home.feature_changelog') !!}
-                                 <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md">CHANGELOG</a>
+                                <a class="has-text-light" href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md">CHANGELOG</a>
                             </h2>
                         </div>
                     </div>
@@ -250,6 +261,22 @@
             easing: "ease-out",
             duration: 800,
         });
+    </script>
+
+    <script type="text/javascript">
+        // Initialize the service worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/serviceworker.js', {
+                registrationStrategy: 'registerImmediately',
+                scope: '/'
+            }).then(function(registration) {
+                // Registration was successful
+                // console.log('Laravel PWA: ServiceWorker registration successful with scope: ', registration.scope);
+            }, function(err) {
+                // registration failed :(
+                console.log('Laravel PWA: ServiceWorker registration failed: ', err);
+            });
+        }
     </script>
 </body>
 
