@@ -72,7 +72,6 @@ class NewInteraction extends Notification
         return (new WebPushMessage)
         ->title($this->title)
         ->icon('/notification.png')
-        ->badge('/notification.png')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
         ->action('Open FantasyClass', $action);
