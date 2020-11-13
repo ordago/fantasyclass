@@ -274,7 +274,7 @@
               <i class="fad fa-bullhorn mr-1 ml-4 mt-2"></i>
               {{ trans.get("challenges.rating_feedback") }}
             </div>
-            <vue-feedback-reaction
+            <VueFeedbackReaction
               containerWidth="50px"
               containerHeight="50px"
               emojiWidth="50px"
@@ -609,7 +609,8 @@ import confetti from "canvas-confetti";
 import Utils from "../../utils.js";
 
 const InputEmoji = () => import("../utils/InputEmoji.vue");
-import { VueReactionEmoji } from "vue-feedback-reaction";
+import { VueReactionEmoji, VueFeedbackReaction } from "vue-feedback-reaction";
+
 
 export default {
   props: [
@@ -653,6 +654,7 @@ export default {
   components: {
     InputEmoji,
     VueReactionEmoji,
+    VueFeedbackReaction,
   },
   methods: {
     editChallenge(challenge) {

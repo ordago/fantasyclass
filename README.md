@@ -121,7 +121,7 @@ https://github.com/kg-bot/laravel-localization-to-vue
 https://medium.com/@sumeshvasu/laravel-vuejs-localization-with-package-laravel-localization-to-vue-73a87d2eec78
 
 Toasts:
-https://github.com/shakee93/vue-toasted
+https://github.com/Maronato/vue-toastification
 
 Popper tippy:
  - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
@@ -161,7 +161,7 @@ Popper tippy:
  https://github.com/laravel-notification-channels/webpush
 
  Chat
- https://github.com/antoine92190/vue-advanced-chat (not implemented yet)
+ https://github.com/antoine92190/vue-advanced-chat
 
  Feedback
  https://github.com/IvanSotelo/VueFeedbackReaction

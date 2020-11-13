@@ -314,6 +314,7 @@ class CardsController extends Controller
         if ($card->hp) $student->setProperty('hp', $card->hp, true);
 
         if ($gold) {
+            session()->put('pending_gold', ['student' => $student->id, "gold" => $gold]);
             $message = __('success_error.use_delete_gold', ['gold' => $gold]);
         } else {
             $message = __('success_error.use_delete');

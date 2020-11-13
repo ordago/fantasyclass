@@ -271,7 +271,15 @@ class StudentController extends Controller
     }
     public function update(Request $request)
     {
-        if ($request->id) {
+        if($request->action == "pay") {
+            $info = session()->pull('pending_gold');
+            $student = Student::findOrFail($info['student']);
+            $gold = $info['gold'];
+            if($gold > $student->gold) {
+                return ['type' => 'error', 'message' => __('success_error.shop_failed_money')];
+            }
+            return $student->setProperty('gold', $info['gold'] * -1, true);
+        } else if ($request->id) {
             $student = Student::findOrFail($request->id);
             $class = Classroom::where('id', $student->classroom->classroom->id)->first();
             $this->authorize('update', $class);

@@ -155,6 +155,8 @@
 
 <script>
 import Utils from "../../utils.js";
+const Buttons = () => import("./Buttons.vue");
+
 
 export default {
   props: [
@@ -167,6 +169,9 @@ export default {
     "assign",
     "import",
   ],
+  components: {
+    Buttons
+  },
   mounted() {
     this.description = Utils.styleText(this.trans.get(this.card.description));
   },
@@ -250,47 +255,10 @@ export default {
 
                 // remove the element from the DOM
                 this.$el.parentNode.removeChild(this.$el);
-                let actions = [
-                  {
-                    text: this.trans.get("general.close"),
-                    onClick: (e, toastObject) => {
-                      toastObject.goAway(0);
-                    },
-                  },
-                ];
                 let gold = response.data.gold;
-                if (gold) {
-                  actions.push({
-                    text: this.trans.get("cards.pay"),
-                    onClick: (e, toastObject) => {
-                      if (response.data.gold > this.student.gold) {
-                        this.$toast(this.trans.get('success_error.shop_failed_money'), { type: "error" });
-                        toastObject.goAway(0);
-                        return false;
-                      }
-                      let options = {
-                        id: this.student.id,
-                        prop: "gold",
-                        value: gold * -1,
-                      };
-                      let student;
-
-                      axios
-                        .post("/classroom/students/update", options)
-                        .then((response) => {
-                          this.student.gold -= gold;
-                          this.$parent.$parent.$parent.$forceUpdate();
-                          toastObject.goAway(0);
-                        });
-                    },
-                  });
-                }
-                this.$toasted.show(response.data.message, {
-                  position: "top-center",
-                  duration: null,
-                  iconPack: "fontawesome",
-                  action: actions,
-                });
+                if(gold)
+                  this.$toast(response.data.message, { type: "default", timeout: 0, closeButton:  Buttons });
+                else this.$toast(response.data.message, { type: response.data.type });
               });
           },
         });

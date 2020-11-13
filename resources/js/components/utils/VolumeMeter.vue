@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <div>
       <div>
         <div class="rounded has-background-warning p-4 mb-3">

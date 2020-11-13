@@ -82,14 +82,14 @@
               <i class="fad fa-music mr-2"></i>
               {{ trans.get("menu.music") }}
             </a>
+            <a class="dropdown-item" @click="isCountDownModalActive = true">
+              <i class="fad fa-stopwatch mr-2"></i>
+              {{ trans.get("menu.countdown") }}
+            </a>
             <a
               class="dropdown-item"
               :href="'/classroom/' + classroom.code + '/utils/meter'"
             >
-              <i class="fad fa-stopwatch mr-2"></i>
-              {{ trans.get("menu.countdown") }}
-            </a>
-            <a class="dropdown-item" @click="isCountDownModalActive = true">
               <i class="fad fa-microphone mr-2"></i>
               {{ trans.get("menu.noise") }}
             </a>
