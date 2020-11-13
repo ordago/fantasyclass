@@ -11,6 +11,8 @@
 - Reorganized icons in utilities.
 - Improvements in mobile view.
 - Changed toasts.
+- JavaScript optimization (more code splits).
+- Fixed share card.
 
 ## v1.18 Beta (08/11/2020)
 ### Added

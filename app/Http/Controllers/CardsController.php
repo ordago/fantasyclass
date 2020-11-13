@@ -208,11 +208,14 @@ class CardsController extends Controller
                 ->toMediaCollection($media->collection_name);
         });
         $cardPath = $newCard->getMedia('card')->first();
-        $imgPath = $cardPath->collection_name . "/" . $cardPath->uuid . '/' . $cardPath->file_name;
-        
-        $newCard->update(['src' => '/storage/' . $imgPath, 'classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
-        
+        if($cardPath) {
+            $imgPath = $cardPath->collection_name . "/" . $cardPath->uuid . '/' . $cardPath->file_name;
+            $newCard->update(['src' => '/storage/' . $imgPath, 'classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
+        } else {
+            $newCard->update(['classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
+        }
         Mail::to(env('EMAIL'))->send(new NewCardNotification());
+        
 
         
     }
