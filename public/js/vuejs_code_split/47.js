@@ -1633,8 +1633,8 @@ var render = function() {
                 "b-tab-item",
                 {
                   attrs: {
-                    label: _vm.trans.get("students.information"),
-                    icon: "info-circle",
+                    label: _vm.trans.get("students.settings"),
+                    icon: "cog",
                     "icon-pack": "fad"
                   }
                 },

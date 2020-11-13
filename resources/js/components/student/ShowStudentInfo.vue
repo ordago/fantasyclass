@@ -77,8 +77,8 @@
     <div class="column pr-0">
       <b-tabs v-model="activeTab" :key="update">
         <b-tab-item
-          :label="trans.get('students.information')"
-          icon="info-circle"
+          :label="trans.get('students.settings')"
+          icon="cog"
           icon-pack="fad"
         >
           <div class="p-2">

@@ -43,7 +43,7 @@ class NewInteractionStudent extends Notification
             'url' => '/classroom/show/'. $this->classroom.'/'.$this->section,
             'type' => $this->action,
             'section' => $this->section,
-            'classroom' => 'show/'.$this->classroom,
+            'classroom' => $this->classroom,
             'user' => 'student',
             'created' => Carbon::now('Europe/Madrid')->toIso8601String()
         ];
