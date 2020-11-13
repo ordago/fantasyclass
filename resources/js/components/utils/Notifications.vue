@@ -3,6 +3,16 @@
     <div
       class="mr-1 cursor-pointer button"
       style="display: initial !important"
+      @click="redirect('/inbox')"
+    >
+      <i class="fad fa-comments-alt" style="font-size: 1.25em"></i>
+      <span v-if="user.pending_messages" class="tag is-danger tag-notif">{{
+        user.pending_messages
+      }}</span>
+    </div>
+    <div
+      class="mr-1 cursor-pointer button"
+      style="display: initial !important"
       @click="
         show = 1;
         open = true;
@@ -10,24 +20,19 @@
       v-if="countCards()"
     >
       <i class="fad fa-club" style="font-size: 1.25em"></i>
-      <span
-        class="tag is-danger"
-        style="font-size: 0.65em; margin-left: -4px"
-        v-html="countCards()"
-      ></span>
+      <span class="tag is-danger tag-notif" v-html="countCards()"></span>
     </div>
     <div
       class="button"
-      @click="show = 0;open = true;"
+      @click="
+        show = 0;
+        open = true;
+      "
       v-if="notifications && notifications.length"
     >
       <span class="cursor-pointer">
         <i class="fad fa-bell" style="font-size: 1.25em"></i>
-        <span
-          class="tag is-danger"
-          style="font-size: 0.65em; margin-left: -4px"
-          >{{ notifications.length }}</span
-        >
+        <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
       </span>
     </div>
     <b-sidebar
@@ -64,6 +69,8 @@
                 :class="{
                   'fa-comment': notification.data.type == 'comment',
                   'fa-paper-plane': notification.data.type == 'message',
+                  'fa-bullhorn': notification.data.type == 'notification',
+                  'fa-comments-alt': notification.data.type == 'chat',
                   'fa-club': notification.data.type == 'mark_card',
                 }"
               ></i>
@@ -93,18 +100,34 @@
                 alt="avatar"
               />
               <span v-else v-html="notification.data.from.avatar"></span>
-              <strong v-tippy v-html="notification.data.from.name" :content="notification.data.from.name">{{
-              }}</strong
+              <strong
+                v-tippy
+                v-html="notification.data.from.name"
+                :content="notification.data.from.name"
+                >{{}}</strong
               >: {{ trans.get(notification.data.content) }}
             </div>
           </div>
           <footer class="card-footer">
             <a
-              v-if="notification.data.user == 'student'"
+              v-if="
+                notification.data.user == 'student' &&
+                notification.data.type == 'message'
+              "
               :href="notification.data.url"
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}
               {{ trans.get("general.classroom") }}
+            </a>
+            <a
+              v-if="
+                notification.data.user == 'student' &&
+                notification.data.type == 'chat'
+              "
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              <i class="fad fa-comments-alt ml-1"></i>
             </a>
             <a
               v-if="notification.data.user == 'teacher'"
@@ -189,6 +212,12 @@ export default {
         return "student";
       },
     },
+    user: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   mounted() {
     this.cards = this.pending;
@@ -207,6 +236,9 @@ export default {
     };
   },
   methods: {
+    redirect(url) {
+      location.href = url;
+    },
     deleteNotification(type, id = null, index = null) {
       this.open = false;
       this.$buefy.dialog.confirm({
@@ -277,3 +309,12 @@ export default {
   computed: {},
 };
 </script>
+<style lang="scss">
+.tag.tag-notif {
+  position: relative;
+  font-size: 0.5em;
+  top: 5px;
+  left: -1px;
+  padding: 0 6px 0 6px;
+}
+</style>

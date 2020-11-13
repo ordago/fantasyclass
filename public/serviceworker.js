@@ -213,6 +213,9 @@
             case 'open_fantasyclass_teacher':
                 self.clients.openWindow("/classroom/" + event.notification.data.code + "/" + event.notification.data.section)
                 break;
+            case 'open_chat':
+                self.clients.openWindow("/inbox")
+                break;
             case 'open_fantasyclass':
                 self.clients.openWindow("/classroom/show/" + event.notification.data.code)
                 break;

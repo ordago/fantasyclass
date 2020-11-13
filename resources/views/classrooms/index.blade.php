@@ -39,9 +39,7 @@
 
 
   @section('notifications')
-  @if(isset($pending) && count($pending) > 0 || isset($notifications) && count($notifications))
-  <notifications :notifications="{{ $notifications }}" type="both"></notifications>
-  @endif
+  <notifications :notifications="{{ $notifications ?? '{}' }}" :user="{{ auth()->user() }}" type="both"></notifications>
   @endsection
 
   <div class="column py-1 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox mb-0 is-flex has-all-centered">

@@ -92,9 +92,6 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
         name: "inviteUser",
         title: "Invite User"
       }, {
-        name: "removeUser",
-        title: "Remove User"
-      }, {
         name: "deleteRoom",
         title: "Delete Room"
       }],
@@ -382,7 +379,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var content, roomId, file, replyMessage, message, _yield$_this7$message, id;
+        var content, roomId, file, replyMessage, message, _yield$_this7$message, id, query, room, users;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
@@ -426,9 +423,30 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                   file: file,
                   messageId: id,
                   roomId: roomId
-                }); // TODO Send notification
+                });
+                console.log(roomId);
+                query = _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId);
+                _context3.next = 13;
+                return query.get();
 
-              case 9:
+              case 13:
+                room = _context3.sent;
+                console.log(room);
+                _context3.next = 17;
+                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc("" + roomId);
+
+              case 17:
+                users = _context3.sent;
+                users.get().then(function (doc) {
+                  axios.post('/chat/notify', {
+                    users: doc.data().users,
+                    message: content
+                  });
+                })["catch"](function (error) {
+                  console.log("Error getting document:", error);
+                });
+
+              case 19:
               case "end":
                 return _context3.stop();
             }
@@ -652,18 +670,18 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
 
       this.resetForms();
       this.$buefy.dialog.prompt({
-        message: this.trans.get('auth.username'),
+        message: this.trans.get("auth.username"),
         confirmText: this.trans.get("general.add"),
         cancelText: this.trans.get("general.cancel"),
         trapFocus: true,
         onConfirm: function onConfirm(value) {
-          value = value.replace('@', '');
+          value = value.replace("@", "");
           axios.post("/users/chat", {
             username: value
           }).then(function (response) {
             _this14.createRoom(response.data.id, response.data.username);
           })["catch"](function (error) {
-            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this14, _this14.trans.get('utils.user_not_exists'), vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].ERROR);
+            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this14, _this14.trans.get("utils.user_not_exists"), vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].ERROR);
           });
         }
       });
@@ -676,8 +694,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
           while (1) {
             switch (_context9.prev = _context9.next) {
               case 0:
-                _this15.disableForm = true; // const { id } = await usersRef.add({ _id: uid, username: this.addRoomUsername });
-
+                _this15.disableForm = true;
                 _context9.next = 3;
                 return _firestore__WEBPACK_IMPORTED_MODULE_4__["usersRef"].doc("" + uid).set({
                   _id: uid,
@@ -702,24 +719,50 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       }))();
     },
     inviteUser: function inviteUser(roomId) {
-      this.resetForms();
-      this.inviteRoomId = roomId;
+      var _this16 = this;
+
+      this.$buefy.dialog.prompt({
+        message: this.trans.get("auth.username"),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get("general.cancel"),
+        trapFocus: true,
+        onConfirm: function onConfirm(value) {
+          value = value.replace("@", "");
+          axios.post("/users/chat", {
+            username: value
+          }).then(function (response) {
+            _this16.addRoomUser(response.data.id, response.data.username, roomId);
+          })["catch"](function (error) {
+            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this16, _this16.trans.get("utils.user_not_exists"), vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].ERROR);
+          });
+        }
+      });
     },
-    addRoomUser: function addRoomUser() {// this.disableForm = true;
-      // const { id } = await usersRef.add({ username: this.invitedUsername });
-      // await usersRef.doc(id).update({ _id: id });
-      // await roomsRef
-      //   .doc(this.inviteRoomId)
-      //   .update({ users: firebase.firestore.FieldValue.arrayUnion(id) });
-      // this.inviteRoomId = null;
-      // this.invitedUsername = "";
-      // this.fetchRooms();
+    addRoomUser: function addRoomUser(uid, username, roomId) {
+      var _this17 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
           while (1) {
             switch (_context10.prev = _context10.next) {
               case 0:
+                console.log(roomId);
+                _context10.next = 3;
+                return _firestore__WEBPACK_IMPORTED_MODULE_4__["usersRef"].doc("" + uid).set({
+                  _id: uid,
+                  username: username
+                });
+
+              case 3:
+                _context10.next = 5;
+                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId).update({
+                  users: _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayUnion(uid + "")
+                });
+
+              case 5:
+                _this17.fetchRooms();
+
+              case 6:
               case "end":
                 return _context10.stop();
             }
@@ -735,24 +778,24 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       }).users;
     },
     deleteRoomUser: function deleteRoomUser() {
-      var _this16 = this;
+      var _this18 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                _this16.disableForm = true;
+                _this18.disableForm = true;
                 _context11.next = 3;
-                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(_this16.removeRoomId).update({
-                  users: _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayRemove(_this16.removeUserId)
+                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(_this18.removeRoomId).update({
+                  users: _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayRemove(_this18.removeUserId)
                 });
 
               case 3:
-                _this16.removeRoomId = null;
-                _this16.removeUserId = "";
+                _this18.removeRoomId = null;
+                _this18.removeUserId = "";
 
-                _this16.fetchRooms();
+                _this18.fetchRooms();
 
               case 6:
               case "end":
@@ -763,7 +806,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       }))();
     },
     deleteRoom: function deleteRoom(roomId) {
-      var _this17 = this;
+      var _this19 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var ref;
@@ -771,7 +814,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                ref = _this17.messagesRef(roomId);
+                ref = _this19.messagesRef(roomId);
                 ref.get().then(function (res) {
                   if (res.empty) return;
                   res.docs.map(function (doc) {
@@ -782,7 +825,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                 return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId)["delete"]();
 
               case 4:
-                _this17.fetchRooms();
+                _this19.fetchRooms();
 
               case 5:
               case "end":

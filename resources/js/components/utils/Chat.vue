@@ -65,7 +65,6 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
-        { name: "removeUser", title: "Remove User" },
         { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
@@ -327,8 +326,23 @@ export default {
       }
       const { id } = await this.messagesRef(roomId).add(message);
       if (file) this.uploadFile({ file, messageId: id, roomId });
-      // TODO Send notification
 
+      console.log(roomId);
+
+      const query = roomsRef.doc(roomId);
+      const room = await query.get();
+      console.log(room);
+
+      let users = await roomsRef.doc("" + roomId);
+
+      users
+        .get()
+        .then(function (doc) {
+            axios.post('/chat/notify', { users : doc.data().users, message: content})
+        })
+        .catch(function (error) {
+          console.log("Error getting document:", error);
+        });
 
     },
     openFile({ message, action }) {
@@ -464,19 +478,23 @@ export default {
     addRoom() {
       this.resetForms();
       this.$buefy.dialog.prompt({
-        message: this.trans.get('auth.username'),
+        message: this.trans.get("auth.username"),
         confirmText: this.trans.get("general.add"),
         cancelText: this.trans.get("general.cancel"),
         trapFocus: true,
         onConfirm: (value) => {
-          value = value.replace('@', '');
+          value = value.replace("@", "");
           axios
             .post("/users/chat", { username: value })
             .then((response) => {
               this.createRoom(response.data.id, response.data.username);
             })
             .catch((error) => {
-              Utils.toast(this, this.trans.get('utils.user_not_exists'), TYPE.ERROR);
+              Utils.toast(
+                this,
+                this.trans.get("utils.user_not_exists"),
+                TYPE.ERROR
+              );
             });
         },
       });
@@ -484,28 +502,44 @@ export default {
 
     async createRoom(uid, username) {
       this.disableForm = true;
-      // const { id } = await usersRef.add({ _id: uid, username: this.addRoomUsername });
-
       await usersRef.doc("" + uid).set({ _id: uid, username: username });
-
-      // await usersRef.doc(id).update({ _id: id });
       await roomsRef.add({ users: ["" + uid, this.currentUserId] });
       this.fetchRooms();
     },
     inviteUser(roomId) {
-      this.resetForms();
-      this.inviteRoomId = roomId;
+      this.$buefy.dialog.prompt({
+        message: this.trans.get("auth.username"),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get("general.cancel"),
+        trapFocus: true,
+        onConfirm: (value) => {
+          value = value.replace("@", "");
+          axios
+            .post("/users/chat", { username: value })
+            .then((response) => {
+              this.addRoomUser(
+                response.data.id,
+                response.data.username,
+                roomId
+              );
+            })
+            .catch((error) => {
+              Utils.toast(
+                this,
+                this.trans.get("utils.user_not_exists"),
+                TYPE.ERROR
+              );
+            });
+        },
+      });
     },
-    async addRoomUser() {
-      // this.disableForm = true;
-      // const { id } = await usersRef.add({ username: this.invitedUsername });
-      // await usersRef.doc(id).update({ _id: id });
-      // await roomsRef
-      //   .doc(this.inviteRoomId)
-      //   .update({ users: firebase.firestore.FieldValue.arrayUnion(id) });
-      // this.inviteRoomId = null;
-      // this.invitedUsername = "";
-      // this.fetchRooms();
+    async addRoomUser(uid, username, roomId) {
+      console.log(roomId);
+      await usersRef.doc("" + uid).set({ _id: uid, username: username });
+      await roomsRef
+        .doc(roomId)
+        .update({ users: firebase.firestore.FieldValue.arrayUnion(uid + "") });
+      this.fetchRooms();
     },
     removeUser(roomId) {
       this.resetForms();

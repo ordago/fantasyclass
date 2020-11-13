@@ -68,13 +68,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return 'remember_token';
     }
 
-    public function sendMessage($content, $classroom) {
+    public function sendMessage($content, $classroom, $type = "message") {
         $from['title'] = __('notifications.message');
         $from['name'] = auth()->user()->name;
         $from['username'] = auth()->user()->username;
         $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
 
-        Notification::send($this, new NewMessage($content, $from, $classroom));
+        Notification::send($this, new NewMessage($content, $from, $classroom, 'student', null, $type));
     }
 
     public function markPending() {

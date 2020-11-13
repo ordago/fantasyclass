@@ -6,6 +6,7 @@ use App\Behaviour;
 use App\Classroom;
 use App\Student;
 use App\Exports\Export;
+use App\Notifications\NewMessage;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Firebase\JWT\JWT;
-
+use Illuminate\Support\Facades\Notification;
 
 class UtilsController extends Controller
 {
@@ -62,6 +63,26 @@ class UtilsController extends Controller
         $images = preg_grep('~\.(svg)$~', scandir(public_path() . '/img/icon-packs/'.$category));
         array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );
         return json_encode($images);
+    }
+
+    public function showChat()
+    {
+        auth()->user()->removePending();
+        return view('utils.chat');
+    }
+    public function notifyChat()
+    {
+        $from['title'] = __('notifications.message');
+        $from['name'] = auth()->user()->name;
+        $from['username'] = auth()->user()->username;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        foreach (request()->users as $user) {
+            if($user != auth()->user()->id) {
+                $userobj = User::find($user);
+                Notification::send($userobj, new NewMessage(request()->message, $from, null, 'student', '/inbox', 'chat'));
+                $userobj->markPending();
+            }
+        }
     }
 
     public function getUserChatInfo()

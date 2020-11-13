@@ -16,6 +16,8 @@ class NewMessage extends Notification
     public $classroom;
     public $from;
     public $data;
+    public $url;
+    public $type;
 
 
     /**
@@ -23,21 +25,25 @@ class NewMessage extends Notification
      *
      * @return void
      */
-    public function __construct($content, $from, $classroom, $user = 'student')
+    public function __construct($content, $from, $classroom, $user = 'student', $url = null, $type = "message")
     {
         $this->content = $content;
         $this->classroom = $classroom;
         $this->from = $from;
         $this->user = $user;
+        $this->url = $url;
+        $this->type = $type;
     }
 
     public function toArray($notifiable)
     {
+        $url = $this->url ? $this->url : '/classroom/show/'. $this->classroom;
+        if($this->type == 'chat') $this->url = '/inbox';
         return [
             'from' => $this->from,
             'content' => $this->content,
-            'url' => '/classroom/show/'. $this->classroom,
-            'type' => 'message',
+            'url' => $url,
+            'type' => $this->type,
             'user' => $this->user,
             'classroom' => $this->classroom,
             'created' => Carbon::now('Europe/Madrid')->toIso8601String()
@@ -55,12 +61,15 @@ class NewMessage extends Notification
         if($this->classroom) {
             $data['code'] = $this->classroom;
         }
+        $action = 'open_fantasyclass';
+        if($this->type == 'chat')
+            $action = "open_chat";
 
         return (new WebPushMessage)
         ->title('New message')
         ->icon('/ic_fc_mono.png')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
-        ->action('FantasyClass', 'open_fantasyclass');
+        ->action('FantasyClass', $action);
     }
 }

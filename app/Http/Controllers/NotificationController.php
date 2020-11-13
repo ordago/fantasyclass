@@ -74,7 +74,7 @@ class NotificationController extends Controller
         ]);
 
         foreach ($class->users()->where('role', '=', 0)->get() as $student) {
-            $student->sendMessage($data['message'], $code);
+            $student->sendMessage($data['message'], $code, "notification");
         }
     }
 

@@ -7,9 +7,7 @@
 @endsection
 
 @section('notifications')
-@if(isset($pending) && count($pending) > 0 || isset($notifications) && count($notifications))
-<notifications :notifications="{{ $notifications }}" type="teacher" :pending="{{ $pending }}"></notifications>
-@endif
+<notifications :notifications="{{ $notifications ?? '{}' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '{}' }}"></notifications>
 @endsection
 
 @section('menu')

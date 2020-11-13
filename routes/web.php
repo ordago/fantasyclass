@@ -264,8 +264,9 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/notification/delete/all','NotificationController@destroyAll');
 
     // inbox
-    Route::get('/inbox', function () {return view('utils.chat');});
+    Route::get('/inbox', 'UtilsController@showChat');
     Route::get('/inbox/token', 'UtilsController@getFirebaseToken');
     Route::post('/users/chat', 'UtilsController@getUserChatInfo');
+    Route::post('/chat/notify', 'UtilsController@notifyChat');
     
 });

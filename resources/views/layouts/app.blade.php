@@ -67,7 +67,6 @@
                     </label>
                 </a>
                 <div class="is-flex has-all-centered left-auto is-hidden-desktop">
-                    <a href="/inbox" class="button mr-1"><i class="fad fa-comments-alt" style="font-size: 1.25em"></i></a>
 
                     @yield('notifications')
 
@@ -90,7 +89,6 @@
                     <div class="navbar-item">
                         <span class="is-hidden-touch mr-2">
                             <div class="is-flex">
-                                <a href="/inbox" class="button mr-2"><i class="fad fa-comments-alt" style="font-size: 1.25em"></i></a>
                                 @yield('notifications')
                             </div>
                         </span>

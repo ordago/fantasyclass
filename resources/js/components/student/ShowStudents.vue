@@ -148,7 +148,7 @@
           @click="sendMessage(1)"
           class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
-          <i class="fad fa-paper-plane" style="font-size: 2em"></i>
+          <i class="fad fa-bullhorn" style="font-size: 2em"></i>
         </a>
       </div>
       <div
