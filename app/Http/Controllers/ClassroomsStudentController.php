@@ -92,9 +92,11 @@ class ClassroomsStudentController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $student = Functions::getCurrentStudent($class);
+
+        $class->students->each->append('grouplogopublic');
         $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
             return collect($user->toArray())
-                ->only(['avatar', 'name', 'xp', 'hp', 'gold', 'equipment', 'pets', 'level', 'groups'])
+                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'equipment', 'pets', 'level', 'groups'])
                 ->all();
         });
 

@@ -20,10 +20,14 @@
         ></croppa>
       </label>
     </figure>
-    <label>{{ trans.get('groups.group_name') }}</label>
+    <label>{{ trans.get("groups.group_name") }}</label>
     <input type="text" class="input" v-model="group.name" />
-    <button class="button is-dark m-3" @click="edit">{{ trans.get('general.edit') }}</button>
-    <button class="button is-danger m-3" @click="remove">{{ trans.get('general.delete') }}</button>
+    <button class="button is-dark m-3" @click="edit">
+      {{ trans.get("general.edit") }}
+    </button>
+    <button class="button is-danger m-3" @click="remove">
+      {{ trans.get("general.delete") }}
+    </button>
   </div>
 </template>
 
@@ -33,23 +37,20 @@ export default {
   created() {
     this.prevImage = this.group.logo;
   },
-  data: function() {
+  data: function () {
     return {
       image: null,
-      prevImage: null
+      prevImage: null,
     };
   },
   components: {},
   methods: {
     remove() {
-      axios.delete("/classroom/groups/" + this.group.id).then(response => {
-        this.$toasted.show(this.trans.get("success_error.update_success"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "check",
-          type: "success"
+      axios.delete("/classroom/groups/" + this.group.id).then((response) => {
+        this.$toast(this.trans.get("success_error.update_success"), {
+          type: "success",
         });
+
         this.$destroy();
         location.reload();
         // this.$el.parentNode.removeChild(this.$el);
@@ -57,7 +58,7 @@ export default {
     },
     edit() {
       this.image.generateBlob(
-        blob => {
+        (blob) => {
           // form data
           var formData = new FormData();
           if (blob) formData.append("logo", blob, "logo.png");
@@ -67,26 +68,19 @@ export default {
           axios
             .post("/classroom/" + this.code + "/groups/info", formData, {
               headers: {
-                "content-type": "multipart/form-data"
-              }
+                "content-type": "multipart/form-data",
+              },
             })
-            .then(response => {
-              this.$toasted.show(
-                this.trans.get("success_error.update_success"),
-                {
-                  position: "top-center",
-                  duration: 3000,
-                  iconPack: "fontawesome",
-                  icon: "check",
-                  type: "success"
-                }
-              );
+            .then((response) => {
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
             });
         },
         "image/png",
         0.8
       );
-    }
-  }
+    },
+  },
 };
 </script>

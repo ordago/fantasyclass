@@ -94,8 +94,9 @@
                 alt="avatar"
               />
               <span v-else v-html="notification.data.from.avatar"></span>
-              <strong v-tippy :content="notification.data.from.name"
-                >{{ notification.data.from.name }}</strong
+              <strong v-tippy :content="notification.data.from.name">{{
+                notification.data.from.name
+              }}</strong
               >: {{ notification.data.content }}
             </div>
           </div>
@@ -260,13 +261,8 @@ export default {
           type: type,
         })
         .then((response) => {
-          this.$toasted.show(response.data.message, {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: response.data.icon,
-            type: response.data.type,
-          });
+          this.$toast(response.data.message, { type: response.data.type });
+
           if (action) {
             if (response.data.type == "success") location.reload();
           }

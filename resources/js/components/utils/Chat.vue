@@ -23,6 +23,8 @@
 </template>
 
 <script>
+import Utils from "../../utils.js";
+
 import ChatWindow from "vue-advanced-chat";
 import "vue-advanced-chat/dist/vue-advanced-chat.css";
 
@@ -35,6 +37,7 @@ import {
 } from "./firestore";
 require("firebase/auth");
 import { parseTimestamp, isSameDay } from "./functions/dates";
+import { TYPE } from "vue-toastification";
 
 export default {
   props: ["currentUserId", "currentUsername"],
@@ -324,6 +327,9 @@ export default {
       }
       const { id } = await this.messagesRef(roomId).add(message);
       if (file) this.uploadFile({ file, messageId: id, roomId });
+      // TODO Send notification
+
+
     },
     openFile({ message, action }) {
       window.open(message.file.url, "_blank");
@@ -458,22 +464,19 @@ export default {
     addRoom() {
       this.resetForms();
       this.$buefy.dialog.prompt({
-        message: "Username",
+        message: this.trans.get('auth.username'),
         confirmText: this.trans.get("general.add"),
         cancelText: this.trans.get("general.cancel"),
-        inputAttrs: {
-          placeholder: "username",
-        },
         trapFocus: true,
         onConfirm: (value) => {
+          value = value.replace('@', '');
           axios
             .post("/users/chat", { username: value })
             .then((response) => {
               this.createRoom(response.data.id, response.data.username);
             })
             .catch((error) => {
-              console.log("error");
-              // Utils.toast(this, "The user don't exist", 2, 5000, "toasted-primary", "times");
+              Utils.toast(this, this.trans.get('utils.user_not_exists'), TYPE.ERROR);
             });
         },
       });

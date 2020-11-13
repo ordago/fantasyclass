@@ -12,5 +12,7 @@ return [
     'quantity_rewards' => 'Cantidad de premios',
 
     'reports' => 'Informes',
-    'download_confidential_data_students' => 'Descargar contraseñas estudiantes'    
+    'download_confidential_data_students' => 'Descargar contraseñas estudiantes',
+    
+    'user_not_exists' => 'El usuario no existe',
 ];

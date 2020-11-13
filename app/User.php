@@ -20,7 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'username', 'email_verified_at', 'is_student', 'locale', 'refresh_token', 'expires_in', 'token'
+        'name', 'email', 'password', 'username', 'email_verified_at',
+        'is_student', 'locale', 'refresh_token', 'expires_in', 'token', 'pending_messages'
     ];
     
 
@@ -75,4 +76,13 @@ class User extends Authenticatable implements MustVerifyEmail
 
         Notification::send($this, new NewMessage($content, $from, $classroom));
     }
+
+    public function markPending() {
+        $this->update(['pending_messages' => $this->pending_messages + 1]);
+    }   
+    
+    public function removePending() {
+        $this->update(['pending_messages' => 0]);
+    }
+
 }

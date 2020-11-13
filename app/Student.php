@@ -49,8 +49,20 @@ class Student extends Model implements HasMedia
 
         return "/img/no_avatar.png";
     }
-
+    
+    
     public function getGrouplogoAttribute()
+    {
+        $group = $this->groups->first();
+        if ($group) {
+            if ($group->logo)
+                return $group->logo;
+            return "/img/no_group_avatar.png";
+        }
+        return null;
+    }
+
+    public function getGrouplogopublicAttribute()
     {
         $group = $this->groups->first();
         if ($group) {

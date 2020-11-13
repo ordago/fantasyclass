@@ -97,11 +97,14 @@
               (challenge.students && challenge.students.length == 0)
             "
           >
-            <i class="fas fa-user m-2"></i> {{ trans.get('challenges.available_all') }}
+            <i class="fas fa-user m-2"></i>
+            {{ trans.get("challenges.available_all") }}
           </span>
           <span v-else-if="students && challenge.students">
-            <i class="fas fa-user m-2"></i> {{ trans.get('challenges.available_some') }}
-            {{ students.length - challenge.students.length }} {{ trans.get('challenges.available_students') }}
+            <i class="fas fa-user m-2"></i>
+            {{ trans.get("challenges.available_some") }}
+            {{ students.length - challenge.students.length }}
+            {{ trans.get("challenges.available_students") }}
           </span>
         </button>
       </div>
@@ -443,13 +446,7 @@ export default {
       }
 
       axios.post(route, this.challenge).then((response) => {
-        this.$toasted.show(response.data.message, {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: response.data.icon,
-          type: response.data.type,
-        });
+        this.$toast(response.data.message, { type: response.data.type });
         if (response.data.type == "success") {
           this.importFlag = false;
           this.$parent.addChallenge = false;

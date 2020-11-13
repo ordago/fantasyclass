@@ -57,6 +57,7 @@
         "vue-slider-component": "^3.2.9",
         "vue-tippy": "^4.7.1",
         "vue-toasted": "^1.1.28",
+        "vue-toastification": "^1.7.8",
         "vue-xlsx": "^0.2.1",
         "vuetify": "^2.3.15",
         "xlsx": "^0.16.8"

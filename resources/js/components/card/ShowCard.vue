@@ -194,13 +194,8 @@ export default {
               id: this.card.id,
             })
             .then((response) => {
-              this.$toasted.show(this.trans.get("success_error.add_success"), {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: "check",
-                type: "success",
-              });
+              this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
+    
             });
         },
       });
@@ -211,13 +206,7 @@ export default {
           id: this.card.id,
         })
         .then((response) => {
-          this.$toasted.show(this.trans.get("success_error.add_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
-            type: "success",
-          });
+          this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
         });
     },
     assignCard() {
@@ -228,13 +217,7 @@ export default {
           card: this.card.id,
         })
         .then((response) => {
-          this.$toasted.show(this.trans.get("success_error.add_success"), {
-            position: "top-center",
-            duration: 3000,
-            type: "success",
-            iconPack: "fontawesome",
-            icon: "tick",
-          });
+          this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
         });
     },
     markCard(card, type) {
@@ -281,16 +264,7 @@ export default {
                     text: this.trans.get("cards.pay"),
                     onClick: (e, toastObject) => {
                       if (response.data.gold > this.student.gold) {
-                        this.$toasted.show(
-                          this.trans.get("success_error.shop_failed_money"),
-                          {
-                            position: "top-center",
-                            duration: 3000,
-                            type: "error",
-                            iconPack: "fontawesome",
-                            icon: "times",
-                          }
-                        );
+                        this.$toast(this.trans.get('success_error.shop_failed_money'), { type: "error" });
                         toastObject.goAway(0);
                         return false;
                       }
@@ -339,13 +313,7 @@ export default {
                 student: this.student.id,
               })
               .then((response) => {
-                this.$toasted.show(response.data.message, {
-                  position: "top-center",
-                  duration: 3000,
-                  iconPack: "fontawesome",
-                  icon: response.data.icon,
-                  type: response.data.type,
-                });
+                this.$toast(response.data.message, { type: response.data.type });
                 card.pivot.marked = type;
                 this.$forceUpdate();
               });

@@ -157,6 +157,8 @@
 
 <script>
 import Utils from "../../utils.js";
+import { TYPE } from "vue-toastification";
+
 const Xlsx = () => import("../utils/ImportExcel.vue");
 
 export default {
@@ -229,7 +231,7 @@ export default {
     },
     addStudent(name, email, gcourse = null, guid = null) {
       if (email && !Utils.validEmail(email)) {
-        Utils.toast(this, this.trans.get("validation.email"), 2);
+        Utils.toast(this, this.trans.get("validation.email"), TYPE.ERROR);
         return false;
       }
       if (!email) email = "";
@@ -254,7 +256,7 @@ export default {
             
           });
       } else {
-        Utils.toast(this, this.trans.get("validation.distinct"), 2);
+        Utils.toast(this, this.trans.get("validation.distinct"), TYPE.ERROR);
       }
     },
     sendStudents() {
@@ -269,19 +271,7 @@ export default {
             this.isLoading = false;
             if (response.data) {
               response.data.forEach((element) => {
-                this.$toasted.show(element, {
-                  position: "top-center",
-                  duration: null,
-                  iconPack: "fontawesome",
-                  type: "error",
-                  icon: "times",
-                  action: {
-                    text: this.trans.get("general.close"),
-                    onClick: (e, toastObject) => {
-                      toastObject.goAway(0);
-                    },
-                  },
-                });
+                Utils.toast(this, element, TYPE.ERROR);
               });
               this.students = [];
             } else {
@@ -290,7 +280,7 @@ export default {
           })
           .catch((error) => {
             this.isLoading = false;
-            Utils.toast(this, error, 2);
+            Utils.toast(this, error, TYPE.ERROR);
             this.students = [];
           });
       }

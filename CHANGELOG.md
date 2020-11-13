@@ -9,7 +9,8 @@
 ### Changed
 - Show 3 comments by default.
 - Reorganized icons in utilities.
-- Better mobile random events.
+- Improvements in mobile view.
+- Changed toasts.
 
 ## v1.18 Beta (08/11/2020)
 ### Added

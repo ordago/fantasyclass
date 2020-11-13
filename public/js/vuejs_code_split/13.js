@@ -955,6 +955,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
  // Download excel
 // import JsonExcel from "vue-json-excel";
@@ -1095,22 +1099,14 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           id: this.student.id,
           name: this.student.name
         }).then(function (response) {
-          _this4.$toasted.show(_this4.trans.get("success_error.update_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
+          _this4.$toast(_this4.trans.get("success_error.update_success"), {
             type: "success"
           });
 
           _this4.$forceUpdate();
         });
       } else {
-        this.$toasted.show(this.trans.get("success_error.min_name"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "times",
+        this.$toast(this.trans.get("success_error.min_name"), {
           type: "error"
         });
       }
@@ -1272,11 +1268,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           axios.post("/classroom/" + _this9.classroom.code + "/student/buypet", {
             pet: pet.id
           }).then(function (response) {
-            _this9.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
+            _this9.$toast(response.data.message, {
               type: response.data.type
             });
 
@@ -1308,11 +1300,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           axios.post("/classroom/" + _this10.classroom.code + "/student/buyitem", {
             item: item.id
           }).then(function (response) {
-            _this10.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
+            _this10.$toast(response.data.message, {
               type: response.data.type
             });
 
@@ -1344,11 +1332,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component("apexchart", vue_apexcharts
           axios.post("/classroom/" + _this11.classroom.code + "/student/buyequipment", {
             "new": newItem
           }).then(function (response) {
-            _this11.$toasted.show(response.data.message, {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: response.data.icon,
+            _this11.$toast(response.data.message, {
               type: response.data.type
             });
 

@@ -39,9 +39,7 @@
       </b-field>
       <b-field :label="trans.get('settings.config')">
         <div class="buttons pl-4">
-          <a
-            class="button"
-            :href="'/classroom/' + classroom.code + '/edit'"
+          <a class="button" :href="'/classroom/' + classroom.code + '/edit'"
             ><i class="far fa-cog mr-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
@@ -64,7 +62,7 @@
         :label="trans.get('settings.enrollment_code')"
         style="width: 400px"
       >
-        <div class="field has-addons my-3  pl-4">
+        <div class="field has-addons my-3 pl-4">
           <p class="control">
             <b-input
               type="password"
@@ -82,10 +80,13 @@
         </div>
       </b-field>
       <button class="button is-link mb-3" v-if="user.token" @click="unlink">
-        {{ trans.get('settings.classroom_unlink') }}
+        {{ trans.get("settings.classroom_unlink") }}
       </button>
       <div class="mt-0 mb-2">
-        <small v-if="user.token" v-html="trans.get('settings.classroom_unlink_info')"></small>
+        <small
+          v-if="user.token"
+          v-html="trans.get('settings.classroom_unlink_info')"
+        ></small>
       </div>
       <div class="">
         <h1>
@@ -204,10 +205,7 @@
             <strong>{{ trans.get("settings.legendary") }}</strong>
             : {{ value[4] - value[3] }}
           </div>
-          <button
-            class="button is-primary my-4"
-            @click="saveProbabilities()"
-          >
+          <button class="button is-primary my-4" @click="saveProbabilities()">
             <i class="fas fa-save mr-3"></i>
             {{ trans.get("general.save") }}
           </button>
@@ -366,13 +364,10 @@ export default {
   methods: {
     unlink() {
       axios.get("/google/classroom/unlink").then((response) => {
-        this.$toasted.show(this.trans.get("success_error.update_success"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "check",
+        this.$toast(this.trans.get("success_error.update_success"), {
           type: "success",
         });
+
         this.user.token = null;
         this.$forceUpdate();
       });
@@ -443,13 +438,8 @@ export default {
               email: email,
             })
             .then((response) => {
-              this.$toasted.show(response.data.message, {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: response.data.icon,
-                type: response.data.type,
-              });
+              this.$toast(response.data.message, { type: response.data.type });
+
               if (response.data.type == "success") {
                 // TODO change to insert teacher from array
                 location.reload(true);
@@ -500,11 +490,7 @@ export default {
         action: "update",
         value: this.settings.num_cards,
       });
-      this.$toasted.show(this.trans.get("success_error.update_success"), {
-        position: "top-center",
-        duration: 3000,
-        iconPack: "fontawesome",
-        icon: "check",
+      this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",
       });
     },

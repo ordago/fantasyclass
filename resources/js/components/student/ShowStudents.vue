@@ -700,11 +700,7 @@ export default {
               id: id,
             })
             .then((response) => {
-              this.$toasted.show(this.trans.get("success_error.add_success"), {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: "check",
+              this.$toast(this.trans.get("success_error.add_success"), {
                 type: "success",
               });
             });

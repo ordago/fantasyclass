@@ -26,6 +26,14 @@ Vue.prototype.print = window.print;
 import Toasted from 'vue-toasted';
 Vue.use(Toasted)
 
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
+Vue.use(Toast, {
+    transition: "Vue-Toastification__bounce",
+    maxToasts: 20,
+    newestOnTop: true
+  });
+  
 // Tippy poppover
 import VueTippy, {
     TippyComponent

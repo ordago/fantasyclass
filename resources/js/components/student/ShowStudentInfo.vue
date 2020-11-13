@@ -83,10 +83,7 @@
         >
           <div class="p-2">
             <h3 class="title is-4 ml-2 mb-0">Avatar</h3>
-            <div
-              class="m-3"
-              v-if="admin || settings.allow_upload != 0"
-            >
+            <div class="m-3" v-if="admin || settings.allow_upload != 0">
               <croppa
                 v-model="image"
                 :width="128"
@@ -197,7 +194,11 @@
           </div>
           <div
             class="p-4"
-            v-if="(classroom.character_theme && student.hp > 0) && (admin || settings.allow_change_class == 1)"
+            v-if="
+              classroom.character_theme &&
+              student.hp > 0 &&
+              (admin || settings.allow_change_class == 1)
+            "
           >
             <img
               v-tippy
@@ -415,7 +416,7 @@
           v-if="!admin && pets.length"
           icon="dog"
           icon-pack="fad"
-           class="p-2"
+          class="p-2"
         >
           <article class="message is-danger">
             <div class="message-body">
@@ -463,7 +464,6 @@
           v-if="admin || cards.length"
           icon="club"
           icon-pack="fad"
-
         >
           <button
             class="button is-link ml-3 mt-1"
@@ -675,9 +675,7 @@
                           'is-danger':
                             grade.pivot.grade < settings.eval_max / 2,
                         }"
-                        ><i
-                          class="fas fa-external-link-alt mr-2"
-                        ></i>
+                        ><i class="fas fa-external-link-alt mr-2"></i>
                         {{ grade.pivot.grade }}</span
                       >
                     </span>
@@ -818,9 +816,15 @@
                     props.row.value >= 0 ? 'is-success' : 'is-danger',
                   ]"
                 >
-                  <span v-if="props.row.type == 'xp'"><i class='fas fa-fist-raised colored'></i></span>
-                  <span v-if="props.row.type == 'gold'"><i class='fas fa-coins colored'></i></span>
-                  <span v-if="props.row.type == 'hp'"><i class='fas fa-heart colored'></i></span>
+                  <span v-if="props.row.type == 'xp'"
+                    ><i class="fas fa-fist-raised colored"></i
+                  ></span>
+                  <span v-if="props.row.type == 'gold'"
+                    ><i class="fas fa-coins colored"></i
+                  ></span>
+                  <span v-if="props.row.type == 'hp'"
+                    ><i class="fas fa-heart colored"></i
+                  ></span>
                 </span>
               </b-table-column>
 
@@ -1118,21 +1122,14 @@ export default {
             name: this.student.name,
           })
           .then((response) => {
-            this.$toasted.show(this.trans.get("success_error.update_success"), {
-              position: "top-center",
-              duration: 3000,
-              iconPack: "fontawesome",
-              icon: "check",
+            this.$toast(this.trans.get("success_error.update_success"), {
               type: "success",
             });
+
             this.$forceUpdate();
           });
       } else {
-        this.$toasted.show(this.trans.get("success_error.min_name"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "times",
+        this.$toast(this.trans.get("success_error.min_name"), {
           type: "error",
         });
       }
@@ -1314,13 +1311,8 @@ export default {
               pet: pet.id,
             })
             .then((response) => {
-              this.$toasted.show(response.data.message, {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: response.data.icon,
-                type: response.data.type,
-              });
+              this.$toast(response.data.message, { type: response.data.type });
+
               if (response.data.type == "success") {
                 this.student.pets = response.data.pets;
                 this.student.gold = this.student.gold - pet.price;
@@ -1347,13 +1339,8 @@ export default {
               item: item.id,
             })
             .then((response) => {
-              this.$toasted.show(response.data.message, {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: response.data.icon,
-                type: response.data.type,
-              });
+              this.$toast(response.data.message, { type: response.data.type });
+
               if (response.data.type == "success") {
                 this.student.items = response.data.items;
                 this.updateEmpty();
@@ -1391,13 +1378,8 @@ export default {
               }
             )
             .then((response) => {
-              this.$toasted.show(response.data.message, {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: response.data.icon,
-                type: response.data.type,
-              });
+              this.$toast(response.data.message, { type: response.data.type });
+
               if (response.data.type == "success") {
                 this.student.equipment = response.data.equipment;
                 this.student.gold = this.student.gold - this.calculate(newItem);

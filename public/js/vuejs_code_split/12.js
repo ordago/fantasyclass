@@ -94,12 +94,107 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var IconSelector = function IconSelector() {
   return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['code', 'behaviour'],
+  props: ["code", "behaviour"],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -135,12 +230,8 @@ var IconSelector = function IconSelector() {
     update: function update() {
       var _this = this;
 
-      axios.patch('/classroom/behaviours/' + this.id, this.$data).then(function (response) {
-        _this.$toasted.show(response.data.message, {
-          position: "top-center",
-          duration: 3000,
-          iconPack: 'fontawesome',
-          icon: response.data.icon,
+      axios.patch("/classroom/behaviours/" + this.id, this.$data).then(function (response) {
+        _this.$toast(response.data.message, {
           type: response.data.type
         });
       });
@@ -220,7 +311,10 @@ var render = function() {
           [
             _c("label", [
               _c("small", [
-                _vm._v(_vm._s(_vm.trans.get("behaviours.fontawesome")) + " "),
+                _vm._v(
+                  _vm._s(_vm.trans.get("behaviours.fontawesome")) +
+                    "\n          "
+                ),
                 _c(
                   "a",
                   {
@@ -241,7 +335,11 @@ var render = function() {
             _c("span", { staticClass: "help is-danger is-inline" }, [
               _vm._v("* ")
             ]),
-            _vm._v(" " + _vm._s(_vm.trans.get("behaviours.name")) + " "),
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.trans.get("behaviours.name")) +
+                "\n        "
+            ),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v("(" + _vm._s(_vm.trans.get("behaviours.name_info")) + ")")
             ])
@@ -272,7 +370,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-2" }, [
           _c("label", { attrs: { for: "custom_text" } }, [
-            _vm._v(_vm._s(_vm.trans.get("behaviours.custom_text")) + " "),
+            _vm._v(
+              _vm._s(_vm.trans.get("behaviours.custom_text")) + "\n        "
+            ),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v(
                 "(" + _vm._s(_vm.trans.get("behaviours.custom_text_info")) + ")"
@@ -310,7 +410,9 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-3" }, [
           _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("behaviours.attributes")) + " "),
+            _vm._v(
+              _vm._s(_vm.trans.get("behaviours.attributes")) + "\n        "
+            ),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v(
                 "(" + _vm._s(_vm.trans.get("behaviours.attributes_info")) + ")"
@@ -456,7 +558,13 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.update }
                 },
-                [_vm._v(_vm._s(_vm.trans.get("behaviours.edit")))]
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("behaviours.edit")) +
+                      "\n      "
+                  )
+                ]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -464,7 +572,13 @@ var render = function() {
             ? _c(
                 "button",
                 { staticClass: "button is-success", attrs: { type: "submit" } },
-                [_vm._v(_vm._s(_vm.trans.get("behaviours.create")))]
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("behaviours.create")) +
+                      "\n      "
+                  )
+                ]
               )
             : _vm._e()
         ])

@@ -17,8 +17,10 @@
         </span>
         <span>
           <button class="button" @click="isImportModalActive = true">
-            <i class="fas fa-file-import mr-2"></i>
-            {{ trans.get("general.import") }}
+            <i class="fas fa-file-import"></i>
+            <span class="is-hidden-mobile ml-2">{{
+              trans.get("general.import")
+            }}</span>
           </button>
           <button
             class="button"
@@ -26,8 +28,10 @@
               challengeEdit = null;
               addChallenge = !addChallenge;
             "
-            v-html="buttonAddChallege"
-          ></button>
+          >
+            <span v-html="buttonAddChallege(1)" class="is-hidden-tablet"></span>
+            <span v-html="buttonAddChallege(0)" class="is-hidden-mobile"></span>
+          </button>
         </span>
       </p>
       <div class="panel-block" v-if="!addChallenge && challenges.length > 0">
@@ -211,17 +215,20 @@ export default {
         challenge: this.currentChallenge.id,
       });
     },
+    buttonAddChallege(type) {
+      let append = type == 0
+        ? "<span class='ml-2'>" + this.trans.get("challenges.add") + "</span>"
+        : "";
+      return this.addChallenge
+        ? this.trans.get("general.cancel")
+        : "<i class='far fa-plus'></i>" + append;
+    },
   },
   components: {
     CreateChallenges,
     ShowChallenge,
   },
   computed: {
-    buttonAddChallege() {
-      return this.addChallenge
-        ? this.trans.get("general.cancel")
-        : "<i class='far fa-plus pr-2'></i>" + this.trans.get("challenges.add");
-    },
     filteredList: function () {
       return this.orderedChallenges.filter((challenge) => {
         return challenge.title

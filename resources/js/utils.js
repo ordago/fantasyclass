@@ -1,5 +1,5 @@
 // Toast management
-import Toasted from 'vue-toasted';
+import { TYPE } from "vue-toastification";
 
 export default {
 
@@ -43,25 +43,15 @@ export default {
         return "fa-check";
     },
 
-    // 1 succes, 2, error 
-    toast(vue, str, type = 0, duration = 5000, theme = "toasted-primary", ficon = "") {
-        switch (type) {
-            case 1:
-                ficon = "check"
-                theme = "toasted-primary"
-                break;
-            case 2:
-                ficon = "times"
-                theme = "bubble"
-                break;
-        }
-        vue.$toasted.show(str, {
-            theme: theme,
-            position: "top-center",
-            duration: duration,
-            iconPack: 'fontawesome',
-            icon: ficon,
-        });
+    // TYPE.SUCCESS, TYPE.ERROR, TYPE.DEFAULT, TYPE.INFO, TYPE.WARNING 
+    toast(vue, str, type = TYPE.DEFAULT, duration = 5000) {
+       
+        vue.$toast(str, {
+            position: "top-right",
+            timeout: duration,
+            type: type,
+            icon: true,
+          });
     },
     validEmail: function (email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

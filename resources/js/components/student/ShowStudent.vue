@@ -10,17 +10,8 @@
         </div>
         <div class="media-content cursor-default">
           <p class="title is-4">{{ student.name }}</p>
-          <p
-            class="subtitle is-6"
-            :v-tippy="student.group"
-            v-tippy
-            :content="'Proud member 😄 <br><img style=\'background-color: #e6e6e6\' class=\'p-2 card-shadow-s is-full-rounded\' src=' + student.groups[0].logo + '>'"
-            v-if="student.groups && student.groups.length"
-          >
-            <small v-if="student.groups && student.groups.length">
-              <i class="fas fa-users"></i>
-              {{ student.groups[0].name }}
-            </small>
+          <p class="subtitle is-6">
+            <small>@{{ student.username }}</small>
           </p>
         </div>
       </div>

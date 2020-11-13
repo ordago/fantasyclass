@@ -15,7 +15,7 @@
     <div class="column is-narrow has-all-centered is-flex" v-if="prizeSelected">
       <div class="field m-0 is-flex">
         <button class="button is-link" @click="randomStudent()">
-          <i class="fad fa-random mr-2"></i> {{ trans.get('utils.random') }}
+          <i class="fad fa-random mr-2"></i> {{ trans.get("utils.random") }}
         </button>
         <p class="control has-icons-left">
           <span class="select">
@@ -156,13 +156,10 @@ export default {
       };
 
       axios.post("/classroom/students/update", options).then((response) => {
-        this.$toasted.show(this.trans.get("success_error.update_success"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "check",
+        this.$toast(this.trans.get("success_error.update_success"), {
           type: "success",
         });
+
         this.studentSelected = null;
         this.prizeSelected = null;
       });

@@ -148,7 +148,12 @@
               <b-input v-model="tag.description" required></b-input>
             </b-field>
             <b-field :label="trans.get('evaluation.percent')">
-              <b-input v-model="tag.percent" type="number" step="0.01" required></b-input>
+              <b-input
+                v-model="tag.percent"
+                type="number"
+                step="0.01"
+                required
+              ></b-input>
             </b-field>
           </section>
           <footer class="modal-card-foot">
@@ -296,10 +301,7 @@
                 </b-taginput>
               </b-field>
             </section>
-            <b-field
-              class="mt-3"
-              :label="trans.get('evaluation.description')"
-            >
+            <b-field class="mt-3" :label="trans.get('evaluation.description')">
               <b-input v-model="line.description" required></b-input>
             </b-field>
             <b-field :label="trans.get('evaluation.type')">
@@ -513,11 +515,7 @@ export default {
           });
       } else {
         this.$refs.taginput.newTag = "";
-        this.$toasted.show(this.trans.get("success_error.taginput"), {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          icon: "times",
+        this.$toast(this.trans.get("success_error.taginput"), {
           type: "error",
         });
       }

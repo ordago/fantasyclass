@@ -12,5 +12,7 @@ return [
     'quantity_rewards' => 'Quantitat de premis',
 
     'reports' => 'Informes',
-    'download_confidential_data_students' => 'Descarregar contrasenyes estudiants'
+    'download_confidential_data_students' => 'Descarregar contrasenyes estudiants',
+    
+    'user_not_exists' => 'L\'usuari no existeix',
 ];

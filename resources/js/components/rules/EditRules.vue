@@ -1,15 +1,15 @@
 <template>
   <div class="w-100 p-2 content">
     <div class="buttons">
-        <button @click="getRules('en')" class="button is-primary">
-          Import default (EN)
-        </button>
-        <button @click="getRules('es')" class="button is-link">
-          Importa por defecto (ES)
-        </button>
-        <button @click="getRules('ca')" class="button is-info">
-          Importa per defecte (CA)
-        </button>
+      <button @click="getRules('en')" class="button is-primary">
+        Import default (EN)
+      </button>
+      <button @click="getRules('es')" class="button is-link">
+        Importa por defecto (ES)
+      </button>
+      <button @click="getRules('ca')" class="button is-info">
+        Importa per defecte (CA)
+      </button>
     </div>
     <Editor height="70vh" :code="code"></Editor>
     <div>
@@ -43,11 +43,7 @@ export default {
           _method: "patch",
         })
         .then((response) => {
-          this.$toasted.show(this.trans.get("success_error.update_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
+          this.$toast(this.trans.get("success_error.update_success"), {
             type: "success",
           });
         });

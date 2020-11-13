@@ -78,12 +78,102 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var IconSelector = function IconSelector() {
   return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['code', 'badge'],
+  props: ["code", "badge"],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -119,12 +209,8 @@ var IconSelector = function IconSelector() {
     update: function update() {
       var _this = this;
 
-      axios.patch('/classroom/badges/' + this.id, this.$data).then(function (response) {
-        _this.$toasted.show(response.data.message, {
-          position: "top-center",
-          duration: 3000,
-          iconPack: 'fontawesome',
-          icon: response.data.icon,
+      axios.patch("/classroom/badges/" + this.id, this.$data).then(function (response) {
+        _this.$toast(response.data.message, {
           type: response.data.type
         });
       });
@@ -204,7 +290,9 @@ var render = function() {
           [
             _c("label", [
               _c("small", [
-                _vm._v(_vm._s(_vm.trans.get("badges.fontawesome")) + " "),
+                _vm._v(
+                  _vm._s(_vm.trans.get("badges.fontawesome")) + "\n          "
+                ),
                 _c(
                   "a",
                   {
@@ -225,7 +313,7 @@ var render = function() {
             _c("span", { staticClass: "help is-danger is-inline" }, [
               _vm._v("* ")
             ]),
-            _vm._v(" " + _vm._s(_vm.trans.get("badges.title")))
+            _vm._v("\n        " + _vm._s(_vm.trans.get("badges.title")))
           ]),
           _vm._v(" "),
           _c("input", {
@@ -256,7 +344,7 @@ var render = function() {
             _c("span", { staticClass: "help is-danger is-inline" }, [
               _vm._v("* ")
             ]),
-            _vm._v(" " + _vm._s(_vm.trans.get("badges.description")))
+            _vm._v("\n        " + _vm._s(_vm.trans.get("badges.description")))
           ]),
           _vm._v(" "),
           _c("input", {
@@ -269,7 +357,12 @@ var render = function() {
               }
             ],
             staticClass: "input",
-            attrs: { type: "text", name: "description", placeholder: "" },
+            attrs: {
+              type: "text",
+              name: "description",
+              required: "",
+              placeholder: ""
+            },
             domProps: { value: _vm.description },
             on: {
               input: function($event) {
@@ -284,7 +377,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-3" }, [
           _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("badges.attributes")) + " "),
+            _vm._v(_vm._s(_vm.trans.get("badges.attributes")) + "\n        "),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v(
                 "(" + _vm._s(_vm.trans.get("badges.attributes_info")) + ")"
@@ -430,7 +523,13 @@ var render = function() {
                   attrs: { type: "button" },
                   on: { click: _vm.update }
                 },
-                [_vm._v(_vm._s(_vm.trans.get("badges.edit")))]
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("badges.edit")) +
+                      "\n      "
+                  )
+                ]
               )
             : _vm._e(),
           _vm._v(" "),
@@ -438,7 +537,13 @@ var render = function() {
             ? _c(
                 "button",
                 { staticClass: "button is-success", attrs: { type: "submit" } },
-                [_vm._v(_vm._s(_vm.trans.get("badges.create")))]
+                [
+                  _vm._v(
+                    "\n        " +
+                      _vm._s(_vm.trans.get("badges.create")) +
+                      "\n      "
+                  )
+                ]
               )
             : _vm._e()
         ])

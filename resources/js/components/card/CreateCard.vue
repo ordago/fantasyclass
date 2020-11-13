@@ -463,8 +463,7 @@
                 for="fullscreenCard"
                 v-tippy
                 :content="trans.get('cards.fullscreen_help')"
-                >Fullscreen
-                <i class="fas fa-question-circle ml-2"></i
+                >Fullscreen <i class="fas fa-question-circle ml-2"></i
               ></label>
             </b-switch>
           </div>
@@ -664,12 +663,7 @@ export default {
       let imageU = e.target.files[0];
       if (imageU.size > 10000000) {
         e.target.value = "";
-        this.$toasted.show("File size error. Max file size 10MB", {
-          position: "top-center",
-          duration: 3000,
-          iconPack: "fontawesome",
-          type: "error",
-        });
+        this.$toast("File size error. Max file size 10MB", { type: "error" });
       } else {
         let reader = new FileReader();
         reader.readAsDataURL(imageU);
@@ -682,13 +676,7 @@ export default {
       axios
         .patch("/classroom/cards/" + this.id, this.$data)
         .then((response) => {
-          this.$toasted.show(response.data.message, {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: response.data.icon,
-            type: response.data.type,
-          });
+          this.$toast(response.data.message, { type: response.data.type });
         });
     },
   },

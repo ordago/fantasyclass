@@ -14,7 +14,11 @@
           class="challenge-category has-background-light"
           v-if="admin && isHidden"
           v-tippy
-          :content="trans.get('challenges.hidden_until') + ' ' + challenge.datetime.split(':00')[0] "
+          :content="
+            trans.get('challenges.hidden_until') +
+            ' ' +
+            challenge.datetime.split(':00')[0]
+          "
         >
           <i class="fas fa-eye-slash"></i>
         </div>
@@ -676,13 +680,7 @@ export default {
           challenge: this.challenge.id,
         })
         .then((response) => {
-          this.$toasted.show(this.trans.get("general.thanks"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "thumbs-up",
-            type: "success",
-          });
+          this.$toast(this.trans.get("general.thanks"), { type: "success" });
         });
     },
     getHp5(url) {
@@ -817,7 +815,16 @@ export default {
     },
     isHidden() {
       let now = new Date();
-      now = now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + " " + now.getHours() + ":" + now.getMinutes();
+      now =
+        now.getFullYear() +
+        "-" +
+        (now.getMonth() + 1) +
+        "-" +
+        now.getDate() +
+        " " +
+        now.getHours() +
+        ":" +
+        now.getMinutes();
       if (this.challengeReactive.datetime.split(":00")[0] > now) {
         return true;
       }

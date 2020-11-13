@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-2">
     <form @submit.prevent="send">
       <section class="px-3">
         <h1 class="is-size-2">
@@ -8,9 +8,7 @@
         </h1>
 
         <div class="my-4">
-          <label for="name" class="my-2">{{
-            trans.get("profile.name")
-          }}</label>
+          <label for="name" class="my-2">{{ trans.get("profile.name") }}</label>
           <input
             id="name"
             type="text"
@@ -154,7 +152,7 @@ export default {
   methods: {
     promote: function () {
       this.$buefy.dialog.confirm({
-        title: this.trans.get('profile.only_teachers_title'),
+        title: this.trans.get("profile.only_teachers_title"),
         message: this.trans.get("profile.only_teachers"),
         confirmText: this.trans.get("profile.only_teachers_accept"),
         cancelText: this.trans.get("general.cancel"),
@@ -175,21 +173,13 @@ export default {
       axios
         .patch("/profile/update", this.$data)
         .then((response) => {
-          this.$toasted.show(this.trans.get("profile.update_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
+          this.$toast(this.trans.get("profile.update_success"), {
             type: "success",
           });
           location.reload();
         })
         .catch((error) => {
-          this.$toasted.show(this.trans.get("profile.incorrect_password"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "times",
+          this.$toast(this.trans.get("profile.incorrect_password"), {
             type: "error",
           });
         });
@@ -210,13 +200,7 @@ export default {
           onConfirm: (value) => {
             if (value == this.email) this.axiosSend();
             else {
-              this.$toasted.show("The e-mail verification failed", {
-                position: "top-center",
-                duration: 3000,
-                iconPack: "fontawesome",
-                icon: "times",
-                type: "error",
-              });
+              this.$toast("The e-mail verification failed", { type: "error" });
             }
           },
         });

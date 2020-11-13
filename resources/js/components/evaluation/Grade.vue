@@ -2,7 +2,9 @@
   <div class="w-100 p-2 content">
     <form @submit.prevent="save">
       <div v-for="student in students" :key="student.id">
-        <div class="column is-flex align-items-center is-size-4">{{ student.name }}</div>
+        <div class="column is-flex align-items-center is-size-4">
+          {{ student.name }}
+        </div>
 
         <div class="columns">
           <div v-if="evaluable.type == 1" class="column is-narrow">
@@ -221,11 +223,7 @@ export default {
           grades: this.students,
         })
         .then((response) => {
-          this.$toasted.show(this.trans.get("success_error.update_success"), {
-            position: "top-center",
-            duration: 3000,
-            iconPack: "fontawesome",
-            icon: "check",
+          this.$toast(this.trans.get("success_error.update_success"), {
             type: "success",
           });
         });

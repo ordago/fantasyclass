@@ -129,10 +129,7 @@
           <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
             <i class="fas fa-edit"></i>
           </a>
-          <button
-            class="button is-danger ml-2"
-            @click="deleteItem(item.id)"
-          >
+          <button class="button is-danger ml-2" @click="deleteItem(item.id)">
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -154,10 +151,7 @@
             >{{ trans.get("shop.visibility") }}</b-switch
           >
 
-          <b-field
-            :label="trans.get('shop.multiplier')"
-            class="mt-4"
-          >
+          <b-field :label="trans.get('shop.multiplier')" class="mt-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -207,7 +201,7 @@
             @input="toggleVisibility('equipment_2_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
           >
-          <b-field label="Multiplier" class="mt-4">
+          <b-field :label="trans.get('shop.multiplier')" class="mt-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -257,7 +251,7 @@
             @input="toggleVisibility('equipment_3_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
           >
-          <b-field label="Multiplier" class="mt-4">
+          <b-field :label="trans.get('shop.multiplier')" class="mt-4">
             <b-numberinput
               @input="$forceUpdate()"
               controls-position="compact"
@@ -347,12 +341,18 @@ export default {
           value = this.config.multiplier3;
           break;
       }
-      axios.patch("/classroom/" + this.code + "/setting", {
-        _method: "patch",
-        prop: key,
-        value: value,
-        action: "update",
-      });
+      axios
+        .patch("/classroom/" + this.code + "/setting", {
+          _method: "patch",
+          prop: key,
+          value: value,
+          action: "update",
+        })
+        .then((response) => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+        });
     },
     deleteItem(id) {
       this.$buefy.dialog.confirm({

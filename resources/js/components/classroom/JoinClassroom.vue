@@ -7,6 +7,7 @@
 
 <script>
 import Utils from "../../utils.js";
+import { TYPE } from "vue-toastification";
 
 export default {
   mounted: function () {},
@@ -31,8 +32,7 @@ export default {
               location.reload()
             })
             .catch((error) => {
-              Utils.toast(this, this.trans.get('classroom.code_invalid'), 2, 5000, "toasted-primary", "times");
-
+              Utils.toast(this, this.trans.get('classroom.code_invalid'), TYPE.ERROR);
             });
         },
       });

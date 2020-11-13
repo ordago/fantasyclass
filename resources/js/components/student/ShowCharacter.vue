@@ -87,7 +87,10 @@
 <script>
 export default {
   props: ["student", "classroom"],
-  mounted() {},
+  created() {
+    if(!this.student.grouplogo && this.student.grouplogopublic)
+      this.student.grouplogo = this.student.grouplogopublic
+  },
   data: function () {
     return {};
   },
