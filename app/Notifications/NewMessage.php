@@ -58,7 +58,7 @@ class NewMessage extends Notification
 
         return (new WebPushMessage)
         ->title('New message')
-        ->icon('/mono.svg')
+        ->icon('/ic_fc_mono.png')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
         ->action('FantasyClass', 'open_fantasyclass');
