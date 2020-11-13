@@ -1,1 +1,252 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[36],{vs1o:function(e,t,a){"use strict";a.r(t);var s=a("o0O0"),n={props:["classroom","grades","settings","admin"],created:function(){},data:function(){return{}},methods:{getGradeClass:function(e){return s.default.getGradeClass(e,this.settings.eval_max)},getPassFail:function(e){return s.default.getPassFail(e,this.settings.eval_max)},getEmoji:function(e){return s.default.getEmoji(e,this.settings.eval_max)},getGrade:function(e){var t=0,a=0;return e.evaluables.forEach((function(e){t+=e.grade*e.pivot.weight,a+=e.pivot.weight})),0==t?0:(t/a).toFixed(2)},finalGrade:function(e){var t=this,a=0;return e.grades.forEach((function(e){a+=t.getGrade(e)*e.percent/100})),a.toFixed(2)},exportReport:function(){for(var e=document.getElementById("evaluationReport"),t=e.getElementsByTagName("th"),a=e.getElementsByTagName("tr"),s=[],n=new Array,r=0;r<t.length;r++){var i=t[r].innerHTML.replace(/(<([^>]+)>)/gi,"");i=(i=i.replace(/(\r\n|\n|\r)/gm,"")).replace(/\s{2,}/g,""),s.push(i.trim())}for(r=0;r<a.length;r++){for(var l=[],o=a[r].cells,c=0;c<o.length;c++){var g=o[c].innerHTML.replace(/(<([^>]+)>)/gi,"");g=g.replace(/(\r\n|\n|\r)/gm,""),l.push(g.trim())}n.push(l)}axios.post("/classroom/evaluation/exportEvaluationReport/",{headings:s,values:n},{responseType:"blob"}).then((function(e){var t=new Blob([e.data],{type:e.data.type}),a=document.createElement("a");a.href=URL.createObjectURL(t);var s=e.headers["content-disposition"],n="unknown";if(s){var r=/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(s);null!=r&&r[1]&&(n=r[1].replace(/['"]/g,""))}a.download=n,a.click(),URL.revokeObjectURL(a.href)}))}}},r=a("KHd+"),i=Object(r.a)(n,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",{staticClass:"w-100 p-2 content"},[a("button",{staticClass:"button is-dark noprint",on:{click:e.print}},[a("i",{staticClass:"fas fa-print"})]),e._v(" "),a("button",{staticClass:"button is-success noprint",attrs:{formtarget:"_blank"},on:{click:e.exportReport}},[a("i",{staticClass:"fas fa-file-excel"})]),e._v(" "),a("table",{staticClass:"grades has-background-light mt-3",attrs:{id:"evaluationReport"}},[a("th",[e._v(e._s(e.trans.get("evaluation.student")))]),e._v(" "),e._l(e.grades[0].grades,(function(t,s){return a("th",{key:s+"-"+t.id},[e._v("\n            "+e._s(t.name)+"\n            "),a("br"),e._v("\n            ("+e._s(t.percent)+" %)\n        ")])})),e._v(" "),a("th",[e._v("Total")]),e._v(" "),a("tbody",e._l(e.grades,(function(t){return a("tr",{key:t.student_id},[a("td",[e._v(e._s(t.name))]),e._v(" "),e._l(t.grades,(function(t){return a("td",{key:t.id},[e.admin||1!=e.settings.eval_type&&2!=e.settings.eval_type?a("span",[a("span",{staticClass:"tag is-size-6",class:e.getGradeClass(e.getGrade(t))},[e._v(e._s(e.getGrade(t)))])]):e._e(),e._v(" "),1==e.settings.eval_type?a("span",[a("i",{class:"fas "+e.getEmoji(e.getGrade(t))+" rateEmoji"})]):e._e(),e._v(" "),2==e.settings.eval_type?a("span",{staticClass:"tag",class:e.getGradeClass(e.getGrade(t))},[a("i",{class:"fas "+e.getPassFail(e.getGrade(t))})]):e._e()])})),e._v(" "),a("td",[e.admin||1!=e.settings.eval_type&&2!=e.settings.eval_type?a("span",[a("span",{staticClass:"tag is-size-6",class:e.getGradeClass(e.finalGrade(t))},[e._v(e._s(e.finalGrade(t))+" / "+e._s(e.settings.eval_max))])]):e._e(),e._v(" "),1==e.settings.eval_type?a("span",[a("i",{class:"fas "+e.getEmoji(e.finalGrade(t))+" rateEmoji"})]):e._e(),e._v(" "),2==e.settings.eval_type?a("span",{staticClass:"tag",class:e.getGradeClass(e.finalGrade(t))},[a("i",{class:"fas "+e.getPassFail(e.finalGrade(t))})]):e._e()])],2)})),0)],2)])}),[],!1,null,null,null);t.default=i.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[36],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["rubrics", "classroom"],
+  created: function created() {},
+  data: function data() {
+    return {};
+  },
+  methods: {}
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "p-2" },
+    [
+      _c(
+        "a",
+        {
+          staticClass: "button is-link mb-3",
+          attrs: { href: "/classroom/" + _vm.classroom.code + "/rubric/create" }
+        },
+        [_vm._v(_vm._s(_vm.trans.get("evaluation.create_rubric")))]
+      ),
+      _vm._v(" "),
+      _vm.rubrics.length
+        ? _c("b-table", {
+            attrs: {
+              data: _vm.rubrics,
+              "default-sort": ["name"],
+              "icon-pack": "fas",
+              "cell-class": "align-right",
+              "sort-icon": "arrow-up"
+            },
+            scopedSlots: _vm._u(
+              [
+                {
+                  key: "default",
+                  fn: function(props) {
+                    return [
+                      _c(
+                        "b-table-column",
+                        {
+                          attrs: {
+                            field: "name",
+                            label: _vm.trans.get("maps.name"),
+                            sortable: ""
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(props.row.name) +
+                              "\n              "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "b-table-column",
+                        {
+                          staticClass: "w-100 is-flex has-all-centered",
+                          attrs: {
+                            field: "settings",
+                            label: _vm.trans.get("menu.settings"),
+                            centered: ""
+                          }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              staticClass: "button is-info is-small mr-3",
+                              attrs: {
+                                content: _vm.trans.get("general.edit"),
+                                href:
+                                  "/classroom/" +
+                                  _vm.classroom.code +
+                                  "/rubric/" +
+                                  props.row.id
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-edit" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-button",
+                            {
+                              directives: [
+                                { name: "tippy", rawName: "v-tippy" }
+                              ],
+                              attrs: {
+                                content: _vm.trans.get("general.delete"),
+                                type: "is-danger is-small"
+                              },
+                              on: {
+                                click: function($event) {
+                                  return _vm.confirmDelete(props.row.id)
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "fas fa-trash-alt" })]
+                          )
+                        ],
+                        1
+                      )
+                    ]
+                  }
+                }
+              ],
+              null,
+              false,
+              511752844
+            )
+          })
+        : _vm._e()
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/RubricManagement.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/evaluation/RubricManagement.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RubricManagement.vue?vue&type=template&id=46d13868& */ "./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868&");
+/* harmony import */ var _RubricManagement_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RubricManagement.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _RubricManagement_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/evaluation/RubricManagement.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricManagement_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricManagement.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricManagement.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricManagement_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricManagement.vue?vue&type=template&id=46d13868& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricManagement.vue?vue&type=template&id=46d13868&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricManagement_vue_vue_type_template_id_46d13868___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

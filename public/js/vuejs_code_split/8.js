@@ -1,1 +1,1681 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[8,34],{"1crk":function(e,t,a){"use strict";a.r(t);var s=a("cSmn"),n=a("o0O0"),i=a("RKHd"),l={props:["challenge","edit","admin","code","full","prevRating","students"],created:function(){this.challengeReactive=this.challenge},data:function(){return{rating:"",challengeReactive:null,allowComment:!1,maxComments:3,isAttachmentModalActive:!1,isQuestionModalActive:!1,attachment:{mode:"0",type:null,name:"",url:"",challenge_id:null},question:{challenge_id:null,question:"",correctAnswer:"",incorrectAnswer1:"",incorrectAnswer2:"",incorrectAnswer3:""},comment:""}},components:{InputEmoji:function(){return Promise.all([a.e(2),a.e(6)]).then(a.bind(null,"wvrY"))},VueReactionEmoji:i.VueReactionEmoji,VueFeedbackReaction:i.VueFeedbackReaction},methods:{editChallenge:function(e){var t=this;axios.post("/classroom/"+this.code+"/challenges/info",{type:2}).then((function(e){t.$parent.students=e.data,t.$parent.challengeEdit=t.challenge,t.$parent.addChallenge=!0}))},returnEmoji:function(e){return e<1.8?"hate":e<2.5?"disappointed":e<3.4?"natural":e<4.2?"good":"excellent"},sendRating:function(){var e=this;axios.post("/classroom/challenge/rate",{rating:this.rating,challenge:this.challenge.id}).then((function(t){e.$toast(e.trans.get("general.thanks"),{type:"success"})}))},getHp5:function(e){return"https://h5p.org/h5p/embed/"+e.substring(e.lastIndexOf("/")+1)},getContent:function(e){return!this.admin&&e?n.default.replaceSpecial(e):e},deleteComment:function(e){var t=this;axios.delete("/classroom/challenge/comment/"+e).then((function(a){var s=t.challenge.comments.findIndex((function(t,a){return t.id===e}));t.challenge.comments.splice(s,1),t.$forceUpdate()}))},sendComment:function(){var e=this;this.comment=this.comment.replace("&nbsp;"," "),axios.post("/classroom/challenge/comment",{challenge_id:this.challenge.id,text:this.comment}).then((function(t){e.challenge.comments.push(t.data),e.comment=""}))},confirmDelete:function(e,t){var a=this;this.$buefy.dialog.confirm({title:this.trans.get("general.delete"),message:this.trans.get("general.confirm_delete"),confirmText:this.trans.get("general.delete"),cancelText:this.trans.get("general.cancel"),type:"is-danger",hasIcon:!0,icon:"times-circle",iconPack:"fa",ariaRole:"alertdialog",ariaModal:!0,onConfirm:function(){axios.delete("/classroom/challenge/attachment/"+e).then((function(e){1===e.data&&(a.challenge.attachments.splice(t,1),a.$forceUpdate())}))}})},getYoutube:function(e){return n.default.getYoutube(e)},addQuestion:function(){var e=this;this.question.challenge_id=this.challenge.id,axios.post("/classroom/challenge/question",{question:this.question}).then((function(t){e.isQuestionModalActive=!1,e.$parent.$parent.getChallenges(e.challenge.challenges_group_id)}))},addAttachment:function(){var e=this,t=this.attachment.type;3!=t&&4!=t&&6!=t&&7!=t||(this.attachment.mode=0),this.attachment.challenge_id=this.challenge.id,axios.post("/classroom/challenge/attachment",{attachment:this.attachment}).then((function(t){e.isAttachmentModalActive=!1,e.challenge.attachments.push(t.data)}))},markCompleted:function(e){var t=this;this.$buefy.dialog.confirm({title:this.trans.get("challenges.mark_title"),message:this.trans.get("challenges.mark_text"),confirmText:this.trans.get("challenges.mark_confirm"),cancelText:this.trans.get("general.cancel"),type:"is-warning",iconPack:"fa",hasIcon:!0,onConfirm:function(){axios.post("/classroom/"+t.code+"/student/markchallenge",{challenge:t.challengeReactive.id}).then((function(e){1==e.data.success&&(Object(s.a)({particleCount:200,spread:100,origin:{y:1}}),t.challengeReactive.count++,t.$parent.$parent.$parent.student.hp=e.data.hp,t.$parent.$parent.$parent.student.xp=e.data.xp,t.$parent.$parent.$parent.student.gold=e.data.gold,t.$parent.$parent.$parent.forceReload++)}))}})}},computed:{orderedComments:function(){return _.orderBy(this.challenge.comments,"created_at","desc").splice(0,this.maxComments)},checkCompletion:function(){return 1==this.challengeReactive.completion?1==this.challengeReactive.count:2==this.challengeReactive.completion?2==this.challengeReactive.count:void 0},isHidden:function(){var e=new Date;return e=e.getFullYear()+"-"+(e.getMonth()+1)+"-"+e.getDate()+" "+e.getHours()+":"+e.getMinutes(),this.challengeReactive.datetime.split(":00")[0]>e},getBackground:function(){if(this.full)return 1==this.challengeReactive.is_conquer?"has-background-conquer":"has-background-story";if(this.edit)return this.isHidden?"has-background-light":"";switch(this.challengeReactive.completion){case 0:case 1:return 1==this.challengeReactive.count?"has-background-success-light":"has-background-danger-light";case 2:return 2==this.challengeReactive.count?"has-background-success-light":"has-background-danger-light"}}}},c=a("KHd+"),o=Object(c.a)(l,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",{staticClass:"box card-shadow-s mb-3",class:e.getBackground},[a("section",{staticClass:"media"},[a("div",{staticClass:"media-content is-relative"},[!e.admin&&e.full?a("div",{directives:[{name:"tippy",rawName:"v-tippy"}],staticClass:"challenge-category has-background-light",attrs:{content:e.challengeReactive.group.name}},[a("i",{class:e.challengeReactive.group.icon})]):e._e(),e._v(" "),e.admin&&e.isHidden?a("div",{directives:[{name:"tippy",rawName:"v-tippy"}],staticClass:"challenge-category has-background-light",attrs:{content:e.trans.get("challenges.hidden_until")+" "+e.challenge.datetime.split(":00")[0]}},[a("i",{staticClass:"fas fa-eye-slash"})]):e._e(),e._v(" "),a("div",{staticClass:"content"},[a("h1",[e.challengeReactive.is_conquer&&e.challengeReactive.icon?a("i",{staticClass:"is-size-4",class:e.challengeReactive.icon+" colored",style:"color:"+e.challengeReactive.color}):e._e(),e._v(" "),1==e.challengeReactive.type?a("i",{staticClass:"fas fa-users is-size-4 colored"}):e._e(),e._v("\n          "+e._s(e.challengeReactive.title)+"\n          "),a("span",{staticClass:"tag is-light"},[e._v(e._s(e.challengeReactive.datetime.split(":00")[0]))])]),e._v(" "),a("p",[a("small",[e._v(e._s(e.challengeReactive.description))])]),e._v(" "),e.challengeReactive.is_conquer?a("p",[0!=e.challengeReactive.xp?a("small",[a("i",{staticClass:"fas fa-fist-raised colored"}),e._v("\n            "+e._s(e.challengeReactive.xp)+"\n          ")]):e._e(),e._v(" "),0!=e.challengeReactive.hp?a("small",[a("i",{staticClass:"fas fa-heart colored"}),e._v("\n            "+e._s(e.challengeReactive.hp)+"\n          ")]):e._e(),e._v(" "),0!=e.challengeReactive.gold?a("small",[a("i",{staticClass:"fas fa-coins colored"}),e._v("\n            "+e._s(e.challengeReactive.gold)+"\n          ")]):e._e(),e._v(" "),0!=e.challengeReactive.cards?a("small",[a("i",{staticClass:"fas fa-club colored"}),e._v("\n            "+e._s(e.challengeReactive.cards)+"\n          ")]):e._e()]):e._e(),e._v(" "),e.full||e.admin?e._e():a("a",{staticClass:"button",attrs:{href:"/classroom/show/"+this.code+"/challenges/"+e.challengeReactive.permalink}},[e._v(e._s(e.trans.get("challenges.show_challenge")))]),e._v(" "),e.edit||e.full?a("div",{domProps:{innerHTML:e._s(e.getContent(e.challengeReactive.content))}}):e._e(),e._v(" "),e._l(e.challenge.questioninfo,(function(t,s){return a("div",{key:s},[a("show-question",{attrs:{admin:e.admin,question:t}})],1)})),e._v(" "),e._l(e.challenge.stats,(function(t,s){return a("div",{key:s},[a("show-question",{attrs:{admin:e.admin,index:s,question:t}})],1)})),e._v(" "),a("div",{staticClass:"mt-5"},e._l(e.challenge.attachments,(function(t,s){return a("div",{key:t.id,staticClass:"columns p-4 m-3 card rounded card-shadow-s"},[a("div",{staticClass:"column is-narrow"},[1==t.type?a("i",{staticClass:"fad fa-globe"}):2==t.type||8==t.type?a("i",{staticClass:"fad fa-icons"}):3==t.type?a("i",{staticClass:"fad fa-graduation-cap"}):4==t.type?a("i",{staticClass:"fab fa-google-drive"}):5==t.type?a("i",{staticClass:"fab fa-youtube"}):6==t.type?a("i",{staticClass:"fab fa-dropbox"}):7==t.type?a("i",{staticClass:"fad fa-file"}):e._e(),e._v(" "),a("i",{staticClass:"fad ml-3",class:{"fa-link":0==t.mode,"fa-expand":1==t.mode}})]),e._v(" "),a("div",{staticClass:"column",staticStyle:{"word-break":"break-all"}},[0==t.mode?a("a",{attrs:{target:"_blank",href:t.url}},[e._v(e._s(t.name?t.name:t.url))]):e._e(),e._v(" "),1==t.mode?a("div",{staticStyle:{width:"100%"}},[a("div",{staticStyle:{position:"relative","padding-bottom":"46.57%","padding-top":"0",height:"0"}},[8==t.type?a("iframe",{staticStyle:{position:"absolute",top:"0",left:"0",width:"100%",height:"100%"},attrs:{src:e.getHp5(t.url),width:"1090",height:"677",frameborder:"0",allowfullscreen:"allowfullscreen",allow:"geolocation *; microphone *; camera *; midi *; encrypted-media *"}}):e._e(),e._v(" "),2==t.type?a("iframe",{staticClass:"rounded",staticStyle:{position:"absolute",top:"0",left:"0",width:"100%",height:"100%"},attrs:{frameborder:"0",width:"3000px",height:"1397px",src:t.url.slice(0,t.url.lastIndexOf("/")),type:"text/html",allowscriptaccess:"always",allowfullscreen:"true",scrolling:"yes",allownetworking:"all"}}):e._e(),e._v(" "),5==t.type?a("div",{staticClass:"video-wrapper"},[a("iframe",{attrs:{width:"560",height:"315",src:"https://youtube.com/embed/"+e.getYoutube(t.url),frameborder:"0",allow:"accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture",allowfullscreen:""}})]):e._e()])]):e._e()]),e._v(" "),e.admin?a("div",{staticClass:"column is-narrow"},[a("button",{staticClass:"button is-danger",on:{click:function(a){return e.confirmDelete(t.id,s)}}},[a("i",{staticClass:"fas fa-trash"})])]):e._e()])})),0),e._v(" "),e.allowComment||!e.full&&!e.edit?e._e():a("button",{staticClass:"button",on:{click:function(t){e.allowComment=!0}}},[a("i",{staticClass:"fad fa-comments mr-2"}),e._v("\n          "+e._s(e.trans.get("challenges.comment"))+"\n        ")]),e._v(" "),(e.edit||e.full)&&e.allowComment?a("InputEmoji"):e._e(),e._v(" "),a("div",{staticClass:"mt-3 comments"},[e._l(e.orderedComments,(function(t,s){return a("div",{key:s,staticClass:"comment m-0"},[a("div",{staticClass:"flexCenter imgTeacher"},["student"==t.info.type?a("img",{attrs:{width:"32px",height:"32px",src:t.info.avatar}}):e._e(),e._v(" "),"teacher"==t.info.type?a("i",{staticClass:"fas fa-user-graduate text-light textshadow"}):e._e()]),e._v(" "),a("div",{staticClass:"commentInfo p-2"},[a("div",[a("span",{staticClass:"tag is-info p-2"},[e._v(e._s(t.info.name))]),e._v(" "),a("span",{staticClass:"tag is-link p-2"},[e._v(e._s(t.info.datetime))]),e._v(" "),e.admin?a("button",{staticClass:"button tag is-danger has-text-light p-2",on:{click:function(a){return e.deleteComment(t.id,s)}}},[a("i",{staticClass:"far fa-trash-alt"})]):e._e()]),e._v(" "),a("div",{staticClass:"flexVertical p-2"},[e._v(e._s(t.text))])])])})),e._v(" "),a("div",{staticClass:"mt-3"},[e.challenge.comments&&e.challenge.comments.length>3&&e.maxComments!=e.challenge.comments.length?a("a",{staticClass:"has-text-dark",on:{click:function(t){e.maxComments=e.challenge.comments.length}}},[e._v(e._s(e.trans.get("challenges.load_comments")))]):e._e()])],2),e._v(" "),e.prevRating||!e.full||e.rating||e.admin||!e.challengeReactive.is_conquer?e._e():a("div",[a("div",{staticClass:"mt-4 mb-0"},[a("i",{staticClass:"fad fa-bullhorn mr-1 ml-4 mt-2"}),e._v("\n            "+e._s(e.trans.get("challenges.rating_feedback"))+"\n          ")]),e._v(" "),a("VueFeedbackReaction",{staticClass:"mt-2",attrs:{containerWidth:"50px",containerHeight:"50px",emojiWidth:"50px",emojiHeight:"50px",labels:["","","","",""]},on:{input:e.sendRating},model:{value:e.rating,callback:function(t){e.rating=t},expression:"rating"}})],1),e._v(" "),e.admin&&e.challengeReactive.rating?a("div",{staticClass:"mt-2 is-flex is-center-vertically"},[a("vue-reaction-emoji",{attrs:{reaction:e.returnEmoji(e.challengeReactive.rating),"is-active":!0,"is-disabled":!1}}),e._v("\n          Feedback: "+e._s(e.challengeReactive.rating)+" / 5\n        ")],1):e._e(),e._v(" "),e.edit&&e.admin||!e.admin?a("div",{staticClass:"buttons"},[e.admin||2!=e.challengeReactive.completion&&1!=e.challengeReactive.completion||e.checkCompletion?e._e():a("button",{staticClass:"button is-info",on:{click:function(t){return e.markCompleted(e.challenge)}}},[e._m(0),e._v(" "),a("span",[e._v(e._s(e.trans.get("challenges.mark_title")))])]),e._v(" "),e.admin?a("button",{staticClass:"button is-outlined is-link",on:{click:function(t){e.isAttachmentModalActive=!0}}},[e._m(1),e._v(" "),a("span",[e._v(e._s(e.trans.get("challenges.add_attachment")))])]):e._e(),e._v(" "),e.admin?a("button",{staticClass:"button is-outlined is-primary",on:{click:function(t){e.isQuestionModalActive=!0}}},[e._m(2),e._v(" "),a("span",[e._v(e._s(e.trans.get("challenges.add_question")))])]):e._e(),e._v(" "),e.challengeReactive.is_conquer&&e.admin?a("button",{staticClass:"button is-success is-outlined",on:{click:function(t){return e.$parent.showModal(e.challenge)}}},[e._m(3),e._v(" "),a("span",[e._v(e._s(e.trans.get("challenges.mark")))])]):e._e(),e._v(" "),e.admin?a("button",{staticClass:"button is-dark is-outlined",on:{click:e.editChallenge}},[e._m(4),e._v(" "),a("span",[e._v(e._s(e.trans.get("general.edit")))])]):e._e(),e._v(" "),e.admin?a("button",{staticClass:"button is-danger is-outlined",on:{click:function(t){return e.$parent.confirmDelete(e.challengeReactive.id)}}},[e._m(5),e._v(" "),a("span",[e._v(e._s(e.trans.get("general.delete")))])]):e._e()]):e._e()],2)])]),e._v(" "),e.admin?a("b-modal",{attrs:{active:e.isAttachmentModalActive,"has-modal-card":"","trap-focus":"","destroy-on-hide":!1,"aria-role":"dialog","aria-modal":""},on:{"update:active":function(t){e.isAttachmentModalActive=t}}},[a("form",{on:{submit:function(t){return t.preventDefault(),e.addAttachment(t)}}},[a("div",{staticClass:"modal-card",staticStyle:{width:"auto"}},[a("header",{staticClass:"modal-card-head"},[a("p",{staticClass:"modal-card-title"},[e._v("\n            "+e._s(e.trans.get("challenges.add_attachment"))+"\n          ")])]),e._v(" "),a("section",{staticClass:"modal-card-body"},[a("b-field",[a("b-select",{staticStyle:{"font-family":"Arial, FontAwesome"},attrs:{placeholder:e.trans.get("challenges.attachment_type"),icon:"paperclip","icon-pack":"fas",required:""},model:{value:e.attachment.type,callback:function(t){e.$set(e.attachment,"type",t)},expression:"attachment.type"}},[a("option",{attrs:{value:"1",icon:"paperclip","icon-pack":"fas"}},[e._v("\n                Web page\n              ")]),e._v(" "),a("option",{attrs:{value:"2"}},[e._v("Genial.ly")]),e._v(" "),a("option",{attrs:{value:"3"}},[e._v("Moodle")]),e._v(" "),a("option",{attrs:{value:"4"}},[e._v("Google drive")]),e._v(" "),a("option",{attrs:{value:"5"}},[e._v("Youtube")]),e._v(" "),a("option",{attrs:{value:"6"}},[e._v("Dropbox")]),e._v(" "),a("option",{attrs:{value:"7"}},[e._v("File")]),e._v(" "),a("option",{attrs:{value:"8"}},[e._v("H5p.org")])])],1),e._v(" "),1==e.attachment.type||2==e.attachment.type||5==e.attachment.type||8==e.attachment.type?a("div",[a("b-radio-button",{attrs:{"native-value":"0",type:"is-link"},model:{value:e.attachment.mode,callback:function(t){e.$set(e.attachment,"mode",t)},expression:"attachment.mode"}},[a("b-icon",{attrs:{icon:"link"}}),e._v(" "),a("span",[e._v("Link")])],1),e._v(" "),a("b-radio-button",{attrs:{"native-value":"1",type:"is-link"},model:{value:e.attachment.mode,callback:function(t){e.$set(e.attachment,"mode",t)},expression:"attachment.mode"}},[a("b-icon",{attrs:{icon:"expand"}}),e._v(" "),a("span",[e._v("Embedded")])],1)],1):e._e(),e._v(" "),a("b-field",{staticClass:"mt-3"},[a("b-input",{attrs:{placeholder:e.trans.get("general.name")+" ("+e.trans.get("general.optional")+")"},model:{value:e.attachment.name,callback:function(t){e.$set(e.attachment,"name",t)},expression:"attachment.name"}})],1),e._v(" "),a("b-field",[a("b-input",{attrs:{placeholder:"URL",required:"",type:"url"},model:{value:e.attachment.url,callback:function(t){e.$set(e.attachment,"url",t)},expression:"attachment.url"}})],1)],1),e._v(" "),a("footer",{staticClass:"modal-card-foot"},[a("button",{staticClass:"button",attrs:{type:"button"},on:{click:function(t){e.isAttachmentModalActive=!1}}},[e._v("\n            "+e._s(e.trans.get("general.close"))+"\n          ")]),e._v(" "),a("button",{staticClass:"button is-primary"},[e._v("\n            "+e._s(e.trans.get("general.add"))+"\n          ")])])])])]):e._e(),e._v(" "),e.admin?a("b-modal",{attrs:{active:e.isQuestionModalActive,"has-modal-card":"","trap-focus":"","destroy-on-hide":!1,"aria-role":"dialog","aria-modal":""},on:{"update:active":function(t){e.isQuestionModalActive=t}}},[a("form",{on:{submit:function(t){return t.preventDefault(),e.addQuestion(t)}}},[a("div",{staticClass:"modal-card",staticStyle:{width:"auto"}},[a("header",{staticClass:"modal-card-head"},[a("p",{staticClass:"modal-card-title"},[e._v("\n            "+e._s(e.trans.get("challenges.add_question"))+"\n          ")])]),e._v(" "),a("section",{staticClass:"modal-card-body"},[a("b-field",[a("b-input",{attrs:{placeholder:e.trans.get("challenges.question"),type:"text",required:""},model:{value:e.question.question,callback:function(t){e.$set(e.question,"question",t)},expression:"question.question"}})],1),e._v(" "),a("div",{staticClass:"field is-horizontal mb-3"},[a("div",{staticClass:"field-body"},[a("div",{staticClass:"field is-expanded"},[a("div",{staticClass:"field has-addons"},[a("p",{staticClass:"control"},[a("a",{staticClass:"button is-success"},[a("i",{staticClass:"fas fa-check colored"})])]),e._v(" "),a("p",{staticClass:"control is-expanded"},[a("b-field",[a("b-input",{attrs:{placeholder:e.trans.get("challenges.correct_answer"),type:"text",required:""},model:{value:e.question.correctAnswer,callback:function(t){e.$set(e.question,"correctAnswer",t)},expression:"question.correctAnswer"}})],1)],1)])])])]),e._v(" "),a("div",{staticClass:"field is-horizontal mb-3"},[a("div",{staticClass:"field-body"},[a("div",{staticClass:"field is-expanded"},[a("div",{staticClass:"field has-addons"},[a("p",{staticClass:"control"},[a("a",{staticClass:"button is-danger"},[a("i",{staticClass:"fas fa-times colored"})])]),e._v(" "),a("p",{staticClass:"control is-expanded"},[a("b-field",[a("b-input",{attrs:{placeholder:e.trans.get("challenges.incorrect_answer"),required:"",type:"text"},model:{value:e.question.incorrectAnswer1,callback:function(t){e.$set(e.question,"incorrectAnswer1",t)},expression:"question.incorrectAnswer1"}})],1)],1)])])])]),e._v(" "),a("div",{staticClass:"field is-horizontal mb-3"},[a("div",{staticClass:"field-body"},[a("div",{staticClass:"field is-expanded"},[a("div",{staticClass:"field has-addons"},[a("p",{staticClass:"control"},[a("a",{staticClass:"button is-danger"},[a("i",{staticClass:"fas fa-times colored"})])]),e._v(" "),a("p",{staticClass:"control is-expanded"},[a("b-field",[a("b-input",{attrs:{placeholder:e.trans.get("challenges.incorrect_answer"),type:"text"},model:{value:e.question.incorrectAnswer2,callback:function(t){e.$set(e.question,"incorrectAnswer2",t)},expression:"question.incorrectAnswer2"}})],1)],1)])])])]),e._v(" "),a("div",{staticClass:"field is-horizontal mb-3"},[a("div",{staticClass:"field-body"},[a("div",{staticClass:"field is-expanded"},[a("div",{staticClass:"field has-addons"},[a("p",{staticClass:"control"},[a("a",{staticClass:"button is-danger"},[a("i",{staticClass:"fas fa-times colored"})])]),e._v(" "),a("p",{staticClass:"control is-expanded"},[a("b-field",[a("b-input",{attrs:{placeholder:e.trans.get("challenges.incorrect_answer"),type:"text"},model:{value:e.question.incorrectAnswer3,callback:function(t){e.$set(e.question,"incorrectAnswer3",t)},expression:"question.incorrectAnswer3"}})],1)],1)])])])])],1),e._v(" "),a("footer",{staticClass:"modal-card-foot"},[a("button",{staticClass:"button",attrs:{type:"button"},on:{click:function(t){e.isQuestionModalActive=!1}}},[e._v("\n            "+e._s(e.trans.get("general.close"))+"\n          ")]),e._v(" "),a("button",{staticClass:"button is-primary"},[e._v("\n            "+e._s(e.trans.get("general.add"))+"\n          ")])])])])]):e._e()],1)}),[function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-check"})])},function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-paperclip"})])},function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-question"})])},function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-check"})])},function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-edit"})])},function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-small"},[t("i",{staticClass:"fas fa-trash-alt"})])}],!1,null,null,null);t.default=o.exports},Htx7:function(e,t,a){"use strict";a.r(t);var s=a("rAQ3"),n=a("1crk"),i={props:["challengegroup","challenges","code","icon"],created:function(){},data:function(){return{addChallenge:!1,search:"",importFlag:!1,challengeEdit:null,isModalActive:!1,isImportModalActive:!1,students:null,groups:null,currentChallenge:null,mark:null}},methods:{deleteChallengeGroup:function(e){this.$buefy.dialog.confirm({title:this.trans.get("general.delete"),message:this.trans.get("general.confirm_delete"),confirmText:this.trans.get("general.delete"),cancelText:this.trans.get("general.cancel"),type:"is-danger",hasIcon:!0,icon:"times-circle",iconPack:"fa",ariaRole:"alertdialog",ariaModal:!0,onConfirm:function(){axios.delete("/classroom/challenges/group/"+e).then((function(e){location.reload()}))}})},confirmDelete:function(e){var t=this;this.$buefy.dialog.confirm({title:this.trans.get("general.delete"),message:this.trans.get("general.confirm_delete"),confirmText:this.trans.get("general.delete"),cancelText:this.trans.get("general.cancel"),type:"is-danger",hasIcon:!0,icon:"times-circle",iconPack:"fa",ariaRole:"alertdialog",ariaModal:!0,onConfirm:function(){axios.delete("/classroom/challenges/"+e).then((function(e){1===e.data&&t.$parent.getChallenges(t.challengegroup.id)}))}})},showModal:function(e){var t=this;this.currentChallenge=e,axios.post("/classroom/"+this.code+"/challenges/info",{type:e.type,challenge:e.id}).then((function(a){0==e.type?t.students=a.data:t.groups=a.data,t.isModalActive=!0}))},toggleChallenge:function(e){axios.post("/classroom/"+this.code+"/challenges/toggle",{id:e,challenge:this.currentChallenge.id})},buttonAddChallege:function(e){var t=0==e?"<span class='ml-2'>"+this.trans.get("challenges.add")+"</span>":"";return this.addChallenge?this.trans.get("general.cancel"):"<i class='far fa-plus'></i>"+t}},components:{CreateChallenges:s.default,ShowChallenge:n.default},computed:{filteredList:function(){var e=this;return this.orderedChallenges.filter((function(t){return t.title.toLowerCase().includes(e.search.toLowerCase())}))},orderedChallenges:function(){return _.orderBy(this.challenges,"datetime","desc")}},updated:function(){}},l=a("KHd+"),c=Object(l.a)(i,(function(){var e=this,t=e.$createElement,a=e._self._c||t;return a("div",{ref:"topref",staticClass:"pl-0"},[a("div",{staticClass:"panel is-primary pl-0"},[a("p",{staticClass:"panel-heading is-flex has-space-between align-items-center p-3"},[a("span",[a("i",{class:e.challengegroup.icon}),e._v(" "),a("span",{staticClass:"pl-3"},[e._v(e._s(e.challengegroup.name))]),e._v(" "),0==e.challenges.length?a("button",{staticClass:"button is-danger",staticStyle:{"font-size":"0.5em"},on:{click:function(t){return e.deleteChallengeGroup(e.challengegroup.id)}}},[a("i",{staticClass:"fas fa-trash"})]):e._e()]),e._v(" "),a("span",[a("button",{staticClass:"button",on:{click:function(t){e.isImportModalActive=!0}}},[a("i",{staticClass:"fas fa-file-import"}),e._v(" "),a("span",{staticClass:"is-hidden-mobile ml-2"},[e._v(e._s(e.trans.get("general.import")))])]),e._v(" "),a("button",{staticClass:"button",on:{click:function(t){e.challengeEdit=null,e.addChallenge=!e.addChallenge}}},[a("span",{staticClass:"is-hidden-tablet",domProps:{innerHTML:e._s(e.buttonAddChallege(1))}}),e._v(" "),a("span",{staticClass:"is-hidden-mobile",domProps:{innerHTML:e._s(e.buttonAddChallege(0))}})])])]),e._v(" "),!e.addChallenge&&e.challenges.length>0?a("div",{staticClass:"panel-block"},[a("p",{staticClass:"control has-icons-left"},[a("input",{directives:[{name:"model",rawName:"v-model",value:e.search,expression:"search"}],staticClass:"input",attrs:{type:"text",placeholder:"Search"},domProps:{value:e.search},on:{input:function(t){t.target.composing||(e.search=t.target.value)}}}),e._v(" "),e._m(0)])]):e._e(),e._v(" "),e.addChallenge?a("div",{staticClass:"panel-block"},[a("CreateChallenges",{attrs:{edit:e.challengeEdit,"import-flag":e.importFlag,iconPrev:e.icon,challengegroups:e.$parent.challengesgroup,code:e.code,challengegroup:e.challengegroup.id,"students-loaded":e.students}})],1):e._e(),e._v(" "),0!=e.challenges.length||e.addChallenge?e._e():a("div",{staticClass:"panel-block"},[a("h3",{staticClass:"is-size-3 p-4 w-100 has-text-centered"},[a("i",{staticClass:"fal fa-smile-wink"}),e._v("\n        "+e._s(e.trans.get("challenges.empty"))+"\n      ")])]),e._v(" "),e.challenges.length>0&&!e.addChallenge?a("div",{staticClass:"panel-block is-block p-3"},e._l(e.filteredList,(function(t){return a("div",{key:t.id},[a("ShowChallenge",{attrs:{code:e.code,challenge:t,admin:!0,edit:!0,students:e.students}})],1)})),0):e._e()]),e._v(" "),a("b-modal",{attrs:{active:e.isModalActive,width:"95%",scroll:"keep"},on:{"update:active":function(t){e.isModalActive=t}}},[e.currentChallenge?a("div",{staticClass:"p-5 rounded has-background-light"},[a("h1",{staticClass:"is-size-1 mb-3"},[e._v("\n        "+e._s(e.currentChallenge.title)+"\n      ")]),e._v(" "),0==e.currentChallenge.type?a("div",e._l(e.students,(function(t){return a("div",{key:t.id,staticClass:"p-3"},[a("div",{staticClass:"columns"},[a("div",{staticClass:"column is-narrow is-flex has-all-centered"},[a("div",{staticClass:"field"},[t.challenges?a("b-switch",{attrs:{value:t.challenges.length?1:0,"true-value":"1","false-value":"0",type:"is-info"},on:{input:function(a){return e.toggleChallenge(t.id)}}},[e._v(e._s(t.name))]):e._e()],1)])])])})),0):e._e(),e._v(" "),1==e.currentChallenge.type?a("div",e._l(e.groups,(function(t){return a("div",{key:t.id,staticClass:"p-3"},[a("div",{staticClass:"columns"},[a("div",{staticClass:"column is-narrow is-flex has-all-centered"},[a("div",{staticClass:"field"},[a("b-switch",{attrs:{value:t.challenges.length?1:0,"true-value":"1","false-value":"0",type:"is-info"},on:{input:function(a){return e.toggleChallenge(t.id)}}},[e._v(e._s(t.name))])],1)])])])})),0):e._e()]):e._e()]),e._v(" "),a("b-modal",{attrs:{active:e.isImportModalActive,"has-modal-card":"","full-screen":""},on:{"update:active":function(t){e.isImportModalActive=t}}},[a("import-challenge",{attrs:{classroom:e.code,challengegroup:e.challengegroup.id}})],1)],1)}),[function(){var e=this.$createElement,t=this._self._c||e;return t("span",{staticClass:"icon is-left"},[t("i",{staticClass:"fas fa-search",attrs:{"aria-hidden":"true"}})])}],!1,null,null,null);t.default=c.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[8],{
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxDownload.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxDownload.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var script = {
+  inject: ["getWorkbook"],
+  props: {
+    filename: {
+      type: String,
+      default: "my-workbook.xlsx"
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    },
+    disableWrapperClick: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      loaded: false
+    };
+  },
+  mounted() {
+    this.load();
+  },
+  watch: {
+    loaded: {
+      immediate: true,
+      handler(loaded) {
+        if (loaded) {
+          this.getWorkbook(wb => {
+            this._workbook = wb;
+          });
+        }
+      }
+    }
+  },
+  methods: {
+    async load() {
+      const { writeFile } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._writeFile = writeFile;
+      this.loaded = true;
+    },
+    download() {
+      this._writeFile(this._workbook, this.filename, this.options);
+    }
+  },
+  render(h) {
+    if (this.$scopedSlots.default && this.loaded) {
+      return h(
+        "div",
+        {
+          on: {
+            click: this.disableWrapperClick ? () => {} : this.download
+          }
+        },
+        [
+          this.$scopedSlots.default({
+            download: this.download
+          })
+        ]
+      );
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxDownload = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxDownload);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxJson.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxJson.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var SheetTo = {
+  inject: ["getWorkbook"],
+  props: {
+    sheet: {
+      type: [String, Number],
+      default: 0
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
+      loaded: false
+    };
+  },
+  computed: {
+    loadedAndSheet() {
+      return this.loaded ? this.sheet : null;
+    }
+  },
+  watch: {
+    loadedAndSheet: {
+      immediate: true,
+      handler(sheet) {
+        if (sheet !== null) {
+          this.getWorkbook(this._callBack);
+        }
+      }
+    }
+  },
+  mounted() {
+    this._callBack = () => {
+      console.warning("Missing data parsing callback");
+    };
+  },
+  methods: {
+    sheetNameFinder(workbook) {
+      return Number.isInteger(this.sheet)
+        ? workbook.SheetNames[this.sheet]
+        : this.sheet;
+    }
+  }
+};
+
+var script = {
+  mixins: [SheetTo],
+  data() {
+    return {
+      collection: null
+    };
+  },
+  mounted() {
+    this._callBack = this.updateJson;
+    this.load();
+  },
+  methods: {
+    async load() {
+      const {
+        utils: { sheet_to_json }
+      } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._sheet_to_json = sheet_to_json;
+      this.loaded = true;
+    },
+    updateJson(workbook) {
+      const ws = workbook.Sheets[this.sheetNameFinder(workbook)];
+      this.collection = this._sheet_to_json(ws, this.options);
+      this.$emit("parsed", this.collection);
+    }
+  },
+  render(h) {
+    if (this.$scopedSlots.default && this.loaded) {
+      return h("div", [
+        this.$scopedSlots.default({
+          collection: this.collection
+        })
+      ]);
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxJson = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxJson);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxRead.js":
+/*!***********************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxRead.js ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var WorkbookHandler = {
+  data() {
+    return {
+      libLoaded: false,
+      loading: false
+    };
+  },
+  provide() {
+    return {
+      getWorkbook: this.getWorkbook
+    };
+  },
+  methods: {
+    startLoading() {
+      this.loading = true;
+      this.$emit("loading", this.loading);
+    },
+    endLoading() {
+      this.loading = false;
+      this.$emit("loading", this.loading);
+    },
+    fireCallBacks() {
+      if (this._callbackQueue && Array.isArray(this._callbackQueue)) {
+        this._callbackQueue.forEach(cb => {
+          try {
+            cb(this._workbook);
+          } catch (e) {
+            console.warning("error in firing callbacks", e);
+          }
+        });
+      }
+    },
+    getWorkbook(cb) {
+      if (this._callbackQueue) {
+        this._callbackQueue.push(cb);
+      }
+      if (this._workbook) {
+        cb(this._workbook);
+      }
+    }
+  }
+};
+
+var script = {
+  mixins: [WorkbookHandler],
+  props: {
+    file: {
+      type: null,
+      default: null
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  computed: {
+    loadedAndFile() {
+      return this.libLoaded ? this.file : null;
+    }
+  },
+  watch: {
+    loadedAndFile: {
+      immediate: true,
+      handler(file) {
+        if (file) {
+          this.parseFile(file);
+        }
+      }
+    }
+  },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    async load() {
+      const { globalPolyfill } = __webpack_require__(/*! ../polyfills */ "./node_modules/vue-xlsx/dist/polyfills.js");
+      globalPolyfill();
+      const { read } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._read = read;
+      this.libLoaded = true;
+      this._callbackQueue = [];
+    },
+    parseFile(file) {
+      this.startLoading();
+      const reader = new FileReader();
+      reader.onload = e => {
+        let binary = "";
+        const bytes = new Uint8Array(e.target.result);
+        const length = bytes.byteLength;
+        for (var i = 0; i < length; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        this._workbook = this._read(binary, {
+          type: "binary",
+          ...this.options
+        });
+        this.fireCallBacks();
+        this.$emit("parsed", this._workbook);
+        this.endLoading();
+      };
+      reader.onerror = e => {
+        console.log(e);
+      };
+      reader.readAsArrayBuffer(file);
+    }
+  },
+  render(h) {
+    if (this.$scopedSlots.default && this.libLoaded) {
+      return h("div", [
+        this.$scopedSlots.default({
+          loading: this.loading
+        })
+      ]);
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxRead = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxRead);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxSheet.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxSheet.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+const typeFinder = value =>
+  value instanceof Array ? "array" : value instanceof Object ? "object" : false;
+
+const collectionValidator = collection => {
+  return collection.reduce((a, c) => {
+    if (a === null) {
+      return typeFinder(c);
+    } else {
+      return typeFinder(c) === a ? a : false;
+    }
+  }, null);
+};
+
+var script = {
+  inject: ["getWorkbook", "addSheet", "deleteSheet"],
+  props: {
+    sheetName: {
+      type: String,
+      required: true
+    },
+    collection: {
+      type: Array,
+      default: null,
+      validator(value) {
+        if (value && value.length > 0) {
+          const type = collectionValidator(value);
+          return ["array", "object"].includes(type);
+        }
+        return true;
+      }
+    }
+  },
+  data() {
+    return {
+      libLoaded: false
+    };
+  },
+  computed: {
+    readyToParse() {
+      return this.libLoaded ? this.collection : null;
+    }
+  },
+  watch: {
+    readyToParse: {
+      immediate: true,
+      handler(collection) {
+        if (collection) {
+          this.parseCollection(collection);
+        }
+      }
+    }
+  },
+  mounted() {
+    this.load();
+  },
+  beforeDestroy() {
+    this.deleteSheet(this.sheetName);
+  },
+  methods: {
+    async load() {
+      const {
+        utils: { aoa_to_sheet, json_to_sheet }
+      } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._aoa_to_sheet = aoa_to_sheet;
+      this._json_to_sheet = json_to_sheet;
+      this.libLoaded = true;
+      this.getWorkbook(wb => {
+        this._workbook = wb;
+      });
+    },
+    parseCollection(collection) {
+      const type = typeFinder(collection[0]);
+      const lib = {
+        array: this._aoa_to_sheet,
+        object: this._json_to_sheet
+      };
+      this._sheet = lib[type](collection, this.options);
+      this.$emit("parsed", this._sheet);
+      this.addSheet(this._sheet, this.sheetName);
+    }
+  },
+  render(h) {
+    if (this.$slots.default && this.libLoaded) {
+      return h("div", this.$slots.default);
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxSheet = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxSheet);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxSheets.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxSheets.js ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var script = {
+  inject: ["getWorkbook"],
+  data() {
+    return {
+      innerValue: []
+    };
+  },
+  mounted() {
+    this.getWorkbook(this.parseSheets);
+  },
+  methods: {
+    parseSheets(wb) {
+      this.innerValue = [...wb.SheetNames];
+      this.$emit("parsed", [...wb.SheetNames]);
+    }
+  },
+  render(h) {
+    if (this.$scopedSlots.default) {
+      return h("div", [
+        this.$scopedSlots.default({
+          sheets: this.innerValue
+        })
+      ]);
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxSheets = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxSheets);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxTable.js":
+/*!************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxTable.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var SheetTo = {
+  inject: ["getWorkbook"],
+  props: {
+    sheet: {
+      type: [String, Number],
+      default: 0
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
+      loaded: false
+    };
+  },
+  computed: {
+    loadedAndSheet() {
+      return this.loaded ? this.sheet : null;
+    }
+  },
+  watch: {
+    loadedAndSheet: {
+      immediate: true,
+      handler(sheet) {
+        if (sheet !== null) {
+          this.getWorkbook(this._callBack);
+        }
+      }
+    }
+  },
+  mounted() {
+    this._callBack = () => {
+      console.warning("Missing data parsing callback");
+    };
+  },
+  methods: {
+    sheetNameFinder(workbook) {
+      return Number.isInteger(this.sheet)
+        ? workbook.SheetNames[this.sheet]
+        : this.sheet;
+    }
+  }
+};
+
+//
+
+var script = {
+  mixins: [SheetTo],
+  data() {
+    return {
+      table: null
+    };
+  },
+  mounted() {
+    this._callBack = this.updateTable;
+    this.load();
+  },
+  methods: {
+    async load() {
+      const {
+        utils: { sheet_to_html }
+      } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._sheet_to_html = sheet_to_html;
+      this.loaded = true;
+    },
+    updateTable(workbook) {
+      const ws = workbook.Sheets[this.sheetNameFinder(workbook)];
+      this.table = this._sheet_to_html(ws, this.options);
+    }
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+var __vue_render__ = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.table)?_c('div',{domProps:{"innerHTML":_vm._s(_vm.table)}}):_vm._e()};
+var __vue_staticRenderFns__ = [];
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxTable = normalizeComponent_1(
+    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxTable);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/components/XlsxWorkbook.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/components/XlsxWorkbook.js ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var WorkbookHandler = {
+  data() {
+    return {
+      libLoaded: false,
+      loading: false
+    };
+  },
+  provide() {
+    return {
+      getWorkbook: this.getWorkbook
+    };
+  },
+  methods: {
+    startLoading() {
+      this.loading = true;
+      this.$emit("loading", this.loading);
+    },
+    endLoading() {
+      this.loading = false;
+      this.$emit("loading", this.loading);
+    },
+    fireCallBacks() {
+      if (this._callbackQueue && Array.isArray(this._callbackQueue)) {
+        this._callbackQueue.forEach(cb => {
+          try {
+            cb(this._workbook);
+          } catch (e) {
+            console.warning("error in firing callbacks", e);
+          }
+        });
+      }
+    },
+    getWorkbook(cb) {
+      if (this._callbackQueue) {
+        this._callbackQueue.push(cb);
+      }
+      if (this._workbook) {
+        cb(this._workbook);
+      }
+    }
+  }
+};
+
+var script = {
+  mixins: [WorkbookHandler],
+  provide() {
+    return {
+      addSheet: this.addSheet,
+      deleteSheet: this.deleteSheet
+    };
+  },
+  mounted() {
+    this.load();
+  },
+  methods: {
+    async load() {
+      const { globalPolyfill } = __webpack_require__(/*! ../polyfills */ "./node_modules/vue-xlsx/dist/polyfills.js");
+      globalPolyfill();
+      const {
+        utils: { book_new, book_append_sheet }
+      } = await Promise.all(/*! import() */[__webpack_require__.e(0), __webpack_require__.e(1)]).then(__webpack_require__.t.bind(null, /*! xlsx */ "./node_modules/xlsx/xlsx.js", 7));
+      this._book_new = book_new;
+      this._book_append_sheet = book_append_sheet;
+      this._workbook = this._book_new();
+      this.$emit("created", this._workbook);
+      this.libLoaded = true;
+    },
+    addSheet(sheet, sheetName) {
+      if (this._workbook) {
+        this.deleteSheet(sheetName);
+        this._book_append_sheet(this._workbook, sheet, sheetName);
+        this.$emit("change", this._workbook);
+      }
+    },
+    deleteSheet(sheetName) {
+      if (this._workbook && this._workbook.Sheets[sheetName]) {
+        this._workbook.SheetNames = this._workbook.SheetNames.filter(
+          s => s !== sheetName
+        );
+        this._workbook.Sheets[sheetName] = undefined;
+        this.$emit("change", this._workbook);
+      }
+    }
+  },
+  render(h) {
+    if (this.$slots.default && this.libLoaded) {
+      return h("div", this.$slots.default);
+    }
+    return null;
+  }
+};
+
+function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier
+/* server only */
+, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
+  if (typeof shadowMode !== 'boolean') {
+    createInjectorSSR = createInjector;
+    createInjector = shadowMode;
+    shadowMode = false;
+  } // Vue.extend constructor export interop.
+
+
+  var options = typeof script === 'function' ? script.options : script; // render functions
+
+  if (template && template.render) {
+    options.render = template.render;
+    options.staticRenderFns = template.staticRenderFns;
+    options._compiled = true; // functional template
+
+    if (isFunctionalTemplate) {
+      options.functional = true;
+    }
+  } // scopedId
+
+
+  if (scopeId) {
+    options._scopeId = scopeId;
+  }
+
+  var hook;
+
+  if (moduleIdentifier) {
+    // server build
+    hook = function hook(context) {
+      // 2.3 injection
+      context = context || // cached call
+      this.$vnode && this.$vnode.ssrContext || // stateful
+      this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext; // functional
+      // 2.2 with runInNewContext: true
+
+      if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
+        context = __VUE_SSR_CONTEXT__;
+      } // inject component styles
+
+
+      if (style) {
+        style.call(this, createInjectorSSR(context));
+      } // register component module identifier for async chunk inference
+
+
+      if (context && context._registeredComponents) {
+        context._registeredComponents.add(moduleIdentifier);
+      }
+    }; // used by ssr in case component is cached and beforeCreate
+    // never gets called
+
+
+    options._ssrRegister = hook;
+  } else if (style) {
+    hook = shadowMode ? function () {
+      style.call(this, createInjectorShadow(this.$root.$options.shadowRoot));
+    } : function (context) {
+      style.call(this, createInjector(context));
+    };
+  }
+
+  if (hook) {
+    if (options.functional) {
+      // register for functional component in vue file
+      var originalRender = options.render;
+
+      options.render = function renderWithStyleInjection(h, context) {
+        hook.call(context);
+        return originalRender(h, context);
+      };
+    } else {
+      // inject component registration as beforeCreate hook
+      var existing = options.beforeCreate;
+      options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
+    }
+  }
+
+  return script;
+}
+
+var normalizeComponent_1 = normalizeComponent;
+
+/* script */
+const __vue_script__ = script;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__ = undefined;
+  /* scoped */
+  const __vue_scope_id__ = undefined;
+  /* module identifier */
+  const __vue_module_identifier__ = undefined;
+  /* functional template */
+  const __vue_is_functional_template__ = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+
+  
+  var XlsxWorkbook = normalizeComponent_1(
+    {},
+    __vue_inject_styles__,
+    __vue_script__,
+    __vue_scope_id__,
+    __vue_is_functional_template__,
+    __vue_module_identifier__,
+    undefined,
+    undefined
+  );
+
+/* harmony default export */ __webpack_exports__["default"] = (XlsxWorkbook);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/mixins/SheetTo.js":
+/*!******************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/mixins/SheetTo.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var SheetTo = {
+  inject: ["getWorkbook"],
+  props: {
+    sheet: {
+      type: [String, Number],
+      default: 0
+    },
+    options: {
+      type: Object,
+      default: () => ({})
+    }
+  },
+  data() {
+    return {
+      loaded: false
+    };
+  },
+  computed: {
+    loadedAndSheet() {
+      return this.loaded ? this.sheet : null;
+    }
+  },
+  watch: {
+    loadedAndSheet: {
+      immediate: true,
+      handler(sheet) {
+        if (sheet !== null) {
+          this.getWorkbook(this._callBack);
+        }
+      }
+    }
+  },
+  mounted() {
+    this._callBack = () => {
+      console.warning("Missing data parsing callback");
+    };
+  },
+  methods: {
+    sheetNameFinder(workbook) {
+      return Number.isInteger(this.sheet)
+        ? workbook.SheetNames[this.sheet]
+        : this.sheet;
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SheetTo);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/mixins/WorkbookHandler.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/mixins/WorkbookHandler.js ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var WorkbookHandler = {
+  data() {
+    return {
+      libLoaded: false,
+      loading: false
+    };
+  },
+  provide() {
+    return {
+      getWorkbook: this.getWorkbook
+    };
+  },
+  methods: {
+    startLoading() {
+      this.loading = true;
+      this.$emit("loading", this.loading);
+    },
+    endLoading() {
+      this.loading = false;
+      this.$emit("loading", this.loading);
+    },
+    fireCallBacks() {
+      if (this._callbackQueue && Array.isArray(this._callbackQueue)) {
+        this._callbackQueue.forEach(cb => {
+          try {
+            cb(this._workbook);
+          } catch (e) {
+            console.warning("error in firing callbacks", e);
+          }
+        });
+      }
+    },
+    getWorkbook(cb) {
+      if (this._callbackQueue) {
+        this._callbackQueue.push(cb);
+      }
+      if (this._workbook) {
+        cb(this._workbook);
+      }
+    }
+  }
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (WorkbookHandler);
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/polyfills.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/polyfills.js ***!
+  \*************************************************/
+/*! exports provided: globalPolyfill */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "globalPolyfill", function() { return globalPolyfill; });
+const globalPolyfill = () => {
+  var global = global || window;
+  if (window) {
+    window.global = global;
+  }
+};
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/utils.js":
+/*!*********************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/utils.js ***!
+  \*********************************************/
+/*! exports provided: collectionValidator, typeFinder */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "collectionValidator", function() { return collectionValidator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "typeFinder", function() { return typeFinder; });
+const typeFinder = value =>
+  value instanceof Array ? "array" : value instanceof Object ? "object" : false;
+
+const collectionValidator = collection => {
+  return collection.reduce((a, c) => {
+    if (a === null) {
+      return typeFinder(c);
+    } else {
+      return typeFinder(c) === a ? a : false;
+    }
+  }, null);
+};
+
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-xlsx/dist/vue-xlsx.es.js":
+/*!***************************************************!*\
+  !*** ./node_modules/vue-xlsx/dist/vue-xlsx.es.js ***!
+  \***************************************************/
+/*! exports provided: collectionValidator, typeFinder, XlsxDownload, XlsxJson, XlsxRead, XlsxSheet, XlsxSheets, XlsxTable, XlsxWorkbook, SheetToMixin, WorkbookHandlerMixin */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ "./node_modules/vue-xlsx/dist/utils.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "collectionValidator", function() { return _utils__WEBPACK_IMPORTED_MODULE_0__["collectionValidator"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "typeFinder", function() { return _utils__WEBPACK_IMPORTED_MODULE_0__["typeFinder"]; });
+
+/* harmony import */ var _components_XlsxDownload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/XlsxDownload */ "./node_modules/vue-xlsx/dist/components/XlsxDownload.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxDownload", function() { return _components_XlsxDownload__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+
+/* harmony import */ var _components_XlsxJson__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/XlsxJson */ "./node_modules/vue-xlsx/dist/components/XlsxJson.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxJson", function() { return _components_XlsxJson__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+
+/* harmony import */ var _components_XlsxRead__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/XlsxRead */ "./node_modules/vue-xlsx/dist/components/XlsxRead.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxRead", function() { return _components_XlsxRead__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _components_XlsxSheet__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/XlsxSheet */ "./node_modules/vue-xlsx/dist/components/XlsxSheet.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxSheet", function() { return _components_XlsxSheet__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _components_XlsxSheets__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/XlsxSheets */ "./node_modules/vue-xlsx/dist/components/XlsxSheets.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxSheets", function() { return _components_XlsxSheets__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+/* harmony import */ var _components_XlsxTable__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/XlsxTable */ "./node_modules/vue-xlsx/dist/components/XlsxTable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxTable", function() { return _components_XlsxTable__WEBPACK_IMPORTED_MODULE_6__["default"]; });
+
+/* harmony import */ var _components_XlsxWorkbook__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/XlsxWorkbook */ "./node_modules/vue-xlsx/dist/components/XlsxWorkbook.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "XlsxWorkbook", function() { return _components_XlsxWorkbook__WEBPACK_IMPORTED_MODULE_7__["default"]; });
+
+/* harmony import */ var _mixins_SheetTo__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mixins/SheetTo */ "./node_modules/vue-xlsx/dist/mixins/SheetTo.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SheetToMixin", function() { return _mixins_SheetTo__WEBPACK_IMPORTED_MODULE_8__["default"]; });
+
+/* harmony import */ var _mixins_WorkbookHandler__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./mixins/WorkbookHandler */ "./node_modules/vue-xlsx/dist/mixins/WorkbookHandler.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "WorkbookHandlerMixin", function() { return _mixins_WorkbookHandler__WEBPACK_IMPORTED_MODULE_9__["default"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ })
+
+}]);

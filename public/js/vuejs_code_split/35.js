@@ -1,1 +1,401 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[35],{TPop:function(e,a,t){"use strict";t.r(a);var s={props:["goals","themes","classroom"],mounted:function(){this.goalsJson=JSON.parse(this.goals),this.themesJson=JSON.parse(this.themes),this.classroom&&(this.classForm.name=this.classroom.name,this.classForm.adventure_name=this.classroom.adventure_name,this.classForm.goal_type=this.classroom.goal_type,this.classForm.bg_theme=this.classroom.theme.id,this.classForm.character_theme=this.classroom.character_theme)},data:function(){return{activeTab:0,goalsJson:[],themesJson:[],goalSelected:1,classForm:{name:"",adventure_name:"FantasyClass",goal_type:1,bg_theme:1,character_theme:1}}},methods:{selectGoal:function(e){this.goalSelected=e},confirmDelete:function(){var e=this;this.$buefy.dialog.confirm({title:this.trans.get("general.delete"),message:this.trans.get("general.confirm_delete_class"),confirmText:this.trans.get("general.delete"),cancelText:this.trans.get("general.cancel"),type:"is-danger",hasIcon:!0,icon:"times-circle",iconPack:"fa",ariaRole:"alertdialog",ariaModal:!0,onConfirm:function(){axios.delete("/classroom/"+e.classroom.code).then((function(e){location.href=e.data}))}})}}},r=t("KHd+"),i=Object(r.a)(s,(function(){var e=this,a=e.$createElement,t=e._self._c||a;return t("section",{staticClass:"p-3"},[t("b-tabs",{attrs:{size:"is-small"},model:{value:e.activeTab,callback:function(a){e.activeTab=a},expression:"activeTab"}},[t("b-tab-item",{attrs:{label:e.trans.get("classroom.name_and_goals"),icon:"scroll","icon-pack":"far"}},[t("h1",{staticClass:"is-size-2 mt-4"},[t("i",{staticClass:"fal fa-cog faa-spin animated faa-slow"}),e._v(" "+e._s(e.trans.get("classroom.prepare")))]),e._v(" "),t("div",{staticClass:"my-4"},[t("label",{staticClass:"my-2",attrs:{for:"wizardName"}},[e._v(e._s(e.trans.get("classroom.wizard_name"))+" "),t("small",[t("i",[e._v(e._s(e.trans.get("classroom.wizard_name_example")))])])]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.name,expression:"classForm.name"}],staticClass:"input my-2",attrs:{type:"text",name:"name",required:"",minlength:"2"},domProps:{value:e.classForm.name},on:{input:function(a){a.target.composing||e.$set(e.classForm,"name",a.target.value)}}})]),e._v(" "),t("div",{staticClass:"my-4"},[t("label",{staticClass:"my-4",attrs:{for:"adventureName"}},[e._v(e._s(e.trans.get("classroom.adventure_name"))+" "),t("small",[t("i",[e._v(e._s(e.trans.get("classroom.adventure_name_example")))])])]),e._v(" "),t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.adventure_name,expression:"classForm.adventure_name"}],staticClass:"input my-2",attrs:{type:"text",required:"",minlength:"3",value:"FantasyClass",name:"adventureName",id:"adventureName"},domProps:{value:e.classForm.adventure_name},on:{input:function(a){a.target.composing||e.$set(e.classForm,"adventure_name",a.target.value)}}})]),e._v(" "),t("div",{staticClass:"my-4"},[e._v("\n                "+e._s(e.trans.get("classroom.goal_type"))+" "),t("small",[t("i",[e._v(e._s(e.trans.get("classroom.goal_type_example")))])])]),e._v(" "),t("div",{staticClass:"field has-addons",staticStyle:{width:"100%","overflow-x":"auto"},attrs:{"data-toggle":"buttons"}},e._l(e.goalsJson,(function(a,s){return t("p",{key:a.id,staticClass:"control"},[t("label",{staticClass:"button",class:{"is-success is-selected":a.id==e.classForm.goal_type},on:{click:function(t){return e.selectGoal(a.id)}}},[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.goal_type,expression:"classForm.goal_type"}],staticClass:"hide-radios",attrs:{type:"radio",name:"goalType",autocomplete:"off"},domProps:{checked:s==e.classForm.goal_type,value:a.id,checked:e._q(e.classForm.goal_type,a.id)},on:{change:function(t){return e.$set(e.classForm,"goal_type",a.id)}}}),t("i",{class:a.icon+" colored",style:"color: "+a.color})])])})),0)]),e._v(" "),t("b-tab-item",{attrs:{label:e.trans.get("classroom.theme"),icon:"palette","icon-pack":"far"}},[t("h1",{staticClass:"is-size-2 mt-4"},[e._v(e._s(e.trans.get("classroom.theme")))]),e._v(" "),t("h6",{staticClass:"my-3"},[e._v(e._s(e.trans.get("classroom.theme_text")))]),e._v(" "),t("div",{staticClass:"themes"},[e._l(e.themesJson,(function(a,s){return t("label",{key:a.id},[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.bg_theme,expression:"classForm.bg_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"bgtheme"},domProps:{checked:0===s,value:a.id,checked:e._q(e.classForm.bg_theme,a.id)},on:{change:function(t){return e.$set(e.classForm,"bg_theme",a.id)}}}),e._v(" "),t("div",{staticClass:"theme bg_color_theme",style:"background-color:"+a.color},[1==a.type?t("img",{attrs:{src:"/img/bg/thumb_"+a.name}}):t("img",{attrs:{src:"/img/bg/empty.png"}})])])})),e._v(" "),t("div",{staticClass:"my-3"},[t("a",{attrs:{href:"https://www.freepik.es/fotos-vectores-gratis/fondo"}},[e._v("Vector de fondo creado por freepik - www.freepik.es")])])],2)]),e._v(" "),t("b-tab-item",{attrs:{label:e.trans.get("classroom.char_theme"),icon:"mask","icon-pack":"far"}},[t("h1",{staticClass:"is-size-2 my-4"},[t("i",{staticClass:"fal fa-ghost faa-float animated"}),e._v(" "+e._s(e.trans.get("classroom.char_theme")))]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",checked:"",value:"1"},domProps:{checked:e._q(e.classForm.character_theme,"1")},on:{change:function(a){return e.$set(e.classForm,"character_theme","1")}}}),e._v(" "),t("img",{staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/medieval-fantasy.png"}})]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",value:"2"},domProps:{checked:e._q(e.classForm.character_theme,"2")},on:{change:function(a){return e.$set(e.classForm,"character_theme","2")}}}),e._v(" "),t("img",{directives:[{name:"tippy",rawName:"v-tippy",value:{interactive:!0},expression:"{interactive: true}"}],staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/robots.png",content:"<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>"}})]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",value:"3"},domProps:{checked:e._q(e.classForm.character_theme,"3")},on:{change:function(a){return e.$set(e.classForm,"character_theme","3")}}}),e._v(" "),t("img",{staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/superheros.png"}})]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",value:"4"},domProps:{checked:e._q(e.classForm.character_theme,"4")},on:{change:function(a){return e.$set(e.classForm,"character_theme","4")}}}),e._v(" "),t("img",{directives:[{name:"tippy",rawName:"v-tippy",value:{interactive:!0},expression:"{interactive: true}"}],staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/pirateanimals.png",content:"<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>"}})]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",value:"6"},domProps:{checked:e._q(e.classForm.character_theme,"6")},on:{change:function(a){return e.$set(e.classForm,"character_theme","6")}}}),e._v(" "),t("img",{directives:[{name:"tippy",rawName:"v-tippy",value:{interactive:!0},expression:"{interactive: true}"}],staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/aquatic.png",content:"<a class='text-light' href='https://www.instagram.com/kieanwong.art/'><i class='fab fa-instagram'></i> @kieanwong.art</a>"}})]),e._v(" "),t("label",[t("input",{directives:[{name:"model",rawName:"v-model",value:e.classForm.character_theme,expression:"classForm.character_theme"}],staticClass:"hide-radios",attrs:{type:"radio",name:"charTheme",value:"0"},domProps:{checked:e._q(e.classForm.character_theme,"0")},on:{change:function(a){return e.$set(e.classForm,"character_theme","0")}}}),e._v(" "),t("img",{directives:[{name:"tippy",rawName:"v-tippy"}],staticClass:"themePreview",attrs:{src:"/img/character/themes-preview/custom.png",content:e.trans.get("classroom.custom_theme")}})])]),e._v(" "),t("b-tab-item",{attrs:{label:"+ Info",icon:"info","icon-pack":"far"}},[t("div",{staticClass:"mt-4"},[t("h1",{staticClass:"is-size-2 has-text-centered"},[t("i",{staticClass:"fal fa-laugh-beam  faa-wrench animated"}),e._v(" "+e._s(e.trans.get("classroom.finish_title")))]),e._v(" "),t("h4",{staticClass:"is-size-4 my-3 has-text-centered"},[e._v(e._s(e.trans.get("classroom.info_wizard_0")))]),e._v(" "),t("ol",{staticClass:"p-4 pl-5"},[t("li",{staticClass:"is-size-5 m-3"},[e._v(e._s(e.trans.get("classroom.info_wizard_1"))+" "),t("i",{staticClass:"fal fa-users"})]),e._v(" "),t("li",{staticClass:"is-size-5 m-3"},[e._v(e._s(e.trans.get("classroom.info_wizard_2"))+" "),t("i",{staticClass:"fal fa-tasks"})]),e._v(" "),t("li",{staticClass:"is-size-5 m-3"},[e._v(e._s(e.trans.get("classroom.info_wizard_3"))+" "),t("i",{staticClass:"fal fa-treasure-chest"})]),e._v(" "),t("li",{staticClass:"is-size-5 m-3"},[e._v(e._s(e.trans.get("classroom.info_wizard_4"))+" "),t("i",{staticClass:"fal fa-hands-helping"})]),e._v(" "),t("li",{staticClass:"is-size-5 m-3"},[e._v(e._s(e.trans.get("classroom.info_wizard_5"))+" "),t("i",{staticClass:"fal fa-swords"})])])])])],1),e._v(" "),t("div",{staticClass:"px-1",staticStyle:{position:"fixed",bottom:"0",left:"0",width:"100%"}},[t("div",{staticClass:"buttons"},[t("div",{staticClass:"mb-1 buttons has-addons"},[e.activeTab>0?t("button",{staticClass:"button",attrs:{type:"button"},on:{click:function(a){e.activeTab--}}},[t("i",{staticClass:"fas fa-chevron-left"})]):e._e(),e._v(" "),e.activeTab<3?t("button",{staticClass:"button is-info is-selected",attrs:{type:"button"},on:{click:function(a){e.activeTab++}}},[t("i",{staticClass:"fas fa-chevron-right"})]):e._e()]),e._v(" "),e.classroom?t("div",{staticClass:"mb-1 has-text-right left-auto"},[t("button",{staticClass:"button ml-4 is-danger",on:{click:function(a){return a.preventDefault(),e.confirmDelete(a)}}},[t("i",{staticClass:"fas fa-trash"}),e._v(" "),t("span",{staticClass:"mx-3 is-hidden-mobile"},[e._v("\n                  "+e._s(e.trans.get("general.delete"))+"\n                  "),t("i",{staticClass:"fas fa-radiation-alt"}),e._v(" "),t("i",{staticClass:"fas fa-exclamation-triangle"})])]),e._v(" "),t("button",{staticClass:"button is-link"},[t("i",{staticClass:"fas fa-edit mr-2"}),e._v(" "+e._s(e.trans.get("classroom.edit")))])]):t("button",{staticClass:"button is-success mb-3 left-auto"},[e._v(e._s(e.trans.get("classroom.end_wizard")))])])])],1)}),[],!1,null,null,null);a.default=i.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[35],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["classroom", "grades", "settings", "admin"],
+  created: function created() {},
+  data: function data() {
+    return {};
+  },
+  methods: {
+    getGradeClass: function getGradeClass(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getGradeClass(grade, this.settings.eval_max);
+    },
+    getPassFail: function getPassFail(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getPassFail(grade, this.settings.eval_max);
+    },
+    getEmoji: function getEmoji(grade) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getEmoji(grade, this.settings.eval_max);
+    },
+    getGrade: function getGrade(grade) {
+      var totalGrades = 0;
+      var totalWeight = 0;
+      grade.evaluables.forEach(function (element) {
+        totalGrades += element.grade * element.pivot.weight;
+        totalWeight += element.pivot.weight;
+      });
+      if (totalGrades == 0) return 0;
+      return (totalGrades / totalWeight).toFixed(2);
+    },
+    finalGrade: function finalGrade(student) {
+      var _this = this;
+
+      var finalGrade = 0;
+      student.grades.forEach(function (grade) {
+        finalGrade += _this.getGrade(grade) * grade.percent / 100;
+      });
+      return finalGrade.toFixed(2);
+    },
+    exportReport: function exportReport() {
+      var table = document.getElementById('evaluationReport');
+      var columns = table.getElementsByTagName("th");
+      var rows = table.getElementsByTagName("tr");
+      var headings = [];
+      var elements = new Array();
+
+      for (var n = 0; n < columns.length; n++) {
+        var innerHtml = columns[n].innerHTML; // Remove Html Tags
+
+        var header = innerHtml.replace(/(<([^>]+)>)/gi, ""); // Remove break lines
+
+        header = header.replace(/(\r\n|\n|\r)/gm, ""); // Remove whitespaces
+
+        header = header.replace(/\s{2,}/g, "");
+        headings.push(header.trim());
+      }
+
+      for (var n = 0; n < rows.length; n++) {
+        var values = [];
+        var row = rows[n];
+        var cells = row.cells;
+
+        for (var cont = 0; cont < cells.length; cont++) {
+          var innerHtml = cells[cont].innerHTML; // Remove Html Tags
+
+          var value = innerHtml.replace(/(<([^>]+)>)/gi, ""); // Remove break lines
+
+          value = value.replace(/(\r\n|\n|\r)/gm, "");
+          values.push(value.trim());
+        }
+
+        elements.push(values);
+      }
+
+      axios.post('/classroom/evaluation/exportEvaluationReport/', {
+        headings: headings,
+        values: elements
+      }, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var blob = new Blob([response.data], {
+          type: response.data.type
+        });
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        var contentDisposition = response.headers['content-disposition'];
+        var fileName = 'unknown';
+
+        if (contentDisposition) {
+          var fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+          var matches = fileNameRegex.exec(contentDisposition);
+
+          if (matches != null && matches[1]) {
+            fileName = matches[1].replace(/['"]/g, '');
+          }
+        }
+
+        link.download = fileName;
+        link.click();
+        URL.revokeObjectURL(link.href);
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68& ***!
+  \********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "w-100 p-2 content" }, [
+    _c(
+      "button",
+      { staticClass: "button is-dark noprint", on: { click: _vm.print } },
+      [_c("i", { staticClass: "fas fa-print" })]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "button is-success noprint",
+        attrs: { formtarget: "_blank" },
+        on: { click: _vm.exportReport }
+      },
+      [_c("i", { staticClass: "fas fa-file-excel" })]
+    ),
+    _vm._v(" "),
+    _c(
+      "table",
+      {
+        staticClass: "grades has-background-light mt-3",
+        attrs: { id: "evaluationReport" }
+      },
+      [
+        _c("th", [_vm._v(_vm._s(_vm.trans.get("evaluation.student")))]),
+        _vm._v(" "),
+        _vm._l(_vm.grades[0].grades, function(tag, index) {
+          return _c("th", { key: index + "-" + tag.id }, [
+            _vm._v("\n            " + _vm._s(tag.name) + "\n            "),
+            _c("br"),
+            _vm._v("\n            (" + _vm._s(tag.percent) + " %)\n        ")
+          ])
+        }),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total")]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.grades, function(student) {
+            return _c(
+              "tr",
+              { key: student.student_id },
+              [
+                _c("td", [_vm._v(_vm._s(student.name))]),
+                _vm._v(" "),
+                _vm._l(student.grades, function(grade) {
+                  return _c("td", { key: grade.id }, [
+                    _vm.admin ||
+                    (_vm.settings.eval_type != 1 && _vm.settings.eval_type != 2)
+                      ? _c("span", [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "tag is-size-6",
+                              class: _vm.getGradeClass(_vm.getGrade(grade))
+                            },
+                            [_vm._v(_vm._s(_vm.getGrade(grade)))]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.settings.eval_type == 1
+                      ? _c("span", [
+                          _c("i", {
+                            class:
+                              "fas " +
+                              _vm.getEmoji(_vm.getGrade(grade)) +
+                              " rateEmoji"
+                          })
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm.settings.eval_type == 2
+                      ? _c(
+                          "span",
+                          {
+                            staticClass: "tag",
+                            class: _vm.getGradeClass(_vm.getGrade(grade))
+                          },
+                          [
+                            _c("i", {
+                              class:
+                                "fas " + _vm.getPassFail(_vm.getGrade(grade))
+                            })
+                          ]
+                        )
+                      : _vm._e()
+                  ])
+                }),
+                _vm._v(" "),
+                _c("td", [
+                  _vm.admin ||
+                  (_vm.settings.eval_type != 1 && _vm.settings.eval_type != 2)
+                    ? _c("span", [
+                        _c(
+                          "span",
+                          {
+                            staticClass: "tag is-size-6",
+                            class: _vm.getGradeClass(_vm.finalGrade(student))
+                          },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.finalGrade(student)) +
+                                " / " +
+                                _vm._s(_vm.settings.eval_max)
+                            )
+                          ]
+                        )
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.settings.eval_type == 1
+                    ? _c("span", [
+                        _c("i", {
+                          class:
+                            "fas " +
+                            _vm.getEmoji(_vm.finalGrade(student)) +
+                            " rateEmoji"
+                        })
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.settings.eval_type == 2
+                    ? _c(
+                        "span",
+                        {
+                          staticClass: "tag",
+                          class: _vm.getGradeClass(_vm.finalGrade(student))
+                        },
+                        [
+                          _c("i", {
+                            class:
+                              "fas " + _vm.getPassFail(_vm.finalGrade(student))
+                          })
+                        ]
+                      )
+                    : _vm._e()
+                ])
+              ],
+              2
+            )
+          }),
+          0
+        )
+      ],
+      2
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/Report.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/evaluation/Report.vue ***!
+  \*******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Report.vue?vue&type=template&id=8de5bd68& */ "./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&");
+/* harmony import */ var _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Report.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/evaluation/Report.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68& ***!
+  \**************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=template&id=8de5bd68& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

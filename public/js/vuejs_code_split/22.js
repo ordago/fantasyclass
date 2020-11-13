@@ -1,1 +1,930 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[22],{LVYR:function(t,a,e){"use strict";e.r(a);var i=e("o0O0"),s={props:["code"],created:function(){this.audio=new Audio("/sound/alarm.mp3")},data:function(){return{audioContext:null,meter:null,canvasContext:null,width:400,height:50,rafID:null,sttoped:!0,tolerance:5,prevTime:0,audio:null,alarmCount:0,countHp:0,countXp:0,countGold:0,hp:1,xp:5,gold:10}},computed:{},mounted:function(){},methods:{accept:function(){var t=this;axios.post("/classroom/"+this.code+"/utils/meter",{gold:this.gold*this.alarmCount*this.countGold*-1,hp:this.hp*this.alarmCount*this.countHp*-1,xp:this.xp*this.alarmCount*this.countXp*-1}).then((function(a){location.href="/classroom/"+t.code}))},deleteLog:function(){this.alarmCount--},onMicrophoneDenied:function(){alert("It's mandatory to grant microphone access")},onLevelChange:function(t){this.canvasContext.clearRect(0,0,this.width,this.height),this.meter.checkClipping()?this.canvasContext.fillStyle="red":this.canvasContext.fillStyle="green",t-this.prevTime>1500&&!this.stopped&&(this.meter.volume>this.tolerance/20&&(this.audio.play(),this.alarmCount++),this.prevTime=t),this.canvasContext.fillRect(0,0,this.meter.volume*this.width*1.4,this.height),this.rafID=window.requestAnimationFrame(this.onLevelChange)},onMicrophoneGranted:function(t){var a=this.audioContext.createMediaStreamSource(t);this.meter=i.default.createAudioMeter(this.audioContext),a.connect(this.meter),this.onLevelChange()},start:function(){this.stopped=!1,this.canvasContext=this.$refs.meter.getContext("2d"),window.AudioContext=window.AudioContext||window.webkitAudioContext,this.audioContext=new AudioContext,navigator.getUserMedia=navigator.getUserMedia||navigator.webkitGetUserMedia||navigator.mozGetUserMedia||navigator.msGetUserMedia,void 0===navigator.mediaDevices.getUserMedia?navigator.getUserMedia({audio:!0},this.onMicrophoneGranted,this.onMicrophoneDenied):navigator.mediaDevices.getUserMedia({audio:!0}).then(this.onMicrophoneGranted)}}},o=(e("i4q4"),e("KHd+")),n=Object(o.a)(s,(function(){var t=this,a=t.$createElement,e=t._self._c||a;return e("div",{staticClass:"p-2"},[e("div",[e("div",[t._m(0),t._v(" "),e("div",{staticClass:"columns"},[e("div",{staticClass:"column"},[e("div",{staticClass:"propertyMeter p-3"},[e("b-switch",{attrs:{"true-value":"1","false-value":"0"},model:{value:t.countGold,callback:function(a){t.countGold=a},expression:"countGold"}},[e("i",{staticClass:"fas fa-coins colored"})]),t._v(" "),e("input",{directives:[{name:"model",rawName:"v-model",value:t.gold,expression:"gold"}],staticClass:"input",attrs:{type:"number"},domProps:{value:t.gold},on:{input:function(a){a.target.composing||(t.gold=a.target.value)}}})],1),t._v(" "),e("div",{staticClass:"propertyMeter p-3"},[e("b-switch",{attrs:{"true-value":"1","false-value":"0"},model:{value:t.countXp,callback:function(a){t.countXp=a},expression:"countXp"}},[e("i",{staticClass:"fas fa-fist-raised colored"})]),t._v(" "),e("input",{directives:[{name:"model",rawName:"v-model",value:t.xp,expression:"xp"}],staticClass:"input",attrs:{type:"number"},domProps:{value:t.xp},on:{input:function(a){a.target.composing||(t.xp=a.target.value)}}})],1),t._v(" "),e("div",{staticClass:"propertyMeter p-3"},[e("b-switch",{attrs:{"true-value":"1","false-value":"0"},model:{value:t.countHp,callback:function(a){t.countHp=a},expression:"countHp"}},[e("i",{staticClass:"fas fa-heart colored"})]),t._v(" "),e("input",{directives:[{name:"model",rawName:"v-model",value:t.hp,expression:"hp"}],staticClass:"input",attrs:{type:"number"},domProps:{value:t.hp},on:{input:function(a){a.target.composing||(t.hp=a.target.value)}}})],1)]),t._v(" "),e("div",{staticClass:"column"},[e("div",{attrs:{id:"info"}},[e("span",{staticClass:"tag tag fa-2x m-2 is-size-5 p-4"},[e("span",[t._v(t._s(t.alarmCount))]),t._v(" "),e("i",{staticClass:"fas fa-siren-on colored"})]),t._v(" "),e("span",{staticClass:"tag tag is-warning fa-2x m-2 is-size-5 p-4"},[e("span",[t._v(t._s(t.gold*t.alarmCount*t.countGold*-1))]),t._v(" "),e("i",{staticClass:"fas fa-coins colored"})]),t._v(" "),e("span",{staticClass:"tag tag is-dark fa-2x m-2 is-size-5 p-4"},[e("span",[t._v(t._s(t.xp*t.alarmCount*t.countXp*-1))]),t._v(" "),e("i",{staticClass:"fas fa-fist-raised colored"})]),t._v(" "),e("span",{staticClass:"tag tag is-danger fa-2x m-2 is-size-5 p-4"},[e("span",[t._v(t._s(t.hp*t.alarmCount*t.countHp*-1))]),t._v(" "),e("i",{staticClass:"fas fa-heart colored"})]),t._v(" "),e("span",{staticClass:"button is-size-6 acceptDestiny ml-2",staticStyle:{"margin-top":"0!important"},on:{click:t.accept}},[e("i",{staticClass:"fas fa-feather-alt"}),t._v(" Accept\n            ")])])])]),t._v(" "),e("br"),t._v(" "),t._m(1),t._v(" "),e("input",{directives:[{name:"model",rawName:"v-model",value:t.tolerance,expression:"tolerance"}],staticStyle:{width:"100%"},attrs:{type:"range",min:"0",id:"tolerance",max:"10"},domProps:{value:t.tolerance},on:{__r:function(a){t.tolerance=a.target.value}}}),t._v(" "),e("br"),t._v(" "),e("canvas",{ref:"meter",staticClass:"mt-3",staticStyle:{width:"100%"},attrs:{id:"meter",height:"30"}}),t._v(" "),e("button",{staticClass:"button is-primary mt-3 start",on:{click:t.start}},[e("i",{staticClass:"fas fa-play mr-2"}),t._v(" Start\n      ")]),t._v(" "),e("button",{staticClass:"button is-dark",on:{click:function(a){t.stopped=!0}}},[e("i",{staticClass:"fas fa-stop mr-2"}),t._v(" Stop\n      ")])]),t._v(" "),e("div",{attrs:{id:"log"}},t._l(t.alarmCount,(function(a){return e("div",{key:a,staticClass:"p-4 m-3 itemLog"},[e("span",{staticClass:"tag is-dark"},[t._v(t._s(a))]),t._v(" Ruido detectado\n        "),e("div",{staticClass:"has-background-danger p-4 delLog",on:{click:t.deleteLog}},[e("i",{staticClass:"fas fa-trash"})])])})),0)])])}),[function(){var t=this.$createElement,a=this._self._c||t;return a("div",{staticClass:"rounded has-background-warning p-4 mb-3"},[a("strong",[a("i",{staticClass:"fas fa-flask"}),this._v(" Función experimental\n        ")]),this._v(" "),a("i",{staticClass:"fas fa-info-square"}),this._v(" Haz start y prueba los valores de tolerancia antes de activar las penalizaciones.\n      ")])},function(){var t=this.$createElement,a=this._self._c||t;return a("div",{staticClass:"sensitivity"},[a("i",{staticClass:"fal fa-tachometer-slowest fa-2x left"}),this._v(" "),a("i",{staticClass:"fal fa-tachometer-average fa-2x center"}),this._v(" "),a("i",{staticClass:"fal fa-tachometer-fastest fa-2x right"})])}],!1,null,null,null);a.default=n.exports},UO0R:function(t,a,e){var i=e("njGD");"string"==typeof i&&(i=[[t.i,i,""]]);var s={hmr:!0,transform:void 0,insertInto:void 0};e("aET+")(i,s);i.locals&&(t.exports=i.locals)},i4q4:function(t,a,e){"use strict";var i=e("UO0R");e.n(i).a},njGD:function(t,a,e){(t.exports=e("I1BE")(!1)).push([t.i,"#meter{padding:20px;background-color:hsla(0,0%,100%,.8);border-radius:10px;clear:both}.propertyMeter{display:inline-block;width:40%}.itemLog{padding:20px;background-color:hsla(0,0%,100%,.8);border:1px solid #555;border-radius:5px}.bootstrapInlineForm{width:60%}.sensitivity{margin-top:35px;position:relative;padding-bottom:15px}.sensitivity .left{left:0}.sensitivity .center,.sensitivity .left{padding:4px;background-color:#fff;position:absolute;top:-21px;border-radius:4px}.sensitivity .center{left:50%;margin-left:-20px}.sensitivity .right{padding:4px;background-color:#fff;position:absolute;top:-21px;right:0;border-radius:4px}.itemLog{position:relative}.delLog{position:absolute;top:0;right:0;padding:20px;color:#fff;height:100%;cursor:pointer}#info,.delLog{display:flex;align-items:center;align-content:center}.acceptDestiny{cursor:pointer}@media screen and (max-width:700px){.flexC{display:block}}",""])}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[22],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+var ModalForm = {
+  props: ["name", "url"],
+  template: "\n            <div class=\"modal-card\" style=\"width: auto\">\n                <header class=\"modal-card-head p-2\">\n                    <p class=\"modal-card-title\">{{ name }}</p>\n                    <button class=\"button\" type=\"button\" @click=\"$parent.close()\">{{ trans.get('general.close') }}</button>\n                </header>\n                <section class=\"modal-card-body\">\n                    <div>\n                    <iframe frameborder=\"0\" class=\"map-iframe\" \n                    v-bind:src=\"url\"\n                    type=\"text/html\" allowscriptaccess=\"always\" allowfullscreen=\"true\" scrolling=\"yes\" allownetworking=\"all\"></iframe>\n                    </div>\n                </section>\n            </div>\n        "
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["maps", "code", "activeMap"],
+  components: {
+    ModalForm: ModalForm
+  },
+  created: function created() {
+    this.data = JSON.parse(this.maps);
+    this.mapSelected = this.activeMap;
+  },
+  data: function data() {
+    return {
+      data: [],
+      isComponentModalActive: false,
+      formProps: {
+        url: "url",
+        name: "name"
+      },
+      mapSelected: null,
+      json_fields: {
+        Name: "name",
+        Url: "url"
+      },
+      sortIcon: "arrow-down",
+      sortIconSize: "is-small"
+    };
+  },
+  methods: {
+    getURLRefactoring: function getURLRefactoring(url) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getURLRefactoring(url);
+    },
+    mapFullScreen: function mapFullScreen(name, url) {
+      this.isComponentModalActive = true;
+      this.formProps.name = name;
+      this.formProps.url = url;
+    },
+    confirmDelete: function confirmDelete(mapId) {
+      var _this = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          var index = _this.data.findIndex(function (item, i) {
+            return item.id === mapId;
+          });
+
+          axios["delete"]("/classroom/maps/" + mapId).then(function (response) {
+            if (response.data === 1) {
+              _this.data.splice(index, 1);
+            }
+          });
+        }
+      });
+    },
+    confirmActive: function confirmActive(mapId) {
+      var _this2 = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("maps.active"),
+        message: this.trans.get("maps.confirm_active"),
+        confirmText: this.trans.get("maps.active"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-info",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "dialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios.patch("/classroom/" + _this2.code + "/setting", {
+            _method: "patch",
+            prop: "active_map",
+            value: mapId,
+            action: "update"
+          });
+          _this2.mapSelected = mapId;
+        }
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&":
+/*!******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css& ***!
+  \******************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ntr.is-info {\n  background: #00d1b2;\n  color: #fff;\n}\n.align-right {\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\n  word-break: break-all;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&":
+/*!**********************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css& ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowMaps.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2& ***!
+  \***************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "section",
+    { staticClass: "p-2 content" },
+    [
+      _c("div", { staticClass: "columns mb-0" }, [
+        _c("div", { staticClass: "column is-narrow" }, [
+          _c(
+            "a",
+            {
+              staticClass: "button is-link",
+              attrs: { href: "/classroom/" + this.code + "/maps/create" }
+            },
+            [_vm._v(_vm._s(_vm.trans.get("maps.add")))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column is-hidden-mobile" })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "m-0 w-100" },
+        [
+          _vm.data.length
+            ? _c("b-table", {
+                attrs: {
+                  data: _vm.data,
+                  "default-sort": ["hp", "desc"],
+                  "icon-pack": "fas",
+                  "cell-class": "align-right",
+                  "sort-icon": "arrow-up",
+                  "row-class": function(row, index) {
+                    return row.id == _vm.mapSelected && "is-info"
+                  }
+                },
+                scopedSlots: _vm._u(
+                  [
+                    {
+                      key: "default",
+                      fn: function(props) {
+                        return [
+                          _c(
+                            "b-table-column",
+                            {
+                              attrs: {
+                                field: "name",
+                                label: _vm.trans.get("maps.name"),
+                                sortable: ""
+                              }
+                            },
+                            [_vm._v(_vm._s(props.row.name))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-table-column",
+                            {
+                              attrs: {
+                                field: "url",
+                                label: "Url",
+                                sortable: ""
+                              }
+                            },
+                            [_vm._v(_vm._s(props.row.url))]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "b-table-column",
+                            {
+                              staticClass: "w-100 is-flex has-all-centered",
+                              attrs: {
+                                field: "settings",
+                                label: _vm.trans.get("menu.settings"),
+                                centered: ""
+                              }
+                            },
+                            [
+                              _c(
+                                "b-button",
+                                {
+                                  directives: [
+                                    { name: "tippy", rawName: "v-tippy" }
+                                  ],
+                                  attrs: {
+                                    content: _vm.trans.get("maps.preview"),
+                                    type: "is-dark is-small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.mapFullScreen(
+                                        props.row.name,
+                                        _vm.getURLRefactoring(props.row.url)
+                                      )
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-eye" })]
+                              ),
+                              _vm._v(" "),
+                              props.row.id != _vm.mapSelected
+                                ? _c(
+                                    "b-button",
+                                    {
+                                      directives: [
+                                        { name: "tippy", rawName: "v-tippy" }
+                                      ],
+                                      attrs: {
+                                        content: _vm.trans.get(
+                                          "maps.set_active"
+                                        ),
+                                        type: "is-primary is-small ml-3"
+                                      },
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.confirmActive(props.row.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-map-marker-check"
+                                      })
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c("i", {
+                                staticClass: "fal fa-ellipsis-v fas fa-lg px-3"
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  directives: [
+                                    { name: "tippy", rawName: "v-tippy" }
+                                  ],
+                                  staticClass: "button is-info is-small mr-3",
+                                  attrs: {
+                                    content: _vm.trans.get("general.edit"),
+                                    href:
+                                      "/classroom/" +
+                                      _vm.code +
+                                      "/maps/" +
+                                      props.row.id
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-edit" })]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "b-button",
+                                {
+                                  directives: [
+                                    { name: "tippy", rawName: "v-tippy" }
+                                  ],
+                                  attrs: {
+                                    content: _vm.trans.get("general.delete"),
+                                    type: "is-danger is-small"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.confirmDelete(props.row.id)
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fas fa-trash-alt" })]
+                              )
+                            ],
+                            1
+                          )
+                        ]
+                      }
+                    }
+                  ],
+                  null,
+                  false,
+                  4087311010
+                )
+              })
+            : _vm._e()
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.isComponentModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.isComponentModalActive = $event
+            }
+          }
+        },
+        [_c("modal-form", _vm._b({}, "modal-form", _vm.formProps, false))],
+        1
+      ),
+      _vm._v(" "),
+      _c("h1", [
+        _vm._v(_vm._s(_vm.trans.get("maps.templates")) + " (Genial.ly)")
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "columns" }, [
+        _c("div", { staticClass: "column" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item mb-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f6253f951337070914e0604/interactive-content-fantasyclass-1"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "card-footer-item mb-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f6253f951337070914e0604"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item mb-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f6256633c6c490cee94ca80/interactive-content-fantasyclass-2"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "card-footer-item mb-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f6256633c6c490cee94ca80"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "column" }, [
+          _vm._m(3),
+          _vm._v(" "),
+          _c("footer", { staticClass: "card-footer" }, [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "card-footer-item mb-0 has-background-primary rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://view.genial.ly/5f633cd051337070914e116e/interactive-content-fantasyclass-3"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-eye" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.show_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "p",
+              {
+                staticClass: "card-footer-item mb-0 has-background-info rounded"
+              },
+              [
+                _c("span", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "has-text-light",
+                      attrs: {
+                        target: "_blank",
+                        href:
+                          "https://app.genial.ly/reuse/5f633cd051337070914e116e"
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-clone" }),
+                      _vm._v(
+                        "\n              " +
+                          _vm._s(_vm.trans.get("maps.use_template"))
+                      )
+                    ]
+                  )
+                ])
+              ]
+            )
+          ])
+        ])
+      ])
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-1.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-2.png" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "p",
+      { staticClass: "card-footer-item mb-0 has-background-dark rounded" },
+      [
+        _c("span", [
+          _c(
+            "a",
+            {
+              staticClass: "has-text-light",
+              attrs: {
+                href: "https://twitter.com/soyjujo_juanjo",
+                target: "_blank"
+              }
+            },
+            [_c("i", { staticClass: "fad fa-image" }), _vm._v(" By Jujo")]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-content has-text-centered" }, [
+      _c("img", { attrs: { src: "/img/maps/FantasyClass-3.png" } })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/map/ShowMaps.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/map/ShowMaps.vue ***!
+  \**************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowMaps.vue?vue&type=template&id=32177af2& */ "./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2&");
+/* harmony import */ var _ShowMaps_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowMaps.vue?vue&type=script&lang=js& */ "./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ShowMaps.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _ShowMaps_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/map/ShowMaps.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowMaps.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css& ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowMaps.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2& ***!
+  \*********************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowMaps.vue?vue&type=template&id=32177af2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/map/ShowMaps.vue?vue&type=template&id=32177af2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowMaps_vue_vue_type_template_id_32177af2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

@@ -1,1 +1,143 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[48],{WbBv:function(t,s,a){"use strict";a.r(s);var e=a("o0O0"),n=a("bEKI"),i={components:{Xlsx:function(){return a.e(9).then(a.bind(null,"2anh"))}},props:["code","modalVisible"],mounted:function(){1==this.modalVisible&&this.loadGoogleCourses()},data:function(){return{students:[],stdName:"",stdEmail:"",stdCourse:"",stdGoogleUid:"",stdUsername:"",nextId:1,gcourses:[],gstudents:[],isModalActive:!1,isLoading:!1}},methods:{loadGoogleStudents:function(t){var s=this;axios.get("/google/classroom/list/"+t+"/students").then((function(t){s.gstudents=t.data}))},loadGoogleCourses:function(){var t=this;axios.get("/google/classroom/list/courses").then((function(s){t.gcourses=s.data,t.isModalActive=!0})).catch((function(s){location.href="/google/classroom/link/"+t.code}))},addFromClassroom:function(){var t=this;this.gstudents.forEach((function(s){t.addStudent(s.profile.name.fullName,s.profile.emailAddress,s.courseId,s.userId),t.stdName="",t.stdEmail=""})),this.gstudents=[],this.isModalActive=!1},addFromExcel:function(t){var s=this;t.forEach((function(t){s.addStudent(t.Name,t["E-mail"]),s.stdName="",s.stdEmail=""}))},addStudentForm:function(){this.addStudent(this.stdName,this.stdEmail),this.stdEmail="",this.stdNameP=""},addStudent:function(t,s){var a=this,i=arguments.length>2&&void 0!==arguments[2]?arguments[2]:null,o=arguments.length>3&&void 0!==arguments[3]?arguments[3]:null;if(s&&!e.default.validEmail(s))return e.default.toast(this,this.trans.get("validation.email"),n.a.ERROR),!1;s||(s="");var l=this.students.find((function(s){return s.name===t}));t&&!l?axios.post("/classroom/students/getusername",{name:t,email:s}).then((function(e){a.stdUsername=e.data,a.students.push({id:a.nextId++,name:t,email:s,username:a.stdUsername,google_course:i,google_uid:o}),t=s=a.stdEmail=a.stdName=a.stdUsername=""})):e.default.toast(this,this.trans.get("validation.distinct"),n.a.ERROR)},sendStudents:function(){var t=this;this.students.length&&(this.isLoading=!0,this.$forceUpdate(),axios.post("/classroom/students",{students:this.students}).then((function(s){t.isLoading=!1,s.data?(s.data.forEach((function(s){e.default.toast(t,s,n.a.ERROR)})),t.students=[]):window.location="/classroom/"+t.code})).catch((function(s){t.isLoading=!1,e.default.toast(t,s,n.a.ERROR),t.students=[]})))},deleteStudent:function(t){this.students.splice(t,1)}}},o=a("KHd+"),l=Object(o.a)(i,(function(){var t=this,s=t.$createElement,a=t._self._c||s;return a("div",{staticClass:"p-4"},[a("div",{staticClass:"columns"},[a("div",{staticClass:"column is-narrow p-0 m-1"},[a("Xlsx",{attrs:{type:"addstudent"}})],1),t._v(" "),a("div",{staticClass:"column is-narrow p-0 m-1"},[a("button",{staticClass:"button button is-white border",on:{click:t.loadGoogleCourses}},[a("img",{attrs:{src:"/img/google-logo.svg",width:"40px"}}),t._v("\n        "+t._s(t.trans.get("students.import_gclassroom"))+"\n      ")])])]),t._v(" "),a("div",{staticClass:"field is-horizontal"},[a("form",{on:{submit:function(s){return s.preventDefault(),t.addStudentForm(s)}}},[a("div",{staticClass:"field-body"},[a("div",{staticClass:"field is-expanded"},[a("div",{staticClass:"field has-addons mobile"},[t._m(0),t._v(" "),a("p",{staticClass:"control is-expanded"},[a("input",{directives:[{name:"model",rawName:"v-model",value:t.stdName,expression:"stdName"}],staticClass:"input",attrs:{required:"",type:"text",minlength:"4",placeholder:t.trans.get("students.name_surname")},domProps:{value:t.stdName},on:{input:function(s){s.target.composing||(t.stdName=s.target.value)}}})]),t._v(" "),a("p",{staticClass:"control is-expanded"},[a("input",{directives:[{name:"model",rawName:"v-model",value:t.stdEmail,expression:"stdEmail"}],staticClass:"input",attrs:{type:"email",placeholder:"Email ("+t.trans.get("general.optional")+")"},domProps:{value:t.stdEmail},on:{input:function(s){s.target.composing||(t.stdEmail=s.target.value)}}})]),t._v(" "),a("p",{staticClass:"control"},[a("button",{staticClass:"button is-primary"},[t._v("\n                "+t._s(t.trans.get("users_groups.add_student"))+"\n              ")])])])])])])]),t._v(" "),t._l(t.students,(function(s,e){return a("div",{key:s.name},[a("div",{staticClass:"my-2 p-5 border has-background-white rounded relative"},[a("span",{staticClass:"pr-3"},[t._v(t._s(e+1))]),t._v(" "),s.google_uid?a("span",{staticClass:"tag is-danger"},[a("i",{staticClass:"fab fa-google"})]):t._e(),t._v("\n      "+t._s(s.name)+"\n      "),s.email&&s.email.length?a("i",{staticClass:"fal fa-at pl-2"}):t._e(),t._v(" "),a("span",{staticClass:"is-italic"},[t._v(" "+t._s(s.email))]),t._v(" "),s.username.length?a("span",{directives:[{name:"tippy",rawName:"v-tippy"}],staticClass:"tag is-warning ml-2",attrs:{content:"User already exists in FantasyClass, it'll be registered in the classroom"}},[a("i",{staticClass:"fal fa-user pr-2"}),t._v(" "+t._s(s.username))]):t._e(),t._v(" "),a("button",{staticClass:"button is-danger delete-button-right",on:{click:function(s){return t.deleteStudent(e)}}},[a("i",{staticClass:"far fa-trash"})])])])})),t._v(" "),t.students.length?a("button",{staticClass:"button is-link",on:{click:function(s){return s.preventDefault(),t.sendStudents(s)}}},[t._v("\n    "+t._s(t.trans.get("users_groups.create_students"))+"\n  ")]):t._e(),t._v(" "),a("b-modal",{attrs:{active:t.isModalActive,"has-modal-card":"","full-screen":"","can-cancel":!1},on:{"update:active":function(s){t.isModalActive=s}}},[a("div",{staticClass:"modal-card",staticStyle:{width:"auto"}},[a("header",{staticClass:"modal-card-head"},[a("p",{staticClass:"modal-card-title"},[t._v("Google Classroom")])]),t._v(" "),a("section",{staticClass:"modal-card-body is-relative"},[t.gcourses&&t.gcourses.length&&!t.gstudents.length?a("div",t._l(t.gcourses,(function(s){return a("div",{key:s.id,staticClass:"p-5 m-2 card-shadow-s cursor-pointer",on:{click:function(a){return t.loadGoogleStudents(s.id)}}},[a("i",{staticClass:"fad fa-chalkboard mr-2"}),t._v(" "+t._s(s.name)+"\n          ")])})),0):t._e(),t._v(" "),t.gstudents&&t.gstudents.length?a("div",t._l(t.gstudents,(function(s){return a("div",{key:s.profile.id,staticClass:"p-3 m-1"},[t._v("\n            "+t._s(s.profile.name.fullName)+" ("+t._s(s.profile.emailAddress)+")\n            "),a("hr")])})),0):t._e()]),t._v(" "),a("footer",{staticClass:"modal-card-foot"},[a("button",{staticClass:"button",attrs:{type:"button"},on:{click:function(s){t.isModalActive=!1}}},[t._v("\n          "+t._s(t.trans.get("general.close"))+"\n        ")]),t._v(" "),t.gstudents&&t.gstudents.length?a("button",{staticClass:"button is-link",attrs:{type:"button"},on:{click:function(s){t.gstudents=[]}}},[a("i",{staticClass:"fas fa-arrow-left"})]):t._e(),t._v(" "),t.gstudents&&t.gstudents.length?a("button",{staticClass:"button is-success",attrs:{type:"button"},on:{click:t.addFromClassroom}},[t._v("\n          "+t._s(t.trans.get("general.import"))+"\n        ")]):t._e()])])]),t._v(" "),a("b-loading",{attrs:{"is-full-page":!0,active:t.isLoading,"can-cancel":!1},on:{"update:active":function(s){t.isLoading=s}}})],2)}),[function(){var t=this.$createElement,s=this._self._c||t;return s("p",{staticClass:"control"},[s("a",{staticClass:"button is-static"},[s("i",{staticClass:"far fa-user-plus"})])])}],!1,null,null,null);s.default=l.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[48],{
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["map"],
+  mounted: function mounted() {},
+  data: function data() {
+    return {};
+  },
+  methods: {
+    getURLRefactoring: function getURLRefactoring(url) {
+      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getURLRefactoring(url);
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("iframe", {
+      staticClass: "map-iframe",
+      attrs: {
+        frameborder: "0",
+        src: _vm.getURLRefactoring(_vm.map.url),
+        type: "text/html",
+        allowscriptaccess: "always",
+        allowfullscreen: "true",
+        scrolling: "yes",
+        allownetworking: "all"
+      }
+    })
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowStudentMap.vue":
+/*!************************************************************!*\
+  !*** ./resources/js/components/student/ShowStudentMap.vue ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowStudentMap.vue?vue&type=template&id=576ccd7d& */ "./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d&");
+/* harmony import */ var _ShowStudentMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowStudentMap.vue?vue&type=script&lang=js& */ "./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ShowStudentMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/student/ShowStudentMap.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowStudentMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowStudentMap.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudentMap.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowStudentMap_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowStudentMap.vue?vue&type=template&id=576ccd7d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/student/ShowStudentMap.vue?vue&type=template&id=576ccd7d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowStudentMap_vue_vue_type_template_id_576ccd7d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ })
+
+}]);

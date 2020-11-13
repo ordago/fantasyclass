@@ -10,7 +10,6 @@ use App\Equipment;
 use App\Http\Classes\Functions;
 use App\Item;
 use App\Student;
-use App\User;
 use App\Map;
 use App\Pet;
 use App\Rating;
@@ -373,6 +372,14 @@ class ClassroomsStudentController extends Controller
             ->first();
 
         $cardLine->update(['marked' => $data['type']]);
+
+        $from['title'] = __("notifications.mark_card");
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content") , $from, "mark_card", '');
+
         return [
             "message" => " " . __('success_error.update_success'),
             "icon" => "check",

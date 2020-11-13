@@ -1,7 +1,7 @@
 <template>
-  <div class="is-flex has-all-centered left-auto button">
+  <div class="is-flex has-all-centered left-auto">
     <div
-      class="m-3 cursor-pointer"
+      class="mr-1 cursor-pointer button"
       style="display: initial !important"
       @click="
         show = 1;
@@ -12,18 +12,16 @@
       <i class="fad fa-club" style="font-size: 1.25em"></i>
       <span
         class="tag is-danger"
-        style="font-size: 0.7em"
+        style="font-size: 0.65em; margin-left: -4px"
         v-html="countCards()"
       ></span>
     </div>
-    <div v-if="notifications && notifications.length">
-      <span
-        class="cursor-pointer"
-        @click="
-          show = 0;
-          open = true;
-        "
-      >
+    <div
+      class="button"
+      @click="show = 0;open = true;"
+      v-if="notifications && notifications.length"
+    >
+      <span class="cursor-pointer">
         <i class="fad fa-bell" style="font-size: 1.25em"></i>
         <span
           class="tag is-danger"
@@ -66,9 +64,10 @@
                 :class="{
                   'fa-comment': notification.data.type == 'comment',
                   'fa-paper-plane': notification.data.type == 'message',
+                  'fa-club': notification.data.type == 'mark_card',
                 }"
               ></i>
-              {{ notification.data.from.title }}
+              {{ trans.get(notification.data.from.title) }}
               <span class="left-auto"
                 ><time
                   :datetime="notification.data.from.datetime"
@@ -94,10 +93,9 @@
                 alt="avatar"
               />
               <span v-else v-html="notification.data.from.avatar"></span>
-              <strong v-tippy :content="notification.data.from.name">{{
-                notification.data.from.name
+              <strong v-tippy v-html="notification.data.from.name" :content="notification.data.from.name">{{
               }}</strong
-              >: {{ notification.data.content }}
+              >: {{ trans.get(notification.data.content) }}
             </div>
           </div>
           <footer class="card-footer">

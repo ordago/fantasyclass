@@ -2,8 +2,12 @@
 
 namespace App;
 
+use App\Notifications\NewInteraction;
+use App\Notifications\NewInteractionStudent;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Notification;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
@@ -199,6 +203,14 @@ class Student extends Model implements HasMedia
         $valHp = $this->setProperty('hp', $behaviour->hp, true);
         $valXp = $this->setProperty('xp', $behaviour->xp, true);
         $valGold = $this->setProperty('gold', $behaviour->gold, true);
+
+        $from['title'] = 'notifications.new_behaviour';
+        $from['name'] = "<i class='fas fa-user-graduate'></i>";
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        $behaviourText = $behaviour->custom_text ? $behaviour->custom_text : __($behaviour->name);
+
+        Notification::send($this->classroom->user, new NewInteractionStudent('notifications.new_behaviour', $behaviourText, $from, "new_behaviour", $this->classroom->classroom->code));
 
         return [
             'hp' => $valHp,

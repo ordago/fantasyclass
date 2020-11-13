@@ -1,1 +1,33 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[1],{NNFD:function(n,a,t){"use strict";t.r(a);var e=t("R8AW"),s=t.n(e);Vue.use(s.a);var i={created:function(){},data:function(){return{csrfToken:null}},methods:{parentIcon:function(n){return n.styles.indexOf("regular")>-1?"fa":n.styles.indexOf("solid")>-1?"fas":n.styles.indexOf("brands")>-1?"fab":""},updateIcon:function(){this.$refs.iconPreview.innerHTML="<i class='"+this.$parent.$data.icon+"'></i>"},update:function(){}}},c=t("KHd+"),o=Object(c.a)(i,(function(){var n=this,a=n.$createElement,t=n._self._c||a;return t("vfa-picker",{attrs:{"is-both":"false"},scopedSlots:n._u([{key:"activator",fn:function(a){var e=a.on;return[t("button",{staticClass:"button is-link fullIcon",attrs:{type:"button"},on:{click:e}},[t("span",{ref:"iconPreview"},[t("i",{directives:[{name:"show",rawName:"v-show",value:!n.$parent.$data.icon,expression:"!$parent.$data.icon"}],class:"fas fa-image"}),n._v(" "),n.$parent.$data.icon?t("i",{class:n.$parent.$data.icon}):n._e()]),n._v(" "),t("i",{staticClass:"fas fa-caret-down ml-1"})])]}},{key:"icon",fn:function(a){var e=a.icon,s=a.picked;return[t("div",{attrs:{title:e.label},on:{click:function(a){n.parentIcon(e),s(e),n.$parent.$data.icon=n.parentIcon(e)+" fa-"+e.class,n.updateIcon()}}},[t("span",{class:[n.parentIcon(e),"fa-"+e.class,"vfa-icon-preview"]})])]}}])})}),[],!1,null,null,null);a.default=o.exports}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[1],[
+/* 0 */,
+/* 1 */
+/*!********************!*\
+  !*** fs (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 2 */
+/*!************************!*\
+  !*** crypto (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ }),
+/* 3 */
+/*!************************!*\
+  !*** stream (ignored) ***!
+  \************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
+
+/***/ })
+]]);
