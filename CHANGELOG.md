@@ -3,8 +3,9 @@
 ## v1.19 Beta (XX/11/2020)
 ### Added
 - Android app.
-- Chat between users.
+- Chat.
 - Reports: passwords and evaluation.
+- More notifications.
 
 ### Changed
 - Show 3 comments by default.
