@@ -58,7 +58,6 @@ class NewMessage extends Notification
 
         return (new WebPushMessage)
         ->title('New message')
-        ->icon('/ic_fc_mono.png')
         ->badge('/ic_fc_mono.png')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
