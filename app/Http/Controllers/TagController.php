@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Tag;
-use Illuminate\Http\Request;
 
 class TagController extends Controller
 {
@@ -31,6 +30,7 @@ class TagController extends Controller
             'description' => ['required', 'string'],
             'percent' => ['required', 'numeric'],
             'id' => ['required', 'numeric'],
+            'evaluables_group_id' => ['nullable', 'numeric']
         ]);
 
         $tag = Tag::where('id', $data['id'])->where('classroom_id', $class->id)->firstOrFail();
@@ -42,11 +42,11 @@ class TagController extends Controller
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('update', $class);
 
-
         $data = request()->validate([
             'short' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string'],
             'percent' => ['required', 'numeric'],
+            'evaluables_group_id' => ['required', 'numeric']
         ]);
 
         return Tag::create([
@@ -54,6 +54,7 @@ class TagController extends Controller
             'description' => $data['description'],
             'percent' => $data['percent'],
             'classroom_id' => $class->id,
+            'evaluables_group_id' => $data['evaluables_group_id']
         ]);
     }
 }

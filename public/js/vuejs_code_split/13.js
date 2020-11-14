@@ -79,7 +79,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({

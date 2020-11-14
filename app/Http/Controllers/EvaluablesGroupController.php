@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\ChallengesGroup;
+use App\EvaluablesGroup;
 use App\Classroom;
 
-class ChallengesGroupController extends Controller
+class EvaluablesGroupController extends Controller
 {
     public function __construct()
     {
@@ -15,16 +15,16 @@ class ChallengesGroupController extends Controller
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstorFail();
         $this->authorize('view', $class);
-        $challenges = ChallengesGroup::where('classroom_id', $class->id)->whereNull('challenges_group_id')->with('children')->get();
-        return view('challenges.index', compact('class', 'challenges'));
-
+        $evaluablesGroup = EvaluablesGroup::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->with('children')->get();
+        return view('evaluation.index', compact('class', 'evaluablesGroup'));
     }
+
     public function destroy($id) {
-        $group = ChallengesGroup::findOrFail($id);
-        $class = Classroom::where('id', '=', $group->classroom_id)->firstorFail();
+        $evaluableGroup = EvaluablesGroup::findOrFail($id);
+        $class = Classroom::where('id', '=', $evaluableGroup->classroom_id)->firstorFail();
         $this->authorize('update', $class);
-        if($group->challenges->count() == 0) {
-            $group->delete();
+        if($evaluableGroup->evaluables->count() == 0) {
+            $evaluableGroup->delete();
         }
     }
 
@@ -36,23 +36,23 @@ class ChallengesGroupController extends Controller
                 'name' => ['string'],
                 'icon' => ['string'],
                 'id' => ['numeric', 'nullable'],
-                'challenges_group_id' => ['numeric', 'nullable'],
+                'evaluables_group_id' => ['numeric', 'nullable'],
             ]);
 
-            $challenge = ChallengesGroup::create([
+            $evaluableGroup = EvaluablesGroup::create([
                 'name' => $data['name'],
                 'icon' => $data['icon'],
-                'challenges_group_id' => $data['challenges_group_id'],
+                'evaluables_group_id' => $data['evaluables_group_id'],
                 'classroom_id' => $class->id,
             ]);
-            $challenge['children'] = [];
+
+            $evaluableGroup['children'] = [];
             return [
                     "message" => __('success_error.add_success'),
                     "type" => "success",
                     "icon" => "check",
-                    "challenge" => $challenge,
+                    "evaluable" => $evaluableGroup,
             ];
-
         }
         catch (\Throwable $th) {
             return [
@@ -61,7 +61,5 @@ class ChallengesGroupController extends Controller
                     "type" => "error"
             ];
         }
-
     }
-
 }

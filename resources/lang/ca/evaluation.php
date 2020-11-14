@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'add_tag' => 'Afegeix etiqueta d\'avaluació',
     'add' => 'Afegeix etiqueta',
     'description' => 'Descripció',
@@ -39,10 +38,13 @@ return [
     'grade_number' => 'Nota',
     'student' => 'Estudiant',
     'feedback' => 'Retroacció',
-    
+
     'weight' => 'Pes',
     'weight_info' => 'Pes respecte a l\'etiqueta',
 
-
-  
+    'evaluations' => 'Avaluacions',
+    'add_evaluation' => 'Afegeix avaluació',
+    'create' => 'Crea avaluació',
+    'icon' => 'Icona',
+    'parent' => 'Categoria pare (opcional)',
 ];

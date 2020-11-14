@@ -18,9 +18,15 @@
         <span>{{ __('menu.evaluation') }}</span>
     </a>
 </li>
+<a href="/classroom/{{ $class->code }}" class="left-auto">
+    <span class="icon is-small">
+        <i class="mr-2 fas fa-cog"></i>
+    </span>
+    <span>{{ __('evaluation.config') }}</span>
+</a>
 @include('layouts.breadcrumbend')
 @endsection
 
 @section('content')
-    <tag-management :settings="{{ json_encode($settings) }}" :lines="{{ $lines }}" :rubrics="{{ $rubrics }}" :classroom="{{ $class }}" :tags="{{ $tags }}"></tag-management>
+<show-evaluations-group :evaluablesgroup="{{ $evaluablesGroup }}" code="{{ $class->code }}"></show-evaluations-group>
 @endsection

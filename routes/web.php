@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -12,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::group(['middleware' => 'language'], function () {
 
@@ -58,13 +57,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/cards/{id}', 'CardsController@update');
         Route::post('/card/usedelete/{id}', 'CardsController@useDelete');
         Route::post('/card/usedelete/bypass/{id}', 'CardsController@useDeleteAdmin');
-        
+
         // Groups
         Route::get('/{code}/groups', 'GroupsController@index');
         Route::post('/{code}/groups/create', 'GroupsController@store');
         Route::patch('/{code}/groups/{action}', 'GroupsController@update');
         Route::delete('/groups/{id}', 'GroupsController@destroy');
-        
+
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
         Route::get('/{code}/students/add/{flag}', 'StudentController@create');
@@ -81,7 +80,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/student/inventory', 'InventoryController@update');
         Route::delete('/{code}/student/{id}', 'StudentController@destroy');
         Route::post('/{code}/student/show', 'StudentController@showAsStudent');
-        
+
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
@@ -97,7 +96,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
-        
+
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
         Route::get('/{code}/behaviours/create', 'BehaviourController@create');
@@ -106,7 +105,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show');
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
         Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
-        
+
         // Badges
         Route::get('/{code}/badges', 'BadgeController@index');
         Route::get('/{code}/badges/create', 'BadgeController@create');
@@ -115,7 +114,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/badge/{id}', 'BadgeController@destroy');
         Route::get('/{code}/badges/{id}', 'BadgeController@show');
         Route::patch('/badges/{id}', 'BadgeController@update');
-        
+
         // Levels
         Route::post('/{code}/level/add', 'LevelsController@createNew');
         Route::get('/{code}/levels', 'LevelsController@index');
@@ -134,16 +133,16 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update');
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
-        
+
         // Attachment
         Route::post('/challenge/attachment', 'AttachmentController@store');
         Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
-        
+
         // Question
         Route::post('/challenge/question', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
         Route::post('/question/answer', 'QuestionController@answer');
-        
+
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
@@ -161,14 +160,14 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/shop/forsale', 'ShopController@updateForSale');
         Route::delete('/shop/{id}', 'ShopController@destroy');
         Route::get('/{code}/shop/{id}', 'ShopController@show');
-        
+
         // Settings
         Route::get('/{code}/settings', 'SettingsController@index');
         Route::patch('/{code}/setting', 'SettingsController@updateSetting');
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
-        Route::post('/{code}/invite', 'SettingsController@invite'); 
+        Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
-        
+
         // Events
         Route::get('/{code}/events', 'EventController@index');
         Route::post('/{code}/events/disable', 'EventController@disable');
@@ -184,17 +183,24 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/maps/{id}', 'MapsController@destroy');
         Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
-        
+
+        // Evaluable Group
+        Route::get('/{code}/evaluation', 'EvaluablesGroupController@index');
+        Route::post('/{code}/evaluation/group', 'EvaluablesGroupController@store');
+        Route::delete('/evaluation/group/{id}', 'EvaluablesGroupController@destroy');
+
         // Evaluation
-        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
-        Route::get('/{code}/evaluation', 'EvaluationController@index');
+        Route::post('/{code}/evaluation/get', 'EvaluationController@index');
+        Route::post('/{code}/evaluation', 'EvaluationController@store');
+        Route::delete('/evaluation/{id}', 'EvaluationController@destroy');
+
         Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');
+        Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
+        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
+
         Route::post('/evaluation/student/rubric', 'EvaluationController@getRubric');
         Route::post('/evaluation/rubric', 'EvaluationController@getShowRubric');
         Route::post('/evaluation/{id}/evaluate/rubric', 'EvaluationController@evaluateRubric');
-        Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
-        Route::post('/{code}/evaline', 'EvaluationController@store');
-        Route::delete('/evaline/{id}', 'EvaluationController@destroy');
         Route::get('/{code}/rubrics', 'RubricController@index');
         Route::get('/{code}/rubric/create', 'RubricController@create');
         Route::post('/{code}/rubric', 'RubricController@store');
@@ -205,7 +211,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/tag', 'TagController@store');
         Route::patch('/{code}/tag', 'TagController@update');
         Route::delete('/tag/{id}', 'TagController@destroy');
-        
+
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');
         Route::get('/pets/get', 'PetsController@get');
@@ -221,7 +227,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
     });
-    
+
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
     Route::get('/utils/online', 'UtilsController@online');
@@ -229,12 +235,12 @@ Route::group(['middleware' => 'language'], function () {
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
     Route::post('/user/challenges/import/{id}', 'ChallengesController@importChallenge');
-    
+
     // User card
     Route::get('/user/cards', 'CardsController@getUserCards');
     Route::post('/card/share', 'CardsController@share');
     Route::get('/card/share/get', 'CardsController@getSharedCards');
-    
+
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');
     Route::get('/profile', 'ProfileController@index');
@@ -245,23 +251,23 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/callback/{provider}', 'SocialController@callback');
     Route::get('/google/classroom/link/{code}', 'SocialController@googleClassroom');
     Route::get('/google/classroom/unlink', 'SocialController@unlinkGoogleClassroom');
-    
+
     // Google Classroom
     Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
     Route::get('/google/classroom/list/{courseId}/students', 'ServicesController@usersList');
-    
+
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
-    
-    
+
+
     // Notifications
     Route::post('/push','NotificationController@store');
     Route::post('/classroom/{code}/push/all','NotificationController@sendAll');
     Route::post('/classroom/{code}/push','NotificationController@send');
     Route::post('/notification/delete','NotificationController@destroy');
     Route::post('/notification/delete/all','NotificationController@destroyAll');
-    
+
     // Chat
     Route::get('/chat', function () {return view('utils.chat');});
-    
+
 });

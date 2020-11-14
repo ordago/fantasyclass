@@ -24,7 +24,7 @@ Vue.prototype.print = window.print;
 
 // Toast management
 import Toasted from 'vue-toasted';
-Vue.use(Toasted)
+Vue.use(Toasted);
 
 // Tippy poppover
 import VueTippy, {
@@ -37,7 +37,7 @@ Vue.component("tippy", TippyComponent);
 
 // Cookies
 import VueCookies from 'vue-cookies'
-Vue.use(VueCookies)
+Vue.use(VueCookies);
 
 import VueFeedbackReaction from "vue-feedback-reaction";
 Vue.use(VueFeedbackReaction);
@@ -45,16 +45,16 @@ Vue.use(VueFeedbackReaction);
 
 // Buefy
 import Buefy from 'buefy'
-Vue.use(Buefy, {
-    defaultIconPack: 'fas',
-})
-
+Vue.use(Buefy,
+    {
+        defaultIconPack: 'fas'
+    });
 
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
 
-Vue.use(Croppa)
+Vue.use(Croppa);
 
 Vue.component('create-classroom', require('./components/classroom/CreateClassroom.vue').default);
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
@@ -115,7 +115,7 @@ Vue.component('edit-rules', require('./components/rules/EditRules.vue').default)
 
 Vue.component('profile', require('./components/profile/Profile.vue').default);
 
-Vue.component('tag-management', require('./components/evaluation/TagManagement.vue').default);
+Vue.component('show-evaluations-group', require('./components/evaluation/ShowEvaluationGroup.vue').default);
 Vue.component('grade', require('./components/evaluation/Grade.vue').default);
 Vue.component('report', require('./components/evaluation/Report.vue').default);
 Vue.component('rubric-management', require('./components/evaluation/RubricManagement.vue').default);
@@ -235,5 +235,5 @@ const app = new Vue({
         //             console.log('Show error notification!')
         //             return Promise.reject(error)
         //         })
-    },
+    }
 });
