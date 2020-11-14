@@ -14,6 +14,7 @@
 - Changed toasts.
 - JavaScript optimization (more code splits).
 - Fixed share card.
+- Fixed price in animals pack (equipment 3).
 
 ## v1.18 Beta (08/11/2020)
 ### Added
