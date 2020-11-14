@@ -8,7 +8,6 @@
     </div>
     <div
       class="mr-1 cursor-pointer button"
-      style="display: initial !important"
       @click="
         show = 1;
         open = true;
@@ -19,17 +18,15 @@
       <span class="tag is-danger tag-notif" v-html="countCards()"></span>
     </div>
     <div
-      class="button"
+      class="button cursor-pointer"
       @click="
         show = 0;
         open = true;
       "
       v-if="notifications && notifications.length"
     >
-      <span class="cursor-pointer">
-        <i class="fad fa-bell" style="font-size: 1.25em"></i>
-        <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
-      </span>
+      <i class="fad fa-bell" style="font-size: 1.25em"></i>
+      <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
     </div>
     <b-sidebar
       type="is-light"
