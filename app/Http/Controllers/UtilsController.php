@@ -85,6 +85,11 @@ class UtilsController extends Controller
         }
     }
 
+    public function mobile()
+    {
+        return view('utils.mobile');
+    }
+
     public function getUserChatInfo()
     {
         $data = request()->validate([

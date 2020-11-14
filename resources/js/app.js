@@ -147,6 +147,7 @@ Vue.component('massive-actions', () => import('./components/utils/MassiveActions
 
 Vue.component('chat', () => import('./components/utils/Chat.vue'));
 
+Vue.component('mobile', () => import('./components/utils/Mobile.vue'));
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

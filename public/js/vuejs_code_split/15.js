@@ -91,10 +91,8 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       menuActions: [{
         name: "inviteUser",
         title: "Invite User"
-      }, {
-        name: "deleteRoom",
-        title: "Delete Room"
-      }],
+      } // { name: "deleteRoom", title: "Delete Room" },
+      ],
       styles: {
         container: {
           borderRadius: "4px"

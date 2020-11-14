@@ -5526,12 +5526,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     pending: {
@@ -46480,7 +46474,7 @@ var render = function() {
                   expression: "{ arrow: true }"
                 }
               ],
-              staticClass: "topr group-logo is-full-rounded",
+              staticClass: "top-right group-logo is-full-rounded",
               attrs: {
                 content:
                   "<i class='fas fa-users'></i> " + _vm.student.groups[0].name
@@ -46923,7 +46917,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "dropdown is-right topr is-hoverable",
+              staticClass: "dropdown is-right top-right is-hoverable",
               staticStyle: { right: "10px" }
             },
             [
@@ -49506,7 +49500,6 @@ var render = function() {
         "div",
         {
           staticClass: "mr-1 cursor-pointer button",
-          staticStyle: { display: "initial !important" },
           on: {
             click: function($event) {
               return _vm.redirect("/inbox")
@@ -49661,7 +49654,9 @@ var render = function() {
                                 notification.data.type == "notification",
                               "fa-comments-alt":
                                 notification.data.type == "chat",
-                              "fa-club": notification.data.type == "mark_card"
+                              "fa-club": notification.data.type == "mark_card",
+                              "fa-heart":
+                                notification.data.type == "new_behaviour"
                             }
                           }),
                           _vm._v(
@@ -49736,26 +49731,6 @@ var render = function() {
                       _vm._v(" "),
                       _c("footer", { staticClass: "card-footer" }, [
                         notification.data.user == "student" &&
-                        notification.data.type == "message"
-                          ? _c(
-                              "a",
-                              {
-                                staticClass:
-                                  "card-footer-item has-background-link-light has-text-dark",
-                                attrs: { href: notification.data.url }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.trans.get("notifications.go_to")) +
-                                    "\n            " +
-                                    _vm._s(_vm.trans.get("general.classroom")) +
-                                    "\n          "
-                                )
-                              ]
-                            )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        notification.data.user == "student" &&
                         notification.data.type == "chat"
                           ? _c(
                               "a",
@@ -49774,9 +49749,24 @@ var render = function() {
                                 })
                               ]
                             )
-                          : _vm._e(),
-                        _vm._v(" "),
-                        notification.data.user == "teacher"
+                          : notification.data.user == "student"
+                          ? _c(
+                              "a",
+                              {
+                                staticClass:
+                                  "card-footer-item has-background-link-light has-text-dark",
+                                attrs: { href: notification.data.url }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans.get("notifications.go_to")) +
+                                    "\n            " +
+                                    _vm._s(_vm.trans.get("general.classroom")) +
+                                    "\n          "
+                                )
+                              ]
+                            )
+                          : notification.data.user == "teacher"
                           ? _c(
                               "a",
                               {
@@ -69706,6 +69696,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configura",
     "contribute": "Convida a caf\xE8 o cervesa!",
     "pets": "Mascotes",
+    "mobile": "Versi\xF3 m\xF2bil",
     "view_list": "Vista de llista",
     "view_group": "Vista de grups",
     "view_student": "Vista d'estudiants",
@@ -69893,7 +69884,9 @@ __webpack_require__.r(__webpack_exports__);
     "quantity_rewards": "Quantitat de premis",
     "reports": "Informes",
     "download_confidential_data_students": "Descarregar contrasenyes estudiants",
-    "user_not_exists": "L'usuari no existeix"
+    "user_not_exists": "L'usuari no existeix",
+    "mobile_text_android": "Estem a Google Play! Fes clic a la imatge o cerca FantasyClass a la botiga d'aplicacions d'Android. \n                              Hi ha molt d'esfor\xE7 a la plataforma i \xE9s i ser\xE0 gratu\xEFta, agrair\xEDem una ajuda per xicoteta que siga,\n                              simplement fent una valoraci\xF3 positiva ja \n                              \xE9s suficient, gr\xE0cies! <i class=\"fas fa-smile-beam colored\"></i>",
+    "mobile_text_apple": "Malauradament no estem a la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> per\xF2 instal\xB7lar FantasyClass\n                            \xE9s molt senzill! Simplement fes clic al men\xFA i selecciona \"Afegir a la pantalla d'inici\". Aqu\xED tens un v\xEDdeo del proc\xE9s."
   },
   "ca.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -70452,6 +70445,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configure",
     "contribute": "Buy us coffe or beer!",
     "pets": "Pets",
+    "mobile": "Mobile version",
     "view_list": "List view",
     "view_group": "Group view",
     "view_student": "Students view",
@@ -70637,7 +70631,9 @@ __webpack_require__.r(__webpack_exports__);
     "quantity_rewards": "Quantity of prizes",
     "reports": "Reports",
     "download_confidential_data_students": "Download student passwords",
-    "user_not_exists": "User not exist"
+    "user_not_exists": "User not exist",
+    "mobile_text_android": "We are on Google Play! Click on the image or search FantasyClass in the Android app store. \n                                There is a lot of effort in the platform and it is and will be free, we would appreciate a help even if it is small,\n                                simply making a positive rating is enough,\n                                Thank you! <i class=\"fas fa-smile-beam colored\"><\/i>",
+    "mobile_text_apple": "Unfortunately we are not in the Apple App Store <i class=\"fas fa-sad-cry colored\"><\/i> but install FantasyClass\n                                is very simple: just click on the menu and select \"Add to Home Screen\". \n                                Here is a video of the process"
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -71195,6 +71191,7 @@ __webpack_require__.r(__webpack_exports__);
     "config": "Configura",
     "contribute": "\xA1Invita a caf\xE9 o cerveza!",
     "pets": "Mascotas",
+    "mobile": "Versi\xF3n m\xF3vil",
     "view_list": "Vista de lista",
     "view_group": "Vista de grupos",
     "view_student": "Vista de estudiantes",
@@ -71382,7 +71379,9 @@ __webpack_require__.r(__webpack_exports__);
     "quantity_rewards": "Cantidad de premios",
     "reports": "Informes",
     "download_confidential_data_students": "Descargar contrase\xF1as estudiantes",
-    "user_not_exists": "El usuario no existe"
+    "user_not_exists": "El usuario no existe",
+    "mobile_text_android": "\xA1Estamos en Google Play! Haz clic en la imagen o busca FantasyClass en la tienda de aplicaciones de Android. \n                              Hay mucho esfuerzo en la plataforma y es y ser\xE1 gratis, agradecer\xEDamos una ayuda aunque sea peque\xF1a,\n                              simplemente haciendo una valoraci\xF3n positiva es suficiente,\n                            \xA1gracias! <i class=\"fas fa-smile-beam colored\"></i>",
+    "mobile_text_apple": "Lamentablemente no estamos en la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> pero instalar FantasyClass\n                            es muy senzillo: simplement haz clic en el men\xFA y selecciona \"A\xF1adir a la pantalla de inicio\". \n                            Aqu\xED tienes un v\xEDdeo del proceso."
   },
   "es.validation": {
     "accepted": "El :attribute debe ser aceptado.",
@@ -71838,6 +71837,9 @@ Vue.component('massive-actions', function () {
 });
 Vue.component('chat', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"));
+});
+Vue.component('mobile', function () {
+  return __webpack_require__.e(/*! import() */ 53).then(__webpack_require__.bind(null, /*! ./components/utils/Mobile.vue */ "./resources/js/components/utils/Mobile.vue"));
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

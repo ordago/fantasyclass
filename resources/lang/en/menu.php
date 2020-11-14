@@ -41,6 +41,7 @@ return [
     'config' => 'Configure',
     'contribute' => 'Buy us coffe or beer!',
     'pets' => 'Pets',
+    'mobile' => 'Mobile version',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

@@ -1,10 +1,6 @@
 <template>
   <div class="is-flex has-all-centered left-auto">
-    <div
-      class="mr-1 cursor-pointer button"
-      style="display: initial !important"
-      @click="redirect('/inbox')"
-    >
+    <div class="mr-1 cursor-pointer button" @click="redirect('/inbox')">
       <i class="fad fa-comments-alt" style="font-size: 1.25em"></i>
       <span v-if="user.pending_messages" class="tag is-danger tag-notif">{{
         user.pending_messages
@@ -72,6 +68,7 @@
                   'fa-bullhorn': notification.data.type == 'notification',
                   'fa-comments-alt': notification.data.type == 'chat',
                   'fa-club': notification.data.type == 'mark_card',
+                  'fa-heart': notification.data.type == 'new_behaviour',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -112,16 +109,6 @@
             <a
               v-if="
                 notification.data.user == 'student' &&
-                notification.data.type == 'message'
-              "
-              :href="notification.data.url"
-              class="card-footer-item has-background-link-light has-text-dark"
-              >{{ trans.get("notifications.go_to") }}
-              {{ trans.get("general.classroom") }}
-            </a>
-            <a
-              v-if="
-                notification.data.user == 'student' &&
                 notification.data.type == 'chat'
               "
               :href="notification.data.url"
@@ -130,7 +117,14 @@
               <i class="fad fa-comments-alt ml-1"></i>
             </a>
             <a
-              v-if="notification.data.user == 'teacher'"
+              v-else-if="notification.data.user == 'student'"
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              {{ trans.get("general.classroom") }}
+            </a>
+            <a
+              v-else-if="notification.data.user == 'teacher'"
               :href="notification.data.url"
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}

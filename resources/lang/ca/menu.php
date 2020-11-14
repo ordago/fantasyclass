@@ -41,6 +41,7 @@ return [
     'config' => 'Configura',
     'contribute' => 'Convida a cafè o cervesa!',
     'pets' => 'Mascotes',
+    'mobile' => 'Versió mòbil',
 
     'view_list' => 'Vista de llista',
     'view_group' => 'Vista de grups',

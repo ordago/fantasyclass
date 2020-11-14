@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.19 Beta (XX/11/2020)
+## v1.19 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.

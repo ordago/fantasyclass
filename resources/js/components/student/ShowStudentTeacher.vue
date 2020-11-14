@@ -5,7 +5,7 @@
       class="card-content is-relative"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
     >
-      <div class="dropdown is-right topr is-hoverable" style="right: 10px;">
+      <div class="dropdown is-right top-right is-hoverable" style="right: 10px;">
         <div class="dropdown-trigger fs-2">
           <span class="pl-5 py-2">
             <i class="far fa-bars"></i>

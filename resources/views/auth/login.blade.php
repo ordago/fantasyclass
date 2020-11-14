@@ -3,7 +3,7 @@
 @section('bg', $bg ?? '')
 
 @section('content')
-<div class="topr lang rounded" style="width: auto; font-size: 1em">
+<div class="top-right lang rounded" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/login/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/en">en</a>
 </div>
 <h1 class="fantasyTitle mt-4 mb-3">FantasyClass</h1>
@@ -14,7 +14,7 @@
             {{ __('auth.privacy_info') }} <a target="_blank" href="/policy">{{ __('auth.privacy') }}</a>
         </div>
     </article>
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" id="login_form" action="{{ route('login') }}">
         @csrf
 
         <div class="field">
@@ -48,7 +48,6 @@
                 </button>
                 <a href="{{ url('/auth/redirect/google') }}" class="button is-white w-100 border my-2 p-5">
                     <img src="/img/google-logo.svg"> Sign in with Google
-                    <!-- <i class="fa fa-google mr-2"></i> Google -->
                 </a>
                 @if (Route::has('register'))
                 <a class="button is-primary w-100 my-2 p-5" href="{{ route('register') }}/{{ $locale ?? '' }}"><i class="fas fa-user-plus mr-2"></i> {{ __('auth.register') }}</a>

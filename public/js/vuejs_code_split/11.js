@@ -248,8 +248,7 @@ __webpack_require__.r(__webpack_exports__);
       return _.orderBy(this.challenges, "datetime", "desc");
     }
   },
-  updated: function updated() {// this.$refs.topref.scrollTop=0;
-  }
+  updated: function updated() {}
 });
 
 /***/ }),
@@ -271,7 +270,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { ref: "topref", staticClass: "pl-0" },
+    { staticClass: "pl-0" },
     [
       _c("div", { staticClass: "panel is-primary pl-0" }, [
         _c(

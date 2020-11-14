@@ -1,5 +1,5 @@
 <template>
-  <div class="pl-0" ref="topref">
+  <div class="pl-0">
     <div class="panel is-primary pl-0">
       <p class="panel-heading is-flex has-space-between align-items-center p-3">
         <span>
@@ -241,7 +241,6 @@ export default {
     },
   },
   updated: function () {
-    // this.$refs.topref.scrollTop=0;
   },
 };
 </script>

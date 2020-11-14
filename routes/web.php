@@ -269,4 +269,8 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/users/chat', 'UtilsController@getUserChatInfo');
     Route::post('/chat/notify', 'UtilsController@notifyChat');
     
+    // Mobile
+    Route::get('/mobile', 'UtilsController@mobile');
+
+    
 });

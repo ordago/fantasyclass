@@ -6,6 +6,9 @@
   .fs-2 {
       font-size: 2em;
   }
+  .fs-1-2 {
+      font-size: 1.2em;
+  }
 
   .bottom-right {
       position: absolute;
@@ -789,6 +792,7 @@
 
       &.fa-sad-tear,
       &.fa-smile-beam,
+      &.fa-sad-cry,
       &.fa-smile-wink,
       &.fa-laugh-beam,
       &.fa-surprise {
@@ -1409,10 +1413,10 @@
       height: 100%;
   }
 
-  .topr {
+  .top-right {
       position: absolute;
       top: 10px;
-      right: 12px;
+      right: 19px;
       z-index: 12;
   }
 

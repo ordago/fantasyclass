@@ -20,6 +20,7 @@
 
     .fa-smile-beam,
     .fa-smile-wink,
+    .fa-sad-cry,
     .fa-laugh-beam {
       font-size: 1.4em;
       text-shadow: 1px 0 0 #000, -1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000, 1px 1px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;

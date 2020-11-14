@@ -65,7 +65,7 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
-        { name: "deleteRoom", title: "Delete Room" },
+        // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
       rooms: [],
