@@ -221,12 +221,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/utils/massive', 'UtilsController@massive');
         Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
+        Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
+
     });
 
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
     Route::get('/utils/online', 'UtilsController@online');
-    Route::get('/utils/exportConfidentialDataStudent/', 'UtilsController@exportConfidentialDataStudent');
 
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');

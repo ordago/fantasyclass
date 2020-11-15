@@ -109,7 +109,7 @@
           <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
-              href="/utils/exportConfidentialDataStudent/"
+              :href="'/classroom/' + classroom.code + '/utils/exportConfidentialDataStudent'"
               target="_blank"
               v-if="students.length"
             >

@@ -145,15 +145,20 @@ class UtilsController extends Controller
         return view('utils.music', compact('music'));
     }
 
-    public function exportConfidentialDataStudent()
+    public function exportConfidentialDataStudent($code)
     {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
         $headings = [
-            Lang::get("students.name"),
-            Lang::get("students.password")
+            __("students.name"),
+            __("students.username"),
+            __("students.password")
         ];
 
-        $students = Student::all()->map(function($item){
-            return array('name' => $item->name, 'password_plain' => $item->password_plain);
+        $students = $class->students->whereNotNull('password_plain')->map(function($item){
+            return array('name' => $item->name, 'username' => $item->username, 'password_plain' => $item->password_plain);
         });
 
         return Excel::download(new Export($headings, $students), 'Students.xlsx');

@@ -5523,9 +5523,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     pending: {
@@ -48120,7 +48117,10 @@ var render = function() {
                             {
                               staticClass: "dropdown-item",
                               attrs: {
-                                href: "/utils/exportConfidentialDataStudent/",
+                                href:
+                                  "/classroom/" +
+                                  _vm.classroom.code +
+                                  "/utils/exportConfidentialDataStudent",
                                 target: "_blank"
                               }
                             },
@@ -49525,7 +49525,6 @@ var render = function() {
             "div",
             {
               staticClass: "mr-1 cursor-pointer button",
-              staticStyle: { display: "initial !important" },
               on: {
                 click: function($event) {
                   _vm.show = 1
@@ -49551,7 +49550,7 @@ var render = function() {
         ? _c(
             "div",
             {
-              staticClass: "button",
+              staticClass: "button cursor-pointer",
               on: {
                 click: function($event) {
                   _vm.show = 0
@@ -49560,15 +49559,13 @@ var render = function() {
               }
             },
             [
-              _c("span", { staticClass: "cursor-pointer" }, [
-                _c("i", {
-                  staticClass: "fad fa-bell",
-                  staticStyle: { "font-size": "1.25em" }
-                }),
-                _vm._v(" "),
-                _c("span", { staticClass: "tag is-danger tag-notif" }, [
-                  _vm._v(_vm._s(_vm.notifications.length))
-                ])
+              _c("i", {
+                staticClass: "fad fa-bell",
+                staticStyle: { "font-size": "1.25em" }
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "tag is-danger tag-notif" }, [
+                _vm._v(_vm._s(_vm.notifications.length))
               ])
             ]
           )
@@ -71710,7 +71707,7 @@ Vue.component('show-students-student', function () {
 });
 Vue.component('show-group-view', __webpack_require__(/*! ./components/student/ShowGroupView.vue */ "./resources/js/components/student/ShowGroupView.vue")["default"]);
 Vue.component('show-student-info', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(52), __webpack_require__.e(47)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(53), __webpack_require__.e(47)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
 });
 Vue.component('show-student-map', function () {
   return __webpack_require__.e(/*! import() */ 48).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentMap.vue */ "./resources/js/components/student/ShowStudentMap.vue"));
@@ -71762,7 +71759,7 @@ Vue.component('show-question', function () {
   return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowQuestion.vue */ "./resources/js/components/challenges/ShowQuestion.vue"));
 });
 Vue.component('create-group', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(51), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/group/CreateGroups.vue */ "./resources/js/components/group/CreateGroups.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(52), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/group/CreateGroups.vue */ "./resources/js/components/group/CreateGroups.vue"));
 });
 Vue.component('edit-group', function () {
   return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./components/group/EditGroup.vue */ "./resources/js/components/group/EditGroup.vue"));
@@ -71839,7 +71836,7 @@ Vue.component('chat', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"));
 });
 Vue.component('mobile', function () {
-  return __webpack_require__.e(/*! import() */ 53).then(__webpack_require__.bind(null, /*! ./components/utils/Mobile.vue */ "./resources/js/components/utils/Mobile.vue"));
+  return __webpack_require__.e(/*! import() */ 51).then(__webpack_require__.bind(null, /*! ./components/utils/Mobile.vue */ "./resources/js/components/utils/Mobile.vue"));
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to
