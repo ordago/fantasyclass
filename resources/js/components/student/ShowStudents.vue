@@ -642,8 +642,11 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom", "groups"],
   created() {
-    if (this.$cookies.get("view")) {
-      this.view = this.$cookies.get("view");
+    let view = this.$cookies.get("view");
+    if (view) {
+      if(view == 1 && (!this.groups.length))
+        this.view = 0;
+      else this.view = this.$cookies.get("view");
     }
   },
   mounted() {

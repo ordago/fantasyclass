@@ -619,6 +619,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -664,28 +667,38 @@ var InputEmoji = function InputEmoji() {
     VueFeedbackReaction: vue_feedback_reaction__WEBPACK_IMPORTED_MODULE_2__["VueFeedbackReaction"]
   },
   methods: {
-    editChallenge: function editChallenge(challenge) {
+    copyPermalink: function copyPermalink() {
       var _this = this;
+
+      var url = "/classroom/show/" + this.code + "/challenges/" + this.challengeReactive.permalink;
+      navigator.clipboard.writeText(url).then(function (response) {
+        _this.$toast(_this.trans.get('success_error.copy_success'), {
+          type: 'success'
+        });
+      });
+    },
+    editChallenge: function editChallenge(challenge) {
+      var _this2 = this;
 
       axios.post("/classroom/" + this.code + "/challenges/info", {
         type: 2
       }).then(function (response) {
-        _this.$parent.students = response.data;
-        _this.$parent.challengeEdit = _this.challenge;
-        _this.$parent.addChallenge = true;
+        _this2.$parent.students = response.data;
+        _this2.$parent.challengeEdit = _this2.challenge;
+        _this2.$parent.addChallenge = true;
       });
     },
     returnEmoji: function returnEmoji(rating) {
       if (rating < 1.8) return "hate";else if (rating < 2.5) return "disappointed";else if (rating < 3.4) return "natural";else if (rating < 4.2) return "good";else return "excellent";
     },
     sendRating: function sendRating() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.post("/classroom/challenge/rate", {
         rating: this.rating,
         challenge: this.challenge.id
       }).then(function (response) {
-        _this2.$toast(_this2.trans.get("general.thanks"), {
+        _this3.$toast(_this3.trans.get("general.thanks"), {
           type: "success"
         });
       });
@@ -698,33 +711,33 @@ var InputEmoji = function InputEmoji() {
       return content;
     },
     deleteComment: function deleteComment(id) {
-      var _this3 = this;
+      var _this4 = this;
 
       axios["delete"]("/classroom/challenge/comment/" + id).then(function (response) {
-        var index = _this3.challenge.comments.findIndex(function (comment, i) {
+        var index = _this4.challenge.comments.findIndex(function (comment, i) {
           return comment.id === id;
         });
 
-        _this3.challenge.comments.splice(index, 1);
+        _this4.challenge.comments.splice(index, 1);
 
-        _this3.$forceUpdate();
+        _this4.$forceUpdate();
       });
     },
     sendComment: function sendComment() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.comment = this.comment.replace("&nbsp;", " ");
       axios.post("/classroom/challenge/comment", {
         challenge_id: this.challenge.id,
         text: this.comment
       }).then(function (response) {
-        _this4.challenge.comments.push(response.data);
+        _this5.challenge.comments.push(response.data);
 
-        _this4.comment = "";
+        _this5.comment = "";
       });
     },
     confirmDelete: function confirmDelete(id, index) {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -740,9 +753,9 @@ var InputEmoji = function InputEmoji() {
         onConfirm: function onConfirm() {
           axios["delete"]("/classroom/challenge/attachment/" + id).then(function (response) {
             if (response.data === 1) {
-              _this5.challenge.attachments.splice(index, 1);
+              _this6.challenge.attachments.splice(index, 1);
 
-              _this5.$forceUpdate();
+              _this6.$forceUpdate();
             }
           });
         }
@@ -752,19 +765,19 @@ var InputEmoji = function InputEmoji() {
       return _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].getYoutube(url);
     },
     addQuestion: function addQuestion() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.question.challenge_id = this.challenge.id;
       axios.post("/classroom/challenge/question", {
         question: this.question
       }).then(function (response) {
-        _this6.isQuestionModalActive = false;
+        _this7.isQuestionModalActive = false;
 
-        _this6.$parent.$parent.getChallenges(_this6.challenge.challenges_group_id);
+        _this7.$parent.$parent.getChallenges(_this7.challenge.challenges_group_id);
       });
     },
     addAttachment: function addAttachment() {
-      var _this7 = this;
+      var _this8 = this;
 
       var type = this.attachment.type;
       if (type == 3 || type == 4 || type == 6 || type == 7) this.attachment.mode = 0;
@@ -772,13 +785,13 @@ var InputEmoji = function InputEmoji() {
       axios.post("/classroom/challenge/attachment", {
         attachment: this.attachment
       }).then(function (response) {
-        _this7.isAttachmentModalActive = false;
+        _this8.isAttachmentModalActive = false;
 
-        _this7.challenge.attachments.push(response.data);
+        _this8.challenge.attachments.push(response.data);
       });
     },
     markCompleted: function markCompleted(challenge) {
-      var _this8 = this;
+      var _this9 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("challenges.mark_title"),
@@ -789,8 +802,8 @@ var InputEmoji = function InputEmoji() {
         iconPack: "fa",
         hasIcon: true,
         onConfirm: function onConfirm() {
-          axios.post("/classroom/" + _this8.code + "/student/markchallenge", {
-            challenge: _this8.challengeReactive.id
+          axios.post("/classroom/" + _this9.code + "/student/markchallenge", {
+            challenge: _this9.challengeReactive.id
           }).then(function (response) {
             if (response.data.success == true) {
               Object(canvas_confetti__WEBPACK_IMPORTED_MODULE_0__["default"])({
@@ -800,11 +813,11 @@ var InputEmoji = function InputEmoji() {
                   y: 1.0
                 }
               });
-              _this8.challengeReactive.count++;
-              _this8.$parent.$parent.$parent.student.hp = response.data.hp;
-              _this8.$parent.$parent.$parent.student.xp = response.data.xp;
-              _this8.$parent.$parent.$parent.student.gold = response.data.gold;
-              _this8.$parent.$parent.$parent.forceReload++;
+              _this9.challengeReactive.count++;
+              _this9.$parent.$parent.$parent.student.hp = response.data.hp;
+              _this9.$parent.$parent.$parent.student.xp = response.data.xp;
+              _this9.$parent.$parent.$parent.student.gold = response.data.gold;
+              _this9.$parent.$parent.$parent.forceReload++;
             }
           });
         }
@@ -906,6 +919,23 @@ var render = function() {
                 [_c("i", { staticClass: "fas fa-eye-slash" })]
               )
             : _vm._e(),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              directives: [{ name: "tippy", rawName: "v-tippy" }],
+              staticClass: "button top-right cursor-pointer",
+              staticStyle: { top: "0", right: "0" },
+              attrs: {
+                content: "Copy direct link to story (only for students)"
+              },
+              on: { click: _vm.copyPermalink }
+            },
+            [
+              _c("i", { staticClass: "fad fa-link mr-2" }),
+              _vm._v(" Permalink\n        ")
+            ]
+          ),
           _vm._v(" "),
           _c(
             "div",

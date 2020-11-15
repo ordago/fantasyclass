@@ -22,6 +22,9 @@
         >
           <i class="fas fa-eye-slash"></i>
         </div>
+          <span @click="copyPermalink" v-tippy content="Copy direct link to story (only for students)" class="button top-right cursor-pointer" style="top: 0;right:0">
+            <i class="fad fa-link mr-2"></i> Permalink
+          </span>
         <div class="content">
           <h1>
             <i
@@ -611,7 +614,6 @@ import Utils from "../../utils.js";
 const InputEmoji = () => import("../utils/InputEmoji.vue");
 import { VueReactionEmoji, VueFeedbackReaction } from "vue-feedback-reaction";
 
-
 export default {
   props: [
     "challenge",
@@ -657,6 +659,17 @@ export default {
     VueFeedbackReaction,
   },
   methods: {
+    copyPermalink() {
+      let url =
+        "/classroom/show/" +
+        this.code +
+        "/challenges/" +
+        this.challengeReactive.permalink;
+      navigator.clipboard.writeText(url).then( response => {
+        this.$toast(this.trans.get('success_error.copy_success'), { type: 'success' });
+      }
+      );
+    },
     editChallenge(challenge) {
       axios
         .post("/classroom/" + this.code + "/challenges/info", {

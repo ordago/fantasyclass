@@ -39,7 +39,7 @@
 
 
   @section('notifications')
-  <notifications :notifications="{{ $notifications ?? '{}' }}" :user="{{ auth()->user() }}" type="both"></notifications>
+  <notifications :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="both"></notifications>
   @endsection
 
   <div class="column py-1 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox mb-0 is-flex has-all-centered">

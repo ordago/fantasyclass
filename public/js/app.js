@@ -5097,8 +5097,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["students", "classroom", "groups"],
   created: function created() {
-    if (this.$cookies.get("view")) {
-      this.view = this.$cookies.get("view");
+    var view = this.$cookies.get("view");
+
+    if (view) {
+      if (view == 1 && !this.groups.length) this.view = 0;else this.view = this.$cookies.get("view");
     }
   },
   mounted: function mounted() {
@@ -69845,6 +69847,7 @@ __webpack_require__.r(__webpack_exports__);
   "ca.success_error": {
     "add_success": "L'element s'ha afegit correctament",
     "update_success": "L'element s'ha actualitzat correctament",
+    "copy_success": "Enlla\xE7 copiat al portapapers",
     "error": "Alguna cosa ha anat malament :(",
     "email_not_recognised": "L'usuari no est\xE0 enregistrat. Per favor, demana-li que es registre abans de convidar-lo a la classe.",
     "user_already_invited": "L'usuari ja \xE9s profe de la classe.",
@@ -70593,6 +70596,7 @@ __webpack_require__.r(__webpack_exports__);
   "en.success_error": {
     "add_success": "The element has been added successfully",
     "update_success": "The element has been updated successfully",
+    "copy_success": "Link copied to clipboard",
     "error": "Something went wrong :(",
     "email_not_recognised": "User is not registered, please, ask they to register before invite them.",
     "user_already_invited": "User is already teacher of the class.",
@@ -71340,6 +71344,7 @@ __webpack_require__.r(__webpack_exports__);
   "es.success_error": {
     "add_success": "El elemento se ha a\xF1adido correctamente",
     "update_success": "El elemento se ha actualizado correctamente",
+    "copy_success": "Enlace copiado al portapapeles",
     "error": "Alguna cosa ha ido mal :(",
     "email_not_recognised": "El usuario no est\xE1 grabado. Por favor, p\xEDdele que se registre antes de invitarlo en la clase.\n",
     "user_already_invited": "El usuario ya es profe de la clase.",
