@@ -670,7 +670,7 @@ var InputEmoji = function InputEmoji() {
     copyPermalink: function copyPermalink() {
       var _this = this;
 
-      var url = "/classroom/show/" + this.code + "/challenges/" + this.challengeReactive.permalink;
+      var url = window.location.origin + "/classroom/show/" + this.code + "/challenges/" + this.challengeReactive.permalink;
       navigator.clipboard.writeText(url).then(function (response) {
         _this.$toast(_this.trans.get('success_error.copy_success'), {
           type: 'success'
@@ -920,22 +920,25 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _c(
-            "span",
-            {
-              directives: [{ name: "tippy", rawName: "v-tippy" }],
-              staticClass: "button top-right cursor-pointer",
-              staticStyle: { top: "0", right: "0" },
-              attrs: {
-                content: "Copy direct link to story (only for students)"
-              },
-              on: { click: _vm.copyPermalink }
-            },
-            [
-              _c("i", { staticClass: "fad fa-link mr-2" }),
-              _vm._v(" Permalink\n        ")
-            ]
-          ),
+          _vm.admin
+            ? _c(
+                "span",
+                {
+                  directives: [{ name: "tippy", rawName: "v-tippy" }],
+                  staticClass: "button top-right cursor-pointer",
+                  staticStyle: { top: "0", right: "0" },
+                  attrs: { content: _vm.trans.get("challenges.permalink") },
+                  on: { click: _vm.copyPermalink }
+                },
+                [
+                  _c("i", { staticClass: "fad fa-link" }),
+                  _vm._v(" "),
+                  _c("span", { staticClass: "ml-2 is-hidden-mobile" }, [
+                    _vm._v("Permalink")
+                  ])
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
           _c(
             "div",

@@ -46722,7 +46722,7 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "score p-3 centered-attribute m-1 my-4 has-all-centered",
+                    "score p-2 centered-attribute m-1 my-4 has-all-centered",
                   staticStyle: { border: "none" }
                 },
                 [
@@ -46730,7 +46730,7 @@ var render = function() {
                     "span",
                     {
                       staticClass:
-                        "attribute has-background-white-ter py-3 rounded",
+                        "attribute has-background-white-ter py-2 rounded",
                       staticStyle: { width: "100%", border: "1px solid black" }
                     },
                     [
@@ -46749,7 +46749,7 @@ var render = function() {
                     "span",
                     {
                       staticClass:
-                        "attribute has-background-danger py-3 rounded-left",
+                        "attribute has-background-danger py-2 rounded-left",
                       class: { rounded: _vm.student.hp == 100 },
                       style: "width: " + _vm.student.hp + "%"
                     },
@@ -46778,14 +46778,14 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "score p-3 centered-attribute m-1 my-4 has-all-centered",
+                    "score p-2 centered-attribute m-1 my-4 has-all-centered",
                   staticStyle: { border: "none" }
                 },
                 [
                   _c(
                     "span",
                     {
-                      staticClass: "attribute has-background-dark py-3 rounded",
+                      staticClass: "attribute has-background-dark py-2 rounded",
                       staticStyle: { width: "100%", border: "1px solid black" }
                     },
                     [
@@ -46807,14 +46807,14 @@ var render = function() {
                 "div",
                 {
                   staticClass:
-                    "score p-3 centered-attribute m-1 my-4 has-all-centered"
+                    "score p-2 centered-attribute m-1 my-4 has-all-centered"
                 },
                 [
                   _c(
                     "span",
                     {
                       staticClass:
-                        "attribute has-background-warning py-3 rounded",
+                        "attribute has-background-warning py-2 rounded",
                       staticStyle: { width: "100%", border: "1px solid black" }
                     },
                     [
@@ -69447,7 +69447,8 @@ __webpack_require__.r(__webpack_exports__);
     "available_some": "Disponible per ",
     "available_students": "estudiants",
     "load_comments": "Carrega m\xE9s comentaris...",
-    "hidden_until": "Ocult fins"
+    "hidden_until": "Ocult fins",
+    "permalink": "Copiar enlla\xE7 al repte (solament accessible per estudiants)"
   },
   "ca.classroom": {
     "add": "Afegeix classe",
@@ -70194,7 +70195,8 @@ __webpack_require__.r(__webpack_exports__);
     "available_some": "Available to",
     "available_students": "students",
     "load_comments": "Load more comments...",
-    "hidden_until": "Hidden until"
+    "hidden_until": "Hidden until",
+    "permalink": "Copy direct link to challenge (only for students)"
   },
   "en.classroom": {
     "add": "Add classroom",
@@ -70944,7 +70946,8 @@ __webpack_require__.r(__webpack_exports__);
     "available_some": "Disponible para ",
     "available_students": "estudiantes",
     "load_comments": "Carga m\xE1s comentarios...",
-    "hidden_until": "Oculto hasta"
+    "hidden_until": "Oculto hasta",
+    "permalink": "Copiar enlace al reto (solo accesible por estudiantes)"
   },
   "es.classroom": {
     "add": "A\xF1ade clase",

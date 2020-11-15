@@ -22,8 +22,8 @@
         >
           <i class="fas fa-eye-slash"></i>
         </div>
-          <span @click="copyPermalink" v-tippy content="Copy direct link to story (only for students)" class="button top-right cursor-pointer" style="top: 0;right:0">
-            <i class="fad fa-link mr-2"></i> Permalink
+          <span @click="copyPermalink" v-if="admin" v-tippy :content="trans.get('challenges.permalink')" class="button top-right cursor-pointer" style="top: 0;right: 0">
+            <i class="fad fa-link"></i> <span class="ml-2 is-hidden-mobile">Permalink</span>
           </span>
         <div class="content">
           <h1>
@@ -661,6 +661,7 @@ export default {
   methods: {
     copyPermalink() {
       let url =
+        window.location.origin +
         "/classroom/show/" +
         this.code +
         "/challenges/" +

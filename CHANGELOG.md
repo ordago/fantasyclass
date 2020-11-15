@@ -1,11 +1,12 @@
 # Changelog
 
-## v1.19 Beta (14/11/2020)
+## v1.19.1 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.
 - Reports: passwords and evaluation.
 - More notifications.
+- Added permalink in challenges.
 
 ### Changed
 - Show 3 comments by default.
@@ -14,6 +15,7 @@
 - Changed toasts.
 - JavaScript optimization (more code splits).
 - Fixed share card.
+- Fixed students view mode.
 - Fixed price in animals pack (equipment 3).
 
 ## v1.18 Beta (08/11/2020)
