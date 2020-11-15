@@ -119,6 +119,9 @@
                                     <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="https://t.me/fantasyclass">
+                                        <i class="fal fa-paper-plane"></i> Telegram
+                                    </a>
                                     <a class="dropdown-item is-hidden-mobile" href="/mobile">
                                         <i class="fal fa-mobile"></i> {{ __('menu.mobile') }}
                                     </a>
