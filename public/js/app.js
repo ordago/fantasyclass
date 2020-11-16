@@ -3644,7 +3644,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4029,11 +4029,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var Editor = function Editor() {
-  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
 
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4853,7 +4853,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var InputEmoji = function InputEmoji() {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ../utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ../utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"));
 };
 
 
@@ -5958,7 +5958,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var IconSelector = function IconSelector() {
-  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(1)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(3), __webpack_require__.e(2)]).then(__webpack_require__.bind(null, /*! ../utils/IconSelector.vue */ "./resources/js/components/utils/IconSelector.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6909,6 +6909,7 @@ __webpack_require__.r(__webpack_exports__);
       this.filteredTags = this.tagsReactive.filter(function (option) {
         return option["short"].toString().toLowerCase().indexOf(text.toLowerCase()) >= 0;
       });
+      this.$forceUpdate();
     },
     showEditTag: function showEditTag(tag) {
       this.tag = tag;
@@ -9084,7 +9085,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var Editor = function Editor() {
-  return Promise.all(/*! import() */[__webpack_require__.e(4), __webpack_require__.e(6)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -10447,7 +10448,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Xlsx = function Xlsx() {
-  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ../utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ../utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -29572,7 +29573,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.button .input {\r\n  border: none !important;\r\n  text-align: center;\r\n  background-color: transparent;\n}\r\n", ""]);
+exports.push([module.i, "\n.button .input {\n  border: none !important;\n  text-align: center;\n  background-color: transparent;\n}\n", ""]);
 
 // exports
 
@@ -29610,7 +29611,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@font-face {\r\n  font-family: logo;\r\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\r\n.fade-leave-active {\r\n  transition: opacity 0.5s;\r\n  transition-delay: 1000ms;\n}\n.fade-enter,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\n.fadesecond-enter-active,\r\n.fadesecond-leave-active {\r\n  transition: opacity 0.5s;\r\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\r\n  opacity: 0;\n}\n.first-appear {\r\n  height: 30vh;\r\n  background-color: rgba(255, 255, 255, 0.9);\r\n  display: flex;\r\n  align-items: center;\r\n  justify-content: center;\r\n  font-family: logo;\r\n  font-size: 8em;\r\n  word-spacing: 0.2em;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  position: relative;\r\n  padding: 40px;\r\n  z-index: 5;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\r\n  overflow: auto;\n}\n.second-appear {\r\n  height: 70vh;\r\n  border-bottom-left-radius: 10px;\r\n  border-bottom-right-radius: 10px;\r\n  background-color: rgba(255, 255, 255, 0.75);\r\n  display: flex;\r\n  flex-direction: column;\r\n  align-items: center;\r\n  justify-content: center;\r\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\r\n  padding: 30px;\r\n  padding-top: 70px;\r\n  margin-top: -40px;\r\n  z-index: 2;\r\n  overflow: auto;\n}\n.final {\r\n  opacity: 0;\n}\nh2.second-appear > * {\r\n  margin: 5px;\n}\n.hiddenName {\r\n  display: inline-block;\r\n  font-size: 2.5em;\r\n  position: relative;\r\n  min-width: 600px;\r\n  text-align: center;\n}\n.hideObj {\r\n  position: absolute;\r\n  z-index: 1000;\r\n  background-image: url(\"/img/hide.png\");\r\n  background-repeat: no-repeat;\r\n  background-size: 100% 100%;\r\n  width: 100%;\r\n  height: 120%;\r\n  border-radius: 5px;\r\n  transition: 1s opacity;\r\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\r\n  opacity: 0;\r\n  transition-delay: 1s;\n}\n.hiddenMEssage {\r\n  visibility: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 1000ms;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.fadesecond-enter-active,\n.fadesecond-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.first-appear {\n  height: 30vh;\n  background-color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-family: logo;\n  font-size: 8em;\n  word-spacing: 0.2em;\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n  position: relative;\n  padding: 40px;\n  z-index: 5;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  overflow: auto;\n}\n.second-appear {\n  height: 70vh;\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n  background-color: rgba(255, 255, 255, 0.75);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  padding: 30px;\n  padding-top: 70px;\n  margin-top: -40px;\n  z-index: 2;\n  overflow: auto;\n}\n.final {\n  opacity: 0;\n}\nh2.second-appear > * {\n  margin: 5px;\n}\n.hiddenName {\n  display: inline-block;\n  font-size: 2.5em;\n  position: relative;\n  min-width: 600px;\n  text-align: center;\n}\n.hideObj {\n  position: absolute;\n  z-index: 1000;\n  background-image: url(\"/img/hide.png\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  width: 100%;\n  height: 120%;\n  border-radius: 5px;\n  transition: 1s opacity;\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\n  opacity: 0;\n  transition-delay: 1s;\n}\n.hiddenMEssage {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -29629,7 +29630,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ntr.is-disabled {\r\n  background: #999;\r\n  color: #fff;\n}\r\n", ""]);
+exports.push([module.i, "\ntr.is-disabled {\n  background: #999;\n  color: #fff;\n}\n", ""]);
 
 // exports
 
@@ -29648,7 +29649,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.min-width {\r\n  min-width: 400px;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.min-width {\n  min-width: 400px;\n}\n\n", ""]);
 
 // exports
 
@@ -29667,7 +29668,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\ntr.is-info {\r\n  background: #00d1b2;\r\n  color: #fff;\n}\n.align-right {\r\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\r\n  word-break: break-all;\n}\r\n", ""]);
+exports.push([module.i, "\ntr.is-info {\n  background: #00d1b2;\n  color: #fff;\n}\n.align-right {\n  text-align: right;\n}\ntd [data-label=\"Url\"] {\n  word-break: break-all;\n}\n", ""]);
 
 // exports
 
@@ -29686,7 +29687,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.custom-dot {\r\n  width: 20px;\r\n  height: 20px;\r\n  border-radius: 0;\r\n  background-color: white;\r\n  border-radius: 50%;\r\n  border: 2px solid black;\r\n  position: absolute;\r\n  top: -5px;\r\n  left: -5px;\n}\r\n", ""]);
+exports.push([module.i, "\n.custom-dot {\n  width: 20px;\n  height: 20px;\n  border-radius: 0;\n  background-color: white;\n  border-radius: 50%;\n  border: 2px solid black;\n  position: absolute;\n  top: -5px;\n  left: -5px;\n}\n", ""]);
 
 // exports
 
@@ -29705,7 +29706,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n@-webkit-keyframes hmovement {\n0% {\r\n        transform: translateX(0px)\n}\n20% {\r\n        transform: translateX(8px);\n}\n40% {\r\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\r\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\r\n        transform: translateX(-8px)\n}\n}\n@keyframes hmovement {\n0% {\r\n        transform: translateX(0px)\n}\n20% {\r\n        transform: translateX(8px);\n}\n40% {\r\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\r\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\r\n        transform: translateX(-8px)\n}\n}\n.pet-character:hover {\r\n  -webkit-animation: none;\r\n          animation: none;\n}\n.pet-character {\r\n  position: absolute;\r\n  bottom: 5px;\r\n  left: 50%;\r\n  -webkit-animation-name: hmovement;\r\n          animation-name: hmovement;\r\n  -webkit-animation-duration: 10s;\r\n          animation-duration: 10s;\r\n  -webkit-animation-iteration-count: infinite;\r\n          animation-iteration-count: infinite;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n@-webkit-keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n@keyframes hmovement {\n0% {\n        transform: translateX(0px)\n}\n20% {\n        transform: translateX(8px);\n}\n40% {\n        transform: translateX(8px) scale(-1, 1)\n}\n60% {\n        transform: translateX(-8px) scale(-1, 1)\n}\n80% {\n        transform: translateX(-8px)\n}\n}\n.pet-character:hover {\n  -webkit-animation: none;\n          animation: none;\n}\n.pet-character {\n  position: absolute;\n  bottom: 5px;\n  left: 50%;\n  -webkit-animation-name: hmovement;\n          animation-name: hmovement;\n  -webkit-animation-duration: 10s;\n          animation-duration: 10s;\n  -webkit-animation-iteration-count: infinite;\n          animation-iteration-count: infinite;\n}\n\n", ""]);
 
 // exports
 
@@ -29724,7 +29725,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.selected[data-v-57e7ecfc] {\r\n  margin: 0;\r\n  background-color: lightskyblue;\n}\r\n", ""]);
+exports.push([module.i, "\n.selected[data-v-57e7ecfc] {\n  margin: 0;\n  background-color: lightskyblue;\n}\n", ""]);
 
 // exports
 
@@ -29743,7 +29744,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n#meter {\r\n  padding: 20px;\r\n  background-color: rgba(255, 255, 255, 0.8);\r\n  border-radius: 10px;\r\n  clear: both;\n}\n.propertyMeter {\r\n  display: inline-block;\r\n  width: 40%;\n}\n.itemLog {\r\n  padding: 20px;\r\n  background-color: rgba(255, 255, 255, 0.8);\r\n  border: 1px solid #555;\r\n  border-radius: 5px;\n}\n.bootstrapInlineForm {\r\n  width: 60%;\n}\n.sensitivity {\r\n  margin-top: 35px;\r\n  position: relative;\r\n  padding-bottom: 15px;\n}\n.sensitivity .left {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  left: 0;\r\n  border-radius: 4px;\n}\n.sensitivity .center {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  left: 50%;\r\n  margin-left: -20px;\r\n  border-radius: 4px;\n}\n.sensitivity .right {\r\n  padding: 4px;\r\n  background-color: white;\r\n  position: absolute;\r\n  top: -21px;\r\n  right: 0;\r\n  border-radius: 4px;\n}\n.itemLog {\r\n  position: relative;\n}\n.delLog {\r\n  display: flex;\r\n  align-items: center;\r\n  align-content: center;\r\n  position: absolute;\r\n  top: 0;\r\n  right: 0;\r\n  padding: 20px;\r\n  color: white;\r\n  height: 100%;\r\n  cursor: pointer;\n}\n#info {\r\n  display: flex;\r\n  align-items: center;\r\n  align-content: center;\n}\n.acceptDestiny {\r\n  cursor: pointer;\n}\n@media screen and (max-width: 700px) {\n.flexC {\r\n    display: block;\n}\n}\r\n", ""]);
+exports.push([module.i, "\n#meter {\n  padding: 20px;\n  background-color: rgba(255, 255, 255, 0.8);\n  border-radius: 10px;\n  clear: both;\n}\n.propertyMeter {\n  display: inline-block;\n  width: 40%;\n}\n.itemLog {\n  padding: 20px;\n  background-color: rgba(255, 255, 255, 0.8);\n  border: 1px solid #555;\n  border-radius: 5px;\n}\n.bootstrapInlineForm {\n  width: 60%;\n}\n.sensitivity {\n  margin-top: 35px;\n  position: relative;\n  padding-bottom: 15px;\n}\n.sensitivity .left {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  left: 0;\n  border-radius: 4px;\n}\n.sensitivity .center {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  left: 50%;\n  margin-left: -20px;\n  border-radius: 4px;\n}\n.sensitivity .right {\n  padding: 4px;\n  background-color: white;\n  position: absolute;\n  top: -21px;\n  right: 0;\n  border-radius: 4px;\n}\n.itemLog {\n  position: relative;\n}\n.delLog {\n  display: flex;\n  align-items: center;\n  align-content: center;\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 20px;\n  color: white;\n  height: 100%;\n  cursor: pointer;\n}\n#info {\n  display: flex;\n  align-items: center;\n  align-content: center;\n}\n.acceptDestiny {\n  cursor: pointer;\n}\n@media screen and (max-width: 700px) {\n.flexC {\n    display: block;\n}\n}\n", ""]);
 
 // exports
 
@@ -29762,7 +29763,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.hiddenV[data-v-f289363c] {\r\n  visibility: hidden;\n}\r\n", ""]);
+exports.push([module.i, "\n.hiddenV[data-v-f289363c] {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
@@ -94253,7 +94254,7 @@ Vue.component('show-character', __webpack_require__(/*! ./components/student/Sho
 Vue.component('show-students-student', __webpack_require__(/*! ./components/student/ShowStudentsStudent.vue */ "./resources/js/components/student/ShowStudentsStudent.vue")["default"]);
 Vue.component('show-group-view', __webpack_require__(/*! ./components/student/ShowGroupView.vue */ "./resources/js/components/student/ShowGroupView.vue")["default"]);
 Vue.component('show-student-info', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(16), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(53), __webpack_require__.e(47)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
 });
 Vue.component('show-student-map', __webpack_require__(/*! ./components/student/ShowStudentMap.vue */ "./resources/js/components/student/ShowStudentMap.vue")["default"]);
 Vue.component('show-student', __webpack_require__(/*! ./components/student/ShowStudent.vue */ "./resources/js/components/student/ShowStudent.vue")["default"]);
@@ -94262,11 +94263,11 @@ Vue.component('show-card', __webpack_require__(/*! ./components/card/ShowCard.vu
 Vue.component('show-cards', __webpack_require__(/*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue")["default"]);
 Vue.component('create-card', __webpack_require__(/*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue")["default"]);
 Vue.component('create-behaviour', function () {
-  return __webpack_require__.e(/*! import() */ 14).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
+  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
 });
 Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
 Vue.component('create-badge', function () {
-  return __webpack_require__.e(/*! import() */ 13).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
+  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
 });
 Vue.component('show-badges', __webpack_require__(/*! ./components/badge/ShowBadges.vue */ "./resources/js/components/badge/ShowBadges.vue")["default"]);
 Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
@@ -94301,7 +94302,7 @@ Vue.component('grade', __webpack_require__(/*! ./components/evaluation/Grade.vue
 Vue.component('report', __webpack_require__(/*! ./components/evaluation/Report.vue */ "./resources/js/components/evaluation/Report.vue")["default"]);
 Vue.component('rubric-management', __webpack_require__(/*! ./components/evaluation/RubricManagement.vue */ "./resources/js/components/evaluation/RubricManagement.vue")["default"]);
 Vue.component('rubric-create', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
 }); // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 // Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);
@@ -94312,16 +94313,16 @@ Vue.component('image-bank', __webpack_require__(/*! ./components/utils/ImageBank
 Vue.component('count-down', __webpack_require__(/*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue")["default"]);
 Vue.component('notifications', __webpack_require__(/*! ./components/utils/Notifications.vue */ "./resources/js/components/utils/Notifications.vue")["default"]);
 Vue.component('input-emoji', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(5)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
 });
 Vue.component('import-excel', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"))["default"];
+  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"))["default"];
 });
 Vue.component('wheel', __webpack_require__(/*! ./components/utils/Wheel.vue */ "./resources/js/components/utils/Wheel.vue")["default"]);
 Vue.component('volume-meter', __webpack_require__(/*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue")["default"]);
 Vue.component('massive-actions', __webpack_require__(/*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue")["default"]);
 Vue.component('chat', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(10), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"))["default"];
+  return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"))["default"];
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -98409,16 +98410,16 @@ __webpack_require__.r(__webpack_exports__);
   */
 
   /*
-    Usage:
+   Usage:
   audioNode = createAudioMeter(audioContext,clipLevel,averaging,clipLag);
-    audioContext: the AudioContext you're using.
+   audioContext: the AudioContext you're using.
   clipLevel: the level (0 to 1) that you would consider "clipping".
      Defaults to 0.98.
   averaging: how "smoothed" you would like the meter to be over time.
      Should be between 0 and less than 1.  Defaults to 0.95.
   clipLag: how long you would like the "clipping" indicator to show
      after clipping has occured, in milliseconds.  Defaults to 750ms.
-    Access the clipping through node.checkClipping(); use node.shutdown to get rid of it.
+   Access the clipping through node.checkClipping(); use node.shutdown to get rid of it.
   */
   createAudioMeter: function createAudioMeter(audioContext, clipLevel, averaging, clipLag) {
     var processor = audioContext.createScriptProcessor(512);
@@ -98492,8 +98493,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Proyectos\FantasyClass\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Proyectos\FantasyClass\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/joan/fantasyclass/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/joan/fantasyclass/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

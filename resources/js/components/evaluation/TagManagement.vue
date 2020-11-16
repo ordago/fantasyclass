@@ -440,6 +440,7 @@
                 this.filteredTags = this.tagsReactive.filter((option) => {
                     return option.short.toString().toLowerCase().indexOf(text.toLowerCase()) >= 0;
                 });
+                this.$forceUpdate();
             },
             showEditTag(tag) {
                 this.tag = tag;
