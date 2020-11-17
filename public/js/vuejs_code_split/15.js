@@ -245,13 +245,11 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
 
                 _this3.rooms.map(function (room, index) {
                   return _this3.listenLastMessage(room, index);
-                });
+                }); // this.listenUsersOnlineStatus();
+                // this.listenRoomsTypingUsers(query);
 
-                _this3.listenUsersOnlineStatus();
 
-                _this3.listenRoomsTypingUsers(query);
-
-              case 24:
+              case 22:
               case "end":
                 return _context2.stop();
             }

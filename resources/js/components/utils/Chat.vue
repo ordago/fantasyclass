@@ -182,8 +182,8 @@ export default {
       this.rooms = this.rooms.concat(formattedRooms);
       this.loadingRooms = false;
       this.rooms.map((room, index) => this.listenLastMessage(room, index));
-      this.listenUsersOnlineStatus();
-      this.listenRoomsTypingUsers(query);
+      // this.listenUsersOnlineStatus();
+      // this.listenRoomsTypingUsers(query);
     },
     getLastMessage(room) {
       return this.messagesRef(room.id)
