@@ -164,7 +164,7 @@
         </main>
     </div>
     @if(isset($showChat) && $showChat == true)
-    @stack('scriptchat');
+    @stack('scriptchat')
     @endif
 
     @auth
@@ -191,6 +191,7 @@
     </script>
     <script src="{{ asset('js/config.js') }}" defer></script>
     <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    @stack('scripttalk')
     @endauth
     @guest
     <script type="text/javascript">
