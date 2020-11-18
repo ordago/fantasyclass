@@ -622,6 +622,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -672,8 +682,8 @@ var InputEmoji = function InputEmoji() {
 
       var url = window.location.origin + "/classroom/show/" + this.code + "/challenges/" + this.challengeReactive.permalink;
       navigator.clipboard.writeText(url).then(function (response) {
-        _this.$toast(_this.trans.get('success_error.copy_success'), {
-          type: 'success'
+        _this.$toast(_this.trans.get("success_error.copy_success"), {
+          type: "success"
         });
       });
     },
@@ -903,23 +913,6 @@ var render = function() {
               )
             : _vm._e(),
           _vm._v(" "),
-          _vm.admin && _vm.isHidden
-            ? _c(
-                "div",
-                {
-                  directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "challenge-category has-background-light",
-                  attrs: {
-                    content:
-                      _vm.trans.get("challenges.hidden_until") +
-                      " " +
-                      _vm.challenge.datetime.split(":00")[0]
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-eye-slash" })]
-              )
-            : _vm._e(),
-          _vm._v(" "),
           _vm.admin
             ? _c(
                 "span",
@@ -944,7 +937,7 @@ var render = function() {
             "div",
             { staticClass: "content" },
             [
-              _c("h1", [
+              _c("h1", { staticClass: "is-flex is-center-vertically" }, [
                 _vm.challengeReactive.is_conquer && _vm.challengeReactive.icon
                   ? _c("i", {
                       staticClass: "is-size-4",
@@ -959,10 +952,29 @@ var render = function() {
                 _vm._v(
                   "\n          " +
                     _vm._s(_vm.challengeReactive.title) +
-                    "\n          "
+                    "\n\n          "
                 ),
-                _c("span", { staticClass: "tag is-light" }, [
-                  _vm._v(_vm._s(_vm.challengeReactive.datetime.split(":00")[0]))
+                _c("span", { staticClass: "tag is-dark ml-2" }, [
+                  _vm.admin && _vm.isHidden
+                    ? _c(
+                        "span",
+                        {
+                          directives: [{ name: "tippy", rawName: "v-tippy" }],
+                          staticClass: "mr-2",
+                          attrs: {
+                            content:
+                              _vm.trans.get("challenges.hidden_until") +
+                              " " +
+                              _vm.challenge.datetime.split(":00")[0]
+                          }
+                        },
+                        [_c("i", { staticClass: "fas fa-eye-slash" })]
+                      )
+                    : _vm._e(),
+                  _vm._v(
+                    "\n\n            " +
+                      _vm._s(_vm.challengeReactive.datetime.split(":00")[0])
+                  )
                 ])
               ]),
               _vm._v(" "),

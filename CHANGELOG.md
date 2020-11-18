@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.19.1 Beta (14/11/2020)
+## v1.19.2 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.
@@ -17,6 +17,7 @@
 - Fixed share card.
 - Fixed students view mode.
 - Fixed price in animals pack (equipment 3).
+- Fixed "invisible" icon in challenges.
 
 ## v1.18 Beta (08/11/2020)
 ### Added

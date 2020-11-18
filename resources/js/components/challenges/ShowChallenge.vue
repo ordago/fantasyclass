@@ -10,23 +10,19 @@
         >
           <i :class="challengeReactive.group.icon"></i>
         </div>
-        <div
-          class="challenge-category has-background-light"
-          v-if="admin && isHidden"
+        <span
+          @click="copyPermalink"
+          v-if="admin"
           v-tippy
-          :content="
-            trans.get('challenges.hidden_until') +
-            ' ' +
-            challenge.datetime.split(':00')[0]
-          "
+          :content="trans.get('challenges.permalink')"
+          class="button top-right cursor-pointer"
+          style="top: 0; right: 0"
         >
-          <i class="fas fa-eye-slash"></i>
-        </div>
-          <span @click="copyPermalink" v-if="admin" v-tippy :content="trans.get('challenges.permalink')" class="button top-right cursor-pointer" style="top: 0;right: 0">
-            <i class="fad fa-link"></i> <span class="ml-2 is-hidden-mobile">Permalink</span>
-          </span>
+          <i class="fad fa-link"></i>
+          <span class="ml-2 is-hidden-mobile">Permalink</span>
+        </span>
         <div class="content">
-          <h1>
+          <h1 class="is-flex is-center-vertically">
             <i
               v-if="challengeReactive.is_conquer && challengeReactive.icon"
               class="is-size-4"
@@ -38,9 +34,23 @@
               class="fas fa-users is-size-4 colored"
             ></i>
             {{ challengeReactive.title }}
-            <span class="tag is-light">{{
-              challengeReactive.datetime.split(":00")[0]
-            }}</span>
+
+            <span class="tag is-dark ml-2">
+              <span
+                v-if="admin && isHidden"
+                class="mr-2"
+                v-tippy
+                :content="
+                  trans.get('challenges.hidden_until') +
+                  ' ' +
+                  challenge.datetime.split(':00')[0]
+                "
+              >
+                <i class="fas fa-eye-slash"></i>
+              </span>
+
+              {{ challengeReactive.datetime.split(":00")[0] }}</span
+            >
           </h1>
           <p>
             <small>{{ challengeReactive.description }}</small>
@@ -666,10 +676,11 @@ export default {
         this.code +
         "/challenges/" +
         this.challengeReactive.permalink;
-      navigator.clipboard.writeText(url).then( response => {
-        this.$toast(this.trans.get('success_error.copy_success'), { type: 'success' });
-      }
-      );
+      navigator.clipboard.writeText(url).then((response) => {
+        this.$toast(this.trans.get("success_error.copy_success"), {
+          type: "success",
+        });
+      });
     },
     editChallenge(challenge) {
       axios
