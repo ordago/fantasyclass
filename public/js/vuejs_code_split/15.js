@@ -104,6 +104,13 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
   mounted: function mounted() {
     var _this = this;
 
+    this.$toast(this.trans.get('utils.chat_warning'), {
+      type: 'warning',
+      timeout: 0
+    });
+    this.$toast(this.trans.get('utils.chat_reminder'), {
+      type: 'default'
+    });
     axios.get("/inbox/token").then(function (response) {
       _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].auth().signInWithCustomToken(response.data).then(function (response) {
         _this.createUser().then(function (response) {

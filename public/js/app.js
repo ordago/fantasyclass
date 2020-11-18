@@ -69887,7 +69887,9 @@ __webpack_require__.r(__webpack_exports__);
     "download_confidential_data_students": "Descarregar contrasenyes estudiants",
     "user_not_exists": "L'usuari no existeix",
     "mobile_text_android": "Estem a Google Play! Fes clic a la imatge o cerca FantasyClass a la botiga d'aplicacions d'Android. \n                              Hi ha molt d'esfor\xE7 a la plataforma i \xE9s i ser\xE0 gratu\xEFta, agrair\xEDem una ajuda per xicoteta que siga,\n                              simplement fent una valoraci\xF3 positiva ja \n                              \xE9s suficient, gr\xE0cies! <i class=\"fas fa-smile-beam colored\"></i>",
-    "mobile_text_apple": "Malauradament no estem a la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> per\xF2 instal\xB7lar FantasyClass\n                            \xE9s molt senzill! Simplement fes clic al men\xFA i selecciona \"Afegir a la pantalla d'inici\". Aqu\xED tens un v\xEDdeo del proc\xE9s."
+    "mobile_text_apple": "Malauradament no estem a la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> per\xF2 instal\xB7lar FantasyClass\n                            \xE9s molt senzill! Simplement fes clic al men\xFA i selecciona \"Afegir a la pantalla d'inici\". Aqu\xED tens un v\xEDdeo del proc\xE9s.",
+    "chat_reminder": "Estem tenint problemes amb el xat, preguem paci\xE8ncia.",
+    "chat_warning": "No compartiu informaci\xF3 personal o sensible al xat."
   },
   "ca.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -70636,7 +70638,9 @@ __webpack_require__.r(__webpack_exports__);
     "download_confidential_data_students": "Download student passwords",
     "user_not_exists": "User not exist",
     "mobile_text_android": "We are on Google Play! Click on the image or search FantasyClass in the Android app store. \n                                There is a lot of effort in the platform and it is and will be free, we would appreciate a help even if it is small,\n                                simply making a positive rating is enough,\n                                Thank you! <i class=\"fas fa-smile-beam colored\"><\/i>",
-    "mobile_text_apple": "Unfortunately we are not in the Apple App Store <i class=\"fas fa-sad-cry colored\"><\/i> but install FantasyClass\n                                is very simple: just click on the menu and select \"Add to Home Screen\". \n                                Here is a video of the process"
+    "mobile_text_apple": "Unfortunately we are not in the Apple App Store <i class=\"fas fa-sad-cry colored\"><\/i> but install FantasyClass\n                                is very simple: just click on the menu and select \"Add to Home Screen\". \n                                Here is a video of the process",
+    "chat_reminder": "We're having some issues with the chat. Please be patient.",
+    "chat_warning": "Don't share personal or sensible information in the chat."
   },
   "en.validation": {
     "accepted": "The :attribute must be accepted.",
@@ -71386,7 +71390,9 @@ __webpack_require__.r(__webpack_exports__);
     "download_confidential_data_students": "Descargar contrase\xF1as estudiantes",
     "user_not_exists": "El usuario no existe",
     "mobile_text_android": "\xA1Estamos en Google Play! Haz clic en la imagen o busca FantasyClass en la tienda de aplicaciones de Android. \n                              Hay mucho esfuerzo en la plataforma y es y ser\xE1 gratis, agradecer\xEDamos una ayuda aunque sea peque\xF1a,\n                              simplemente haciendo una valoraci\xF3n positiva es suficiente,\n                            \xA1gracias! <i class=\"fas fa-smile-beam colored\"></i>",
-    "mobile_text_apple": "Lamentablemente no estamos en la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> pero instalar FantasyClass\n                            es muy senzillo: simplement haz clic en el men\xFA y selecciona \"A\xF1adir a la pantalla de inicio\". \n                            Aqu\xED tienes un v\xEDdeo del proceso."
+    "mobile_text_apple": "Lamentablemente no estamos en la Apple App Store <i class=\"fas fa-sad-cry colored\"></i> pero instalar FantasyClass\n                            es muy senzillo: simplement haz clic en el men\xFA y selecciona \"A\xF1adir a la pantalla de inicio\". \n                            Aqu\xED tienes un v\xEDdeo del proceso.",
+    "chat_reminder": "Estamos teniendo problemas con el chat, rogamos paciencia.",
+    "chat_warning": "No compart\xE1is informaci\xF3n personal en el chat."
   },
   "es.validation": {
     "accepted": "El :attribute debe ser aceptado.",

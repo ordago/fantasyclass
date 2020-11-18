@@ -22,4 +22,7 @@ return [
                               és suficient, gràcies! <i class="fas fa-smile-beam colored"></i>',
     'mobile_text_apple' => 'Malauradament no estem a la Apple App Store <i class="fas fa-sad-cry colored"></i> però instal·lar FantasyClass
                             és molt senzill! Simplement fes clic al menú i selecciona "Afegir a la pantalla d\'inici". Aquí tens un vídeo del procés.',
+
+    'chat_reminder' => 'Estem tenint problemes amb el xat, preguem paciència.',
+    'chat_warning' => 'No compartiu informació personal o sensible al xat.',
 ];
