@@ -75,7 +75,7 @@ export default {
   },
   mounted() {
     this.$toast(this.trans.get('utils.chat_warning'), {type: 'warning', timeout: 0})
-    this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
+    // this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
     axios.get("/inbox/token").then((response) => {
       firebase
         .auth()
