@@ -15,7 +15,7 @@
           v-if="admin"
           v-tippy
           :content="trans.get('challenges.permalink')"
-          class="button top-right cursor-pointer"
+          class="button top-right custom cursor-pointer"
           style="top: 0; right: 0"
         >
           <i class="fad fa-link"></i>

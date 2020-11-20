@@ -32,7 +32,7 @@
 </head>
 
 <body>
-    <div class="top-right lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
+    <div class="top-right custom lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
         <i class="fal fa-globe"></i> <a href="/locale/es">es</a> <i class="fal fa-ellipsis-v"></i> <a href="/locale/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a href="/locale/en">en</a>
     </div>
 

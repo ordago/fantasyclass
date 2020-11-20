@@ -46473,7 +46473,7 @@ var render = function() {
                   expression: "{ arrow: true }"
                 }
               ],
-              staticClass: "top-right group-logo is-full-rounded",
+              staticClass: "top-right custom group-logo is-full-rounded",
               attrs: {
                 content:
                   "<i class='fas fa-users'></i> " + _vm.student.groups[0].name
@@ -46916,7 +46916,7 @@ var render = function() {
           _c(
             "div",
             {
-              staticClass: "dropdown is-right top-right is-hoverable",
+              staticClass: "dropdown is-right top-right  custom is-hoverable",
               staticStyle: { right: "10px" }
             },
             [

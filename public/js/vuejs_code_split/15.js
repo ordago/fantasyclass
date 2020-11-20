@@ -91,6 +91,9 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       menuActions: [{
         name: "inviteUser",
         title: "Invite User"
+      }, {
+        name: "report",
+        title: "Report to teacher"
       } // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: {
@@ -427,18 +430,16 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                   messageId: id,
                   roomId: roomId
                 });
-                console.log(roomId);
                 query = _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId);
-                _context3.next = 13;
+                _context3.next = 12;
                 return query.get();
 
-              case 13:
+              case 12:
                 room = _context3.sent;
-                console.log(room);
-                _context3.next = 17;
+                _context3.next = 15;
                 return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc("" + roomId);
 
-              case 17:
+              case 15:
                 users = _context3.sent;
                 users.get().then(function (doc) {
                   axios.post('/chat/notify', {
@@ -449,7 +450,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                   console.log("Error getting document:", error);
                 });
 
-              case 19:
+              case 17:
               case "end":
                 return _context3.stop();
             }
@@ -562,6 +563,9 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       switch (action.name) {
         case "inviteUser":
           return this.inviteUser(roomId);
+
+        case "report":
+          return this.report(this.messages);
 
         case "removeUser":
           return this.removeUser(roomId);
@@ -721,6 +725,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
         }, _callee9);
       }))();
     },
+    report: function report(messages) {},
     inviteUser: function inviteUser(roomId) {
       var _this16 = this;
 

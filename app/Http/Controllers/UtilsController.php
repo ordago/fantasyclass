@@ -153,7 +153,7 @@ class UtilsController extends Controller
 
         $headings = [
             __("students.name"),
-            __("students.username"),
+            __("auth.username"),
             __("students.password")
         ];
 

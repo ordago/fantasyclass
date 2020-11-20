@@ -65,6 +65,7 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
+        // { name: "report", title: "Report to teacher" },
         // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
@@ -329,12 +330,9 @@ export default {
       const { id } = await this.messagesRef(roomId).add(message);
       if (file) this.uploadFile({ file, messageId: id, roomId });
 
-      console.log(roomId);
-
       const query = roomsRef.doc(roomId);
       const room = await query.get();
-      console.log(room);
-
+      
       let users = await roomsRef.doc("" + roomId);
 
       users
@@ -387,6 +385,8 @@ export default {
       switch (action.name) {
         case "inviteUser":
           return this.inviteUser(roomId);
+        case "report":
+          return this.report(this.messages);
         case "removeUser":
           return this.removeUser(roomId);
         case "deleteRoom":
@@ -507,6 +507,9 @@ export default {
       await usersRef.doc("" + uid).set({ _id: uid, username: username });
       await roomsRef.add({ users: ["" + uid, this.currentUserId] });
       this.fetchRooms();
+    },
+    report(messages) {
+
     },
     inviteUser(roomId) {
       this.$buefy.dialog.prompt({

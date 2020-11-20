@@ -918,7 +918,7 @@ var render = function() {
                 "span",
                 {
                   directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "button top-right cursor-pointer",
+                  staticClass: "button top-right custom cursor-pointer",
                   staticStyle: { top: "0", right: "0" },
                   attrs: { content: _vm.trans.get("challenges.permalink") },
                   on: { click: _vm.copyPermalink }

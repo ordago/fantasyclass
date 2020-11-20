@@ -1416,12 +1416,17 @@
       height: 100%;
   }
 
-  .top-right {
+  .top-right  {
       position: absolute;
-      top: 10px;
-      right: 19px;
       z-index: 12;
-  }
+     
+    }
+
+    .top-right.custom {
+        top: 10px;
+        right: 19px;
+    }
+    
 
   .lang,
   .group-logo {

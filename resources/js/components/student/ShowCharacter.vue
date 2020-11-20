@@ -16,7 +16,7 @@
       v-if="student.grouplogo"
       v-tippy="{ arrow: true }"
       :content="'<i class=\'fas fa-users\'></i> ' + student.groups[0].name"
-      class="top-right group-logo is-full-rounded"
+      class="top-right custom group-logo is-full-rounded"
     >
       <img :src="student.grouplogo" class="is-full-rounded" />
     </span>
