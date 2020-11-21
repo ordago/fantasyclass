@@ -26,7 +26,7 @@
     </div>
     <div class="my-3">
       <span
-        class="tag is-dark is-medium mr-2"
+        class="tag is-dark is-medium mr-2 p-5"
         v-for="(tag, index) in tagsReactive"
         :key="tag.id"
         v-tippy

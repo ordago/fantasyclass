@@ -269,6 +269,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/inbox/token', 'UtilsController@getFirebaseToken');
     Route::post('/users/chat', 'UtilsController@getUserChatInfo');
     Route::post('/chat/notify', 'UtilsController@notifyChat');
+    Route::post('/chat/send2admin', 'UtilsController@send2admin');
     
     // Mobile
     Route::get('/mobile', 'UtilsController@mobile');

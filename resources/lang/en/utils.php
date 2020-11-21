@@ -26,4 +26,7 @@ return [
 
     'chat_reminder' => 'We\'re having some issues with the chat. Please be patient.',
     'chat_warning' => 'Don\'t share personal or sensible information in the chat.',
+    'chat_report' => 'Report user',
+    'chat_report_confirm' => 'Are you sure to report this user?',
+    'report' => 'Report',
 ];

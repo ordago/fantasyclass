@@ -5,7 +5,7 @@
        @foreach($music as $name => $sound)
        <div class="sound">
               <p>{{ $name }}</p>
-              <audio src="/music/{{ $sound }}" controls loop>
+              <audio src="/music/{{ $sound }}" controls loop preload="none">
                      <p>Tu navegador no implementa el elemento audio.</p>
               </audio>
        </div>

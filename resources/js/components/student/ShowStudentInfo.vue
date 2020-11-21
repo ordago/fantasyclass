@@ -238,7 +238,7 @@
 
         <b-tab-item
           :label="trans.get('students.inventory')"
-          class="p-2"
+          class="p-2 pt-4"
           icon="backpack"
           icon-pack="fad"
         >

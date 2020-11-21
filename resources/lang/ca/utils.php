@@ -25,4 +25,8 @@ return [
 
     'chat_reminder' => 'Estem tenint problemes amb el xat, preguem paciència.',
     'chat_warning' => 'No compartiu informació personal o sensible al xat.',
+    'chat_report' => 'Denúncia usuari',
+    'chat_report_confirm' => 'Estàs segur/a de denunciar aquest usuari?',
+    'report' => 'Denúncia',
+
 ];

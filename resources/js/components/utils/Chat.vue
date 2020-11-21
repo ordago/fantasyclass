@@ -1,4 +1,5 @@
 <template>
+<div>
   <chat-window
     height="calc(100vh - 56px)"
     :styles="styles"
@@ -20,6 +21,7 @@
     @typingMessage="typingMessage"
   >
   </chat-window>
+</div>
 </template>
 
 <script>
@@ -65,7 +67,7 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
-        // { name: "report", title: "Report to teacher" },
+        { name: "report", title: this.trans.get('utils.chat_report') },
         // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
@@ -74,7 +76,7 @@ export default {
     };
   },
   mounted() {
-    this.$toast(this.trans.get('utils.chat_warning'), {type: 'warning', timeout: 0})
+    this.$toast(this.trans.get('utils.chat_warning'), {type: 'warning', timeout: 3000})
     // this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
     axios.get("/inbox/token").then((response) => {
       firebase
@@ -510,6 +512,24 @@ export default {
     },
     report(messages) {
 
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("utils.report"),
+        message: this.trans.get("utils.chat_report_confirm"),
+        confirmText: this.trans.get("utils.report"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+            axios.post('/chat/send2admin', { messages: this.messages, room: this.selectedRoom}).then(response => {
+              Utils.toast(
+                this,
+                "User has been reported",
+                TYPE.SUCCESS
+              );
+            })
+        }
+      });
     },
     inviteUser(roomId) {
       this.$buefy.dialog.prompt({

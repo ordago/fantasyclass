@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.20 Beta (XX/11/2020)
+### Added
+- Report user in chat.
+
+### Changed
+- Improvements in mobile view.
+
 ## v1.19.2 Beta (14/11/2020)
 ### Added
 - Android app.

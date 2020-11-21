@@ -2002,7 +2002,7 @@ var render = function() {
               _c(
                 "b-tab-item",
                 {
-                  staticClass: "p-2",
+                  staticClass: "p-2 pt-4",
                   attrs: {
                     label: _vm.trans.get("students.inventory"),
                     icon: "backpack",

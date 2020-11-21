@@ -658,7 +658,7 @@ var render = function() {
             {
               directives: [{ name: "tippy", rawName: "v-tippy" }],
               key: tag.id,
-              staticClass: "tag is-dark is-medium mr-2",
+              staticClass: "tag is-dark is-medium mr-2 p-5",
               attrs: { content: tag.description }
             },
             [
