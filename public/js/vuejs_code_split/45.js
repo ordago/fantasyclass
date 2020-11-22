@@ -683,7 +683,7 @@ var render = function() {
                                 expression: "item.for_sale"
                               }
                             },
-                            [_vm._v("For sale?")]
+                            [_vm._v(_vm._s(_vm.trans.get("shop.for_sale")))]
                           )
                         ],
                         1

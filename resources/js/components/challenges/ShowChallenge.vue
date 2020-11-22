@@ -775,6 +775,7 @@ export default {
           question: this.question,
         })
         .then((response) => {
+          console.log(response.data)
           this.isQuestionModalActive = false;
           this.$parent.$parent.getChallenges(
             this.challenge.challenges_group_id

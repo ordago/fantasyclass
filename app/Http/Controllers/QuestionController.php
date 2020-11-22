@@ -6,7 +6,6 @@ use App\Challenge;
 use App\Classroom;
 use App\Http\Classes\Functions;
 use App\Question;
-use Illuminate\Http\Request;
 
 class QuestionController extends Controller
 {
@@ -14,7 +13,7 @@ class QuestionController extends Controller
     {
         $this->middleware('verified');
     }
-
+    
     public function store()
     {
         $data = request()->validate([

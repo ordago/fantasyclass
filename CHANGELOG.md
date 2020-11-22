@@ -6,6 +6,7 @@
 
 ### Changed
 - Improvements in mobile view.
+- Music preload disabled.
 
 ## v1.19.2 Beta (14/11/2020)
 ### Added

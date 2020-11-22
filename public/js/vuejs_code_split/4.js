@@ -781,6 +781,7 @@ var InputEmoji = function InputEmoji() {
       axios.post("/classroom/challenge/question", {
         question: this.question
       }).then(function (response) {
+        console.log(response.data);
         _this7.isQuestionModalActive = false;
 
         _this7.$parent.$parent.getChallenges(_this7.challenge.challenges_group_id);

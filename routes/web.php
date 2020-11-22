@@ -185,6 +185,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
 
+        // Question bank
+        // Route::get('/{code}/questions', 'QuestionBankController@index');
+
+
         // Evaluation
         Route::get('/{code}/evaluation/report', 'EvaluationController@report');
         Route::get('/{code}/evaluation', 'EvaluationController@index');
