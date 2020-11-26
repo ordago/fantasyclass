@@ -44,6 +44,12 @@ class Classroom extends Model
     {
         return $this->hasMany(Item::class);
     }
+
+    public function questionBanks()
+    {
+        return $this->hasMany(QuestionBank::class);
+    }
+    
     public function tags()
     {
         return $this->hasMany(Tag::class);

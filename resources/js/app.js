@@ -122,6 +122,10 @@ Vue.component('report', () => import('./components/evaluation/Report.vue'));
 Vue.component('rubric-management', () => import('./components/evaluation/RubricManagement.vue'));
 Vue.component('rubric-create', () => import('./components/evaluation/RubricCreate.vue'));
 
+Vue.component('question-banks', () => import('./components/questions/ShowQuestionBanks.vue'));
+Vue.component('create-question-bank', () => import('./components/questions/CreateQuestionBank.vue'));
+Vue.component('show-questions', () => import('./components/questions/ShowQuestions.vue'));
+
 // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 // Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);

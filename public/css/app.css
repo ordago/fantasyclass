@@ -17848,6 +17848,11 @@ textPath {
 }
 
 /**************/
+/* Content fix */
+.media-content .content {
+  overflow: hidden;
+}
+
 /* Google captcha */
 .text-xs-center {
   text-align: center;

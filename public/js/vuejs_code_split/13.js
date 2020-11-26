@@ -1,22 +1,23 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[13],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/Editor.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/Editor.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vue_xlsx__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-xlsx */ "./node_modules/vue-xlsx/dist/vue-xlsx.es.js");
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! element-ui */ "./node_modules/element-ui/lib/element-ui.common.js");
+/* harmony import */ var element_ui__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(element_ui__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var element_tiptap__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! element-tiptap */ "./node_modules/element-tiptap/lib/element-tiptap.esm.js");
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! element-ui/lib/theme-chalk/index.css */ "./node_modules/element-ui/lib/theme-chalk/index.css");
+/* harmony import */ var element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(element_ui_lib_theme_chalk_index_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var element_tiptap_lib_index_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! element-tiptap/lib/index.css */ "./node_modules/element-tiptap/lib/index.css");
+/* harmony import */ var element_tiptap_lib_index_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(element_tiptap_lib_index_css__WEBPACK_IMPORTED_MODULE_4__);
 //
 //
 //
@@ -36,37 +37,56 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+ // import ElementUI's styles
+
+ // import this package's styles
+
+ // use ElementUI's plugin
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(element_ui__WEBPACK_IMPORTED_MODULE_1___default.a); // use this package's plugin
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(element_tiptap__WEBPACK_IMPORTED_MODULE_2__["ElementTiptapPlugin"], {
+  /* plugin options */
+}); // Now you register `'el-tiptap'` component globally.
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  components: {
-    XlsxRead: vue_xlsx__WEBPACK_IMPORTED_MODULE_0__["XlsxRead"],
-    XlsxJson: vue_xlsx__WEBPACK_IMPORTED_MODULE_0__["XlsxJson"]
-  },
-  props: ["type"],
+  props: ["code", "height"],
+  created: function created() {},
   data: function data() {
     return {
-      file: null,
-      showExcel: false
+      extensions: [new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Doc"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Text"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["History"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Paragraph"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Heading"]({
+        level: 5
+      }), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Bold"](), // render command-button in bubble menu.
+      new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Underline"](), // render command-button in bubble menu but not in menubar.
+      new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Italic"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Strike"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["ListItem"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["BulletList"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["OrderedList"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Link"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Image"]({
+        uploadRequest: function uploadRequest(file) {
+          var formData = new FormData();
+          formData.append("file", file);
+          var request = axios.post("/classroom/challenges/image", formData);
+          return request.then(function (result) {
+            return result.data;
+          });
+        }
+      }), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["CodeBlock"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Blockquote"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TextAlign"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Indent"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["LineHeight"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["HorizontalRule"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Table"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TableHeader"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TableCell"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TableRow"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["FontType"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["FontSize"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TextColor"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["TextHighlight"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["FormatClear"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Print"](), new element_tiptap__WEBPACK_IMPORTED_MODULE_2__["Fullscreen"]()]
     };
   },
   methods: {
-    onChange: function onChange(event) {
-      this.file = event ? event : null;
-      this.showExcel = false;
-    },
-    importExcel: function importExcel(data) {
-      if (this.type == "addstudent") {
-        this.$parent.addFromExcel(data);
-      }
-    }
+    sendImage: function sendImage() {}
+  },
+  components: {
+    ElementUI: element_ui__WEBPACK_IMPORTED_MODULE_1___default.a,
+    ElementTiptapPlugin: element_tiptap__WEBPACK_IMPORTED_MODULE_2__["ElementTiptapPlugin"]
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214&":
+/*!***************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214& ***!
+  \***************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -81,93 +101,62 @@ var render = function() {
   return _c(
     "div",
     [
-      _c(
-        "button",
-        {
-          staticClass: "button is-success mb-3",
-          on: {
-            click: function($event) {
-              _vm.showExcel = !_vm.showExcel
-            }
-          }
+      _vm._m(0),
+      _vm._v(" "),
+      _c("el-tiptap", {
+        attrs: {
+          extensions: _vm.extensions,
+          height: _vm.height,
+          placeholder: "Write here some fun stuff!"
         },
-        [
-          _c("i", { staticClass: "fad fa-file-spreadsheet mr-2" }),
-          _vm._v(" " + _vm._s(_vm.trans.get("students.excel")) + " \n  ")
-        ]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "mb-2" }, [
-        _vm.showExcel
-          ? _c(
-              "a",
-              { attrs: { href: "/templates/students.xlsx", download: "" } },
-              [
-                _c("i", { staticClass: "fas fa-download mr-2" }),
-                _vm._v(" " + _vm._s(_vm.trans.get("students.excel_template")))
-              ]
-            )
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _vm.showExcel
-        ? _c(
-            "b-field",
-            [
-              _c(
-                "b-upload",
-                { attrs: { "drag-drop": "" }, on: { input: _vm.onChange } },
-                [
-                  _c("section", { staticClass: "section" }, [
-                    _c("div", { staticClass: "content has-text-centered" }, [
-                      _c(
-                        "p",
-                        [
-                          _c("b-icon", {
-                            attrs: { icon: "upload", size: "is-large" }
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c("p", [_vm._v(_vm._s(_vm.trans.get("students.dnd")))])
-                    ])
-                  ])
-                ]
-              )
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c(
-        "xlsx-read",
-        { attrs: { file: _vm.file } },
-        [_c("xlsx-json", { on: { parsed: _vm.importExcel } })],
-        1
-      )
+        model: {
+          value: _vm.$parent.content,
+          callback: function($$v) {
+            _vm.$set(_vm.$parent, "content", $$v)
+          },
+          expression: "$parent.content"
+        }
+      })
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "tag is-warning my-2" }, [
+      _vm._v("\n    %HP% "),
+      _c("i", { staticClass: "fas fa-heart colored" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
+      _vm._v(" %XP%\n    "),
+      _c("i", { staticClass: "fas fa-fist-raised colored" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
+      _vm._v(" %GOLD%\n    "),
+      _c("i", { staticClass: "fas fa-coins colored" })
+    ])
+  }
+]
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/utils/ImportExcel.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/utils/ImportExcel.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/utils/Editor.vue":
+/*!**************************************************!*\
+  !*** ./resources/js/components/utils/Editor.vue ***!
+  \**************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ImportExcel.vue?vue&type=template&id=655894d9& */ "./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9&");
-/* harmony import */ var _ImportExcel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ImportExcel.vue?vue&type=script&lang=js& */ "./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js&");
+/* harmony import */ var _Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Editor.vue?vue&type=template&id=d7987214& */ "./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214&");
+/* harmony import */ var _Editor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Editor.vue?vue&type=script&lang=js& */ "./resources/js/components/utils/Editor.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -177,9 +166,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ImportExcel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Editor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -189,38 +178,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/utils/ImportExcel.vue"
+component.options.__file = "resources/js/components/utils/Editor.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/utils/Editor.vue?vue&type=script&lang=js&":
+/*!***************************************************************************!*\
+  !*** ./resources/js/components/utils/Editor.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportExcel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ImportExcel.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/ImportExcel.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportExcel_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Editor.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/Editor.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214& ***!
+  \*********************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ImportExcel.vue?vue&type=template&id=655894d9& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/ImportExcel.vue?vue&type=template&id=655894d9&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Editor.vue?vue&type=template&id=d7987214& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/utils/Editor.vue?vue&type=template&id=d7987214&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ImportExcel_vue_vue_type_template_id_655894d9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Editor_vue_vue_type_template_id_d7987214___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

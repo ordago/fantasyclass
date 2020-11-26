@@ -2694,7 +2694,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 var Editor = function Editor() {
-  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(12)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(7), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ../utils/Editor.vue */ "./resources/js/components/utils/Editor.vue"));
 };
 
 var IconSelector = function IconSelector() {
@@ -71716,61 +71716,61 @@ Vue.use(buefy__WEBPACK_IMPORTED_MODULE_7__["default"], {
 
 Vue.use(vue_croppa__WEBPACK_IMPORTED_MODULE_8___default.a);
 Vue.component('create-classroom', function () {
-  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue"));
+  return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue"));
 });
 Vue.component('join-classroom', __webpack_require__(/*! ./components/classroom/JoinClassroom.vue */ "./resources/js/components/classroom/JoinClassroom.vue")["default"]);
 Vue.component('clone-classroom', __webpack_require__(/*! ./components/classroom/CloneClassroom.vue */ "./resources/js/components/classroom/CloneClassroom.vue")["default"]);
 Vue.component('add-students', function () {
-  return __webpack_require__.e(/*! import() */ 46).then(__webpack_require__.bind(null, /*! ./components/student/AddStudents.vue */ "./resources/js/components/student/AddStudents.vue"));
+  return __webpack_require__.e(/*! import() */ 49).then(__webpack_require__.bind(null, /*! ./components/student/AddStudents.vue */ "./resources/js/components/student/AddStudents.vue"));
 });
 Vue.component('show-students', __webpack_require__(/*! ./components/student/ShowStudents.vue */ "./resources/js/components/student/ShowStudents.vue")["default"]);
 Vue.component('show-character', __webpack_require__(/*! ./components/student/ShowCharacter.vue */ "./resources/js/components/student/ShowCharacter.vue")["default"]);
 Vue.component('show-students-student', function () {
-  return __webpack_require__.e(/*! import() */ 49).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentsStudent.vue */ "./resources/js/components/student/ShowStudentsStudent.vue"));
+  return __webpack_require__.e(/*! import() */ 52).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentsStudent.vue */ "./resources/js/components/student/ShowStudentsStudent.vue"));
 });
 Vue.component('show-group-view', __webpack_require__(/*! ./components/student/ShowGroupView.vue */ "./resources/js/components/student/ShowGroupView.vue")["default"]);
 Vue.component('show-student-info', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(53), __webpack_require__.e(47)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(56), __webpack_require__.e(50)]).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentInfo.vue */ "./resources/js/components/student/ShowStudentInfo.vue"));
 });
 Vue.component('show-student-map', function () {
-  return __webpack_require__.e(/*! import() */ 48).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentMap.vue */ "./resources/js/components/student/ShowStudentMap.vue"));
+  return __webpack_require__.e(/*! import() */ 51).then(__webpack_require__.bind(null, /*! ./components/student/ShowStudentMap.vue */ "./resources/js/components/student/ShowStudentMap.vue"));
 });
 Vue.component('show-student', __webpack_require__(/*! ./components/student/ShowStudent.vue */ "./resources/js/components/student/ShowStudent.vue")["default"]);
 Vue.component('show-student-teacher', __webpack_require__(/*! ./components/student/ShowStudentTeacher.vue */ "./resources/js/components/student/ShowStudentTeacher.vue")["default"]);
 Vue.component('show-card', function () {
-  return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue"));
+  return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue"));
 });
 Vue.component('show-cards', function () {
-  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue"));
+  return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue"));
 });
 Vue.component('create-card', function () {
-  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue"));
+  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue"));
 });
 Vue.component('create-behaviour', function () {
-  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
+  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
 });
 Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
 Vue.component('create-badge', function () {
-  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
+  return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
 });
 Vue.component('show-badges', __webpack_require__(/*! ./components/badge/ShowBadges.vue */ "./resources/js/components/badge/ShowBadges.vue")["default"]);
 Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
 Vue.component('show-level', __webpack_require__(/*! ./components/level/ShowLevel.vue */ "./resources/js/components/level/ShowLevel.vue")["default"]);
 Vue.component('show-levels', function () {
-  return __webpack_require__.e(/*! import() */ 39).then(__webpack_require__.bind(null, /*! ./components/level/ShowLevels.vue */ "./resources/js/components/level/ShowLevels.vue"));
+  return __webpack_require__.e(/*! import() */ 41).then(__webpack_require__.bind(null, /*! ./components/level/ShowLevels.vue */ "./resources/js/components/level/ShowLevels.vue"));
 });
 Vue.component('show-level-student', __webpack_require__(/*! ./components/level/ShowLevelStudent.vue */ "./resources/js/components/level/ShowLevelStudent.vue")["default"]);
 Vue.component('show-challenges-group', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4), __webpack_require__.e(11), __webpack_require__.e(10), __webpack_require__.e(33)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallengesGroup.vue */ "./resources/js/components/challenges/ShowChallengesGroup.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(4), __webpack_require__.e(11), __webpack_require__.e(10), __webpack_require__.e(35)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallengesGroup.vue */ "./resources/js/components/challenges/ShowChallengesGroup.vue"));
 });
 Vue.component('show-challenges', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(4), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue"));
 });
 Vue.component('show-challenge', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenge.vue */ "./resources/js/components/challenges/ShowChallenge.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(12), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenge.vue */ "./resources/js/components/challenges/ShowChallenge.vue"));
 });
 Vue.component('import-challenge', function () {
-  return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/challenges/ImportChallenges.vue */ "./resources/js/components/challenges/ImportChallenges.vue"));
+  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/challenges/ImportChallenges.vue */ "./resources/js/components/challenges/ImportChallenges.vue"));
 });
 Vue.component('create-challenges-group', function () {
   return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./components/challenges/CreateChallengeGroup.vue */ "./resources/js/components/challenges/CreateChallengeGroup.vue"));
@@ -71779,56 +71779,65 @@ Vue.component('create-challenges', function () {
   return __webpack_require__(/*! ./components/challenges/CreateChallenges.vue */ "./resources/js/components/challenges/CreateChallenges.vue")["default"];
 });
 Vue.component('show-question', function () {
-  return __webpack_require__.e(/*! import() */ 17).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowQuestion.vue */ "./resources/js/components/challenges/ShowQuestion.vue"));
+  return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowQuestion.vue */ "./resources/js/components/challenges/ShowQuestion.vue"));
 });
 Vue.component('create-group', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(52), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/group/CreateGroups.vue */ "./resources/js/components/group/CreateGroups.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(55), __webpack_require__.e(17)]).then(__webpack_require__.bind(null, /*! ./components/group/CreateGroups.vue */ "./resources/js/components/group/CreateGroups.vue"));
 });
 Vue.component('edit-group', function () {
-  return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./components/group/EditGroup.vue */ "./resources/js/components/group/EditGroup.vue"));
+  return __webpack_require__.e(/*! import() */ 40).then(__webpack_require__.bind(null, /*! ./components/group/EditGroup.vue */ "./resources/js/components/group/EditGroup.vue"));
 });
 Vue.component('show-shop', function () {
-  return __webpack_require__.e(/*! import() */ 45).then(__webpack_require__.bind(null, /*! ./components/shop/ShowShop.vue */ "./resources/js/components/shop/ShowShop.vue"));
+  return __webpack_require__.e(/*! import() */ 48).then(__webpack_require__.bind(null, /*! ./components/shop/ShowShop.vue */ "./resources/js/components/shop/ShowShop.vue"));
 });
 Vue.component('shop-create', function () {
-  return __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! ./components/shop/ShopCreate.vue */ "./resources/js/components/shop/ShopCreate.vue"));
+  return __webpack_require__.e(/*! import() */ 47).then(__webpack_require__.bind(null, /*! ./components/shop/ShopCreate.vue */ "./resources/js/components/shop/ShopCreate.vue"));
 });
 Vue.component('show-maps', function () {
-  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/map/ShowMaps.vue */ "./resources/js/components/map/ShowMaps.vue"));
+  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/map/ShowMaps.vue */ "./resources/js/components/map/ShowMaps.vue"));
 });
 Vue.component('create-map', function () {
-  return __webpack_require__.e(/*! import() */ 40).then(__webpack_require__.bind(null, /*! ./components/map/CreateMap.vue */ "./resources/js/components/map/CreateMap.vue"));
+  return __webpack_require__.e(/*! import() */ 42).then(__webpack_require__.bind(null, /*! ./components/map/CreateMap.vue */ "./resources/js/components/map/CreateMap.vue"));
 });
 Vue.component('settings', __webpack_require__(/*! ./components/settings/Settings.vue */ "./resources/js/components/settings/Settings.vue")["default"]);
 Vue.component('show-event', function () {
-  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvent.vue */ "./resources/js/components/event/ShowEvent.vue"));
+  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvent.vue */ "./resources/js/components/event/ShowEvent.vue"));
 });
 Vue.component('show-events', function () {
-  return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvents.vue */ "./resources/js/components/event/ShowEvents.vue"));
+  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvents.vue */ "./resources/js/components/event/ShowEvents.vue"));
 });
 Vue.component('show-pets', function () {
-  return __webpack_require__.e(/*! import() */ 41).then(__webpack_require__.bind(null, /*! ./components/pet/ShowPets.vue */ "./resources/js/components/pet/ShowPets.vue"));
+  return __webpack_require__.e(/*! import() */ 43).then(__webpack_require__.bind(null, /*! ./components/pet/ShowPets.vue */ "./resources/js/components/pet/ShowPets.vue"));
 });
 Vue.component('edit-rules', function () {
-  return __webpack_require__.e(/*! import() */ 43).then(__webpack_require__.bind(null, /*! ./components/rules/EditRules.vue */ "./resources/js/components/rules/EditRules.vue"));
+  return __webpack_require__.e(/*! import() */ 46).then(__webpack_require__.bind(null, /*! ./components/rules/EditRules.vue */ "./resources/js/components/rules/EditRules.vue"));
 });
 Vue.component('profile', function () {
-  return __webpack_require__.e(/*! import() */ 42).then(__webpack_require__.bind(null, /*! ./components/profile/Profile.vue */ "./resources/js/components/profile/Profile.vue"));
+  return __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! ./components/profile/Profile.vue */ "./resources/js/components/profile/Profile.vue"));
 });
 Vue.component('tag-management', function () {
-  return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/evaluation/TagManagement.vue */ "./resources/js/components/evaluation/TagManagement.vue"));
+  return __webpack_require__.e(/*! import() */ 39).then(__webpack_require__.bind(null, /*! ./components/evaluation/TagManagement.vue */ "./resources/js/components/evaluation/TagManagement.vue"));
 });
 Vue.component('grade', function () {
-  return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./components/evaluation/Grade.vue */ "./resources/js/components/evaluation/Grade.vue"));
+  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/evaluation/Grade.vue */ "./resources/js/components/evaluation/Grade.vue"));
 });
 Vue.component('report', function () {
-  return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./components/evaluation/Report.vue */ "./resources/js/components/evaluation/Report.vue"));
+  return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/evaluation/Report.vue */ "./resources/js/components/evaluation/Report.vue"));
 });
 Vue.component('rubric-management', function () {
-  return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricManagement.vue */ "./resources/js/components/evaluation/RubricManagement.vue"));
+  return __webpack_require__.e(/*! import() */ 38).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricManagement.vue */ "./resources/js/components/evaluation/RubricManagement.vue"));
 });
 Vue.component('rubric-create', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(21)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
+});
+Vue.component('question-banks', function () {
+  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./components/questions/ShowQuestionBanks.vue */ "./resources/js/components/questions/ShowQuestionBanks.vue"));
+});
+Vue.component('create-question-bank', function () {
+  return __webpack_require__.e(/*! import() */ 45).then(__webpack_require__.bind(null, /*! ./components/questions/CreateQuestionBank.vue */ "./resources/js/components/questions/CreateQuestionBank.vue"));
+});
+Vue.component('show-questions', function () {
+  return __webpack_require__.e(/*! import() */ 6).then(__webpack_require__.bind(null, /*! ./components/questions/ShowQuestions.vue */ "./resources/js/components/questions/ShowQuestions.vue"));
 }); // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 // Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);
@@ -71836,30 +71845,30 @@ Vue.component('rubric-create', function () {
 // Vue.component('editor', () => import('./components/utils/Editor.vue').default);
 
 Vue.component('image-bank', function () {
-  return __webpack_require__.e(/*! import() */ 50).then(__webpack_require__.bind(null, /*! ./components/utils/ImageBank.vue */ "./resources/js/components/utils/ImageBank.vue"));
+  return __webpack_require__.e(/*! import() */ 53).then(__webpack_require__.bind(null, /*! ./components/utils/ImageBank.vue */ "./resources/js/components/utils/ImageBank.vue"));
 });
 Vue.component('count-down', function () {
-  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue"));
+  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue"));
 });
 Vue.component('notifications', __webpack_require__(/*! ./components/utils/Notifications.vue */ "./resources/js/components/utils/Notifications.vue")["default"]);
 Vue.component('input-emoji', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(9)]).then(__webpack_require__.bind(null, /*! ./components/utils/InputEmoji.vue */ "./resources/js/components/utils/InputEmoji.vue"))["default"];
 });
 Vue.component('import-excel', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(13)]).then(__webpack_require__.bind(null, /*! ./components/utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"))["default"];
+  return Promise.all(/*! import() */[__webpack_require__.e(8), __webpack_require__.e(14)]).then(__webpack_require__.bind(null, /*! ./components/utils/ImportExcel.vue */ "./resources/js/components/utils/ImportExcel.vue"))["default"];
 });
 Vue.component('wheel', __webpack_require__(/*! ./components/utils/Wheel.vue */ "./resources/js/components/utils/Wheel.vue")["default"]);
 Vue.component('volume-meter', function () {
-  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue"));
+  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue"));
 });
 Vue.component('massive-actions', function () {
-  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue"));
+  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue"));
 });
 Vue.component('chat', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(15), __webpack_require__.e(16)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"));
 });
 Vue.component('mobile', function () {
-  return __webpack_require__.e(/*! import() */ 51).then(__webpack_require__.bind(null, /*! ./components/utils/Mobile.vue */ "./resources/js/components/utils/Mobile.vue"));
+  return __webpack_require__.e(/*! import() */ 54).then(__webpack_require__.bind(null, /*! ./components/utils/Mobile.vue */ "./resources/js/components/utils/Mobile.vue"));
 });
 /**
  * Next, we will create a fresh Vue application instance and attach it to

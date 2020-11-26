@@ -1,15 +1,16 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[35],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _utils_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../utils.js */ "./resources/js/utils.js");
+/* harmony import */ var _CreateChallengeGroup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateChallengeGroup.vue */ "./resources/js/components/challenges/CreateChallengeGroup.vue");
+/* harmony import */ var _ShowChallenges_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue");
 //
 //
 //
@@ -54,114 +55,112 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["classroom", "grades", "settings", "admin"],
-  created: function created() {},
+  props: ["code", "challengesgroup", "icon"],
+  mounted: function mounted() {},
   data: function data() {
-    return {};
+    return {
+      activeAddGroup: false,
+      activeGroup: false,
+      updated: false,
+      challenges: [],
+      isLoading: false
+    };
   },
   methods: {
-    getGradeClass: function getGradeClass(grade) {
-      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getGradeClass(grade, this.settings.eval_max);
+    refresh: function refresh(elem) {
+      if (elem.challenges_group_id) {
+        var challenge = this.challengesgroup.filter(function (data) {
+          return data.id == elem.challenges_group_id;
+        });
+        challenge[0].children.push(elem);
+      } else this.challengesgroup.push(elem);
+
+      this.$forceUpdate();
     },
-    getPassFail: function getPassFail(grade) {
-      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getPassFail(grade, this.settings.eval_max);
-    },
-    getEmoji: function getEmoji(grade) {
-      return _utils_js__WEBPACK_IMPORTED_MODULE_0__["default"].getEmoji(grade, this.settings.eval_max);
-    },
-    getGrade: function getGrade(grade) {
-      var totalGrades = 0;
-      var totalWeight = 0;
-      grade.evaluables.forEach(function (element) {
-        totalGrades += element.grade * element.pivot.weight;
-        totalWeight += element.pivot.weight;
-      });
-      if (totalGrades == 0) return 0;
-      return (totalGrades / totalWeight).toFixed(2);
-    },
-    finalGrade: function finalGrade(student) {
+    getChallenges: function getChallenges(id) {
       var _this = this;
 
-      var finalGrade = 0;
-      student.grades.forEach(function (grade) {
-        finalGrade += _this.getGrade(grade) * grade.percent / 100;
-      });
-      return finalGrade.toFixed(2);
-    },
-    exportReport: function exportReport() {
-      var table = document.getElementById('evaluationReport');
-      var columns = table.getElementsByTagName("th");
-      var rows = table.getElementsByTagName("tr");
-      var headings = [];
-      var elements = new Array();
-
-      for (var n = 0; n < columns.length; n++) {
-        var innerHtml = columns[n].innerHTML; // Remove Html Tags
-
-        var header = innerHtml.replace(/(<([^>]+)>)/gi, ""); // Remove break lines
-
-        header = header.replace(/(\r\n|\n|\r)/gm, ""); // Remove whitespaces
-
-        header = header.replace(/\s{2,}/g, "");
-        headings.push(header.trim());
-      }
-
-      for (var n = 0; n < rows.length; n++) {
-        var values = [];
-        var row = rows[n];
-        var cells = row.cells;
-
-        for (var cont = 0; cont < cells.length; cont++) {
-          var innerHtml = cells[cont].innerHTML; // Remove Html Tags
-
-          var value = innerHtml.replace(/(<([^>]+)>)/gi, ""); // Remove break lines
-
-          value = value.replace(/(\r\n|\n|\r)/gm, "");
-          values.push(value.trim());
-        }
-
-        elements.push(values);
-      }
-
-      axios.post('/classroom/evaluation/exportEvaluationReport/', {
-        headings: headings,
-        values: elements
-      }, {
-        responseType: 'blob'
+      // this.isLoading = true;
+      axios.post("/classroom/" + this.code + "/challenges/get", {
+        id: id
       }).then(function (response) {
-        var blob = new Blob([response.data], {
-          type: response.data.type
-        });
-        var link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        var contentDisposition = response.headers['content-disposition'];
-        var fileName = 'unknown';
-
-        if (contentDisposition) {
-          var fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-          var matches = fileNameRegex.exec(contentDisposition);
-
-          if (matches != null && matches[1]) {
-            fileName = matches[1].replace(/['"]/g, '');
-          }
-        }
-
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(link.href);
+        // this.isLoading = false;
+        _this.challenges = response.data; // this.$forceUpdate();
       });
+    }
+  },
+  components: {
+    CreateChallengeGroup: _CreateChallengeGroup_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ShowChallenges: _ShowChallenges_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
+  computed: {
+    buttonAddGroup: function buttonAddGroup() {
+      return this.activeAddGroup ? this.trans.get("general.cancel") : "<i class='far fa-plus pr-2'></i>" + this.trans.get("challenges.add_category");
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -173,173 +172,201 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "w-100 p-2 content" }, [
+  return _c("div", { staticClass: "columns p-2" }, [
     _c(
-      "button",
-      { staticClass: "button is-dark noprint", on: { click: _vm.print } },
-      [_c("i", { staticClass: "fas fa-print" })]
-    ),
-    _vm._v(" "),
-    _c(
-      "button",
+      "div",
       {
-        staticClass: "button is-success noprint",
-        attrs: { formtarget: "_blank" },
-        on: { click: _vm.exportReport }
-      },
-      [_c("i", { staticClass: "fas fa-file-excel" })]
-    ),
-    _vm._v(" "),
-    _c(
-      "table",
-      {
-        staticClass: "grades has-background-light mt-3",
-        attrs: { id: "evaluationReport" }
+        staticClass: "column is-narrow pr-0",
+        staticStyle: { "min-width": "400px" }
       },
       [
-        _c("th", [_vm._v(_vm._s(_vm.trans.get("evaluation.student")))]),
-        _vm._v(" "),
-        _vm._l(_vm.grades[0].grades, function(tag, index) {
-          return _c("th", { key: index + "-" + tag.id }, [
-            _vm._v("\n            " + _vm._s(tag.name) + "\n            "),
-            _c("br"),
-            _vm._v("\n            (" + _vm._s(tag.percent) + " %)\n        ")
-          ])
-        }),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total")]),
-        _vm._v(" "),
         _c(
-          "tbody",
-          _vm._l(_vm.grades, function(student) {
-            return _c(
-              "tr",
-              { key: student.student_id },
+          "article",
+          { staticClass: "panel is-sticky-panel is-info" },
+          [
+            _c(
+              "p",
+              {
+                staticClass:
+                  "panel-heading is-flex has-space-between align-items-center p-3"
+              },
               [
-                _c("td", [_vm._v(_vm._s(student.name))]),
+                _c("span", [
+                  _vm._v(_vm._s(_vm.trans.get("challenges.categories")))
+                ]),
                 _vm._v(" "),
-                _vm._l(student.grades, function(grade) {
-                  return _c("td", { key: grade.id }, [
-                    _vm.admin ||
-                    (_vm.settings.eval_type != 1 && _vm.settings.eval_type != 2)
-                      ? _c("span", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "tag is-size-6",
-                              class: _vm.getGradeClass(_vm.getGrade(grade))
-                            },
-                            [_vm._v(_vm._s(_vm.getGrade(grade)))]
+                _c("button", {
+                  staticClass: "button",
+                  domProps: { innerHTML: _vm._s(_vm.buttonAddGroup) },
+                  on: {
+                    click: function($event) {
+                      _vm.activeAddGroup = !_vm.activeAddGroup
+                    }
+                  }
+                })
+              ]
+            ),
+            _vm._v(" "),
+            _vm._l(_vm.challengesgroup, function(challenge) {
+              return _c(
+                "div",
+                {
+                  key: challenge.id,
+                  staticClass: "panel-block is-flex is-flex-column p-0",
+                  staticStyle: { "align-items": "flex-start" }
+                },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "highlight-arrow is-flex has-space-between w-100 is-fullwidth cursor-pointer pl-1 pr-4 py-3",
+                      on: {
+                        click: function($event) {
+                          _vm.getChallenges(challenge.id)
+                          _vm.activeGroup = challenge
+                        }
+                      }
+                    },
+                    [
+                      _c("span", { staticClass: "p-2" }, [
+                        _c("span", { staticClass: "panel-icon" }, [
+                          _c("i", {
+                            class: challenge.icon,
+                            attrs: { "aria-hidden": "true" }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c("span", { attrs: { title: challenge.name } }, [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(
+                                challenge.name.length > 30
+                                  ? challenge.name.substring(0, 30) + "..."
+                                  : challenge.name
+                              ) +
+                              "\n              "
                           )
                         ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.settings.eval_type == 1
-                      ? _c("span", [
-                          _c("i", {
-                            class:
-                              "fas " +
-                              _vm.getEmoji(_vm.getGrade(grade)) +
-                              " rateEmoji"
-                          })
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.settings.eval_type == 2
-                      ? _c(
-                          "span",
-                          {
-                            staticClass: "tag",
-                            class: _vm.getGradeClass(_vm.getGrade(grade))
-                          },
-                          [
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(0, true)
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(challenge.children, function(challengeChild) {
+                    return _c(
+                      "div",
+                      {
+                        key: challengeChild.id,
+                        staticClass:
+                          "highlight-arrow is-flex has-space-between w-100 is-fullwidth cursor-pointer pl-5 pr-4 py-3",
+                        on: {
+                          click: function($event) {
+                            _vm.activeGroup = challengeChild
+                            _vm.getChallenges(challengeChild.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("span", { staticClass: "p-2" }, [
+                          _c("span", { staticClass: "panel-icon" }, [
                             _c("i", {
-                              class:
-                                "fas " + _vm.getPassFail(_vm.getGrade(grade))
+                              class: challengeChild.icon,
+                              attrs: { "aria-hidden": "true" }
                             })
-                          ]
-                        )
-                      : _vm._e()
-                  ])
-                }),
-                _vm._v(" "),
-                _c("td", [
-                  _vm.admin ||
-                  (_vm.settings.eval_type != 1 && _vm.settings.eval_type != 2)
-                    ? _c("span", [
-                        _c(
-                          "span",
-                          {
-                            staticClass: "tag is-size-6",
-                            class: _vm.getGradeClass(_vm.finalGrade(student))
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.finalGrade(student)) +
-                                " / " +
-                                _vm._s(_vm.settings.eval_max)
-                            )
-                          ]
-                        )
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.settings.eval_type == 1
-                    ? _c("span", [
-                        _c("i", {
-                          class:
-                            "fas " +
-                            _vm.getEmoji(_vm.finalGrade(student)) +
-                            " rateEmoji"
-                        })
-                      ])
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _vm.settings.eval_type == 2
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "tag",
-                          class: _vm.getGradeClass(_vm.finalGrade(student))
-                        },
-                        [
-                          _c("i", {
-                            class:
-                              "fas " + _vm.getPassFail(_vm.finalGrade(student))
-                          })
-                        ]
-                      )
-                    : _vm._e()
-                ])
-              ],
-              2
-            )
-          }),
-          0
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "span",
+                            { attrs: { title: challengeChild.name } },
+                            [
+                              _vm._v(
+                                "\n              " +
+                                  _vm._s(
+                                    challengeChild.name.length > 30
+                                      ? challengeChild.name.substring(0, 30) +
+                                          "..."
+                                      : challengeChild.name
+                                  ) +
+                                  "\n              "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1, true)
+                      ]
+                    )
+                  })
+                ],
+                2
+              )
+            })
+          ],
+          2
         )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "column pr-0" },
+      [
+        _vm.activeAddGroup
+          ? _c("CreateChallengeGroup", { attrs: { code: _vm.code } })
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.activeAddGroup && _vm.activeGroup && !_vm.isLoading
+          ? _c("ShowChallenges", {
+              attrs: {
+                icon: _vm.icon,
+                code: _vm.code,
+                challengegroup: _vm.activeGroup,
+                challenges: _vm.challenges
+              }
+            })
+          : _vm._e()
       ],
-      2
+      1
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "p-2 arrow rounded-right" }, [
+      _c("i", { staticClass: "fal fa-angle-right" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "p-2 arrow rounded-right" }, [
+      _c("i", { staticClass: "fal fa-angle-right" })
+    ])
+  }
+]
 render._withStripped = true
 
 
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/Report.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/evaluation/Report.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue":
+/*!********************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue ***!
+  \********************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Report.vue?vue&type=template&id=8de5bd68& */ "./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&");
-/* harmony import */ var _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Report.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&");
+/* harmony import */ var _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowChallengesGroup.vue?vue&type=template&id=570e1b04& */ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&");
+/* harmony import */ var _ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowChallengesGroup.vue?vue&type=script&lang=js& */ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -349,9 +376,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -361,38 +388,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/evaluation/Report.vue"
+component.options.__file = "resources/js/components/challenges/ShowChallengesGroup.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallengesGroup.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04& ***!
+  \***************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Report.vue?vue&type=template&id=8de5bd68& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/Report.vue?vue&type=template&id=8de5bd68&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowChallengesGroup.vue?vue&type=template&id=570e1b04& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/challenges/ShowChallengesGroup.vue?vue&type=template&id=570e1b04&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Report_vue_vue_type_template_id_8de5bd68___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowChallengesGroup_vue_vue_type_template_id_570e1b04___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

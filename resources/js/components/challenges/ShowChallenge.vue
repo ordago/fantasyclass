@@ -498,7 +498,7 @@
             <b-field>
               <b-input
                 :placeholder="trans.get('challenges.question')"
-                v-model="question.question"
+                v-model="question.name"
                 type="text"
                 required
               ></b-input>
@@ -654,7 +654,7 @@ export default {
       },
       question: {
         challenge_id: null,
-        question: "",
+        name: "",
         correctAnswer: "",
         incorrectAnswer1: "",
         incorrectAnswer2: "",
@@ -772,7 +772,8 @@ export default {
       this.question.challenge_id = this.challenge.id;
       axios
         .post("/classroom/challenge/question", {
-          question: this.question,
+          question: this.question,  
+          type: 1,
         })
         .then((response) => {
           console.log(response.data)

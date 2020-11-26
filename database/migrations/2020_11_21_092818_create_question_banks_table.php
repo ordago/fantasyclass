@@ -16,7 +16,6 @@ class CreateQuestionBanksTable extends Migration
         Schema::create('question_banks', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description')->nullable();
             $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });

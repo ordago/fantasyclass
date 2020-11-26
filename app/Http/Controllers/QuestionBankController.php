@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Classroom;
+use App\QuestionBank;
 
 class QuestionBankController extends Controller
 {
@@ -10,15 +12,27 @@ class QuestionBankController extends Controller
         $this->middleware('verified');
     }
 
-    public function store()
+    public function index($code) 
     {
+        $class = Classroom::where('code', '=', $code)->firstorFail();
+        $this->authorize('view', $class);
+        $banks = $class->questionBanks;
+        return view('questions.index', compact('class', 'banks'));
+    }
+    
+    public function store($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstorFail();
+        $this->authorize('update', $class);
         $data = request()->validate([
-            'question.challenge_id' => ['numeric', 'required'],
+            'title' => ['string', 'required', 'min:3'],
         ]);
 
-        // $class = Classroom::findOrFail(Challenge::find($data['question']['challenge_id'])->group->classroom_id);
-        // $this->authorize('update', $class);
-
+        $questionBank = QuestionBank::create([
+            'title' => $data['title'],
+            'classroom_id' => $class->id,
+        ]);
+        return $class->questionBanks;
     }
 
 

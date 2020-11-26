@@ -11,6 +11,7 @@ class Question extends Model
     protected $fillable = [
         'name',
         'challenge_id',
+        'question_bank_id',
         'options',
     ];
 
@@ -27,6 +28,11 @@ class Question extends Model
     public function students()
     {
         return $this->belongsToMany(Student::class)->withPivot('answer');
+    }
+
+    public function questionBank()
+    {
+        return $this->belongsTo(QuestionBank::class);
     }
 
     public function getTeacherInfo() {

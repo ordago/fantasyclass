@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /.vs
 ..env.swp
+/public/js/vuejs_code_split/*.js
+/public/js/app.js

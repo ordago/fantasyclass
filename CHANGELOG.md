@@ -3,6 +3,7 @@
 ## v1.20 Beta (XX/11/2020)
 ### Added
 - Report user in chat.
+- Question bank.
 
 ### Changed
 - Improvements in mobile view.

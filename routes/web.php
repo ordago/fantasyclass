@@ -186,8 +186,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/maps/{id}', 'MapsController@update');
 
         // Question bank
-        // Route::get('/{code}/questions', 'QuestionBankController@index');
+        Route::get('/{code}/questions', 'QuestionBankController@index');
+        Route::post('/{code}/questions', 'QuestionBankController@store');
+        Route::post('/question/add', 'QuestionController@store');
 
+        // Questions
+        Route::get('/{code}/questions/{bank}', 'QuestionController@index');
 
         // Evaluation
         Route::get('/{code}/evaluation/report', 'EvaluationController@report');

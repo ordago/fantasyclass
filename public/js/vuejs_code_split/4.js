@@ -662,7 +662,7 @@ var InputEmoji = function InputEmoji() {
       },
       question: {
         challenge_id: null,
-        question: "",
+        name: "",
         correctAnswer: "",
         incorrectAnswer1: "",
         incorrectAnswer2: "",
@@ -779,7 +779,8 @@ var InputEmoji = function InputEmoji() {
 
       this.question.challenge_id = this.challenge.id;
       axios.post("/classroom/challenge/question", {
-        question: this.question
+        question: this.question,
+        type: 1
       }).then(function (response) {
         console.log(response.data);
         _this7.isQuestionModalActive = false;
@@ -1938,11 +1939,11 @@ var render = function() {
                                   required: ""
                                 },
                                 model: {
-                                  value: _vm.question.question,
+                                  value: _vm.question.name,
                                   callback: function($$v) {
-                                    _vm.$set(_vm.question, "question", $$v)
+                                    _vm.$set(_vm.question, "name", $$v)
                                   },
-                                  expression: "question.question"
+                                  expression: "question.name"
                                 }
                               })
                             ],
