@@ -75,9 +75,8 @@ class QuestionController extends Controller
 
         $this->authorize('update', $class);
 
-
-
         return Question::create([
+            'type' => request()->type ,
             'challenge_id' => $challenge,
             'question_bank_id' => $bank,
             'name' => $data['question']['name'],

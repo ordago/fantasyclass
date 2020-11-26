@@ -6,6 +6,11 @@
         <span class="tag p-2 mr-1" :class="{ 'is-success': option.answer.id == question.options[0].correctAnswer }" v-if="option.answer">{{ option.answer.text }}</span>
       </span>
     </div>
+    <div class="mt-2" v-else-if="question.type == 2">
+      <span v-for="(option, index) in question.options" :key="index">
+        <span class="tag p-2 mr-1 is-success">{{ option.answer }}</span>
+      </span>
+    </div>
   </div>
 </template>
 <script>
