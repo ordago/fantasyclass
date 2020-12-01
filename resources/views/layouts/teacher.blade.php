@@ -48,9 +48,25 @@
     <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
         <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
     </a>
-    <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
-        <i class="fad fa-analytics mr-2"></i> {{ __('menu.evaluation') }}
-    </a>
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item navbar-link">
+            <i class="fad fa-analytics mr-2"></i> {{ __('menu.evaluation') }}
+        </a>
+
+        <div class="navbar-dropdown">
+            <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item">
+                <i class="fad fa-analytics mr-2"></i> {{ __('menu.evaluation') }}
+            </a>
+            <a href="/classroom/{{ $class->code }}/questions" class="navbar-item">
+                <i class="fad fa-question mr-2"></i> {{ __('questions.banks') }}
+            </a>
+            <a href="/classroom/{{ $class->code }}/rubrics" class="navbar-item">
+                <i class="fad fa-tasks-alt mr-2"></i> {{ __('evaluation.rubric_management') }}
+            </a>
+        </div>
+    </div>
+
+
     <a href="/classroom/{{ $class->code }}/maps" class="navbar-item">
         <i class="fad fa-map-marked-alt mr-2"></i> {{ __('menu.map') }}
     </a>
@@ -69,15 +85,17 @@
 <script src="{{ asset('js/config.js') }}"></script>
 
 <script defer>
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src=config.TAWK;
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
+    var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"),
+            s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = config.TAWK;
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 </script>
 <!--End of Tawk.to Script-->
 @endpush
