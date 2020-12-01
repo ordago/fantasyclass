@@ -139,10 +139,18 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/challenge/attachment', 'AttachmentController@store');
         Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
 
-        // Question
+        // Questions
         Route::post('/challenge/question', 'QuestionController@store');
+        Route::post('/question/add', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
+        Route::delete('/questions/{id}', 'QuestionController@destroy');
         Route::post('/question/answer', 'QuestionController@answer');
+        Route::get('/{code}/questions/{bank}', 'QuestionController@index');
+
+        // Question bank
+        Route::get('/{code}/questions', 'QuestionBankController@index');
+        Route::post('/{code}/questions', 'QuestionBankController@store');
+        Route::delete('/bank/{id}', 'QuestionBankController@destroy');
 
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
@@ -185,13 +193,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
 
-        // Question bank
-        Route::get('/{code}/questions', 'QuestionBankController@index');
-        Route::post('/{code}/questions', 'QuestionBankController@store');
-        Route::post('/question/add', 'QuestionController@store');
+      
 
-        // Questions
-        Route::get('/{code}/questions/{bank}', 'QuestionController@index');
 
         // Evaluation
         Route::get('/{code}/evaluation/report', 'EvaluationController@report');

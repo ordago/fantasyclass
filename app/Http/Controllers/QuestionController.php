@@ -7,6 +7,7 @@ use App\Classroom;
 use App\Http\Classes\Functions;
 use App\Question;
 use App\QuestionBank;
+use Illuminate\Support\Facades\Crypt;
 
 class QuestionController extends Controller
 {
@@ -56,8 +57,7 @@ class QuestionController extends Controller
 
         } else if (request()->type == 2) {
             $data = request()->validate([
-                'bank' => ['numeric', 'required'],
-                'type' => ['numeric', 'required'],
+                'bank' => ['numeric'],
                 'question.name' => ['string', 'required', 'min:3'],
                 'question.answers' => ['array'],
             ]);
@@ -66,15 +66,14 @@ class QuestionController extends Controller
         }
 
         $bank = request()->bank;
-        $challenge = isset(request()->question['challenge_id']) ? request()->question['challenge_id'] : null;
+        $challenge = isset(request()->challenge) ? request()->challenge : null;
         if($bank) {
             $class = Classroom::findOrFail(QuestionBank::find($bank)->classroom_id);
         } else {
-            $class = Classroom::findOrFail(Challenge::find(request()->question['challenge_id'])->group->classroom_id);
+            $class = Classroom::findOrFail(Challenge::find(request()->challenge)->group->classroom_id);
         }
 
         $this->authorize('update', $class);
-
         return Question::create([
             'type' => request()->type ,
             'challenge_id' => $challenge,
@@ -116,7 +115,7 @@ class QuestionController extends Controller
             return false;
 
         $student->questions()->attach($question->id, [
-            'answer' => request()->answer,
+            'answer' => Crypt::decryptString(request()->answer),
         ]);
         return $question->getStudentInfo();
     }
@@ -125,7 +124,11 @@ class QuestionController extends Controller
     {
 
         $question = Question::findOrFail($id);
-        $class = Classroom::find($question->challenge->group->classroom_id);
+        if($question->challenge) {
+            $class = Classroom::find($question->challenge->group->classroom_id);
+        } else {
+            $class = Classroom::find($question->questionBank->classroom_id);
+        }
         $this->authorize('update', $class);
 
         return $question->delete();

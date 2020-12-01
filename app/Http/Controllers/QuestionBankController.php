@@ -35,14 +35,12 @@ class QuestionBankController extends Controller
         return $class->questionBanks;
     }
 
-
     public function destroy($id)
     {
+        $questionBank = QuestionBank::findOrFail($id);
+        $class = Classroom::find($questionBank->classroom_id);
+        $this->authorize('update', $class);
 
-        // $question = Question::findOrFail($id);
-        // $class = Classroom::find($question->challenge->group->classroom_id);
-        // $this->authorize('update', $class);
-
-        // return $question->delete();
+        return $questionBank->delete();
     }
 }

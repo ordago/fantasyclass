@@ -11,19 +11,19 @@
             style="font-size: 0.5em"
             class="button is-danger"
             @click="deleteBank(bank.id)"
-            v-if="questions.length == 0"
+            v-if="questions.length == 0 && bank.id && !$parent.isLoading"
           >
             <i class="fas fa-trash"></i>
           </button>
         </span>
-        <span>
+        <span v-if="bank.id">
           <button class="button" @click="isImportModalActive = true">
             <i class="fas fa-file-import"></i>
             <span class="is-hidden-mobile ml-2">{{
               trans.get("general.import")
             }}</span>
           </button>
-          <button class="button" @click="isQuestionModalActive = true">
+          <button class="button" @click="modal = true">
             <span v-html="buttonAddChallege(1)" class="is-hidden-tablet"></span>
             <span v-html="buttonAddChallege(0)" class="is-hidden-mobile"></span>
           </button>
@@ -43,22 +43,19 @@
         </p>
       </div>
 
-      <div class="panel-block" v-if="addQuestion">
-        <!-- <CreateChallenges
-          :edit="challengeEdit"
-          :import-flag="importFlag"
-          :challengegroups="$parent.challengesgroup"
-          :code="code"
-          :challengegroup="challengegroup.id"
-          :students-loaded="students"
-        ></CreateChallenges> -->
-      </div>
+      <article class="message is-warning m-2" v-if="$parent.banks.length == 0">
+        <div class="message-body">
+          {{ trans.get("questions.alert") }}
+        </div>
+      </article>
 
       <div class="panel-block" v-if="questions.length == 0 && !addQuestion">
-        <h3 class="is-size-3 p-4 w-100 has-text-centered">
-          <i class="fal fa-smile-wink"></i>
+        <h4 v-if="bank.id" class="is-size-4 p-4 w-100 has-text-centered">
           {{ trans.get("questions.empty") }}
-        </h3>
+        </h4>
+        <h4 v-else class="is-size-4 p-4 w-100 has-text-centered">
+          {{ trans.get("questions.empty_challenges") }}
+        </h4>
       </div>
 
       <div
@@ -71,195 +68,11 @@
       </div>
     </div>
 
-    <b-modal
-      :active.sync="isQuestionModalActive"
-      has-modal-card
-      trap-focus
-      :destroy-on-hide="false"
-      aria-role="dialog"
-      aria-modal
-    >
-      <form @submit.prevent="addQuestion">
-        <div class="modal-card" style="width: auto">
-          <header class="modal-card-head">
-            <p class="modal-card-title">
-              {{ trans.get("challenges.add_question") }}
-            </p>
-          </header>
-          <section class="modal-card-body">
-            <b-tabs v-model="type" type="is-toggle" expanded>
-              <b-tab-item label="Test" icon-pack="fal" icon="list">
-                <div class="py-3">
-                  <b-field>
-                    <b-input
-                      :placeholder="trans.get('challenges.question')"
-                      v-model="question.name"
-                      type="text"
-                      required
-                    ></b-input>
-                  </b-field>
-                  <div class="field is-horizontal mb-3">
-                    <div class="field-body">
-                      <div class="field is-expanded">
-                        <div class="field has-addons">
-                          <p class="control">
-                            <a class="button is-success">
-                              <i class="fas fa-check colored"></i>
-                            </a>
-                          </p>
-                          <p class="control is-expanded">
-                            <b-field>
-                              <b-input
-                                :placeholder="
-                                  trans.get('challenges.correct_answer')
-                                "
-                                v-model="question.correctAnswer"
-                                type="text"
-                                required
-                              ></b-input>
-                            </b-field>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field is-horizontal mb-3">
-                    <div class="field-body">
-                      <div class="field is-expanded">
-                        <div class="field has-addons">
-                          <p class="control">
-                            <a class="button is-danger">
-                              <i class="fas fa-times colored"></i>
-                            </a>
-                          </p>
-                          <p class="control is-expanded">
-                            <b-field>
-                              <b-input
-                                :placeholder="
-                                  trans.get('challenges.incorrect_answer')
-                                "
-                                v-model="question.incorrectAnswer1"
-                                required
-                                type="text"
-                              ></b-input>
-                            </b-field>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field is-horizontal mb-3">
-                    <div class="field-body">
-                      <div class="field is-expanded">
-                        <div class="field has-addons">
-                          <p class="control">
-                            <a class="button is-danger is-light">
-                              <i class="fas fa-times colored"></i>
-                            </a>
-                          </p>
-                          <p class="control is-expanded">
-                            <b-field>
-                              <b-input
-                                :placeholder="
-                                  trans.get('challenges.incorrect_answer')
-                                "
-                                v-model="question.incorrectAnswer2"
-                                type="text"
-                              ></b-input>
-                            </b-field>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="field is-horizontal mb-3">
-                    <div class="field-body">
-                      <div class="field is-expanded">
-                        <div class="field has-addons">
-                          <p class="control">
-                            <a class="button is-danger is-light">
-                              <i class="fas fa-times colored"></i>
-                            </a>
-                          </p>
-                          <p class="control is-expanded">
-                            <b-field>
-                              <b-input
-                                :placeholder="
-                                  trans.get('challenges.incorrect_answer')
-                                "
-                                v-model="question.incorrectAnswer3"
-                                type="text"
-                              ></b-input>
-                            </b-field>
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </b-tab-item>
-              <b-tab-item label="Respuesta simple" icon-pack="fal" icon="text">
-                <div class="py-3">
-                  <b-field>
-                    <b-input
-                      :placeholder="trans.get('challenges.question')"
-                      v-model="question1.name"
-                      type="text"
-                      required
-                    ></b-input>
-                  </b-field>
-                  <b-field>
-                    <b-input
-                      :placeholder="trans.get('challenges.answer')"
-                      type="text"
-                      v-model="currentAnswer"
-                    ></b-input>
-                  </b-field>
-                  <div class="field">
-                    <b-checkbox v-model="currentCaseSensitive">
-                      Distinguir mayúsculas y minúsculas
-                    </b-checkbox>
-                  </div>
-                  <button class="button" @click.prevent="addAnswer">
-                    Add answer
-                  </button>
-                  <div
-                    class="p-2 m-2 border"
-                    v-for="(answer, index) in question1.answers"
-                    :key="index"
-                  >
-                    {{ answer.answer }}
-                  </div>
-                </div>
-              </b-tab-item>
-            </b-tabs>
-          </section>
-          <footer class="modal-card-foot">
-            <button
-              class="button"
-              type="button"
-              @click="isQuestionModalActive = false"
-            >
-              {{ trans.get("general.close") }}
-            </button>
-            <button @click.prevent="sendQuestion" class="button is-primary">
-              {{ trans.get("general.add") }}
-            </button>
-          </footer>
-        </div>
-      </form>
-    </b-modal>
-
-    <!-- <b-modal :active.sync="isImportModalActive" has-modal-card full-screen>
-      <import-challenge
-        :classroom="code"
-        :bank="bank.id"
-      ></import-challenge>
-    </b-modal> -->
+    <AddQuestion :modal="modal" :bank="bank" :code="code"> </AddQuestion>
   </div>
 </template>
 <script>
-// import CreateChallenges from "./Createquestions.vue";
+import AddQuestion from "./AddQuestion.vue";
 import ShowQuestion from "./ShowQuestion.vue";
 
 export default {
@@ -268,17 +81,6 @@ export default {
   data: function () {
     return {
       type: 0,
-      question: {
-        name: "",
-        correctAnswer: null,
-        incorrectAnswer1: null,
-        incorrectAnswer2: null,
-        incorrectAnswer3: null,
-      },
-      question1: {
-        name: null,
-        answers: [],
-      },
       currentAnswer: "",
       currentCaseSensitive: true,
       addQuestion: false,
@@ -287,7 +89,7 @@ export default {
       challengeEdit: null,
       isModalActive: false,
       isImportModalActive: false,
-      isQuestionModalActive: false,
+      modal: false,
       students: null,
       groups: null,
       currentChallenge: null,
@@ -303,10 +105,13 @@ export default {
       } else if (type == 2) {
         question = this.question1;
       }
-      axios.post("/classroom/question/add", { type: type, bank: this.bank.id, question: question })
-      .then(response => {
-        console.log(response.data)
-      })
+      axios
+        .post("/classroom/question/add", {
+          type: type,
+          bank: this.bank.id,
+          question: question,
+        })
+        .then((response) => {});
     },
     addAnswer() {
       if (this.currentAnswer != "") {
@@ -332,7 +137,7 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/challenges/group/" + id).then((response) => {
+          axios.delete("/classroom/bank/" + id).then((response) => {
             location.reload();
           });
         },
@@ -389,7 +194,7 @@ export default {
     },
   },
   components: {
-    // CreateChallenges,
+    AddQuestion,
     ShowQuestion,
   },
   computed: {

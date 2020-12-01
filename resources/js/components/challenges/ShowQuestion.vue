@@ -70,15 +70,21 @@
           {{ reactiveQuestion.answerOK.answer.text }}
         </div>
       </div>
-      <div v-if="!reactiveQuestion.answered">
+      <div v-if="!reactiveQuestion.answered && reactiveQuestion.type == 1">
         <div
           class="card-shadow-s p-4 m-3 rounded answer cursor-pointer"
           v-for="answer in reactiveQuestion.answers"
           @click="answerQuestion(answer.id)"
           :key="answer.id"
         >
-          {{ answer.answer }}
+          {{ answer.text }}
         </div>
+      </div>
+      <div v-if="reactiveQuestion.type == 2 && !reactiveQuestion.answered">
+        <div class="control">
+          <input class="input" v-model="answer" type="text" placeholder="Answer">
+        </div>
+        <button class="button is-primary mt-2" v-if="answer != ''">Send answer</button>
       </div>
     </div>
   </div>
@@ -93,6 +99,7 @@ export default {
   },
   data: function () {
     return {
+      answer: "",
       reactiveQuestion: null,
     };
   },
@@ -121,10 +128,16 @@ export default {
         },
       });
     },
-    answerQuestion(answer) {
+    answerTextQuestion(answer) {
+
+
+      this.answerQuestion(answer, 2);
+    },
+    answerQuestion(answer, type = 1) {
       axios
         .post("/classroom/question/answer", {
           answer: answer,
+          type: type,
           question: this.reactiveQuestion,
         })
         .then((response) => {

@@ -5,7 +5,7 @@
         <p
           class="panel-heading is-flex has-space-between align-items-center p-3"
         >
-          <span>{{ trans.get("challenges.categories") }}</span>
+          <span>{{ trans.get("questions.banks") }}</span>
           <button
             class="button"
             @click="activeAddBank = !activeAddBank"
@@ -19,7 +19,7 @@
           <div
             @click="
               getQuestions();
-              activeBank = {title: 'Without category'};
+              activeBank = {title: trans.get('questions.challenge_question')};
             "
             class="highlight-arrow is-flex has-space-between w-100 is-fullwidth cursor-pointer pl-1 pr-4 py-3"
           >
@@ -27,7 +27,7 @@
               <span class="panel-icon">
                 <i class="fad fa-books" style="color: #ccc"></i>
               </span>
-              <span> Without category </span>
+              <span> {{ trans.get('questions.challenge_question') }} </span>
             </span>
             <span class="p-2 arrow rounded-right">
               <i class="fal fa-angle-right"></i>
@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     getQuestions(bank = null) {
+      this.isLoading = true;
       if(!bank) {
         // That is whithout category, just for clarify
         bank = "wc";
@@ -116,7 +117,7 @@ export default {
         .get("/classroom/" + this.code + "/questions/" + bank)
         .then((response) => {
           this.questions = response.data;
-          console.log(response.data);
+          this.isLoading = false;
         });
     },
   },
@@ -129,7 +130,7 @@ export default {
       return this.activeAddBank
         ? this.trans.get("general.cancel")
         : "<i class='far fa-plus pr-2'></i>" +
-            this.trans.get("challenges.add_category");
+            this.trans.get("questions.add_bank");
     },
   },
 };

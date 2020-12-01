@@ -2,7 +2,7 @@
   <div class="pl-0-desktop">
     <div class="panel pl-0">
       <p class="panel-heading is-flex has-space-between align-items-center p-4">
-        <span class="pl-3">Create </span>
+        <span class="pl-3">{{ trans.get('questions.add_bank') }}</span>
       </p>
       <div class="p-4 panel-block">
         <form
@@ -38,7 +38,7 @@
               {{ trans.get("challenges.edit") }}
             </button>
             <button class="button is-success" type="submit" v-if="!editBank">
-              {{ trans.get("challenges.create") }}
+              {{ trans.get("questions.create") }}
             </button>
           </div>
         </form>
@@ -75,13 +75,10 @@ export default {
           this.$data.questionBank
         )
         .then((response) => {
-          // this.$toast(response.data.message, { type: response.data.type });
-          // if (response.data.challenge) {
-          //   this.$parent.refresh(response.data.challenge);
-          // }
+          location.reload();
+          // this.$parent.activeAddBank = false;
+          // this.$parent.$forceUpdate();
         });
-      this.$parent.activeAddBank = false;
-      this.$parent.$forceUpdate();
     },
     update: function () {},
   },

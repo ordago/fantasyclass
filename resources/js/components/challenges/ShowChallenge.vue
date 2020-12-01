@@ -338,10 +338,10 @@
             <button
               v-if="admin"
               class="button is-outlined is-primary"
-              @click="isQuestionModalActive = true"
+              @click="modal = true"
             >
               <span class="icon is-small">
-                <i class="fas fa-question"></i>
+                <i class="fas fa-question"></i> 
               </span>
               <span>{{ trans.get("challenges.add_question") }}</span>
             </button>
@@ -478,148 +478,15 @@
         </div>
       </form>
     </b-modal>
-    <b-modal
-      :active.sync="isQuestionModalActive"
-      has-modal-card
-      trap-focus
-      :destroy-on-hide="false"
-      aria-role="dialog"
-      aria-modal
-      v-if="admin"
-    >
-      <form @submit.prevent="addQuestion">
-        <div class="modal-card" style="width: auto">
-          <header class="modal-card-head">
-            <p class="modal-card-title">
-              {{ trans.get("challenges.add_question") }}
-            </p>
-          </header>
-          <section class="modal-card-body">
-            <b-field>
-              <b-input
-                :placeholder="trans.get('challenges.question')"
-                v-model="question.name"
-                type="text"
-                required
-              ></b-input>
-            </b-field>
-            <div class="field is-horizontal mb-3">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-check colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <b-field>
-                        <b-input
-                          :placeholder="trans.get('challenges.correct_answer')"
-                          v-model="question.correctAnswer"
-                          type="text"
-                          required
-                        ></b-input>
-                      </b-field>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="field is-horizontal mb-3">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-times colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <b-field>
-                        <b-input
-                          :placeholder="
-                            trans.get('challenges.incorrect_answer')
-                          "
-                          v-model="question.incorrectAnswer1"
-                          required
-                          type="text"
-                        ></b-input>
-                      </b-field>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="field is-horizontal mb-3">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-times colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <b-field>
-                        <b-input
-                          :placeholder="
-                            trans.get('challenges.incorrect_answer')
-                          "
-                          v-model="question.incorrectAnswer2"
-                          type="text"
-                        ></b-input>
-                      </b-field>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="field is-horizontal mb-3">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-times colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <b-field>
-                        <b-input
-                          :placeholder="
-                            trans.get('challenges.incorrect_answer')
-                          "
-                          v-model="question.incorrectAnswer3"
-                          type="text"
-                        ></b-input>
-                      </b-field>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <footer class="modal-card-foot">
-            <button
-              class="button"
-              type="button"
-              @click="isQuestionModalActive = false"
-            >
-              {{ trans.get("general.close") }}
-            </button>
-            <button class="button is-primary">
-              {{ trans.get("general.add") }}
-            </button>
-          </footer>
-        </div>
-      </form>
-    </b-modal>
+    <AddQuestion :challenge="challenge.id" :modal="modal" bank="wc" :code="code"> </AddQuestion>
+
   </div>
 </template>
 <script>
 import confetti from "canvas-confetti";
 import Utils from "../../utils.js";
+import AddQuestion from "../questions/AddQuestion.vue";
+
 
 const InputEmoji = () => import("../utils/InputEmoji.vue");
 import { VueReactionEmoji, VueFeedbackReaction } from "vue-feedback-reaction";
@@ -644,7 +511,7 @@ export default {
       allowComment: false,
       maxComments: 3,
       isAttachmentModalActive: false,
-      isQuestionModalActive: false,
+      modal: false,
       attachment: {
         mode: "0",
         type: null,
@@ -667,6 +534,7 @@ export default {
     InputEmoji,
     VueReactionEmoji,
     VueFeedbackReaction,
+    AddQuestion,
   },
   methods: {
     copyPermalink() {
@@ -777,7 +645,7 @@ export default {
         })
         .then((response) => {
           console.log(response.data)
-          this.isQuestionModalActive = false;
+          this.modal = false;
           this.$parent.$parent.getChallenges(
             this.challenge.challenges_group_id
           );

@@ -56,6 +56,7 @@ export default {
       start: null,
       end: null,
       roomsListeners: [],
+      typingMessageCache: '',
       listeners: [],
       disableForm: false,
       addNewRoom: null,
@@ -187,8 +188,8 @@ export default {
       this.rooms = this.rooms.concat(formattedRooms);
       this.loadingRooms = false;
       this.rooms.map((room, index) => this.listenLastMessage(room, index));
-      // this.listenUsersOnlineStatus();
-      // this.listenRoomsTypingUsers(query);
+      this.listenUsersOnlineStatus();
+      this.listenRoomsTypingUsers(query);
     },
     getLastMessage(room) {
       return this.messagesRef(room.id)
@@ -333,9 +334,9 @@ export default {
       if (file) this.uploadFile({ file, messageId: id, roomId });
 
       const query = roomsRef.doc(roomId);
-      const room = await query.get();
-      
-      let users = await roomsRef.doc("" + roomId);
+
+      // const room = await query.get();
+      // let users = await roomsRef.doc("" + roomId);
 
       users
         .get()
@@ -409,6 +410,14 @@ export default {
         });
     },
     typingMessage({ message, roomId }) {
+      if (message?.length > 1) {
+				return (this.typingMessageCache = message)
+			}
+			if (message?.length === 1 && this.typingMessageCache) {
+				return (this.typingMessageCache = message)
+			}
+      this.typingMessageCache = message
+      
       const dbAction = message
         ? firebase.firestore.FieldValue.arrayUnion(this.currentUserId)
         : firebase.firestore.FieldValue.arrayRemove(this.currentUserId);

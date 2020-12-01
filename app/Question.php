@@ -12,6 +12,7 @@ class Question extends Model
         'name',
         'challenge_id',
         'question_bank_id',
+        'type',
         'options',
     ];
 
@@ -83,11 +84,13 @@ class Question extends Model
             }
         } else {
             foreach ($this->options as $option) {
-                if (isset($option['answer'])) {
+                if ($this->type == 1 && isset($option['answer'])) {
                     $answers->add(['id' => $option['answer']['id'], 'answer' => $option['answer']['text']]);
+                } else if($this->type == 2) {
+                    return ['id' => $this['id'], 'type' => $this->type, 'question' => $this['name']];
                 }
             }
-            return ['id' => $this['id'], 'question' => $this['name'], 'answers' => $answers->shuffle()];
+            return ['id' => $this['id'], 'question' => $this['name'], 'type' => $this->type, 'answers' => $answers->shuffle()];
         }
     }
 }
