@@ -2,6 +2,7 @@
 <div>
   <chat-window
     height="calc(100vh - 56px)"
+    :loadFirstRoom="false"
     :styles="styles"
     :currentUserId="currentUserId"
     :rooms="rooms"
