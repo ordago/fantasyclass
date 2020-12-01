@@ -21,5 +21,7 @@ return [
     'example' => 'Puedes añadir múltiples respuestas clicando en "añadir respuesta". Como mínimo, tienes que añadir una. Recuerda que estas respuestas son conceptos clave para acertar la pregunta.',
     'example1' => 'Por ejemplo: ¿Quien es el protagonista de Iron Man?',
     'example2' => 'Las tres opciones serán aceptadas',
+    'student_answer' => 'Respuesta',
+    'send_answer' => 'Envía respuesta',
 
 ];

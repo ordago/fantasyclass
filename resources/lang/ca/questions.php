@@ -20,5 +20,7 @@ return [
     'example' => 'Pots afegir múltples respostes fent clic sobre "afegir resposta". Com a mínim, has d\'afegir una. Recorda que aquestes respostes són conceptes clau per encertar la pregunta.',
     'example1' => 'Per exemple: Qui és el protagonista de Iron Man?',
     'example2' => 'Les tres opcions seran acceptades',
+    'student_answer' => 'Resposta',
+    'send_answer' => 'Envia resposta',
 
 ];

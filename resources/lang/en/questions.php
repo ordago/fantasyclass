@@ -20,5 +20,7 @@ return [
     'example' => 'You can add multiple answers by clickin in "add answer". One asnwers minimum is needed. Remember that these answers are key concepts to answer correctly.',
     'example1' => 'For example: How is the main character in Iron Man?',
     'example2' => 'The three answers will be accepted',
+    'student_answer' => 'Answer',
+    'send_answer' => 'Send answer',
 
 ];

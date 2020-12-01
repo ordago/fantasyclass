@@ -10,7 +10,7 @@
       ></i>
       {{ question.name }}
     </h1>
-    <div class="mt-2" v-if="question.type == 1">1
+    <div class="mt-2" v-if="question.type == 1">
       <span v-for="(option, index) in question.options" :key="index">
         <span
           class="tag is-light p-2 mr-1"

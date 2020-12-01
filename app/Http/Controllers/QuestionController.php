@@ -114,8 +114,9 @@ class QuestionController extends Controller
         if ($student->questions->contains($question->id))
             return false;
 
+        $answer = $question->type == 1 ? Crypt::decryptString(request()->answer) : request()->answer;
         $student->questions()->attach($question->id, [
-            'answer' => Crypt::decryptString(request()->answer),
+            'answer' => $answer,
         ]);
         return $question->getStudentInfo();
     }

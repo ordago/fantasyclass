@@ -57,7 +57,7 @@ class Challenge extends Model
                     foreach ($question['answers'] as $answer) {
                         array_push($answers, ['id' => Crypt::encryptString($answer['id']),'text' => $answer['answer']]);
                     }
-                    $questions->add(['id' => $question['id'], 'question' => $question['question'], 'answers' => $answers]);
+                    $questions->add(['id' => $question['id'], 'type' => $question['type'],'question' => $question['question'], 'answers' => $answers]);
                 } else $questions->add($question);
             }
         return $questions;

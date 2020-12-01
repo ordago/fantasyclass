@@ -41,46 +41,59 @@ class Question extends Model
         $class = Classroom::where('id', '=', $this->challenge->classroom())->first();
         $answered = 0;
         $answeredOK = $answeredKO = $remainning = [];
-        $correct = head(Arr::where($this->options, function ($value, $key) {
-            return isset($value['correctAnswer']);
-        }));
         $students = $class->students;
         foreach ($students as $student) {
-            $question = $student->questions->where('id', $this->id)->first();
-            if ($question) {
+            $info = $this->getStudentInfo($student);
+            if(isset($info['answered']) && $info['answered']) {
                 $answered++;
-                if($question->pivot->answer == $correct['correctAnswer']) {
+                if($info['correct'])
                     $answeredOK[] = $student->name;
-                } else $answeredKO[]  = $student->name;
-            } else {
-                $remainning[] = $student->name;
-            }
+                else $answeredKO[]  = $student->name;
+            } else $remainning[] = $student->name;
         }
         return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remainning' => $remainning];
     }
 
-    public function getStudentInfo()
+    public function getStudentInfo($student = null)
     {
         $class = Classroom::where('id', '=', $this->challenge->classroom())->first();
-        $student = Functions::getCurrentStudent($class, []);
+        if(!$student)
+            $student = Functions::getCurrentStudent($class, []);
         $answers = collect();
         $answer = $student->questions()->where('question_id', '=', $this->id)->first();
         if ($answer) {
-            $correct = head(Arr::where($this->options, function ($value, $key) {
-                return isset($value['correctAnswer']);
-            }));
-            $correctText = Arr::where($this->options, function ($value, $key) use ($correct) {
-                if (isset($value['answer']))
-                    return $value['answer']['id'] == $correct['correctAnswer'];
-            });
-            if ($answer->pivot->answer == $correct['correctAnswer']) {
-                return ['question' => $this['name'], 'answered' => true, 'correct' => true, 'answerOK' => head($correctText)];
-            } else {
-                $incorrect = Arr::where($this->options, function ($value, $key) use ($answer) {
+            if($this->type == 1) {
+                $correct = head(Arr::where($this->options, function ($value, $key) {
+                    return isset($value['correctAnswer']);
+                }));
+                $correctText = Arr::where($this->options, function ($value, $key) use ($correct) {
                     if (isset($value['answer']))
-                        return $answer->pivot->answer == $value['answer']['id'];
+                        return $value['answer']['id'] == $correct['correctAnswer'];
                 });
-                return ['question' => $this['name'], 'answered' => true, 'correct' => false, 'answerOK' => head($correctText), 'answerKO' => head($incorrect)];
+                if ($answer->pivot->answer == $correct['correctAnswer']) {
+                    return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => true, 'answerOK' => head($correctText)];
+                } else {
+                    $incorrect = Arr::where($this->options, function ($value, $key) use ($answer) {
+                        if (isset($value['answer']))
+                            return $answer->pivot->answer == $value['answer']['id'];
+                    });
+                    return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => false, 'answerOK' => head($correctText), 'answerKO' => head($incorrect)];
+                }
+            } else if($this->type == 2) {
+                $answers = "";
+                foreach ($this->options as $option) {
+                    $answers .= $option['answer'] . ". ";
+                    if($option['caseSensitive']) {
+                        $result = strcmp($answer->pivot->answer, $option['answer']);
+                    } else {
+                        $result = strcasecmp($answer->pivot->answer, $option['answer']);
+                    }
+                    if($result === 0) {
+                        return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => true, 'answerOK' => $answer->pivot->answer]; 
+                    }
+                }
+                return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => false, 'answerKO' => $answer->pivot->answer, 'answerOK' => $answers]; 
+
             }
         } else {
             foreach ($this->options as $option) {
