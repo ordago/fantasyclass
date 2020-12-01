@@ -365,7 +365,7 @@ class CardsController extends Controller
                     ];
                 }
                 $cost = settings()->get('card_use', 200);
-                if ($card->gold == 0 && $student->gold < $cost) {
+                if (!$card->special && $card->gold == 0 && $student->gold < $cost) {
                     return [
                         "message" => " " . __('success_error.shop_failed_money'),
                         "icon" => "times",
