@@ -55,6 +55,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -79,6 +82,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       start: null,
       end: null,
       roomsListeners: [],
+      typingMessageCache: '',
       listeners: [],
       disableForm: false,
       addNewRoom: null,
@@ -93,7 +97,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
         title: "Invite User"
       }, {
         name: "report",
-        title: "Report to teacher"
+        title: this.trans.get('utils.chat_report')
       } // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: {
@@ -109,11 +113,9 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
 
     this.$toast(this.trans.get('utils.chat_warning'), {
       type: 'warning',
-      timeout: 0
-    });
-    this.$toast(this.trans.get('utils.chat_reminder'), {
-      type: 'default'
-    });
+      timeout: 3000
+    }); // this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
+
     axios.get("/inbox/token").then(function (response) {
       _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].auth().signInWithCustomToken(response.data).then(function (response) {
         _this.createUser().then(function (response) {
@@ -255,11 +257,13 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
 
                 _this3.rooms.map(function (room, index) {
                   return _this3.listenLastMessage(room, index);
-                }); // this.listenUsersOnlineStatus();
-                // this.listenRoomsTypingUsers(query);
+                });
 
+                _this3.listenUsersOnlineStatus();
 
-              case 22:
+                _this3.listenRoomsTypingUsers(query);
+
+              case 24:
               case "end":
                 return _context2.stop();
             }
@@ -385,7 +389,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var content, roomId, file, replyMessage, message, _yield$_this7$message, id, query, room, users;
+        var content, roomId, file, replyMessage, message, _yield$_this7$message, id, query;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
@@ -430,17 +434,9 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                   messageId: id,
                   roomId: roomId
                 });
-                query = _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId);
-                _context3.next = 12;
-                return query.get();
+                query = _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId); // const room = await query.get();
+                // let users = await roomsRef.doc("" + roomId);
 
-              case 12:
-                room = _context3.sent;
-                _context3.next = 15;
-                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc("" + roomId);
-
-              case 15:
-                users = _context3.sent;
                 users.get().then(function (doc) {
                   axios.post('/chat/notify', {
                     users: doc.data().users,
@@ -450,7 +446,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                   console.log("Error getting document:", error);
                 });
 
-              case 17:
+              case 11:
               case "end":
                 return _context3.stop();
             }
@@ -601,6 +597,16 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
     typingMessage: function typingMessage(_ref10) {
       var message = _ref10.message,
           roomId = _ref10.roomId;
+
+      if ((message === null || message === void 0 ? void 0 : message.length) > 1) {
+        return this.typingMessageCache = message;
+      }
+
+      if ((message === null || message === void 0 ? void 0 : message.length) === 1 && this.typingMessageCache) {
+        return this.typingMessageCache = message;
+      }
+
+      this.typingMessageCache = message;
       var dbAction = message ? _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayUnion(this.currentUserId) : _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayRemove(this.currentUserId);
       _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId).update({
         typingUsers: dbAction
@@ -725,9 +731,29 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
         }, _callee9);
       }))();
     },
-    report: function report(messages) {},
-    inviteUser: function inviteUser(roomId) {
+    report: function report(messages) {
       var _this16 = this;
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("utils.report"),
+        message: this.trans.get("utils.chat_report_confirm"),
+        confirmText: this.trans.get("utils.report"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: function onConfirm() {
+          axios.post('/chat/send2admin', {
+            messages: _this16.messages,
+            room: _this16.selectedRoom
+          }).then(function (response) {
+            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this16, "User has been reported", vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].SUCCESS);
+          });
+        }
+      });
+    },
+    inviteUser: function inviteUser(roomId) {
+      var _this17 = this;
 
       this.$buefy.dialog.prompt({
         message: this.trans.get("auth.username"),
@@ -739,15 +765,15 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
           axios.post("/users/chat", {
             username: value
           }).then(function (response) {
-            _this16.addRoomUser(response.data.id, response.data.username, roomId);
+            _this17.addRoomUser(response.data.id, response.data.username, roomId);
           })["catch"](function (error) {
-            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this16, _this16.trans.get("utils.user_not_exists"), vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].ERROR);
+            _utils_js__WEBPACK_IMPORTED_MODULE_1__["default"].toast(_this17, _this17.trans.get("utils.user_not_exists"), vue_toastification__WEBPACK_IMPORTED_MODULE_6__["TYPE"].ERROR);
           });
         }
       });
     },
     addRoomUser: function addRoomUser(uid, username, roomId) {
-      var _this17 = this;
+      var _this18 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee10() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee10$(_context10) {
@@ -768,7 +794,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                 });
 
               case 5:
-                _this17.fetchRooms();
+                _this18.fetchRooms();
 
               case 6:
               case "end":
@@ -786,24 +812,24 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       }).users;
     },
     deleteRoomUser: function deleteRoomUser() {
-      var _this18 = this;
+      var _this19 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee11() {
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee11$(_context11) {
           while (1) {
             switch (_context11.prev = _context11.next) {
               case 0:
-                _this18.disableForm = true;
+                _this19.disableForm = true;
                 _context11.next = 3;
-                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(_this18.removeRoomId).update({
-                  users: _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayRemove(_this18.removeUserId)
+                return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(_this19.removeRoomId).update({
+                  users: _firestore__WEBPACK_IMPORTED_MODULE_4__["firebase"].firestore.FieldValue.arrayRemove(_this19.removeUserId)
                 });
 
               case 3:
-                _this18.removeRoomId = null;
-                _this18.removeUserId = "";
+                _this19.removeRoomId = null;
+                _this19.removeUserId = "";
 
-                _this18.fetchRooms();
+                _this19.fetchRooms();
 
               case 6:
               case "end":
@@ -814,7 +840,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
       }))();
     },
     deleteRoom: function deleteRoom(roomId) {
-      var _this19 = this;
+      var _this20 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee12() {
         var ref;
@@ -822,7 +848,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
           while (1) {
             switch (_context12.prev = _context12.next) {
               case 0:
-                ref = _this19.messagesRef(roomId);
+                ref = _this20.messagesRef(roomId);
                 ref.get().then(function (res) {
                   if (res.empty) return;
                   res.docs.map(function (doc) {
@@ -833,7 +859,7 @@ __webpack_require__(/*! firebase/auth */ "./node_modules/firebase/auth/dist/inde
                 return _firestore__WEBPACK_IMPORTED_MODULE_4__["roomsRef"].doc(roomId)["delete"]();
 
               case 4:
-                _this19.fetchRooms();
+                _this20.fetchRooms();
 
               case 5:
               case "end":
@@ -921,30 +947,37 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("chat-window", {
-    attrs: {
-      height: "calc(100vh - 56px)",
-      styles: _vm.styles,
-      currentUserId: _vm.currentUserId,
-      rooms: _vm.rooms,
-      loadingRooms: _vm.loadingRooms,
-      messages: _vm.messages,
-      messagesLoaded: _vm.messagesLoaded,
-      menuActions: _vm.menuActions
-    },
-    on: {
-      fetchMessages: _vm.fetchMessages,
-      sendMessage: _vm.sendMessage,
-      editMessage: _vm.editMessage,
-      deleteMessage: _vm.deleteMessage,
-      openFile: _vm.openFile,
-      addRoom: _vm.addRoom,
-      menuActionHandler: _vm.menuActionHandler,
-      messageActionHandler: _vm.messageActionHandler,
-      sendMessageReaction: _vm.sendMessageReaction,
-      typingMessage: _vm.typingMessage
-    }
-  })
+  return _c(
+    "div",
+    [
+      _c("chat-window", {
+        attrs: {
+          height: "calc(100vh - 56px)",
+          loadFirstRoom: false,
+          styles: _vm.styles,
+          currentUserId: _vm.currentUserId,
+          rooms: _vm.rooms,
+          loadingRooms: _vm.loadingRooms,
+          messages: _vm.messages,
+          messagesLoaded: _vm.messagesLoaded,
+          menuActions: _vm.menuActions
+        },
+        on: {
+          fetchMessages: _vm.fetchMessages,
+          sendMessage: _vm.sendMessage,
+          editMessage: _vm.editMessage,
+          deleteMessage: _vm.deleteMessage,
+          openFile: _vm.openFile,
+          addRoom: _vm.addRoom,
+          menuActionHandler: _vm.menuActionHandler,
+          messageActionHandler: _vm.messageActionHandler,
+          sendMessageReaction: _vm.sendMessageReaction,
+          typingMessage: _vm.typingMessage
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
