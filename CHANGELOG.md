@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.20 Beta (XX/11/2020)
+## v1.21 Beta (XX/12/2020)
 ### Added
 - Report user in chat.
 - Question bank.
@@ -9,7 +9,11 @@
 - Improvements in mobile view.
 - Music preload disabled.
 
-## v1.19.2 Beta (14/11/2020)
+## v1.20 Beta (02/12/2020)
+### Added
+- Reset assistant.
+
+## v1.19.4 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.
