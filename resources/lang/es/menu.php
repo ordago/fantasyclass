@@ -42,6 +42,7 @@ return [
     'contribute' => '¡Invita a café o cerveza!',
     'pets' => 'Mascotas',
     'mobile' => 'Versión móvil',
+    'battles' => 'Batallas',
 
     'view_list' => 'Vista de lista',
     'view_group' => 'Vista de grupos',

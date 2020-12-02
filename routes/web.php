@@ -151,7 +151,11 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/questions', 'QuestionBankController@index');
         Route::post('/{code}/questions', 'QuestionBankController@store');
         Route::delete('/bank/{id}', 'QuestionBankController@destroy');
+        
+        // Battles
+        Route::get('/{code}/battles', 'BattleController@index');
 
+        
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
