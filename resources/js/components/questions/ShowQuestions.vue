@@ -17,12 +17,13 @@
           </button>
         </span>
         <span v-if="bank.id">
-          <button class="button" @click="isImportModalActive = true">
+          <Xlsx type="importTest"></Xlsx>
+          <!-- <button class="button" @click="isImportModalActive = true">
             <i class="fas fa-file-import"></i>
             <span class="is-hidden-mobile ml-2">{{
               trans.get("general.import")
             }}</span>
-          </button>
+          </button> -->
           <button class="button" @click="modal = true">
             <span v-html="buttonAddChallege(1)" class="is-hidden-tablet"></span>
             <span v-html="buttonAddChallege(0)" class="is-hidden-mobile"></span>
@@ -68,12 +69,20 @@
       </div>
     </div>
 
-    <AddQuestion :modal="modal" :bank="bank" :code="code"> </AddQuestion>
+    <AddQuestion
+      v-if="modal"
+      :modal="modal"
+      :questioncopy="question"
+      :bank="bank"
+      :code="code"
+    >
+    </AddQuestion>
   </div>
 </template>
 <script>
 import AddQuestion from "./AddQuestion.vue";
 import ShowQuestion from "./ShowQuestion.vue";
+const Xlsx = () => import("../utils/ImportExcel.vue");
 
 export default {
   props: ["bank", "questions", "code"],
@@ -94,25 +103,35 @@ export default {
       groups: null,
       currentChallenge: null,
       mark: null,
+      question: null,
     };
   },
   methods: {
-    sendQuestion() {
-      let type = this.type + 1;
-      let question;
-      if (type == 1) {
-        question = this.question;
-      } else if (type == 2) {
-        question = this.question1;
-      }
-      axios
-        .post("/classroom/question/add", {
-          type: type,
-          bank: this.bank.id,
-          question: question,
-        })
-        .then((response) => {});
+    addFromExcel(questions) {
+      questions.forEach((question) => {
+        axios
+          .post("/classroom/question/add", {
+            type: 1,
+            bank: this.bank.id,
+            question: {
+              name: question['Title'],
+              correctAnswer: question['CorrectAnswer'],
+              incorrectAnswer1: question['Incorrect1'],
+              incorrectAnswer2: question['Incorrect2'] ? question['Incorrect2'] : "",
+              incorrectAnswer3: question['Incorrect3'] ? question['Incorrect3'] : "",
+            },
+          })
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.add_success"), {
+              type: "success",
+            });
+            if (this.bank.id) {
+              this.$parent.getQuestions(this.bank.id);
+            }
+          });
+      });
     },
+
     addAnswer() {
       if (this.currentAnswer != "") {
         this.question1.answers.push({
@@ -164,19 +183,7 @@ export default {
         },
       });
     },
-    showModal(challenge) {
-      this.currentChallenge = challenge;
-      axios
-        .post("/classroom/" + this.code + "/challenges/info", {
-          type: challenge.type,
-          challenge: challenge.id,
-        })
-        .then((response) => {
-          if (challenge.type == 0) this.students = response.data;
-          else this.groups = response.data;
-          this.isModalActive = true;
-        });
-    },
+
     toggleChallenge(id) {
       axios.post("/classroom/" + this.code + "/challenges/toggle", {
         id: id,
@@ -196,6 +203,7 @@ export default {
   components: {
     AddQuestion,
     ShowQuestion,
+    Xlsx,
   },
   computed: {
     filteredList: function () {

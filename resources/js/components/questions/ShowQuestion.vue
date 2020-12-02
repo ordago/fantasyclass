@@ -19,7 +19,8 @@
             'is-danger': option.answer.id != question.options[0].correctAnswer,
           }"
           v-if="option.answer"
-          >{{ option.answer.text }}</span>
+          >{{ option.answer.text }}</span
+        >
       </span>
     </div>
     <div class="mt-2" v-else-if="question.type == 2">
@@ -37,13 +38,19 @@
         </span>
       </span>
     </div>
-    <small>
-      <button
-        class="button is-danger delete-button-right"
-        v-on:click.prevent="deleteQuestion()"
-      >
-        <i class="far fa-trash"></i></button
-    ></small>
+    <div class="delete-button-right p-2">
+      <small>
+        <!-- <button
+          class="button"
+          v-on:click.prevent="clone(question)"
+        >
+          <i class="far fa-clone"></i>
+        </button> -->
+        <button class="button is-danger" v-on:click.prevent="deleteQuestion()">
+          <i class="far fa-trash"></i>
+        </button>
+      </small>
+    </div>
   </div>
 </template>
 <script>
@@ -56,8 +63,12 @@ export default {
   data: function () {
     return {};
   },
-  components: {},
   methods: {
+    clone(question) {
+      // this.$parent.question = question;
+      // this.$parent.modal = true;
+    },
+ 
     deleteQuestion() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),

@@ -220,6 +220,7 @@ export default {
   created: function () {
     this.init();
   },
+  mounted: function () {},
   data: function () {
     return {
       type: 0,
@@ -232,7 +233,7 @@ export default {
   },
   methods: {
     deleteAnswer(index) {
-      this.question1.answers.splice(index, 1)
+      this.question1.answers.splice(index, 1);
     },
     init() {
       this.question = {
@@ -278,9 +279,9 @@ export default {
         });
     },
     getText() {
-      if(this.question1.answers.length == 0)
-        return this.trans.get('questions.answer')
-      return this.trans.get('questions.answer_multiple')
+      if (this.question1.answers.length == 0)
+        return this.trans.get("questions.answer");
+      return this.trans.get("questions.answer_multiple");
     },
     addAnswer() {
       if (this.currentAnswer != "") {
