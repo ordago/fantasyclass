@@ -1,18 +1,14 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[19],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js&":
-/*!**********************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js& ***!
-  \**********************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @zaichaopan/emoji-picker */ "./node_modules/@zaichaopan/emoji-picker/dist/emoji-picker.common.js");
-/* harmony import */ var _zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @zaichaopan/emoji-picker/data/emojis.json */ "./node_modules/@zaichaopan/emoji-picker/data/emojis.json");
-var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___namespace = /*#__PURE__*/__webpack_require__.t(/*! @zaichaopan/emoji-picker/data/emojis.json */ "./node_modules/@zaichaopan/emoji-picker/data/emojis.json", 1);
 //
 //
 //
@@ -94,89 +90,211 @@ var _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1___names
 //
 //
 //
-
-Vue.use(_zaichaopan_emoji_picker__WEBPACK_IMPORTED_MODULE_0___default.a);
-
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["classroom", "rubricEdit"],
-  created: function created() {
-    if (this.rubricEdit) this.rubric = this.rubricEdit;
+  props: ["info", "code"],
+  mounted: function mounted() {
+    this.show = true;
   },
   data: function data() {
     return {
-      rubric: {
-        name: "",
-        rows: []
-      },
-      data: _zaichaopan_emoji_picker_data_emojis_json__WEBPACK_IMPORTED_MODULE_1__
+      isWheelModalActive: false,
+      show: false,
+      selectedStudent: 0,
+      isCountDownModalActive: false,
+      showInfo: false
     };
   },
   methods: {
-    delSubItem: function delSubItem(index, indexCol) {
-      this.rubric.rows[index].items.splice(indexCol, 1);
-      if (this.rubric.rows[index].items.length == 0) this.rubric.rows.splice(index, 1);
+    close: function close() {
+      window.location = "/classroom/" + this.code;
     },
-    addColumn: function addColumn(index) {
-      var row = this.rubric.rows[index];
-      var points = this.rubric.rows[index].items[this.rubric.rows[index].items.length - 1].points + 1;
-      row.items.push({
-        points: points,
-        description: ""
-      });
-      this.$forceUpdate();
-    },
-    addRow: function addRow() {
-      var row = {
-        description: "",
-        optional: false,
-        items: [{
-          points: 0,
-          description: ""
-        }]
-      };
-      this.rubric.rows.push(row);
-    },
-    back: function back() {
-      window.history.back();
-    },
-    createRubric: function createRubric() {
-      var _this = this;
+    accept: function accept() {
+      var value = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
 
-      if (this.rubricEdit) {
-        axios.patch("/classroom/" + this.classroom.code + "/rubric/" + this.rubric.id, {
-          rubric: this.rubric,
-          _method: "patch"
-        }).then(function (response) {
-          window.location.href = "/classroom/" + _this.classroom.code + "/rubrics";
-        });
-      } else {
-        axios.post("/classroom/" + this.classroom.code + "/rubric", {
-          rubric: this.rubric
-        }).then(function (response) {
-          window.location.href = "/classroom/" + _this.classroom.code + "/rubrics";
-        });
+      switch (this.info.event.type) {
+        case 1:
+        case 6:
+          axios.post("/classroom/students/update", {
+            id: this.info.student.id,
+            prop: "hp",
+            value: this.info.hp
+          });
+          break;
+
+        case 5:
+          axios.post("/classroom/students/update", {
+            id: this.selectedStudent,
+            prop: "hp",
+            value: this.info.hp
+          });
+          break;
+
+        case 2:
+          axios.post("/classroom/students/update", {
+            code: this.code,
+            prop: "hp",
+            value: this.info.hp
+          });
+          break;
+
+        case 8:
+          if (value) {
+            axios.post("/classroom/students/update", {
+              id: this.info.student.id,
+              prop: "gold",
+              value: this.info.gold
+            });
+          } else {
+            axios.post("/classroom/students/update", {
+              id: this.info.student.id,
+              prop: "hp",
+              value: this.info.hp
+            });
+          }
+
+          break;
+
+        case 9:
+          if (value) {
+            axios.post("/classroom/students/update", {
+              id: this.info.student.id,
+              prop: "xp",
+              value: this.info.xp
+            });
+          } else {
+            axios.post("/classroom/students/update", {
+              id: this.info.student.id,
+              prop: "xp",
+              value: this.info.xp * -1
+            });
+          }
+
+          break;
+
+        case 10:
+          axios.post("/classroom/students/update", {
+            id: this.info.student.id,
+            prop: "gold",
+            value: this.info.gold
+          });
+          break;
+
+        case 11:
+          axios.post("/classroom/students/update", {
+            id: this.info.student.id,
+            card_id: this.info.card.id
+          });
+          break;
+
+        case 12:
+          var prop = "gold";
+          if (this.info.value < 0) prop = "hp";
+          axios.post("/classroom/students/update", {
+            code: this.code,
+            prop: prop,
+            value: this.info.value
+          });
+          break;
       }
-    },
-    handleEmojiPicked: function handleEmojiPicked(emoji, text) {
-      var event = new Event("input");
-      this.$refs[text][0].value += emoji;
-      this.$refs[text][0].dispatchEvent(event);
-    },
-    handleEditorClick: function handleEditorClick(text) {
-      this.focusEditor(text);
-    },
-    focusEditor: function focusEditor(text) {
-      this.$refs[text][0].focus();
+
+      this.close();
     }
   }
 });
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&":
-/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss& ***!
-  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -185,22 +303,22 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".emoji-dropdown .emoji-preview,\n.emoji-dropdown .title {\n  display: none !important;\n}\n.message {\n  position: relative;\n  display: flex;\n  width: 100%;\n}\n.message .rich-editor-container {\n  width: 100%;\n  border: 1px solid #ddd;\n  padding: 5px 40px 5px 15px;\n}\n.message .rich-editor-container:focus {\n  outline: none;\n}\n.message .message-emoji {\n  position: absolute;\n  right: 9px;\n  top: 9px;\n}\n.message [contenteditable=true]:empty:before {\n  content: attr(placeholder);\n  color: grey;\n}\n.emoji-dropdown {\n  z-index: 20 !important;\n}\n.rubric-rows {\n  display: block;\n  position: relative;\n  background-color: #efefef;\n  padding: 30px;\n  border-radius: 5px;\n  margin: 10px auto 10px auto;\n  border: 1px solid #757575;\n}\n.rubric-row {\n  display: flex;\n  overflow: visible;\n  width: 100%;\n}\n.addRubricItem {\n  margin: 0 0 0 10px;\n}\n.subItem {\n  background-color: white;\n  padding: 10px;\n  margin: 0 4px 0 4px;\n  border: 1px solid #aaa;\n  border-radius: 10px;\n  position: relative;\n  overflow: visible;\n}\n.subItems {\n  display: flex;\n}\n.delSubItem {\n  position: absolute;\n  bottom: -1px;\n  right: 0;\n}\n.input p,\ninput {\n  padding: 7px;\n  border: 1px solid #aaa;\n  border-radius: 5px;\n}", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: logo;\n  src: url(/fonts/wizzta.otf);\n}\n.fade-enter-active,\n.fade-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 1000ms;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n.fadesecond-enter-active,\n.fadesecond-leave-active {\n  transition: opacity 0.5s;\n  transition-delay: 3000ms;\n}\n.fadesecond-enter, .fadesecond-leave-to /* .fade-leave-active below version 2.1.8 */ {\n  opacity: 0;\n}\n.first-appear {\n  height: 30vh;\n  background-color: rgba(255, 255, 255, 0.9);\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  word-spacing: 0.2em;\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n  position: relative;\n  padding: 40px;\n  z-index: 5;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  overflow: auto;\n}\n.second-appear {\n  height: 70vh;\n  border-bottom-left-radius: 10px;\n  border-bottom-right-radius: 10px;\n  background-color: rgba(255, 255, 255, 0.75);\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);\n  padding: 30px;\n  padding-top: 70px;\n  margin-top: -40px;\n  z-index: 2;\n  overflow: auto;\n}\n.final {\n  opacity: 0;\n}\nh2.second-appear > * {\n  margin: 5px;\n}\n.hiddenName {\n  display: inline-block;\n  font-size: 2.5em;\n  position: relative;\n  min-width: 600px;\n  text-align: center;\n}\n.hideObj {\n  position: absolute;\n  z-index: 1000;\n  background-image: url(\"/img/hide.png\");\n  background-repeat: no-repeat;\n  background-size: 100% 100%;\n  width: 100%;\n  height: 120%;\n  border-radius: 5px;\n  transition: 1s opacity;\n  cursor: zoom-in;\n}\n.hiddenName:hover .hideObj {\n  opacity: 0;\n  transition-delay: 1s;\n}\n.hiddenMEssage {\n  visibility: hidden;\n}\n", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&":
-/*!*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/style-loader!./node_modules/css-loader!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--7-2!./node_modules/sass-loader/dist/cjs.js??ref--7-3!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss& ***!
-  \*************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(/*! !../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricCreate.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&");
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&");
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -222,10 +340,10 @@ if(false) {}
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21&":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21& ***!
-  \**************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd& ***!
+  \******************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -238,276 +356,564 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "form",
-    {
-      staticClass: "p-3",
-      on: {
-        submit: function($event) {
-          $event.preventDefault()
-          return _vm.createRubric($event)
-        }
-      }
-    },
+    "div",
+    { staticClass: "m-0 content" },
     [
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v(_vm._s(_vm.trans.get("evaluation.name")))
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "control" }, [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.rubric.name,
-                expression: "rubric.name"
+      _c("transition", { attrs: { name: "fade" } }, [
+        _vm.show
+          ? _c("h1", {
+              staticClass: "first-appear is-size-1",
+              domProps: {
+                innerHTML: _vm._s(_vm.trans.get(_vm.info.event.title))
               }
-            ],
-            staticClass: "input",
-            attrs: { required: "", minlength: "3", type: "text" },
-            domProps: { value: _vm.rubric.name },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.$set(_vm.rubric, "name", $event.target.value)
-              }
-            }
-          })
-        ])
+            })
+          : _vm._e()
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "field" }, [
-        _c("label", { staticClass: "label" }, [
-          _vm._v(_vm._s(_vm.trans.get("evaluation.rows")))
-        ]),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "control" },
-          _vm._l(_vm.rubric.rows, function(row, index) {
-            return _c("div", { key: index, staticClass: "rubric-row my-2" }, [
-              _c("div", { staticClass: "description" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: row.description,
-                      expression: "row.description"
-                    }
-                  ],
-                  staticStyle: { height: "100%" },
-                  attrs: {
-                    placeholder: _vm.trans.get(
-                      "evaluation.general_description"
-                    ),
-                    required: ""
-                  },
-                  domProps: { value: row.description },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(row, "description", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  directives: [{ name: "tippy", rawName: "v-tippy" }],
-                  staticClass: "button is-success mx-2",
-                  attrs: {
-                    content: _vm.trans.get("evaluation.add_column"),
-                    tabindex: "0"
-                  },
-                  on: {
-                    click: function($event) {
-                      return _vm.addColumn(index)
-                    }
-                  }
-                },
-                [_c("i", { staticClass: "fas fa-plus" })]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "subItems" },
-                _vm._l(row.items, function(column, indexCol) {
-                  return _c("div", { key: indexCol, staticClass: "subItem" }, [
-                    _c(
-                      "div",
-                      { staticClass: "message mb-1 is-flex has-all-centered" },
-                      [
-                        _c("textarea", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: column.description,
-                              expression: "column.description"
-                            }
-                          ],
-                          ref: "textarea" + index + indexCol,
-                          refInFor: true,
-                          staticClass: "rich-editor-container rounded p-4",
-                          attrs: { required: "" },
-                          domProps: { value: column.description },
-                          on: {
-                            keypress: function($event) {
-                              if (
-                                !$event.type.indexOf("key") &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              $event.preventDefault()
-                            },
-                            click: function($event) {
-                              return _vm.handleEditorClick(
-                                "textarea" + index + indexCol
-                              )
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                column,
-                                "description",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c("emoji-picker", {
-                          attrs: { data: _vm.data },
-                          on: {
-                            "emoji:picked": function($event) {
-                              return _vm.handleEmojiPicked(
-                                $event,
-                                "textarea" + index + indexCol
-                              )
-                            }
-                          }
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c("div", { attrs: { id: "container" } }),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "pointsItem" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: column.points,
-                            expression: "column.points"
-                          }
-                        ],
-                        staticStyle: { width: "4em" },
-                        attrs: { type: "number", value: "0", min: "0" },
-                        domProps: { value: column.points },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(column, "points", $event.target.value)
-                          }
+      _c("transition", { attrs: { name: "fadesecond" } }, [
+        _vm.show
+          ? _c(
+              "div",
+              { staticClass: "second-appear" },
+              [
+                _c("h2", { staticClass: "py-3 is-size-3 has-text-centered" }, [
+                  !(_vm.info.event.type && _vm.showInfo)
+                    ? _c("span", {
+                        domProps: {
+                          innerHTML: _vm._s(
+                            _vm.trans.get(_vm.info.event.content)
+                          )
                         }
-                      }),
-                      _vm._v(
-                        "\n              " +
-                          _vm._s(_vm.trans.get("evaluation.points")) +
-                          "\n            "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    !_vm.rubricEdit
-                      ? _c(
-                          "div",
+                      })
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.info.event.type == 1 ||
+                  _vm.info.event.type == 2 ||
+                  _vm.info.event.type == 5
+                    ? _c("span", [
+                        _vm._v(
+                          "\n          (" + _vm._s(_vm.info.hp) + "\n          "
+                        ),
+                        _c("i", { staticClass: "fas fa-heart colored" }),
+                        _vm._v(")\n        ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.info.event.type == 10
+                    ? _c("span", [
+                        _vm._v(
+                          "\n          (" +
+                            _vm._s(_vm.info.gold) +
+                            "\n          "
+                        ),
+                        _c("i", { staticClass: "fas fa-coins colored" }),
+                        _vm._v(")\n        ")
+                      ])
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.info.event.type == 7
+                    ? _c("img", { attrs: { src: _vm.info.class } })
+                    : _vm._e()
+                ]),
+                _vm._v(" "),
+                _vm.info.event.type == 1 ||
+                _vm.info.event.type == 3 ||
+                _vm.info.event.type == 4 ||
+                _vm.info.event.type == 6 ||
+                _vm.info.event.type == 8 ||
+                _vm.info.event.type == 9 ||
+                _vm.info.event.type == 10 ||
+                _vm.info.event.type == 11
+                  ? _c(
+                      "h2",
+                      { staticClass: "py-3 is-size-3 has-text-centered" },
+                      [
+                        _c("div", { staticClass: "hiddenName" }, [
+                          _c("div", { staticClass: "hideObj" }),
+                          _vm._v(" "),
+                          _c("span", [_vm._v(_vm._s(_vm.info.student.name))])
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 8 || _vm.info.event.type == 9
+                  ? _c(
+                      "h4",
+                      {
+                        staticClass:
+                          "py-3 mt-2 is-flex is-size-4 has-all-centered"
+                      },
+                      [
+                        _c("div", { staticClass: "columns" }, [
+                          _c("div", { staticClass: "column" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button is-success",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.accept()
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-thumbs-up" }),
+                                _vm._v(" "),
+                                _vm.info.event.type == 8
+                                  ? _c("span", [_vm._v(_vm._s(_vm.info.gold))])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.info.event.type == 9
+                                  ? _c("span", [_vm._v(_vm._s(_vm.info.xp))])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("i", {
+                                  staticClass: "fas colored",
+                                  class: {
+                                    "fa-coins": _vm.info.event.type == 8,
+                                    "fa-fist-raised": _vm.info.event.type == 9
+                                  }
+                                })
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "column" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button is-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.accept(false)
+                                  }
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-thumbs-down" }),
+                                _vm._v(" "),
+                                _vm.info.event.type == 8
+                                  ? _c("span", [_vm._v(_vm._s(_vm.info.hp))])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.info.event.type == 9
+                                  ? _c("span", [
+                                      _vm._v(_vm._s(_vm.info.xp * -1))
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("i", {
+                                  staticClass: "fas colored",
+                                  class: {
+                                    "fa-heart": _vm.info.event.type == 8,
+                                    "fa-fist-raised": _vm.info.event.type == 9
+                                  }
+                                })
+                              ]
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 5
+                  ? _c(
+                      "h4",
+                      {
+                        staticClass: "py-3 is-flex is-size-4 has-all-centered"
+                      },
+                      [
+                        _c(
+                          "b-modal",
                           {
-                            staticClass: "button is-danger delSubItem",
+                            attrs: {
+                              active: _vm.isCountDownModalActive,
+                              "has-modal-card": "",
+                              "full-screen": "",
+                              "can-cancel": false
+                            },
                             on: {
-                              click: function($event) {
-                                return _vm.delSubItem(index, indexCol)
+                              "update:active": function($event) {
+                                _vm.isCountDownModalActive = $event
                               }
                             }
                           },
-                          [_c("i", { staticClass: "far fa-trash-alt" })]
-                        )
-                      : _vm._e()
-                  ])
-                }),
-                0
-              )
-            ])
-          }),
-          0
-        )
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "modal-card",
+                                staticStyle: { width: "auto" }
+                              },
+                              [
+                                _c(
+                                  "header",
+                                  { staticClass: "modal-card-head" },
+                                  [
+                                    _c(
+                                      "p",
+                                      { staticClass: "modal-card-title" },
+                                      [_vm._v("Countdown")]
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "section",
+                                  {
+                                    staticClass:
+                                      "modal-card-body is-flex has-all-centered",
+                                    staticStyle: { "align-items": "flex-start" }
+                                  },
+                                  [
+                                    _c("count-down", {
+                                      attrs: {
+                                        starttime: new Date(1, 1, 1, 0, 0, 10)
+                                      }
+                                    })
+                                  ],
+                                  1
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "footer",
+                                  { staticClass: "modal-card-foot" },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "button",
+                                        attrs: { type: "button" },
+                                        on: {
+                                          click: function($event) {
+                                            _vm.isCountDownModalActive = false
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Close")]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "columns" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "column is-narrow is-flex has-all-centered"
+                            },
+                            [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.info.student.name) +
+                                  "\n            "
+                              ),
+                              _c("i", {
+                                staticClass: "fal ml-3 fa-arrow-right"
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "column is-flex has-all-centered" },
+                            [
+                              _c("div", { staticClass: "field" }, [
+                                _c("div", { staticClass: "control" }, [
+                                  _c(
+                                    "div",
+                                    { staticClass: "select is-danger" },
+                                    [
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: _vm.selectedStudent,
+                                              expression: "selectedStudent"
+                                            }
+                                          ],
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.selectedStudent = $event
+                                                .target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            {
+                                              domProps: {
+                                                value: _vm.info.student.id
+                                              }
+                                            },
+                                            [
+                                              _vm._v(
+                                                _vm._s(_vm.info.student.name)
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _vm._l(
+                                            _vm.info.groupMembers,
+                                            function(student) {
+                                              return _c(
+                                                "option",
+                                                {
+                                                  key: student.id,
+                                                  domProps: {
+                                                    value: student.id
+                                                  }
+                                                },
+                                                [_vm._v(_vm._s(student.name))]
+                                              )
+                                            }
+                                          )
+                                        ],
+                                        2
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "column is-narrow is-flex has-all-centered"
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "button is-link",
+                                  on: {
+                                    click: function($event) {
+                                      _vm.isCountDownModalActive = true
+                                    }
+                                  }
+                                },
+                                [_c("i", { staticClass: "fad fa-stopwatch" })]
+                              )
+                            ]
+                          )
+                        ])
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 14
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-primary",
+                        on: {
+                          click: function($event) {
+                            _vm.isWheelModalActive = true
+                          }
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.trans.get("events.wheel_btn")))]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 11 && _vm.showInfo
+                  ? _c("show-card", {
+                      staticClass: "mt-2",
+                      staticStyle: { zoom: "0.5" },
+                      attrs: { card: _vm.info.card }
+                    })
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 11
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button mt-3",
+                        on: {
+                          click: function($event) {
+                            _vm.showInfo = !_vm.showInfo
+                          }
+                        }
+                      },
+                      [_vm._v("Show / hide card")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type == 12
+                  ? _c("div", { staticClass: "columns" }, [
+                      !_vm.showInfo
+                        ? _c("div", { staticClass: "column" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button is-success",
+                                on: {
+                                  click: function($event) {
+                                    _vm.showInfo = true
+                                  }
+                                }
+                              },
+                              [_vm._v(_vm._s(_vm.trans.get("events.go_ahead")))]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      !_vm.showInfo
+                        ? _c("div", { staticClass: "column" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "button is-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.close()
+                                  }
+                                }
+                              },
+                              [_vm._v("Nope ...")]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      _vm.showInfo
+                        ? _c("div", { staticClass: "column" }, [
+                            _c("span", { staticClass: "is-size-3 mt-3" }, [
+                              _vm._v(
+                                "\n            " +
+                                  _vm._s(_vm.trans.get(_vm.info.text)) +
+                                  " (" +
+                                  _vm._s(_vm.info.value) +
+                                  "\n            "
+                              ),
+                              _c("i", {
+                                staticClass: "fas colored",
+                                class: {
+                                  "fa-coins": _vm.info.value > 0,
+                                  "fa-heart": _vm.info.value < 0
+                                }
+                              }),
+                              _vm._v(")\n          ")
+                            ])
+                          ])
+                        : _vm._e()
+                    ])
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.info.event.type != 8 &&
+                _vm.info.event.type != 9 &&
+                (_vm.info.event.type != 12 || _vm.showInfo)
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-dark mt-5",
+                        on: {
+                          click: function($event) {
+                            return _vm.accept()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-feather-alt" }),
+                        _vm._v(" Accept the destiny\n      ")
+                      ]
+                    )
+                  : _vm._e()
+              ],
+              1
+            )
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c(
-        "button",
+        "b-modal",
         {
-          staticClass: "button is-primary",
+          attrs: {
+            active: _vm.isWheelModalActive,
+            "has-modal-card": "",
+            "full-screen": "",
+            "can-cancel": false
+          },
           on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.addRow($event)
+            "update:active": function($event) {
+              _vm.isWheelModalActive = $event
             }
           }
         },
-        [_vm._v(_vm._s(_vm.trans.get("evaluation.add_row")))]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "button is-info",
-          attrs: { type: "submit" },
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              return _vm.back($event)
-            }
-          }
-        },
-        [_vm._v(_vm._s(_vm.trans.get("general.cancel")))]
-      ),
-      _vm._v(" "),
-      _vm.rubric.rows.length && !this.rubricEdit
-        ? _c(
-            "button",
-            { staticClass: "button is-success", attrs: { type: "submit" } },
-            [_vm._v(_vm._s(_vm.trans.get("evaluation.create_rubric")))]
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v(_vm._s(_vm.trans.get("utils.fortune")))
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "section",
+                { staticClass: "modal-card-body is-flex has-all-centered" },
+                [_c("wheel", { attrs: { students: _vm.info.students } })],
+                1
+              ),
+              _vm._v(" "),
+              _c("footer", { staticClass: "modal-card-foot" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.isWheelModalActive = false
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("general.close")) +
+                        "\n        "
+                    )
+                  ]
+                )
+              ])
+            ]
           )
-        : _vm._e(),
-      _vm._v(" "),
-      this.rubricEdit
-        ? _c(
-            "button",
-            { staticClass: "button is-info", attrs: { type: "submit" } },
-            [_vm._v(_vm._s(_vm.trans.get("evaluation.edit_rubric")))]
-          )
-        : _vm._e()
-    ]
+        ]
+      )
+    ],
+    1
   )
 }
 var staticRenderFns = []
@@ -517,18 +923,18 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/RubricCreate.vue":
-/*!*************************************************************!*\
-  !*** ./resources/js/components/evaluation/RubricCreate.vue ***!
-  \*************************************************************/
+/***/ "./resources/js/components/event/ShowEvent.vue":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/event/ShowEvent.vue ***!
+  \*****************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RubricCreate.vue?vue&type=template&id=76daeb21& */ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21&");
-/* harmony import */ var _RubricCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./RubricCreate.vue?vue&type=script&lang=js& */ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RubricCreate.vue?vue&type=style&index=0&lang=scss& */ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&");
+/* harmony import */ var _ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ShowEvent.vue?vue&type=template&id=1e523ccd& */ "./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd&");
+/* harmony import */ var _ShowEvent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ShowEvent.vue?vue&type=script&lang=js& */ "./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ShowEvent.vue?vue&type=style&index=0&lang=css& */ "./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -539,9 +945,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
-  _RubricCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _ShowEvent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -551,54 +957,54 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/evaluation/RubricCreate.vue"
+component.options.__file = "resources/js/components/event/ShowEvent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricCreate.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&":
-/*!***********************************************************************************************!*\
-  !*** ./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss& ***!
-  \***********************************************************************************************/
+/***/ "./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css& ***!
+  \**************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--7-2!../../../../node_modules/sass-loader/dist/cjs.js??ref--7-3!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricCreate.vue?vue&type=style&index=0&lang=scss& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/sass-loader/dist/cjs.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=style&index=0&lang=scss&");
-/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_7_2_node_modules_sass_loader_dist_cjs_js_ref_7_3_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_style_index_0_lang_scss___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvent.vue?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
-/***/ "./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21&":
-/*!********************************************************************************************!*\
-  !*** ./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21& ***!
-  \********************************************************************************************/
+/***/ "./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd& ***!
+  \************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./RubricCreate.vue?vue&type=template&id=76daeb21& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/evaluation/RubricCreate.vue?vue&type=template&id=76daeb21&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ShowEvent.vue?vue&type=template&id=1e523ccd& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/event/ShowEvent.vue?vue&type=template&id=1e523ccd&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_RubricCreate_vue_vue_type_template_id_76daeb21___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ShowEvent_vue_vue_type_template_id_1e523ccd___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

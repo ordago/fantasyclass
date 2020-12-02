@@ -1,14 +1,35 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([[26],{
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&":
-/*!****************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js& ***!
-  \****************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -173,26 +194,26 @@ var IconSelector = function IconSelector() {
 };
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["code", "badge"],
+  props: ["code", "behaviour"],
   created: function created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
-    if (this.badge) {
-      this.title = this.trans.get(this.badge.title);
-      this.description = this.trans.get(this.badge.description);
-      this.hp = this.badge.hp;
-      this.xp = this.badge.xp;
-      this.gold = this.badge.gold;
-      this.icon = this.badge.icon;
-      this.id = this.badge.id;
+    if (this.behaviour) {
+      this.name = this.trans.get(this.behaviour.name);
+      this.custom_text = this.trans.get(this.behaviour.custom_text);
+      this.hp = this.behaviour.hp;
+      this.xp = this.behaviour.xp;
+      this.gold = this.behaviour.gold;
+      this.icon = this.behaviour.icon;
+      this.id = this.behaviour.id;
     }
   },
   data: function data() {
     return {
       icon: null,
       csrfToken: null,
-      title: null,
-      description: null,
+      name: null,
+      custom_text: null,
       xp: 0,
       hp: 0,
       gold: 0,
@@ -209,7 +230,7 @@ var IconSelector = function IconSelector() {
     update: function update() {
       var _this = this;
 
-      axios.patch("/classroom/badges/" + this.id, this.$data).then(function (response) {
+      axios.patch("/classroom/behaviours/" + this.id, this.$data).then(function (response) {
         _this.$toast(response.data.message, {
           type: response.data.type
         });
@@ -220,10 +241,10 @@ var IconSelector = function IconSelector() {
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&":
-/*!********************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980& ***!
-  \********************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674&":
+/*!****************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674& ***!
+  \****************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -241,7 +262,7 @@ var render = function() {
       {
         attrs: {
           method: "post",
-          action: "/classroom/" + this.code + "/badges",
+          action: "/classroom/" + this.code + "/behaviours",
           enctype: "multipart/form-data"
         }
       },
@@ -268,7 +289,7 @@ var render = function() {
               attrs: {
                 name: "icon",
                 required: "",
-                placeholder: _vm.trans.get("badges.icon_select"),
+                placeholder: _vm.trans.get("behaviours.icon_select"),
                 type: "text"
               },
               domProps: { value: _vm.icon },
@@ -291,7 +312,8 @@ var render = function() {
             _c("label", [
               _c("small", [
                 _vm._v(
-                  _vm._s(_vm.trans.get("badges.fontawesome")) + "\n          "
+                  _vm._s(_vm.trans.get("behaviours.fontawesome")) +
+                    "\n          "
                 ),
                 _c(
                   "a",
@@ -313,7 +335,14 @@ var render = function() {
             _c("span", { staticClass: "help is-danger is-inline" }, [
               _vm._v("* ")
             ]),
-            _vm._v("\n        " + _vm._s(_vm.trans.get("badges.title")))
+            _vm._v(
+              "\n        " +
+                _vm._s(_vm.trans.get("behaviours.name")) +
+                "\n        "
+            ),
+            _c("small", { staticClass: "font-italic" }, [
+              _vm._v("(" + _vm._s(_vm.trans.get("behaviours.name_info")) + ")")
+            ])
           ]),
           _vm._v(" "),
           _c("input", {
@@ -321,19 +350,19 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.title,
-                expression: "title"
+                value: _vm.name,
+                expression: "name"
               }
             ],
             staticClass: "input my-3",
-            attrs: { type: "text", id: "title", name: "title", required: "" },
-            domProps: { value: _vm.title },
+            attrs: { type: "text", id: "name", name: "name", required: "" },
+            domProps: { value: _vm.name },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.title = $event.target.value
+                _vm.name = $event.target.value
               }
             }
           })
@@ -341,10 +370,14 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-2" }, [
           _c("label", { attrs: { for: "custom_text" } }, [
-            _c("span", { staticClass: "help is-danger is-inline" }, [
-              _vm._v("* ")
-            ]),
-            _vm._v("\n        " + _vm._s(_vm.trans.get("badges.description")))
+            _vm._v(
+              _vm._s(_vm.trans.get("behaviours.custom_text")) + "\n        "
+            ),
+            _c("small", { staticClass: "font-italic" }, [
+              _vm._v(
+                "(" + _vm._s(_vm.trans.get("behaviours.custom_text_info")) + ")"
+              )
+            ])
           ]),
           _vm._v(" "),
           _c("input", {
@@ -352,24 +385,24 @@ var render = function() {
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.description,
-                expression: "description"
+                value: _vm.custom_text,
+                expression: "custom_text"
               }
             ],
             staticClass: "input",
             attrs: {
               type: "text",
-              name: "description",
-              required: "",
+              id: "custom_text",
+              name: "custom_text",
               placeholder: ""
             },
-            domProps: { value: _vm.description },
+            domProps: { value: _vm.custom_text },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.description = $event.target.value
+                _vm.custom_text = $event.target.value
               }
             }
           })
@@ -377,10 +410,12 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "mt-3" }, [
           _c("label", [
-            _vm._v(_vm._s(_vm.trans.get("badges.attributes")) + "\n        "),
+            _vm._v(
+              _vm._s(_vm.trans.get("behaviours.attributes")) + "\n        "
+            ),
             _c("small", { staticClass: "font-italic" }, [
               _vm._v(
-                "(" + _vm._s(_vm.trans.get("badges.attributes_info")) + ")"
+                "(" + _vm._s(_vm.trans.get("behaviours.attributes_info")) + ")"
               )
             ])
           ]),
@@ -515,7 +550,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", [
-          _vm.badge
+          _vm.behaviour
             ? _c(
                 "button",
                 {
@@ -526,21 +561,21 @@ var render = function() {
                 [
                   _vm._v(
                     "\n        " +
-                      _vm._s(_vm.trans.get("badges.edit")) +
+                      _vm._s(_vm.trans.get("behaviours.edit")) +
                       "\n      "
                   )
                 ]
               )
             : _vm._e(),
           _vm._v(" "),
-          !_vm.badge
+          !_vm.behaviour
             ? _c(
                 "button",
                 { staticClass: "button is-success", attrs: { type: "submit" } },
                 [
                   _vm._v(
                     "\n        " +
-                      _vm._s(_vm.trans.get("badges.create")) +
+                      _vm._s(_vm.trans.get("behaviours.create")) +
                       "\n      "
                   )
                 ]
@@ -558,17 +593,17 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue":
-/*!*******************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue ***!
-  \*******************************************************/
+/***/ "./resources/js/components/behaviour/CreateBehaviour.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/behaviour/CreateBehaviour.vue ***!
+  \***************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateBadge.vue?vue&type=template&id=ba865980& */ "./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&");
-/* harmony import */ var _CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateBadge.vue?vue&type=script&lang=js& */ "./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&");
+/* harmony import */ var _CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreateBehaviour.vue?vue&type=template&id=58567674& */ "./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674&");
+/* harmony import */ var _CreateBehaviour_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreateBehaviour.vue?vue&type=script&lang=js& */ "./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -578,9 +613,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _CreateBehaviour_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -590,38 +625,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/badge/CreateBadge.vue"
+component.options.__file = "resources/js/components/behaviour/CreateBehaviour.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&":
-/*!********************************************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************/
+/***/ "./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBadge.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBehaviour_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBehaviour.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBehaviour_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&":
-/*!**************************************************************************************!*\
-  !*** ./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980& ***!
-  \**************************************************************************************/
+/***/ "./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674&":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674& ***!
+  \**********************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBadge.vue?vue&type=template&id=ba865980& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/badge/CreateBadge.vue?vue&type=template&id=ba865980&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CreateBehaviour.vue?vue&type=template&id=58567674& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/behaviour/CreateBehaviour.vue?vue&type=template&id=58567674&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBadge_vue_vue_type_template_id_ba865980___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateBehaviour_vue_vue_type_template_id_58567674___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

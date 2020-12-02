@@ -43,7 +43,16 @@
             ><i class="far fa-cog mr-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
-          <!-- <button class="button is-primary">Reset</button> -->
+          <button
+            class="button is-link"
+            @click="resetAssistant = true"
+            v-tippy
+            v-if="isAdmin"
+            :content="trans.get('settings.reset_assistant_help')"
+          >
+            <i class="fas fa-eraser mr-2"></i>
+            {{ trans.get("settings.reset_assistant") }}
+          </button>
           <button
             class="button is-danger"
             @click="confirmDelete"
@@ -312,6 +321,39 @@
         </b-switch>
       </div>-->
     </div>
+    <b-modal
+      :active.sync="resetAssistant"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("settings.reset_assistant") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <button @click="reset('hp', 'heart')" class="button is-danger w-100">
+            Reset <i class="fas fa-heart colored"></i>
+          </button>
+          <button @click="reset('xp', 'fist-raised')" class="button is-dark w-100 mt-2">
+            Reset <i class="fas fa-fist-raised colored"></i>
+          </button>
+          <button @click="reset('gold', 'coins')" class="button is-warning w-100 mt-2">
+            Reset <i class="fas fa-coins colored"></i>
+          </button>
+          <!-- <button class="button is-link w-100 mt-2">Reset {{ trans.get('menu.shop') }}</button> -->
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="resetAssistant = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -334,6 +376,7 @@ export default {
   },
   data: function () {
     return {
+      resetAssistant: false,
       state: "0",
       value: [],
       process: (dotsPos) => [
@@ -362,6 +405,31 @@ export default {
     };
   },
   methods: {
+    reset(type, icon) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete_class") + " (<i class='fas fa-" + icon + " colored'></i>)",
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/settings/reset", {
+              type: type,
+            })
+            .then((response) => {
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+            });
+        },
+      });
+    },
     unlink() {
       axios.get("/google/classroom/unlink").then((response) => {
         this.$toast(this.trans.get("success_error.update_success"), {

@@ -107,10 +107,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -139,12 +135,12 @@ __webpack_require__.r(__webpack_exports__);
     getChallenges: function getChallenges(id) {
       var _this = this;
 
-      this.isLoading = true;
+      // this.isLoading = true;
       axios.post("/classroom/" + this.code + "/challenges/get", {
         id: id
       }).then(function (response) {
-        _this.challenges = response.data;
-        _this.isLoading = false; // this.$forceUpdate();
+        // this.isLoading = false;
+        _this.challenges = response.data; // this.$forceUpdate();
       });
     }
   },
@@ -317,19 +313,6 @@ var render = function() {
       "div",
       { staticClass: "column pr-0" },
       [
-        _c("b-loading", {
-          attrs: {
-            "is-full-page": true,
-            active: _vm.isLoading,
-            "can-cancel": false
-          },
-          on: {
-            "update:active": function($event) {
-              _vm.isLoading = $event
-            }
-          }
-        }),
-        _vm._v(" "),
         _vm.activeAddGroup
           ? _c("CreateChallengeGroup", { attrs: { code: _vm.code } })
           : _vm._e(),

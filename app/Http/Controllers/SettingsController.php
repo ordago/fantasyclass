@@ -53,6 +53,27 @@ class SettingsController extends Controller
 
     }
 
+    public function reset($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+        switch(request()->type) {
+            case 'hp':
+                $value = 100;        
+            break;
+            case 'gold':
+            case 'xp':
+                $value = 0;
+            break;
+            default:
+                abort(403);
+            break;
+        }
+        foreach ($class->students as $student) {
+            $student->update([request()->type => $value]);
+        }
+    }
+
     public function invite($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

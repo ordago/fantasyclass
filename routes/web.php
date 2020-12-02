@@ -168,6 +168,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
+        Route::post('/{code}/settings/reset', 'SettingsController@reset');
 
         // Events
         Route::get('/{code}/events', 'EventController@index');

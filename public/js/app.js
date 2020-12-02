@@ -3478,6 +3478,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3495,6 +3537,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      resetAssistant: false,
       state: "0",
       value: [],
       process: function process(dotsPos) {
@@ -3522,30 +3565,55 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    unlink: function unlink() {
+    reset: function reset(type, icon) {
       var _this = this;
 
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete_class") + " (<i class='fas fa-" + icon + " colored'></i>)",
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: function onConfirm() {
+          axios.post("/classroom/" + _this.classroom.code + "/settings/reset", {
+            type: type
+          }).then(function (response) {
+            _this.$toast(_this.trans.get("success_error.update_success"), {
+              type: "success"
+            });
+          });
+        }
+      });
+    },
+    unlink: function unlink() {
+      var _this2 = this;
+
       axios.get("/google/classroom/unlink").then(function (response) {
-        _this.$toast(_this.trans.get("success_error.update_success"), {
+        _this2.$toast(_this2.trans.get("success_error.update_success"), {
           type: "success"
         });
 
-        _this.user.token = null;
-
-        _this.$forceUpdate();
-      });
-    },
-    regenerate: function regenerate() {
-      var _this2 = this;
-
-      axios.get("/classroom/" + this.classroom.code + "/regenerate").then(function (response) {
-        _this2.classroom.enrollment_code = response.data;
+        _this2.user.token = null;
 
         _this2.$forceUpdate();
       });
     },
-    confirmDelete: function confirmDelete() {
+    regenerate: function regenerate() {
       var _this3 = this;
+
+      axios.get("/classroom/" + this.classroom.code + "/regenerate").then(function (response) {
+        _this3.classroom.enrollment_code = response.data;
+
+        _this3.$forceUpdate();
+      });
+    },
+    confirmDelete: function confirmDelete() {
+      var _this4 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -3559,14 +3627,14 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this3.classroom.code).then(function (response) {
+          axios["delete"]("/classroom/" + _this4.classroom.code).then(function (response) {
             location.href = response.data;
           });
         }
       });
     },
     confirmDeleteTeacher: function confirmDeleteTeacher(id, index) {
-      var _this4 = this;
+      var _this5 = this;
 
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -3580,7 +3648,7 @@ __webpack_require__.r(__webpack_exports__);
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: function onConfirm() {
-          axios["delete"]("/classroom/" + _this4.classroom.code + "/teacher/" + id).then(function (response) {
+          axios["delete"]("/classroom/" + _this5.classroom.code + "/teacher/" + id).then(function (response) {
             if (response.data === 1) {
               // TODO change to delete teacher from array
               location.reload(true);
@@ -3592,7 +3660,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     promptInvite: function promptInvite() {
-      var _this5 = this;
+      var _this6 = this;
 
       this.$buefy.dialog.prompt({
         message: "Email",
@@ -3601,10 +3669,10 @@ __webpack_require__.r(__webpack_exports__);
         },
         trapFocus: true,
         onConfirm: function onConfirm(email) {
-          axios.post("/classroom/" + _this5.classroom.code + "/invite", {
+          axios.post("/classroom/" + _this6.classroom.code + "/invite", {
             email: email
           }).then(function (response) {
-            _this5.$toast(response.data.message, {
+            _this6.$toast(response.data.message, {
               type: response.data.type
             });
 
@@ -45735,692 +45803,869 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "content p-3" }, [
-    _c(
-      "div",
-      { staticClass: "p-2 pl-4" },
-      [
-        _c("h1", { staticClass: "mb-5" }, [
-          _c("i", { staticClass: "fal fa-chalkboard" }),
-          _vm._v(
-            "\n      " + _vm._s(_vm.trans.get("settings.classroom")) + "\n    "
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "b-field",
-          {
-            staticClass: "mt-4",
-            attrs: { label: _vm.trans.get("settings.state") }
-          },
-          [
+  return _c(
+    "div",
+    { staticClass: "content p-3" },
+    [
+      _c(
+        "div",
+        { staticClass: "p-2 pl-4" },
+        [
+          _c("h1", { staticClass: "mb-5" }, [
+            _c("i", { staticClass: "fal fa-chalkboard" }),
+            _vm._v(
+              "\n      " +
+                _vm._s(_vm.trans.get("settings.classroom")) +
+                "\n    "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "b-field",
+            {
+              staticClass: "mt-4",
+              attrs: { label: _vm.trans.get("settings.state") }
+            },
+            [
+              _c(
+                "b-field",
+                { staticClass: "mb-3 pl-4" },
+                [
+                  _c(
+                    "b-radio-button",
+                    {
+                      attrs: { "native-value": "0", type: "is-success" },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateClassState("state", 0)
+                        }
+                      },
+                      model: {
+                        value: _vm.state,
+                        callback: function($$v) {
+                          _vm.state = $$v
+                        },
+                        expression: "state"
+                      }
+                    },
+                    [
+                      _c("b-icon", {
+                        attrs: { icon: "check", "icon-pack": "fa" }
+                      }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.trans.get("settings.active")))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-radio-button",
+                    {
+                      attrs: { "native-value": "1", type: "is-warning" },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateClassState("state", 1)
+                        }
+                      },
+                      model: {
+                        value: _vm.state,
+                        callback: function($$v) {
+                          _vm.state = $$v
+                        },
+                        expression: "state"
+                      }
+                    },
+                    [
+                      _c("b-icon", { attrs: { icon: "hourglass-end" } }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.trans.get("settings.finished")))
+                      ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "b-radio-button",
+                    {
+                      attrs: { "native-value": "2", type: "is-danger" },
+                      on: {
+                        input: function($event) {
+                          return _vm.updateClassState("state", 2)
+                        }
+                      },
+                      model: {
+                        value: _vm.state,
+                        callback: function($$v) {
+                          _vm.state = $$v
+                        },
+                        expression: "state"
+                      }
+                    },
+                    [
+                      _c("b-icon", { attrs: { icon: "eye-slash" } }),
+                      _vm._v(" "),
+                      _c("span", [
+                        _vm._v(_vm._s(_vm.trans.get("settings.disabled")))
+                      ])
+                    ],
+                    1
+                  )
+                ],
+                1
+              )
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "b-field",
+            { attrs: { label: _vm.trans.get("settings.config") } },
+            [
+              _c("div", { staticClass: "buttons pl-4" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "button",
+                    attrs: {
+                      href: "/classroom/" + _vm.classroom.code + "/edit"
+                    }
+                  },
+                  [
+                    _c("i", { staticClass: "far fa-cog mr-2" }),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("menu.config")) +
+                        " (wizard)"
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _vm.isAdmin
+                  ? _c(
+                      "button",
+                      {
+                        directives: [{ name: "tippy", rawName: "v-tippy" }],
+                        staticClass: "button is-link",
+                        attrs: {
+                          content: _vm.trans.get(
+                            "settings.reset_assistant_help"
+                          )
+                        },
+                        on: {
+                          click: function($event) {
+                            _vm.resetAssistant = true
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-eraser mr-2" }),
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(_vm.trans.get("settings.reset_assistant")) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.isAdmin
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-danger",
+                        on: { click: _vm.confirmDelete }
+                      },
+                      [
+                        _c("i", { staticClass: "fas fa-trash" }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "mx-3" }, [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(_vm.trans.get("general.delete")) +
+                              "\n            "
+                          ),
+                          _c("i", { staticClass: "fas fa-radiation-alt" }),
+                          _vm._v(" "),
+                          _c("i", {
+                            staticClass: "fas fa-exclamation-triangle"
+                          })
+                        ])
+                      ]
+                    )
+                  : _vm._e()
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "b-field",
+            {
+              staticStyle: { width: "400px" },
+              attrs: { label: _vm.trans.get("settings.enrollment_code") }
+            },
+            [
+              _c("div", { staticClass: "field has-addons my-3 pl-4" }, [
+                _c(
+                  "p",
+                  { staticClass: "control" },
+                  [
+                    _c("b-input", {
+                      attrs: {
+                        type: "password",
+                        value: _vm.classroom.enrollment_code,
+                        "password-reveal": "",
+                        readonly: ""
+                      }
+                    })
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("p", { staticClass: "control" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "button is-info",
+                      on: { click: _vm.regenerate }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-sync-alt" }),
+                      _vm._v(
+                        "\n            " +
+                          _vm._s(_vm.trans.get("settings.generate")) +
+                          "\n          "
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _vm.user.token
+            ? _c(
+                "button",
+                {
+                  staticClass: "button is-link mb-3",
+                  on: { click: _vm.unlink }
+                },
+                [
+                  _vm._v(
+                    "\n      " +
+                      _vm._s(_vm.trans.get("settings.classroom_unlink")) +
+                      "\n    "
+                  )
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-0 mb-2" }, [
+            _vm.user.token
+              ? _c("small", {
+                  domProps: {
+                    innerHTML: _vm._s(
+                      _vm.trans.get("settings.classroom_unlink_info")
+                    )
+                  }
+                })
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", {}, [
+            _c("h1", [
+              _c("i", { staticClass: "fal fa-cog" }),
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("settings.general_preferences")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
             _c(
-              "b-field",
-              { staticClass: "mb-3 pl-4" },
+              "div",
+              { staticClass: "my-4" },
               [
                 _c(
-                  "b-radio-button",
+                  "b-switch",
                   {
-                    attrs: { "native-value": "0", type: "is-success" },
+                    staticClass: "ml-4",
+                    attrs: { "true-value": "1", "false-value": "0" },
                     on: {
                       input: function($event) {
-                        return _vm.updateClassState("state", 0)
+                        return _vm.toggleProp("allow_change_class")
                       }
                     },
                     model: {
-                      value: _vm.state,
+                      value: _vm.settings.allow_change_class,
                       callback: function($$v) {
-                        _vm.state = $$v
+                        _vm.$set(_vm.settings, "allow_change_class", $$v)
                       },
-                      expression: "state"
+                      expression: "settings.allow_change_class"
                     }
                   },
-                  [
-                    _c("b-icon", {
-                      attrs: { icon: "check", "icon-pack": "fa" }
-                    }),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.trans.get("settings.active")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
+                  [_vm._v(_vm._s(_vm.trans.get("settings.allow_change_class")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "my-4" },
+              [
                 _c(
-                  "b-radio-button",
+                  "b-switch",
                   {
-                    attrs: { "native-value": "1", type: "is-warning" },
+                    staticClass: "ml-4",
+                    attrs: { "true-value": "1", "false-value": "0" },
                     on: {
                       input: function($event) {
-                        return _vm.updateClassState("state", 1)
+                        return _vm.toggleProp("allow_upload")
                       }
                     },
                     model: {
-                      value: _vm.state,
+                      value: _vm.settings.allow_upload,
                       callback: function($$v) {
-                        _vm.state = $$v
+                        _vm.$set(_vm.settings, "allow_upload", $$v)
                       },
-                      expression: "state"
+                      expression: "settings.allow_upload"
                     }
                   },
-                  [
-                    _c("b-icon", { attrs: { icon: "hourglass-end" } }),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.trans.get("settings.finished")))
-                    ])
-                  ],
-                  1
-                ),
-                _vm._v(" "),
+                  [_vm._v(_vm._s(_vm.trans.get("settings.allow_upload")))]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "my-4" },
+              [
                 _c(
-                  "b-radio-button",
+                  "b-switch",
                   {
-                    attrs: { "native-value": "2", type: "is-danger" },
+                    staticClass: "ml-4",
+                    attrs: { "true-value": "1", "false-value": "0" },
                     on: {
                       input: function($event) {
-                        return _vm.updateClassState("state", 2)
+                        return _vm.toggleProp("show_chat")
                       }
                     },
                     model: {
-                      value: _vm.state,
+                      value: _vm.settings.show_chat,
                       callback: function($$v) {
-                        _vm.state = $$v
+                        _vm.$set(_vm.settings, "show_chat", $$v)
                       },
-                      expression: "state"
+                      expression: "settings.show_chat"
                     }
                   },
-                  [
-                    _c("b-icon", { attrs: { icon: "eye-slash" } }),
-                    _vm._v(" "),
-                    _c("span", [
-                      _vm._v(_vm._s(_vm.trans.get("settings.disabled")))
-                    ])
-                  ],
-                  1
+                  [_vm._v(_vm._s(_vm.trans.get("settings.show_chat")))]
                 )
               ],
               1
             )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c("b-field", { attrs: { label: _vm.trans.get("settings.config") } }, [
-          _c("div", { staticClass: "buttons pl-4" }, [
-            _c(
-              "a",
-              {
-                staticClass: "button",
-                attrs: { href: "/classroom/" + _vm.classroom.code + "/edit" }
-              },
-              [
-                _c("i", { staticClass: "far fa-cog mr-2" }),
-                _vm._v(
-                  "\n          " +
-                    _vm._s(_vm.trans.get("menu.config")) +
-                    " (wizard)"
-                )
-              ]
-            ),
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-4" }, [
+            _c("h1", [
+              _c("i", { staticClass: "fal fa-user-graduate" }),
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("settings.teachers")) +
+                  "\n      "
+              )
+            ]),
             _vm._v(" "),
-            _vm.isAdmin
-              ? _c(
-                  "button",
-                  {
-                    staticClass: "button is-danger",
-                    on: { click: _vm.confirmDelete }
-                  },
-                  [
-                    _c("i", { staticClass: "fas fa-trash" }),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "mx-3" }, [
-                      _vm._v(
-                        "\n            " +
-                          _vm._s(_vm.trans.get("general.delete")) +
-                          "\n            "
-                      ),
-                      _c("i", { staticClass: "fas fa-radiation-alt" }),
+            _c(
+              "div",
+              { staticClass: "pl-4" },
+              [
+                _vm.isAdmin
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "button is-primary",
+                        on: {
+                          click: function($event) {
+                            return _vm.promptInvite()
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(_vm.trans.get("settings.add_teachers")) +
+                            "\n        "
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._l(_vm.teachers, function(teacher, index) {
+                  return _c(
+                    "div",
+                    {
+                      key: teacher.id,
+                      staticClass: "columns box card-shadow-s"
+                    },
+                    [
+                      _c("div", { staticClass: "column is-narrow" }, [
+                        _c("i", {
+                          staticClass: "fal fa-2x",
+                          class: {
+                            "fa-user-crown": teacher.pivot.role == 2,
+                            "fa-user-graduate": teacher.pivot.role == 1
+                          }
+                        })
+                      ]),
                       _vm._v(" "),
-                      _c("i", { staticClass: "fas fa-exclamation-triangle" })
-                    ])
-                  ]
-                )
-              : _vm._e()
-          ])
-        ]),
-        _vm._v(" "),
-        _c(
-          "b-field",
-          {
-            staticStyle: { width: "400px" },
-            attrs: { label: _vm.trans.get("settings.enrollment_code") }
-          },
-          [
-            _c("div", { staticClass: "field has-addons my-3 pl-4" }, [
-              _c(
-                "p",
-                { staticClass: "control" },
-                [
-                  _c("b-input", {
-                    attrs: {
-                      type: "password",
-                      value: _vm.classroom.enrollment_code,
-                      "password-reveal": "",
-                      readonly: ""
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "column is-narrow is-flex align-items-center"
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(teacher.name) +
+                              "\n          "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "column is-narrow is-flex align-items-center"
+                        },
+                        [
+                          _vm._v(
+                            "\n            " +
+                              _vm._s(teacher.email) +
+                              "\n          "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "column is-narrow is-flex align-items-center"
+                        },
+                        [
+                          (_vm.isAdmin && teacher.id != _vm.user.id) ||
+                          (teacher.pivot.role == 1 && teacher.id == _vm.user.id)
+                            ? _c(
+                                "button",
+                                {
+                                  staticClass: "button ml-4 is-danger",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.confirmDeleteTeacher(
+                                        teacher.id,
+                                        index
+                                      )
+                                    }
+                                  }
+                                },
+                                [
+                                  _c("i", { staticClass: "fas fa-trash" }),
+                                  _vm._v(" Delete\n            ")
+                                ]
+                              )
+                            : _vm._e()
+                        ]
+                      )
+                    ]
+                  )
+                })
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mt-5" }, [
+            _c("h1", [
+              _c("i", { staticClass: "fal fa-brackets-curly" }),
+              _vm._v(
+                "\n        " +
+                  _vm._s(_vm.trans.get("settings.parameters")) +
+                  "\n      "
+              )
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "pl-4" },
+              [
+                _c("h3", { staticClass: "mb-5" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.trans.get("settings.probability")) +
+                      "\n        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("vue-slider", {
+                  staticClass: "p-5",
+                  attrs: {
+                    process: _vm.process,
+                    tooltip: "always",
+                    "dot-options": _vm.dotOptions
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "dot",
+                      fn: function(ref) {
+                        var focus = ref.focus
+                        return [
+                          _c("div", { class: ["custom-dot", { focus: focus }] })
+                        ]
+                      }
                     }
-                  })
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("p", { staticClass: "control" }, [
+                  ]),
+                  model: {
+                    value: _vm.value,
+                    callback: function($$v) {
+                      _vm.value = $$v
+                    },
+                    expression: "value"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "m-0 is-size-6" }, [
+                  _c("strong", [
+                    _vm._v(_vm._s(_vm.trans.get("settings.common")))
+                  ]),
+                  _vm._v(
+                    "\n          : " + _vm._s(_vm.value[1]) + "\n          "
+                  ),
+                  _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(_vm._s(_vm.trans.get("settings.rare")))
+                  ]),
+                  _vm._v(
+                    "\n          : " +
+                      _vm._s(_vm.value[2] - _vm.value[1]) +
+                      "\n          "
+                  ),
+                  _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(_vm._s(_vm.trans.get("settings.epic")))
+                  ]),
+                  _vm._v(
+                    "\n          : " +
+                      _vm._s(_vm.value[3] - _vm.value[2]) +
+                      "\n          "
+                  ),
+                  _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
+                  _vm._v(" "),
+                  _c("strong", [
+                    _vm._v(_vm._s(_vm.trans.get("settings.legendary")))
+                  ]),
+                  _vm._v(
+                    "\n          : " +
+                      _vm._s(_vm.value[4] - _vm.value[3]) +
+                      "\n        "
+                  )
+                ]),
+                _vm._v(" "),
                 _c(
                   "button",
                   {
-                    staticClass: "button is-info",
-                    on: { click: _vm.regenerate }
+                    staticClass: "button is-primary my-4",
+                    on: {
+                      click: function($event) {
+                        return _vm.saveProbabilities()
+                      }
+                    }
                   },
                   [
-                    _c("i", { staticClass: "fas fa-sync-alt" }),
+                    _c("i", { staticClass: "fas fa-save mr-3" }),
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("general.save")) +
+                        "\n        "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c("div", { staticClass: "pl-4" }, [
+              _c("h3", { staticClass: "mb-4" }, [
+                _vm._v(
+                  "\n          " +
+                    _vm._s(_vm.trans.get("settings.economic")) +
+                    "\n        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c("div", { staticClass: "column is-narrow" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.card_use,
+                        expression: "settings.card_use"
+                      }
+                    ],
+                    staticClass: "input is-narrow",
+                    attrs: { type: "number" },
+                    domProps: { value: _vm.settings.card_use },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.settings, "card_use", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column is-flex align-items-center" },
+                  [
+                    _c("i", { staticClass: "fas fa-coins colored mr-2" }),
                     _vm._v(
                       "\n            " +
-                        _vm._s(_vm.trans.get("settings.generate")) +
+                        _vm._s(_vm.trans.get("settings.use_card_gold")) +
+                        "\n          "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c("div", { staticClass: "column is-narrow" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.card_delete,
+                        expression: "settings.card_delete"
+                      }
+                    ],
+                    staticClass: "input is-narrow",
+                    attrs: { type: "number" },
+                    domProps: { value: _vm.settings.card_delete },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.settings,
+                          "card_delete",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column is-flex align-items-center" },
+                  [
+                    _c("i", { staticClass: "fas fa-coins colored mr-2" }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.trans.get("settings.delete_card_gold")) +
+                        "\n          "
+                    )
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "columns" }, [
+                _c("div", { staticClass: "column is-narrow" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.settings.num_cards,
+                        expression: "settings.num_cards"
+                      }
+                    ],
+                    staticClass: "input is-narrow",
+                    attrs: { type: "number" },
+                    domProps: { value: _vm.settings.num_cards },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.settings, "num_cards", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "column is-flex align-items-center" },
+                  [
+                    _c("i", { staticClass: "fas fa-club colored mr-2" }),
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(_vm.trans.get("settings.cards")) +
                         "\n          "
                     )
                   ]
                 )
               ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _vm.user.token
-          ? _c(
+            ]),
+            _vm._v(" "),
+            _c(
               "button",
-              { staticClass: "button is-link mb-3", on: { click: _vm.unlink } },
+              {
+                staticClass: "button is-primary m-4",
+                on: {
+                  click: function($event) {
+                    return _vm.saveCards()
+                  }
+                }
+              },
               [
+                _c("i", { staticClass: "fas fa-save mr-3" }),
                 _vm._v(
-                  "\n      " +
-                    _vm._s(_vm.trans.get("settings.classroom_unlink")) +
-                    "\n    "
+                  "\n        " +
+                    _vm._s(_vm.trans.get("general.save")) +
+                    "\n      "
                 )
               ]
             )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-0 mb-2" }, [
-          _vm.user.token
-            ? _c("small", {
-                domProps: {
-                  innerHTML: _vm._s(
-                    _vm.trans.get("settings.classroom_unlink_info")
+          ])
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "b-modal",
+        {
+          attrs: {
+            active: _vm.resetAssistant,
+            "has-modal-card": "",
+            "trap-focus": "",
+            "destroy-on-hide": false,
+            "aria-role": "dialog",
+            "aria-modal": ""
+          },
+          on: {
+            "update:active": function($event) {
+              _vm.resetAssistant = $event
+            }
+          }
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-card", staticStyle: { width: "auto" } },
+            [
+              _c("header", { staticClass: "modal-card-head" }, [
+                _c("p", { staticClass: "modal-card-title" }, [
+                  _vm._v(
+                    "\n          " +
+                      _vm._s(_vm.trans.get("settings.reset_assistant")) +
+                      "\n        "
                   )
-                }
-              })
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _c("div", {}, [
-          _c("h1", [
-            _c("i", { staticClass: "fal fa-cog" }),
-            _vm._v(
-              "\n        " +
-                _vm._s(_vm.trans.get("settings.general_preferences")) +
-                "\n      "
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "my-4" },
-            [
-              _c(
-                "b-switch",
-                {
-                  staticClass: "ml-4",
-                  attrs: { "true-value": "1", "false-value": "0" },
-                  on: {
-                    input: function($event) {
-                      return _vm.toggleProp("allow_change_class")
-                    }
-                  },
-                  model: {
-                    value: _vm.settings.allow_change_class,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "allow_change_class", $$v)
-                    },
-                    expression: "settings.allow_change_class"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("settings.allow_change_class")))]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "my-4" },
-            [
-              _c(
-                "b-switch",
-                {
-                  staticClass: "ml-4",
-                  attrs: { "true-value": "1", "false-value": "0" },
-                  on: {
-                    input: function($event) {
-                      return _vm.toggleProp("allow_upload")
-                    }
-                  },
-                  model: {
-                    value: _vm.settings.allow_upload,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "allow_upload", $$v)
-                    },
-                    expression: "settings.allow_upload"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("settings.allow_upload")))]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "my-4" },
-            [
-              _c(
-                "b-switch",
-                {
-                  staticClass: "ml-4",
-                  attrs: { "true-value": "1", "false-value": "0" },
-                  on: {
-                    input: function($event) {
-                      return _vm.toggleProp("show_chat")
-                    }
-                  },
-                  model: {
-                    value: _vm.settings.show_chat,
-                    callback: function($$v) {
-                      _vm.$set(_vm.settings, "show_chat", $$v)
-                    },
-                    expression: "settings.show_chat"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.trans.get("settings.show_chat")))]
-              )
-            ],
-            1
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-4" }, [
-          _c("h1", [
-            _c("i", { staticClass: "fal fa-user-graduate" }),
-            _vm._v(
-              "\n        " +
-                _vm._s(_vm.trans.get("settings.teachers")) +
-                "\n      "
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "pl-4" },
-            [
-              _vm.isAdmin
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "button is-primary",
-                      on: {
-                        click: function($event) {
-                          return _vm.promptInvite()
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n          " +
-                          _vm._s(_vm.trans.get("settings.add_teachers")) +
-                          "\n        "
-                      )
-                    ]
-                  )
-                : _vm._e(),
+                ])
+              ]),
               _vm._v(" "),
-              _vm._l(_vm.teachers, function(teacher, index) {
-                return _c(
-                  "div",
-                  { key: teacher.id, staticClass: "columns box card-shadow-s" },
+              _c("section", { staticClass: "modal-card-body" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-danger w-100",
+                    on: {
+                      click: function($event) {
+                        return _vm.reset("hp", "heart")
+                      }
+                    }
+                  },
                   [
-                    _c("div", { staticClass: "column is-narrow" }, [
-                      _c("i", {
-                        staticClass: "fal fa-2x",
-                        class: {
-                          "fa-user-crown": teacher.pivot.role == 2,
-                          "fa-user-graduate": teacher.pivot.role == 1
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "column is-narrow is-flex align-items-center"
-                      },
-                      [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(teacher.name) +
-                            "\n          "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "column is-narrow is-flex align-items-center"
-                      },
-                      [
-                        _vm._v(
-                          "\n            " +
-                            _vm._s(teacher.email) +
-                            "\n          "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "column is-narrow is-flex align-items-center"
-                      },
-                      [
-                        (_vm.isAdmin && teacher.id != _vm.user.id) ||
-                        (teacher.pivot.role == 1 && teacher.id == _vm.user.id)
-                          ? _c(
-                              "button",
-                              {
-                                staticClass: "button ml-4 is-danger",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.confirmDeleteTeacher(
-                                      teacher.id,
-                                      index
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-trash" }),
-                                _vm._v(" Delete\n            ")
-                              ]
-                            )
-                          : _vm._e()
-                      ]
+                    _vm._v("\n          Reset "),
+                    _c("i", { staticClass: "fas fa-heart colored" })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-dark w-100 mt-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.reset("xp", "fist-raised")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("\n          Reset "),
+                    _c("i", { staticClass: "fas fa-fist-raised colored" })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "button is-warning w-100 mt-2",
+                    on: {
+                      click: function($event) {
+                        return _vm.reset("gold", "coins")
+                      }
+                    }
+                  },
+                  [
+                    _vm._v("\n          Reset "),
+                    _c("i", { staticClass: "fas fa-coins colored" })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("footer", { staticClass: "modal-card-foot" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "button",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.resetAssistant = false
+                      }
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n          " +
+                        _vm._s(_vm.trans.get("general.close")) +
+                        "\n        "
                     )
                   ]
                 )
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-5" }, [
-          _c("h1", [
-            _c("i", { staticClass: "fal fa-brackets-curly" }),
-            _vm._v(
-              "\n        " +
-                _vm._s(_vm.trans.get("settings.parameters")) +
-                "\n      "
-            )
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "pl-4" },
-            [
-              _c("h3", { staticClass: "mb-5" }, [
-                _vm._v(
-                  "\n          " +
-                    _vm._s(_vm.trans.get("settings.probability")) +
-                    "\n        "
-                )
-              ]),
-              _vm._v(" "),
-              _c("vue-slider", {
-                staticClass: "p-5",
-                attrs: {
-                  process: _vm.process,
-                  tooltip: "always",
-                  "dot-options": _vm.dotOptions
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "dot",
-                    fn: function(ref) {
-                      var focus = ref.focus
-                      return [
-                        _c("div", { class: ["custom-dot", { focus: focus }] })
-                      ]
-                    }
-                  }
-                ]),
-                model: {
-                  value: _vm.value,
-                  callback: function($$v) {
-                    _vm.value = $$v
-                  },
-                  expression: "value"
-                }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "m-0 is-size-6" }, [
-                _c("strong", [
-                  _vm._v(_vm._s(_vm.trans.get("settings.common")))
-                ]),
-                _vm._v(
-                  "\n          : " + _vm._s(_vm.value[1]) + "\n          "
-                ),
-                _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
-                _vm._v(" "),
-                _c("strong", [_vm._v(_vm._s(_vm.trans.get("settings.rare")))]),
-                _vm._v(
-                  "\n          : " +
-                    _vm._s(_vm.value[2] - _vm.value[1]) +
-                    "\n          "
-                ),
-                _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
-                _vm._v(" "),
-                _c("strong", [_vm._v(_vm._s(_vm.trans.get("settings.epic")))]),
-                _vm._v(
-                  "\n          : " +
-                    _vm._s(_vm.value[3] - _vm.value[2]) +
-                    "\n          "
-                ),
-                _c("i", { staticClass: "fal fa-ellipsis-v mx-3" }),
-                _vm._v(" "),
-                _c("strong", [
-                  _vm._v(_vm._s(_vm.trans.get("settings.legendary")))
-                ]),
-                _vm._v(
-                  "\n          : " +
-                    _vm._s(_vm.value[4] - _vm.value[3]) +
-                    "\n        "
-                )
-              ]),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "button is-primary my-4",
-                  on: {
-                    click: function($event) {
-                      return _vm.saveProbabilities()
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fas fa-save mr-3" }),
-                  _vm._v(
-                    "\n          " +
-                      _vm._s(_vm.trans.get("general.save")) +
-                      "\n        "
-                  )
-                ]
-              )
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("div", { staticClass: "pl-4" }, [
-            _c("h3", { staticClass: "mb-4" }, [
-              _vm._v(
-                "\n          " +
-                  _vm._s(_vm.trans.get("settings.economic")) +
-                  "\n        "
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "columns" }, [
-              _c("div", { staticClass: "column is-narrow" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.card_use,
-                      expression: "settings.card_use"
-                    }
-                  ],
-                  staticClass: "input is-narrow",
-                  attrs: { type: "number" },
-                  domProps: { value: _vm.settings.card_use },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.settings, "card_use", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-coins colored mr-2" }),
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.trans.get("settings.use_card_gold")) +
-                    "\n          "
-                )
               ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "columns" }, [
-              _c("div", { staticClass: "column is-narrow" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.card_delete,
-                      expression: "settings.card_delete"
-                    }
-                  ],
-                  staticClass: "input is-narrow",
-                  attrs: { type: "number" },
-                  domProps: { value: _vm.settings.card_delete },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.settings, "card_delete", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-coins colored mr-2" }),
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.trans.get("settings.delete_card_gold")) +
-                    "\n          "
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "columns" }, [
-              _c("div", { staticClass: "column is-narrow" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.settings.num_cards,
-                      expression: "settings.num_cards"
-                    }
-                  ],
-                  staticClass: "input is-narrow",
-                  attrs: { type: "number" },
-                  domProps: { value: _vm.settings.num_cards },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.settings, "num_cards", $event.target.value)
-                    }
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "column is-flex align-items-center" }, [
-                _c("i", { staticClass: "fas fa-club colored mr-2" }),
-                _vm._v(
-                  "\n            " +
-                    _vm._s(_vm.trans.get("settings.cards")) +
-                    "\n          "
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c(
-            "button",
-            {
-              staticClass: "button is-primary m-4",
-              on: {
-                click: function($event) {
-                  return _vm.saveCards()
-                }
-              }
-            },
-            [
-              _c("i", { staticClass: "fas fa-save mr-3" }),
-              _vm._v(
-                "\n        " +
-                  _vm._s(_vm.trans.get("general.save")) +
-                  "\n      "
-              )
             ]
           )
-        ])
-      ],
-      1
-    )
-  ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -69778,7 +70023,9 @@ __webpack_require__.r(__webpack_exports__);
     "finished": "Finalitzada",
     "disabled": "Deshabilitada",
     "classroom_unlink": "Desenlla\xE7a Google Classroom",
-    "classroom_unlink_info": "Treu abans els permissos des del teu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>compte de Google<\/a>"
+    "classroom_unlink_info": "Treu abans els permissos des del teu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>compte de Google<\/a>",
+    "reset_assistant": "Assistent de reinici",
+    "reset_assistant_help": "Ac\xED podr\xE0s escollir reiniciar les principals propietats dels estudiants"
   },
   "ca.shop": {
     "items": "Objectes",
@@ -70531,7 +70778,9 @@ __webpack_require__.r(__webpack_exports__);
     "finished": "Finished",
     "disabled": "Disabled",
     "classroom_unlink": "Unlink Google Classroom",
-    "classroom_unlink_info": "Revoke permissions before in your <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>Google account<\/a>"
+    "classroom_unlink_info": "Revoke permissions before in your <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>Google account<\/a>",
+    "reset_assistant": "Rsset wizard",
+    "reset_assistant_help": "There you'll be able to select to reset student properties"
   },
   "en.shop": {
     "items": "Items",
@@ -71281,7 +71530,9 @@ __webpack_require__.r(__webpack_exports__);
     "finished": "Finalizada",
     "disabled": "Deshabilitada",
     "classroom_unlink": "Desenlaza Google Classroom",
-    "classroom_unlink_info": "Elimina antes los permisos des de tu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>cuenta de Google<\/a>"
+    "classroom_unlink_info": "Elimina antes los permisos des de tu <a target='_blank' href='https:\/\/myaccount.google.com\/permissions'>cuenta de Google<\/a>",
+    "reset_assistant": "Asistente de reinicio",
+    "reset_assistant_help": "Aqu\xED podr\xE1s elegir reiniciar las principales propiedades de los estudiantes"
   },
   "es.shop": {
     "items": "Objetos",
@@ -71707,7 +71958,7 @@ Vue.use(buefy__WEBPACK_IMPORTED_MODULE_7__["default"], {
 
 Vue.use(vue_croppa__WEBPACK_IMPORTED_MODULE_8___default.a);
 Vue.component('create-classroom', function () {
-  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue"));
+  return __webpack_require__.e(/*! import() */ 33).then(__webpack_require__.bind(null, /*! ./components/classroom/CreateClassroom.vue */ "./resources/js/components/classroom/CreateClassroom.vue"));
 });
 Vue.component('join-classroom', __webpack_require__(/*! ./components/classroom/JoinClassroom.vue */ "./resources/js/components/classroom/JoinClassroom.vue")["default"]);
 Vue.component('clone-classroom', __webpack_require__(/*! ./components/classroom/CloneClassroom.vue */ "./resources/js/components/classroom/CloneClassroom.vue")["default"]);
@@ -71729,20 +71980,20 @@ Vue.component('show-student-map', function () {
 Vue.component('show-student', __webpack_require__(/*! ./components/student/ShowStudent.vue */ "./resources/js/components/student/ShowStudent.vue")["default"]);
 Vue.component('show-student-teacher', __webpack_require__(/*! ./components/student/ShowStudentTeacher.vue */ "./resources/js/components/student/ShowStudentTeacher.vue")["default"]);
 Vue.component('show-card', function () {
-  return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue"));
+  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/card/ShowCard.vue */ "./resources/js/components/card/ShowCard.vue"));
 });
 Vue.component('show-cards', function () {
-  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue"));
+  return __webpack_require__.e(/*! import() */ 30).then(__webpack_require__.bind(null, /*! ./components/card/ShowCards.vue */ "./resources/js/components/card/ShowCards.vue"));
 });
 Vue.component('create-card', function () {
-  return __webpack_require__.e(/*! import() */ 29).then(__webpack_require__.bind(null, /*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue"));
+  return __webpack_require__.e(/*! import() */ 28).then(__webpack_require__.bind(null, /*! ./components/card/CreateCard.vue */ "./resources/js/components/card/CreateCard.vue"));
 });
 Vue.component('create-behaviour', function () {
-  return __webpack_require__.e(/*! import() */ 27).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
+  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/behaviour/CreateBehaviour.vue */ "./resources/js/components/behaviour/CreateBehaviour.vue"));
 });
 Vue.component('show-behaviours', __webpack_require__(/*! ./components/behaviour/ShowBehaviours.vue */ "./resources/js/components/behaviour/ShowBehaviours.vue")["default"]);
 Vue.component('create-badge', function () {
-  return __webpack_require__.e(/*! import() */ 26).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
+  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/badge/CreateBadge.vue */ "./resources/js/components/badge/CreateBadge.vue"));
 });
 Vue.component('show-badges', __webpack_require__(/*! ./components/badge/ShowBadges.vue */ "./resources/js/components/badge/ShowBadges.vue")["default"]);
 Vue.component('create-levels', __webpack_require__(/*! ./components/level/CreateLevels.vue */ "./resources/js/components/level/CreateLevels.vue")["default"]);
@@ -71752,7 +72003,7 @@ Vue.component('show-levels', function () {
 });
 Vue.component('show-level-student', __webpack_require__(/*! ./components/level/ShowLevelStudent.vue */ "./resources/js/components/level/ShowLevelStudent.vue")["default"]);
 Vue.component('show-challenges-group', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4), __webpack_require__.e(11), __webpack_require__.e(10), __webpack_require__.e(33)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallengesGroup.vue */ "./resources/js/components/challenges/ShowChallengesGroup.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4), __webpack_require__.e(11), __webpack_require__.e(10), __webpack_require__.e(32)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallengesGroup.vue */ "./resources/js/components/challenges/ShowChallengesGroup.vue"));
 });
 Vue.component('show-challenges', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4), __webpack_require__.e(11)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenges.vue */ "./resources/js/components/challenges/ShowChallenges.vue"));
@@ -71761,7 +72012,7 @@ Vue.component('show-challenge', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(6), __webpack_require__.e(4)]).then(__webpack_require__.bind(null, /*! ./components/challenges/ShowChallenge.vue */ "./resources/js/components/challenges/ShowChallenge.vue"));
 });
 Vue.component('import-challenge', function () {
-  return __webpack_require__.e(/*! import() */ 32).then(__webpack_require__.bind(null, /*! ./components/challenges/ImportChallenges.vue */ "./resources/js/components/challenges/ImportChallenges.vue"));
+  return __webpack_require__.e(/*! import() */ 31).then(__webpack_require__.bind(null, /*! ./components/challenges/ImportChallenges.vue */ "./resources/js/components/challenges/ImportChallenges.vue"));
 });
 Vue.component('create-challenges-group', function () {
   return __webpack_require__.e(/*! import() */ 10).then(__webpack_require__.bind(null, /*! ./components/challenges/CreateChallengeGroup.vue */ "./resources/js/components/challenges/CreateChallengeGroup.vue"));
@@ -71785,17 +72036,17 @@ Vue.component('shop-create', function () {
   return __webpack_require__.e(/*! import() */ 44).then(__webpack_require__.bind(null, /*! ./components/shop/ShopCreate.vue */ "./resources/js/components/shop/ShopCreate.vue"));
 });
 Vue.component('show-maps', function () {
-  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/map/ShowMaps.vue */ "./resources/js/components/map/ShowMaps.vue"));
+  return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/map/ShowMaps.vue */ "./resources/js/components/map/ShowMaps.vue"));
 });
 Vue.component('create-map', function () {
   return __webpack_require__.e(/*! import() */ 40).then(__webpack_require__.bind(null, /*! ./components/map/CreateMap.vue */ "./resources/js/components/map/CreateMap.vue"));
 });
 Vue.component('settings', __webpack_require__(/*! ./components/settings/Settings.vue */ "./resources/js/components/settings/Settings.vue")["default"]);
 Vue.component('show-event', function () {
-  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvent.vue */ "./resources/js/components/event/ShowEvent.vue"));
+  return __webpack_require__.e(/*! import() */ 19).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvent.vue */ "./resources/js/components/event/ShowEvent.vue"));
 });
 Vue.component('show-events', function () {
-  return __webpack_require__.e(/*! import() */ 21).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvents.vue */ "./resources/js/components/event/ShowEvents.vue"));
+  return __webpack_require__.e(/*! import() */ 20).then(__webpack_require__.bind(null, /*! ./components/event/ShowEvents.vue */ "./resources/js/components/event/ShowEvents.vue"));
 });
 Vue.component('show-pets', function () {
   return __webpack_require__.e(/*! import() */ 41).then(__webpack_require__.bind(null, /*! ./components/pet/ShowPets.vue */ "./resources/js/components/pet/ShowPets.vue"));
@@ -71810,7 +72061,7 @@ Vue.component('tag-management', function () {
   return __webpack_require__.e(/*! import() */ 37).then(__webpack_require__.bind(null, /*! ./components/evaluation/TagManagement.vue */ "./resources/js/components/evaluation/TagManagement.vue"));
 });
 Vue.component('grade', function () {
-  return __webpack_require__.e(/*! import() */ 18).then(__webpack_require__.bind(null, /*! ./components/evaluation/Grade.vue */ "./resources/js/components/evaluation/Grade.vue"));
+  return __webpack_require__.e(/*! import() */ 34).then(__webpack_require__.bind(null, /*! ./components/evaluation/Grade.vue */ "./resources/js/components/evaluation/Grade.vue"));
 });
 Vue.component('report', function () {
   return __webpack_require__.e(/*! import() */ 35).then(__webpack_require__.bind(null, /*! ./components/evaluation/Report.vue */ "./resources/js/components/evaluation/Report.vue"));
@@ -71819,7 +72070,7 @@ Vue.component('rubric-management', function () {
   return __webpack_require__.e(/*! import() */ 36).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricManagement.vue */ "./resources/js/components/evaluation/RubricManagement.vue"));
 });
 Vue.component('rubric-create', function () {
-  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(19)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
+  return Promise.all(/*! import() */[__webpack_require__.e(5), __webpack_require__.e(18)]).then(__webpack_require__.bind(null, /*! ./components/evaluation/RubricCreate.vue */ "./resources/js/components/evaluation/RubricCreate.vue"));
 }); // Utils
 // For use this component the parent component should have a data attibute called "icon", where the icon will be stored
 // Vue.component('icon-selector', () => import('./components/utils/IconSelector.vue').default);
@@ -71830,7 +72081,7 @@ Vue.component('image-bank', function () {
   return __webpack_require__.e(/*! import() */ 50).then(__webpack_require__.bind(null, /*! ./components/utils/ImageBank.vue */ "./resources/js/components/utils/ImageBank.vue"));
 });
 Vue.component('count-down', function () {
-  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue"));
+  return __webpack_require__.e(/*! import() */ 22).then(__webpack_require__.bind(null, /*! ./components/utils/CountDown.vue */ "./resources/js/components/utils/CountDown.vue"));
 });
 Vue.component('notifications', __webpack_require__(/*! ./components/utils/Notifications.vue */ "./resources/js/components/utils/Notifications.vue")["default"]);
 Vue.component('input-emoji', function () {
@@ -71841,10 +72092,10 @@ Vue.component('import-excel', function () {
 });
 Vue.component('wheel', __webpack_require__(/*! ./components/utils/Wheel.vue */ "./resources/js/components/utils/Wheel.vue")["default"]);
 Vue.component('volume-meter', function () {
-  return __webpack_require__.e(/*! import() */ 25).then(__webpack_require__.bind(null, /*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue"));
+  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/utils/VolumeMeter.vue */ "./resources/js/components/utils/VolumeMeter.vue"));
 });
 Vue.component('massive-actions', function () {
-  return __webpack_require__.e(/*! import() */ 24).then(__webpack_require__.bind(null, /*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue"));
+  return __webpack_require__.e(/*! import() */ 23).then(__webpack_require__.bind(null, /*! ./components/utils/MassiveActions.vue */ "./resources/js/components/utils/MassiveActions.vue"));
 });
 Vue.component('chat', function () {
   return Promise.all(/*! import() */[__webpack_require__.e(14), __webpack_require__.e(15)]).then(__webpack_require__.bind(null, /*! ./components/utils/Chat.vue */ "./resources/js/components/utils/Chat.vue"));

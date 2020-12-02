@@ -1,6 +1,10 @@
 # Changelog
 
-## v1.19.2 Beta (14/11/2020)
+## v1.20 Beta (02/12/2020)
+### Added
+- Reset assistant.
+
+## v1.19.4 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.
