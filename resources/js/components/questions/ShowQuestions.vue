@@ -128,6 +128,12 @@ export default {
             if (this.bank.id) {
               this.$parent.getQuestions(this.bank.id);
             }
+          })
+          .catch((response) => {
+            this.$toast("'" + question['Title'] + "' not imported", {
+              type: "error",
+              timeout: 0,
+            });
           });
       });
     },
