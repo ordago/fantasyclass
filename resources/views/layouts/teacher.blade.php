@@ -49,7 +49,7 @@
         <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
     </a>
     <div class="navbar-item has-dropdown is-hoverable">
-        <a href="/classroom/{{ $class->code }}/evaluation" class="navbar-item navbar-link">
+        <a class="navbar-link">
             <i class="fad fa-analytics mr-2"></i> {{ __('menu.evaluation') }}
         </a>
 
