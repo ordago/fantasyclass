@@ -5,7 +5,7 @@
       <span class="is-hidden-mobile ml-2">{{ trans.get("students.excel") }}</span>
     </button>
     <b-modal :active.sync="showExcel">
-      <div class="is-flex is-flex-direction-column p-3 has-all-centered has-background-light">
+      <div class="is-flex is-flex-direction-column p-4 rounded has-all-centered has-background-light">
         <div class="mb-2">
           <a :href="getTemplate()" download v-if="showExcel"
             ><i class="fas fa-download mr-2"></i>

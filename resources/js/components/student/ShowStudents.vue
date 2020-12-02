@@ -11,12 +11,20 @@
         style="flex-flow: wrap"
       >
         <a
-          class="link outer_glow has-text-dark pr-2"
+          class="link outer_glow has-text-dark px-0"
           v-tippy
           :content="trans.get('menu.groups')"
           :href="'/classroom/' + classroom.code + '/groups'"
         >
           <i class="fad fa-users outer_glow" style="font-size: 2em"></i>
+        </a>
+        <a
+          class="link outer_glow has-text-dark pr-2"
+          v-tippy
+          :content="trans.get('menu.battles')"
+          :href="'/classroom/' + classroom.code + '/battles'"
+        >
+          <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
         </a>
         <div class="dropdown is-hoverable" style="display: inline-block">
           <span class="dropdown-trigger link outer_glow m-0 p-0">
