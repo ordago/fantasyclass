@@ -1,9 +1,10 @@
 # Changelog
 
-## v1.21 Beta (XX/12/2020)
+## v1.21 Beta (05/12/2020)
 ### Added
 - Report user in chat.
 - Question bank.
+- Individual battles.
 
 ### Changed
 - Improvements in mobile view.
