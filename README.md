@@ -166,6 +166,9 @@ Popper tippy:
  Feedback
  https://github.com/IvanSotelo/VueFeedbackReaction
 
+ Animations
+ https://animate.style/
+
 ## 3rd party Licenses
 
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
