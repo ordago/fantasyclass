@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.22 Beta (XX/12/2020)
+## v1.22 Beta (06/12/2020)
 ### Added
 - Money transfer.
 
