@@ -21,11 +21,11 @@ class QuestionController extends Controller
 
         if (request()->type == 1) {
             $data = request()->validate([
-                'question.name' => ['string', 'required'],
-                'question.correctAnswer' => ['string', 'required'],
-                'question.incorrectAnswer1' => ['string', 'required'],
-                'question.incorrectAnswer2' => ['string', 'nullable'],
-                'question.incorrectAnswer3' => ['string', 'nullable'],
+                'question.name' => ['required'],
+                'question.correctAnswer' => ['required'],
+                'question.incorrectAnswer1' => ['required'],
+                'question.incorrectAnswer2' => ['nullable'],
+                'question.incorrectAnswer3' => ['nullable'],
             ]);
 
             $num = 2;
