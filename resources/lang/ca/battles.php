@@ -2,6 +2,7 @@
 
 return [
 
+    'protect_shield' => 'Escut protector',
     'bank_empty' => 'Ei! No tens bancs de preguntes, què vols fer?',
     'bank_create' => 'Millor crearé n banc de preguntes ...',
     'type_battle' => 'Tipus de batalla',

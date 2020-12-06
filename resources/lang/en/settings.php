@@ -24,6 +24,8 @@ return [
     'allow_upload' => 'Allow students to upload custom images',
     'show_chat' => 'Enable classroom chat',
     'allow_change_class' => 'Allow students to change subclass',
+    'allow_send_money' => 'Allow students to send money',
+    'transfer_fee' => 'Comission when students send money',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

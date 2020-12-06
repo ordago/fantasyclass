@@ -2,6 +2,7 @@
 
 return [
 
+    'protect_shield' => 'Shield',
     'bank_empty' => 'Wep! You don\'t have questions banks, what do you want to do?',
     'bank_create' => 'I\'ll create a question bank...',
     'type_battle' => 'Battle type',

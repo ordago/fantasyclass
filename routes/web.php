@@ -97,6 +97,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
+        Route::post('/{code}/send/money', 'ClassroomsStudentController@sendMoney');
 
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');

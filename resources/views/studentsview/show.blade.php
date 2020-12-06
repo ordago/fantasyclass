@@ -1,7 +1,7 @@
 @extends('layouts.student')
 
 @section('content')
-       <show-student-info :cards="{{ $cards }}" :pets="{{ $pets }}" :settings="{{ json_encode($settings) }}" :evaluation="{{ json_encode($evaluation) }}" :admin="false" :student="{{ $student }}" :challenges="{{ $challenges }}" :classroom="{{ $class }}" :shop="{{ json_encode($shop) }}"></show-student>
+       <show-student-info :students_money="{{ $students_money }}"  :cards="{{ $cards }}" :pets="{{ $pets }}" :settings="{{ json_encode($settings) }}" :evaluation="{{ json_encode($evaluation) }}" :admin="false" :student="{{ $student }}" :challenges="{{ $challenges }}" :classroom="{{ $class }}" :shop="{{ json_encode($shop) }}"></show-student>
 @endsection
 
 @push('scriptchat')

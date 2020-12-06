@@ -58,4 +58,14 @@ return [
     'student_area' => 'Area del estudiante',
     'student_view' => 'Ver como estudiante',
     'send_message' => 'Envía una notificación',
+    
+    'send_money' => 'Envía dinero',
+    'transfer_fee' => 'Esta operación tiene una comisión del ',
+    'thief' => '¡Ten cuidado! Hay ladrones que pueden quitarte un poco de tu dinero...',
+    'money_sent' => 'Dinero enviado',
+    'money_received' => 'Dinero recibido',
+    'thief_info' => 'Unos ladrones han robado',
+    'comission' => 'Comisión',
+
+
 ];

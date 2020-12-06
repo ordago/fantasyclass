@@ -6,6 +6,7 @@ use App\Card;
 use App\CardStudent;
 use App\Challenge;
 use App\Classroom;
+use App\ClassroomUser;
 use App\Equipment;
 use App\Http\Classes\Functions;
 use App\Item;
@@ -259,6 +260,13 @@ class ClassroomsStudentController extends Controller
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
+        $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
+        $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
+
+
+        if($settings['allow_send_money']) {
+            $students_money = $class->students()->pluck('classroom_user_id', 'name');
+        }
 
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
@@ -274,7 +282,7 @@ class ClassroomsStudentController extends Controller
 
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'student')->get();
 
-        return view('studentsview.show', compact('student', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
+        return view('studentsview.show', compact('student', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
     public function rules($code)
@@ -309,6 +317,34 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
 
         return view('studentsview.licenses', compact('class', 'student'));
+    }
+
+    public function sendMoney($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+        $student = Functions::getCurrentStudent($class, []);
+        
+        $to = Student::where('classroom_user_id', '=', request()->to)->firstOrFail();
+        if($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id)
+            abort(403);
+        
+        ;
+        $fee = settings()->get('transfer_fee', 10);
+
+        $gold = request()->money - request()->money * $fee / 100;
+        $steal = 0;
+        $thief = rand(0,99);
+        if ($thief>=60) {
+            $steal = ($gold * rand(0, 20) / 100);
+            $gold = $gold - $steal;
+        }
+
+        $student->setProperty('gold', request()->money * - 1, true, true);
+        $to->setProperty('gold', $gold, true, true);
+
+        return ['gold' => request()->money, 'received' => $gold, 'steal' => $steal];
+
     }
 
     public function markChallenge($code)

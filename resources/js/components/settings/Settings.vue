@@ -132,6 +132,16 @@
             >{{ trans.get("settings.show_chat") }}</b-switch
           >
         </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('allow_send_money')"
+            v-model="settings.allow_send_money"
+            >{{ trans.get("settings.allow_send_money") }}</b-switch
+          >
+        </div>
       </div>
       <div class="mt-4">
         <h1>
@@ -223,6 +233,19 @@
           <h3 class="mb-4">
             {{ trans.get("settings.economic") }}
           </h3>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.transfer_fee"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              <i class="fas fa-coins colored mr-2"></i>
+              {{ trans.get("settings.transfer_fee") }}
+            </div>
+          </div>
           <div class="columns">
             <div class="column is-narrow">
               <input
@@ -545,6 +568,12 @@ export default {
         prop: "card_use",
         action: "update",
         value: this.settings.card_use,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "transfer_fee",
+        action: "update",
+        value: this.settings.transfer_fee,
       });
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",

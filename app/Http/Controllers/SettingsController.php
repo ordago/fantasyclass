@@ -29,6 +29,8 @@ class SettingsController extends Controller
         $settings['allow_upload'] = settings()->get('allow_upload', false);
         $settings['show_chat'] = settings()->get('show_chat', false);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
+        $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
+        $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         
         $teachers = $class->users->where('pivot.role', '>', 0);     
         

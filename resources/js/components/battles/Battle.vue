@@ -229,8 +229,8 @@
               <div class="field is-expanded">
                 <div class="field has-addons">
                   <p class="control">
-                    <a class="button">
-                      <i class="fas fa-heart colored"></i>
+                    <a class="button" v-tippy :content="trans.get('battles.protect_shield')">
+                      <i class="far fa-shield-alt colored"></i>
                     </a>
                   </p>
                   <p class="control">
@@ -341,8 +341,9 @@
                 <span
                   v-for="index in parseInt(student1.max_fails)"
                   :key="index"
+                  v-tippy :content="trans.get('battles.protect_shield')"
                 >
-                  <i class="fas fa-heart colored" style="font-size: 3em"></i>
+                  <i class="far fa-shield-alt colored" style="font-size: 3em"></i>
                 </span>
               </div>
               <div class="my-2" style="max-width: 270px" v-if="student1">
@@ -454,8 +455,9 @@
                 <span
                   v-for="index in parseInt(student2.max_fails)"
                   :key="index"
+                  v-tippy :content="trans.get('battles.protect_shield')"
                 >
-                  <i class="fas fa-heart colored" style="font-size: 3em"></i>
+                  <i class="far fa-shield-alt colored" style="font-size: 3em;"></i>
                 </span>
               </div>
               <div class="my-2" style="max-width: 270px" v-if="student2">

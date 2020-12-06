@@ -24,6 +24,8 @@ return [
     'allow_upload' => 'Permet als i les estudiants pujar imatges pròpies',
     'show_chat' => 'Habilita el xat de la classe',
     'allow_change_class' => 'Permet canviar la subclasse',
+    'allow_send_money' => 'Permet a l\'alumnat enviar-se diners',
+    'transfer_fee' => 'Comissió al enviar diners entre estudiants',
     
     'cards' => 'Màxim de cartes per estudiant',
     'rare' => 'Rara',
