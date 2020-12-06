@@ -76,14 +76,14 @@
       v-if="$parent.$parent.answered"
       @click="nextQuestion"
     >
-      {{ trans.get('battles.next') }}
+      {{ trans.get("battles.next") }}
     </button>
     <button
       class="button"
       v-if="!$parent.$parent.answered"
       @click="skipQuestion"
     >
-      {{ trans.get('battles.skip_question') }}
+      {{ trans.get("battles.skip_question") }}
     </button>
   </div>
 </template>
@@ -112,6 +112,7 @@ export default {
           this.correctAnswer = element.correctAnswer;
         }
       });
+      this.answer = "";
     },
     skipQuestion() {
       this.reactiveQuestion = this.$parent.$parent.skipQuestion();
@@ -152,10 +153,9 @@ export default {
           }
         });
       } else {
-        console.log("testing");
         correct = this.answerTextQuestion();
       }
-      this.lastText = correct
+      this.lastText = correct;
       if (correct) {
         this.$parent.$parent.answer(true, false);
       } else {
