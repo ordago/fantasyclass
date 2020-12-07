@@ -1,10 +1,10 @@
 # Changelog
 
 ## v1.23 Beta (XX/12/2020)
-- Student blog
+- Student blog: your adventure.
 
 ### Changed
-
+- Editor modifications.
 
 ## v1.22.1 Beta (07/12/2020)
 ### Added

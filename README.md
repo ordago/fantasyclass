@@ -120,6 +120,9 @@ Translation in vue:
 https://github.com/kg-bot/laravel-localization-to-vue
 https://medium.com/@sumeshvasu/laravel-vuejs-localization-with-package-laravel-localization-to-vue-73a87d2eec78
 
+Editor:
+https://leecason.github.io/element-tiptap/
+
 Toasts:
 https://github.com/Maronato/vue-toastification
 

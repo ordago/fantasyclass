@@ -137,3 +137,8 @@ export default {
   },
 };
 </script>
+<style>
+.el-tiptap-editor > .el-tiptap-editor__content {
+  background-color: #e7daa8;
+}
+</style>
