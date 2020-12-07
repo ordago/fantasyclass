@@ -228,6 +228,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/blog', 'BlogController@store');
         Route::post('/{code}/post', 'BlogController@storePost');
         Route::post('/{code}/posts', 'BlogController@index');
+        Route::delete('/{code}/blog/{id}', 'BlogController@destroy');
+        Route::delete('/{code}/post/{id}', 'BlogController@destroyPost');
         
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');

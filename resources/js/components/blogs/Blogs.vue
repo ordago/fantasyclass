@@ -25,6 +25,9 @@
       </span>
     </div>
     <div class="" v-if="blogSelected">
+    <button class="button is-danger mb-2" @click="deleteBlog" v-if="!stories.length">
+      <i class="fad fa-trash-alt"></i> {{ trans.get('general.delete') }}
+    </button>
       <article class="message is-link" v-if="!stories.length">
         <div class="message-body">
           {{ trans.get("blog.empty_posts") }}
@@ -37,7 +40,7 @@
         {{ trans.get("blog.write_post") }}
       </button>
       <div v-if="stories.length && blogSelected">
-        <ShowPost v-for="post in stories" :post="post" :key="post.id">
+        <ShowPost v-for="post in stories" :code="code" :post="post" :key="post.id">
         </ShowPost>
       </div>
     </div>
@@ -105,6 +108,28 @@ export default {
     };
   },
   methods: {
+    deleteBlog(index) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/" + this.code + "/blog/" + this.blogSelected)
+            .then((response) => {
+              this.blogs = response.data
+              this.blogSelected = null;
+            });
+        },
+      });
+    },
     sendPost() {
       this.isLoading = true;
       axios
@@ -122,9 +147,8 @@ export default {
     writePost() {
       this.modal = true;
     },
-    toggleBlog(id) {
-      if (!this.blogSelected) {
-        this.isLoading = true;
+    load(id) {
+      this.isLoading = true;
         axios
           .post("/classroom/" + this.code + "/posts", { blog: id })
           .then((response) => {
@@ -132,6 +156,10 @@ export default {
             this.blogSelected = id;
             this.isLoading = false;
           });
+    },
+    toggleBlog(id) {
+      if (!this.blogSelected) {
+        this.load(id);
       } else this.blogSelected = null;
     },
     createBlog() {

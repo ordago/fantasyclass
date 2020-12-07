@@ -2,9 +2,7 @@
   <div class="box card-shadow-s mb-3 has-background-story">
     <section class="media">
       <div class="media-content is-relative">
-        <div
-          class="challenge-category has-background-light"
-        >
+        <div class="challenge-category has-background-light">
           <i class="fad fa-file-alt"></i>
         </div>
         <!-- <span
@@ -29,6 +27,14 @@
 
           <div v-html="getContent(post.content)"></div>
         </div>
+        <div class="has-text-right">
+          <button class="button is-dark is-outlined">
+            <i class="fad fa-edit"></i> {{ trans.get("general.edit") }}
+          </button>
+          <button class="button is-danger is-outlined" @click="deletePost(post.id)">
+            <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
+          </button>
+        </div>
       </div>
     </section>
   </div>
@@ -39,13 +45,34 @@ import Utils from "../../utils.js";
 // const InputEmoji = () => import("../utils/InputEmoji.vue");
 
 export default {
-  props: ["post"],
+  props: ["post" , "code"],
   created: function () {},
   data: function () {
     return {};
   },
   components: {},
   methods: {
+    deletePost(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/" + this.code + "/post/" + id)
+            .then((response) => {
+              this.$parent.load(this.$parent.$data.blogSelected);
+            });
+        },
+      });
+    },
     getContent(content) {
       return Utils.replaceSpecial(content);
     },

@@ -6,6 +6,7 @@ use App\Blog;
 use App\Classroom;
 use App\Http\Classes\Functions;
 use App\Posts;
+use App\Student;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -29,6 +30,35 @@ class BlogController extends Controller
             'name' => $data['name'],
             'student_id' => $student->id,
         ]);
+    }
+
+    public function destroy($code, $id)
+    {
+        $blog = Blog::find($id);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        
+        $student = Functions::getCurrentStudent($class, []);
+        
+        if($student->id != $blog->student_id)
+            abort(403);
+
+        $blog->delete();
+        return $student->blogs;
+    }
+
+    public function destroyPost($code, $id)
+    {
+        $post = Posts::find($id);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        
+        $student = Functions::getCurrentStudent($class, []);
+        
+        if($student->id != $post->blog->student_id)
+            abort(403);
+
+        $post->delete();
     }
 
     public function storePost($code)
