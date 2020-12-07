@@ -10,6 +10,7 @@ return [
     'questions' => 'Preguntas',
     'start' => 'Empezar',
     '1vs1' => '¡Los y las estudiantes batallarán de manera individual para no perder sus atributos y mantener el honor!',
+    'groupVSgroup' => 'Batalla de equipos, intentarán ganar la recompensa',
     'not_available' => 'Próximamente ... Estams trabajando en ello :D',
     'loss_fail' => 'Pérdida de puntos de vida por fallo',
     'gain' => 'Ganancia del contrario si ha acertado la pregunta anterior.',
@@ -26,5 +27,6 @@ return [
     'skip_question' => 'Salta pregunta',
     'well_done' => '¡Bien hecho!',
     'go_back' => 'Volver',
+    'reward' => 'Recompensa para el grupo ganador',
     '' => '',
 ];

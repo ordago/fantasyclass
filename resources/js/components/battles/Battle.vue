@@ -32,7 +32,7 @@
             expanded
             v-tippy
             :content="trans.get('battles.not_available')"
-            :disabled="true || !classroom.grouping[0].groups.length"
+            :disabled="groups.length < 2"
           >
             <i class="fas fa-users mr-1"></i> vs
             <i class="fas fa-users ml-1"></i>
@@ -75,8 +75,10 @@
         :label="trans.get('battles.settings')"
         :clickable="true"
       >
-        <h3 class="m-2">{{ trans.get("battles.loss_fail") }}</h3>
-        <div class="columns m-2">
+        <h3 class="m-2" v-if="type == 0">
+          {{ trans.get("battles.loss_fail") }}
+        </h3>
+        <div class="columns m-2" v-if="type == 0">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -148,10 +150,61 @@
           </div>
         </div>
 
-        <h3 class="m-2" v-if="type == 0 || type == 1">
+        <h3 class="m-2" v-if="type == 1">
+          {{ trans.get("battles.reward") }}
+        </h3>
+        <div class="columns m-2" v-if="type == 1">
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-success">
+                        <i class="fas fa-fist-raised colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        max="0"
+                        v-model="xp_reward"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-success">
+                        <i class="fas fa-coins colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        max="0"
+                        v-model="gold_reward"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="m-2" v-if="type == 0">
           {{ trans.get("battles.gain") }}
         </h3>
-        <div class="columns m-2" v-if="type == 0 || type == 1">
+        <div class="columns m-2" v-if="type == 0">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -229,7 +282,11 @@
               <div class="field is-expanded">
                 <div class="field has-addons">
                   <p class="control">
-                    <a class="button" v-tippy :content="trans.get('battles.protect_shield')">
+                    <a
+                      class="button"
+                      v-tippy
+                      :content="trans.get('battles.protect_shield')"
+                    >
                       <i class="far fa-shield-alt colored"></i>
                     </a>
                   </p>
@@ -322,6 +379,11 @@
             <div
               class="column rounded is-flex is-flex-direction-column has-text-centered is-narrow"
             >
+              <div v-if="type == 1 && group1">
+                <h3 class="is-size-3 animate__animated animate__bounceIn">
+                  {{ group1.name }}
+                </h3>
+              </div>
               <div style="min-width: 300px">
                 <show-student
                   class="animate__animated"
@@ -337,18 +399,26 @@
                   :theme="classroom.theme"
                 ></show-student>
               </div>
-              <div class="my-2" style="max-width: 270px" v-if="student1">
+              <div
+                class="my-2"
+                style="max-width: 270px"
+                v-if="student1 || group1"
+              >
                 <span
-                  v-for="index in parseInt(student1.max_fails)"
+                  v-for="index in getMaxFails(1)"
                   :key="index"
-                  v-tippy :content="trans.get('battles.protect_shield')"
+                  v-tippy
+                  :content="trans.get('battles.protect_shield')"
                 >
-                  <i class="far fa-shield-alt colored" style="font-size: 3em"></i>
+                  <i
+                    class="far fa-shield-alt colored"
+                    style="font-size: 3em"
+                  ></i>
                 </span>
               </div>
               <div class="my-2" style="max-width: 270px" v-if="student1">
                 <span
-                  v-for="(answer, index) in student1.answers"
+                  v-for="(answer, index) in getAnswers(1)"
                   :key="index"
                   class="tag mr-1"
                   :class="{ 'is-success': answer, 'is-danger': !answer }"
@@ -356,12 +426,18 @@
                   {{ index + 1 }}
                 </span>
               </div>
-              <div>
+              <div v-if="type == 0">
                 <button
                   @click="selectStudent(1)"
                   class="button is-primary my-2"
                 >
                   {{ trans.get("battles.select_student") }}
+                  <i class="fas fa-random ml-1"></i>
+                </button>
+              </div>
+              <div v-if="type == 1 && !group1">
+                <button @click="selectGroup(1)" class="button is-primary my-2">
+                  {{ trans.get("battles.select_group") }}
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
@@ -373,7 +449,8 @@
                 :disabled="!student1 || !student2 || student1.id == student2.id"
                 @click="startBattle"
               >
-                <i class="fas fa-swords colored mr-2 faa-pulse animated"></i>{{ trans.get("battles.lets_start") }}
+                <i class="fas fa-swords colored mr-2 faa-pulse animated"></i
+                >{{ trans.get("battles.lets_start") }}
               </button>
               <div v-else class="w-100">
                 <div
@@ -435,6 +512,11 @@
             <div
               class="column rounded is-flex is-flex-direction-column has-text-centered is-narrow"
             >
+              <div v-if="type == 1 && group2">
+                <h3 class="is-size-3 animate__animated animate__bounceIn">
+                  {{ group2.name }}
+                </h3>
+              </div>
               <div style="min-width: 300px">
                 <show-student
                   :class="{
@@ -453,16 +535,20 @@
 
               <div class="my-2" style="max-width: 270px" v-if="student2">
                 <span
-                  v-for="index in parseInt(student2.max_fails)"
+                  v-for="index in getMaxFails(2)"
                   :key="index"
-                  v-tippy :content="trans.get('battles.protect_shield')"
+                  v-tippy
+                  :content="trans.get('battles.protect_shield')"
                 >
-                  <i class="far fa-shield-alt colored" style="font-size: 3em;"></i>
+                  <i
+                    class="far fa-shield-alt colored"
+                    style="font-size: 3em"
+                  ></i>
                 </span>
               </div>
               <div class="my-2" style="max-width: 270px" v-if="student2">
                 <span
-                  v-for="(answer, index) in student2.answers"
+                  v-for="(answer, index) in getAnswers(2)"
                   :key="index"
                   class="tag mr-1"
                   :class="{ 'is-success': answer, 'is-danger': !answer }"
@@ -470,12 +556,18 @@
                   {{ index + 1 }}
                 </span>
               </div>
-              <div>
+              <div v-if="type == 0">
                 <button
                   @click="selectStudent(2)"
                   class="button is-primary my-2"
                 >
                   {{ trans.get("battles.select_student") }}
+                  <i class="fas fa-random ml-1"></i>
+                </button>
+              </div>
+              <div v-if="type == 1 && !group2">
+                <button @click="selectGroup(2)" class="button is-primary my-2">
+                  {{ trans.get("battles.select_group") }}
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
@@ -511,11 +603,18 @@ export default {
   props: ["classroom"],
   mounted() {
     this.students = _.shuffle(this.classroom.students);
+    this.classroom.grouping[0].groups.forEach((element) => {
+      if (element.students && element.students.length) {
+        this.groups.push(element);
+      }
+    });
+    this.groups = _.shuffle(this.groups);
   },
   data: function () {
     return {
       audioOK: new Audio("/sound/clap.mp3"),
       audioKO: new Audio("/sound/wheel-bad.mp3"),
+      groups: [],
       activeStep: 0,
       type: 0,
       hp_loss: -5,
@@ -525,8 +624,12 @@ export default {
       xp_transfer: 5,
       gold_transfer: 5,
       gold_reward: 200,
+      xp_reward: 50,
       selectedBank: null,
       isBattleActive: false,
+      group1: null,
+      group2: null,
+      group_count: 0,
       student1: null,
       student2: null,
       students: null,
@@ -546,7 +649,42 @@ export default {
     };
   },
   methods: {
-    answer(correct, next = true) {
+    getAnswers(slot) {
+      if (slot == 1) {
+        if (this.type == 0) {
+          return this.student1.answers;
+        } else return this.group1.answers;
+      } else {
+        if (this.type == 0) {
+          return this.student2.answers;
+        } else return this.group2.answers;
+      }
+    },
+    getMaxFails(slot) {
+      if (slot == 1) {
+        if (this.type == 0) {
+          return parseInt(this.student1.max_fails);
+        } else return parseInt(this.group1.max_fails);
+      } else {
+        if (this.type == 0) {
+          return parseInt(this.student2.max_fails);
+        } else return parseInt(this.group2.max_fails);
+      }
+    },
+    answerGroup(correct, next = true) {
+      let group_1;
+      let group_2;
+      if (this.turn == 0) {
+        group_1 = this.group1;
+      } else {
+        group_1 = this.group2;
+      }
+      if (!correct) {
+        if (this.max_fails != 0) group_1.max_fails -= 1;
+      }
+        group_1.answers.push(correct)
+    },
+    answerIndividual(correct, next = true) {
       let student_1;
       let student_2;
       if (this.turn == 0) {
@@ -558,7 +696,6 @@ export default {
       }
       student_1.lastAnswer = correct;
       student_1.answers.push(correct);
-      this.answered = true;
 
       if (!correct) {
         if (this.max_fails != 0) student_1.max_fails -= 1;
@@ -578,7 +715,7 @@ export default {
           student_2.gold += this.gold_transfer;
           this.updateProp(student_2.id, "gold", this.gold_transfer);
         }
-        this.audioKO.play();
+
         if (student_1.max_fails == 0 && this.max_fails != 0) {
           if (this.turn == 0) {
             this.$refs.student1.$el.classList.add("animate__rotateOut");
@@ -598,23 +735,34 @@ export default {
           this.$forceUpdate();
           return false;
         }
-        if (this.turn == 1) {
-          this.move2 = true;
-        } else {
-          this.move1 = true;
-        }
+      }
+    },
+    answer(correct, next = true) {
+      this.answered = true;
+      if (this.type == 0) {
+        this.answerIndividual(correct, next);
       } else {
-        confetti({
-          particleCount: 200,
-          spread: 100,
-          origin: { y: 1.0 },
-        });
+        this.answerGroup(correct, next);
+      }
+      if (correct) {
         if (this.turn == 0) {
           this.$refs.student1.$el.classList.add("animate__bounce");
         } else {
           this.$refs.student2.$el.classList.add("animate__bounce");
         }
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 1.0 },
+        });
         this.audioOK.play();
+      } else {
+        if (this.turn == 1) {
+          this.move2 = true;
+        } else {
+          this.move1 = true;
+        }
+        this.audioKO.play();
       }
     },
     updateProp: function (id, prop, value) {
@@ -647,6 +795,16 @@ export default {
 
       setTimeout(this.reset, 1000);
       if (this.selectedBank) this.currentQuestion = this.questions.pop();
+      if(this.type == 1) {
+        
+        // TODO increment group count every 2.
+        this.group_count++;
+        if(this.turn == 0) {
+          this.selectStudent(1)
+        } else {
+          this.selectStudent(2)
+        }
+      }
       this.turn = (this.turn + 1) % 2;
       this.answered = false;
       return this.currentQuestion;
@@ -657,27 +815,53 @@ export default {
       this.flip2 = false;
       this.move2 = false;
     },
+    selectGroup(slot) {
+      if (slot == 1) {
+        this.group1 = this.groups.pop();
+        this.group1.max_fails = this.max_fails;
+        this.group1.answers = [];
+        this.selectStudent(1);
+      } else {
+        this.group2 = this.groups.pop();
+        this.group2.max_fails = this.max_fails;
+        this.group2.answers = [];
+        this.selectStudent(2);
+      }
+    },
     selectStudent(slot) {
       setTimeout(this.reset, 1000);
+      if (this.type == 0) {
+        if (slot == 1) {
+          this.student1 = this.students.pop();
+        } else {
+          this.student2 = this.students.pop();
+        }
+        if (this.students && !this.students.length)
+          this.students = _.shuffle(this.classroom.students);
+        if (
+          this.student2 &&
+          this.student1 &&
+          this.student1.id == this.student2.id
+        ) {
+          this.selectStudent(slot);
+        }
+      } else if (this.type == 1) {
+        if (slot == 1) {
+          let index = this.group_count % this.group1.students.length;
+          this.student1 = this.group1.students[index];
+        } else {
+          let index = this.group_count % this.group2.students.length;
+          this.student2 = this.group2.students[index];
+        }
+      }
       if (slot == 1) {
-        this.student1 = this.students.pop();
         this.student1.answers = [];
         this.student1.max_fails = this.max_fails;
         this.flip1 = true;
       } else {
-        this.student2 = this.students.pop();
         this.student2.max_fails = this.max_fails;
         this.student2.answers = [];
         this.flip2 = true;
-      }
-      if (this.students && !this.students.length)
-        this.students = _.shuffle(this.classroom.students);
-      if (
-        this.student2 &&
-        this.student1 &&
-        this.student1.id == this.student2.id
-      ) {
-        this.selectStudent(slot);
       }
     },
     getMessage() {
@@ -686,7 +870,7 @@ export default {
           return "1 vs 1. " + this.trans.get("battles.1vs1");
           break;
         case 1:
-          return "Batalla de equipos, intentarán no perder los atributos";
+          return this.trans.get("battles.groupVSgroup");
           break;
         case 2:
           return "Estudiantes se enfrentarán a monstruos ...";

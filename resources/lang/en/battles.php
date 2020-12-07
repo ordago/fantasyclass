@@ -10,6 +10,7 @@ return [
     'questions' => 'Questions',
     'start' => 'Start',
     '1vs1' => 'Students battle individually to keep their attributes and maintain honor!',
+    'groupVSgroup' => 'Group battle, they\'ll try to win the reward',
     'not_available' => 'Coming ... We\'re working on it :D',
     'loss_fail' => 'Loss of points by fail',
     'gain' => 'Rival points gain if they\'ve answered correctly the last question',
@@ -26,5 +27,6 @@ return [
     'skip_question' => 'Skip question',
     'well_done' => 'Well done!',
     'go_back' => 'Go back',
+    'reward' => 'Winner group reward',
     '' => '',
 ];
