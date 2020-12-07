@@ -265,6 +265,7 @@ class ClassroomsStudentController extends Controller
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
+        $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
 
 
         $students_money = json_encode([]);

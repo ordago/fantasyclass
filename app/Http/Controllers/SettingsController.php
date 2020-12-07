@@ -27,6 +27,7 @@ class SettingsController extends Controller
         $settings['fog'] = settings()->get('fog', false);
         $settings['num_cards'] = settings()->get('num_cards', 5);
         $settings['allow_upload'] = settings()->get('allow_upload', false);
+        $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['show_chat'] = settings()->get('show_chat', false);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);

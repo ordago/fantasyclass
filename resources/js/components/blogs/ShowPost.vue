@@ -28,10 +28,10 @@
           <div v-html="getContent(post.content)"></div>
         </div>
         <div class="has-text-right">
-          <button class="button is-dark is-outlined">
+          <button class="button is-dark is-outlined" @click="editPost(post)">
             <i class="fad fa-edit"></i> {{ trans.get("general.edit") }}
           </button>
-          <button class="button is-danger is-outlined" @click="deletePost(post.id)">
+          <button class="button is-danger is-outlined" v-if="!admin" @click="deletePost(post.id)">
             <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
           </button>
         </div>
@@ -45,13 +45,21 @@ import Utils from "../../utils.js";
 // const InputEmoji = () => import("../utils/InputEmoji.vue");
 
 export default {
-  props: ["post" , "code"],
+  props: ["post" , "code", "admin"],
   created: function () {},
   data: function () {
     return {};
   },
   components: {},
   methods: {
+    editPost(post) {
+      this.$parent.editor = false;
+      this.$parent.edit = post.id
+      this.$parent.content = post.content
+      this.$parent.title = post.title
+      this.$parent.modal = true
+      this.$parent.editor = true;
+    },
     deletePost(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),

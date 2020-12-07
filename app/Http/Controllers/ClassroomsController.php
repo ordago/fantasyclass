@@ -364,7 +364,7 @@ class ClassroomsController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $students = $class->students()->with('equipment', 'pets', 'blogs')->get();
+        $students = $class->students()->with('equipment', 'pets')->get();
         $groups = $class->grouping->first()->groups;
         $students->each->append('numcards');
         $students->each->append('boost');

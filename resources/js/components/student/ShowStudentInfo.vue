@@ -425,10 +425,11 @@
         <b-tab-item
           :label="trans.get('menu.adventure')"
           icon="feather-alt"
+          v-if="settings.disable_your_adventure == 0"
           icon-pack="fad"
           class="p-2"
         >
-          <Blogs :code="classroom.code" :blogs="student.blogs"></Blogs>
+          <Blogs :code="classroom.code" :student="student" :admin="admin" :blogs="student.blogs"></Blogs>
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.pets')"

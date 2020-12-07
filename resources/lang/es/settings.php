@@ -26,6 +26,7 @@ return [
     'allow_change_class' => 'Permite cambiar la subclase',
     'allow_send_money' => 'Permite al alumnado enviarse dinero',
     'transfer_fee' => 'Comisión cuando envían dinero entre alumnos',
+    'disable_your_adventure' => 'Deshabilita la sección de "tu aventura"',
     
     'cards' => 'Máximo de cartas por estudiante',
     'rare' => 'Rara',

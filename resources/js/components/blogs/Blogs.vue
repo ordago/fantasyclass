@@ -11,7 +11,11 @@
       >
         {{ trans.get("blog.new_blog") }}
       </button>
-      <span @click="toggleBlog(blog.id)" v-for="blog in orderedBlogs" :key="blog.id">
+      <span
+        @click="toggleBlog(blog.id)"
+        v-for="blog in orderedBlogs"
+        :key="blog.id"
+      >
         <div
           v-if="!blogSelected || blogSelected == blog.id"
           class="card rounded p-5 my-2 cursor-pointer"
@@ -25,9 +29,13 @@
       </span>
     </div>
     <div class="" v-if="blogSelected">
-    <button class="button is-danger mb-2" @click="deleteBlog" v-if="!stories.length">
-      <i class="fad fa-trash-alt"></i> {{ trans.get('general.delete') }}
-    </button>
+      <button
+        class="button is-danger mb-2"
+        @click="deleteBlog"
+        v-if="!stories.length && !admin"
+      >
+        <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
+      </button>
       <article class="message is-link" v-if="!stories.length">
         <div class="message-body">
           {{ trans.get("blog.empty_posts") }}
@@ -40,7 +48,13 @@
         {{ trans.get("blog.write_post") }}
       </button>
       <div v-if="stories.length && blogSelected">
-        <ShowPost v-for="post in stories" :code="code" :post="post" :key="post.id">
+        <ShowPost
+          v-for="post in stories"
+          :code="code"
+          :post="post"
+          :key="post.id"
+          :admin="admin"
+        >
         </ShowPost>
       </div>
     </div>
@@ -70,13 +84,22 @@
             class="button is-primary"
             @click="sendPost"
             :disabled="title == '' || content == null"
+            v-if="!edit"
           >
             {{ trans.get("general.add") }}
+          </button>
+          <button
+            class="button is-link"
+            @click="editPost"
+            v-else
+            :disabled="title == '' || content == null"
+          >
+            {{ trans.get("general.edit") }}
           </button>
         </footer>
       </div>
     </b-modal>
-     <b-loading
+    <b-loading
       :is-full-page="true"
       :active.sync="isLoading"
       :can-cancel="false"
@@ -88,7 +111,7 @@ const ShowPost = () => import("./ShowPost.vue");
 const Editor = () => import("../utils/Editor.vue");
 
 export default {
-  props: ["blogs", "code"],
+  props: ["blogs", "code", "admin", "student"],
   components: {
     ShowPost,
     Editor,
@@ -100,6 +123,7 @@ export default {
     return {
       isLoading: false,
       editor: false,
+      edit: null,
       content: ``,
       blogSelected: null,
       stories: [],
@@ -108,6 +132,21 @@ export default {
     };
   },
   methods: {
+    editPost() {
+      let student = null;
+      if (this.admin) student = this.student.id;
+      axios
+        .patch("/classroom/" + this.code + "/post", {
+          id: this.edit,
+          content: this.content,
+          title: this.title,
+          student: student,
+        })
+        .then((response) => {
+          this.modal = false;
+          this.load(this.blogSelected);
+        });
+    },
     deleteBlog(index) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -124,19 +163,22 @@ export default {
           axios
             .delete("/classroom/" + this.code + "/blog/" + this.blogSelected)
             .then((response) => {
-              this.blogs = response.data
+              this.blogs = response.data;
               this.blogSelected = null;
             });
         },
       });
     },
     sendPost() {
+      let student = null;
+      if (this.admin) student = this.student.id;
       this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/post", {
           blog: this.blogSelected,
           content: this.content,
           title: this.title,
+          student: student,
         })
         .then((response) => {
           this.modal = false;
@@ -145,17 +187,25 @@ export default {
         });
     },
     writePost() {
-      this.modal = true;
+      (this.content = ``),
+        (this.title = ""),
+        (this.edit = null),
+        (this.modal = true);
     },
     load(id) {
+      let student = null;
+      if (this.admin) student = this.student.id;
       this.isLoading = true;
-        axios
-          .post("/classroom/" + this.code + "/posts", { blog: id })
-          .then((response) => {
-            this.stories = response.data;
-            this.blogSelected = id;
-            this.isLoading = false;
-          });
+      axios
+        .post("/classroom/" + this.code + "/posts", {
+          blog: id,
+          student: student,
+        })
+        .then((response) => {
+          this.stories = response.data;
+          this.blogSelected = id;
+          this.isLoading = false;
+        });
     },
     toggleBlog(id) {
       if (!this.blogSelected) {
@@ -163,6 +213,8 @@ export default {
       } else this.blogSelected = null;
     },
     createBlog() {
+      let student = null;
+      if (this.admin) student = this.student.id;
       this.$buefy.dialog.prompt({
         message: this.trans.get("blog.adventure_name"),
         confirmText: this.trans.get("general.add"),
@@ -173,10 +225,13 @@ export default {
         trapFocus: true,
         onConfirm: (value) => {
           axios
-            .post(`/classroom/${this.code}/blog`, { name: value })
+            .post(`/classroom/${this.code}/blog`, {
+              name: value,
+              student: student,
+            })
             .then((response) => {
               this.orderedBlogs.unshift(response.data);
-              this.$forceUpdate()
+              this.$forceUpdate();
             })
             .catch((error) => {
               Utils.toast(

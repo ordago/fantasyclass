@@ -117,6 +117,16 @@
             class="ml-4"
             true-value="1"
             false-value="0"
+            @input="toggleProp('disable_your_adventure')"
+            v-model="settings.disable_your_adventure"
+            >{{ trans.get("settings.disable_your_adventure") }}</b-switch
+          >
+        </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
             @input="toggleProp('allow_upload')"
             v-model="settings.allow_upload"
             >{{ trans.get("settings.allow_upload") }}</b-switch

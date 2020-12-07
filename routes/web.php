@@ -227,6 +227,7 @@ Route::group(['middleware' => 'language'], function () {
         // Blogs
         Route::post('/{code}/blog', 'BlogController@store');
         Route::post('/{code}/post', 'BlogController@storePost');
+        Route::patch('/{code}/post', 'BlogController@editPost');
         Route::post('/{code}/posts', 'BlogController@index');
         Route::delete('/{code}/blog/{id}', 'BlogController@destroy');
         Route::delete('/{code}/post/{id}', 'BlogController@destroyPost');

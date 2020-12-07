@@ -26,6 +26,7 @@ return [
     'allow_change_class' => 'Allow students to change subclass',
     'allow_send_money' => 'Allow students to send money',
     'transfer_fee' => 'Comission when students send money',
+    'disable_your_adventure' => 'Disable "your adventure" section',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',
