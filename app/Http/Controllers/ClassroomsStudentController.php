@@ -12,6 +12,7 @@ use App\Http\Classes\Functions;
 use App\Item;
 use App\Student;
 use App\Map;
+use App\Notifications\NewInteractionStudent;
 use App\Pet;
 use App\Rating;
 use App\Rules;
@@ -19,6 +20,7 @@ use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
@@ -343,6 +345,18 @@ class ClassroomsStudentController extends Controller
 
         $student->setProperty('gold', request()->money * - 1, true, true);
         $to->setProperty('gold', $gold, true, true);
+
+        $from['title'] = 'notifications.money_sent';
+        $from['name'] = $student->name;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        $message = __('notifications.money_sent') . ' ' . request()->money . ' <i class="fas fa-coins colored"></i> ' . __('notifications.money_sent_taxes') . ($gold + $steal) . " <i class='fas fa-coins colored'></i> ";
+
+        if($steal) {
+            $message .= __('notifications.money_sent_thief') . $steal . " <i class='fas fa-coins colored'></i> " . __('notifications.money_sent_total') . $gold . " <i class='fas fa-coins colored'></i>";
+        }
+
+        Notification::send($to->classroom->user, new NewInteractionStudent('notifications.money_sent', $message, $from, "money_sent", $class->code));
 
         return ['gold' => request()->money, 'received' => $gold, 'steal' => $steal];
 

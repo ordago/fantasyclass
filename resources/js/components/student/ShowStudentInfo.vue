@@ -43,7 +43,7 @@
                 ></i>
               </span>
               <span class="has-text-grey-light" v-show="student.hp < 30">{{
-                student.hp
+                Math.round(student.hp)
               }}</span>
             </span>
             <span
@@ -1122,7 +1122,7 @@ export default {
       isAssignModalActive: false,
       showRubric: false,
       rubric: null,
-      send_money: null,
+      send_money: 50,
       send_money_student: null,
       moneySended: false,
       transaction: null,

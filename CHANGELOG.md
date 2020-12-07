@@ -1,10 +1,12 @@
 # Changelog
 
-## v1.22 Beta (06/12/2020)
+## v1.22.1 Beta (07/12/2020)
 ### Added
 - Money transfer.
 
 ### Changed
+- Send notification when money receive.
+- Fixed errors.
 - Changed "lives" to shields in battles.
 - Fix showing "plus" on gauntlets.
 

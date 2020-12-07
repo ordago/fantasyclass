@@ -66,6 +66,7 @@
                   'fa-comments-alt': notification.data.type == 'chat',
                   'fa-club': notification.data.type == 'mark_card',
                   'fa-heart': notification.data.type == 'new_behaviour',
+                  'fa-coins': notification.data.type == 'money_sent',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -98,8 +99,8 @@
                 v-tippy
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
-                >{{}}</strong
-              >: {{ trans.get(notification.data.content) }}
+                ></strong
+              >: <span v-html="trans.get(notification.data.content)"></span>
             </div>
           </div>
           <footer class="card-footer">
