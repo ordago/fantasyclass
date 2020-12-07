@@ -64,5 +64,7 @@ return [
     'money_received' => 'Money received',
     'thief_info' => 'One thief has stolen',
     'comission' => 'Comission',
+    'error' => 'An error was ocurred, do you try to do something illegal or without sense? :(',
+
 
 ];

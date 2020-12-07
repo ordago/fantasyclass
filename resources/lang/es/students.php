@@ -66,6 +66,6 @@ return [
     'money_received' => 'Dinero recibido',
     'thief_info' => 'Unos ladrones han robado',
     'comission' => 'Comisión',
-
+    'error' => '¿Intentas hacer alguna cosa ilegal o sin sentido? :(',
 
 ];

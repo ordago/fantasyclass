@@ -1162,7 +1162,7 @@ export default {
           this.moneySended = true;
         })
         .catch((error) => {
-          console.log("error");
+          this.$toast(this.trans.get('students.error'), {type: "error"});
         });
     },
     lastBehaviour: function () {

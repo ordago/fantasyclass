@@ -66,4 +66,5 @@ return [
     'money_received' => 'Diners rebuts',
     'thief_info' => 'Uns lladres han robat',
     'comission' => 'Comissió',
+    'error' => 'Intentes fer alguna cosa il·legal o sense sentit? :(',
 ];
