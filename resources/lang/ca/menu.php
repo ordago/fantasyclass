@@ -24,6 +24,7 @@ return [
     'map' => 'Mapa',
     'levels' => 'Nivells',
     'stories' => 'Històries',
+    'adventure' => 'La teua aventura',
     'goals' => 'Objectius',
     'challenges' => 'Reptes',
     'evaluation' => 'Avaluació',

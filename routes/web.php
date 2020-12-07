@@ -224,6 +224,11 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/tag', 'TagController@update');
         Route::delete('/tag/{id}', 'TagController@destroy');
 
+        // Blogs
+        Route::post('/{code}/blog', 'BlogController@store');
+        Route::post('/{code}/post', 'BlogController@storePost');
+        Route::post('/{code}/posts', 'BlogController@index');
+        
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');
         Route::get('/pets/get', 'PetsController@get');

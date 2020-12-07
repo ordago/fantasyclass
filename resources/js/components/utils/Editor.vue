@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <div class="tag is-warning my-2">
       %HP% <i class="fas fa-heart colored"></i>
       <i class="fal fa-ellipsis-v mx-3"></i> %XP%
@@ -7,11 +7,13 @@
       <i class="fal fa-ellipsis-v mx-3"></i> %GOLD%
       <i class="fas fa-coins colored"></i>
     </div>
+
     <el-tiptap
-      v-model="$parent.content"
       :extensions="extensions"
       :height="height"
       placeholder="Write here some fun stuff!"
+      v-model="content"
+      @onUpdate="updateValue()"
     />
   </div>
 </template>
@@ -73,9 +75,12 @@ import {
 
 export default {
   props: ["code", "height"],
-  created() {},
+  mounted() {
+    this.content = this.$attrs.value; 
+  },
   data: function () {
     return {
+      content: ``,
       extensions: [
         new Doc(),
         new Text(),
@@ -122,6 +127,9 @@ export default {
   },
   methods: {
     sendImage() {},
+    updateValue: function () {
+      this.$emit("input", this.content);
+    },
   },
   components: {
     ElementUI,

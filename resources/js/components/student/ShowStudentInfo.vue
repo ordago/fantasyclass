@@ -423,6 +423,14 @@
           </div>
         </b-tab-item>
         <b-tab-item
+          :label="trans.get('menu.adventure')"
+          icon="feather-alt"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <Blogs :code="classroom.code" :blogs="student.blogs"></Blogs>
+        </b-tab-item>
+        <b-tab-item
           :label="trans.get('menu.pets')"
           v-if="!admin && pets.length"
           icon="dog"
@@ -1038,17 +1046,27 @@
           </div>
           <div class="fs-2">
             <div class="my-2 py-2">
-              {{ trans.get('students.money_sent') }}: {{ transaction.gold }} <i class="fas fa-coins colored"></i>
+              {{ trans.get("students.money_sent") }}: {{ transaction.gold }}
+              <i class="fas fa-coins colored"></i>
             </div>
 
             <div class="my-2 py-2">
-              {{ trans.get('students.comission') }}: {{ Math.round(transaction.gold - transaction.received - transaction.steal)  }} <i class="fas fa-coins colored"></i>
+              {{ trans.get("students.comission") }}:
+              {{
+                Math.round(
+                  transaction.gold - transaction.received - transaction.steal
+                )
+              }}
+              <i class="fas fa-coins colored"></i>
             </div>
             <div class="my-2 py-2" v-if="transaction.steal != 0">
-              <i class="fas fa-hood-cloak colored"></i> {{ trans.get('students.thief_info') }} {{ transaction.steal }} <i class="fas fa-coins colored"></i>
+              <i class="fas fa-hood-cloak colored"></i>
+              {{ trans.get("students.thief_info") }} {{ transaction.steal }}
+              <i class="fas fa-coins colored"></i>
             </div>
             <div class="my-2 py-2">
-              {{ trans.get('students.money_received') }}: {{ transaction.received }} <i class="fas fa-coins colored"></i>
+              {{ trans.get("students.money_received") }}:
+              {{ transaction.received }} <i class="fas fa-coins colored"></i>
             </div>
           </div>
         </div>
@@ -1062,9 +1080,7 @@ import Vue from "vue";
 
 import Utils from "../../utils.js";
 
-// Download excel
-// import JsonExcel from "vue-json-excel";
-// Vue.component("download-excel", JsonExcel);
+import Blogs from "../blogs/Blogs.vue";
 
 // Charts
 import VueApexCharts from "vue-apexcharts";
@@ -1087,6 +1103,9 @@ export default {
     "pets",
     "students_money",
   ],
+  components: {
+    Blogs,
+  },
   mounted() {
     this.behaviours = this.student.behaviours;
     if (!this.admin) {
@@ -1136,7 +1155,7 @@ export default {
           to: this.send_money_student,
         })
         .then((response) => {
-          this.student.gold -= this.send_money
+          this.student.gold -= this.send_money;
           this.transaction = response.data;
           this.isSendMoneyActive = false;
           this.moneySended = true;

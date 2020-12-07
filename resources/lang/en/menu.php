@@ -24,6 +24,7 @@ return [
     'map' => 'Map',
     'levels' => 'Levels',
     'stories' => 'Stories',
+    'adventure' => 'Your adventure',
     'goals' => 'Goals',
     'challenges' => 'Challenges',
     'evaluation' => 'Evaluation',

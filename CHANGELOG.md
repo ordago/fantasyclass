@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.23 Beta (XX/12/2020)
+- Student blog
+
+### Changed
+
+
 ## v1.22.1 Beta (07/12/2020)
 ### Added
 - Money transfer.

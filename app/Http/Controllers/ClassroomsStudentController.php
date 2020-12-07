@@ -253,6 +253,7 @@ class ClassroomsStudentController extends Controller
         $student->append('boost');
         $student->load('badges');
         $student->load('pets');
+        $student->load('blogs');
 
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {

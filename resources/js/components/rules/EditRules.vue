@@ -11,7 +11,7 @@
         Importa per defecte (CA)
       </button>
     </div>
-    <Editor height="70vh" :code="code"></Editor>
+    <Editor v-if="editor" height="70vh" v-model="content" :code="code"></Editor>
     <div>
       <button class="button is-primary mt-4" @click="saveRules">
         <i class="fas fa-save mr-2"></i>
@@ -29,9 +29,11 @@ export default {
     if (this.rules) {
       this.content = this.rules.content;
     }
+    this.editor = true;
   },
   data: function () {
     return {
+      editor: false,
       content: ``,
     };
   },
@@ -49,10 +51,12 @@ export default {
         });
     },
     getRules(lang) {
+      this.editor = false;
       axios
         .post("/classroom/default/rules", { lang: lang })
         .then((response) => {
           this.content = response.data;
+          this.editor = true;
         });
     },
   },
