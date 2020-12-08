@@ -56,4 +56,6 @@ return [
 
     'load_comments' => 'Load more comments...',
     'hidden_until' => 'Hidden until',
+    'permalink' => 'Copy direct link to challenge (only for students)',
+
 ];

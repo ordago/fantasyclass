@@ -13,7 +13,7 @@
           :student="student"
           :classroom="classroom"
         ></show-character>
-        <div class="card-content">
+        <div class="card-content has-text-centered">
           <div class="media mb-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
@@ -43,7 +43,7 @@
                 ></i>
               </span>
               <span class="has-text-grey-light" v-show="student.hp < 30">{{
-                student.hp
+                Math.round(student.hp)
               }}</span>
             </span>
             <span
@@ -71,6 +71,13 @@
             </span>
             {{ student.gold }}
           </div>
+          <button
+            @click="isSendMoneyActive = true"
+            class="button is-warning m-1"
+            v-if="student.gold && settings.allow_send_money == 1"
+          >
+            Send <i class="fas fa-coins colored"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -238,7 +245,7 @@
 
         <b-tab-item
           :label="trans.get('students.inventory')"
-          class="p-2"
+          class="p-2 pt-4"
           icon="backpack"
           icon-pack="fad"
         >
@@ -337,7 +344,11 @@
                 />
                 <div
                   class="price-buy rounded not-hover"
-                  v-if="eq1Json || eq2Json || eq3Json"
+                  v-if="
+                    (eq1Json || eq2Json || eq3Json) &&
+                    gear.id != 41 &&
+                    gear.id != 50
+                  "
                 >
                   <i class="fas fa-plus"></i>
                 </div>
@@ -410,6 +421,15 @@
               </div>
             </div>
           </div>
+        </b-tab-item>
+        <b-tab-item
+          :label="trans.get('menu.adventure')"
+          icon="feather-alt"
+          v-if="settings.disable_your_adventure == 0"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <Blogs :code="classroom.code" :student="student" :admin="admin" :blogs="student.blogs"></Blogs>
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.pets')"
@@ -940,6 +960,119 @@
         </footer>
       </div>
     </b-modal>
+
+    <b-modal
+      :active.sync="isSendMoneyActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("students.send_money") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <div class="py-3">
+            <b-field :label="trans.get('auth.student')">
+              <b-select
+                v-model="send_money_student"
+                expanded
+                placeholder="Select a name"
+              >
+                <option
+                  :value="id"
+                  v-for="(id, name) in students_money"
+                  :key="id"
+                >
+                  {{ name }}
+                </option>
+              </b-select>
+            </b-field>
+            <b-field>
+              <template slot="label">
+                <i class="fas fa-coins colored"></i>
+              </template>
+              <b-numberinput
+                :max="student.gold"
+                :min="50"
+                expanded
+                v-model="send_money"
+                controls-position="compact"
+              ></b-numberinput>
+            </b-field>
+            <article class="message is-warning">
+              <div class="message-body">
+                {{ trans.get("students.transfer_fee") }}
+                {{ settings.transfer_fee }}%. {{ trans.get("students.thief") }}
+              </div>
+            </article>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isSendMoneyActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+          <button
+            @click.prevent="sendMoney"
+            :disabled="send_money < 50 || !send_money_student"
+            class="button is-primary"
+          >
+            {{ trans.get("general.send") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
+    <b-modal
+      :active.sync="moneySended"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="true"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="card">
+        <div class="card-content" v-if="transaction">
+          <div class="fs-2">
+            <i class="fas fa-coins colored"></i>
+            <i class="fas fa-arrow-right colored"></i>
+            <i class="fas fa-user colored"></i>
+          </div>
+          <div class="fs-2">
+            <div class="my-2 py-2">
+              {{ trans.get("students.money_sent") }}: {{ transaction.gold }}
+              <i class="fas fa-coins colored"></i>
+            </div>
+
+            <div class="my-2 py-2">
+              {{ trans.get("students.comission") }}:
+              {{
+                Math.round(
+                  transaction.gold - transaction.received - transaction.steal
+                )
+              }}
+              <i class="fas fa-coins colored"></i>
+            </div>
+            <div class="my-2 py-2" v-if="transaction.steal != 0">
+              <i class="fas fa-hood-cloak colored"></i>
+              {{ trans.get("students.thief_info") }} {{ transaction.steal }}
+              <i class="fas fa-coins colored"></i>
+            </div>
+            <div class="my-2 py-2">
+              {{ trans.get("students.money_received") }}:
+              {{ transaction.received }} <i class="fas fa-coins colored"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -948,9 +1081,7 @@ import Vue from "vue";
 
 import Utils from "../../utils.js";
 
-// Download excel
-// import JsonExcel from "vue-json-excel";
-// Vue.component("download-excel", JsonExcel);
+import Blogs from "../blogs/Blogs.vue";
 
 // Charts
 import VueApexCharts from "vue-apexcharts";
@@ -971,7 +1102,11 @@ export default {
     "settings",
     "allcards",
     "pets",
+    "students_money",
   ],
+  components: {
+    Blogs,
+  },
   mounted() {
     this.behaviours = this.student.behaviours;
     if (!this.admin) {
@@ -1000,15 +1135,36 @@ export default {
       eq2Json: null,
       eq3Json: null,
       forceReload: 0,
+      isSendMoneyActive: false,
       prevImage: null,
       image: null,
       behaviours: null,
       isAssignModalActive: false,
       showRubric: false,
       rubric: null,
+      send_money: 50,
+      send_money_student: null,
+      moneySended: false,
+      transaction: null,
     };
   },
   methods: {
+    sendMoney() {
+      axios
+        .post("/classroom/" + this.classroom.code + "/send/money", {
+          money: this.send_money,
+          to: this.send_money_student,
+        })
+        .then((response) => {
+          this.student.gold -= this.send_money;
+          this.transaction = response.data;
+          this.isSendMoneyActive = false;
+          this.moneySended = true;
+        })
+        .catch((error) => {
+          this.$toast(this.trans.get('students.error'), {type: "error"});
+        });
+    },
     lastBehaviour: function () {
       let behaviour = this.student.behaviours[
         this.student.behaviours.length - 1

@@ -97,6 +97,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
+        Route::post('/{code}/send/money', 'ClassroomsStudentController@sendMoney');
 
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');
@@ -139,11 +140,23 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/challenge/attachment', 'AttachmentController@store');
         Route::delete('/challenge/attachment/{id}', 'AttachmentController@destroy');
 
-        // Question
+        // Questions
         Route::post('/challenge/question', 'QuestionController@store');
+        Route::post('/question/add', 'QuestionController@store');
         Route::delete('/challenge/question/{id}', 'QuestionController@destroy');
+        Route::delete('/questions/{id}', 'QuestionController@destroy');
         Route::post('/question/answer', 'QuestionController@answer');
+        Route::get('/{code}/questions/{bank}', 'QuestionController@index');
 
+        // Question bank
+        Route::get('/{code}/questions', 'QuestionBankController@index');
+        Route::post('/{code}/questions', 'QuestionBankController@store');
+        Route::delete('/bank/{id}', 'QuestionBankController@destroy');
+        
+        // Battles
+        Route::get('/{code}/battles', 'BattleController@index');
+
+        
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
@@ -168,6 +181,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
+        Route::post('/{code}/settings/reset', 'SettingsController@reset');
 
         // Events
         Route::get('/{code}/events', 'EventController@index');
@@ -184,6 +198,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/maps/{id}', 'MapsController@destroy');
         Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
+
+      
+
 
         // Evaluation
         Route::get('/{code}/evaluation/report', 'EvaluationController@report');
@@ -207,6 +224,14 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/tag', 'TagController@update');
         Route::delete('/tag/{id}', 'TagController@destroy');
 
+        // Blogs
+        Route::post('/{code}/blog', 'BlogController@store');
+        Route::post('/{code}/post', 'BlogController@storePost');
+        Route::patch('/{code}/post', 'BlogController@editPost');
+        Route::post('/{code}/posts', 'BlogController@index');
+        Route::delete('/{code}/blog/{id}', 'BlogController@destroy');
+        Route::delete('/{code}/post/{id}', 'BlogController@destroyPost');
+        
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');
         Route::get('/pets/get', 'PetsController@get');
@@ -221,12 +246,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/utils/massive', 'UtilsController@massive');
         Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
+        Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
+
     });
 
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
     Route::get('/utils/online', 'UtilsController@online');
-    Route::get('/utils/exportConfidentialDataStudent/', 'UtilsController@exportConfidentialDataStudent');
 
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
@@ -268,6 +294,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/inbox/token', 'UtilsController@getFirebaseToken');
     Route::post('/users/chat', 'UtilsController@getUserChatInfo');
     Route::post('/chat/notify', 'UtilsController@notifyChat');
+    Route::post('/chat/send2admin', 'UtilsController@send2admin');
     
     // Mobile
     Route::get('/mobile', 'UtilsController@mobile');

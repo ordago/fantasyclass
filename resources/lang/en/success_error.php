@@ -12,6 +12,7 @@ return [
 
     'add_success' => 'The element has been added successfully',
     'update_success' => 'The element has been updated successfully',
+    'copy_success' => 'Link copied to clipboard',
     
     'error' => 'Something went wrong :(',
 

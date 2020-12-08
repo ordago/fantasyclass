@@ -24,6 +24,7 @@ return [
     'map' => 'Map',
     'levels' => 'Levels',
     'stories' => 'Stories',
+    'adventure' => 'Your adventure',
     'goals' => 'Goals',
     'challenges' => 'Challenges',
     'evaluation' => 'Evaluation',
@@ -42,6 +43,7 @@ return [
     'contribute' => 'Buy us coffe or beer!',
     'pets' => 'Pets',
     'mobile' => 'Mobile version',
+    'battles' => 'Battles',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

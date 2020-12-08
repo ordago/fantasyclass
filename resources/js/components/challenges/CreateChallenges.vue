@@ -111,7 +111,7 @@
       <div class="field w-100 pt-1">
         <label class="label">{{ trans.get("challenges.content") }}</label>
         <div class="control content" data-app>
-          <Editor height="70vh" :code="code"></Editor>
+          <Editor v-model="content" v-if="editor" height="70vh" :code="code"></Editor>
         </div>
       </div>
       <div class="field">
@@ -341,6 +341,7 @@ export default {
     "studentsLoaded",
   ],
   mounted: function () {
+    this.editor = false;
     if (this.edit) {
       if (this.studentsLoaded) this.students = this.studentsLoaded;
       this.challenge = this.edit;
@@ -352,24 +353,26 @@ export default {
 
       if (this.challenge.students == null) this.challenge.students = [];
 
-      this.icon = this.challenge.icon;
       this.content = this.edit.content;
+      this.icon = this.challenge.icon;
       this.datepicker = new Date(this.edit.datetime);
     } else {
       this.icon = this.iconPrev.icon;
       this.challenge.color = this.iconPrev.color;
       this.datepicker = new Date();
     }
+    this.editor = true;
     this.$forceUpdate();
   },
   data: function () {
     return {
-      content: ``,
+      editor: false,
       datepicker: null,
       reload: false,
       icon: null,
       isModalActive: false,
       students: null,
+      content: ``,
       challenge: {
         icon: null,
         color: null,

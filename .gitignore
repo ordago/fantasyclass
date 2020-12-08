@@ -13,3 +13,5 @@ npm-debug.log
 yarn-error.log
 /.vs
 ..env.swp
+/public/css
+/public/js

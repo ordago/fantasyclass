@@ -211,6 +211,7 @@ class ClassroomsController extends Controller
             $new->id => ['role' => 2],
         ]);
     }
+
     public function store()
     {
         $data = request()->all();

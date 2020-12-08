@@ -78,7 +78,11 @@
       </article>
     </div>
     <div class="column pr-0">
-      <!-- <b-loading :is-full-page="true" :active.sync="isLoading" :can-cancel="false"></b-loading> -->
+      <b-loading
+        :is-full-page="true"
+        :active.sync="isLoading"
+        :can-cancel="false"
+      ></b-loading>
 
       <CreateChallengeGroup
         :code="code"
@@ -121,12 +125,12 @@ export default {
       this.$forceUpdate();
     },
     getChallenges(id) {
-      // this.isLoading = true;
+      this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/challenges/get", { id: id })
         .then((response) => {
-          // this.isLoading = false;
           this.challenges = response.data;
+          this.isLoading = false;
           // this.$forceUpdate();
         });
     },

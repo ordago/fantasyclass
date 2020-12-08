@@ -12,6 +12,7 @@ return [
 
     'add_success' => 'El elemento se ha añadido correctamente',
     'update_success' => 'El elemento se ha actualizado correctamente',
+    'copy_success' => 'Enlace copiado al portapapeles',
     
     'error' => 'Alguna cosa ha ido mal :(',
 

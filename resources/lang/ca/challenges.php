@@ -56,4 +56,5 @@ return [
     
     'load_comments' => 'Carrega més comentaris...',
     'hidden_until' => 'Ocult fins',
+    'permalink' => 'Copiar enllaç al repte (solament accessible per estudiants)',
 ];

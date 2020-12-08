@@ -24,6 +24,9 @@ return [
     'allow_upload' => 'Permite a los y las estudiantes subir imágenes propias',
     'show_chat' => 'Habilita el chat de la clase',
     'allow_change_class' => 'Permite cambiar la subclase',
+    'allow_send_money' => 'Permite al alumnado enviarse dinero',
+    'transfer_fee' => 'Comisión cuando envían dinero entre alumnos',
+    'disable_your_adventure' => 'Deshabilita la sección de "tu aventura"',
     
     'cards' => 'Máximo de cartas por estudiante',
     'rare' => 'Rara',
@@ -40,4 +43,6 @@ return [
     'classroom_unlink' => "Desenlaza Google Classroom",
     'classroom_unlink_info' => "Elimina antes los permisos des de tu <a target='_blank' href='https://myaccount.google.com/permissions'>cuenta de Google</a>",
     
+    'reset_assistant' => "Asistente de reinicio",
+    'reset_assistant_help' => "Aquí podrás elegir reiniciar las principales propiedades de los estudiantes",
 ];

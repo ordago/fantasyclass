@@ -119,6 +119,9 @@
                                     <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
+                                    <a class="dropdown-item" href="https://t.me/fantasyclass">
+                                        <i class="fal fa-paper-plane"></i> Telegram
+                                    </a>
                                     <a class="dropdown-item is-hidden-mobile" href="/mobile">
                                         <i class="fal fa-mobile"></i> {{ __('menu.mobile') }}
                                     </a>
@@ -161,7 +164,7 @@
         </main>
     </div>
     @if(isset($showChat) && $showChat == true)
-    @stack('scriptchat');
+    @stack('scriptchat')
     @endif
 
     @auth
@@ -188,6 +191,7 @@
     </script>
     <script src="{{ asset('js/config.js') }}" defer></script>
     <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    @stack('scripttalk')
     @endauth
     @guest
     <script type="text/javascript">

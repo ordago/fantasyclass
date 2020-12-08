@@ -56,4 +56,5 @@ return [
 
     'load_comments' => 'Carga más comentarios...',
     'hidden_until' => 'Oculto hasta',
+    'permalink' => 'Copiar enlace al reto (solo accesible por estudiantes)',
 ];

@@ -58,7 +58,8 @@
             class="fas fa-sad-tear colored pr-2"
             v-if="!reactiveQuestion.correct"
           ></i>
-          {{ reactiveQuestion.answerKO.answer.text }}
+          <span v-if="reactiveQuestion.type == 1">{{ reactiveQuestion.answerKO.answer.text }}</span>
+          <span v-else-if="reactiveQuestion.type == 2">{{ reactiveQuestion.answerKO }}</span>
         </div>
         <div
           class="has-background-success-light card-shadow-s p-4 m-3 rounded"
@@ -67,18 +68,25 @@
             class="fas fa-smile-beam colored pr-2"
             v-if="reactiveQuestion.correct"
           ></i>
-          {{ reactiveQuestion.answerOK.answer.text }}
+          <span v-if="reactiveQuestion.type == 1">{{ reactiveQuestion.answerOK.answer.text }}</span>
+          <span v-else-if="reactiveQuestion.type == 2">{{ reactiveQuestion.answerOK }}</span>
         </div>
       </div>
-      <div v-if="!reactiveQuestion.answered">
+      <div v-if="!reactiveQuestion.answered && reactiveQuestion.type == 1">
         <div
           class="card-shadow-s p-4 m-3 rounded answer cursor-pointer"
           v-for="answer in reactiveQuestion.answers"
           @click="answerQuestion(answer.id)"
           :key="answer.id"
         >
-          {{ answer.answer }}
+          {{ answer.text }}
         </div>
+      </div>
+      <div v-if="reactiveQuestion.type == 2 && !reactiveQuestion.answered">
+        <div class="control">
+          <input class="input" v-model="answer" type="text" :placeholder="trans.get('questions.student_answer')">
+        </div>
+        <button class="button is-primary mt-2" @click="answerTextQuestion" v-if="answer != ''">{{ trans.get('questions.send_answer') }}</button>
       </div>
     </div>
   </div>
@@ -93,6 +101,7 @@ export default {
   },
   data: function () {
     return {
+      answer: "",
       reactiveQuestion: null,
     };
   },
@@ -121,10 +130,14 @@ export default {
         },
       });
     },
-    answerQuestion(answer) {
+    answerTextQuestion() {
+      this.answerQuestion(this.answer, 2);
+    },
+    answerQuestion(answer, type = 1) {
       axios
         .post("/classroom/question/answer", {
           answer: answer,
+          type: type,
           question: this.reactiveQuestion,
         })
         .then((response) => {

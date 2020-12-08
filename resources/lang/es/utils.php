@@ -23,4 +23,11 @@ return [
     'mobile_text_apple' => 'Lamentablemente no estamos en la Apple App Store <i class="fas fa-sad-cry colored"></i> pero instalar FantasyClass
                             es muy senzillo: simplement haz clic en el menú y selecciona "Añadir a la pantalla de inicio". 
                             Aquí tienes un vídeo del proceso.',
+
+    'chat_reminder' => 'Estamos teniendo problemas con el chat, rogamos paciencia.',
+    'chat_warning' => 'No compartáis información personal en el chat.',
+    'chat_report' => 'Denuncia usuario',
+    'chat_report_confirm' => '¿Estás seguro/a de denunciar este usuario?',
+    'report' => 'Denuncia',
+
 ];

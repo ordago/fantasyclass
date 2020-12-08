@@ -24,6 +24,9 @@ return [
     'allow_upload' => 'Allow students to upload custom images',
     'show_chat' => 'Enable classroom chat',
     'allow_change_class' => 'Allow students to change subclass',
+    'allow_send_money' => 'Allow students to send money',
+    'transfer_fee' => 'Comission when students send money',
+    'disable_your_adventure' => 'Disable "your adventure" section',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',
@@ -40,5 +43,7 @@ return [
     'classroom_unlink' => "Unlink Google Classroom",
     'classroom_unlink_info' => "Revoke permissions before in your <a target='_blank' href='https://myaccount.google.com/permissions'>Google account</a>",
 
+    'reset_assistant' => "Rsset wizard",
+    'reset_assistant_help' => "There you'll be able to select to reset student properties",
     
 ];

@@ -56,4 +56,15 @@ return [
     'student_area' => 'Student area',
     'student_view' => 'View as the student',
     'send_message' => 'Send a message',
+
+    'send_money' => 'Send money',
+    'transfer_fee' => 'This operation has a fee of ',
+    'thief' => 'Be careful! There are thiefs that could steal a part of your money...',
+    'money_sent' => 'Money sent',
+    'money_received' => 'Money received',
+    'thief_info' => 'One thief has stolen',
+    'comission' => 'Comission',
+    'error' => 'An error was ocurred, do you try to do something illegal or without sense? :(',
+
+
 ];

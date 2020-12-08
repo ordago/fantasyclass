@@ -1,11 +1,42 @@
 # Changelog
 
-## v1.19 Beta (14/11/2020)
+## v1.23 Beta (XX/12/2020)
+- Student blog: your adventure.
+
+### Changed
+- Editor modifications.
+
+## v1.22.1 Beta (07/12/2020)
+### Added
+- Money transfer.
+
+### Changed
+- Send notification when money receive.
+- Fixed errors.
+- Changed "lives" to shields in battles.
+- Fix showing "plus" on gauntlets.
+
+## v1.21 Beta (05/12/2020)
+### Added
+- Report user in chat.
+- Question bank.
+- Individual battles.
+
+### Changed
+- Improvements in mobile view.
+- Music preload disabled.
+
+## v1.20 Beta (02/12/2020)
+### Added
+- Reset assistant.
+
+## v1.19.4 Beta (14/11/2020)
 ### Added
 - Android app.
 - Chat.
 - Reports: passwords and evaluation.
 - More notifications.
+- Added permalink in challenges.
 
 ### Changed
 - Show 3 comments by default.
@@ -14,6 +45,9 @@
 - Changed toasts.
 - JavaScript optimization (more code splits).
 - Fixed share card.
+- Fixed students view mode.
+- Fixed price in animals pack (equipment 3).
+- Fixed "invisible" icon in challenges.
 
 ## v1.18 Beta (08/11/2020)
 ### Added

@@ -43,7 +43,16 @@
             ><i class="far fa-cog mr-2"></i>
             {{ trans.get("menu.config") }} (wizard)</a
           >
-          <!-- <button class="button is-primary">Reset</button> -->
+          <button
+            class="button is-link"
+            @click="resetAssistant = true"
+            v-tippy
+            v-if="isAdmin"
+            :content="trans.get('settings.reset_assistant_help')"
+          >
+            <i class="fas fa-eraser mr-2"></i>
+            {{ trans.get("settings.reset_assistant") }}
+          </button>
           <button
             class="button is-danger"
             @click="confirmDelete"
@@ -108,6 +117,16 @@
             class="ml-4"
             true-value="1"
             false-value="0"
+            @input="toggleProp('disable_your_adventure')"
+            v-model="settings.disable_your_adventure"
+            >{{ trans.get("settings.disable_your_adventure") }}</b-switch
+          >
+        </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
             @input="toggleProp('allow_upload')"
             v-model="settings.allow_upload"
             >{{ trans.get("settings.allow_upload") }}</b-switch
@@ -121,6 +140,16 @@
             @input="toggleProp('show_chat')"
             v-model="settings.show_chat"
             >{{ trans.get("settings.show_chat") }}</b-switch
+          >
+        </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('allow_send_money')"
+            v-model="settings.allow_send_money"
+            >{{ trans.get("settings.allow_send_money") }}</b-switch
           >
         </div>
       </div>
@@ -219,6 +248,19 @@
               <input
                 class="input is-narrow"
                 type="number"
+                v-model="settings.transfer_fee"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              <i class="fas fa-coins colored mr-2"></i>
+              {{ trans.get("settings.transfer_fee") }}
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
                 v-model="settings.card_use"
               />
             </div>
@@ -312,6 +354,39 @@
         </b-switch>
       </div>-->
     </div>
+    <b-modal
+      :active.sync="resetAssistant"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("settings.reset_assistant") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <button @click="reset('hp', 'heart')" class="button is-danger w-100">
+            Reset <i class="fas fa-heart colored"></i>
+          </button>
+          <button @click="reset('xp', 'fist-raised')" class="button is-dark w-100 mt-2">
+            Reset <i class="fas fa-fist-raised colored"></i>
+          </button>
+          <button @click="reset('gold', 'coins')" class="button is-warning w-100 mt-2">
+            Reset <i class="fas fa-coins colored"></i>
+          </button>
+          <!-- <button class="button is-link w-100 mt-2">Reset {{ trans.get('menu.shop') }}</button> -->
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="resetAssistant = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -334,6 +409,7 @@ export default {
   },
   data: function () {
     return {
+      resetAssistant: false,
       state: "0",
       value: [],
       process: (dotsPos) => [
@@ -362,6 +438,31 @@ export default {
     };
   },
   methods: {
+    reset(type, icon) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete_class") + " (<i class='fas fa-" + icon + " colored'></i>)",
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/settings/reset", {
+              type: type,
+            })
+            .then((response) => {
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+            });
+        },
+      });
+    },
     unlink() {
       axios.get("/google/classroom/unlink").then((response) => {
         this.$toast(this.trans.get("success_error.update_success"), {
@@ -477,6 +578,12 @@ export default {
         prop: "card_use",
         action: "update",
         value: this.settings.card_use,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "transfer_fee",
+        action: "update",
+        value: this.settings.transfer_fee,
       });
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",

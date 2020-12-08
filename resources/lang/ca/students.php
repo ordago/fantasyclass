@@ -58,4 +58,13 @@ return [
     'student_area' => 'Àrea de l\'estudiant',
     'student_view' => 'Veure com l\'estudiant',
     'send_message' => 'Envia un missatge',
+
+    'send_money' => 'Envia diners',
+    'transfer_fee' => 'Aquesta operació té una comissió del ',
+    'thief' => 'Vés en compte! Hi ha lladres que poden robar-te una mica dels diners ...',
+    'money_sent' => 'Diners enviats',
+    'money_received' => 'Diners rebuts',
+    'thief_info' => 'Uns lladres han robat',
+    'comission' => 'Comissió',
+    'error' => 'Intentes fer alguna cosa il·legal o sense sentit? :(',
 ];

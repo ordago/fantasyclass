@@ -23,4 +23,10 @@ return [
     'mobile_text_apple' => 'Unfortunately we are not in the Apple App Store <i class="fas fa-sad-cry colored"></i> but install FantasyClass
                                 is very simple: just click on the menu and select "Add to Home Screen". 
                                 Here is a video of the process',
+
+    'chat_reminder' => 'We\'re having some issues with the chat. Please be patient.',
+    'chat_warning' => 'Don\'t share personal or sensible information in the chat.',
+    'chat_report' => 'Report user',
+    'chat_report_confirm' => 'Are you sure to report this user?',
+    'report' => 'Report',
 ];

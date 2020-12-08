@@ -18,6 +18,15 @@
         >
           <i class="fad fa-users outer_glow" style="font-size: 2em"></i>
         </a>
+        <a
+          class="link outer_glow has-text-dark pl-0 ml-0 pr-2 has-text-danger"
+          v-tippy
+          :content="trans.get('menu.battles')"
+           v-if="students.length"
+          :href="'/classroom/' + classroom.code + '/battles'"
+        >
+          <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
+        </a>
         <div class="dropdown is-hoverable" style="display: inline-block">
           <span class="dropdown-trigger link outer_glow m-0 p-0">
             <i class="fad fa-random outer_glow" style="font-size: 2em"></i>
@@ -109,7 +118,7 @@
           <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
-              href="/utils/exportConfidentialDataStudent/"
+              :href="'/classroom/' + classroom.code + '/utils/exportConfidentialDataStudent'"
               target="_blank"
               v-if="students.length"
             >
@@ -642,8 +651,11 @@ import confetti from "canvas-confetti";
 export default {
   props: ["students", "classroom", "groups"],
   created() {
-    if (this.$cookies.get("view")) {
-      this.view = this.$cookies.get("view");
+    let view = this.$cookies.get("view");
+    if (view) {
+      if(view == 1 && (!this.groups.length))
+        this.view = 0;
+      else this.view = this.$cookies.get("view");
     }
   },
   mounted() {

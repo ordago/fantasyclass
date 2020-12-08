@@ -23,7 +23,7 @@
         <span class="icon is-small">
             <i class="fad fa-tasks-alt" aria-hidden="true"></i>
         </span>
-        <span>Rubric management</span>
+        <span>{{ __('evaluation.rubric_management') }}</span>
     </a>
 </li>
 <li class="is-active">

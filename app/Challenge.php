@@ -51,7 +51,14 @@ class Challenge extends Model
         $questions = collect();
         if ($this->questions)
             foreach ($this->questions as $question) {
-                $questions->add($question->getStudentInfo());
+                $question = $question->getStudentInfo();
+                $answers = [];
+                if(isset($question['answers'])) {
+                    foreach ($question['answers'] as $answer) {
+                        array_push($answers, ['id' => Crypt::encryptString($answer['id']),'text' => $answer['answer']]);
+                    }
+                    $questions->add(['id' => $question['id'], 'type' => $question['type'],'question' => $question['question'], 'answers' => $answers]);
+                } else $questions->add($question);
             }
         return $questions;
     }

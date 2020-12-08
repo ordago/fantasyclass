@@ -1,6 +1,8 @@
 <template>
+<div>
   <chat-window
     height="calc(100vh - 56px)"
+    :loadFirstRoom="false"
     :styles="styles"
     :currentUserId="currentUserId"
     :rooms="rooms"
@@ -20,6 +22,7 @@
     @typingMessage="typingMessage"
   >
   </chat-window>
+</div>
 </template>
 
 <script>
@@ -54,6 +57,7 @@ export default {
       start: null,
       end: null,
       roomsListeners: [],
+      typingMessageCache: '',
       listeners: [],
       disableForm: false,
       addNewRoom: null,
@@ -65,6 +69,7 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
+        { name: "report", title: this.trans.get('utils.chat_report') },
         // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
@@ -73,6 +78,8 @@ export default {
     };
   },
   mounted() {
+    this.$toast(this.trans.get('utils.chat_warning'), {type: 'warning', timeout: 3000})
+    // this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
     axios.get("/inbox/token").then((response) => {
       firebase
         .auth()
@@ -327,13 +334,10 @@ export default {
       const { id } = await this.messagesRef(roomId).add(message);
       if (file) this.uploadFile({ file, messageId: id, roomId });
 
-      console.log(roomId);
-
       const query = roomsRef.doc(roomId);
-      const room = await query.get();
-      console.log(room);
 
-      let users = await roomsRef.doc("" + roomId);
+      // const room = await query.get();
+      // let users = await roomsRef.doc("" + roomId);
 
       users
         .get()
@@ -385,6 +389,8 @@ export default {
       switch (action.name) {
         case "inviteUser":
           return this.inviteUser(roomId);
+        case "report":
+          return this.report(this.messages);
         case "removeUser":
           return this.removeUser(roomId);
         case "deleteRoom":
@@ -405,6 +411,14 @@ export default {
         });
     },
     typingMessage({ message, roomId }) {
+      if (message?.length > 1) {
+				return (this.typingMessageCache = message)
+			}
+			if (message?.length === 1 && this.typingMessageCache) {
+				return (this.typingMessageCache = message)
+			}
+      this.typingMessageCache = message
+      
       const dbAction = message
         ? firebase.firestore.FieldValue.arrayUnion(this.currentUserId)
         : firebase.firestore.FieldValue.arrayRemove(this.currentUserId);
@@ -505,6 +519,27 @@ export default {
       await usersRef.doc("" + uid).set({ _id: uid, username: username });
       await roomsRef.add({ users: ["" + uid, this.currentUserId] });
       this.fetchRooms();
+    },
+    report(messages) {
+
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("utils.report"),
+        message: this.trans.get("utils.chat_report_confirm"),
+        confirmText: this.trans.get("utils.report"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+            axios.post('/chat/send2admin', { messages: this.messages, room: this.selectedRoom}).then(response => {
+              Utils.toast(
+                this,
+                "User has been reported",
+                TYPE.SUCCESS
+              );
+            })
+        }
+      });
     },
     inviteUser(roomId) {
       this.$buefy.dialog.prompt({

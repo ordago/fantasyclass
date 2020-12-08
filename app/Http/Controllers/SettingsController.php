@@ -27,8 +27,11 @@ class SettingsController extends Controller
         $settings['fog'] = settings()->get('fog', false);
         $settings['num_cards'] = settings()->get('num_cards', 5);
         $settings['allow_upload'] = settings()->get('allow_upload', false);
+        $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['show_chat'] = settings()->get('show_chat', false);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
+        $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
+        $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
@@ -51,6 +54,27 @@ class SettingsController extends Controller
             return $cus->delete();
         }
 
+    }
+
+    public function reset($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+        switch(request()->type) {
+            case 'hp':
+                $value = 100;        
+            break;
+            case 'gold':
+            case 'xp':
+                $value = 0;
+            break;
+            default:
+                abort(403);
+            break;
+        }
+        foreach ($class->students as $student) {
+            $student->update([request()->type => $value]);
+        }
     }
 
     public function invite($code)

@@ -8,7 +8,6 @@
     </div>
     <div
       class="mr-1 cursor-pointer button"
-      style="display: initial !important"
       @click="
         show = 1;
         open = true;
@@ -19,17 +18,15 @@
       <span class="tag is-danger tag-notif" v-html="countCards()"></span>
     </div>
     <div
-      class="button"
+      class="button cursor-pointer"
       @click="
         show = 0;
         open = true;
       "
       v-if="notifications && notifications.length"
     >
-      <span class="cursor-pointer">
-        <i class="fad fa-bell" style="font-size: 1.25em"></i>
-        <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
-      </span>
+      <i class="fad fa-bell" style="font-size: 1.25em"></i>
+      <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
     </div>
     <b-sidebar
       type="is-light"
@@ -69,6 +66,7 @@
                   'fa-comments-alt': notification.data.type == 'chat',
                   'fa-club': notification.data.type == 'mark_card',
                   'fa-heart': notification.data.type == 'new_behaviour',
+                  'fa-coins': notification.data.type == 'money_sent',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -101,8 +99,8 @@
                 v-tippy
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
-                >{{}}</strong
-              >: {{ trans.get(notification.data.content) }}
+                ></strong
+              >: <span v-html="trans.get(notification.data.content)"></span>
             </div>
           </div>
           <footer class="card-footer">

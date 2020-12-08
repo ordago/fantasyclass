@@ -214,11 +214,14 @@ class StudentController extends Controller
 
         $cards = $student->cards;
         $student->append('boost');
+        $student->load('blogs');
 
         $allcards = $class->cards->sortBy('type');
 
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $evaluation[0] = EvaluationController::individualReport($class, $student);
         $settings = EvaluationController::getEvalSettings($class->id);
+        $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
 
         return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }

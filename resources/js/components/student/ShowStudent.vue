@@ -23,11 +23,11 @@
               <i class="fas fa-heart colored is-absolute" style="left: 10px"></i>
             </div>
             <div
-              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
+              class="score p-2 centered-attribute m-1 my-4 has-all-centered"
               style="border: none"
             >
               <span
-                class="attribute has-background-white-ter py-3 rounded"
+                class="attribute has-background-white-ter py-2 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span
@@ -36,7 +36,7 @@
                 >{{ student.hp }}</span>
               </span>
               <span
-                class="attribute has-background-danger py-3 rounded-left"
+                class="attribute has-background-danger py-2 rounded-left"
                 v-bind:class="{ rounded: student.hp==100 }"
                 :style="'width: ' + student.hp + '%'"
               >
@@ -55,11 +55,11 @@
               <i class="fas fa-fist-raised colored is-absolute" style="left: 13px"></i>
             </div>
             <div
-              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
+              class="score p-2 centered-attribute m-1 my-4 has-all-centered"
               style="border: none"
             >
               <span
-                class="attribute has-background-dark py-3 rounded"
+                class="attribute has-background-dark py-2 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span class="has-text-light">{{ student.xp }}</span>
@@ -74,10 +74,10 @@
               <i class="fas fa-coins colored is-absolute" style="left: 10px"></i>
             </div>
             <div
-              class="score p-3 centered-attribute m-1 my-4 has-all-centered"
+              class="score p-2 centered-attribute m-1 my-4 has-all-centered"
             >
               <span
-                class="attribute has-background-warning py-3 rounded"
+                class="attribute has-background-warning py-2 rounded"
                 style="width:100%;border: 1px solid black"
               >
                 <span class="has-text-dark">{{ student.gold }}</span>

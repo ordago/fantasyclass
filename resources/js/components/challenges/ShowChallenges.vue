@@ -10,7 +10,7 @@
             style="font-size: 0.5em"
             class="button is-danger"
             @click="deleteChallengeGroup(challengegroup.id)"
-            v-if="challenges.length == 0"
+            v-if="challenges.length == 0 && !$parent.isLoading"
           >
             <i class="fas fa-trash"></i>
           </button>

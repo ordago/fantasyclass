@@ -6,6 +6,7 @@ use App\Behaviour;
 use App\Classroom;
 use App\Student;
 use App\Exports\Export;
+use App\Mail\ReportUser;
 use App\Notifications\NewMessage;
 use App\User;
 use Carbon\Carbon;
@@ -14,6 +15,7 @@ use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Firebase\JWT\JWT;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 
 class UtilsController extends Controller
@@ -67,6 +69,9 @@ class UtilsController extends Controller
 
     public function showChat()
     {
+        if(Carbon::parse(auth()->user()->banned)->gt(Carbon::now('Europe/Madrid'))) {
+            abort(403, "You're banned until ". Carbon::parse(auth()->user()->banned)->toDateTimeString());
+        }
         auth()->user()->removePending();
         return view('utils.chat');
     }
@@ -145,15 +150,24 @@ class UtilsController extends Controller
         return view('utils.music', compact('music'));
     }
 
-    public function exportConfidentialDataStudent()
+    public function send2admin() {
+        Mail::to(env('EMAIL'))->send(new ReportUser(request()->messages, request()->room));
+    }
+
+    public function exportConfidentialDataStudent($code)
     {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
         $headings = [
-            Lang::get("students.name"),
-            Lang::get("students.password")
+            __("students.name"),
+            __("auth.username"),
+            __("students.password")
         ];
 
-        $students = Student::all()->map(function($item){
-            return array('name' => $item->name, 'password_plain' => $item->password_plain);
+        $students = $class->students->whereNotNull('password_plain')->map(function($item){
+            return array('name' => $item->name, 'username' => $item->username, 'password_plain' => $item->password_plain);
         });
 
         return Excel::download(new Export($headings, $students), 'Students.xlsx');

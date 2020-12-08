@@ -122,6 +122,10 @@ export default {
     },
     onTimesUp() {
       clearInterval(this.timerInterval);
+      this.resetTimer();
+      this.pause = !this.pause;
+      var audio = new Audio("/sound/beep.mp3");
+      audio.play();
     },
     pauseTimer() {
       this.pause=!this.pause
