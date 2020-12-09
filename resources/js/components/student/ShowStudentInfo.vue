@@ -76,7 +76,7 @@
             class="button is-warning m-1"
             v-if="student.gold && settings.allow_send_money == 1"
           >
-            Send <i class="fas fa-coins colored"></i>
+            {{ trans.get('general.send') }} <i class="fas fa-coins colored"></i>
           </button>
         </div>
       </div>

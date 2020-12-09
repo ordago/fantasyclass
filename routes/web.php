@@ -64,7 +64,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/groups/create', 'GroupsController@store');
         Route::patch('/{code}/groups/{action}', 'GroupsController@update');
         Route::delete('/groups/{id}', 'GroupsController@destroy');
-
+        Route::post('/{code}/group/reward', 'GroupsController@reward');
+        
         // Students
         Route::get('/{code}/students/add', 'StudentController@create');
         Route::get('/{code}/students/add/{flag}', 'StudentController@create');

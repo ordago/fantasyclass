@@ -39,9 +39,10 @@ return [
     'correct_answer' => 'Resposta correcta',
     'incorrect_answer' => 'Resposta incorrecta',
 
-    'mark' => 'Marcar compleció',
+    'mark' => 'Marcar superació',
+    'mark_tooltip' => 'Assigna les recompenses a estudiants que han superat el repte',
     'mark_title' => 'Marcar com a superat',
-    'mark_confirm' => 'Confirme superació',
+    'mark_confirm' => 'Confirme la superació',
     'mark_text' => 'Estàs segur/a que has superat la tasca? La confiança és necessària.',
 
     'comment' => 'Comenta',

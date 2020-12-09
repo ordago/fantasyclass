@@ -39,7 +39,8 @@ return [
     'correct_answer' => 'Correct answer',
     'incorrect_answer' => 'Incorrect answer',
 
-    'mark' => 'Mark completion',
+    'mark' => 'Mark overcoming',
+    'mark_tooltip' => 'Assign rewards to students that have passed the challenge',
     'mark_title' => 'Mark as done',
     'mark_confirm' => 'Confirm done',
     'mark_text' => 'Are you sure you have done all the the work? Trust is needed there.',

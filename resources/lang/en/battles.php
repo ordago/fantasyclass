@@ -27,6 +27,11 @@ return [
     'skip_question' => 'Skip question',
     'well_done' => 'Well done!',
     'go_back' => 'Go back',
-    'reward' => 'Winner group reward',
+    'reward' => 'Winner group members reward',
+    'select_group' => 'Random group',
+    'finish' => 'End battle',
+    'give_reward' => 'Give reward to',
+    'show_timer' => 'Start countdown',
+    'timer_default' => 'Default timer seconds (optional)',
     '' => '',
 ];

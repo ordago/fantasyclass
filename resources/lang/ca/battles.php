@@ -27,6 +27,11 @@ return [
     'skip_question' => 'Salta pregunta',
     'well_done' => 'Ben fet!',
     'go_back' => 'Tornar',
-    'reward' => 'Recompensa pel grup guanyador',
+    'reward' => 'Recompensa pels membres del grup guanyador',
+    'select_group' => 'Grup aleatori',
+    'finish' => 'Acaba batalla',
+    'give_reward' => 'Entrega premi a',
+    'show_timer' => 'Comença cronòmetre',
+    'timer_default' => 'Temps per defecte del cronòmetre (opcional)',
     '' => '',
 ];

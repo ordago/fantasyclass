@@ -39,7 +39,7 @@
             :placeholder="trans.get('questions.student_answer')"
           />
         </div>
-        <button class="button is-primary mt-2" @click="answerQuestion('', 2)">
+        <button class="button is-primary my-2" @click="answerQuestion('', 2)">
           {{ trans.get("questions.send_answer") }}
         </button>
       </div>
@@ -71,13 +71,15 @@
         </div>
       </div>
     </div>
-    <button
-      class="button"
-      v-if="$parent.$parent.answered"
-      @click="nextQuestion"
-    >
-      {{ trans.get("battles.next") }}
-    </button>
+    <div class="buttons">
+      <button
+        class="button"
+        v-if="$parent.$parent.answered"
+        @click="nextQuestion"
+      >
+        {{ trans.get("battles.next") }}
+      </button>
+    </div>
     <button
       class="button"
       v-if="!$parent.$parent.answered"

@@ -20,9 +20,35 @@ class GroupsController extends Controller
         return view('groups.index', compact('class'));
     }
 
-    public static function getRandomGroup($class) {
+    public static function getRandomGroup($class)
+    {
 
         return $class->grouping->first()->groups->random(1)->first();
+    }
+
+    public function reward($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstorFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'group' => ['numeric', 'required'],
+            'xp' => ['numeric', 'required'],
+            'gold' => ['numeric', 'required'],
+        ]);
+
+        $group = Group::findOrFail($data['group']);
+        if ($group->grouping->classroom_id != $class->id) {
+            abort(403);
+        }
+
+        foreach ($group->students as $student) {
+            if ($data['xp'])
+                $student->setProperty('xp', $data['xp']);
+            if ($data['gold'])
+                $student->setProperty('gold', $data['gold']);
+        }
 
     }
 
@@ -56,18 +82,19 @@ class GroupsController extends Controller
                 $media = $group->addMedia(request()->file('logo'))
                     ->toMediaCollection('logo');
                 $group->update(['logo' => $media->getUrl()]);
-            } 
+            }
             $group->update(['name' => $data['name']]);
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $group = Group::find($id);
         $this->authorize('update', Classroom::where('id', $group->grouping->classroom_id)->firstOrFail());
         try {
             $group->delete();
         } catch (\Throwable $th) {
-            return [ 'error' => $th];
+            return ['error' => $th];
         }
         return 1;
     }

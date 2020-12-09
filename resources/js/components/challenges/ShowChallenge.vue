@@ -347,7 +347,9 @@
             </button>
             <button
               v-if="challengeReactive.is_conquer && admin"
-              class="button is-success is-outlined"
+              class="button is-success"
+              v-tippy
+              :content="trans.get('challenges.mark_tooltip')"
               @click="$parent.showModal(challenge)"
             >
               <span class="icon is-small">

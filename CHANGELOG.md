@@ -1,10 +1,14 @@
 # Changelog
 
-## v1.23 Beta (XX/12/2020)
+## v1.23 Beta (09/12/2020)
 - Student blog: your adventure.
+- Group vs group battles.
 
 ### Changed
+- Individual battles improvement.
 - Editor modifications.
+- Fixed "perscadores" tail position.
+- Fixed challenge overcoming info.
 
 ## v1.22.1 Beta (07/12/2020)
 ### Added

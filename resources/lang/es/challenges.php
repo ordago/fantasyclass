@@ -39,8 +39,9 @@ return [
     'correct_answer' => 'Respuesta correcta',
     'incorrect_answer' => 'Respuesta incorrecta',
 
-    'mark' => 'Marcar compleción',
-    'mark_title' => 'Marcar como superado',
+    'mark' => 'Marcar superación',
+    'mark_title' => 'Marcar superación',
+    'mark_tooltip' => 'Asigna las recompensas a estudiantes que han superado el reto',
     'mark_confirm' => 'Confirmo la superación',
     'mark_text' => '¿Estás seguro/a que has superado la tarea? La confianza es necesaria.',
 
