@@ -3,6 +3,16 @@
     overflow: hidden;
 }
 
+/* Editor */
+[data-display=left] {
+    float: left;
+    margin-right: 10px;
+}
+[data-display=right] {
+    float: right;
+    margin-left: 10px;
+}
+
 /* Google captcha */
 
 .text-xs-center {
