@@ -82,7 +82,7 @@
       </div>
     </div>
     <div class="column pr-0">
-      <b-tabs v-model="activeTab" :key="update">
+      <b-tabs :destroy-on-hide="true" multiline v-model="activeTab" :key="update">
         <b-tab-item
           :label="trans.get('students.settings')"
           icon="cog"
