@@ -1199,6 +1199,9 @@ export default {
         case 'battle':
           return "<i class='fas fa-swords colored' style='color: #E6E6FA'></i>";
         break;
+        case 'wheel':
+          return "<i class='fas fa-spinner colored' style='color: #E6E6FA'></i>";
+        break;
       }
     },
     sendMoney() {

@@ -80,5 +80,6 @@ return [
     'log_card' => 'Carta',
     'log_badge' => 'Insígnia',
     'log_battle' => 'Batalla',
+    'log_wheel' => 'Ruleta de la fortuna',
 
 ];

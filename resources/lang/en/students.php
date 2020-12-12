@@ -78,6 +78,7 @@ return [
     'log_card' => 'Card',
     'log_badge' => 'Badge',
     'log_battle' => 'Battle',
+    'log_wheel' => 'Fortune wheel',
 
 
 ];
