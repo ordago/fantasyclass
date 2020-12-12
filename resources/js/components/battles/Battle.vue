@@ -49,6 +49,7 @@
           </b-radio-button>
           <b-radio-button
             v-model="type"
+            disabled
             expanded
             :native-value="3"
             type="is-info"

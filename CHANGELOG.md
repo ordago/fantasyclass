@@ -1,10 +1,10 @@
 # Changelog
-## v1.23 Beta (09/12/2020)
+## v1.23 Beta (12/12/2020)
 ### Added
 - More info in log.
 
 ### Changed
-- Wheel fortune updated with vertical text.
+- Wheel fortune updated with vertical text and 30 prizes.
 - Fixed badge icon show.
 - Better tabs in student info.
 
