@@ -1,5 +1,5 @@
 # Changelog
-## v1.23 Beta (12/12/2020)
+## v1.24 Beta (12/12/2020)
 ### Added
 - More info in log.
 
