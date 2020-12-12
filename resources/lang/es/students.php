@@ -67,5 +67,18 @@ return [
     'thief_info' => 'Unos ladrones han robado',
     'comission' => 'Comisión',
     'error' => '¿Intentas hacer alguna cosa ilegal o sin sentido? :(',
+    'details' => 'Detalles',
+
+    'log_behaviour' => 'Comportamiento',
+    'log_teacher' => 'Modificación manual',
+    'log_shop' => 'Tienda',
+    'log_item' => 'Objeto usado',
+    'log_event' => 'Evento',
+    'log_send' => 'Dinero enviado',
+    'log_received' => 'Dinero recibido',
+    'log_challenge' => 'Desafío',
+    'log_card' => 'Carta',
+    'log_badge' => 'Insignia',
+    'log_battle' => 'Batalla',
 
 ];

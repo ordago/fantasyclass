@@ -39,10 +39,10 @@
             v-model="type"
             :native-value="2"
             expanded
-            disabled
+            type="is-info"
             v-tippy
             :content="trans.get('battles.not_available')"
-            type="is-info"
+            disabled
           >
             <i class="fas fa-user mr-1"></i> vs
             <i class="fas fa-dragon ml-1"></i>
@@ -51,10 +51,7 @@
             v-model="type"
             expanded
             :native-value="3"
-            v-tippy
-            :content="trans.get('battles.not_available')"
             type="is-info"
-            disabled
           >
             <i class="fad fa-users-class mr-1"></i> vs
             <i class="fas fa-dragon ml-1"></i>
@@ -151,7 +148,10 @@
         <h3 class="m-2" v-if="type == 1">
           {{ trans.get("battles.reward") }}
         </h3>
-        <div class="columns m-2" v-if="type == 1">
+        <h3 class="m-2" v-if="type == 3">
+          {{ trans.get("battles.reward_class") }}
+        </h3>
+        <div class="columns m-2" v-if="type == 1 || type == 3">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -335,6 +335,21 @@
 
       <b-step-item
         step="3"
+        :visible="type == 3" 
+        :label="trans.get('battles.monster')"
+        :clickable="true"
+        @click="loadMonsters"
+      >
+       
+        <button class="button is-info">{{ trans.get('battles.createMonster') }}</button>
+
+
+
+
+      </b-step-item>
+
+      <b-step-item
+        :step="type == 3 ? '4' : '3'"
         :label="trans.get('battles.questions')"
         :clickable="true"
       >
@@ -379,7 +394,7 @@
       </b-step-item>
 
       <b-step-item
-        step="4"
+        :step="type == 3 ? '5' : '4'"
         :label="trans.get('battles.start')"
         :clickable="true"
         disabled
@@ -643,6 +658,126 @@
         </footer>
       </div>
     </b-modal>
+
+       <!-- <b-modal
+      :active.sync="isModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="addPet">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              <i class="fas fa-dog mr-2"></i
+              >{{ trans.get("pets.new_pet") }}
+            </p>
+          </header>
+          <section class="modal-card-body">
+            <b-field>
+              <button
+                ref="selectbutton"
+                @click.prevent="selectImage"
+                style="z-index: 5"
+                class="button is-link mr-2"
+              >
+                <i class="fas fa-image mr-2"></i>
+                {{ trans.get("pets.image") + " *" }}
+              </button>
+              <img
+                :src="'/img/pets/' + pet.image"
+                v-if="pet.image"
+                class="pet-selector"
+              />
+            </b-field>
+            <b-field :label="trans.get('pets.name')" class="mt-4">
+              <b-input
+                v-model="pet.name"
+                maxlength="40"
+                placeholder="Careful cat"
+              ></b-input>
+            </b-field>
+            <div class="columns">
+              <div class="column">
+                <b-field>
+                  <template slot="label">
+                    {{ trans.get("pets.xx_boost") }}
+                    <i class="fas fa-heart colored"></i> %
+                  </template>
+                  <b-input
+                    v-model="pet.hp_boost"
+                    required
+                    type="number"
+                    step="0.1"
+                  ></b-input>
+                </b-field>
+              </div>
+              <div class="column">
+                <b-field>
+                  <template slot="label">
+                    {{ trans.get("pets.xx_boost") }}
+                    <i class="fas fa-fist-raised colored"></i> %
+                  </template>
+                  <b-input
+                    v-model="pet.xp_boost"
+                    required
+                    type="number"
+                    step="0.1"
+                  ></b-input>
+                </b-field>
+              </div>
+              <div class="column">
+                <b-field>
+                  <template slot="label">
+                    {{ trans.get("pets.xx_boost") }}
+                    <i class="fas fa-coins colored"></i> %
+                  </template>
+                  <b-input
+                    v-model="pet.gold_boost"
+                    required
+                    type="number"
+                    step="0.1"
+                  ></b-input>
+                </b-field>
+              </div>
+            </div>
+            <b-field>
+              <template slot="label">
+                {{ trans.get("pets.price") }}
+                <i class="fas fa-coins colored"></i>
+              </template>
+              <b-input
+                v-model="pet.price"
+                required
+                type="number"
+                step="0.1"
+              ></b-input>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button"
+              type="button"
+              @click="
+                isModalActive = false;
+                resetPet();
+              "
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary" v-if="!edit">
+              {{ trans.get("general.add") }}
+            </button>
+            <button @click.prevent="sendEdit" v-else class="button is-link">
+              {{ trans.get("general.edit") }}
+            </button>
+          </footer>
+        </div>
+      </form>
+    </b-modal> -->
+    
   </div>
 </template>
 
@@ -706,6 +841,9 @@ export default {
     };
   },
   methods: {
+    loadMonsters() {
+
+    },
     sendReward() {
       if (this.winner) {
         axios
@@ -882,7 +1020,7 @@ export default {
       this.showTimer = false;
     },
     updateProp: function (id, prop, value) {
-      let options = { id: id, prop: prop, value: value };
+      let options = { id: id, prop: prop, value: value, type: 'battle' };
       axios.post("/classroom/students/update", options);
     },
     start() {

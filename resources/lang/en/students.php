@@ -65,6 +65,19 @@ return [
     'thief_info' => 'One thief has stolen',
     'comission' => 'Comission',
     'error' => 'An error was ocurred, do you try to do something illegal or without sense? :(',
+    'details' => 'Details',
+
+    'log_behaviour' => 'Behaviour',
+    'log_teacher' => 'Manual modification',
+    'log_shop' => 'Shop',
+    'log_item' => 'Used item',
+    'log_event' => 'Event',
+    'log_send' => 'Money sent',
+    'log_received' => 'Money received',
+    'log_challenge' => 'Challenge',
+    'log_card' => 'Card',
+    'log_badge' => 'Badge',
+    'log_battle' => 'Battle',
 
 
 ];

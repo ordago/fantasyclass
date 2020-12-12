@@ -794,6 +794,9 @@
       font-size: 1.25em;
       margin: 2px;
       filter: drop-shadow(1px 1px 1px black);
+    //   -webkit-text-stroke: .75px #000;
+    //   stroke: black;
+    //   stroke-width: 1px;
       /* left */
       outline: 0;
   }
@@ -826,9 +829,6 @@
   .coloredGray .fa-heart,
   .rules .fa-heart {
       color: red;
-      -webkit-text-stroke: 1px #000;
-      stroke: black;
-      stroke-width: 10;
   }
 
   .colored .fa-fist-raised,
@@ -836,8 +836,6 @@
   .coloredGray .fa-fist-raised,
   .rules .fa-fist-raised {
       color: #ffe0bd;
-      stroke: black;
-      stroke-width: 10;
   }
 
   .colored .fa-coins,
@@ -845,8 +843,7 @@
   .coloredGray .fa-coins,
   .rules .fa-coins {
       color: #FFD700;
-      stroke: black;
-      stroke-width: 10;
+
   }
 
   .colored.fa-fort-awesome,

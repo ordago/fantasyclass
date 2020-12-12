@@ -312,9 +312,9 @@ class CardsController extends Controller
             }
         }
 
-        if ($card->gold) $student->setProperty('gold', $card->gold, true);
-        if ($card->xp) $student->setProperty('xp', $card->xp, true);
-        if ($card->hp) $student->setProperty('hp', $card->hp, true);
+        if ($card->gold) $student->setProperty('gold', $card->gold, true, 'card');
+        if ($card->xp) $student->setProperty('xp', $card->xp, true, 'card');
+        if ($card->hp) $student->setProperty('hp', $card->hp, true, 'card');
 
         if ($gold) {
             session()->put('pending_gold', ['student' => $student->id, "gold" => $gold]);
@@ -373,12 +373,12 @@ class CardsController extends Controller
                     ];
                 }
                 if ($card->gold) {
-                    $student->setProperty('gold', $card->gold, true);
+                    $student->setProperty('gold', $card->gold, true, 'card');
                 } else if (!$card->special) {
-                    $student->setProperty('gold', $cost * -1, true);
+                    $student->setProperty('gold', $cost * -1, true, 'card');
                 }
-                if ($card->xp) $student->setProperty('xp', $card->xp, true);
-                if ($card->hp) $student->setProperty('hp', $card->hp, true);
+                if ($card->xp) $student->setProperty('xp', $card->xp, true, 'card');
+                if ($card->hp) $student->setProperty('hp', $card->hp, true, 'card');
             } else {
                 $cost = settings()->get('card_delete', 50);
                 if ($student->gold < $cost) {
@@ -388,7 +388,7 @@ class CardsController extends Controller
                         "type" => "error",
                     ];
                 }
-                $student->setProperty('gold', $cost * -1, true);
+                $student->setProperty('gold', $cost * -1, true, 'card');
             }
             $cardLine->delete();
             return [

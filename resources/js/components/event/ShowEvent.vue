@@ -192,21 +192,24 @@ export default {
           axios.post("/classroom/students/update", {
             id: this.info.student.id,
             prop: "hp",
-            value: this.info.hp
+            value: this.info.hp,
+            type: 'event',
           });
           break;
         case 5:
           axios.post("/classroom/students/update", {
             id: this.selectedStudent,
             prop: "hp",
-            value: this.info.hp
+            value: this.info.hp,
+            type: 'event',
           });
           break;
         case 2:
           axios.post("/classroom/students/update", {
             code: this.code,
             prop: "hp",
-            value: this.info.hp
+            value: this.info.hp,
+            type: 'event',
           });
           break;
         case 8:
@@ -214,13 +217,15 @@ export default {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "gold",
-              value: this.info.gold
+              value: this.info.gold,
+              type: 'event',
             });
           } else {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "hp",
-              value: this.info.hp
+              value: this.info.hp,
+              type: 'event',
             });
           }
           break;
@@ -229,13 +234,15 @@ export default {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "xp",
-              value: this.info.xp
+              value: this.info.xp,
+              type: 'event',
             });
           } else {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "xp",
-              value: this.info.xp * -1
+              value: this.info.xp * -1,
+              type: 'event',
             });
           }
           break;
@@ -243,13 +250,15 @@ export default {
           axios.post("/classroom/students/update", {
             id: this.info.student.id,
             prop: "gold",
-            value: this.info.gold
+            value: this.info.gold,
+            type: 'event',
           });
           break;
         case 11:
           axios.post("/classroom/students/update", {
             id: this.info.student.id,
-            card_id: this.info.card.id
+            card_id: this.info.card.id,
+            type: 'event',
           });
           break;
         case 12:
@@ -260,7 +269,8 @@ export default {
           axios.post("/classroom/students/update", {
             code: this.code,
             prop: prop,
-            value: this.info.value
+            value: this.info.value,
+            type: 'event',
           });
           break;
       }

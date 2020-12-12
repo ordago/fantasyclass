@@ -242,7 +242,7 @@ class StudentController extends Controller
             ->take(1)
             ->delete();
 
-        $student->setProperty($request->row['type'], $request->row['value'] * -1, false, true);
+        $student->setProperty($request->row['type'], $request->row['value'] * -1, false, null, true);
     }
     public function deleteBehaviour(Request $request)
     {
@@ -281,7 +281,7 @@ class StudentController extends Controller
             if($gold > $student->gold) {
                 return ['type' => 'error', 'message' => __('success_error.shop_failed_money')];
             }
-            return $student->setProperty('gold', $info['gold'] * -1, true);
+            return $student->setProperty('gold', $info['gold'] * -1, true, $request->type);
         } else if ($request->id) {
             $student = Student::findOrFail($request->id);
             $class = Classroom::where('id', $student->classroom->classroom->id)->first();
@@ -290,13 +290,13 @@ class StudentController extends Controller
                 $student->cards()->attach($request->card_id);
                 return true;
             } else {
-                return $student->setProperty($request->prop, $request->value, true);
+                return $student->setProperty($request->prop, $request->value, true, $request->type);
             }
         } else {
             $class = Classroom::where('code', $request->code)->first();
             $this->authorize('update', $class);
             foreach ($class->students as $student) {
-                $student->setProperty($request->prop, $request->value, true);
+                $student->setProperty($request->prop, $request->value, true, $request->type);
             }
         }
     }

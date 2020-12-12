@@ -10,6 +10,7 @@ use App\ClassroomUser;
 use App\Equipment;
 use App\Http\Classes\Functions;
 use App\Item;
+use App\LogEntry;
 use App\Student;
 use App\Map;
 use App\Notifications\NewInteractionStudent;
@@ -345,8 +346,8 @@ class ClassroomsStudentController extends Controller
             $gold = $gold - $steal;
         }
 
-        $student->setProperty('gold', request()->money * - 1, true, true);
-        $to->setProperty('gold', $gold, true, true);
+        $student->setProperty('gold', request()->money * - 1, true, 'send', true);
+        $to->setProperty('gold', $gold, true, 'received', true);
 
         $from['title'] = 'notifications.money_sent';
         $from['name'] = $student->name;
@@ -389,9 +390,9 @@ class ClassroomsStudentController extends Controller
             }
         }
         if ($update) {
-            $student->setProperty('hp', $challenge->hp, true);
-            $student->setProperty('xp', $challenge->xp, true);
-            $student->setProperty('gold', $challenge->gold, true);
+            $student->setProperty('hp', $challenge->hp, true, 'challenge');
+            $student->setProperty('xp', $challenge->xp, true, 'challenge');
+            $student->setProperty('gold', $challenge->gold, true, 'challenge');
         }
         return [
             'success' => true,
@@ -519,6 +520,12 @@ class ClassroomsStudentController extends Controller
 
         $student->items()->sync([$item->id => ['count' => $count]], false);
         $student->update(['gold' => ($student->gold - $item->price)]);
+        LogEntry::create([
+            'type' => 'gold',
+            'value' => $item->price,
+            'student_id' => $student->id,
+            'message' => 'shop',
+        ]);
 
         return [
             "message" => " " . __('success_error.equipment_success'),
@@ -584,6 +591,12 @@ class ClassroomsStudentController extends Controller
         }
         $gold = $student->gold - $price;
         $student->update(['gold' => $gold]);
+        LogEntry::create([
+            'type' => 'gold',
+            'value' => $gold,
+            'student_id' => $student->id,
+            'message' => 'shop',
+        ]);
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);
         return [
@@ -620,10 +633,10 @@ class ClassroomsStudentController extends Controller
             $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
 
         if ($item->hp > 0) {
-            $student->setProperty('hp', $item->hp, true);
+            $student->setProperty('hp', $item->hp, true, 'item');
         }
         if ($item->xp > 0) {
-            $student->setProperty('xp', $item->xp, true);
+            $student->setProperty('xp', $item->xp, true, 'item');
         }
 
         return ['xp' => $item->xp, 'hp' => $item->hp];

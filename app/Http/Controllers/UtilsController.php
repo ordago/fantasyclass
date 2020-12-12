@@ -34,13 +34,13 @@ class UtilsController extends Controller
 
         foreach ($class->students as $student) {
             if(request()->hp != 0) {
-                $student->setProperty('hp', request()->hp);
+                $student->setProperty('hp', request()->hp, true, 'volume');
             }
             if(request()->xp != 0) {
-                $student->setProperty('xp', request()->xp);
+                $student->setProperty('xp', request()->xp, 'volume');
             }
             if(request()->gold != 0) {
-                $student->setProperty('gold', request()->gold);
+                $student->setProperty('gold', request()->gold, 'volume');
             }
         }
     }

@@ -205,9 +205,9 @@ class Student extends Model implements HasMedia
         $behaviour = Behaviour::findOrFail($behaviourId);
         $behaviour->update(['count_number' => $behaviour->count_number + 1]);
         $this->behaviours()->attach($behaviourId);
-        $valHp = $this->setProperty('hp', $behaviour->hp, true);
-        $valXp = $this->setProperty('xp', $behaviour->xp, true);
-        $valGold = $this->setProperty('gold', $behaviour->gold, true);
+        $valHp = $this->setProperty('hp', $behaviour->hp, true, 'behaviour');
+        $valXp = $this->setProperty('xp', $behaviour->xp, true, 'behaviour');
+        $valGold = $this->setProperty('gold', $behaviour->gold, true, 'behaviour');
 
         $from['title'] = 'notifications.new_behaviour';
         $from['name'] = "FantasyClass";
@@ -247,7 +247,7 @@ class Student extends Model implements HasMedia
         ];
     }
 
-    public function setProperty($prop, $value, $log = true, $byPassBoost = false)
+    public function setProperty($prop, $value, $log = true, $type = null, $byPassBoost = false)
     {
         $boost = $this->getBoost();
         $isAlive = $this->hp == 0 ? false : true;
@@ -294,6 +294,7 @@ class Student extends Model implements HasMedia
                 'type' => $prop,
                 'value' => $old,
                 'student_id' => $this->id,
+                'message' => $type,
             ]);
         }
         if ($prop == "xp") {

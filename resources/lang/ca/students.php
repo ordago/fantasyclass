@@ -67,4 +67,18 @@ return [
     'thief_info' => 'Uns lladres han robat',
     'comission' => 'Comissió',
     'error' => 'Intentes fer alguna cosa il·legal o sense sentit? :(',
+    'details' => 'Detalls',
+
+    'log_behaviour' => 'Comportament',
+    'log_teacher' => 'Modificació manual',
+    'log_shop' => 'Botiga',
+    'log_item' => 'Objecte utilitzat',
+    'log_event' => 'Esdeveniment',
+    'log_send' => 'Diners enviats',
+    'log_received' => 'Diners rebuts',
+    'log_challenge' => 'Repte',
+    'log_card' => 'Carta',
+    'log_badge' => 'Insígnia',
+    'log_battle' => 'Batalla',
+
 ];

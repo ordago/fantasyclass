@@ -28,10 +28,12 @@ return [
     'well_done' => '¡Bien hecho!',
     'go_back' => 'Volver',
     'reward' => 'Recompensa para los miembros del grupo ganador',
+    'reward_class' => 'Recompensa para toda la clase',
     'select_group' => 'Grupo aleatorio',
     'finish' => 'Finaliza batalla',
     'give_reward' => 'Entrega premio a',
     'show_timer' => 'Empieza cronómetro',
     'timer_default' => 'Tiempo por defecto del cronómetro (opcional)',
+    'monster' => 'Monstruo',
     '' => '',
 ];

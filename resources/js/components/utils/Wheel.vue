@@ -3,15 +3,15 @@
     <FortuneWheel
       v-if="showWheel"
       style="width: 100%"
-      borderColor="#584b43"
-      :borderWidth="2"
+      :canvas="canvasOptions"
       :useWeight="true"
-      :fontSize="fontSize"
-      :textRadius="230"
       :prizes="prizes"
       @rotateStart="onCanvasRotateStart"
       @rotateEnd="onRotateEnd"
     />
+    <!--
+       
+    -->
     <div class="column is-narrow has-all-centered is-flex" v-if="prizeSelected">
       <div class="field m-0 is-flex">
         <button class="button is-link" @click="randomStudent()">
@@ -54,6 +54,7 @@
         >
           <option value="10">10</option>
           <option value="20">20</option>
+          <option value="30">30</option>
         </b-select>
       </div>
       <div class="columns p-2">
@@ -91,6 +92,13 @@ export default {
   props: ["students"],
   data() {
     return {
+      canvasOptions: {
+        borderWidth: 2,
+        textDirection: "vertical",
+        borderColor: "#584b43",
+        textRadius: "230",
+        borderWidth: "2",
+      },
       min: -100,
       max: 100,
       prizeSelected: false,
@@ -153,6 +161,7 @@ export default {
         id: this.studentSelected,
         prop: "gold",
         value: this.prizeSelected.value,
+        type: 'wheel',
       };
 
       axios.post("/classroom/students/update", options).then((response) => {
@@ -187,7 +196,7 @@ export default {
         }
         this.prizes.push({
           id: i,
-          name: value,
+          name: value + "",
           value: value,
           bgColor: color,
           color: "#ffffff",
@@ -196,7 +205,7 @@ export default {
       }
       this.prizes.push({
         id: i + 1,
-        name: this.max,
+        name: this.max + "",
         value: this.max,
         bgColor: "#ffd700",
         color: "#ffffff",
@@ -231,8 +240,11 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style>
 .hiddenV {
   visibility: hidden;
+}
+.fw-btn__btn {
+  cursor: pointer;
 }
 </style>

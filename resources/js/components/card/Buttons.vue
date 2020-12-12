@@ -18,7 +18,7 @@ export default {
   },
   methods: {
     pay() {
-      axios.post("/classroom/students/update", {action: "pay"})
+      axios.post("/classroom/students/update", {action: "pay", type: 'card'})
       .then(response => {
         if(response.data.type == "error")
             this.$toast(response.data.message, { type: response.data.type });

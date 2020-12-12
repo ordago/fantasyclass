@@ -78,11 +78,11 @@ class BadgeController extends Controller
             $mult = -1;
 
         if ($badge->hp)
-            $student->setProperty('hp', $badge->hp * $mult);
+            $student->setProperty('hp', $badge->hp * $mult, true, 'badge');
         if ($badge->xp)
-            $student->setProperty('xp', $badge->xp * $mult);
+            $student->setProperty('xp', $badge->xp * $mult, true, 'badge');
         if ($badge->gold)
-            $student->setProperty('gold', $badge->gold * $mult);
+            $student->setProperty('gold', $badge->gold * $mult, true, 'badge');
         return [
             'hp' => $student->hp,
             'xp' => $student->xp,

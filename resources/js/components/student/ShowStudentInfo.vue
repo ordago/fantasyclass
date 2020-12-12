@@ -76,7 +76,7 @@
             class="button is-warning m-1"
             v-if="student.gold && settings.allow_send_money == 1"
           >
-            {{ trans.get('general.send') }} <i class="fas fa-coins colored"></i>
+            {{ trans.get("general.send") }} <i class="fas fa-coins colored"></i>
           </button>
         </div>
       </div>
@@ -429,7 +429,12 @@
           icon-pack="fad"
           class="p-2"
         >
-          <Blogs :code="classroom.code" :student="student" :admin="admin" :blogs="student.blogs"></Blogs>
+          <Blogs
+            :code="classroom.code"
+            :student="student"
+            :admin="admin"
+            :blogs="student.blogs"
+          ></Blogs>
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.pets')"
@@ -763,11 +768,11 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div v-if="admin" class="pl-4">
-            <div v-for="badge in classroom.badges" :key="badge.id">
+          <div v-if="admin" class="is-flex pl-4">
+            <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
               <div
                 @click="toggle(badge.id)"
-                class="personalBadge type0"
+                class="personalBadge "
                 v-tippy
                 :content="
                   '<h1>' +
@@ -778,14 +783,14 @@
                 "
                 :class="{ notColored: findInStudent(badge.id) }"
               >
-                <i :class="'fal ' + badge.icon"></i>
+                <i :class="badge.icon"></i>
               </div>
             </div>
           </div>
-          <div v-if="!admin" class="pl-4">
-            <div v-for="badge in student.badges" :key="badge.id">
+          <div class="is-flex pl-4" v-if="!admin">
+            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
               <div
-                class="personalBadge type0"
+                class="personalBadge"
                 v-tippy
                 :content="
                   '<h1>' +
@@ -795,7 +800,7 @@
                   '</h3>'
                 "
               >
-                <i :class="'fal ' + badge.icon"></i>
+                <i :class="badge.icon"></i>
               </div>
             </div>
           </div>
@@ -864,6 +869,16 @@
                 >{{
                   new Date(props.row.created_at).toLocaleDateString()
                 }}</b-table-column
+              >
+
+              <b-table-column
+                field="message"
+                :label="trans.get('students.details')"
+                centered
+                >
+                <span v-tippy :content="trans.get('students.log_' + props.row.message)" v-html="getIcon(props.row.message)">
+                </span>
+                </b-table-column
               >
 
               <b-table-column
@@ -1149,6 +1164,43 @@ export default {
     };
   },
   methods: {
+    getIcon(type) {
+      switch(type) {
+        case 'behaviour':
+          return "<i class='fas fa-heart colored'></i>";
+        break;
+        case 'teacher':
+          return "<i class='fas fa-user-graduate colored' style='color: white'></i>";
+        break;
+        case 'shop':
+          return "<i class='fas fa-store colored' style='color: #A52A2A'></i>";
+        break;
+        case 'item':
+          return "<i class='fas fa-flask-potion colored' style='color: #DC143C'></i>";
+        break;
+        case 'event':
+          return "<i class='fas fa-scroll colored' style='color: #A9A9A9'></i>";
+        break;
+        case 'send':
+          return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-right colored'></i>";
+          break;
+        case 'received':
+          return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-left colored'></i>";
+        break;
+        case 'challenge':
+          return "<i class='fas fa-pen-fancy colored' style='color: #eee'></i>";
+        break;
+        case 'card':
+          return "<i class='fas fa-club colored' style='color: black'></i>";
+        break;
+        case 'badge':
+          return "<i class='fas fa-award colored' style='color: #ADD8E6'></i>";
+        break;
+        case 'battle':
+          return "<i class='fas fa-swords colored' style='color: #E6E6FA'></i>";
+        break;
+      }
+    },
     sendMoney() {
       axios
         .post("/classroom/" + this.classroom.code + "/send/money", {
@@ -1162,7 +1214,7 @@ export default {
           this.moneySended = true;
         })
         .catch((error) => {
-          this.$toast(this.trans.get('students.error'), {type: "error"});
+          this.$toast(this.trans.get("students.error"), { type: "error" });
         });
     },
     lastBehaviour: function () {

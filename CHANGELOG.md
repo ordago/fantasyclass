@@ -1,6 +1,14 @@
 # Changelog
+## v1.23 Beta (09/12/2020)
+### Added
+- Info in students log.
+
+### Changed
+- Wheel fortune updated with vertical text.
+- Fixed badge icon show.
 
 ## v1.23 Beta (09/12/2020)
+### Added
 - Student blog: your adventure.
 - Group vs group battles.
 

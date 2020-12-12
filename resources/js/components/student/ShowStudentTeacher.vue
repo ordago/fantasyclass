@@ -407,7 +407,7 @@ export default {
       }
     },
     updateProp: function (id, prop, value) {
-      let options = { id: id, prop: prop, value: value };
+      let options = { id: id, prop: prop, value: value, type: 'teacher' };
       let student;
 
       axios.post("/classroom/students/update", options).then((response) => {

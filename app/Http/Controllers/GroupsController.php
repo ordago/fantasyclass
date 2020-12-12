@@ -45,9 +45,9 @@ class GroupsController extends Controller
 
         foreach ($group->students as $student) {
             if ($data['xp'])
-                $student->setProperty('xp', $data['xp']);
+                $student->setProperty('xp', $data['xp'], true, 'battle');
             if ($data['gold'])
-                $student->setProperty('gold', $data['gold']);
+                $student->setProperty('gold', $data['gold'], true, 'battle');
         }
 
     }
