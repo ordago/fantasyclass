@@ -28,44 +28,15 @@
             </div>
           </div>
 
-          <div
-            class="score p-3 centered-attribute m-1 my-4 has-all-centered"
-            style="border: none"
-          >
-            <span
-              class="attribute has-background-white-ter py-3 rounded"
-              style="width: 100%"
-            >
-              <span>
-                <i
-                  class="fas fa-heart colored has-text-grey-light"
-                  v-bind:class="{ invisible: student.hp >= 30 }"
-                ></i>
-              </span>
-              <span class="has-text-grey-light" v-show="student.hp < 30">{{
-                Math.round(student.hp)
-              }}</span>
-            </span>
-            <span
-              class="attribute has-background-danger py-3 rounded-left"
-              v-bind:class="{ rounded: student.hp == 100 }"
-              :style="'width: ' + student.hp + '%'"
-              v-if="student.hp > 0"
-            >
-              <i
-                class="fas fa-heart colored"
-                v-bind:class="{ invisible: student.hp < 30 }"
-              ></i>
-              <span v-if="student.hp >= 30">{{ student.hp }}</span>
-            </span>
-          </div>
-          <div class="score p-3 m-1 mt-3">
+          <hp class="mt-2 mb-3" :hp="student.hp" size="3"></hp>
+         
+          <div class="score p-3 m-1 mt-4 border">
             <span>
               <i class="fas fa-fist-raised colored"></i>
             </span>
             {{ student.xp }}
           </div>
-          <div class="gold p-3 m-1 mt-2">
+          <div class="gold p-3 m-1 mt-2 border">
             <span>
               <i class="fas fa-coins colored"></i>
             </span>
@@ -1105,6 +1076,7 @@ import Vue from "vue";
 import Utils from "../../utils.js";
 
 import Blogs from "../blogs/Blogs.vue";
+import Hp from "./Hp.vue";
 
 // Charts
 import VueApexCharts from "vue-apexcharts";
@@ -1129,6 +1101,7 @@ export default {
   ],
   components: {
     Blogs,
+    Hp,
   },
   mounted() {
     this.behaviours = this.student.behaviours;

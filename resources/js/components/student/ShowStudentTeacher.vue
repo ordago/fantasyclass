@@ -81,31 +81,9 @@
               </div>
             </article>
           </div>
-          <div class="centered-attribute mt-5 mb-4 mx-1 p-1">
-            <span
-              class="attribute has-background-white-ter p-2 rounded"
-              style="width: 100%"
-            >
-              <span>
-                <i class="fas fa-heart has-text-grey-light"></i>
-              </span>
-              <span class="has-text-grey-light" v-if="student.hp < 20">{{
-                student.hp
-              }}</span>
-            </span>
-            <span
-              class="attribute has-background-danger p-2 rounded-left"
-              v-bind:class="{ rounded: student.hp == 100 }"
-              :style="'width: ' + student.hp + '%'"
-              v-if="student.hp > 0"
-            >
-              <i
-                class="fas fa-heart"
-                v-bind:class="{ 'has-text-danger': student.hp < 52 }"
-              ></i>
-              <span v-if="student.hp >= 20">{{ student.hp }}</span>
-            </span>
-          </div>
+          
+          <hp :hp="student.hp" size="2" class="mb-3"></hp>
+
           <div class="my-1 has-text-centered">
             <div class="w-100 is-flex has-all-centered">
               <button

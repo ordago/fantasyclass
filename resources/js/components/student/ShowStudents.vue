@@ -22,7 +22,7 @@
           class="link outer_glow has-text-dark pl-0 ml-0 pr-2 has-text-danger"
           v-tippy
           :content="trans.get('menu.battles')"
-           v-if="students.length"
+          v-if="students.length"
           :href="'/classroom/' + classroom.code + '/battles'"
         >
           <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
@@ -118,7 +118,11 @@
           <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
-              :href="'/classroom/' + classroom.code + '/utils/exportConfidentialDataStudent'"
+              :href="
+                '/classroom/' +
+                classroom.code +
+                '/utils/exportConfidentialDataStudent'
+              "
               target="_blank"
               v-if="students.length"
             >
@@ -282,59 +286,31 @@
                 <small>@{{ student.username }}</small>
               </div>
             </div>
-            <div class="buttons">
-              <div class="">
-                <div
-                  class="score p-1 centered-attribute m-1 mt-0 has-all-centered"
-                  style="border: none; width: 150px"
-                >
-                  <span
-                    class="attribute has-background-white py-2 rounded"
-                    style="width: 100%; margin-top: 3px"
-                  >
+            <div class="columns">
+              <div class="column">
+                <hp :hp="student.hp" size="2"></hp>
+              </div>
+              <div class="column">
+                <div class="">
+                  <div class="score p-2 m-1">
                     <span>
                       <i
-                        class="fas fa-heart colored has-text-grey-light"
-                        v-bind:class="{ invisible: student.hp >= 30 }"
+                        class="fas fa-fist-raised colored"
+                        aria-hidden="true"
                       ></i>
                     </span>
-                    <span
-                      class="has-text-grey-light"
-                      v-show="student.hp < 30"
-                      >{{ student.hp }}</span
-                    >
-                  </span>
-                  <span
-                    class="attribute has-background-danger py-2 rounded-left"
-                    v-bind:class="{ rounded: student.hp == 100 }"
-                    :style="'width: ' + student.hp + '%;margin-top: 3px;'"
-                    v-if="student.hp > 0"
-                  >
-                    <i
-                      class="fas fa-heart colored"
-                      v-bind:class="{ invisible: student.hp < 30 }"
-                    ></i>
-                    <span v-if="student.hp >= 30">{{ student.hp }}</span>
-                  </span>
+                    {{ student.xp }}
+                  </div>
                 </div>
               </div>
-              <div class="">
-                <div class="score p-2 m-1">
-                  <span>
-                    <i
-                      class="fas fa-fist-raised colored"
-                      aria-hidden="true"
-                    ></i>
-                  </span>
-                  {{ student.xp }}
-                </div>
-              </div>
-              <div class="">
-                <div class="gold p-2 m-1">
-                  <span>
-                    <i class="fas fa-coins colored" aria-hidden="true"></i>
-                  </span>
-                  {{ student.gold }}
+              <div class="column">
+                <div class="">
+                  <div class="gold p-2 m-1">
+                    <span>
+                      <i class="fas fa-coins colored" aria-hidden="true"></i>
+                    </span>
+                    {{ student.gold }}
+                  </div>
                 </div>
               </div>
             </div>
@@ -653,8 +629,7 @@ export default {
   created() {
     let view = this.$cookies.get("view");
     if (view) {
-      if(view == 1 && (!this.groups.length))
-        this.view = 0;
+      if (view == 1 && !this.groups.length) this.view = 0;
       else this.view = this.$cookies.get("view");
     }
   },

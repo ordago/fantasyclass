@@ -542,9 +542,12 @@
   .attribute-info {
       position: absolute;
       display: flex;
-      top: 3px;
+      top: 0px;
       left: 10px;
       z-index: 2;
+    }
+    .attribute-info-props {
+        top: 3px;
   }
 
   .firstRowChar .attribute {
@@ -907,7 +910,6 @@
       color: white;
       border-radius: 3px;
       text-align: center;
-      font-size: 1.25em;
       font-weight: bold;
   }
 

@@ -1,4 +1,11 @@
 # Changelog
+## v1.25 Beta (XX/12/2020)
+### Added
+- Monsters.
+
+### Changed
+- Better hp showing. Visual improvements in list mode.
+
 ## v1.24 Beta (12/12/2020)
 ### Added
 - More info in log.

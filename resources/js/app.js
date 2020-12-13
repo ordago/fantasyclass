@@ -67,6 +67,8 @@ Vue.component('show-character', require('./components/student/ShowCharacter.vue'
 Vue.component('show-students-student', () => import('./components/student/ShowStudentsStudent.vue'));
 Vue.component('show-group-view', require('./components/student/ShowGroupView.vue').default);
 Vue.component('show-student-info', () => import('./components/student/ShowStudentInfo.vue'));
+Vue.component('hp', () => import('./components/student/Hp.vue'));
+
 
 Vue.component('show-student-map', () => import('./components/student/ShowStudentMap.vue'));
 Vue.component('show-student', require('./components/student/ShowStudent.vue').default);

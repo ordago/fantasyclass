@@ -16,41 +16,12 @@
         </div>
       </div>
       <div class="content mt-3">
-        <div class="is-flex has-all-centered">
-          <div class="w-100 is-relative">
-            <div class="attribute-info has-all-centered">
-              <img src="/img/bg-hp.png" width="40px" />
-              <i class="fas fa-heart colored is-absolute" style="left: 10px"></i>
-            </div>
-            <div
-              class="score p-2 centered-attribute m-1 my-4 has-all-centered"
-              style="border: none"
-            >
-              <span
-                class="attribute has-background-white-ter py-2 rounded"
-                style="width:100%;border: 1px solid black"
-              >
-                <span
-                  class="has-text-grey-light"
-                  :class="{ 'has-text-white-ter' : student.hp>=30 }"
-                >{{ student.hp }}</span>
-              </span>
-              <span
-                class="attribute has-background-danger py-2 rounded-left"
-                v-bind:class="{ rounded: student.hp==100 }"
-                :style="'width: ' + student.hp + '%'"
-              >
-                <span
-                  v-if="student.hp > 0"
-                  :class="{ 'has-text-danger' : student.hp<30 }"
-                >{{ student.hp }}</span>
-              </span>
-            </div>
-          </div>
-        </div>
+        
+        <hp class="mb-3" :hp="student.hp" size="2" :icon="true"></hp>
+        
         <div class="is-flex is-relative has-all-centered">
           <div class="w-100 is-realative">
-            <div class="attribute-info has-all-centered">
+            <div class="attribute-info attribute-info-props has-all-centered">
               <img src="/img/bg-xp.png" width="40px" />
               <i class="fas fa-fist-raised colored is-absolute" style="left: 13px"></i>
             </div>
@@ -59,8 +30,7 @@
               style="border: none"
             >
               <span
-                class="attribute has-background-dark py-2 rounded"
-                style="width:100%;border: 1px solid black"
+                class="attribute has-background-dark py-2 rounded border"
               >
                 <span class="has-text-light">{{ student.xp }}</span>
               </span>
@@ -69,7 +39,7 @@
         </div>
         <div class="is-flex is-relative has-all-centered">
           <div class="w-100 is-realative">
-            <div class="attribute-info has-all-centered">
+            <div class="attribute-info attribute-info-props has-all-centered">
               <img src="/img/bg-gold.png" width="40px" />
               <i class="fas fa-coins colored is-absolute" style="left: 10px"></i>
             </div>
@@ -77,8 +47,7 @@
               class="score p-2 centered-attribute m-1 my-4 has-all-centered"
             >
               <span
-                class="attribute has-background-warning py-2 rounded"
-                style="width:100%;border: 1px solid black"
+                class="attribute has-background-warning py-2 rounded border"
               >
                 <span class="has-text-dark">{{ student.gold }}</span>
               </span>

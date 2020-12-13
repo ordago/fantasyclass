@@ -14,11 +14,9 @@ class BattleController extends Controller
     }
 
     public function index($code) {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'grouping.groups.students.equipment', 'theme', 'questionBanks.questions')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'grouping.groups.students.equipment', 'theme', 'questionBanks.questions', 'monsters')->firstOrFail();
         $this->authorize('view', $class);
 
-        // $banks = $class->questionBanks;
-    
 
         return view('battles.index', compact('class'));
     }

@@ -120,6 +120,7 @@
               <b-input
                 v-model="monster.name"
                 maxlength="40"
+                required
                 placeholder="Careful cat"
               ></b-input>
             </b-field>

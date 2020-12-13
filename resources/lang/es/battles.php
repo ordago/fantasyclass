@@ -35,5 +35,6 @@ return [
     'show_timer' => 'Empieza cronómetro',
     'timer_default' => 'Tiempo por defecto del cronómetro (opcional)',
     'monster' => 'Monstruo',
+    'monster_empty' => 'No tienes monstruos, crea uno para jugar en esta sección',
     '' => '',
 ];
