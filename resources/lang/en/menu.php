@@ -40,7 +40,7 @@ return [
     'badges' => 'Badges',
     'massive' => 'Massive actions',
     'config' => 'Configure',
-    'contribute' => 'Buy us coffe or beer!',
+    'contribute' => 'Help us!',
     'pets' => 'Pets',
     'monsters' => 'Monsters',
     'mobile' => 'Mobile version',

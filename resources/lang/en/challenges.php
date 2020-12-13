@@ -18,6 +18,7 @@ return [
     'completion_both' => 'Both teacher and estudent should mark it as completed',
     
     'empty' => 'Let\'s create some challenges!',
+    'challenges_empty' => 'The adventure hasn\'t started yet...',
 
     'title' => 'Title',
     'description' => 'Description',

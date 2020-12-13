@@ -40,7 +40,7 @@ return [
     'badges' => 'Insignias',
     'massive' => 'Acciones masivas',
     'config' => 'Configura',
-    'contribute' => '¡Invita a café o cerveza!',
+    'contribute' => '¡Colabora con nosotros!',
     'pets' => 'Mascotas',
     'monsters' => 'Monstruos',
     'mobile' => 'Versión móvil',

@@ -18,6 +18,7 @@ return [
     'completion_both' => 'Tanto profe como estudiantes tienen que marcar el desafío como completado',
     
     'empty' => '¡Creemos unos desafíos!',
+    'challenges_empty' => 'La aventura aún no ha empezado...',
 
     'title' => 'Título',
     'description' => 'Descripción',

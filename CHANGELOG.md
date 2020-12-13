@@ -3,9 +3,12 @@
 ### Added
 - Monsters and battles with monsters.
 - Assign pets directly to students.
+- Bar in students showing challenge ratings and monsters.
 
 ### Changed
 - Better hp showing. Visual improvements in list mode.
+- Changed contribute text.
+- Translate when student challenges empty.
 
 ## v1.24 Beta (12/12/2020)
 ### Added

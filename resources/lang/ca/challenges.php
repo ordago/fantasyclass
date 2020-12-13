@@ -18,6 +18,7 @@ return [
     'completion_both' => 'Tant profe com estudiants han de marcar el repte com a superat',
     
     'empty' => 'Creem uns reptes!',
+    'challenges_empty' => 'L\'aventura encara no ha començat...',
 
     'title' => 'Títol',
     'description' => 'Descripció',
