@@ -160,7 +160,7 @@
               type="button"
               @click="
                 isModalActive = false;
-                resetPet();
+                resetMonster();
               "
             >
               {{ trans.get("general.close") }}
