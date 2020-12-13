@@ -38,5 +38,6 @@ return [
     'monster' => 'Monstre',
     'monster_empty' => 'No tens monstres, crea un per a jugar en aquesta secció',
     'monster_hp_loss' => 'Pèrdua de punts de vida del monstre',
+    'defeat' => 'us ha vençut!',
     '' => '',
 ];

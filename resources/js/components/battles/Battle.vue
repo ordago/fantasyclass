@@ -681,7 +681,7 @@
                     {{ trans.get("battles.well_done") }}
                     <span v-if="winnerElem">{{ winnerElem.name }}</span>
                   </h1>
-                  <div v-else>Loose</div>
+                  <div class="is-size-3" v-else>{{ monsterSelected.name }} {{ trans.get('battles.defeat') }}</div>
                   <button
                     class="button is-success mt-2"
                     v-if="winnerElem"

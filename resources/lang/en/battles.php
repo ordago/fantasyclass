@@ -38,5 +38,6 @@ return [
     'monster' => 'Monster',
     'monster_empty' => 'Your class don\'t have monsters,  please create one to play this section',
     'monster_hp_loss' => 'Monster HP loss',
+    'defeat' => 'has defeated you!',
     '' => '',
 ];
