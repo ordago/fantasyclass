@@ -101,6 +101,10 @@ class Classroom extends Model
     public function pets() {
         return $this->hasMany(Pet::class);
     }
+    
+    public function monsters() {
+        return $this->hasMany(Monster::class);
+    }
 
     public function rules() {
         return $this->hasOne(Rules::class);

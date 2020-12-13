@@ -49,7 +49,6 @@
           </b-radio-button>
           <b-radio-button
             v-model="type"
-            disabled
             expanded
             :native-value="3"
             type="is-info"
@@ -149,10 +148,7 @@
         <h3 class="m-2" v-if="type == 1">
           {{ trans.get("battles.reward") }}
         </h3>
-        <h3 class="m-2" v-if="type == 3">
-          {{ trans.get("battles.reward_class") }}
-        </h3>
-        <div class="columns m-2" v-if="type == 1 || type == 3">
+        <div class="columns m-2" v-if="type == 1">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">

@@ -42,6 +42,7 @@ return [
     'config' => 'Configure',
     'contribute' => 'Buy us coffe or beer!',
     'pets' => 'Pets',
+    'monsters' => 'Monsters',
     'mobile' => 'Mobile version',
     'battles' => 'Battles',
 

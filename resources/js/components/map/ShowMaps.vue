@@ -93,9 +93,7 @@
           <img src="/img/maps/FantasyClass-1.png" />
         </div>
         <footer class="card-footer">
-          <p
-            class="card-footer-item mb-0 has-background-primary rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-primary rounded">
             <span>
               <a
                 target="_blank"
@@ -106,9 +104,7 @@
               >
             </span>
           </p>
-          <p
-            class="card-footer-item mb-0 has-background-info rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-info rounded">
             <span>
               <a
                 target="_blank"
@@ -126,9 +122,7 @@
           <img src="/img/maps/FantasyClass-2.png" />
         </div>
         <footer class="card-footer">
-          <p
-            class="card-footer-item mb-0 has-background-primary rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-primary rounded">
             <span>
               <a
                 target="_blank"
@@ -139,9 +133,7 @@
               >
             </span>
           </p>
-          <p
-            class="card-footer-item mb-0 has-background-info rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-info rounded">
             <span>
               <a
                 target="_blank"
@@ -152,9 +144,7 @@
               >
             </span>
           </p>
-          <p
-            class="card-footer-item mb-0 has-background-dark rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-dark rounded">
             <span>
               <a
                 href="https://twitter.com/soyjujo_juanjo"
@@ -171,9 +161,7 @@
           <img src="/img/maps/FantasyClass-3.png" />
         </div>
         <footer class="card-footer">
-          <p
-            class="card-footer-item mb-0 has-background-primary rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-primary rounded">
             <span>
               <a
                 target="_blank"
@@ -184,9 +172,7 @@
               >
             </span>
           </p>
-          <p
-            class="card-footer-item mb-0 has-background-info rounded"
-          >
+          <p class="card-footer-item mb-0 has-background-info rounded">
             <span>
               <a
                 target="_blank"
@@ -212,11 +198,11 @@ const ModalForm = {
             <div class="modal-card" style="width: auto">
                 <header class="modal-card-head p-2">
                     <p class="modal-card-title">{{ name }}</p>
-                    <button class="button" type="button" @click="$parent.close()">{{ trans.get('general.close') }}</button>
+                    <button class="button" @click="$parent.close()" type="button">{{ trans.get('general.close') }}</button>
                 </header>
-                <section class="modal-card-body">
+                <section class="modal-card-body" >
                     <div>
-                    <iframe frameborder="0" class="map-iframe" 
+                    <iframe frameborder="0" id='mapiframe' class="map-iframe" 
                     v-bind:src="url"
                     type="text/html" allowscriptaccess="always" allowfullscreen="true" scrolling="yes" allownetworking="all"></iframe>
                     </div>

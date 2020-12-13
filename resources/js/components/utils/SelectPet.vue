@@ -2,6 +2,7 @@
   <b-modal
     has-modal-card
     full-screen
+          :active.sync="isModalActive"
     :can-cancel="false"
   >
     <div class="modal-card" style="width: auto">
@@ -20,10 +21,7 @@
         <div class="columns is-multiline" v-if="images">
           <img
             width="75px"
-            @click="
-              pet.image = image;
-              isImageModalActive = false;
-            "
+            @click="clickImage(image)"
             v-for="image in images"
             :key="image"
             :src="'/img/pets/' + image"
@@ -38,7 +36,7 @@
           <button
             class="button"
             type="button"
-            @click="isImageModalActive = false"
+            @click="$parent.isImageModalActive = false"
           >
             {{ trans.get("general.close") }}
           </button>
@@ -53,13 +51,26 @@
 
 export default {
   props: ["code"],
-  created() {},
+  created() {
+    axios.get("/classroom/pets/get").then((response) => {
+      this.images = response.data;
+      this.isModalActive = true;
+      this.$parent.isLoading = false;
+    });
+  },
   data: function () {
     return {
+      isModalActive: false,
+      images: null,
       image: null,
     };
   },
   methods: {
+    clickImage(image) {
+      this.image = image;
+      this.updateValue();
+      this.$parent.isImageModalActive = false;
+    },
     updateValue: function () {
       this.$emit("input", this.image);
     },

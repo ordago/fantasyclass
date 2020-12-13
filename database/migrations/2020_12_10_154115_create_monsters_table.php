@@ -18,6 +18,8 @@ class CreateMonstersTable extends Migration
             $table->string('image');
             $table->string('name', 40)->nullable();
             $table->float('hp')->default(100);
+            $table->float('reward_xp')->default(0);
+            $table->float('reward_gold')->default(0);
             $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });

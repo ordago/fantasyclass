@@ -1,15 +1,15 @@
 <template>
   <div class="p-2">
-    <button class="button is-link mb-5" @click="isModalActive = true">
-      <i class="fas fa-dog mr-2"></i>
-      {{ trans.get("pets.new_pet") }}
+     <button class="button is-link mb-5"  @click="isModalActive = true">
+      <i class="fas fa-dragon mr-2"></i>
+      {{ trans.get("monsters.new") }}
     </button>
 
-    <div
-      v-for="pet in pets"
+        <div
+      v-for="monster in monsters"
       class="columns is-multiline is-variable is-1 has-all-centered p-3"
       style="border-bottom: 1px dashed #999"
-      v-bind:key="pet.id"
+      v-bind:key="monster.id"
     >
       <div class="column is-narrow is-relative">
         <img
@@ -18,8 +18,8 @@
             placement: 'bottom',
             arrow: true,
           }"
-          :content="getName(pet.name)"
-          :src="'/img/pets/' + pet.image"
+          :content="getName(monster.name)"
+          :src="'/img/pets/' + monster.image"
           class=""
           style="margin-top: -20px"
         />
@@ -31,7 +31,7 @@
               <div class="field has-addons">
                 <p class="control">
                   <a class="button is-static">
-                    <i class="fas fa-heart colored mr-2"></i> %
+                    <i class="fas fa-fist-raised colored mr-2"></i>
                   </a>
                 </p>
                 <p class="control is-expanded">
@@ -40,7 +40,7 @@
                     disabled
                     class="input"
                     style="border: 1px solid"
-                    v-model="pet.hp_boost"
+                    v-model="monster.reward_xp"
                   />
                 </p>
               </div>
@@ -55,7 +55,7 @@
               <div class="field has-addons">
                 <p class="control">
                   <a class="button is-static">
-                    <i class="fas fa-fist-raised colored mr-2"></i> %
+                    <i class="fas fa-coins colored mr-2"></i>
                   </a>
                 </p>
                 <p class="control is-expanded">
@@ -64,7 +64,7 @@
                     class="input"
                     disabled
                     style="border: 1px solid"
-                    v-model="pet.xp_boost"
+                    v-model="monster.reward_gold"
                   />
                 </p>
               </div>
@@ -72,76 +72,17 @@
           </div>
         </div>
       </div>
-      <div class="column is-narrow">
-        <div class="field is-horizontal">
-          <div class="field-body">
-            <div class="field is-expanded">
-              <div class="field has-addons">
-                <p class="control">
-                  <a class="button is-static">
-                    <i class="fas fa-coins colored mr-2"></i> %
-                  </a>
-                </p>
-                <p class="control is-expanded">
-                  <input
-                    type="number"
-                    class="input"
-                    disabled
-                    style="border: 1px solid"
-                    v-model="pet.gold_boost"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="column is-narrow">
-        <div class="field is-horizontal">
-          <div class="field-body">
-            <div class="field is-expanded">
-              <div class="field has-addons">
-                <p class="control">
-                  <a class="button is-static">
-                    Price
-                    <i class="fas fa-coins colored"></i>
-                  </a>
-                </p>
-                <p class="control is-expanded">
-                  <input
-                    type="number"
-                    class="input"
-                    disabled
-                    style="border: 1px solid"
-                    v-model="pet.price"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="column is-narrow">
-        <div class="field">
-          <b-switch
-            v-model="pet.for_sale"
-            @input="updateForSale(pet.id)"
-            true-value="1"
-            false-value="0"
-            >{{ trans.get("shop.for_sale") }}</b-switch
-          >
-        </div>
-      </div>
-      <button class="button ml-2" @click="editPet(pet)">
+   
+      <button class="button ml-2" @click="editMonster(monster)">
         <i class="fas fa-edit"></i>
       </button>
-      <button class="button is-danger ml-2" @click="deleteItem(pet.id)">
+      <button class="button is-danger ml-2" @click="deleteItem(monster.id)">
         <i class="fas fa-trash-alt"></i>
       </button>
     </div>
 
-    <b-modal
+
+   <b-modal
       :active.sync="isModalActive"
       has-modal-card
       trap-focus
@@ -149,11 +90,12 @@
       aria-role="dialog"
       aria-modal
     >
-      <form @submit.prevent="addPet">
+      <form @submit.prevent="addMonster">
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
             <p class="modal-card-title">
-              <i class="fas fa-dog mr-2"></i>{{ trans.get("pets.new_pet") }}
+              <i class="fas fa-dragon mr-2"></i
+              >{{ trans.get("monsters.new") }}
             </p>
           </header>
           <section class="modal-card-body">
@@ -166,17 +108,17 @@
                 :class="{ 'is-loading': isLoading }"
               >
                 <i class="fas fa-image mr-2"></i>
-                {{ trans.get("pets.image") + " *" }}
+                {{ trans.get("monsters.image") + " *" }}
               </button>
               <img
-                :src="'/img/pets/' + pet.image"
-                v-if="pet.image"
+                :src="'/img/pets/' + monster.image"
+                v-if="monster.image"
                 class="pet-selector"
               />
             </b-field>
-            <b-field :label="trans.get('pets.name')" class="mt-4">
+            <b-field :label="trans.get('monsters.name')" class="mt-4">
               <b-input
-                v-model="pet.name"
+                v-model="monster.name"
                 maxlength="40"
                 placeholder="Careful cat"
               ></b-input>
@@ -185,11 +127,11 @@
               <div class="column">
                 <b-field>
                   <template slot="label">
-                    {{ trans.get("pets.xx_boost") }}
-                    <i class="fas fa-heart colored"></i> %
+                    {{ trans.get("monsters.reward_xx") }}
+                    <i class="fas fa-fist-raised colored"></i>
                   </template>
                   <b-input
-                    v-model="pet.hp_boost"
+                    v-model="monster.reward_gold"
                     required
                     type="number"
                     step="0.1"
@@ -199,25 +141,11 @@
               <div class="column">
                 <b-field>
                   <template slot="label">
-                    {{ trans.get("pets.xx_boost") }}
-                    <i class="fas fa-fist-raised colored"></i> %
+                    {{ trans.get("monsters.reward_xx") }}
+                    <i class="fas fa-coins colored"></i>
                   </template>
                   <b-input
-                    v-model="pet.xp_boost"
-                    required
-                    type="number"
-                    step="0.1"
-                  ></b-input>
-                </b-field>
-              </div>
-              <div class="column">
-                <b-field>
-                  <template slot="label">
-                    {{ trans.get("pets.xx_boost") }}
-                    <i class="fas fa-coins colored"></i> %
-                  </template>
-                  <b-input
-                    v-model="pet.gold_boost"
+                    v-model="monster.reward_xp"
                     required
                     type="number"
                     step="0.1"
@@ -225,18 +153,6 @@
                 </b-field>
               </div>
             </div>
-            <b-field>
-              <template slot="label">
-                {{ trans.get("pets.price") }}
-                <i class="fas fa-coins colored"></i>
-              </template>
-              <b-input
-                v-model="pet.price"
-                required
-                type="number"
-                step="0.1"
-              ></b-input>
-            </b-field>
           </section>
           <footer class="modal-card-foot">
             <button
@@ -260,7 +176,8 @@
       </form>
     </b-modal>
 
-    <SelectPet v-model="pet.image" v-if="isImageModalActive"> </SelectPet>
+    <SelectPet v-model="monster.image" v-if="isImageModalActive">
+    </SelectPet>
   </div>
 </template>
 
@@ -270,11 +187,8 @@ import Utils from "../../utils.js";
 import SelectPet from "../utils/SelectPet.vue";
 
 export default {
-  props: ["code", "pets"],
+  props: ["code", "monsters"],
 
-  components: {
-    SelectPet,
-  },
   created() {},
   data: function () {
     return {
@@ -283,24 +197,25 @@ export default {
       isImageModalActive: false,
       images: null,
       edit: false,
-      pet: {
+      monster: {
         image: null,
-        hp_boost: 0,
-        gold_boost: 0,
-        xp_boost: 0,
-        price: 0,
+        name: "",
+        reward_xp: 0,
+        reward_gold: 0,
       },
     };
   },
+  components: {
+    SelectPet,
+  },
   methods: {
-    resetPet: function () {
+    resetMonster: function () {
       this.edit = false;
-      this.pet = {
+      this.monster = {
         image: null,
-        hp_boost: 0,
-        gold_boost: 0,
-        xp_boost: 0,
-        price: 0,
+        name: "",
+        reward_xp: 0,
+        reward_gold: 0,
       };
     },
     selectImage: function (e) {
@@ -308,32 +223,30 @@ export default {
       this.isLoading = true;
       this.isImageModalActive = true;
     },
-    updateForSale: function (id) {
-      axios.get("/classroom/pets/" + id + "/for-sale");
-    },
-    editPet: function (pet) {
+
+    editMonster: function (monster) {
       this.edit = true;
-      this.pet = pet;
+      this.monster = monster;
       this.isModalActive = true;
     },
     sendEdit: function () {
       axios
-        .patch("/classroom/" + this.code + "/pets", { pet: this.pet })
+        .patch("/classroom/" + this.code + "/monsters", { monster: this.monster })
         .then((response) => {
           this.isModalActive = false;
-          this.resetPet();
+          this.resetMonster();
         });
     },
-    addPet: function () {
-      if (this.pet.image == null) {
+    addMonster: function () {
+      if (this.monster.image == null) {
         this.$refs.selectbutton.classList.add("is-danger");
         return false;
       }
       axios
-        .post("/classroom/" + this.code + "/pets", { pet: this.pet })
+        .post("/classroom/" + this.code + "/monsters", { monster: this.monster })
         .then((response) => {
           this.isModalActive = false;
-          this.pets.push(response.data);
+          this.monsters.push(response.data);
           this.$forceUpdate();
         });
     },
@@ -354,12 +267,12 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          var index = this.pets.findIndex(function (pet, i) {
-            return pet.id === id;
+          var index = this.monsters.findIndex(function (monster, i) {
+            return monster.id === id;
           });
-          axios.delete("/classroom/pets/" + id).then((response) => {
+          axios.delete("/classroom/monsters/" + id).then((response) => {
             if (response.data === 1) {
-              this.pets.splice(index, 1);
+              this.monsters.splice(index, 1);
               this.$forceUpdate();
             }
           });

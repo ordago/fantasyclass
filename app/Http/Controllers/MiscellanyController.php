@@ -15,4 +15,9 @@ class MiscellanyController extends Controller
     {
         return view('miscellany.contribute');
     }
+
+    public function mobile()
+    {
+        return view('utils.mobile');
+    }
 }

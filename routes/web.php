@@ -240,7 +240,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/pets', 'PetsController@update');
         Route::delete('/pets/{id}', 'PetsController@destroy');
         Route::get('/pets/{id}/for-sale', 'PetsController@toggle');
-
+        
+        // Monsters
+        Route::get('/{code}/monsters', 'MonsterController@index');
+        Route::post('/{code}/monsters', 'MonsterController@store');
+        Route::patch('/{code}/monsters', 'MonsterController@update');
+        Route::delete('/monsters/{id}', 'MonsterController@destroy');
+        
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');
@@ -298,7 +304,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/chat/send2admin', 'UtilsController@send2admin');
     
     // Mobile
-    Route::get('/mobile', 'UtilsController@mobile');
+    Route::get('/mobile', 'MiscellanyController@mobile');
 
     
 });

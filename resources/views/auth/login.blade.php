@@ -60,6 +60,9 @@
                     </a>
                     @endif
                 </div>
+                <div class="has-text-centered">
+                    <a href="https://play.google.com/store/apps/details?id=app.fantasyclass.climentjoan" target="_blank"><img width="300px" alt="google play logo" src="/gplay.png" /></a>
+                </div>
                 <div class="d-flex align-items-center mt-4 fs-2 has-text-right">
                     <a target="_blank" href="https://twitter.com/GamificaOnline"><i class="fab fa-twitter"></i></a>
                     <i class="fal fa-ellipsis-v"></i>

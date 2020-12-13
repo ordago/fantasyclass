@@ -111,6 +111,7 @@ Vue.component('show-event', () => import('./components/event/ShowEvent.vue'));
 Vue.component('show-events', () => import('./components/event/ShowEvents.vue'));
 
 Vue.component('show-pets', () => import('./components/pet/ShowPets.vue'));
+Vue.component('show-monsters', () => import('./components/monster/ShowMonsters.vue'));
 
 Vue.component('edit-rules', () => import('./components/rules/EditRules.vue'));
 

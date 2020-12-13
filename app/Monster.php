@@ -11,5 +11,11 @@ class Monster extends Model
         'name',
         'hp',
         'classroom_id',
+        'reward_xp',
+        'reward_gold',
     ];
+
+    public function classroom() {
+        return $this->belongsTo(Classroom::class);
+    }
 }

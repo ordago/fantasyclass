@@ -42,6 +42,7 @@ return [
     'config' => 'Configura',
     'contribute' => 'Convida a cafè o cervesa!',
     'pets' => 'Mascotes',
+    'monsters' => 'Monstres',
     'mobile' => 'Versió mòbil',
     'battles' => 'Batalles',
 
