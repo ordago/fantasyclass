@@ -2,6 +2,7 @@
 ## v1.25 Beta (XX/12/2020)
 ### Added
 - Monsters and battles with monsters.
+- Assign pets directly to students.
 
 ### Changed
 - Better hp showing. Visual improvements in list mode.

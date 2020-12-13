@@ -29,7 +29,7 @@
           </div>
 
           <hp class="mt-2 mb-3" :hp="student.hp" :size="3"></hp>
-         
+
           <div class="score p-3 m-1 mt-4 border">
             <span>
               <i class="fas fa-fist-raised colored"></i>
@@ -414,7 +414,9 @@
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.pets')"
-          v-if="!admin && pets.length"
+          v-if="
+            (pets && pets.length) || (classroom.pets && classroom.pets.length)
+          "
           icon="dog"
           icon-pack="fad"
           class="p-2"
@@ -425,39 +427,78 @@
               {{ trans.get("shop.pet_warning") }}
             </div>
           </article>
-          <div v-for="pet in pets" :key="pet.id" class="p-2 m-2">
-            <div class="columns mb-0">
-              <div class="column is-narrow">
-                <img
-                  v-tippy="{
-                    theme: 'light bordered',
-                    placement: 'bottom',
-                    arrow: true,
-                  }"
-                  :content="getName(pet.name)"
-                  :src="'/img/pets/' + pet.image"
-                  class="pet-selector"
-                />
+          <div v-if="!admin">
+            <div v-for="pet in pets" :key="pet.id" class="p-2 m-2">
+              <div class="columns mb-0">
+                <div class="column is-narrow">
+                  <img
+                    v-tippy="{
+                      theme: 'light bordered',
+                      placement: 'bottom',
+                      arrow: true,
+                    }"
+                    :content="getName(pet.name)"
+                    :src="'/img/pets/' + pet.image"
+                    class="pet-selector"
+                  />
+                </div>
+                <div class="column">
+                  <span class="p-2"
+                    >{{ pet.hp_boost }}% <i class="fas fa-heart colored"></i
+                  ></span>
+                  <span class="ml-3 p-2"
+                    >{{ pet.xp_boost }}%
+                    <i class="fas fa-fist-raised colored"></i
+                  ></span>
+                  <span class="ml-3 p-2"
+                    >{{ pet.gold_boost }}% <i class="fas fa-coins colored"></i
+                  ></span>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-success" @click="buyPet(pet)">
+                    {{ trans.get("shop.buy") }} {{ pet.price }}
+                    <i class="fas fa-coins colored" style="z-index: 0"></i>
+                  </button>
+                </div>
               </div>
-              <div class="column">
-                <span class="p-2"
-                  >{{ pet.hp_boost }}% <i class="fas fa-heart colored"></i
-                ></span>
-                <span class="ml-3 p-2"
-                  >{{ pet.xp_boost }}% <i class="fas fa-fist-raised colored"></i
-                ></span>
-                <span class="ml-3 p-2"
-                  >{{ pet.gold_boost }}% <i class="fas fa-coins colored"></i
-                ></span>
-              </div>
-              <div class="column is-narrow">
-                <button class="button is-success" @click="buyPet(pet)">
-                  {{ trans.get("shop.buy") }} {{ pet.price }}
-                  <i class="fas fa-coins colored" style="z-index: 0"></i>
-                </button>
-              </div>
+              <hr class="mt-0" />
             </div>
-            <hr class="mt-0" />
+          </div>
+          <div v-else>
+            <div v-for="pet in classroom.pets" :key="pet.id" class="p-2 m-2">
+              <div class="columns mb-0">
+                <div class="column is-narrow">
+                  <img
+                    v-tippy="{
+                      theme: 'light bordered',
+                      placement: 'bottom',
+                      arrow: true,
+                    }"
+                    :content="getName(pet.name)"
+                    :src="'/img/pets/' + pet.image"
+                    class="pet-selector"
+                  />
+                </div>
+                <div class="column">
+                  <span class="p-2"
+                    >{{ pet.hp_boost }}% <i class="fas fa-heart colored"></i
+                  ></span>
+                  <span class="ml-3 p-2"
+                    >{{ pet.xp_boost }}%
+                    <i class="fas fa-fist-raised colored"></i
+                  ></span>
+                  <span class="ml-3 p-2"
+                    >{{ pet.gold_boost }}% <i class="fas fa-coins colored"></i
+                  ></span>
+                </div>
+                <div class="column is-narrow">
+                  <button class="button is-success" @click="assign(pet)">
+                    {{ trans.get("general.assign") }}
+                  </button>
+                </div>
+              </div>
+              <hr class="mt-0" />
+            </div>
           </div>
         </b-tab-item>
         <b-tab-item
@@ -1487,6 +1528,34 @@ export default {
     getName(name) {
       if (name) return name + " 🍅🍖";
       else return "🍅🍖";
+    },
+    assign(pet) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.assign"),
+        message: this.trans.get("shop.assign_text"),
+        confirmText: this.trans.get("general.assign"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/student/assignpet", {
+              pet: pet.id,
+              student: this.student.id,
+            })
+            .then((response) => {
+              this.$toast(response.data.message, { type: response.data.type });
+
+              if (response.data.type == "success") {
+                this.student.pets = response.data.pets;
+                this.student.boost = response.data.boost;
+                this.$forceUpdate();
+                this.$refs.showStd.$forceUpdate();
+              }
+            });
+        },
+      });
     },
     buyPet(pet) {
       this.$buefy.dialog.confirm({

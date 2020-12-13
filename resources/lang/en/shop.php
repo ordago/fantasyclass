@@ -30,6 +30,7 @@ return [
     'what_is' => 'What is that?',
     'buy_item' => 'Buy item',
     'buy_text' => 'Do you want to buy the item ',
+    'assign_text' => 'Do you want to assign the pet? It\'ll be free',
     'pet_warning' => 'You can only have one pet, if you buy one, you\'ll lose the pet you had',
 
     

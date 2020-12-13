@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
 use App\Mail\RegisterStudent;
+use App\Pet;
 use App\Student;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -171,6 +172,35 @@ class StudentController extends Controller
         return $student->addBehaviour($data['behaviour']);
     }
 
+    public function assignPet($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'pet' => ['numeric', 'required'],
+            'student' => ['numeric', 'required'],
+        ]);
+
+        $student = Student::findOrFail($data['student']);
+        if($class->id != $student->classroom->classroom_id)
+            abort(403);
+
+        if ($student->hp == 0)
+            return false;
+
+        $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->firstOrFail();
+
+        $student->pets()->sync([$pet->id]);
+
+        return [
+            "message" => " " . __('success_error.equipment_success'),
+            "icon" => "check",
+            "type" => "success",
+            "pets" => $student->fresh()->pets,
+            "boost" => $student->fresh()->getBoost(),
+        ];
+    }
+
     public function show($code, $id)
     {
         $student = Student::where('id', $id)->with(['equipment', 'pets', 'badges', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])->first();
@@ -178,7 +208,7 @@ class StudentController extends Controller
         if ($student->classroom->classroom->code != $code)
             abort(404);
         $admin = true;
-        $class = Classroom::where('code', $code)->with('badges', 'theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('pets', 'badges', 'theme', 'characterTheme.characters')->firstOrFail();
         $this->authorize('view', $class);
 
         $items = DB::table('students')

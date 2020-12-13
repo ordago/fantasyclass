@@ -279,8 +279,8 @@
           </p>
         </figure>
         <div class="media-content">
-          <div class="content">
-            <div class="cursor-pointer" @click="redirect(student.id)">
+          <div class="content cursor-pointer"  @click="redirect(student.id)">
+            <div class="">
               <div class="">
                 <strong>{{ student.name }}</strong>
                 <small>@{{ student.username }}</small>

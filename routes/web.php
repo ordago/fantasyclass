@@ -83,6 +83,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/student/inventory', 'InventoryController@update');
         Route::delete('/{code}/student/{id}', 'StudentController@destroy');
         Route::post('/{code}/student/show', 'StudentController@showAsStudent');
+        Route::post('/{code}/student/assignpet', 'StudentController@assignPet');
 
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
