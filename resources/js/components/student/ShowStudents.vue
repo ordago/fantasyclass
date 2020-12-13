@@ -288,7 +288,7 @@
             </div>
             <div class="columns">
               <div class="column">
-                <hp :hp="student.hp" size="2"></hp>
+                <hp :hp="student.hp" :size="2"></hp>
               </div>
               <div class="column">
                 <div class="">

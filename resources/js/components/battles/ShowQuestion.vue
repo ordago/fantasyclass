@@ -124,9 +124,11 @@ export default {
       this.$parent.$parent.$refs.student1.$el.classList.remove(
         "animate__bounce"
       );
-      this.$parent.$parent.$refs.student2.$el.classList.remove(
-        "animate__bounce"
-      );
+      if(this.$parent.$parent.type != 3) {
+        this.$parent.$parent.$refs.student2.$el.classList.remove(
+          "animate__bounce"
+        );
+      }
 
       this.reactiveQuestion = this.$parent.$parent.nextQuestion();
       if (this.reactiveQuestion) this.initQuestion();

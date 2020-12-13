@@ -103,6 +103,22 @@ class ClassroomsStudentController extends Controller
                 ->all();
         });
 
+        $rating = 0;
+        $count = 0;
+        foreach ($class->challengeGroups as $challengegr) {
+            foreach ($challengegr->challenges as $challenge) {
+                if($challenge->rating) {
+                    $rating += $challenge->rating;
+                    $count++;
+                }
+            }
+        }
+        if($count == 0) {
+            $rating = 0;
+        } else $rating = $rating / $count;
+
+        $monsters = $class->monsters;
+
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
@@ -115,7 +131,7 @@ class ClassroomsStudentController extends Controller
         $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . env('CHATBRO_KEY'));
         $showChat = settings()->get('show_chat', false);
 
-        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'showChat'));
+        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
     public function challenges($code)

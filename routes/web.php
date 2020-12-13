@@ -44,6 +44,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('{code}/clone', 'ClassroomsController@clone');
         Route::get('/{code}/regenerate', 'ClassroomsController@regenerate');
         Route::delete('{code}', 'ClassroomsController@destroy');
+        Route::post('/{code}/reward', 'ClassroomsController@reward');
 
         // Cards
         Route::delete('/card/{id}', 'CardsController@destroy');
@@ -246,6 +247,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/monsters', 'MonsterController@store');
         Route::patch('/{code}/monsters', 'MonsterController@update');
         Route::delete('/monsters/{id}', 'MonsterController@destroy');
+        Route::post('/monsters/fight', 'MonsterController@battle');
         
         // Utils
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');

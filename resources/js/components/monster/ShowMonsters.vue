@@ -1,14 +1,13 @@
 <template>
   <div class="p-2">
-     <button class="button is-link mb-5"  @click="isModalActive = true">
+    <button class="button is-link mb-5" @click="isModalActive = true">
       <i class="fas fa-dragon mr-2"></i>
       {{ trans.get("monsters.new") }}
     </button>
 
-        <div
+    <div
       v-for="monster in monsters"
-      class="columns is-multiline is-variable is-1 has-all-centered p-3"
-      style="border-bottom: 1px dashed #999"
+      class="columns is-multiline is-variable is-1 has-all-centered p-3 has-hr"
       v-bind:key="monster.id"
     >
       <div class="column is-narrow is-relative">
@@ -23,6 +22,9 @@
           class=""
           style="margin-top: -20px"
         />
+      </div>
+      <div class="column is-narrow" style="width: 200px">
+        <hp :size="2" :hp="monster.hp"></hp>
       </div>
       <div class="column is-narrow">
         <div class="field is-horizontal">
@@ -72,7 +74,7 @@
           </div>
         </div>
       </div>
-   
+
       <button class="button ml-2" @click="editMonster(monster)">
         <i class="fas fa-edit"></i>
       </button>
@@ -81,8 +83,7 @@
       </button>
     </div>
 
-
-   <b-modal
+    <b-modal
       :active.sync="isModalActive"
       has-modal-card
       trap-focus
@@ -94,8 +95,7 @@
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
             <p class="modal-card-title">
-              <i class="fas fa-dragon mr-2"></i
-              >{{ trans.get("monsters.new") }}
+              <i class="fas fa-dragon mr-2"></i>{{ trans.get("monsters.new") }}
             </p>
           </header>
           <section class="modal-card-body">
@@ -124,6 +124,22 @@
                 placeholder="Careful cat"
               ></b-input>
             </b-field>
+            <div class="my-2" v-if="edit">
+              <b-field>
+                <template slot="label">
+                  {{ trans.get("monsters.hp") }}
+                  <i class="fas fa-heart colored"></i>
+                </template>
+                <b-input
+                  v-model="monster.hp"
+                  required
+                  type="number"
+                  :max="100"
+                  :min="0"
+                  step="1"
+                ></b-input>
+              </b-field>
+            </div>
             <div class="columns">
               <div class="column">
                 <b-field>
@@ -177,8 +193,7 @@
       </form>
     </b-modal>
 
-    <SelectPet v-model="monster.image" v-if="isImageModalActive">
-    </SelectPet>
+    <SelectPet v-model="monster.image" v-if="isImageModalActive"> </SelectPet>
   </div>
 </template>
 
@@ -232,7 +247,9 @@ export default {
     },
     sendEdit: function () {
       axios
-        .patch("/classroom/" + this.code + "/monsters", { monster: this.monster })
+        .patch("/classroom/" + this.code + "/monsters", {
+          monster: this.monster,
+        })
         .then((response) => {
           this.isModalActive = false;
           this.resetMonster();
@@ -244,7 +261,9 @@ export default {
         return false;
       }
       axios
-        .post("/classroom/" + this.code + "/monsters", { monster: this.monster })
+        .post("/classroom/" + this.code + "/monsters", {
+          monster: this.monster,
+        })
         .then((response) => {
           this.isModalActive = false;
           this.monsters.push(response.data);

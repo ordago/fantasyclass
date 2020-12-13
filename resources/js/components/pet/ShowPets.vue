@@ -7,8 +7,7 @@
 
     <div
       v-for="pet in pets"
-      class="columns is-multiline is-variable is-1 has-all-centered p-3"
-      style="border-bottom: 1px dashed #999"
+      class="columns is-multiline is-variable is-1 has-all-centered p-3 has-hr"
       v-bind:key="pet.id"
     >
       <div class="column is-narrow is-relative">

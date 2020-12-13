@@ -82,7 +82,7 @@
             </article>
           </div>
           
-          <hp :hp="student.hp" size="2" class="mb-3"></hp>
+          <hp :hp="student.hp" :size="2" class="mb-3"></hp>
 
           <div class="my-1 has-text-centered">
             <div class="w-100 is-flex has-all-centered">

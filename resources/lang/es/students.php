@@ -68,6 +68,8 @@ return [
     'comission' => 'Comisión',
     'error' => '¿Intentas hacer alguna cosa ilegal o sin sentido? :(',
     'details' => 'Detalles',
+    'rating' => 'Valoración de profes (desafíos)',
+    'vote' => 'Sin valoración, vota los desafíos propuestos',
 
     'log_behaviour' => 'Comportamiento',
     'log_teacher' => 'Modificación manual',

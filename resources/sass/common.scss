@@ -3,6 +3,20 @@
       //   overflow: auto;
   }
 
+  .has-hr {
+    border-bottom: 1px dashed rgb(153, 153, 153);
+  }
+
+  .monsters-bar {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: white;
+      padding: 10px;
+      border-bottom-left-radius: 50%;
+      z-index: 10;
+  }
+
   /* Rubrics */
   .rubricRow {
     overflow-x: auto;

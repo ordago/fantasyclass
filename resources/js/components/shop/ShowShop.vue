@@ -21,8 +21,7 @@
 
         <div
           v-for="item in items"
-          class="columns is-multiline is-variable is-1 has-all-centered p-3"
-          style="border-bottom: 1px dashed #999"
+          class="columns is-multiline is-variable is-1 has-all-centered p-3 has-hr"
           v-bind:key="item.id"
         >
           <div class="column is-narrow is-relative">

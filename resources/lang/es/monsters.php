@@ -14,5 +14,6 @@ return [
       'reward' => 'Recompensas para cada estudiante al vencer',
       'reward_xx' => 'Recompensa ',
       'image' => 'Imagen',
+      'hp' => 'Puntos de vida restantes',
 
 ];

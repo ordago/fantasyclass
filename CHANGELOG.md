@@ -1,7 +1,7 @@
 # Changelog
 ## v1.25 Beta (XX/12/2020)
 ### Added
-- Monsters.
+- Monsters and battles with monsters.
 
 ### Changed
 - Better hp showing. Visual improvements in list mode.

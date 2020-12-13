@@ -68,6 +68,8 @@ return [
     'comission' => 'Comissió',
     'error' => 'Intentes fer alguna cosa il·legal o sense sentit? :(',
     'details' => 'Detalls',
+    'rating' => 'Valoració dels profes (reptes)',
+    'vote' => 'Sense valoració, vota els reptes proposats',
 
     'log_behaviour' => 'Comportament',
     'log_teacher' => 'Modificació manual',

@@ -28,7 +28,7 @@
             </div>
           </div>
 
-          <hp class="mt-2 mb-3" :hp="student.hp" size="3"></hp>
+          <hp class="mt-2 mb-3" :hp="student.hp" :size="3"></hp>
          
           <div class="score p-3 m-1 mt-4 border">
             <span>

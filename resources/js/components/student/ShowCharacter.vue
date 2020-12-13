@@ -88,15 +88,15 @@
 export default {
   props: ["student", "classroom"],
   created() {
-    if(!this.student.grouplogo && this.student.grouplogopublic)
-      this.student.grouplogo = this.student.grouplogopublic
+    if (!this.student.grouplogo && this.student.grouplogopublic)
+      this.student.grouplogo = this.student.grouplogopublic;
   },
   data: function () {
     return {};
   },
   methods: {
     petMessage(pet) {
-      let name = pet.name ? '<strong>' + pet.name + ":</strong> " : "";
+      let name = pet.name ? "<strong>" + pet.name + ":</strong> " : "";
 
       name +=
         pet.hp_boost +
@@ -135,7 +135,7 @@ export default {
     }
 }
 
-.pet-character:hover {
+.pet-character:hover, .pet-battle:hover  {
   animation: none;
 }
 .pet-character {
@@ -145,6 +145,20 @@ export default {
   animation-name: hmovement;
   animation-duration: 10s;
   animation-iteration-count: infinite;
+}
+.pet-battle {
+  animation-name: hmovement;
+  animation-duration: 4s;
+  animation-iteration-count: infinite;
+}
+.pet-dead {
+  -webkit-transition: all 0.5s ease 0.5s; /* Para Chrome y Safari */
+  -moz-transition: all 0.5s ease 0.5s; /* Para Mozilla */
+  -o-transition: all 0.5s ease 0.5s; /* Para Ópera */
+  -ms-transition: all 0.5s ease 0.5s; /* Para Explorer */
+  transition: all 0.5s ease 0.5s;
+  transform: rotate(180deg);
+  top: 20px;
 }
 
 </style>

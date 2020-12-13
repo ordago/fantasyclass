@@ -17,7 +17,7 @@
       </div>
       <div class="content mt-3">
         
-        <hp class="mb-3" :hp="student.hp" size="2" :icon="true"></hp>
+        <hp class="mb-3" :hp="student.hp" :size="2" :icon="true"></hp>
         
         <div class="is-flex is-relative has-all-centered">
           <div class="w-100 is-realative">

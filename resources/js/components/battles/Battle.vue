@@ -63,9 +63,15 @@
             {{ getMessage() }}
           </div>
         </article>
-        <article class="message is-warning" v-if="classroom.monsters.length == 0 && type == 3">
+        <article
+          class="message is-warning"
+          v-if="classroom.monsters.length == 0 && type == 3"
+        >
           <div class="message-body">
-            {{ trans.get('battles.monster_empty') }}: <a :href="'/classroom/' + classroom.code + '/monsters'">{{ trans.get('menu.monsters') }}</a>
+            {{ trans.get("battles.monster_empty") }}:
+            <a :href="'/classroom/' + classroom.code + '/monsters'">{{
+              trans.get("menu.monsters")
+            }}</a>
           </div>
         </article>
       </b-step-item>
@@ -76,7 +82,7 @@
         :clickable="true"
       >
         <h3 class="m-2" v-if="type == 0">
-          {{ trans.get("battles.loss_fail") }}
+          <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
         </h3>
         <div class="columns m-2" v-if="type == 0">
           <div class="column is-narrow">
@@ -149,7 +155,84 @@
             </div>
           </div>
         </div>
-
+        <h3 class="m-2" v-if="type == 3">
+          <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
+        </h3>
+        <div class="columns m-2" v-if="type == 3">
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-heart colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        max="0"
+                        v-model="hp_loss"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-fist-raised colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        max="0"
+                        v-model="xp_loss"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <h3 class="m-2" v-if="type == 3">
+          <i class="fas fa-dragon"></i>
+          {{ trans.get("battles.monster_hp_loss") }}
+        </h3>
+        <div class="column is-narrow" v-if="type == 3">
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field is-expanded">
+                <div class="field has-addons">
+                  <p class="control">
+                    <a class="button is-danger">
+                      <i class="fas fa-fist-raised colored"></i>
+                    </a>
+                  </p>
+                  <p class="control is-expanded">
+                    <input
+                      type="number"
+                      class="input"
+                      max="0"
+                      v-model="monster_hp_loss"
+                    />
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         <h3 class="m-2" v-if="type == 1">
           {{ trans.get("battles.reward") }}
         </h3>
@@ -168,7 +251,7 @@
                       <input
                         type="number"
                         class="input"
-                        max="0"
+                        min="0"
                         v-model="xp_reward"
                       />
                     </p>
@@ -191,7 +274,7 @@
                       <input
                         type="number"
                         class="input"
-                        max="0"
+                        min="0"
                         v-model="gold_reward"
                       />
                     </p>
@@ -340,9 +423,46 @@
         :visible="type == 3"
         :label="trans.get('battles.monster')"
         :clickable="true"
-        @click="loadMonsters"
       >
-        <a :href="'/classroom/' + classroom.code + '/monsters'" class="button is-info">
+        <div
+          v-for="monster in classroom.monsters"
+          :key="monster.id"
+          @click="monsterSelected = monster"
+          class="my-3 monster-select cursor-pointer"
+          :class="{
+            'has-background-info':
+              monsterSelected && monster.id == monsterSelected.id,
+            'has-hr':
+               monster.hp > 0,
+          }"
+        >
+          <div
+            v-if="monster.hp > 0"
+            class="columns"
+          >
+            <div class="column is-narrow">
+              <img
+                :src="'/img/pets/' + monster.image"
+                class="pet-selector mt-2"
+              />
+            </div>
+            <div class="column is-narrow is-flex has-all-centered">
+              <span>{{ monster.name }}</span>
+            </div>
+            <div class="column">
+              <hp class="mt-3" :hp="monster.hp"></hp>
+            </div>
+            <div class="column is-narrow is-flex has-all-centered">
+              {{ monster.reward_xp }}
+              <i class="fas fa-fist-raised colored"></i> /
+              {{ monster.reward_gold }} <i class="fas fa-coins colored"></i>
+            </div>
+          </div>
+        </div>
+        <a
+          :href="'/classroom/' + classroom.code + '/monsters'"
+          class="button is-info mt-5"
+        >
           {{ trans.get("monsters.new") }}
         </a>
       </b-step-item>
@@ -468,7 +588,7 @@
                   {{ index + 1 }}
                 </span>
               </div>
-              <div v-if="type == 0">
+              <div v-if="(type == 0 || type) == 3 && !finished">
                 <button
                   @click="selectStudent(1)"
                   class="button is-primary my-2"
@@ -488,7 +608,7 @@
               <button
                 class="button is-primary is-size-2"
                 v-if="!started"
-                :disabled="!student1 || !student2 || student1.id == student2.id"
+                :disabled="cantStart"
                 @click="startBattle"
               >
                 <i class="fas fa-swords colored mr-2 faa-pulse animated"></i
@@ -556,16 +676,25 @@
                 <div v-if="finished" class="has-text-centered">
                   <h1
                     class="is-size-1 animate__animated animate__rubberBand animate__infinite"
+                    v-if="type != 3 || (type == 3 && monsterSelected.hp == 0)"
                   >
                     {{ trans.get("battles.well_done") }}
                     <span v-if="winnerElem">{{ winnerElem.name }}</span>
                   </h1>
+                  <div v-else>Loose</div>
                   <button
                     class="button is-success mt-2"
                     v-if="winnerElem"
                     @click="sendReward"
                   >
                     {{ trans.get("battles.give_reward") }} {{ winnerElem.name }}
+                  </button>
+                  <button
+                    class="button is-success mt-2"
+                    v-if="type == 3 && monsterSelected.hp == 0"
+                    @click="sendReward"
+                  >
+                    {{ trans.get("battles.give_reward") }}
                   </button>
                   <a
                     class="button mt-2"
@@ -637,6 +766,15 @@
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
+              <div ref="monsterdiv" v-if="type == 3 && monsterSelected">
+                <img
+                  ref="monster"
+                  :src="'/img/pets/' + monsterSelected.image"
+                  width="250px"
+                  class="pet-selector pet-battle mt-2"
+                />
+                <hp :hp="monsterSelected.hp" :size="2"></hp>
+              </div>
             </div>
           </div>
         </section>
@@ -670,6 +808,20 @@ import CountDown from "../utils/CountDown.vue";
 export default {
   components: { ShowQuestion, CountDown },
   props: ["classroom"],
+  computed: {
+    cantStart() {
+      if (this.type == 0 || this.type == 1) {
+        return (
+          !this.student1 ||
+          !this.student2 ||
+          this.student1.id == this.student2.id
+        );
+      } else if (this.type == 3) {
+        return !this.student1;
+      }
+      this.$forceUpdate();
+    },
+  },
   mounted() {
     this.students = _.shuffle(this.classroom.students);
     this.classroom.grouping[0].groups.forEach((element) => {
@@ -687,6 +839,7 @@ export default {
       activeStep: 0,
       type: 0,
       hp_loss: -5,
+      monster_hp_loss: -10,
       xp_loss: -5,
       gold_loss: -5,
       hp_transfer: 0,
@@ -707,7 +860,7 @@ export default {
       flip2: false,
       move1: false,
       move2: false,
-      turn: null,
+      turn: 0,
       started: false,
       finished: false,
       lastAnswer1: false,
@@ -719,18 +872,33 @@ export default {
       winnerElem: null,
       showTimer: false,
       timer_default: 30,
-      monster: null,
+      monsterSelected: null,
+      classroom_max_fails: 0,
+      classroom_answers: [],
     };
   },
   methods: {
-    loadMonsters() {},
     sendReward() {
-      if (this.winner) {
+      if (this.type == 1 && this.winner) {
         axios
           .post("/classroom/" + this.classroom.code + "/group/reward", {
             group: this.winnerElem.id,
             xp: this.xp_reward,
             gold: this.gold_reward,
+          })
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.add_success"), {
+              type: "success",
+            });
+            setTimeout(() => {
+              location.href = "/classroom/" + this.classroom.code;
+            }, 1000);
+          });
+      } else if (this.type == 3) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/reward", {
+            xp: this.monsterSelected.reward_xp,
+            gold: this.monsterSelected.reward_gold,
           })
           .then((response) => {
             this.$toast(this.trans.get("success_error.add_success"), {
@@ -746,7 +914,11 @@ export default {
       if (slot == 1) {
         if (this.type == 0) {
           return this.student1.answers;
-        } else return this.group1.answers;
+        } else if (this.type == 3) {
+          return this.classroom_answers;
+        } else if (this.type == 1) {
+          return this.group1.answers;
+        }
       } else {
         if (this.type == 0) {
           return this.student2.answers;
@@ -757,7 +929,11 @@ export default {
       if (slot == 1) {
         if (this.type == 0) {
           return parseInt(this.student1.max_fails);
-        } else return parseInt(this.group1.max_fails);
+        } else if (this.type == 1) {
+          return parseInt(this.group1.max_fails);
+        } else if (this.type == 3) {
+          return parseInt(this.classroom_max_fails);
+        }
       } else {
         if (this.type == 0) {
           return parseInt(this.student2.max_fails);
@@ -783,9 +959,67 @@ export default {
         this.winner(null);
       }
     },
+    winnerClass() {
+      this.finished = true;
+      if (this.monsterSelected.hp == 0) {
+        this.$refs.monster.classList.remove("pet-battle");
+        this.$refs.monster.classList.add("pet-dead");
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 1.0 },
+        });
+      } else if (this.classroom_max_fails == 0) {
+        this.$refs.monster.classList.add("animate__fast");
+        this.$refs.monster.classList.add("animate__bounce");
+        this.$refs.monster.classList.add("animate__infinite");
+      }
+    },
     winner(group) {
       this.finished = true;
       this.winnerElem = group;
+    },
+    answerClass(correct, next = true) {
+      if (!correct) {
+        this.student1.hp += parseInt(this.hp_loss);
+        this.updateProp(this.student1.id, "hp", parseInt(this.hp_loss));
+        if (this.max_fails != 0) this.classroom_max_fails -= 1;
+        if (this.classroom_max_fails == 0 && this.max_fails != 0) {
+          this.$refs.student1.$el.classList.add("animate__rotateOut");
+          this.classroom_answers.push(correct);
+          this.winnerClass();
+          return true;
+        }
+      } else {
+        this.monsterSelected.hp = Math.max(
+          this.monsterSelected.hp + parseInt(this.monster_hp_loss),
+          0
+        );
+        let options = {
+          id: this.monsterSelected.id,
+          value: parseInt(this.monster_hp_loss),
+        };
+        axios.post("/classroom/monsters/fight", options);
+
+        this.$refs.monster.classList.add("shake-slow");
+        this.$refs.monster.classList.add("shake-constant");
+        this.$refs.monster.classList.add("shake-constant--hover");
+        setTimeout(() => {
+          this.$refs.monster.classList.remove("shake-constant");
+        }, 1000);
+
+        if (this.monsterSelected.hp == 0) {
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 1.0 },
+          });
+          this.winnerClass();
+          return true;
+        }
+      }
+      this.classroom_answers.push(correct);
+      return false;
     },
     answerGroup(correct, next = true) {
       let group_1;
@@ -829,20 +1063,23 @@ export default {
       if (!correct) {
         if (this.max_fails != 0) student_1.max_fails -= 1;
 
-        student_1.hp = Math.max(student_1.hp + this.hp_loss, 0);
-        this.updateProp(student_1.id, "hp", this.hp_loss);
-        student_1.gold = Math.max(student_1.gold + this.gold_loss, 0);
-        this.updateProp(student_1.id, "gold", this.gold_loss);
-        student_1.xp = Math.max(student_1.xp + this.xp_loss, 0);
-        this.updateProp(student_1.id, "xp", this.xp_loss);
+        student_1.hp = Math.max(student_1.hp + parseInt(this.hp_loss), 0);
+        this.updateProp(student_1.id, "hp", parseInt(this.hp_loss));
+        student_1.gold = Math.max(student_1.gold + parseInt(this.gold_loss), 0);
+        this.updateProp(student_1.id, "gold", parseInt(this.gold_loss));
+        student_1.xp = Math.max(student_1.xp + parseInt(this.xp_loss), 0);
+        this.updateProp(student_1.id, "xp", parseInt(this.xp_loss));
 
         if (student_2.lastAnswer) {
-          student_2.hp = Math.min(student_2.hp + this.hp_transfer, 100);
-          this.updateProp(student_2.id, "hp", this.hp_transfer);
-          student_2.xp += this.xp_transfer;
-          this.updateProp(student_2.id, "xp", this.xp_transfer);
+          student_2.hp = Math.min(
+            student_2.hp + parseInt(this.hp_transfer),
+            100
+          );
+          this.updateProp(student_2.id, "hp", parseInt(this.hp_transfer));
+          student_2.xp += parseInt(this.xp_transfer);
+          this.updateProp(student_2.id, "xp", parseInt(this.xp_transfer));
           student_2.gold += this.gold_transfer;
-          this.updateProp(student_2.id, "gold", this.gold_transfer);
+          this.updateProp(student_2.id, "gold", parseInt(this.gold_transfer));
         }
 
         if (student_1.max_fails == 0 && this.max_fails != 0) {
@@ -872,8 +1109,10 @@ export default {
       let gameOver;
       if (this.type == 0) {
         gameOver = this.answerIndividual(correct, next);
-      } else {
+      } else if (this.type == 1) {
         gameOver = this.answerGroup(correct, next);
+      } else if (this.type == 3) {
+        gameOver = this.answerClass(correct, next);
       }
       if (correct) {
         if (this.turn == 0) {
@@ -890,9 +1129,23 @@ export default {
       } else {
         if (!gameOver) {
           if (this.turn == 1) {
-            this.move2 = true;
+            this.$refs.student2.$el.classList.add("shake-slow");
+            this.$refs.student2.$el.classList.add("shake-constant");
+            this.$refs.student2.$el.classList.add("shake-constant--hover");
+            setTimeout(() => {
+              this.$refs.student2.$el.classList.remove("shake-slow");
+              this.$refs.student2.$el.classList.remove("shake-constant");
+              this.$refs.student2.$el.classList.remove("shake-constant--hover");
+            }, 2000);
           } else {
-            this.move1 = true;
+            this.$refs.student1.$el.classList.add("shake-slow");
+            this.$refs.student1.$el.classList.add("shake-constant");
+            this.$refs.student1.$el.classList.add("shake-constant--hover");
+            setTimeout(() => {
+              this.$refs.student1.$el.classList.remove("shake-slow");
+              this.$refs.student1.$el.classList.remove("shake-constant");
+              this.$refs.student1.$el.classList.remove("shake-constant--hover");
+            }, 2000);
           }
         }
         this.audioKO.play();
@@ -911,12 +1164,14 @@ export default {
           }
         });
       }
-      if(this.type == 3 && !this.monster)
-        return false;
+      if (this.type == 3 && !this.monsterSelected) return false;
+      if (this.type == 3) this.classroom_max_fails = this.max_fails;
       this.isBattleActive = true;
     },
     startBattle() {
-      Math.random() < 0.5 ? (this.turn = 0) : (this.turn = 1);
+      if (this.type != 3) {
+        Math.random() < 0.5 ? (this.turn = 0) : (this.turn = 1);
+      }
       this.started = true;
       if (this.selectedBank) this.currentQuestion = this.questions.pop();
     },
@@ -944,7 +1199,11 @@ export default {
           this.selectStudent(2);
         }
       }
-      this.turn = (this.turn + 1) % 2;
+      if (this.type != 3) {
+        this.turn = (this.turn + 1) % 2;
+      } else {
+        this.selectStudent(1);
+      }
       this.answered = false;
       return this.currentQuestion;
     },
@@ -969,7 +1228,7 @@ export default {
     },
     selectStudent(slot) {
       setTimeout(this.reset, 1000);
-      if (this.type == 0) {
+      if (this.type == 0 || this.type == 3) {
         if (slot == 1) {
           this.student1 = this.students.pop();
         } else {
@@ -1012,10 +1271,10 @@ export default {
           return this.trans.get("battles.groupVSgroup");
           break;
         case 2:
-          return "Estudiantes se enfrentarán a monstruos ...";
+          return "";
           break;
         case 3:
-          return "La classe se enfrentará a monstruos ...";
+          return this.trans.get("battles.allVSmonsters");
           break;
       }
     },
@@ -1023,6 +1282,11 @@ export default {
 };
 </script>
 <style>
+@import "~csshake";
 @import "~animate.css";
+.monster-select:hover,
+.monster-selected {
+  background-color: skyblue;
+}
 </style>
 

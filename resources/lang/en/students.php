@@ -66,6 +66,8 @@ return [
     'comission' => 'Comission',
     'error' => 'An error was ocurred, do you try to do something illegal or without sense? :(',
     'details' => 'Details',
+    'rating' => 'Teacher rating (challenges)',
+    'vote' => 'Without rating, vote the proposed challenges',
 
     'log_behaviour' => 'Behaviour',
     'log_teacher' => 'Manual modification',

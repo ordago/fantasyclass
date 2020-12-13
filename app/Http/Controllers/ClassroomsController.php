@@ -76,6 +76,20 @@ class ClassroomsController extends Controller
         return redirect('/classroom/' . $code);
     }
 
+    public function reward($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        foreach ($class->students as $student) {
+            if ($student->hp > 0) {
+                if (request()->xp)
+                    $student->setProperty('xp', request()->xp, true, 'battle');
+                if (request()->gold)
+                    $student->setProperty('gold', request()->gold, true, 'battle');
+            }
+        }
+    }
+
     public function clone($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
@@ -84,7 +98,7 @@ class ClassroomsController extends Controller
         $new = $class->replicate();
         $new->code = $this->reference(8);
         $new->enrollment_code = $this->reference(5);
-        $new->name = $new->name." (copy)";
+        $new->name = $new->name . " (copy)";
 
         $new->push();
 
@@ -124,9 +138,8 @@ class ClassroomsController extends Controller
                     ->withProperties($props)
                     ->toMediaCollection($media->collection_name);
             });
-
         }
-        
+
         // Clone rules
         $newRules = $class->rules->replicate();
         $newRules->classroom_id = $new->id;
@@ -138,7 +151,7 @@ class ClassroomsController extends Controller
             $newMap->classroom_id = $new->id;
             $newMap->push();
         }
-        
+
         // Clone challenge groups and challenges
         foreach ($class->challengeGroups as $challengeGroup) {
             $newChGr = $challengeGroup->replicate();
@@ -160,7 +173,6 @@ class ClassroomsController extends Controller
                     $newAttachment->challenge_id = $newChallenge->id;
                     $newAttachment->push();
                 }
-
             }
         }
 
@@ -201,7 +213,7 @@ class ClassroomsController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $allSettings = settings()->all();
-        
+
         settings()->setExtraColumns(['classroom_id' => $new->id]);
         foreach ($allSettings as $key => $value) {
             settings()->set($key, $value);
@@ -270,7 +282,7 @@ class ClassroomsController extends Controller
             'name' => 'General',
             'classroom_id' => $classroom->id,
         ]);
-        
+
         Rules::create([
             'classroom_id' => $classroom->id,
             'content' => file_get_contents(public_path() . '/rules/' . auth()->user()->locale . '.txt')
@@ -318,7 +330,6 @@ class ClassroomsController extends Controller
         $student->setBasicEquipment();
 
         return redirect('/classroom');
-
     }
 
     public function edit($code)
@@ -376,14 +387,14 @@ class ClassroomsController extends Controller
                 $pending->add(['student' => $student, 'cards' => $cards]);
         }
 
-        $chat['title'] = sha1(env('CHAT_KEY').$class->id); 
-        $chat['url'] = env('APP_URL_SHORT'); 
+        $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
+        $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
-        $chat['id'] = '999999-'.auth()->user()->id;
+        $chat['id'] = '999999-' . auth()->user()->id;
         $chat['name'] = 'Teacher';
-        $chat['avatar'] = env('APP_URL').'/img/icons/teacher.svg';
+        $chat['avatar'] = env('APP_URL') . '/img/icons/teacher.svg';
 
-        $chat['signature'] = md5(env('APP_URL_SHORT').$chat['id'].$chat['name'].$chat['avatar'].'delete'.env('CHATBRO_KEY')); 
+        $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . 'delete' . env('CHATBRO_KEY'));
 
         $showChat = settings()->get('show_chat', false);
 
