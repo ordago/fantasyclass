@@ -18,11 +18,8 @@
       sort-icon="arrow-up"
     >
       <template slot-scope="props">
-        <b-table-column field="icon" :label="trans.get('badges.icon')" centered>
-          <span class="tag" v-if="props.row.type == 0">
-            <i class="fs-2" :class="props.row.icon"></i>
-          </span>
-          <img v-else :src="props.row.image" width="50px">
+        <b-table-column field="icon" style="width:80px" :label="trans.get('badges.icon')" centered>
+          <ShowBadge :admin="false" :badge="props.row"></ShowBadge>
         </b-table-column>
 
         <b-table-column
@@ -93,6 +90,9 @@
 </template>
 
 <script>
+
+import ShowBadge from "./ShowBadge.vue";
+
 export default {
   props: ["badges", "code"],
   created() {
@@ -112,6 +112,9 @@ export default {
       sortIcon: "arrow-down",
       sortIconSize: "is-small",
     };
+  },
+  components: {
+    ShowBadge,
   },
   methods: {
     confirmDelete(badgeId) {

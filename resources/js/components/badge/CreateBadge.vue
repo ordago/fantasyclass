@@ -15,7 +15,7 @@
           </div>
           <div v-else>
             <croppa
-              class="p-2 card-shadow-s"
+              class="card-shadow-s"
               v-model="image"
               :width="80"
               :height="80"

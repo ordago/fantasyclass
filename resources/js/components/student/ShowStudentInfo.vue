@@ -787,38 +787,12 @@
         >
           <div v-if="admin" class="is-flex pl-4">
             <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
-              <div
-                @click="toggle(badge.id)"
-                class="personalBadge"
-                v-tippy
-                :content="
-                  '<h1>' +
-                  badge.title +
-                  '</h1><h3>' +
-                  badge.description +
-                  '</h3>'
-                "
-                :class="{ notColored: findInStudent(badge.id) }"
-              >
-                <i :class="badge.icon"></i>
-              </div>
+              <ShowBadge :student="student" :badge="badge" :admin="true"></ShowBadge>
             </div>
           </div>
           <div class="is-flex pl-4" v-if="!admin">
             <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
-              <div
-                class="personalBadge"
-                v-tippy
-                :content="
-                  '<h1>' +
-                  badge.title +
-                  '</h1><h3>' +
-                  badge.description +
-                  '</h3>'
-                "
-              >
-                <i :class="badge.icon"></i>
-              </div>
+              <ShowBadge :student="student" :badge="badge" :admin="false"></ShowBadge>
             </div>
           </div>
         </b-tab-item>
@@ -1116,6 +1090,8 @@ import Vue from "vue";
 
 import Utils from "../../utils.js";
 
+import ShowBadge from "../badge/ShowBadge.vue";
+
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
 
@@ -1143,6 +1119,7 @@ export default {
   components: {
     Blogs,
     Hp,
+    ShowBadge,
   },
   mounted() {
     this.behaviours = this.student.behaviours;
@@ -1398,27 +1375,6 @@ export default {
             });
         },
       });
-    },
-    toggle(id) {
-      axios
-        .post("/classroom/student/badge", {
-          badge: id,
-          student: this.student.id,
-        })
-        .then((response) => {
-          this.student.badges = response.data.badges;
-          this.student.hp = response.data.hp;
-          this.student.xp = response.data.xp;
-          this.student.gold = response.data.gold;
-          this.$forceUpdate();
-        });
-    },
-    findInStudent(id) {
-      var index = this.student.badges.findIndex(function (badge, i) {
-        return badge.id === id;
-      });
-      if (index >= 0) return false;
-      return true;
     },
     updateEmpty() {
       let line = 6;
