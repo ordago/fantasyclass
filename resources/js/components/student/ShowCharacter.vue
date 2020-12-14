@@ -158,7 +158,7 @@ export default {
   -ms-transition: all 0.5s ease 0.5s; /* Para Explorer */
   transition: all 0.5s ease 0.5s;
   transform: rotate(180deg);
-  top: 20px;
+  top: 10px;
 }
 
 </style>

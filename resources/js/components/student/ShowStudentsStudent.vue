@@ -46,7 +46,7 @@
           {{ trans.get("menu.monsters") }}
         </h4>
         <div
-          class="columns has-hr"
+          class="columns has-hr py-4"
           v-for="monster in monsters"
           :key="monster.id"
         >

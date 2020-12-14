@@ -1,5 +1,5 @@
 # Changelog
-## v1.25 Beta (XX/12/2020)
+## v1.25 Beta (14/12/2020)
 ### Added
 - Monsters and battles with monsters.
 - Assign pets directly to students.
