@@ -15,7 +15,7 @@
               :class="{ 'has-text-white-ter': icon }"
             ></i>
           </span>
-          <span class="has-text-grey-light" v-if="hp < 20">{{ hp }}</span>
+          <span class="has-text-grey-light" v-if="hp < 20">{{ Math.round(hp) }}</span>
         </span>
         <span
           :class="'attribute has-background-danger rounded py-' + size"
@@ -26,7 +26,7 @@
             v-if="hp > 0"
             v-bind:class="{ 'has-text-danger': hp < 52 || icon }"
           ></i>
-          <span v-if="hp >= 20">{{ hp }}</span>
+          <span v-if="hp >= 20">{{ Math.round(hp) }}</span>
         </span>
       </div>
     </div>
