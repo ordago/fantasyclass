@@ -1,13 +1,46 @@
 <template>
   <div class="container p-3">
-    <form
-      method="post"
-      :action="'/classroom/' + this.code + '/badges'"
-      enctype="multipart/form-data"
-    >
+    <form @submit.prevent="createBadge">
       <input :value="csrfToken" type="hidden" name="_token" />
+      <div class="columns mb-2">
+        <div class="column is-narrow">
+          <div
+            class="personalBadge"
+            v-if="type == 0"
+            :style="{ 'background-image: url(\'/img/medal2.png\')': type == 0 }"
+            v-tippy
+            :content="'<h1>' + title + '</h1><h3>' + description + '</h3>'"
+          >
+            <i :class="icon"></i>
+          </div>
+          <div v-else>
+            <croppa
+              class="p-2 card-shadow-s"
+              v-model="image"
+              :width="80"
+              :height="80"
+              :quality="1"
+              style="z-index: 15"
+              accept="image/*"
+              placeholder="Image"
+              :placeholder-font-size="16"
+              canvas-color="transparent"
+              :show-remove-button="true"
+              remove-button-color="black"
+              :show-loading="true"
+              :loading-size="50"
+              :initial-image="prevImage"
+            ></croppa>
+          </div>
+          <div class="column is-narrow">
+            <b-switch v-model="type" true-value="1" false-value="0">
+              Custom
+            </b-switch>
+          </div>
+        </div>
+      </div>
 
-      <div class="field has-addons">
+      <div class="field has-addons" v-if="type == 0">
         <p class="control">
           <IconSelector></IconSelector>
         </p>
@@ -16,13 +49,12 @@
             v-model="icon"
             name="icon"
             class="input"
-            required
             :placeholder="trans.get('badges.icon_select')"
             type="text"
           />
         </p>
       </div>
-      <div class="form-group" style="margin-top: -10px">
+      <div v-if="type == 0" class="form-group" style="margin-top: -10px">
         <label
           ><small
             >{{ trans.get("badges.fontawesome") }}
@@ -143,7 +175,7 @@
       <div>
         <button
           class="button is-link"
-          @click="update"
+          @click="createBadge"
           v-if="badge"
           type="button"
         >
@@ -169,6 +201,8 @@ export default {
       this.title = this.trans.get(this.badge.title);
       this.description = this.trans.get(this.badge.description);
       this.hp = this.badge.hp;
+      this.type = this.badge.type;
+      this.prevImage = this.badge.image;
       this.xp = this.badge.xp;
       this.gold = this.badge.gold;
       this.icon = this.badge.icon;
@@ -178,12 +212,14 @@ export default {
   data: function () {
     return {
       icon: null,
-      csrfToken: null,
-      title: null,
-      description: null,
+      title: "",
+      image: {},
+      prevImage: "",
+      description: "",
       xp: 0,
       hp: 0,
       gold: 0,
+      type: 0,
       id: null,
     };
   },
@@ -194,8 +230,44 @@ export default {
     formSubmit: function (e) {
       e.preventDefault();
     },
+    sendInfo(formData) {
+      axios.post('/classroom/' + this.code + '/badges', formData)
+        .then(response => {
+          this.$toast(response.data.message, { type: response.data.type });
+        });
+    },
+    createBadge() {
+      let formData = new FormData();
+      formData.append("title", this.title);
+      formData.append("description", this.description);
+      formData.append("type", this.type);
+      formData.append("xp", this.xp);
+      formData.append("hp", this.hp);
+      formData.append("gold", this.gold);
+      if (this.badge) {
+        formData.append("id", this.badge.id);
+        formData.append("_method", "patch");
+      }
+      if (this.type == 0) {
+        formData.append("icon", this.icon);
+        this.sendInfo(formData);
+      } else {
+        this.image.generateBlob(
+          (blob) => {
+            if (blob != null) {
+                formData.append("image", blob, "badge.png");
+            }
+            this.sendInfo(formData);
+          },
+          "image/png",
+          0.8
+        );
+      }
+    },
 
     update: function () {
+      console.log("hit");
+      return false;
       axios
         .patch("/classroom/badges/" + this.id, this.$data)
         .then((response) => {

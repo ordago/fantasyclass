@@ -1,4 +1,13 @@
 # Changelog
+## v1.26 Beta (XX/12/2020)
+### Added
+- Custom badges.
+~ Custom pets / monsters.
+~ Custom image themes.
+
+### Changed
+
+
 ## v1.25 Beta (14/12/2020)
 ### Added
 - Monsters and battles with monsters.

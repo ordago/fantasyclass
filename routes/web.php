@@ -115,6 +115,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/badges', 'BadgeController@index');
         Route::get('/{code}/badges/create', 'BadgeController@create');
         Route::post('/{code}/badges', 'BadgeController@store');
+        Route::patch('/{code}/badges', 'BadgeController@store');
         Route::post('/student/badge', 'BadgeController@toggle');
         Route::delete('/badge/{id}', 'BadgeController@destroy');
         Route::get('/{code}/badges/{id}', 'BadgeController@show');

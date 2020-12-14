@@ -19,9 +19,10 @@
     >
       <template slot-scope="props">
         <b-table-column field="icon" :label="trans.get('badges.icon')" centered>
-          <span class="tag">
-            <i :class="props.row.icon"></i>
+          <span class="tag" v-if="props.row.type == 0">
+            <i class="fs-2" :class="props.row.icon"></i>
           </span>
+          <img v-else :src="props.row.image" width="50px">
         </b-table-column>
 
         <b-table-column
