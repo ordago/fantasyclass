@@ -19,6 +19,7 @@ return [
     'im_bank' => 'Jo soc el banc de preguntes!',
     'bank' => 'O ... Selecciona el banc que vols utilitzar',
     'wb' => 'Sense banc seleccionat',
+    'wm' => 'No has seleccionat un monstre',
     'select_student' => 'Selecciona estudiant',
     'lets_start' => 'Som-hi!',
     'tell_next' => 'Digues la següent pregunta',

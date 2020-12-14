@@ -19,6 +19,7 @@ return [
     'im_bank' => 'I\'m the question bank!',
     'bank' => 'Or ... Select the bank you want to use',
     'wb' => 'Without bank',
+    'wm' => 'You haven\'t selected a monster',
     'select_student' => 'Select student',
     'lets_start' => 'Let\'s go!',
     'tell_next' => 'Say the next question',

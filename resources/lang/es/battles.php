@@ -19,6 +19,7 @@ return [
     'im_bank' => '¡Yo soy el banco de preguntas!',
     'bank' => 'O ... Selecciona el banco que quieres usar',
     'wb' => 'Sin banco seleccionado',
+    'wm' => 'No has seleccionado un monstruo',
     'select_student' => 'Selecciona estudiante',
     'lets_start' => '¡Vamos!',
     'tell_next' => 'Di la siguiente pregunta',

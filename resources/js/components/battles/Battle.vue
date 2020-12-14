@@ -502,7 +502,7 @@
               <option :value="null">{{ trans.get("battles.wb") }}</option>
               <option
                 v-for="bank in classroom.question_banks"
-                :value="bank.id"
+                :value="bank"
                 :key="bank.id"
               >
                 {{ bank.title }}
@@ -518,8 +518,26 @@
         :clickable="true"
         disabled
       >
+        <div class="content">
+          <h1>{{ trans.get('general.summary') }}</h1>
+          <ul class="fs-2">
+            <li>
+              <i class="fas" :class="{'fa-user': type == 0 || type == 3, 'fa-users': type == 1}"></i>
+              vs
+              <i class="fas" :class="{'fa-user': type == 0, 'fa-users': type == 1, 'fa-dragon': type == 3}"></i>
+            </li>
+            <li>
+              <span v-if="!selectedBank">{{ trans.get('battles.wb') }}</span>
+              <span v-else>{{ trans.get('battles.questions') }}: {{ selectedBank.title }}</span>
+            </li>
+            <li v-if="type == 3">
+              <span class="has-text-danger" v-if="type == 3 && !monsterSelected">{{ trans.get('battles.wm') }}</span>
+              <span v-else-if="type == 3">{{ trans.get('battles.monster') }}: {{ monsterSelected.name }}</span>
+            </li>
+          </ul>
+        </div>
         <div class="has-text-centered">
-          <h1 class="button is-size-2 py-3 px-6 is-info m-3" @click="start">
+          <h1 class="button is-size-2 py-3 px-6 is-info m-3" :disabled="type == 3 && !monsterSelected" @click="start">
             {{ trans.get("battles.start") }}!
           </h1>
         </div>
@@ -588,7 +606,7 @@
                   {{ index + 1 }}
                 </span>
               </div>
-              <div v-if="(type == 0 || type) == 3 && !finished">
+              <div v-if="(type == 0 || type == 3) && !finished">
                 <button
                   @click="selectStudent(1)"
                   class="button is-primary my-2"
@@ -1159,7 +1177,7 @@ export default {
     start() {
       if (this.selectedBank) {
         this.classroom.question_banks.forEach((element) => {
-          if (element.id == this.selectedBank) {
+          if (element.id == this.selectedBank.id) {
             this.questions = _.shuffle(element.questions);
           }
         });
