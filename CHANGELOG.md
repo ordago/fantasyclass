@@ -6,6 +6,7 @@
 ~ Custom image themes.
 
 ### Changed
+- Fixed paste on comment HTML tags.
 
 
 ## v1.25 Beta (14/12/2020)

@@ -5,7 +5,7 @@
              ref="textarea"
              autofocus="false"
              @keypress.enter.prevent
-             @input="updateBody($event.target.innerHTML)"
+             @input="updateBody($event.target.innerText)"
              @click="handleEditorClick"
              :placeholder="trans.get('general.type_message')">
         </div>
@@ -31,7 +31,10 @@ export default {
       body: ""
     };
   },
+  mounted() {
+  },
   methods: {
+   
     updateBody(text) {
       this.body = text;
       this.$parent.comment = text

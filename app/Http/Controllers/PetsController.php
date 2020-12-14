@@ -21,7 +21,8 @@ class PetsController extends Controller
     public function get() {
         
         $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/pets'));
-        return json_encode($array);
+        $images[0] = $array;
+        return $images;
 
     }
 

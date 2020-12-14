@@ -2,7 +2,7 @@
   <b-modal
     has-modal-card
     full-screen
-          :active.sync="isModalActive"
+    :active.sync="isModalActive"
     :can-cancel="false"
   >
     <div class="modal-card" style="width: auto">
@@ -10,6 +10,24 @@
         <p class="modal-card-title">{{ trans.get("pets.image") }}</p>
       </header>
       <section class="modal-card-body is-relative">
+        <croppa
+          class="card-shadow-s"
+          v-model="imageUpload"
+          :width="81"
+          :height="99"
+          :quality="1"
+          style="z-index: 15"
+          accept="image/*"
+          placeholder="Image"
+          :placeholder-font-size="16"
+          canvas-color="transparent"
+          :show-remove-button="true"
+          remove-button-color="black"
+          :show-loading="true"
+          :loading-size="50"
+          v-if="customUpload"
+        ></croppa>
+        <hr />
         All pet images are from:
         <a href="https://github.com/HabitRPG/habitica"
           >https://github.com/HabitRPG/habitica</a
@@ -53,16 +71,20 @@ export default {
   props: ["code"],
   created() {
     axios.get("/classroom/pets/get").then((response) => {
-      this.images = response.data;
+      this.images = response.data[0];
+      // this.imagesCustom = response.data[1];
       this.isModalActive = true;
       this.$parent.isLoading = false;
     });
   },
   data: function () {
     return {
+      customUpload: false,
       isModalActive: false,
       images: null,
+      imagesCustom: null,
       image: null,
+      imageUpload: null,
     };
   },
   methods: {

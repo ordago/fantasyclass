@@ -234,6 +234,8 @@ export default {
       axios.post('/classroom/' + this.code + '/badges', formData)
         .then(response => {
           this.$toast(response.data.message, { type: response.data.type });
+          if(!this.badge)
+            location.href = "/classroom/" + this.code + "/badges";
         });
     },
     createBadge() {
@@ -263,16 +265,6 @@ export default {
           0.8
         );
       }
-    },
-
-    update: function () {
-      console.log("hit");
-      return false;
-      axios
-        .patch("/classroom/badges/" + this.id, this.$data)
-        .then((response) => {
-          this.$toast(response.data.message, { type: response.data.type });
-        });
     },
   },
 };
