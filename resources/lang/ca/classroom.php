@@ -40,4 +40,8 @@ return [
     "info_wizard_4" => "Pregunta qualsevol cosa al telegram, estarem encantats d'ajudar-te.",
     "info_wizard_5" => "Comença l'aventura!",
     "end_wizard" => "Acabar assistent",
+    
+    "upload_pet" => "Puja una imatge. Posa la mascota a la part inferior",
+
+
 ];

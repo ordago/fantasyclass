@@ -18,7 +18,8 @@
             arrow: true,
           }"
           :content="getName(pet.name)"
-          :src="'/img/pets/' + pet.image"
+          :src="pet.image"
+          width="81px"
           class=""
           style="margin-top: -20px"
         />
@@ -168,7 +169,8 @@
                 {{ trans.get("pets.image") + " *" }}
               </button>
               <img
-                :src="'/img/pets/' + pet.image"
+                width="81px"
+                :src="pet.image"
                 v-if="pet.image"
                 class="pet-selector"
               />
@@ -259,7 +261,7 @@
       </form>
     </b-modal>
 
-    <SelectPet v-model="pet.image" v-if="isImageModalActive"> </SelectPet>
+    <SelectPet :code="code" v-model="pet.image" v-if="isImageModalActive"> </SelectPet>
   </div>
 </template>
 

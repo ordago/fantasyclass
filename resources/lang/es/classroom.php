@@ -39,4 +39,6 @@ return [
     "info_wizard_4" => "Pregunta cualquier cosa al Telegram, estaremos encantados de ayudarte.",
     "info_wizard_5" => "Comienza la aventura!",
     "end_wizard" => "Acabar asistente",
+
+    "upload_pet" => "Sube una imagen. Pon la mascota en la parte inferior",
 ];

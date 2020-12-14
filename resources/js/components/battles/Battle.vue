@@ -442,7 +442,8 @@
           >
             <div class="column is-narrow">
               <img
-                :src="'/img/pets/' + monster.image"
+                width="81px"
+                :src="monster.image"
                 class="pet-selector mt-2"
               />
             </div>
@@ -787,7 +788,7 @@
               <div ref="monsterdiv" v-if="type == 3 && monsterSelected">
                 <img
                   ref="monster"
-                  :src="'/img/pets/' + monsterSelected.image"
+                  :src="monsterSelected.image"
                   width="250px"
                   class="pet-selector pet-battle mt-2"
                 />

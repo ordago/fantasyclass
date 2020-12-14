@@ -3,9 +3,19 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Classroom extends Model
+
+class Classroom extends Model implements HasMedia
 {
+
+    use InteractsWithMedia;
+
+    public function registerMediaCollections() : void 
+    {
+        $this->addMediaCollection('pets');
+    }
 
     /**
      * The attributes that are mass assignable.

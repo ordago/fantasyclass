@@ -46,15 +46,15 @@
           {{ trans.get("menu.monsters") }}
         </h4>
         <div
-          class="columns has-hr py-4"
+          class="columns has-hr pb-4 pt-5"
           v-for="monster in monsters"
           :key="monster.id"
         >
           <div class="column is-narrow">
             <img
               ref="monster"
-              :src="'/img/pets/' + monster.image"
-              width="100px"
+              :src="monster.image"
+              width="81px"
               class="pet-selector mt-2"
               v-tippy
               :content="'<strong class=\'has-text-light\'>' + monster.name + '</strong> <i class=\'fas fa-fist-raised colored\'></i>: ' + monster.reward_xp + ', <i class=\'fas fa-coins colored\'></i>: ' + monster.reward_gold"

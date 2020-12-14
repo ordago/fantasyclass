@@ -437,8 +437,9 @@
                       placement: 'bottom',
                       arrow: true,
                     }"
+                    width="81px"
                     :content="getName(pet.name)"
-                    :src="'/img/pets/' + pet.image"
+                    :src="pet.image"
                     class="pet-selector"
                   />
                 </div>
@@ -475,7 +476,8 @@
                       arrow: true,
                     }"
                     :content="getName(pet.name)"
-                    :src="'/img/pets/' + pet.image"
+                    :src="pet.image"
+                    width="81px"
                     class="pet-selector"
                   />
                 </div>

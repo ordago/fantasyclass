@@ -45,6 +45,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/regenerate', 'ClassroomsController@regenerate');
         Route::delete('{code}', 'ClassroomsController@destroy');
         Route::post('/{code}/reward', 'ClassroomsController@reward');
+        Route::post('/{code}/add2collection', 'ClassroomsController@add2collection');
+        Route::delete('/{code}/removeMedia/{id}', 'ClassroomsController@removeMedia');
 
         // Cards
         Route::delete('/card/{id}', 'CardsController@destroy');
@@ -238,7 +240,7 @@ Route::group(['middleware' => 'language'], function () {
         
         // Pets
         Route::get('/{code}/pets', 'PetsController@index');
-        Route::get('/pets/get', 'PetsController@get');
+        Route::get('/{code}/pets/get', 'PetsController@get');
         Route::post('/{code}/pets', 'PetsController@store');
         Route::patch('/{code}/pets', 'PetsController@update');
         Route::delete('/pets/{id}', 'PetsController@destroy');

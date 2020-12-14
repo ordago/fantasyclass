@@ -42,4 +42,7 @@ return [
     "info_wizard_4" => "Ask any question in the telegram group, we will be happy to help you.",
     "info_wizard_5" => "Start the adventure!",
     "end_wizard" => "Finish wizard",
+
+    "upload_pet" => "Upload an imagen. Put the pet in the lower part.",
+
 ];

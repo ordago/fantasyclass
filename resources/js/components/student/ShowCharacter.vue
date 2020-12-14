@@ -75,8 +75,9 @@
             placement: 'bottom',
             arrow: true,
           }"
+          width="81px"
           :content="petMessage(student.pets[0])"
-          :src="'/img/pets/' + student.pets[0].image"
+          :src="student.pets[0].image"
           class="pet-character"
         />
       </div>

@@ -90,6 +90,29 @@ class ClassroomsController extends Controller
         }
     }
 
+    public function removeMedia($code, $id)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+        $media = Media::where('id',  $id)->where('model_type', 'App\Classroom')->where('model_id', $class->id)->firstOrFail();
+        $collection = $media->collection_name;
+        $media->forceDelete();
+        return $class->getMedia($collection);
+
+    }
+    public function add2collection($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+
+        if (request()->file('image')) {
+
+            $media = $class->addMedia(request()->file('image'))
+                ->toMediaCollection(request()->collection);
+            return $class->getMedia(request()->collection);
+        }
+
+    }
     public function clone($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

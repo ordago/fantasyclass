@@ -18,10 +18,13 @@ class PetsController extends Controller
         $this->middleware('verified');
     }
 
-    public function get() {
+    public function get($code) {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('view', $class);
         
         $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/pets'));
         $images[0] = $array;
+        $images[1] = $class->getMedia('pets');
         return $images;
 
     }
