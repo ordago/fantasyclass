@@ -8,8 +8,7 @@
 ### Changed
 - Fixed paste on comment HTML tags.
 
-
-## v1.25 Beta (14/12/2020)
+## v1.25.1 Beta (14/12/2020)
 ### Added
 - Monsters and battles with monsters.
 - Assign pets directly to students.
@@ -19,6 +18,7 @@
 - Better hp showing. Visual improvements in list mode.
 - Changed contribute text.
 - Translate when student challenges empty.
+- Fixed attibutes in monsters.
 
 ## v1.24 Beta (12/12/2020)
 ### Added

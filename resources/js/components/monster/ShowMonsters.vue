@@ -150,7 +150,7 @@
                     <i class="fas fa-fist-raised colored"></i>
                   </template>
                   <b-input
-                    v-model="monster.reward_gold"
+                    v-model="monster.reward_xp"
                     required
                     type="number"
                     step="0.1"
@@ -164,7 +164,7 @@
                     <i class="fas fa-coins colored"></i>
                   </template>
                   <b-input
-                    v-model="monster.reward_xp"
+                    v-model="monster.reward_gold"
                     required
                     type="number"
                     step="0.1"
