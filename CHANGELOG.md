@@ -2,8 +2,8 @@
 ## v1.26 Beta (XX/12/2020)
 ### Added
 - Custom badges.
-~ Custom pets / monsters.
-~ Custom image themes.
+- Custom pets / monsters.
+- Custom image themes.
 
 ### Changed
 - Fixed paste on comment HTML tags.
