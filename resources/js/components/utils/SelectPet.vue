@@ -44,6 +44,7 @@
                   '/storage/pets/' + image.uuid + '/' + image.file_name
                 )
               "
+              width="81px"
               class="m-2 cursor-pointer"
             />
             <button @click="deleteImage(image.id)" style="margin-left: -20px" class="has-text-light has-background-danger"><i class="fas fa-trash-alt"></i></button>
