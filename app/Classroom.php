@@ -15,6 +15,7 @@ class Classroom extends Model implements HasMedia
     public function registerMediaCollections() : void 
     {
         $this->addMediaCollection('pets');
+        $this->addMediaCollection('avatars');
     }
 
     /**

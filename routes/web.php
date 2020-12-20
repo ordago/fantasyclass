@@ -188,6 +188,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
         Route::post('/{code}/settings/reset', 'SettingsController@reset');
+        Route::post('/{code}/settings/themes', 'SettingsController@themes');
 
         // Events
         Route::get('/{code}/events', 'EventController@index');
@@ -257,7 +258,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');
         Route::post('/{code}/utils/massive', 'UtilsController@massive');
-        Route::get('/utils/icon-packs', 'UtilsController@iconPacks');
+        Route::get('/{code}/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
         Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
 

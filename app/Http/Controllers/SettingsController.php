@@ -32,15 +32,29 @@ class SettingsController extends Controller
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
+        $settings['themes'] = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.', 'LICENSE'));
+        $settings['disabled_themes'] = json_decode(settings()->get('disabled_themes', json_encode([])));
+        $settings['custom_images'] = $class->getMedia('avatars');
+        $settings['licenses'] = settings()->get('licenses', '');
         
         $teachers = $class->users->where('pivot.role', '>', 0);     
         
         $user = auth()->user()->id;      
         $isAdmin = auth()->user()->classrooms->where('id', $class->id)->where('pivot.role', '=', 2)->first() ? 1 : 0;      
         return view('settings.index', compact('settings', 'class', 'teachers', 'isAdmin', 'user'));
-
+        
     }
+    
+    public function themes($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
 
+        $disabled = request()->themes;
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        settings()->set('disabled_themes', json_encode($disabled));
+        
+    }
+    
     public function destroy($code, $id) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $cus = ClassroomUser::where('user_id', '=', auth()->user()->id)->where('classroom_id', '=', $class->id)->firstOrFail();

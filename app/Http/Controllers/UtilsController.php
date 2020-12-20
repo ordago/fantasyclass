@@ -119,10 +119,25 @@ class UtilsController extends Controller
         
     }
 
-    public function iconPacks()
+    public function iconPacks($code)
     {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
         $array = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.', 'LICENSE'));
-        return json_encode($array);
+        
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $disabled = json_decode(settings()->get('disabled_themes', json_encode([])));
+        foreach ($disabled as $theme) {
+            $index = array_search ($theme , $array);
+            if($index !== false) {
+                unset($array[$index]);
+            }
+        }
+        $result[0] = $class->getMedia('avatars');
+        $result[1] = $array;
+        $result[2] = settings()->get('licenses', '');
+
+        return $result;
     }
 
     public function online()

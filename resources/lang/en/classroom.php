@@ -44,5 +44,6 @@ return [
     "end_wizard" => "Finish wizard",
 
     "upload_pet" => "Upload an imagen. Put the pet in the lower part.",
+    "create_info" => "You can create new themes in settings",
 
 ];

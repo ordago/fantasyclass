@@ -62,7 +62,7 @@
                 </label>
                 <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="0">
-                    <img src="/img/character/themes-preview/custom.png" class="themePreview" v-tippy :content="trans.get('classroom.custom_theme')">
+                    <img @click="notify" src="/img/character/themes-preview/custom.png" class="themePreview" v-tippy :content="trans.get('classroom.custom_theme')">
                 </label>
 
             </b-tab-item>
@@ -134,6 +134,9 @@ export default {
     };
   },
   methods: {
+    notify: function (id) {
+      this.$toast(this.trans.get('classroom.create_info'))
+    },
     selectGoal: function (id) {
       this.goalSelected = id;
     },

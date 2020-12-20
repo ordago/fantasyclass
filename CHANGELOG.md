@@ -1,4 +1,9 @@
 # Changelog
+## v1.27 Beta (20/12/2020)
+### Added
+- Custom class themes.
+- Disable icon packs.
+
 ## v1.26 Beta (15/12/2020)
 ### Added
 - Custom badges.

@@ -41,4 +41,5 @@ return [
     "end_wizard" => "Acabar asistente",
 
     "upload_pet" => "Sube una imagen. Pon la mascota en la parte inferior",
+    "create_info" => "Puedes crear nuevos temas en preferencias",
 ];

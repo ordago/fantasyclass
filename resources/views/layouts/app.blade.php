@@ -113,7 +113,7 @@
                             <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
                                 <div class="dropdown-content">
                                     <span href="#" class="dropdown-item">
-                                        {{ Auth::user()->name }}
+                                        @<span>{{ Auth::user()->username }}</span>
                                     </span>
                                     <hr class="dropdown-divider">
                                     <a class="dropdown-item" href="/profile">

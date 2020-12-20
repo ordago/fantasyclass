@@ -43,7 +43,13 @@ return [
     'classroom_unlink' => "Unlink Google Classroom",
     'classroom_unlink_info' => "Revoke permissions before in your <a target='_blank' href='https://myaccount.google.com/permissions'>Google account</a>",
 
-    'reset_assistant' => "Rsset wizard",
+    'reset_assistant' => "Reset wizard",
     'reset_assistant_help' => "There you'll be able to select to reset student properties",
+
+    'themes' => "Avatars and themes",
+    'themes_disabled' => "Disable icon packs (use <span class='tag is-dark'>Ctrl</span> to select or unselect)",
+    'custom_pack' => "Create your own image pack",
+    'custom_upload' => "Upload an image",
+
     
 ];

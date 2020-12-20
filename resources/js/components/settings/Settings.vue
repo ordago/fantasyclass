@@ -99,6 +99,99 @@
       </div>
       <div class="">
         <h1>
+          <i class="fal fa-mask"></i>
+          {{ trans.get("settings.themes") }}
+        </h1>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('allow_upload')"
+            v-model="settings.allow_upload"
+            >{{ trans.get("settings.allow_upload") }}</b-switch
+          >
+        </div>
+        <p class="pl-4 pt-2">
+          <span v-html="trans.get('settings.themes_disabled')"></span>
+          <span class="cursor-pointer tag is-link" @click="disableAll">{{
+            trans.get("utils.select_all")
+          }}</span>
+        </p>
+        <b-field class="ml-4 mb-3">
+          <b-select
+            multiple
+            native-size="4"
+            expanded
+            v-model="settings.disabled_themes"
+          >
+            <option
+              :value="theme"
+              v-for="(theme, index) in settings.themes"
+              :key="index"
+            >
+              {{ theme }}
+            </option>
+          </b-select>
+        </b-field>
+        <button class="button is-primary mb-3 ml-4" @click="saveDisabled()">
+          <i class="fas fa-save"></i>
+          {{ trans.get("general.save") }}
+        </button>
+        <div class="ml-4">
+          <h4>{{ trans.get("settings.custom_pack") }}:</h4>
+          <button class="button" @click="customUpload = !customUpload">
+            {{ trans.get("settings.custom_upload") }}
+          </button>
+        </div>
+        <div v-if="customUpload" class="mt-2">
+          <croppa
+            class="card-shadow-s"
+            v-model="imageUpload"
+            :width="250"
+            :height="250"
+            :quality="1"
+            style="z-index: 15"
+            accept="image/*"
+            :zoom-speed="8"
+            placeholder="Image"
+            :placeholder-font-size="16"
+            canvas-color="transparent"
+            :show-remove-button="true"
+            remove-button-color="black"
+            :show-loading="true"
+            :loading-size="50"
+          ></croppa>
+          <button @click="addToClass" class="button is-link">
+            <i class="fas fa-upload mr-1"></i> {{ trans.get("general.send") }}
+          </button>
+        </div>
+        <div class="mx-4" v-if="imagesCustom && imagesCustom.length">
+          <span v-for="(image, index) in imagesCustom" :key="index">
+            <img
+              :src="'/storage/avatars/' + image.uuid + '/' + image.file_name"
+              width="81px"
+              class="m-2 cursor-pointer"
+            />
+            <button
+              @click="deleteImage(image.id)"
+              style="margin-left: -20px"
+              class="has-text-light has-background-danger"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </span>
+          <b-field :label="trans.get('menu.licenses')" v-if="imagesCustom && imagesCustom.length">
+            <b-input v-model="settings.licenses"></b-input>
+          </b-field>
+          <button class="button is-primary mb-3" @click="updateLicenses()">
+            <i class="fas fa-save"></i>
+            {{ trans.get("general.save") }}
+          </button>
+        </div>
+      </div>
+      <div class="mt-5">
+        <h1>
           <i class="fal fa-cog"></i>
           {{ trans.get("settings.general_preferences") }}
         </h1>
@@ -122,16 +215,7 @@
             >{{ trans.get("settings.disable_your_adventure") }}</b-switch
           >
         </div>
-        <div class="my-4">
-          <b-switch
-            class="ml-4"
-            true-value="1"
-            false-value="0"
-            @input="toggleProp('allow_upload')"
-            v-model="settings.allow_upload"
-            >{{ trans.get("settings.allow_upload") }}</b-switch
-          >
-        </div>
+
         <div class="my-4">
           <b-switch
             class="ml-4"
@@ -372,10 +456,16 @@
           <button @click="reset('hp', 'heart')" class="button is-danger w-100">
             Reset <i class="fas fa-heart colored"></i>
           </button>
-          <button @click="reset('xp', 'fist-raised')" class="button is-dark w-100 mt-2">
+          <button
+            @click="reset('xp', 'fist-raised')"
+            class="button is-dark w-100 mt-2"
+          >
             Reset <i class="fas fa-fist-raised colored"></i>
           </button>
-          <button @click="reset('gold', 'coins')" class="button is-warning w-100 mt-2">
+          <button
+            @click="reset('gold', 'coins')"
+            class="button is-warning w-100 mt-2"
+          >
             Reset <i class="fas fa-coins colored"></i>
           </button>
           <!-- <button class="button is-link w-100 mt-2">Reset {{ trans.get('menu.shop') }}</button> -->
@@ -403,12 +493,18 @@ export default {
     this.value[2] = this.value[1] + this.settings.probabilities[1];
     this.value[3] = this.value[2] + this.settings.probabilities[2];
     this.value[4] = this.value[3] + this.settings.probabilities[3];
+    this.imagesCustom = this.settings.custom_images;
   },
   components: {
     VueSlider,
   },
   data: function () {
     return {
+      images: null,
+      imagesCustom: [],
+      image: null,
+      imageUpload: null,
+      customUpload: false,
       resetAssistant: false,
       state: "0",
       value: [],
@@ -438,10 +534,61 @@ export default {
     };
   },
   methods: {
+    deleteImage(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/" + this.classroom.code + "/removeMedia/" + id)
+            .then((response) => {
+              this.imagesCustom = response.data;
+            });
+        },
+      });
+    },
+    addToClass() {
+      this.imageUpload.generateBlob(
+        (blob) => {
+          if (blob != null) {
+            let formData = new FormData();
+            formData.append("image", blob, "avatar.png");
+            formData.append("collection", "avatars");
+            axios
+              .post(
+                "/classroom/" + this.classroom.code + "/add2collection",
+                formData
+              )
+              .then((response) => {
+                this.customUpload = false;
+                this.imagesCustom = response.data;
+              });
+          }
+        },
+        "image/png",
+        0.8
+      );
+    },
+    disableAll() {
+      this.settings.disabled_themes = Object.values(this.settings.themes);
+      this.$forceUpdate();
+    },
     reset(type, icon) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
-        message: this.trans.get("general.confirm_delete_class") + " (<i class='fas fa-" + icon + " colored'></i>)",
+        message:
+          this.trans.get("general.confirm_delete_class") +
+          " (<i class='fas fa-" +
+          icon +
+          " colored'></i>)",
         confirmText: this.trans.get("general.delete"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-danger",
@@ -564,12 +711,25 @@ export default {
         action: "toggle",
       });
     },
+    saveDisabled() {
+      axios.post("/classroom/" + this.classroom.code + "/settings/themes", {
+        themes: this.settings.disabled_themes,
+      });
+    },
     saveProbabilities() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
         prop: "card_probabilities",
         action: "update",
         value: this.value,
+      });
+    },
+    updateLicenses() {
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "licenses",
+        action: "update",
+        value: this.settings.licenses,
       });
     },
     saveCards() {

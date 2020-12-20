@@ -284,7 +284,6 @@ class ClassroomsStudentController extends Controller
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
 
-
         $students_money = json_encode([]);
         if($settings['allow_send_money']) {
             $students_money = $class->students()->pluck('classroom_user_id', 'name');

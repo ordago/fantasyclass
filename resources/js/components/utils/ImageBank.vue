@@ -1,13 +1,36 @@
 <template>
   <div>
-    <button class="button is-info" @click="isModalActive=true">{{ trans.get('students.select_image') }}</button>
+    <button class="button is-info" @click="isModalActive = true">
+      {{ trans.get("students.select_image") }}
+    </button>
 
-    <b-modal :active.sync="isModalActive" has-modal-card full-screen :can-cancel="false">
+    <b-modal
+      :active.sync="isModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ trans.get('students.select_image_title') }}</p>
+          <p class="modal-card-title">
+            {{ trans.get("students.select_image_title") }}
+          </p>
         </header>
         <section class="modal-card-body is-relative">
+          <div v-if="custom && custom.length" class="my-2">
+            <span v-for="(image, index) in custom" :key="index">
+              <img
+                @click="updateAvatar('/storage/avatars/' + image.uuid + '/' + image.file_name)"
+                :src="'/storage/avatars/' + image.uuid + '/' + image.file_name"
+                width="81px"
+                class="m-2 cursor-pointer"
+              />
+            </span>
+          </div>
+          <div class="" v-if="custom && custom.length && licenses != ''">
+            {{ licenses }}
+          </div>
+          <hr v-if="categories && categories.length">
           <div class="columns is-multiline" v-if="images">
             <img
               width="75px"
@@ -24,15 +47,37 @@
               :key="category"
               @click="populate(category)"
             >
-              <h4 style="display:inline-block">{{ category }}</h4>
+              <h4 style="display: inline-block">{{ category }}</h4>
             </div>
           </div>
-          <div class="my-3">Icons made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+          <div class="my-3" v-if="categories && categories.length">
+            Icons made by
+            <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
+            <a href="https://www.flaticon.com/" title="Flaticon"
+              >www.flaticon.com</a
+            >
+            is licensed by
+            <a
+              href="http://creativecommons.org/licenses/by/3.0/"
+              title="Creative Commons BY 3.0"
+              target="_blank"
+              >CC 3.0 BY</a
+            >
+          </div>
         </section>
-        <footer class="modal-card-foot columns is-multiline" style="overflow-x: auto">
+        <footer
+          class="modal-card-foot columns is-multiline"
+          style="overflow-x: auto"
+        >
           <div class="column is-narrow">
-            <button class="button" type="button" @click="isModalActive=false">{{ trans.get('general.close') }}</button>
-            <button class="button is-link" @click="images=null" v-if="images != null">
+            <button class="button" type="button" @click="isModalActive = false">
+              {{ trans.get("general.close") }}
+            </button>
+            <button
+              class="button is-link"
+              @click="images = null"
+              v-if="images != null"
+            >
               <i class="far fa-arrow-left"></i>
             </button>
           </div>
@@ -46,15 +91,22 @@
 export default {
   props: ["code", "admin", "student"],
   created() {
-    axios.get("/classroom/utils/icon-packs").then((response) => {
-      this.categories = response.data;
-    });
+    axios
+      .get("/classroom/" + this.code + "/utils/icon-packs")
+      .then((response) => {
+        this.custom = response.data[0];
+        this.categories = response.data[1];
+        this.licenses = response.data[2];
+      });
   },
   data() {
     return {
+      custom: null,
       categories: null,
       images: null,
       isModalActive: false,
+      licenses: '',
+
     };
   },
 
@@ -70,7 +122,7 @@ export default {
       axios
         .post("/classroom/" + this.code + "/setting/updateavatar", formData)
         .then((response) => {
-          location.reload()
+          location.reload();
         });
     },
     populate: function (cat) {

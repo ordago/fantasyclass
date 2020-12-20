@@ -45,4 +45,10 @@ return [
     
     'reset_assistant' => "Asistente de reinicio",
     'reset_assistant_help' => "Aquí podrás elegir reiniciar las principales propiedades de los estudiantes",
+
+    'themes' => "Temas y avatares",
+    'themes_disabled' => "Desactivar pacs de iconos (usa <span class='tag is-dark'>Ctrl</span> para seleccionar o deseleccionar)",
+    'custom_pack' => "Crea tu propio pack de imágenes",
+    'custom_upload' => "Sube una imagen",
+
 ];

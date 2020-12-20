@@ -42,6 +42,7 @@ return [
     "end_wizard" => "Acabar assistent",
     
     "upload_pet" => "Puja una imatge. Posa la mascota a la part inferior",
+    "create_info" => "Pots crear nous temes a preferències",
 
 
 ];
