@@ -27,7 +27,7 @@
               />
             </span>
           </div>
-          <div class="" v-if="custom && custom.length && licenses != ''">
+          <div class="mb-3" v-if="custom && custom.length && licenses != ''">
             {{ licenses }}
           </div>
           <hr v-if="categories && categories.length">
