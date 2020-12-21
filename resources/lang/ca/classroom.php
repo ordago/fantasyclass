@@ -43,6 +43,8 @@ return [
     
     "upload_pet" => "Puja una imatge. Posa la mascota a la part inferior",
     "create_info" => "Pots crear nous temes a preferències",
-
+    
+    "class_filled_ok" => "Afegeix valors per defecte (recomanat)",
+    "class_filled_ko" => "La classe estarà completament buida",
 
 ];

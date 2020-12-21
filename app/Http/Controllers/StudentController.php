@@ -245,6 +245,11 @@ class StudentController extends Controller
         $cards = $student->cards;
         $student->append('boost');
         $student->load('blogs');
+        $student->append('numcards');
+
+        foreach ($student->getAutomaticBadges() as $badge) {
+            $student->badges->push($badge);
+        }
 
         $allcards = $class->cards->sortBy('type');
 

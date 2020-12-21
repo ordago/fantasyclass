@@ -224,6 +224,119 @@ class Student extends Model implements HasMedia
             'level' => $this->getLevelAttribute(),
         ];
     }
+
+    public function getAutomaticBadges()
+    {
+
+        $class = Classroom::findOrFail($this->classroom->classroom_id);
+
+        $badges = collect();
+        $badge = new Badge();
+        
+        $f = true;
+        if($this->behaviours->count() != 0) {
+            foreach ($this->behaviours as $behaviour) {
+                if($behaviour->hp < 0 || $behaviour->xp < 0 || $behaviour->gold < 0) {
+                    $f = false;
+                }
+            }
+        }
+        if($f) {
+            $badge->fill([
+                'title' => __('badges.badge_exemplar'),
+                'description' => __('badges.badge_exemplar_info') . '💪',
+                'type' => 0,
+                'image' => null,
+                'icon' => 'fad fa-crown',
+                'classroom_id' => '',
+                'hp' => 0,
+                'xp' => 0,
+                'gold' => 0,
+            ]);
+            $badges->push($badge->replicate());
+        }
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+
+        $f = true;
+
+        if(settings()->get('eval_visible', false)) {
+            $max = settings()->get('eval_max', false);
+            $count1 = 0;
+            $count2 = 0;
+            $count3 = 0;
+            $message = __('badges.academic_info');
+            foreach ($this->grades as $grade) {
+                $grade = $grade->pivot->grade * 10 / $max;
+                if($grade >= 8.5) {
+                    $count1++;
+                } else if($grade >= 7.5) {
+                    $count2++;
+                } else if($grade >= 6.5) {
+                    $count3++;
+                } else {
+                    $f = false;
+                }
+            }
+            if($f) {
+                if($count3) {
+                    $message .= "6.5!";
+                    $icon = "fad fa-tachometer-alt-average";
+                } else if ($count2) {
+                    $message .= "7.5!";
+                    $icon = "fad fa-tachometer-alt-fast";
+                } else {
+                    $message .= "8.5!";
+                    $icon = "fad fa-tachometer-alt-fastest";
+                }
+                $badge->fill([
+                    'title' => __('badges.academic'),
+                    'description' => $message,
+                    'type' => 0,
+                    'image' => null,
+                    'icon' => $icon,
+                    'classroom_id' => '',
+                    'hp' => 0,
+                    'xp' => 0,
+                    'gold' => 0,
+                ]);
+                $badges->push($badge->replicate());
+            }
+        }
+
+        $f = true;
+
+        foreach ($class->challengeGroups as $group) {
+            $count = $group->challenges->where('is_conquer', 1)->count();
+            if($count == 0)
+                continue;
+            foreach ($group->challenges as $challenge) {
+                if($this->challenges->contains($challenge->id)) {
+                    $count--;
+                }
+            }
+            if($count === 0) {
+                $badge->fill([
+                    'title' => $group->name,
+                    'description' => __('badges.challenge_info', ['name' => $group->name]) . '😊',
+                    'type' => 0,
+                    'image' => null,
+                    'icon' => $group->icon,
+                    'classroom_id' => '',
+                    'hp' => 0,
+                    'xp' => 0,
+                    'gold' => 0,
+                ]);
+                $badges->push($badge->replicate());
+            }
+        }
+
+
+        
+        return $badges;
+
+    }
+
     public function getBoost()
     {
         $xp = $gold = $hp = 0;

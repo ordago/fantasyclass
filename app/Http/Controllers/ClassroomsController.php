@@ -98,7 +98,6 @@ class ClassroomsController extends Controller
         $collection = $media->collection_name;
         $media->forceDelete();
         return $class->getMedia($collection);
-
     }
     public function add2collection($code)
     {
@@ -111,7 +110,6 @@ class ClassroomsController extends Controller
                 ->toMediaCollection(request()->collection);
             return $class->getMedia(request()->collection);
         }
-
     }
     public function clone($code)
     {
@@ -257,6 +255,7 @@ class ClassroomsController extends Controller
             'goalType' => ['required', 'integer'],
             'bgtheme' => ['required', 'integer'],
             'charTheme' => ['required', 'integer'],
+            'filled' => ['nullable'],
         ]);
 
         if ($validator->fails()) {
@@ -275,22 +274,24 @@ class ClassroomsController extends Controller
             'goal_type' => $data['goalType'],
         ]);
 
-        // Assign basic items
-        foreach (Item::whereNull('classroom_id')->get() as $item) {
-            $newItem = $item->replicate();
-            $classroom->items()->save($newItem);
-        }
+        if (isset($data['filled']) && $data['filled']) {
+            // Assign basic items
+            foreach (Item::whereNull('classroom_id')->get() as $item) {
+                $newItem = $item->replicate();
+                $classroom->items()->save($newItem);
+            }
 
-        // Assign cards
-        foreach (Card::whereNull('classroom_id')->where('shared', '=', 0)->get() as $card) {
-            $newCard = $card->replicate();
-            $classroom->cards()->save($newCard);
-        }
+            // Assign cards
+            foreach (Card::whereNull('classroom_id')->where('shared', '=', 0)->get() as $card) {
+                $newCard = $card->replicate();
+                $classroom->cards()->save($newCard);
+            }
 
-        // Assign behaviours
-        foreach (Behaviour::whereNull('classroom_id')->get() as $behaviour) {
-            $newBehaviour = $behaviour->replicate();
-            $classroom->cards()->save($newBehaviour);
+            // Assign behaviours
+            foreach (Behaviour::whereNull('classroom_id')->get() as $behaviour) {
+                $newBehaviour = $behaviour->replicate();
+                $classroom->cards()->save($newBehaviour);
+            }
         }
 
         // Create default challenges group

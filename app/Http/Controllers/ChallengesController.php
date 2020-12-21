@@ -44,7 +44,7 @@ class ChallengesController extends Controller
 
         $newChallenge = $challenge->replicate();
         $newChallenge->challenges_group_id = $group->id;
-        $newChallenge->students = null;
+        $newChallenge->students = json_encode([]);
         $newChallenge->push();
 
         return $newChallenge;
@@ -136,13 +136,15 @@ class ChallengesController extends Controller
             'challenge' => ['numeric'],
             'type' => ['numeric'],
         ]);
-
+        
         if ($data['type'] == 0) {
             $challenge = Challenge::find($data['challenge']);
+            $students = [];
             $students = $class->students()->whereNotIn('students.id', json_decode($challenge->students))->with(['challenges' => function ($query) use ($data) {
                 $query
-                    ->where('challenges.id', '=', $data['challenge']);
+                ->where('challenges.id', '=', $data['challenge']);
             }])->get();
+            
             return $students;
         } else if($data['type'] == 1) {
             $groups = $class->grouping()->first()->groups()->with(['challenges' => function ($query) use ($data) {
@@ -153,7 +155,7 @@ class ChallengesController extends Controller
             return $class->students()->get();
         }
     }
-
+    
     public function toggle()
     {
         $challenge = Challenge::where('id', '=', request()->challenge)->first();

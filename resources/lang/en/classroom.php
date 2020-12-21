@@ -46,4 +46,7 @@ return [
     "upload_pet" => "Upload an imagen. Put the pet in the lower part.",
     "create_info" => "You can create new themes in settings",
 
+    "class_filled_ok" => "Fill with default values (recommended)",
+    "class_filled_ko" => "The classroom will be empty",
+
 ];

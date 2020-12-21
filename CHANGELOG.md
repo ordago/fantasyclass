@@ -1,4 +1,13 @@
 # Changelog
+## v1.28 Beta (XX/12/2020)
+### Added   
+- Automatic badges (3 types).
+- Option to create empty classrooms.
+
+### Changed
+- Fixed bug when importing challenges.
+- Fixed scroll in media-content.
+
 ## v1.27 Beta (20/12/2020)
 ### Added
 - Custom class themes.

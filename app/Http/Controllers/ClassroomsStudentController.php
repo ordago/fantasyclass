@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Badge;
 use App\Card;
 use App\CardStudent;
 use App\Challenge;
@@ -107,13 +108,13 @@ class ClassroomsStudentController extends Controller
         $count = 0;
         foreach ($class->challengeGroups as $challengegr) {
             foreach ($challengegr->challenges as $challenge) {
-                if($challenge->rating) {
+                if ($challenge->rating) {
                     $rating += $challenge->rating;
                     $count++;
                 }
             }
         }
-        if($count == 0) {
+        if ($count == 0) {
             $rating = 0;
         } else $rating = $rating / $count;
 
@@ -158,7 +159,7 @@ class ClassroomsStudentController extends Controller
                     $value['rated'] = 1;
                 } else $value['rated'] = 0;
                 $students = json_decode($value['students']);
-                if(!$students || array_search ($student->id , $students) === false)
+                if (!$students || array_search($student->id, $students) === false)
                     array_push($all, $value);
             }
         }
@@ -269,6 +270,10 @@ class ClassroomsStudentController extends Controller
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');
+        foreach ($student->getAutomaticBadges() as $badge) {
+            $student->badges->push($badge);
+        }
+
         $student->load('pets');
         $student->load('blogs');
 
@@ -285,7 +290,7 @@ class ClassroomsStudentController extends Controller
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
 
         $students_money = json_encode([]);
-        if($settings['allow_send_money']) {
+        if ($settings['allow_send_money']) {
             $students_money = $class->students()->pluck('classroom_user_id', 'name');
         }
 
@@ -345,23 +350,21 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
-        
+
         $to = Student::where('classroom_user_id', '=', request()->to)->firstOrFail();
-        if($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id)
-            abort(403);
-        
-        ;
+        if ($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id)
+            abort(403);;
         $fee = settings()->get('transfer_fee', 10);
 
         $gold = request()->money - request()->money * $fee / 100;
         $steal = 0;
-        $thief = rand(0,99);
-        if ($thief>=60) {
+        $thief = rand(0, 99);
+        if ($thief >= 60) {
             $steal = ($gold * rand(0, 20) / 100);
             $gold = $gold - $steal;
         }
 
-        $student->setProperty('gold', request()->money * - 1, true, 'send', true);
+        $student->setProperty('gold', request()->money * -1, true, 'send', true);
         $to->setProperty('gold', $gold, true, 'received', true);
 
         $from['title'] = 'notifications.money_sent';
@@ -370,14 +373,13 @@ class ClassroomsStudentController extends Controller
 
         $message = __('notifications.money_sent') . ' ' . request()->money . ' <i class="fas fa-coins colored"></i> ' . __('notifications.money_sent_taxes') . ($gold + $steal) . " <i class='fas fa-coins colored'></i> ";
 
-        if($steal) {
+        if ($steal) {
             $message .= __('notifications.money_sent_thief') . $steal . " <i class='fas fa-coins colored'></i> " . __('notifications.money_sent_total') . $gold . " <i class='fas fa-coins colored'></i>";
         }
 
         Notification::send($to->classroom->user, new NewInteractionStudent('notifications.money_sent', $message, $from, "money_sent", $class->code));
 
         return ['gold' => request()->money, 'received' => $gold, 'steal' => $steal];
-
     }
 
     public function markChallenge($code)
@@ -447,7 +449,7 @@ class ClassroomsStudentController extends Controller
         $from['username'] = $student->username;
         $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
 
-        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content") , $from, "mark_card", '');
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
 
         return [
             "message" => " " . __('success_error.update_success'),

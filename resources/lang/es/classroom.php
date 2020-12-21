@@ -42,4 +42,7 @@ return [
 
     "upload_pet" => "Sube una imagen. Pon la mascota en la parte inferior",
     "create_info" => "Puedes crear nuevos temas en preferencias",
+
+    "class_filled_ok" => "Añade valores por defecto (recomendado)",
+    "class_filled_ko" => "La clase estará completamente vacía",
 ];

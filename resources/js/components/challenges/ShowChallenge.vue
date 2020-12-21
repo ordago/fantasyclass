@@ -261,7 +261,7 @@
                 <div class="flexVertical p-2">{{ comment.text }}</div>
               </div>
             </div>
-            <div class="mt-3">
+            <div class="my-3">
               <a
                 class="has-text-dark"
                 @click="maxComments = challenge.comments.length"

@@ -16,4 +16,11 @@ return [
     'hp' => 'Health points',
     'experience' => 'Experience',
     'gold' => 'Gold',
+
+    'badge_exemplar' => 'Exemplary student',
+    'badge_exemplar_info' => 'Without negative interactions. This one is hard to mantain ... You can!',
+    'academic' => 'Recognition',
+    'academic_info' => 'All grades above ',
+    'challenge_info' => 'You\'ve passed all the challenges at ":name", keep it up!',
+
 ];

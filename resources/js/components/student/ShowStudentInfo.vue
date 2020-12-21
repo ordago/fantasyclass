@@ -13,7 +13,7 @@
           :student="student"
           :classroom="classroom"
         ></show-character>
-        <div class="card-content has-text-centered">
+        <div class="card-content">
           <div class="media mb-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
@@ -42,13 +42,16 @@
             </span>
             {{ student.gold }}
           </div>
-          <button
-            @click="isSendMoneyActive = true"
-            class="button is-warning m-1"
-            v-if="student.gold && settings.allow_send_money == 1"
-          >
-            {{ trans.get("general.send") }} <i class="fas fa-coins colored"></i>
-          </button>
+          <div class="has-text-centered">
+            <button
+              @click="isSendMoneyActive = true"
+              class="button is-warning m-1"
+              v-if="student.gold && settings.allow_send_money == 1"
+            >
+              {{ trans.get("general.send") }}
+              <i class="fas fa-coins colored"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -504,11 +507,13 @@
           </div>
         </b-tab-item>
         <b-tab-item
-          :label="trans.get('students.cards')"
           v-if="admin || cards.length"
-          icon="club"
-          icon-pack="fad"
         >
+        <template slot="header">
+            <b-icon pack="fad" icon="club" />
+            {{ trans.get("students.cards") }}
+            <span class="tag is-link tag-notif" :class="{'is-danger' : student.numcards[0] > student.numcards[1] }" style="left: 2px">{{ student.numcards[0] }} / {{ student.numcards[1] }}</span>
+          </template>
           <button
             class="button is-link ml-3 mt-1"
             v-if="admin"
@@ -778,7 +783,6 @@
         </b-tab-item>
 
         <b-tab-item
-          :label="trans.get('students.badges')"
           v-if="
             (classroom.badges && classroom.badges.length) ||
             student.badges.length
@@ -787,14 +791,35 @@
           icon-pack="fad"
           class="p-2"
         >
+          <template slot="header">
+            <b-icon pack="fad" icon="award" />
+            {{ trans.get("students.badges") }}
+            <span class="tag is-link tag-notif" style="left: 2px">{{ student.badges.length }}</span>
+          </template>
           <div v-if="admin" class="is-flex pl-4">
             <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
-              <ShowBadge :student="student" :badge="badge" :admin="true"></ShowBadge>
+              <ShowBadge
+                :student="student"
+                :badge="badge"
+                :admin="true"
+              ></ShowBadge>
+            </div>
+            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
+              <ShowBadge
+                v-if="!badge.classroom_id"
+                :student="student"
+                :badge="badge"
+                :admin="false"
+              ></ShowBadge>
             </div>
           </div>
           <div class="is-flex pl-4" v-if="!admin">
             <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
-              <ShowBadge :student="student" :badge="badge" :admin="false"></ShowBadge>
+              <ShowBadge
+                :student="student"
+                :badge="badge"
+                :admin="false"
+              ></ShowBadge>
             </div>
           </div>
         </b-tab-item>

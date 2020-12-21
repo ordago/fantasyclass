@@ -20,7 +20,12 @@
                             <input type="radio" v-model="classForm.goal_type" name="goalType" class="hide-radios" :checked="index == classForm.goal_type"  :value="goal.id"  autocomplete="off"><i :class="goal.icon + ' colored'" :style="'color: ' + goal.color"></i>
                         </label>
                     </p>
-            </div>
+                </div>
+                <div class="field" v-if="!classroom">
+                  <b-switch v-model="isFilled" name="filled">
+                      {{ getFilledText() }}
+                  </b-switch>
+                </div>
            </b-tab-item>
 
             <b-tab-item :label="trans.get('classroom.theme')" icon="palette" icon-pack="far">
@@ -120,6 +125,7 @@ export default {
   },
   data: function () {
     return {
+      isFilled: true,
       activeTab: 0,
       goalsJson: [],
       themesJson: [],
@@ -134,8 +140,14 @@ export default {
     };
   },
   methods: {
+    getFilledText() {
+      if(this.isFilled) {
+        return this.trans.get('classroom.class_filled_ok');
+      }
+      return this.trans.get('classroom.class_filled_ko');
+    },
     notify: function (id) {
-      this.$toast(this.trans.get('classroom.create_info'))
+      this.$toast(this.trans.get("classroom.create_info"));
     },
     selectGoal: function (id) {
       this.goalSelected = id;
