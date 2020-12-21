@@ -129,48 +129,51 @@ https://github.com/Maronato/vue-toastification
 Popper tippy:
  - Vue: https://kabbouchi.github.io/vue-tippy/4.0/demo.html
 
- LaravelSettings:
- https://github.com/ARCANEDEV/LaravelSettings/blob/master/_docs/3-Usage.md
+LaravelSettings:
+https://github.com/ARCANEDEV/LaravelSettings/blob/master/_docs/3-Usage.md
 
- Vue Croppa:
- https://github.com/zhanziyang/vue-croppa
+Vue Croppa:
+https://github.com/zhanziyang/vue-croppa
 
- Confetti:
- https://github.com/catdad/canvas-confetti
- 
- ```
- import confetti from 'canvas-confetti'
- ```
+Confetti:
+https://github.com/catdad/canvas-confetti
 
- Vue-slider-component:
- https://github.com/NightCatSama/vue-slider-component
+```
+import confetti from 'canvas-confetti'
+```
 
- Vue-excel
- https://github.com/jecovier/vue-json-excel#readme
+Vue-slider-component:
+https://github.com/NightCatSama/vue-slider-component
 
- Google captcha:
- https://laravel-recaptcha-docs.biscolab.com/docs/intro
+Laravel-excel
+https://laravel-excel.com/
 
- Google API
- https://github.com/pulkitjalan/google-apiclient
+Vue-excel
+https://github.com/jecovier/vue-json-excel#readme
 
- Fortune wheel
- https://github.com/XiaoLin1995/vue-fortune-wheel
+Google captcha:
+https://laravel-recaptcha-docs.biscolab.com/docs/intro
 
- Long click
- https://github.com/ittus/vue-long-click (not implemented yet)
+Google API
+https://github.com/pulkitjalan/google-apiclient
 
- Web push
- https://github.com/laravel-notification-channels/webpush
+Fortune wheel
+https://github.com/XiaoLin1995/vue-fortune-wheel
 
- Chat
- https://github.com/antoine92190/vue-advanced-chat
+Long click
+https://github.com/ittus/vue-long-click (not implemented yet)
 
- Feedback
- https://github.com/IvanSotelo/VueFeedbackReaction
+Web push
+https://github.com/laravel-notification-channels/webpush
 
- Animations
- https://animate.style/
+Chat
+https://github.com/antoine92190/vue-advanced-chat
+
+Feedback
+https://github.com/IvanSotelo/VueFeedbackReaction
+
+Animations
+https://animate.style/
 
 ## 3rd party Licenses
 
