@@ -54,6 +54,14 @@
           </div>
         </div>
       </div>
+      <div class="my-2 is-flex">
+        <button class="button" @click="nextStudent(false)">
+          <i class="fas fa-chevron-left mr-2"></i> {{ trans.get('pagination.previous') }}
+        </button>
+        <button class="button is-info left-auto" @click="nextStudent">
+          {{ trans.get('pagination.next') }} <i class="fas fa-chevron-right ml-2"></i>
+        </button>
+      </div>
     </div>
     <div class="column pr-0">
       <b-tabs
@@ -1190,6 +1198,23 @@ export default {
     };
   },
   methods: {
+    nextStudent(next = true) {
+      const currentStudent = (element) => element.id == this.student.id;
+      let nextId;
+      let index;
+      if(next) {
+        index = (this.classroom.students.findIndex(currentStudent) + 1) % this.classroom.students.length;
+      } else {
+        index = (this.classroom.students.findIndex(currentStudent) - 1) % this.classroom.students.length;  
+        if(index == -1)
+          index = this.classroom.students.length - 1;
+      }
+      console.log(index);
+      nextId = this.classroom.students[index].id;
+      
+      location.href = '/classroom/' + this.classroom.code + '/student/' + nextId;
+      
+    },
     getIcon(type) {
       switch (type) {
         case "behaviour":

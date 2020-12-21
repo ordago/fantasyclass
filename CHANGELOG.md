@@ -1,4 +1,10 @@
 # Changelog
+## v1.29 Beta (XX/12/2020)
+### Added   
+- Next and previous students in student info.
+
+### Changed
+
 ## v1.28 Beta (21/12/2020)
 ### Added   
 - Automatic badges (3 types).

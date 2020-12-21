@@ -208,7 +208,7 @@ class StudentController extends Controller
         if ($student->classroom->classroom->code != $code)
             abort(404);
         $admin = true;
-        $class = Classroom::where('code', $code)->with('pets', 'badges', 'theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('pets', 'badges', 'students', 'theme', 'characterTheme.characters')->firstOrFail();
         $this->authorize('view', $class);
 
         $items = DB::table('students')
