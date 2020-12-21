@@ -1,5 +1,5 @@
 # Changelog
-## v1.28 Beta (XX/12/2020)
+## v1.28 Beta (21/12/2020)
 ### Added   
 - Automatic badges (3 types).
 - Option to create empty classrooms.
