@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="my-2 is-flex">
+      <div class="my-2 is-flex" v-if="admin">
         <button class="button" @click="nextStudent(false)">
           <i class="fas fa-chevron-left mr-2"></i> {{ trans.get('pagination.previous') }}
         </button>
