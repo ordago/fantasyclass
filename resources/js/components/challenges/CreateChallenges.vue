@@ -107,6 +107,12 @@
             {{ trans.get("challenges.available_students") }}
           </span>
         </button>
+        <button
+          @click.prevent="selectChallenge"
+          class="button is-rounded"
+        >
+          __Marcar desafío previo
+        </button>
       </div>
       <div class="field w-100 pt-1">
         <label class="label">{{ trans.get("challenges.content") }}</label>
