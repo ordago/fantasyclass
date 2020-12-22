@@ -720,7 +720,7 @@
 
         <b-tab-item
           :label="trans.get('students.challenges')"
-          v-if="challenges && challenges.length"
+          v-if="mutableChallenges && mutableChallenges.length"
           icon="pen-fancy"
           icon-pack="fad"
           class="p-2"
@@ -1246,6 +1246,7 @@ export default {
       name: "",
       selected: null,
       clearable: false,
+      mutableChallenges: this.challenges,
     };
   },
   methods: {
@@ -1266,7 +1267,6 @@ export default {
           this.classroom.students.length;
         if (index == -1) index = this.classroom.students.length - 1;
       }
-      console.log(index);
       nextId = this.classroom.students[index].id;
 
       this.goTo(nextId)
@@ -1801,7 +1801,7 @@ export default {
       return _.orderBy(this.student.equipment, "type");
     },
     orderedChallenges: function () {
-      return _.orderBy(this.challenges, "datetime", "desc");
+      return _.orderBy(this.mutableChallenges, "datetime", "desc");
     },
   },
   watch: {

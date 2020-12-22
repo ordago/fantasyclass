@@ -107,17 +107,54 @@
             {{ trans.get("challenges.available_students") }}
           </span>
         </button>
-        <button
-          @click.prevent="selectChallenge"
-          class="button is-rounded"
+        <tippy
+          interactive
+          :animate-fill="false"
+          theme="light"
+          placement="bottom"
+          animation="fade"
+          trigger="click"
+          style="display: inline-block"
+          arrow
         >
-          __Marcar desafío previo
-        </button>
+          <template v-slot:trigger>
+            <button @click.prevent="" class="button is-rounded" :class="{ 'has-background-info-light' : challenge.challenge_required }" v-html="getChallengeMessage"></button>
+          </template>
+          <span>
+            <p>{{ trans.get('challenges.challenge_hidden') }}</p>
+            <section>
+              <b-select v-model="challenge.challenge_required" :placeholder="trans.get('challenges.select_challenge')" expanded>
+                <option :value="null" v-if="challenge.challenge_required">{{ trans.get('challenges.wo_challenge') }}</option>
+                <optgroup
+                  v-for="group in challenges"
+                  :label="group.name"
+                  :key="group.id"
+                >
+                  <option
+                    v-for="child in group.challenges"
+                    :key="child.id"
+                    :value="child.id"
+                  >
+                    {{ child.title }}
+                  </option>
+                </optgroup>
+                
+                <!-- 
+                <option v-for="challenge in challenges" :key="challenge.id" :value="challenge.id">{{ challenge.title }}</option> -->
+            </b-select>
+            </section>
+          </span>
+        </tippy>
       </div>
       <div class="field w-100 pt-1">
         <label class="label">{{ trans.get("challenges.content") }}</label>
         <div class="control content" data-app>
-          <Editor v-model="content" v-if="editor" height="70vh" :code="code"></Editor>
+          <Editor
+            v-model="content"
+            v-if="editor"
+            height="70vh"
+            :code="code"
+          ></Editor>
         </div>
       </div>
       <div class="field">
@@ -347,6 +384,7 @@ export default {
     "studentsLoaded",
   ],
   mounted: function () {
+    this.getAllChallenges();
     this.editor = false;
     if (this.edit) {
       if (this.studentsLoaded) this.students = this.studentsLoaded;
@@ -372,6 +410,7 @@ export default {
   },
   data: function () {
     return {
+      challenges: false,
       editor: false,
       datepicker: null,
       reload: false,
@@ -399,10 +438,17 @@ export default {
         challenges_group_id: null,
         students: [],
         _method: "post",
+        challenge_required: null,
       },
     };
   },
   methods: {
+    getAllChallenges() {
+      axios.get('/classroom/' + this.code + '/challenges/all')
+      .then(response => {
+        this.challenges = response.data;
+      });
+    },
     disableAll() {
       this.challenge.students = [];
       this.students.forEach((student) => {
@@ -476,7 +522,15 @@ export default {
     IconSelector,
   },
 
-  computed: {},
+  computed: {
+    getChallengeMessage() {
+      if(!this.challenge.challenge_required) {
+        return this.trans.get('challenges.mark_prev_challenge');
+      }
+      return this.trans.get('challenges.exist_requirement');
+    }
+    
+  },
 };
 </script>
 <style>

@@ -59,4 +59,11 @@ return [
     'load_comments' => 'Carga más comentarios...',
     'hidden_until' => 'Oculto hasta',
     'permalink' => 'Copiar enlace al reto (solo accesible por estudiantes)',
+    'new_challenges' => '¡Tienes nuevos retos disponibles!',
+    'challenge_hidden' => 'El desafío estará oculto hasta que el/la estudiante supere este desafío:',
+    'select_challenge' => 'Selecciona un desafío',
+    'wo_challenge' => 'Deselecciona el desafío',
+    'mark_prev_challenge' => 'Selecciona un desafío previo',
+    'exist_requirement' => 'Hay un requerimiento de desafío',
+
 ];

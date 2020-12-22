@@ -59,4 +59,11 @@ return [
     'load_comments' => 'Carrega més comentaris...',
     'hidden_until' => 'Ocult fins',
     'permalink' => 'Copiar enllaç al repte (solament accessible per estudiants)',
+    'new_challenges' => 'Tens nous reptes disponibles!',
+    'challenge_hidden' => 'El repte estarà ocult fins que el/la estudiant supere aquest repte:',
+    'select_challenge' => 'Selecciona un repte',
+    'wo_challenge' => 'Deselecciona el repte',
+    'mark_prev_challenge' => 'Selecciona un repte previ',
+    'exist_requirement' => 'Hi ha un requeriment de repte',
+
 ];

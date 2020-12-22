@@ -28,6 +28,7 @@ class Challenge extends Model
         'password',
         'students',
         'challenges_group_id',
+        'challenge_required',
     ];
 
     protected $appends = ['permalink', 'rating'];

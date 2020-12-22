@@ -61,6 +61,7 @@ class ChallengesController extends Controller
         return $classrooms;
     }
 
+
     public function index($code)
     {
         $data = request()->validate([
@@ -124,7 +125,18 @@ class ChallengesController extends Controller
             'challenges_group_id' => ['numeric'],
             'datetime' => ['string'],
             'students' => ['array'],
+            'challenge_required' => ['numeric', 'nullable'],
         ]);
+    }
+
+    public function getAllChallenges($code)
+    {
+        $class = Classroom::where('code', $code)->with(['challengeGroups.challenges' => function($query) {
+            $query->where('is_conquer', '1');
+        }])->firstOrFail();
+        $this->authorize('view', $class);
+
+        return $class->challengeGroups;
     }
 
     public function getChallengesInfo($code)

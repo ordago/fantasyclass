@@ -141,6 +141,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update');
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
+        Route::get('/{code}/challenges/all', 'ChallengesController@getAllChallenges');
 
         // Attachment
         Route::post('/challenge/attachment', 'AttachmentController@store');

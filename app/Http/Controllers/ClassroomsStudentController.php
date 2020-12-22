@@ -147,14 +147,21 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'attachments', 'comments', 'group', 'questioninfo'])
+                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required'])
                     ->all();
             }));
         }
 
         $all = [];
         foreach ($challenges as $section) {
-            foreach ($section as $value) {
+            foreach ($section as $key => $value) {
+                if ($value['challenge_required']) {
+                    if (!$student->challenges->contains($value['challenge_required'])) {
+                        unset($section[$key]);
+                        continue;
+                    }
+                }
+
                 if (Rating::where('student_id', $student->id)->where('challenge_id', $value['id'])->get()->count()) {
                     $value['rated'] = 1;
                 } else $value['rated'] = 0;
@@ -180,6 +187,64 @@ class ClassroomsStudentController extends Controller
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
+    public function getChallenges($student, $class)
+    {
+        $challenges = DB::table('students')
+            ->crossJoin('challenges')
+            ->where('challenges.is_conquer', '=', 1)
+            ->where('challenges.type', '=', 0)
+            ->whereRaw('not JSON_CONTAINS(challenges.students, ?)', [json_encode($student->id)])
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
+            ->whereIn('challenges.id', function ($query) use ($class) {
+                $query->select('challenges.id')
+                    ->from('challenges')
+                    ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
+                    ->where('challenges_groups.classroom_id', '=', $class->id)
+                    ->get();
+            })
+            ->where('students.id', '=', $student->id)
+            ->leftJoin('challenge_student', function ($join) use ($student) {
+                $join->on('challenges.id', '=', 'challenge_student.challenge_id')
+                    ->where('challenge_student.student_id', '=', $student->id);
+            })
+            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required')
+            ->get();
+
+
+        $groups = $student->groups->pluck('id');
+
+        $groupChallenges = DB::table('groups')
+            ->crossJoin('challenges')
+            ->where('challenges.is_conquer', '=', 1)
+            ->where('challenges.type', '=', 1)
+            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
+            ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
+                $query->select('challenges_groups.id')
+                    ->from('challenges_groups')
+                    ->where('challenges_groups.classroom_id', '=', $class->id)
+                    ->get();
+            })
+            ->whereIn('groups.id', $groups)
+            ->leftJoin('challenge_group', function ($join) use ($groups) {
+                $join->on('challenges.id', '=', 'challenge_group.challenge_id')
+                    ->whereIn('challenge_group.group_id', $groups);
+            })
+            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required')
+            ->get()->all();
+
+        $challenges = $challenges->merge($groupChallenges);
+        foreach ($challenges as $key => $challenge) {
+            if ($challenge->challenge_required) {
+                if (!$student->challenges->contains($challenge->challenge_required)) {
+                    unset($challenges[$key]);
+                    continue;
+                }
+            }
+            $challenge->permalink = Crypt::encryptString($challenge->id);
+        }
+        return $challenges;
+    }
+
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -219,53 +284,7 @@ class ClassroomsStudentController extends Controller
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ];
 
-        $challenges = DB::table('students')
-            ->crossJoin('challenges')
-            ->where('challenges.is_conquer', '=', 1)
-            ->where('challenges.type', '=', 0)
-            ->whereRaw('not JSON_CONTAINS(challenges.students, ?)', [json_encode($student->id)])
-            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
-            ->whereIn('challenges.id', function ($query) use ($class) {
-                $query->select('challenges.id')
-                    ->from('challenges')
-                    ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
-                    ->where('challenges_groups.classroom_id', '=', $class->id)
-                    ->get();
-            })
-            ->where('students.id', '=', $student->id)
-            ->leftJoin('challenge_student', function ($join) use ($student) {
-                $join->on('challenges.id', '=', 'challenge_student.challenge_id')
-                    ->where('challenge_student.student_id', '=', $student->id);
-            })
-            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count')
-            ->get();
-
-
-        $groups = $student->groups->pluck('id');
-
-        $groupChallenges = DB::table('groups')
-            ->crossJoin('challenges')
-            ->where('challenges.is_conquer', '=', 1)
-            ->where('challenges.type', '=', 1)
-            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
-            ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
-                $query->select('challenges_groups.id')
-                    ->from('challenges_groups')
-                    ->where('challenges_groups.classroom_id', '=', $class->id)
-                    ->get();
-            })
-            ->whereIn('groups.id', $groups)
-            ->leftJoin('challenge_group', function ($join) use ($groups) {
-                $join->on('challenges.id', '=', 'challenge_group.challenge_id')
-                    ->whereIn('challenge_group.group_id', $groups);
-            })
-            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count')
-            ->get()->all();
-
-        $challenges = $challenges->merge($groupChallenges);
-        foreach ($challenges as $challenge) {
-            $challenge->permalink = Crypt::encryptString($challenge->id);
-        }
+        $challenges = $this->getChallenges($student, $class);
 
         $cards = $student->cards;
         $student->append('boost');
@@ -416,6 +435,7 @@ class ClassroomsStudentController extends Controller
             'hp' => $student->hp,
             'xp' => $student->xp,
             'gold' => $student->gold,
+            'challenges' => $this->getChallenges($student->fresh(), $class),
         ];
     }
 

@@ -569,7 +569,6 @@ export default {
       });
     },
     async addRoomUser(uid, username, roomId) {
-      console.log(roomId);
       await usersRef.doc("" + uid).set({ _id: uid, username: username });
       await roomsRef
         .doc(roomId)

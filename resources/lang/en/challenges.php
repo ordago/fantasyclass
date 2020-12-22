@@ -59,5 +59,11 @@ return [
     'load_comments' => 'Load more comments...',
     'hidden_until' => 'Hidden until',
     'permalink' => 'Copy direct link to challenge (only for students)',
+    'new_challenges' => 'You have new challenges available!',
+    'challenge_hidden' => 'The challenge will remain hidden ultil the student pass this challenge:',
+    'select_challenge' => 'Select one challenge',
+    'wo_challenge' => 'Remove selection',
+    'mark_prev_challenge' => 'Select the previous challenge',
+    'exist_requirement' => 'Exists a challenge requirement',
 
 ];

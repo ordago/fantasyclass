@@ -341,7 +341,7 @@
               @click="modal = true"
             >
               <span class="icon is-small">
-                <i class="fas fa-question"></i> 
+                <i class="fas fa-question"></i>
               </span>
               <span>{{ trans.get("challenges.add_question") }}</span>
             </button>
@@ -480,15 +480,19 @@
         </div>
       </form>
     </b-modal>
-    <AddQuestion :challenge="challenge.id" :modal="modal" bank="wc" :code="code"> </AddQuestion>
-
+    <AddQuestion
+      :challenge="challenge.id"
+      :modal="modal"
+      bank="wc"
+      :code="code"
+    >
+    </AddQuestion>
   </div>
 </template>
 <script>
 import confetti from "canvas-confetti";
 import Utils from "../../utils.js";
 import AddQuestion from "../questions/AddQuestion.vue";
-
 
 const InputEmoji = () => import("../utils/InputEmoji.vue");
 import { VueReactionEmoji, VueFeedbackReaction } from "vue-feedback-reaction";
@@ -642,11 +646,10 @@ export default {
       this.question.challenge_id = this.challenge.id;
       axios
         .post("/classroom/challenge/question", {
-          question: this.question,  
+          question: this.question,
           type: 1,
         })
         .then((response) => {
-          console.log(response.data)
           this.modal = false;
           this.$parent.$parent.getChallenges(
             this.challenge.challenges_group_id
@@ -682,6 +685,11 @@ export default {
               challenge: this.challengeReactive.id,
             })
             .then((response) => {
+              if(this.$parent.$parent.$parent.mutableChallenges.length < response.data.challenges.length) {
+                this.$toast(this.trans.get('challenges.new_challenges'), {type: 'info'})
+              }
+              this.$parent.$parent.$parent.mutableChallenges =
+                response.data.challenges;
               if (response.data.success == true) {
                 confetti({
                   particleCount: 200,
