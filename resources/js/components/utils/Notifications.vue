@@ -67,6 +67,7 @@
                   'fa-club': notification.data.type == 'mark_card',
                   'fa-heart': notification.data.type == 'new_behaviour',
                   'fa-coins': notification.data.type == 'money_sent',
+                  'fa-feather': notification.data.type == 'post',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -113,6 +114,16 @@
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}
               <i class="fad fa-comments-alt ml-1"></i>
+            </a>
+            <a
+              v-if="
+                notification.data.user == 'teacher' &&
+                notification.data.type == 'post'
+              "
+              :href="'/classroom/' + notification.data.classroom + '/student/' + notification.data.section"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              <i class="fad fa-user ml-1"></i>
             </a>
             <a
               v-else-if="notification.data.user == 'student'"

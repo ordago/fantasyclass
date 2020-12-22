@@ -20,5 +20,7 @@ return [
     'money_sent_taxes' => 'after applying taxes you get ',
     'money_sent_thief' => ' but ... One thief has stolen ',
     'money_sent_total' => ' so you get: ',
+    'new_post' => 'New post on: ',
+
 
 ];

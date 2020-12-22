@@ -1,9 +1,12 @@
 # Changelog
 ## v1.29 Beta (XX/12/2020)
 ### Added   
-- Next and previous students in student info.
+- Easy change between students in student info.
+- New notification when student write a post.
 
 ### Changed
+- Hide badge count if student don't have badges.
+- Fixed bug when creating empty posts.
 
 ## v1.28 Beta (21/12/2020)
 ### Added   

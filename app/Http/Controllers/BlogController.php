@@ -120,6 +120,14 @@ class BlogController extends Controller
         if ($blog->student_id != $student->id)
             abort(403);
 
+        $from['title'] = __("notifications.new_post") . $blog->name;
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.new_post", $data['title'] , $from, "post", $student->id);
+
+
         return Posts::create([
             'title' => $data['title'],
             'content' => $data['content'],

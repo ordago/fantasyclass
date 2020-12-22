@@ -54,13 +54,52 @@
           </div>
         </div>
       </div>
-      <div class="my-2 is-flex" v-if="admin">
-        <button class="button" @click="nextStudent(false)">
-          <i class="fas fa-chevron-left mr-2"></i> {{ trans.get('pagination.previous') }}
-        </button>
-        <button class="button is-info left-auto" @click="nextStudent">
-          {{ trans.get('pagination.next') }} <i class="fas fa-chevron-right ml-2"></i>
-        </button>
+      <div class="mt-0 is-flex columns px-1" v-if="admin">
+        <div class="column pr-1 is-narrow has-text-right">
+          <button class="button" @click="nextStudent(false)">
+            <i class="fas fa-chevron-left mr-1"></i>
+            {{ trans.get("pagination.previous") }}
+          </button>
+        </div>
+        <div class="column px-0">
+          <tippy
+            class="w-100"
+            interactive
+            :animate-fill="false"
+            theme="light"
+            placement="bottom"
+            animation="fade"
+            trigger="click"
+            style="display: inline-block"
+            arrow
+          >
+            <template v-slot:trigger>
+              <button type="submit" class="button is-primary w-100">
+                <i class="fas fa-user"></i>
+              </button>
+            </template>
+            <span>
+              <section>
+                <b-autocomplete
+                  v-model="name"
+                  placeholder="e.g. Anne"
+                  :open-on-focus="true"
+                  :data="filteredDataObj"
+                  field="name"
+                  @select="(option) => goTo(option.id)"
+                  :clearable="false"
+                >
+                </b-autocomplete>
+              </section>
+            </span>
+          </tippy>
+        </div>
+        <div class="column pl-1 is-narrow">
+          <button class="button is-info" @click="nextStudent">
+            {{ trans.get("pagination.next") }}
+            <i class="fas fa-chevron-right ml-1"></i>
+          </button>
+        </div>
       </div>
     </div>
     <div class="column pr-0">
@@ -514,13 +553,18 @@
             </div>
           </div>
         </b-tab-item>
-        <b-tab-item
-          v-if="admin || cards.length"
-        >
-        <template slot="header">
+        <b-tab-item v-if="admin || cards.length">
+          <template slot="header">
             <b-icon pack="fad" icon="club" />
             {{ trans.get("students.cards") }}
-            <span class="tag is-link tag-notif" :class="{'is-danger' : student.numcards[0] > student.numcards[1] }" style="left: 2px">{{ student.numcards[0] }} / {{ student.numcards[1] }}</span>
+            <span
+              class="tag is-link tag-notif"
+              :class="{
+                'is-danger': student.numcards[0] > student.numcards[1],
+              }"
+              style="left: 2px"
+              >{{ student.numcards[0] }} / {{ student.numcards[1] }}</span
+            >
           </template>
           <button
             class="button is-link ml-3 mt-1"
@@ -802,7 +846,9 @@
           <template slot="header">
             <b-icon pack="fad" icon="award" />
             {{ trans.get("students.badges") }}
-            <span class="tag is-link tag-notif" style="left: 2px">{{ student.badges.length }}</span>
+            <span v-if="student.badges.length" class="tag is-link tag-notif" style="left: 2px">{{
+              student.badges.length
+            }}</span>
           </template>
           <div v-if="admin" class="is-flex pl-4">
             <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
@@ -1195,25 +1241,35 @@ export default {
       send_money_student: null,
       moneySended: false,
       transaction: null,
+      keepFirst: false,
+      openOnFocus: false,
+      name: "",
+      selected: null,
+      clearable: false,
     };
   },
   methods: {
+    goTo(id) {
+      location.href = "/classroom/" + this.classroom.code + "/student/" + id;
+    },
     nextStudent(next = true) {
       const currentStudent = (element) => element.id == this.student.id;
       let nextId;
       let index;
-      if(next) {
-        index = (this.classroom.students.findIndex(currentStudent) + 1) % this.classroom.students.length;
+      if (next) {
+        index =
+          (this.classroom.students.findIndex(currentStudent) + 1) %
+          this.classroom.students.length;
       } else {
-        index = (this.classroom.students.findIndex(currentStudent) - 1) % this.classroom.students.length;  
-        if(index == -1)
-          index = this.classroom.students.length - 1;
+        index =
+          (this.classroom.students.findIndex(currentStudent) - 1) %
+          this.classroom.students.length;
+        if (index == -1) index = this.classroom.students.length - 1;
       }
       console.log(index);
       nextId = this.classroom.students[index].id;
-      
-      location.href = '/classroom/' + this.classroom.code + '/student/' + nextId;
-      
+
+      this.goTo(nextId)
     },
     getIcon(type) {
       switch (type) {
@@ -1718,6 +1774,16 @@ export default {
           );
         });
       }
+    },
+    filteredDataObj() {
+      return this.classroom.students.filter((option) => {
+        return (
+          option.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.name.toLowerCase()) >= 0
+        );
+      });
     },
     filteredLogEntries() {
       return this.student.log_entries.filter((entry) => {

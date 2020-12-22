@@ -83,7 +83,7 @@
           <button
             class="button is-primary"
             @click="sendPost"
-            :disabled="title == '' || content == null"
+            :disabled="title == '' || content == ''"
             v-if="!edit"
           >
             {{ trans.get("general.add") }}
