@@ -33,8 +33,7 @@
                 <small class="has-italic-text">{{ __('auth.username_info') }}</small>
             </div>
             <div class="my-3">
-                <input id="email" placeholder="{{ __('auth.email') }}" type="email" class="input is-info @error('email') is-danger @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
+            <input id="email" placeholder="E-mail" type="email" class="input is-info @error('email') is-danger @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                 @error('email')
                 <span class="help is-danger" role="alert">
                     {{ $message }}
