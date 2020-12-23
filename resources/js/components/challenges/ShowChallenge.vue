@@ -148,6 +148,22 @@
                     "
                   >
                     <iframe
+                      v-if="attachment.type == 1"
+                      :src="attachment.url"
+                      width="1090"
+                      height="677"
+                      style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                      "
+                      frameborder="0"
+                      allowfullscreen="allowfullscreen"
+                      allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
+                    ></iframe>
+                    <iframe
                       v-if="attachment.type == 8"
                       :src="getHp5(attachment.url)"
                       width="1090"
