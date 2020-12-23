@@ -1,12 +1,14 @@
 # Changelog
-## v1.29 Beta (XX/12/2020)
+## v1.29 Beta (23/12/2020)
 ### Added   
 - Easy change between students in student info.
 - New notification when student write a post.
+- Add challenge requirement.
 
 ### Changed
 - Hide badge count if student don't have badges.
 - Fixed bug when creating empty posts.
+- Show category in student challenge info.
 
 ## v1.28 Beta (21/12/2020)
 ### Added   

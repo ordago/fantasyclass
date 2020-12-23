@@ -725,13 +725,15 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div v-for="challenge in orderedChallenges" :key="challenge.id">
+          <div class="has-text-centered" v-for="(challenge, index) in orderedChallenges" :key="challenge.id">
             <show-challenge
+            class="has-text-left"
               :challenge="challenge"
               :code="classroom.code"
               :admin="admin"
               :edit="false"
             ></show-challenge>
+            <span v-if="index != orderedChallenges.length - 1"><i class="far fa-arrow-up"></i></span>
           </div>
         </b-tab-item>
 

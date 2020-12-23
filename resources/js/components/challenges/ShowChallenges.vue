@@ -73,6 +73,7 @@
       >
         <div v-for="challenge in filteredList" v-bind:key="challenge.id">
           <ShowChallenge
+            class="mb-3"
             :code="code"
             :challenge="challenge"
             :admin="true"

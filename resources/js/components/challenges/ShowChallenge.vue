@@ -1,10 +1,10 @@
 <template>
-  <div class="box card-shadow-s mb-3" v-bind:class="getBackground">
+  <div class="box card-shadow-s mb-0" v-bind:class="getBackground">
     <section class="media">
       <div class="media-content is-relative">
         <div
           class="challenge-category has-background-light"
-          v-if="!admin && full"
+          v-if="!admin"
           v-tippy
           :content="challengeReactive.group.name"
         >
@@ -315,7 +315,7 @@
                 !admin &&
                 (challengeReactive.completion == 2 ||
                   challengeReactive.completion == 1) &&
-                !checkCompletion
+                !checkCompletion && !full
               "
               class="button is-info"
               @click="markCompleted(challenge)"

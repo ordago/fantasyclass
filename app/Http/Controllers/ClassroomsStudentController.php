@@ -6,6 +6,7 @@ use App\Badge;
 use App\Card;
 use App\CardStudent;
 use App\Challenge;
+use App\ChallengesGroup;
 use App\Classroom;
 use App\ClassroomUser;
 use App\Equipment;
@@ -207,7 +208,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required')
+            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id')
             ->get();
 
 
@@ -229,7 +230,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required')
+            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id')
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
@@ -241,6 +242,11 @@ class ClassroomsStudentController extends Controller
                 }
             }
             $challenge->permalink = Crypt::encryptString($challenge->id);
+            $group = ChallengesGroup::find($challenge->challenges_group_id);
+            $challenge->group = [
+                'name' => $group->name,
+                'icon' => $group->icon,
+            ];
         }
         return $challenges;
     }
