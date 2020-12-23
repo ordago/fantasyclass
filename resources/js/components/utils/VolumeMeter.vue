@@ -67,7 +67,7 @@
         <br />
         <!-- The canvas that will be used to render the input level -->
         <canvas ref="meter" id="meter" style="width:100%;" height="30" class="mt-3"></canvas>
-        <button @click="start" class="button is-primary mt-3 start">
+        <button @click="start" class="button is-primary start">
           <i class="fas fa-play mr-2"></i> Start
         </button>
         <button class="button is-dark" @click="stopped = true">
