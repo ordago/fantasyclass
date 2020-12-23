@@ -436,6 +436,15 @@ class ClassroomsStudentController extends Controller
             $student->setProperty('xp', $challenge->xp, true, 'challenge');
             $student->setProperty('gold', $challenge->gold, true, 'challenge');
         }
+        
+        $from['title'] = $challenge->title;
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_challenge", __("notifications.mark_challenge") . $from['title'] , $from, "challenge", "challenges");
+
+
         return [
             'success' => true,
             'hp' => $student->hp,

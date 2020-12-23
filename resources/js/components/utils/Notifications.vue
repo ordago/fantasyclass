@@ -65,6 +65,7 @@
                   'fa-bullhorn': notification.data.type == 'notification',
                   'fa-comments-alt': notification.data.type == 'chat',
                   'fa-club': notification.data.type == 'mark_card',
+                  'fa-pen-fancy': notification.data.type == 'challenge',
                   'fa-heart': notification.data.type == 'new_behaviour',
                   'fa-coins': notification.data.type == 'money_sent',
                   'fa-feather': notification.data.type == 'post',

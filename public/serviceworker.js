@@ -110,7 +110,7 @@
         return caches.open(version + staticCacheName)
             .then(function (cache) {
                 return cache.addAll([
-                    '/',
+                    '/css/app.css',
                     '/offline',
                     '/css/home.css',
                     '/img/logo.svg',

@@ -21,5 +21,6 @@ return [
     'money_sent_thief' => ' pero ... Unos ladrones han robado ',
     'money_sent_total' => ' así que te queda: ',
     'new_post' => 'Nuevo post en: ',
+    'mark_challenge' => 'Ha completado un desafío: ',
 
 ];
