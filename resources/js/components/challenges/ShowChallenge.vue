@@ -104,7 +104,8 @@
           </div>
           <div class="mt-5">
             <div
-              class="columns p-4 m-3 card rounded card-shadow-s"
+              class="p-4 m-3 card rounded card-shadow-s"
+              :class="{ 'columns' : !attachment.mode == 1 }"
               v-for="(attachment, index) in challenge.attachments"
               :key="attachment.id"
             >
@@ -130,6 +131,7 @@
                     'fa-expand': attachment.mode == 1,
                   }"
                 ></i>
+                <span class="ml-2" v-if="attachment.name && attachment.mode == 1">{{ attachment.name }}</span>
               </div>
               <div class="column" style="word-break: break-all">
                 <a

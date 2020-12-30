@@ -1,4 +1,11 @@
 # Changelog
+## v1.30 Beta (XX/12/2020)
+### Added   
+- Show title in attachments fullscreen and changed layout to increase space.
+
+### Changed
+
+# Changelog
 ## v1.29 Beta (23/12/2020)
 ### Added   
 - Easy change between students in student info.
