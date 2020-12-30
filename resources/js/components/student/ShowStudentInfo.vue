@@ -337,7 +337,7 @@
                 <img
                   :src="item.icon"
                   @click="item.hp > 0 ? useItem(item, message(item)) : null"
-                  class="item"
+                  class="item rounded"
                 />
                 <div class="number-items">{{ item.pivot.count }}</div>
               </div>
