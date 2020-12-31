@@ -83,6 +83,7 @@ return [
     'log_badge' => 'Badge',
     'log_battle' => 'Battle',
     'log_wheel' => 'Fortune wheel',
-
+    'log_card_delete' => 'Deleted card',
+    'log_card_use' => 'Used card',
 
 ];

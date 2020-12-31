@@ -11,5 +11,6 @@ class LogEntry extends Model
         'value',
         'student_id',
         'message',
+        'info',
     ];
 }

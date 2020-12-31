@@ -1,9 +1,13 @@
 # Changelog
-## v1.30 Beta (XX/12/2020)
+## v1.30 Beta (XX/01/2021)
 ### Added   
-- Show title in attachments fullscreen and changed layout to increase space.
+- Show title in fullscreen attachments and changed layout to increase space.
+- Add card info in log.
 
 ### Changed
+- Fixed translations in students' view.
+- Fixed excel and rubric in report.
+- Show name in menu info.
 
 # Changelog
 ## v1.29 Beta (23/12/2020)

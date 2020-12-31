@@ -7,6 +7,7 @@ use App\CardStudent;
 use App\Classroom;
 use App\Group;
 use App\Http\Classes\Functions;
+use App\LogEntry;
 use App\Mail\NewCardNotification;
 use App\Student;
 use Intervention\Image\Facades\Image;
@@ -323,6 +324,17 @@ class CardsController extends Controller
             $message = __('success_error.use_delete');
         }
 
+        $type = 'card_use';
+        if($data['type'] != 1)
+            $type = 'card_delete';
+        LogEntry::create([
+            'type' => $type,
+            'value' => 0,
+            'student_id' => $student->id,
+            'message' => $type,
+            'info' => $card->title,
+        ]);
+
         return [
             "message" => " " . $message,
             "icon" => "check",
@@ -379,6 +391,13 @@ class CardsController extends Controller
                 }
                 if ($card->xp) $student->setProperty('xp', $card->xp, true, 'card');
                 if ($card->hp) $student->setProperty('hp', $card->hp, true, 'card');
+                LogEntry::create([
+                    'type' => 'card_use',
+                    'value' => 0,
+                    'student_id' => $student->id,
+                    'message' => 'card_use',
+                    'info' => $card->title,
+                ]);
             } else {
                 $cost = settings()->get('card_delete', 50);
                 if ($student->gold < $cost) {
@@ -389,6 +408,13 @@ class CardsController extends Controller
                     ];
                 }
                 $student->setProperty('gold', $cost * -1, true, 'card');
+                LogEntry::create([
+                    'type' => 'card_delete',
+                    'value' => 0,
+                    'student_id' => $student->id,
+                    'message' => 'card_delete',
+                    'info' => $card->title,
+                ]);
             }
             $cardLine->delete();
             return [

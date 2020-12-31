@@ -85,6 +85,7 @@ return [
     'log_badge' => 'Insignia',
     'log_battle' => 'Batalla',
     'log_wheel' => 'Ruleta de la fortuna',
-
+    'log_card_delete' => 'Carta eliminada',
+    'log_card_use' => 'Carta utilizada',
 
 ];

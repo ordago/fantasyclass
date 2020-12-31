@@ -725,15 +725,21 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div class="has-text-centered" v-for="(challenge, index) in orderedChallenges" :key="challenge.id">
+          <div
+            class="has-text-centered"
+            v-for="(challenge, index) in orderedChallenges"
+            :key="challenge.id"
+          >
             <show-challenge
-            class="has-text-left"
+              class="has-text-left"
               :challenge="challenge"
               :code="classroom.code"
               :admin="admin"
               :edit="false"
             ></show-challenge>
-            <span v-if="index != orderedChallenges.length - 1"><i class="far fa-arrow-up"></i></span>
+            <span v-if="index != orderedChallenges.length - 1"
+              ><i class="far fa-arrow-up"></i
+            ></span>
           </div>
         </b-tab-item>
 
@@ -848,9 +854,12 @@
           <template slot="header">
             <b-icon pack="fad" icon="award" />
             {{ trans.get("students.badges") }}
-            <span v-if="student.badges.length" class="tag is-link tag-notif" style="left: 2px">{{
-              student.badges.length
-            }}</span>
+            <span
+              v-if="student.badges.length"
+              class="tag is-link tag-notif"
+              style="left: 2px"
+              >{{ student.badges.length }}</span
+            >
           </template>
           <div v-if="admin" class="is-flex pl-4">
             <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
@@ -912,17 +921,25 @@
                 <span
                   class="tag is-light"
                   v-bind:class="[
-                    props.row.value >= 0 ? 'is-success' : 'is-danger',
+                    props.row.value > 0 || props.row.type == 'card_use'
+                      ? 'is-success'
+                      : 'is-danger',
                   ]"
                 >
                   <span v-if="props.row.type == 'xp'"
                     ><i class="fas fa-fist-raised colored"></i
                   ></span>
-                  <span v-if="props.row.type == 'gold'"
+                  <span v-else-if="props.row.type == 'gold'"
                     ><i class="fas fa-coins colored"></i
                   ></span>
-                  <span v-if="props.row.type == 'hp'"
+                  <span v-else-if="props.row.type == 'hp'"
                     ><i class="fas fa-heart colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'card_use'"
+                    ><i class="fas fa-club colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'card_delete'"
+                    ><i class="fas fa-club colored"></i
                   ></span>
                 </span>
               </b-table-column>
@@ -931,8 +948,11 @@
                 field="value"
                 :label="trans.get('students.value')"
                 sortable
-                >{{ props.row.value }}</b-table-column
-              >
+                ><span v-if="props.row.value">{{
+                  props.row.value
+                }}</span>
+                <span v-else>----</span>
+              </b-table-column>
 
               <b-table-column
                 field="created_at"
@@ -952,7 +972,7 @@
               >
                 <span
                   v-tippy
-                  :content="trans.get('students.log_' + props.row.message)"
+                  :content="getMessage(props.row)"
                   v-html="getIcon(props.row.message)"
                 >
                 </span>
@@ -1271,7 +1291,14 @@ export default {
       }
       nextId = this.classroom.students[index].id;
 
-      this.goTo(nextId)
+      this.goTo(nextId);
+    },
+    getMessage(row) {
+      let info = "";
+      if (row.info) {
+        info += ": " + this.trans.get(row.info);
+      }
+      return this.trans.get("students.log_" + row.message) + info;
     },
     getIcon(type) {
       switch (type) {
@@ -1310,6 +1337,9 @@ export default {
           break;
         case "wheel":
           return "<i class='fas fa-spinner colored' style='color: #E6E6FA'></i>";
+          break;
+        default:
+          return "<i class='fas fa-info-circle colored' style='color: #E6E6FA'></i>";
           break;
       }
     },
@@ -1488,10 +1518,9 @@ export default {
     },
     updateEmpty() {
       let n = this.student.items.length;
-      if (n % 6)
-        n = n + (6 - n % 6);
-      this.inventoryRemaining = n - this.student.items.length ? n - this.student.items.length: 6;
-    
+      if (n % 6) n = n + (6 - (n % 6));
+      this.inventoryRemaining =
+        n - this.student.items.length ? n - this.student.items.length : 6;
     },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({
@@ -1516,7 +1545,8 @@ export default {
     },
     useItem(item, messageItem) {
       this.$buefy.dialog.confirm({
-        message: messageItem + " <br><br>" + this.trans.get('students.use_item_info'),
+        message:
+          messageItem + " <br><br>" + this.trans.get("students.use_item_info"),
         onConfirm: () => {
           axios
             .post("/classroom/" + this.classroom.code + "/student/useitem", {
