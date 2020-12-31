@@ -8,6 +8,8 @@
 - Fixed translations in students' view.
 - Fixed excel and rubric in report.
 - Show name in menu info.
+- Reload last tab if was clicked 5 min before.
+- Show tags when click on tag manager in evaluation lines. 
 
 # Changelog
 ## v1.29 Beta (23/12/2020)

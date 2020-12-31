@@ -254,17 +254,17 @@
     </div>
 
     <div class="panel-block mt-1 mb-0 px-1" v-if="students.length && view != 1">
-      <p class="control has-icons-left">
-        <input
-          class="input"
-          type="text"
-          v-model="search"
-          :placeholder="trans.get('students.search')"
-        />
-        <span class="icon is-left">
-          <i class="fas fa-search" aria-hidden="true"></i>
-        </span>
-      </p>
+      <b-autocomplete
+        v-model="search"
+        :placeholder="trans.get('students.search')"
+        :open-on-focus="true"
+        :data="filteredDataObj"
+        field="name"
+        icon-pack="fas"
+        icon="search"
+        :clearable="false"
+      >
+      </b-autocomplete>
     </div>
 
     <div class="column px-1" v-if="view == 2">
@@ -279,7 +279,7 @@
           </p>
         </figure>
         <div class="media-content">
-          <div class="content cursor-pointer"  @click="redirect(student.id)">
+          <div class="content cursor-pointer" @click="redirect(student.id)">
             <div class="">
               <div class="">
                 <strong>{{ student.name }}</strong>
@@ -843,6 +843,16 @@ export default {
     },
   },
   computed: {
+    filteredDataObj() {
+      return this.students.filter((option) => {
+        return (
+          option.name
+            .toString()
+            .toLowerCase()
+            .indexOf(this.search.toLowerCase()) >= 0
+        );
+      });
+    },
     orderedBehaviours: function () {
       return _.orderBy(this.classroom.behaviours, "count_number", "desc");
     },

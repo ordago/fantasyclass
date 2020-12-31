@@ -275,6 +275,7 @@
                   ref="taginput"
                   id="taginput"
                   icon="tag"
+                  :open-on-focus="true"
                   @input="setWeight"
                   :placeholder="trans.get('evaluation.add')"
                   icon-pack="fa"
