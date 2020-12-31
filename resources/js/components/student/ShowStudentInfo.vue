@@ -106,6 +106,7 @@
       <b-tabs
         :destroy-on-hide="true"
         multiline
+        @input="setCookie()"
         v-model="activeTab"
         :key="update"
       >
@@ -946,11 +947,10 @@
 
               <b-table-column
                 field="value"
+                centered
                 :label="trans.get('students.value')"
                 sortable
-                ><span v-if="props.row.value">{{
-                  props.row.value
-                }}</span>
+                ><span v-if="props.row.value">{{ props.row.value }}</span>
                 <span v-else>----</span>
               </b-table-column>
 
@@ -1236,6 +1236,7 @@ export default {
       this.eq2Json = JSON.parse(this.shop.eq2);
       this.eq3Json = JSON.parse(this.shop.eq3);
     }
+    if (this.$cookies.get("tab") !== undefined) this.activeTab = parseInt(this.$cookies.get("tab"));
   },
   data: function () {
     return {
@@ -1272,6 +1273,9 @@ export default {
     };
   },
   methods: {
+    setCookie() {
+      this.$cookies.set("tab", this.activeTab, 60 * 5);
+    },
     goTo(id) {
       location.href = "/classroom/" + this.classroom.code + "/student/" + id;
     },

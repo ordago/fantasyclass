@@ -699,7 +699,7 @@ export default {
         "/classroom/" + this.classroom.code + "/student/" + id;
     },
     assignView(view) {
-      this.$cookies.set("view", view);
+      this.$cookies.set("view", view, Infinity);
       this.view = view;
     },
     refresh() {
