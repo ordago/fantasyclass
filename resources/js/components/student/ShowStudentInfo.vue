@@ -766,7 +766,7 @@
                     "
                   >
                     <span
-                      v-if="grade.rubric_id"
+                      v-if="grade.type == 1 && grade.rubric_id"
                       class="cursor-pointer"
                       @click="loadRubric(grade.rubric_id)"
                     >

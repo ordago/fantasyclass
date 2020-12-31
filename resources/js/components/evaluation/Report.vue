@@ -3,7 +3,7 @@
         <button class="button is-dark noprint" @click="print">
             <i class="fas fa-print"></i>
         </button>
-        <button class="button is-success noprint" @click="exportReport" formtarget="_blank">
+        <button class="button is-success noprint" v-if="admin" @click="exportReport" formtarget="_blank">
             <i class="fas fa-file-excel"></i>
         </button>
         <table class="grades has-background-light mt-3" id="evaluationReport">
