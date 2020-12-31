@@ -54,12 +54,14 @@ return [
     'change_class' => 'Cambia subclase',
     'basic_equipment' => 'El equipamiento básico será asignado, esta acción no se puede deshacer.',
     'online' => 'El/la estudiante está activo/a (online)',
+    'use_item_info' => '¿Quieres usar el objeto?',
 
     'student_area' => 'Area del estudiante',
     'student_view' => 'Ver como estudiante',
     'send_message' => 'Envía una notificación',
     
     'send_money' => 'Envía dinero',
+    'send_name' => 'Selecciona un nombre',
     'transfer_fee' => 'Esta operación tiene una comisión del ',
     'thief' => '¡Ten cuidado! Hay ladrones que pueden quitarte un poco de tu dinero...',
     'money_sent' => 'Dinero enviado',

@@ -54,12 +54,14 @@ return [
     'change_class' => 'Canvia subclasse',
     'basic_equipment' => 'L\'equipament bàsic serà assignat, aquesta acció no es pot desfer.',
     'online' => 'L\'estudiant està actiu (online)',
+    'use_item_info' => 'Vols utilitzar l\'objecte?',
 
     'student_area' => 'Àrea de l\'estudiant',
     'student_view' => 'Veure com l\'estudiant',
     'send_message' => 'Envia un missatge',
 
     'send_money' => 'Envia diners',
+    'send_name' => 'Selecciona un nom',
     'transfer_fee' => 'Aquesta operació té una comissió del ',
     'thief' => 'Vés en compte! Hi ha lladres que poden robar-te una mica dels diners ...',
     'money_sent' => 'Diners enviats',

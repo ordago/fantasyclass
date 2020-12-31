@@ -52,12 +52,14 @@ return [
     'change_class' => 'Change subclass',
     'basic_equipment' => 'Basic equipment will be assigned. This action can\'t be undone.',
     'online' => 'Student is active (online)',
+    'use_item_info' => 'Would you like to use the item?',
     
     'student_area' => 'Student area',
     'student_view' => 'View as the student',
     'send_message' => 'Send a message',
 
     'send_money' => 'Send money',
+    'send_name' => 'Select a name',
     'transfer_fee' => 'This operation has a fee of ',
     'thief' => 'Be careful! There are thiefs that could steal a part of your money...',
     'money_sent' => 'Money sent',

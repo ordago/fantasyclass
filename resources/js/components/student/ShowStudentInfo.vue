@@ -1073,7 +1073,7 @@
               <b-select
                 v-model="send_money_student"
                 expanded
-                placeholder="Select a name"
+                :placeholder="trans.get('students.send_name')"
               >
                 <option
                   :value="id"
@@ -1516,7 +1516,7 @@ export default {
     },
     useItem(item, messageItem) {
       this.$buefy.dialog.confirm({
-        message: messageItem + " <br><br>Would you like to use the item?",
+        message: messageItem + " <br><br>" + this.trans.get('students.use_item_info'),
         onConfirm: () => {
           axios
             .post("/classroom/" + this.classroom.code + "/student/useitem", {

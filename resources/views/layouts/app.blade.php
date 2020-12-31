@@ -101,8 +101,8 @@
                                         @else
                                         <i class="fas fa-user"></i>
                                         @endif
-                                        <span class="pl-2 text-light cursor-default">
-                                            {{ Str::limit(Auth::user()->username, 8, $end='...') }}
+                                        <span v-tippy content="{{ Auth::user()->name }}" class="pl-2 text-light cursor-default">
+                                            {{ Str::limit(Auth::user()->name, 8, $end='...') }}
                                         </span>
                                     </span>
                                     <span class="icon is-small">
