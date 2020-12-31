@@ -1487,11 +1487,11 @@ export default {
       });
     },
     updateEmpty() {
-      let line = 6;
-      if (this.student.items.length >= 6) {
-        line = 12;
-      }
-      this.inventoryRemaining = line - this.student.items.length;
+      let n = this.student.items.length;
+      if (n % 6)
+        n = n + (6 - n % 6);
+      this.inventoryRemaining = n - this.student.items.length ? n - this.student.items.length: 6;
+    
     },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({
