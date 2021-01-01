@@ -91,6 +91,10 @@ class Student extends Model implements HasMedia
             if ($card->slot != 0)
                 $max += $card->slot;
         }
+        foreach ($this->items as $item) {
+            if ($item->slot != 0)
+                $max += $item->slot;
+        }
         return [$num, $max];
     }
 
@@ -361,7 +365,7 @@ class Student extends Model implements HasMedia
                 if ($studentItem)
                     $count = $studentItem->pivot->count + $mult;
                 else $count = $mult == -1 ? 0 : 1;
-                if($count <= 0) {
+                if ($count <= 0) {
                     $this->items()->detach($item['id']);
                 } else {
                     $this->items()->sync([$item['id'] => ['count' => $count]], false);
@@ -371,12 +375,12 @@ class Student extends Model implements HasMedia
         if ($challenge->requirements) {
             foreach ($challenge->requirements as $item) {
                 $studentItem = $this->items->where('id', $item['id'])->first();
-                if($studentItem)
-                 dump($studentItem->attributes   );
+                if ($studentItem)
+                    dump($studentItem->attributes);
                 if ($studentItem)
                     $count = $studentItem->pivot->count + $mult * -1;
                 else $count = 1;
-                if($count <= 0) {
+                if ($count <= 0) {
                     $this->items()->detach($item['id']);
                 } else {
                     $this->items()->sync([$item['id'] => ['count' => $count]], false);

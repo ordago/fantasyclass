@@ -62,6 +62,28 @@
           </div>
         </div>
       </div>
+      <div class="column">
+        <div class="field is-horizontal">
+          <div class="field-body">
+            <div class="field is-expanded">
+              <div
+                class="field has-addons"
+                v-tippy
+                :content="trans.get('shop.item_slot')"
+              >
+                <p class="control">
+                  <a class="button is-static">
+                    <i class="fas fa-club colored"></i>
+                  </a>
+                </p>
+                <p class="control is-expanded">
+                  <input type="number" class="input" v-model="slot" />
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="columns">
       <div class="column">
@@ -132,6 +154,7 @@ export default {
       this.id = this.item.id;
       this.hp = this.item.hp ? this.item.hp : 0;
       this.xp = this.item.xp ? this.item.xp : 0;
+      this.slot = this.item.slot ? this.item.slot : 0;
       this.min_lvl = this.item.min_lvl ? this.item.min_lvl : 0;
       this.price = this.item.price ? this.item.price : 0;
       this.description = this.item.description ? this.item.description : "";
@@ -143,6 +166,7 @@ export default {
       image: {},
       hp: 0,
       xp: 0,
+      slot: 0,
       min_lvl: 0,
       price: 0,
       description: "",
@@ -159,6 +183,7 @@ export default {
             formData.append("icon", blob, "item.png");
             formData.append("hp", this.hp);
             formData.append("xp", this.xp);
+            formData.append("slot", this.slot);
             formData.append("min_lvl", this.min_lvl);
             formData.append("price", this.price);
             formData.append("description", this.description);

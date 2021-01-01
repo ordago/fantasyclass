@@ -725,8 +725,14 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div v-if="!mutableChallenges || mutableChallenges.length === 0" class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning">
-              <h1><i class="fas fa-dungeon"></i> {{ trans.get('challenges.challenges_empty') }}</h1>
+          <div
+            v-if="!mutableChallenges || mutableChallenges.length === 0"
+            class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning"
+          >
+            <h1>
+              <i class="fas fa-dungeon"></i>
+              {{ trans.get("challenges.challenges_empty") }}
+            </h1>
           </div>
 
           <div
@@ -826,7 +832,9 @@
                 <span
                   class="tag is-light"
                   v-bind:class="[
-                    props.row.value > 0 || props.row.type == 'card_use' || props.row.type == 'card_assign' 
+                    props.row.value > 0 ||
+                    props.row.type == 'card_use' ||
+                    props.row.type == 'card_assign'
                       ? 'is-success'
                       : 'is-danger',
                   ]"
@@ -903,7 +911,7 @@
             </template>
           </b-table>
         </b-tab-item>
-          <b-tab-item
+        <b-tab-item
           :label="trans.get('students.evaluation')"
           v-if="evaluation"
           class="p-2"
@@ -1244,7 +1252,8 @@ export default {
       this.eq2Json = JSON.parse(this.shop.eq2);
       this.eq3Json = JSON.parse(this.shop.eq3);
     }
-    if (this.$cookies.get("tab") !== undefined) this.activeTab = parseInt(this.$cookies.get("tab"));
+    if (this.$cookies.get("tab") !== undefined)
+      this.activeTab = parseInt(this.$cookies.get("tab"));
   },
   data: function () {
     return {
@@ -1597,6 +1606,12 @@ export default {
     },
     message(item) {
       let message = "";
+      if (item.slot > 0)
+        message +=
+          this.trans.get("shop.slot") +
+          " +" +
+          item.slot +
+          " <i class='fas fa-club colored mx-1'></i>. ";
       if (item.hp > 0)
         message +=
           this.trans.get("shop.recovers_hp") +

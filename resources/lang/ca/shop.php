@@ -33,6 +33,7 @@ return [
     'assign_text' => 'Vols assignar la mascota? No es cobrarà res',
 
     'pet_warning' => 'Solament pots tenir una mascota, si compres una altra perdràs la que tenies.',
-
+    'item_slot' => 'Assigna un valor si l\'objecte serveix per poder tenir més cartes',
+    'slot' => 'Aquest objecte et permet portar',
 
 ];

@@ -109,6 +109,7 @@ class ShopController extends Controller
                 'id' => ['numeric', 'nullable'],
                 'hp' => ['numeric', 'nullable'],
                 'xp' => ['numeric', 'nullable'],
+                'slot' => ['numeric', 'nullable'],
                 'min_lvl' => ['numeric', 'nullable'],
                 'price' => ['numeric', 'nullable'],
                 'description' => ['string', 'nullable'],

@@ -46,7 +46,7 @@
                         type="number"
                         disabled
                         class="input"
-                        style="border: 1px solid"
+                        style="border: 1px solid; width: 100px"
                         v-model="item.hp"
                       />
                     </p>
@@ -70,8 +70,32 @@
                         type="number"
                         class="input"
                         disabled
-                        style="border: 1px solid"
+                        style="border: 1px solid; width: 100px"
                         v-model="item.xp"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="column is-narrow">
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-static">
+                        <i class="fas fa-club colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        disabled
+                        style="border: 1px solid; width: 100px"
+                        v-model="item.slot"
                       />
                     </p>
                   </div>
@@ -95,7 +119,7 @@
                         type="number"
                         class="input"
                         disabled
-                        style="border: 1px solid"
+                        style="border: 1px solid; width: 100px"
                         v-model="item.price"
                       />
                     </p>

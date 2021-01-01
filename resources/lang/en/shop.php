@@ -33,6 +33,7 @@ return [
     'assign_text' => 'Do you want to assign the pet? It\'ll be free',
     'pet_warning' => 'You can only have one pet, if you buy one, you\'ll lose the pet you had',
 
-    
+    'item_slot' => 'Assign un value if this is an item taht allows students to has more cards',
+    'slot' => 'With this object, you can carry',
     
 ];

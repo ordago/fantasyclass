@@ -14,6 +14,7 @@ class Item extends Model implements HasMedia
         'hp', 
         'xp',  
         'gold', 
+        'slot', 
         'description', 
         'price', 
         'min_lvl', 

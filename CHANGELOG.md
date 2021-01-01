@@ -5,6 +5,7 @@
 - Add card info in log.
 - Assign objects to challenges.
 - Object requirement in challenges.
+- Object can now allow to carry more cards.
 
 ### Changed
 - Fixed translations in students' view.
