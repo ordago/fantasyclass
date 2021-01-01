@@ -374,7 +374,7 @@ class Student extends Model implements HasMedia
         }
         if ($challenge->requirements) {
             foreach ($challenge->requirements as $item) {
-                $studentItem = $this->items->where('id', $item['id'])->first();
+                $studentItem = $this->fresh()->items->where('id', $item['id'])->first();
                 if ($studentItem)
                     $count = $studentItem->pivot->count + $mult * -1;
                 else $count = 1;
