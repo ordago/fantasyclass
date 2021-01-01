@@ -285,6 +285,16 @@
             </div>
           </div>
         </div>
+        <label class="label">{{ trans.get("challenges.reward_items") }}</label>
+
+        <vue-select-image
+          :dataImages="items"
+          @onselectmultipleimage="onSelectMultipleImage"
+          :is-multiple="true"
+          :selectedImages="challenge.items"
+          w="20px"
+          >
+        </vue-select-image>
         <div class="mt-3" v-if="challenge.type == 0">
           <label for="name">{{ trans.get("challenges.completion") }}</label>
           <div class="field mt-3">
@@ -372,6 +382,10 @@
 const Editor = () => import("../utils/Editor.vue");
 const IconSelector = () => import("../utils/IconSelector.vue");
 
+import VueSelectImage from 'vue-select-image';
+require('vue-select-image/dist/vue-select-image.css');
+
+
 export default {
   props: [
     "challengegroup",
@@ -411,6 +425,7 @@ export default {
   data: function () {
     return {
       challenges: false,
+      items: [],
       editor: false,
       datepicker: null,
       reload: false,
@@ -437,16 +452,25 @@ export default {
         password: null,
         challenges_group_id: null,
         students: [],
+        items: [],
         _method: "post",
         challenge_required: null,
       },
     };
   },
   methods: {
+    onSelectMultipleImage(items) {
+      this.challenge.items = items
+    },
     getAllChallenges() {
       axios.get('/classroom/' + this.code + '/challenges/all')
       .then(response => {
-        this.challenges = response.data;
+        this.challenges = response.data.challenges;
+
+        this.items = response.data.items.map(function(row) {
+          return { id : row.id, src : row.icon, alt: row.description }
+        })
+
       });
     },
     disableAll() {
@@ -520,6 +544,7 @@ export default {
   components: {
     Editor,
     IconSelector,
+    VueSelectImage,
   },
 
   computed: {

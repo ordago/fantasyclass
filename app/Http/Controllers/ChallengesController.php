@@ -125,6 +125,7 @@ class ChallengesController extends Controller
             'challenges_group_id' => ['numeric'],
             'datetime' => ['string'],
             'students' => ['array'],
+            'items' => ['array', 'nullable'],
             'challenge_required' => ['numeric', 'nullable'],
         ]);
     }
@@ -136,7 +137,7 @@ class ChallengesController extends Controller
         }])->firstOrFail();
         $this->authorize('view', $class);
 
-        return $class->challengeGroups;
+        return ['challenges' => $class->challengeGroups, 'items' => $class->items];
     }
 
     public function getChallengesInfo($code)
@@ -152,7 +153,7 @@ class ChallengesController extends Controller
         if ($data['type'] == 0) {
             $challenge = Challenge::find($data['challenge']);
             $students = [];
-            $students = $class->students()->whereNotIn('students.id', json_decode($challenge->students))->with(['challenges' => function ($query) use ($data) {
+            $students = $class->students()->whereNotIn('students.id', $challenge->students)->with(['challenges' => function ($query) use ($data) {
                 $query
                 ->where('challenges.id', '=', $data['challenge']);
             }])->get();
@@ -175,7 +176,7 @@ class ChallengesController extends Controller
         $data = request()->validate([
             'id' => ['numeric'],
         ]);
-
+        $card = null;
         if($challenge->type == 0) {
             $student = Student::where('id', '=', $data['id'])->first();
             $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
@@ -185,14 +186,15 @@ class ChallengesController extends Controller
             if ($result['detached']) {
                 $mult = -1;
             } else {
-                if($challenge->auto_assign == 1) {
+                // if($challenge->auto_assign == 1) {
                     $card = CardsController::getRandomCard($class->code);
-                    $student->cards()->attach($card);
-                }
+                    // $student->cards()->attach($card);
+                // }
             }
-            $student->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
-            $student->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
-            $student->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
+            $student->assignChallenge($challenge, $mult, $card);
+            // $student->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
+            // $student->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
+            // $student->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
         } else {
             $group = Group::where('id', $data['id'])->firstOrFail();
             $class = Classroom::where('id', '=', $group->grouping->classroom_id)->firstOrFail();
@@ -208,12 +210,7 @@ class ChallengesController extends Controller
                 $card = CardsController::getRandomCard($class->code);
             }
             foreach ($group->students as $student) {
-                $student->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
-                $student->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
-                $student->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
-                if($cards && $challenge->auto_assign == 1) {
-                    $student->cards()->attach($card);
-                }
+                $student->assignChallenge($challenge, $mult, $card);
             }
         }
     }
@@ -225,7 +222,8 @@ class ChallengesController extends Controller
         $class = Classroom::where('id', '=', $challengeGroup->classroom_id)->first();
         $this->authorize('update', $class);
         $data['students'] = json_encode($data['students']);
-        try {
+        $data['items'] = json_encode($data['items']);
+        // try {
             $challenge = Challenge::create($data);
 
             return [
@@ -234,12 +232,13 @@ class ChallengesController extends Controller
                 "icon" => "check",
                 "challenge" => $challenge,
             ];
-        } catch (\Throwable $th) {
-            return [
-                "message" => __('success_error.error'),
-                "icon" => "times",
-                "type" => "error"
-            ];
-        }
+        // } catch (\Throwable $th) {
+        //     dump($th);
+        //     return [
+        //         "message" => __('success_error.error'),
+        //         "icon" => "times",
+        //         "type" => "error"
+        //     ];
+        // }
     }
 }

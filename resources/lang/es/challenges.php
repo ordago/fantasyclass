@@ -28,6 +28,7 @@ return [
     'content' => 'Contenido',
     'conquer' => 'Es una prueba de conquista?',
     'rewards' => 'Recompensas',
+    'reward_items' => 'Asigna objetos al superar el desafío',
     'auto_assign' => 'Auto-asinación de cartas?',
     'group' => 'Desafío de grupo',
     'optional' => 'Opcional',

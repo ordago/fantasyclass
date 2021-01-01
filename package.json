@@ -56,6 +56,7 @@
         "vue-feedback-reaction": "^1.2.0",
         "vue-fortune-wheel": "^1.0.1",
         "vue-json-excel": "^0.2.99",
+        "vue-select-image": "^1.9.0",
         "vue-slider-component": "^3.2.9",
         "vue-tippy": "^4.7.1",
         "vue-toasted": "^1.1.28",

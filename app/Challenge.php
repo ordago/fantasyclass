@@ -27,8 +27,14 @@ class Challenge extends Model
         'type',
         'password',
         'students',
+        'items',
         'challenges_group_id',
         'challenge_required',
+    ];
+
+    protected $casts = [
+        'items' => 'array',
+        'students' => 'array',
     ];
 
     protected $appends = ['permalink', 'rating'];

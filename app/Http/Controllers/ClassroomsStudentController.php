@@ -432,9 +432,11 @@ class ClassroomsStudentController extends Controller
             }
         }
         if ($update) {
-            $student->setProperty('hp', $challenge->hp, true, 'challenge');
-            $student->setProperty('xp', $challenge->xp, true, 'challenge');
-            $student->setProperty('gold', $challenge->gold, true, 'challenge');
+            $card = null;
+            if($challenge->auto_assign == 1) {
+                $card = CardsController::getRandomCard($class->code);
+            }
+            $student->assignChallenge($challenge, 1, $card);
         }
         
         $from['title'] = $challenge->title;
@@ -443,7 +445,6 @@ class ClassroomsStudentController extends Controller
         $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
 
         NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_challenge", __("notifications.mark_challenge") . $from['title'] , $from, "challenge", "challenges");
-
 
         return [
             'success' => true,

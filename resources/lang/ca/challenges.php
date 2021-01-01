@@ -28,6 +28,7 @@ return [
     'content' => 'Contingut',
     'conquer' => 'És una prova de conquesta?',
     'rewards' => 'Recompenses',
+    'reward_items' => 'Assigna objectes al superar el repte',
     'auto_assign' => 'Auto-assignació de cartes?',
     'group' => 'Repte de grup',
     'optional' => 'Opcional',

@@ -72,6 +72,10 @@
               <i class="fas fa-club colored"></i>
               {{ challengeReactive.cards }}
             </small>
+            <small v-if="challengeReactive.items && challengeReactive.items.length">
+              <i class="fad fa-backpack colored has-text-info-light"></i>: 
+              <img v-for="item in challengeReactive.items" class="mr-1" style="position: relative; top: 4px" :key="item.id" :src="item.src" width="20px">
+            </small>
           </p>
           <a
             class="button"

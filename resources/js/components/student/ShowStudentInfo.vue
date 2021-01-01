@@ -745,6 +745,162 @@
         </b-tab-item>
 
         <b-tab-item
+          v-if="
+            (classroom.badges && classroom.badges.length) ||
+            student.badges.length
+          "
+          icon="award"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <template slot="header">
+            <b-icon pack="fad" icon="award" />
+            {{ trans.get("students.badges") }}
+            <span
+              v-if="student.badges.length"
+              class="tag is-link tag-notif"
+              style="left: 2px"
+              >{{ student.badges.length }}</span
+            >
+          </template>
+          <div v-if="admin" class="is-flex pl-4">
+            <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
+              <ShowBadge
+                :student="student"
+                :badge="badge"
+                :admin="true"
+              ></ShowBadge>
+            </div>
+            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
+              <ShowBadge
+                v-if="!badge.classroom_id"
+                :student="student"
+                :badge="badge"
+                :admin="false"
+              ></ShowBadge>
+            </div>
+          </div>
+          <div class="is-flex pl-4" v-if="!admin">
+            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
+              <ShowBadge
+                :student="student"
+                :badge="badge"
+                :admin="false"
+              ></ShowBadge>
+            </div>
+          </div>
+        </b-tab-item>
+
+        <b-tab-item
+          :label="trans.get('students.log')"
+          v-if="student.log_entries.length"
+          icon="file"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <div class="columns">
+            <div class="column">
+              <input type="date" class="input is-rounded" v-model="dateStart" />
+            </div>
+            <div class="column">
+              <input type="date" class="input is-rounded" v-model="dateEnd" />
+            </div>
+          </div>
+          <b-table
+            v-if="student.log_entries.length"
+            :data="filteredLogEntries"
+            default-sort-direction="asc"
+            default-sort="created_at"
+            icon-pack="fas"
+            sort-icon="arrow-up"
+          >
+            <template slot-scope="props">
+              <b-table-column
+                field="type"
+                :label="trans.get('students.type')"
+                centered
+              >
+                <span
+                  class="tag is-light"
+                  v-bind:class="[
+                    props.row.value > 0 || props.row.type == 'card_use' || props.row.type == 'card_assign' 
+                      ? 'is-success'
+                      : 'is-danger',
+                  ]"
+                >
+                  <span v-if="props.row.type == 'xp'"
+                    ><i class="fas fa-fist-raised colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'gold'"
+                    ><i class="fas fa-coins colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'hp'"
+                    ><i class="fas fa-heart colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'card_use'"
+                    ><i class="fas fa-club colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'card_delete'"
+                    ><i class="fas fa-club colored"></i
+                  ></span>
+                  <span v-else-if="props.row.type == 'card_assign'"
+                    ><i class="fas fa-club colored"></i
+                  ></span>
+                </span>
+              </b-table-column>
+
+              <b-table-column
+                field="value"
+                centered
+                :label="trans.get('students.value')"
+                sortable
+                ><span v-if="props.row.value">{{ props.row.value }}</span>
+                <span v-else>----</span>
+              </b-table-column>
+
+              <b-table-column
+                field="created_at"
+                :custom-sort="sortByLogDate"
+                :label="trans.get('students.created_at')"
+                sortable
+                centered
+                >{{
+                  new Date(props.row.created_at).toLocaleDateString()
+                }}</b-table-column
+              >
+
+              <b-table-column
+                field="message"
+                :label="trans.get('students.details')"
+                centered
+              >
+                <span
+                  v-tippy
+                  :content="getMessage(props.row)"
+                  v-html="getIcon(props.row.message)"
+                >
+                </span>
+              </b-table-column>
+
+              <b-table-column
+                field="name"
+                :label="trans.get('students.settings')"
+                v-if="admin"
+                centered
+              >
+                <b-button
+                  type="is-danger is-small"
+                  @click="
+                    confirmDelete('logentry', props.row, props.row.created_at)
+                  "
+                >
+                  <i class="fas fa-trash-alt"></i>
+                </b-button>
+              </b-table-column>
+            </template>
+          </b-table>
+        </b-tab-item>
+          <b-tab-item
           :label="trans.get('students.evaluation')"
           v-if="evaluation"
           class="p-2"
@@ -841,160 +997,6 @@
               </tr>
             </table>
           </div>
-        </b-tab-item>
-
-        <b-tab-item
-          v-if="
-            (classroom.badges && classroom.badges.length) ||
-            student.badges.length
-          "
-          icon="award"
-          icon-pack="fad"
-          class="p-2"
-        >
-          <template slot="header">
-            <b-icon pack="fad" icon="award" />
-            {{ trans.get("students.badges") }}
-            <span
-              v-if="student.badges.length"
-              class="tag is-link tag-notif"
-              style="left: 2px"
-              >{{ student.badges.length }}</span
-            >
-          </template>
-          <div v-if="admin" class="is-flex pl-4">
-            <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
-              <ShowBadge
-                :student="student"
-                :badge="badge"
-                :admin="true"
-              ></ShowBadge>
-            </div>
-            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
-              <ShowBadge
-                v-if="!badge.classroom_id"
-                :student="student"
-                :badge="badge"
-                :admin="false"
-              ></ShowBadge>
-            </div>
-          </div>
-          <div class="is-flex pl-4" v-if="!admin">
-            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
-              <ShowBadge
-                :student="student"
-                :badge="badge"
-                :admin="false"
-              ></ShowBadge>
-            </div>
-          </div>
-        </b-tab-item>
-
-        <b-tab-item
-          :label="trans.get('students.log')"
-          v-if="student.log_entries.length"
-          icon="file"
-          icon-pack="fad"
-          class="p-2"
-        >
-          <div class="columns">
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateStart" />
-            </div>
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateEnd" />
-            </div>
-          </div>
-          <b-table
-            v-if="student.log_entries.length"
-            :data="filteredLogEntries"
-            default-sort-direction="asc"
-            default-sort="created_at"
-            icon-pack="fas"
-            sort-icon="arrow-up"
-          >
-            <template slot-scope="props">
-              <b-table-column
-                field="type"
-                :label="trans.get('students.type')"
-                centered
-              >
-                <span
-                  class="tag is-light"
-                  v-bind:class="[
-                    props.row.value > 0 || props.row.type == 'card_use'
-                      ? 'is-success'
-                      : 'is-danger',
-                  ]"
-                >
-                  <span v-if="props.row.type == 'xp'"
-                    ><i class="fas fa-fist-raised colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'gold'"
-                    ><i class="fas fa-coins colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'hp'"
-                    ><i class="fas fa-heart colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'card_use'"
-                    ><i class="fas fa-club colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'card_delete'"
-                    ><i class="fas fa-club colored"></i
-                  ></span>
-                </span>
-              </b-table-column>
-
-              <b-table-column
-                field="value"
-                centered
-                :label="trans.get('students.value')"
-                sortable
-                ><span v-if="props.row.value">{{ props.row.value }}</span>
-                <span v-else>----</span>
-              </b-table-column>
-
-              <b-table-column
-                field="created_at"
-                :custom-sort="sortByLogDate"
-                :label="trans.get('students.created_at')"
-                sortable
-                centered
-                >{{
-                  new Date(props.row.created_at).toLocaleDateString()
-                }}</b-table-column
-              >
-
-              <b-table-column
-                field="message"
-                :label="trans.get('students.details')"
-                centered
-              >
-                <span
-                  v-tippy
-                  :content="getMessage(props.row)"
-                  v-html="getIcon(props.row.message)"
-                >
-                </span>
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.settings')"
-                v-if="admin"
-                centered
-              >
-                <b-button
-                  type="is-danger is-small"
-                  @click="
-                    confirmDelete('logentry', props.row, props.row.created_at)
-                  "
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </b-button>
-              </b-table-column>
-            </template>
-          </b-table>
         </b-tab-item>
       </b-tabs>
     </div>

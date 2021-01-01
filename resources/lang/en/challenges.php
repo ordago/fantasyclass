@@ -28,6 +28,7 @@ return [
     'content' => 'Content',
     'conquer' => 'Is this a conquer story?',
     'rewards' => 'Rewards',
+    'reward_items' => 'Assign objects when succeed',
     'auto_assign' => 'Autoassign cards?',
     'group' => 'Group challenge',
     'optional' => 'Optional',

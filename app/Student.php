@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Controllers\CardsController;
 use App\Notifications\NewInteraction;
 use App\Notifications\NewInteractionStudent;
 use Carbon\Carbon;
@@ -39,7 +40,7 @@ class Student extends Model implements HasMedia
             return false;
     }
 
-   
+
 
     public function getAvatarAttribute()
     {
@@ -53,8 +54,8 @@ class Student extends Model implements HasMedia
 
         return "/img/no_avatar.png";
     }
-    
-    
+
+
     public function getGrouplogoAttribute()
     {
         $group = $this->groups->first();
@@ -164,7 +165,7 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Challenge::class)->withPivot('count');
     }
-    
+
     public function ratings()
     {
         return $this->belongsToMany(Challenge::class, 'ratings', 'student_id', 'challenge_id')->withPivot('rating');
@@ -232,16 +233,16 @@ class Student extends Model implements HasMedia
 
         $badges = collect();
         $badge = new Badge();
-        
+
         $f = true;
-        if($this->behaviours->count() != 0) {
+        if ($this->behaviours->count() != 0) {
             foreach ($this->behaviours as $behaviour) {
-                if($behaviour->hp < 0 || $behaviour->xp < 0 || $behaviour->gold < 0) {
+                if ($behaviour->hp < 0 || $behaviour->xp < 0 || $behaviour->gold < 0) {
                     $f = false;
                 }
             }
         }
-        if($f) {
+        if ($f) {
             $badge->fill([
                 'title' => __('badges.badge_exemplar'),
                 'description' => __('badges.badge_exemplar_info') . '💪',
@@ -260,7 +261,7 @@ class Student extends Model implements HasMedia
 
         $f = true;
 
-        if(settings()->get('eval_visible', false)) {
+        if (settings()->get('eval_visible', false)) {
             $max = settings()->get('eval_max', false);
             $count1 = 0;
             $count2 = 0;
@@ -268,18 +269,18 @@ class Student extends Model implements HasMedia
             $message = __('badges.academic_info');
             foreach ($this->grades as $grade) {
                 $grade = $grade->pivot->grade * 10 / $max;
-                if($grade >= 8.5) {
+                if ($grade >= 8.5) {
                     $count1++;
-                } else if($grade >= 7.5) {
+                } else if ($grade >= 7.5) {
                     $count2++;
-                } else if($grade >= 6.5) {
+                } else if ($grade >= 6.5) {
                     $count3++;
                 } else {
                     $f = false;
                 }
             }
-            if($f) {
-                if($count3) {
+            if ($f) {
+                if ($count3) {
                     $message .= "6.5!";
                     $icon = "fad fa-tachometer-alt-average";
                 } else if ($count2) {
@@ -308,14 +309,14 @@ class Student extends Model implements HasMedia
 
         foreach ($class->challengeGroups as $group) {
             $count = $group->challenges->where('is_conquer', 1)->count();
-            if($count == 0)
+            if ($count == 0)
                 continue;
             foreach ($group->challenges as $challenge) {
-                if($this->challenges->contains($challenge->id)) {
+                if ($this->challenges->contains($challenge->id)) {
                     $count--;
                 }
             }
-            if($count === 0) {
+            if ($count === 0) {
                 $badge->fill([
                     'title' => $group->name,
                     'description' => __('badges.challenge_info', ['name' => $group->name]) . '😊',
@@ -332,10 +333,46 @@ class Student extends Model implements HasMedia
         }
 
 
-        
-        return $badges;
 
+        return $badges;
     }
+
+    public function assignChallenge($challenge, $mult = 1, $card = null)
+    {
+        $this->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
+        $this->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
+        $this->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
+        if ($card && $mult == 1) {
+            $this->cards()->attach($card);
+            LogEntry::create([
+                'type' => 'card_assign',
+                'value' => 0,
+                'student_id' => $this->id,
+                'message' => 'card_assign',
+                'info' => $card->title,
+            ]);
+        }
+
+        if ($challenge->items) {
+            foreach ($challenge->items as $item) {
+                $studentItem = $this->items->where('id', $item['id'])->first();
+                if ($studentItem)
+                    $count = $studentItem->pivot->count + $mult;
+                else $count = $mult == -1 ? 0 : 1;
+                if($count <= 0) {
+                    $this->items()->detach($item['id']);
+                } else {
+                    $this->items()->sync([$item['id'] => ['count' => $count]], false);
+                }
+            }
+        }
+    }
+
+    public function unAssignChallenge()
+    {
+    }
+
+
 
     public function getBoost()
     {
