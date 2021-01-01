@@ -59,18 +59,22 @@
             <small v-if="challengeReactive.xp != 0">
               <i class="fas fa-fist-raised colored"></i>
               {{ challengeReactive.xp }}
+              <i class="fal fa-ellipsis-v mx-1"></i>
             </small>
             <small v-if="challengeReactive.hp != 0">
               <i class="fas fa-heart colored"></i>
               {{ challengeReactive.hp }}
+              <i class="fal fa-ellipsis-v mx-1"></i>
             </small>
             <small v-if="challengeReactive.gold != 0">
               <i class="fas fa-coins colored"></i>
               {{ challengeReactive.gold }}
+              <i class="fal fa-ellipsis-v mx-1"></i>
             </small>
             <small v-if="challengeReactive.cards != 0">
               <i class="fas fa-club colored"></i>
               {{ challengeReactive.cards }}
+              <i class="fal fa-ellipsis-v mx-1"></i>
             </small>
             <small v-if="challengeReactive.items && challengeReactive.items.length">
               <i class="fad fa-backpack colored has-text-info-light"></i>: 

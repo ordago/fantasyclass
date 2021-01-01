@@ -148,7 +148,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required'])
+                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required'])
                     ->all();
             }));
         }
@@ -166,7 +166,7 @@ class ClassroomsStudentController extends Controller
                 if (Rating::where('student_id', $student->id)->where('challenge_id', $value['id'])->get()->count()) {
                     $value['rated'] = 1;
                 } else $value['rated'] = 0;
-                $students = json_decode($value['students']);
+                $students = $value['students'];
                 if (!$students || array_search($student->id, $students) === false)
                     array_push($all, $value);
             }
@@ -208,7 +208,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id')
+            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id')
             ->get();
 
 
@@ -230,11 +230,12 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id')
+            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id')
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
         foreach ($challenges as $key => $challenge) {
+            $challenge->items = json_decode($challenge->items);
             if ($challenge->challenge_required) {
                 if (!$student->challenges->contains($challenge->challenge_required)) {
                     unset($challenges[$key]);
@@ -432,11 +433,13 @@ class ClassroomsStudentController extends Controller
             }
         }
         if ($update) {
-            $card = null;
+            $cards = [];
             if($challenge->auto_assign == 1) {
-                $card = CardsController::getRandomCard($class->code);
+                for ($i = 0; $i < $challenge->cards; $i++) {
+                    array_push($cards, CardsController::getRandomCard($class->code));
+                }
             }
-            $student->assignChallenge($challenge, 1, $card);
+            $student->assignChallenge($challenge, 1, $cards);
         }
         
         $from['title'] = $challenge->title;
@@ -587,6 +590,7 @@ class ClassroomsStudentController extends Controller
             "items" => $student->fresh()->items,
         ];
     }
+
     public function buyEquipment($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

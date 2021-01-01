@@ -337,20 +337,22 @@ class Student extends Model implements HasMedia
         return $badges;
     }
 
-    public function assignChallenge($challenge, $mult = 1, $card = null)
+    public function assignChallenge($challenge, $mult = 1, $cards = [])
     {
         $this->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
         $this->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
         $this->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
-        if ($card && $mult == 1) {
-            $this->cards()->attach($card);
-            LogEntry::create([
-                'type' => 'card_assign',
-                'value' => 0,
-                'student_id' => $this->id,
-                'message' => 'card_assign',
-                'info' => $card->title,
-            ]);
+        if (count($cards) && $mult == 1) {
+            foreach ($cards as $card) {
+                $this->cards()->attach($card);
+                LogEntry::create([
+                    'type' => 'card_assign',
+                    'value' => 0,
+                    'student_id' => $this->id,
+                    'message' => 'card_assign',
+                    'info' => $card->title,
+                ]);
+            }
         }
 
         if ($challenge->items) {
@@ -367,11 +369,6 @@ class Student extends Model implements HasMedia
             }
         }
     }
-
-    public function unAssignChallenge()
-    {
-    }
-
 
 
     public function getBoost()

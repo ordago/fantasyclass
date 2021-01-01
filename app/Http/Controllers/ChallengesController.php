@@ -31,13 +31,13 @@ class ChallengesController extends Controller
         }
         return '/storage/' . $path;
     }
-    
+
     public function importChallenge($id)
     {
         $challenge = Challenge::findOrFail($id);
         $class = Classroom::findOrFail($challenge->classroom());
         $this->authorize('view', $class);
-        
+
         $group = ChallengesGroup::findOrFail(request()->group);
         $class = Classroom::findOrFail($group->classroom_id);
         $this->authorize('update', $class);
@@ -48,10 +48,9 @@ class ChallengesController extends Controller
         $newChallenge->push();
 
         return $newChallenge;
-
     }
 
-    public function getUserChallenges() 
+    public function getUserChallenges()
     {
         $user = auth()->user();
         $classrooms = $user->classrooms->where('pivot.role', '>=', 1);
@@ -132,7 +131,7 @@ class ChallengesController extends Controller
 
     public function getAllChallenges($code)
     {
-        $class = Classroom::where('code', $code)->with(['challengeGroups.challenges' => function($query) {
+        $class = Classroom::where('code', $code)->with(['challengeGroups.challenges' => function ($query) {
             $query->where('is_conquer', '1');
         }])->firstOrFail();
         $this->authorize('view', $class);
@@ -149,17 +148,17 @@ class ChallengesController extends Controller
             'challenge' => ['numeric'],
             'type' => ['numeric'],
         ]);
-        
+
         if ($data['type'] == 0) {
             $challenge = Challenge::find($data['challenge']);
             $students = [];
             $students = $class->students()->whereNotIn('students.id', $challenge->students)->with(['challenges' => function ($query) use ($data) {
                 $query
-                ->where('challenges.id', '=', $data['challenge']);
+                    ->where('challenges.id', '=', $data['challenge']);
             }])->get();
-            
+
             return $students;
-        } else if($data['type'] == 1) {
+        } else if ($data['type'] == 1) {
             $groups = $class->grouping()->first()->groups()->with(['challenges' => function ($query) use ($data) {
                 $query->where('challenges.id', '=', $data['challenge']);
             }])->get();
@@ -168,16 +167,16 @@ class ChallengesController extends Controller
             return $class->students()->get();
         }
     }
-    
+
     public function toggle()
     {
         $challenge = Challenge::where('id', '=', request()->challenge)->first();
-        
+
         $data = request()->validate([
             'id' => ['numeric'],
         ]);
-        $card = null;
-        if($challenge->type == 0) {
+        $cards = [];
+        if ($challenge->type == 0) {
             $student = Student::where('id', '=', $data['id'])->first();
             $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
             $this->authorize('update', $class);
@@ -186,31 +185,30 @@ class ChallengesController extends Controller
             if ($result['detached']) {
                 $mult = -1;
             } else {
-                // if($challenge->auto_assign == 1) {
-                    $card = CardsController::getRandomCard($class->code);
-                    // $student->cards()->attach($card);
-                // }
+                if ($challenge->auto_assign == 1) {
+                    for ($i = 0; $i < $challenge->cards; $i++) {
+                        array_push($cards, CardsController::getRandomCard($class->code));
+                    }
+                }
             }
-            $student->assignChallenge($challenge, $mult, $card);
-            // $student->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
-            // $student->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
-            // $student->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
+            $student->assignChallenge($challenge, $mult, $cards);
         } else {
             $group = Group::where('id', $data['id'])->firstOrFail();
             $class = Classroom::where('id', '=', $group->grouping->classroom_id)->firstOrFail();
             $this->authorize('update', $class);
             $result = $group->challenges()->toggle($challenge->id);
             $mult = 1;
-            $cards = true;
             if ($result['detached']) {
                 $mult = -1;
-                $card = false;
-            }
-            if($cards && $challenge->auto_assign == 1) {
-                $card = CardsController::getRandomCard($class->code);
+            } else {
+                if ($challenge->auto_assign == 1) {
+                    for ($i = 0; $i < $challenge->cards; $i++) {
+                        array_push($cards, CardsController::getRandomCard($class->code));
+                    }
+                }
             }
             foreach ($group->students as $student) {
-                $student->assignChallenge($challenge, $mult, $card);
+                $student->assignChallenge($challenge, $mult, $cards);
             }
         }
     }
@@ -224,14 +222,14 @@ class ChallengesController extends Controller
         $data['students'] = json_encode($data['students']);
         $data['items'] = json_encode($data['items']);
         // try {
-            $challenge = Challenge::create($data);
+        $challenge = Challenge::create($data);
 
-            return [
-                "message" => __('success_error.add_success'),
-                "type" => "success",
-                "icon" => "check",
-                "challenge" => $challenge,
-            ];
+        return [
+            "message" => __('success_error.add_success'),
+            "type" => "success",
+            "icon" => "check",
+            "challenge" => $challenge,
+        ];
         // } catch (\Throwable $th) {
         //     dump($th);
         //     return [
