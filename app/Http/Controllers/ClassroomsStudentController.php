@@ -148,7 +148,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required'])
+                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -160,6 +160,24 @@ class ClassroomsStudentController extends Controller
                     if (!$student->challenges->contains($value['challenge_required'])) {
                         unset($section[$key]);
                         continue;
+                    }
+                }
+
+                if ($value['requirements'] && !$student->challenges->contains($value['id'])) {
+                    $allItems = true;
+                    $content = '';
+                    foreach ($value['requirements'] as $item) {
+                        if (!$student->items->contains($item['id'])) {
+                            $allItems = false;
+                            $content .= "<img class='coloredGray m-2' title='". $item['alt'] ."' alt='". $item['alt'] ."' src='" . $item['src'] . "' width='48px'>";
+                        } else {
+                            $content .= "<img class='m-2' title='". $item['alt'] ."' alt='". $item['alt'] ."' src='" . $item['src'] . "' width='48px'>";
+                        }
+                    }
+                    if (!$allItems) {
+                        $value['title'] = __('challenges.objects_required');
+                        $value['content'] = $content;
+                        $value['incomplete'] = true;
                     }
                 }
 
@@ -188,7 +206,7 @@ class ClassroomsStudentController extends Controller
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
-    public function getChallenges($student, $class)
+    public static function getChallenges($student, $class, $admin = false)
     {
         $challenges = DB::table('students')
             ->crossJoin('challenges')
@@ -208,7 +226,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id')
+            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
 
@@ -230,7 +248,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id')
+            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
@@ -241,6 +259,17 @@ class ClassroomsStudentController extends Controller
                     unset($challenges[$key]);
                     continue;
                 }
+            }
+            if ($challenge->requirements && !$admin && !$student->challenges->contains($challenge->id)) {
+                $continue = false;
+                foreach (json_decode($challenge->requirements) as $item) {
+                    if (!$student->items->contains($item->id)) {
+                        unset($challenges[$key]);
+                        $continue = true;
+                    }
+                }
+                if($continue)
+                    continue;
             }
             $challenge->permalink = Crypt::encryptString($challenge->id);
             $group = ChallengesGroup::find($challenge->challenges_group_id);
@@ -291,7 +320,7 @@ class ClassroomsStudentController extends Controller
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ];
 
-        $challenges = $this->getChallenges($student, $class);
+        $challenges = $this::getChallenges($student, $class);
 
         $cards = $student->cards;
         $student->append('boost');
@@ -434,27 +463,27 @@ class ClassroomsStudentController extends Controller
         }
         if ($update) {
             $cards = [];
-            if($challenge->auto_assign == 1) {
+            if ($challenge->auto_assign == 1) {
                 for ($i = 0; $i < $challenge->cards; $i++) {
                     array_push($cards, CardsController::getRandomCard($class->code));
                 }
             }
             $student->assignChallenge($challenge, 1, $cards);
         }
-        
+
         $from['title'] = $challenge->title;
         $from['name'] = $student->name;
         $from['username'] = $student->username;
         $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
 
-        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_challenge", __("notifications.mark_challenge") . $from['title'] , $from, "challenge", "challenges");
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_challenge", __("notifications.mark_challenge") . $from['title'], $from, "challenge", "challenges");
 
         return [
             'success' => true,
             'hp' => $student->hp,
             'xp' => $student->xp,
             'gold' => $student->gold,
-            'challenges' => $this->getChallenges($student->fresh(), $class),
+            'challenges' => $this::getChallenges($student->fresh(), $class),
         ];
     }
 

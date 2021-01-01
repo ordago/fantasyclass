@@ -721,11 +721,14 @@
 
         <b-tab-item
           :label="trans.get('students.challenges')"
-          v-if="mutableChallenges && mutableChallenges.length"
           icon="pen-fancy"
           icon-pack="fad"
           class="p-2"
         >
+          <div v-if="!mutableChallenges || mutableChallenges.length === 0" class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning">
+              <h1><i class="fas fa-dungeon"></i> {{ trans.get('challenges.challenges_empty') }}</h1>
+          </div>
+
           <div
             class="has-text-centered"
             v-for="(challenge, index) in orderedChallenges"
@@ -1226,6 +1229,9 @@ export default {
     Hp,
     ShowBadge,
   },
+  created() {
+    this.mutableChallenges = this.challenges;
+  },
   mounted() {
     this.behaviours = this.student.behaviours;
     if (!this.admin) {
@@ -1271,7 +1277,7 @@ export default {
       name: "",
       selected: null,
       clearable: false,
-      mutableChallenges: this.challenges,
+      mutableChallenges: [],
     };
   },
   methods: {

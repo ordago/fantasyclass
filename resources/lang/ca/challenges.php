@@ -62,9 +62,17 @@ return [
     'permalink' => 'Copiar enllaç al repte (solament accessible per estudiants)',
     'new_challenges' => 'Tens nous reptes disponibles!',
     'challenge_hidden' => 'El repte estarà ocult fins que el/la estudiant supere aquest repte:',
+    'challenge_hidden_object' => 'El repte estarà ocult fins que el/la estudiant tingui aquests objectes:',
+    'mark_requirement_item' => 'Requeriment d\'objecte',
+    'exist_requirement_item' => 'Hi ha un requeriment d\'objectes',
     'select_challenge' => 'Selecciona un repte',
     'wo_challenge' => 'Deselecciona el repte',
-    'mark_prev_challenge' => 'Selecciona un repte previ',
+    'mark_prev_challenge' => 'Requeriment de repte',
     'exist_requirement' => 'Hi ha un requeriment de repte',
+
+    'attributes' => 'Atributs',
+    'items' => 'Objectes',
+    'requirements' => 'Requeriments',
+    'objects_required' => 'Objectes requerits 😢',
 
 ];

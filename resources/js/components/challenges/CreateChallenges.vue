@@ -118,13 +118,26 @@
           arrow
         >
           <template v-slot:trigger>
-            <button @click.prevent="" class="button is-rounded" :class="{ 'has-background-info-light' : challenge.challenge_required }" v-html="getChallengeMessage"></button>
+            <button
+              @click.prevent=""
+              class="button is-rounded"
+              :class="{
+                'has-background-info-light': challenge.challenge_required,
+              }"
+              v-html="getChallengeMessage"
+            ></button>
           </template>
           <span>
-            <p>{{ trans.get('challenges.challenge_hidden') }}</p>
+            <p>{{ trans.get("challenges.challenge_hidden") }}</p>
             <section>
-              <b-select v-model="challenge.challenge_required" :placeholder="trans.get('challenges.select_challenge')" expanded>
-                <option :value="null" v-if="challenge.challenge_required">{{ trans.get('challenges.wo_challenge') }}</option>
+              <b-select
+                v-model="challenge.challenge_required"
+                :placeholder="trans.get('challenges.select_challenge')"
+                expanded
+              >
+                <option :value="null" v-if="challenge.challenge_required">
+                  {{ trans.get("challenges.wo_challenge") }}
+                </option>
                 <optgroup
                   v-for="group in challenges"
                   :label="group.name"
@@ -138,10 +151,45 @@
                     {{ child.title }}
                   </option>
                 </optgroup>
-                
+
                 <!-- 
                 <option v-for="challenge in challenges" :key="challenge.id" :value="challenge.id">{{ challenge.title }}</option> -->
-            </b-select>
+              </b-select>
+            </section>
+          </span>
+        </tippy>
+        <tippy
+          interactive
+          :animate-fill="false"
+          theme="light"
+          placement="bottom"
+          animation="fade"
+          trigger="click"
+          style="display: inline-block"
+          arrow
+        >
+          <template v-slot:trigger>
+            <button
+              @click.prevent=""
+              class="button is-rounded ml-1"
+              :class="{
+                'has-background-info-light':
+                  challenge.requirements && challenge.requirements.length,
+              }"
+              v-html="getItemMessage"
+            ></button>
+          </template>
+          <span>
+            <p>{{ trans.get("challenges.challenge_hidden_object") }}</p>
+            <section>
+              <vue-select-image
+                :dataImages="items"
+                @onselectmultipleimage="onSelectMultipleImageRequirements"
+                :is-multiple="true"
+                :selectedImages="challenge.requirements"
+                w="30px"
+              >
+              </vue-select-image>
             </section>
           </span>
         </tippy>
@@ -292,8 +340,8 @@
           @onselectmultipleimage="onSelectMultipleImage"
           :is-multiple="true"
           :selectedImages="challenge.items"
-          w="20px"
-          >
+          w="30px"
+        >
         </vue-select-image>
         <div class="mt-3" v-if="challenge.type == 0">
           <label for="name">{{ trans.get("challenges.completion") }}</label>
@@ -382,9 +430,8 @@
 const Editor = () => import("../utils/Editor.vue");
 const IconSelector = () => import("../utils/IconSelector.vue");
 
-import VueSelectImage from 'vue-select-image';
-require('vue-select-image/dist/vue-select-image.css');
-
+import VueSelectImage from "vue-select-image";
+require("vue-select-image/dist/vue-select-image.css");
 
 export default {
   props: [
@@ -397,12 +444,25 @@ export default {
     "challengegroups",
     "studentsLoaded",
   ],
+  created: function () {
+    if (this.edit) {
+      this.challenge = this.edit;
+      if (this.challenge.requirements) {
+        if (typeof this.challenge.requirements == "string")
+          this.challenge.requirements = JSON.parse(this.challenge.requirements);
+      }
+      if (this.challenge.items) {
+        if (typeof this.challenge.items == "string")
+          this.challenge.items = JSON.parse(this.challenge.items);
+      }
+
+    }
+  },
   mounted: function () {
     this.getAllChallenges();
     this.editor = false;
     if (this.edit) {
       if (this.studentsLoaded) this.students = this.studentsLoaded;
-      this.challenge = this.edit;
 
       if (this.challenge.students) {
         if (typeof this.challenge.students == "string")
@@ -453,25 +513,30 @@ export default {
         challenges_group_id: null,
         students: [],
         items: [],
+        requirements: [],
         _method: "post",
         challenge_required: null,
       },
     };
   },
   methods: {
+    onSelectMultipleImageRequirements(items) {
+      console.log(this.challenge.requirements);
+      this.challenge.requirements = items;
+    },
     onSelectMultipleImage(items) {
-      this.challenge.items = items
+      this.challenge.items = items;
     },
     getAllChallenges() {
-      axios.get('/classroom/' + this.code + '/challenges/all')
-      .then(response => {
-        this.challenges = response.data.challenges;
+      axios
+        .get("/classroom/" + this.code + "/challenges/all")
+        .then((response) => {
+          this.challenges = response.data.challenges;
 
-        this.items = response.data.items.map(function(row) {
-          return { id : row.id, src : row.icon, alt: row.description }
-        })
-
-      });
+          this.items = response.data.items.map(function (row) {
+            return { id: row.id, src: row.icon, alt: row.description };
+          });
+        });
     },
     disableAll() {
       this.challenge.students = [];
@@ -548,13 +613,18 @@ export default {
   },
 
   computed: {
-    getChallengeMessage() {
-      if(!this.challenge.challenge_required) {
-        return this.trans.get('challenges.mark_prev_challenge');
+    getItemMessage() {
+      if (this.challenge.requirements && this.challenge.requirements.length) {
+        return this.trans.get("challenges.exist_requirement_item");
       }
-      return this.trans.get('challenges.exist_requirement');
-    }
-    
+      return this.trans.get("challenges.mark_requirement_item");
+    },
+    getChallengeMessage() {
+      if (!this.challenge.challenge_required) {
+        return this.trans.get("challenges.mark_prev_challenge");
+      }
+      return this.trans.get("challenges.exist_requirement");
+    },
   },
 };
 </script>

@@ -24,7 +24,11 @@
         <div class="content">
           <h1 class="is-flex is-center-vertically">
             <i
-              v-if="challengeReactive.is_conquer && challengeReactive.icon"
+              v-if="
+                challengeReactive.is_conquer &&
+                challengeReactive.icon &&
+                !challengeReactive.incomplete
+              "
               class="is-size-4"
               :style="'color:' + challengeReactive.color"
               :class="challengeReactive.icon + ' colored'"
@@ -35,7 +39,7 @@
             ></i>
             {{ challengeReactive.title }}
 
-            <span class="tag is-dark ml-2">
+            <span class="tag is-dark ml-2" v-if="!challengeReactive.incomplete">
               <span
                 v-if="admin && isHidden"
                 class="mr-2"
@@ -55,32 +59,82 @@
           <p>
             <small>{{ challengeReactive.description }}</small>
           </p>
-          <p v-if="challengeReactive.is_conquer">
-            <small v-if="challengeReactive.xp != 0">
-              <i class="fas fa-fist-raised colored"></i>
-              {{ challengeReactive.xp }}
-              <i class="fal fa-ellipsis-v mx-1"></i>
-            </small>
-            <small v-if="challengeReactive.hp != 0">
-              <i class="fas fa-heart colored"></i>
-              {{ challengeReactive.hp }}
-              <i class="fal fa-ellipsis-v mx-1"></i>
-            </small>
-            <small v-if="challengeReactive.gold != 0">
-              <i class="fas fa-coins colored"></i>
-              {{ challengeReactive.gold }}
-              <i class="fal fa-ellipsis-v mx-1"></i>
-            </small>
-            <small v-if="challengeReactive.cards != 0">
-              <i class="fas fa-club colored"></i>
-              {{ challengeReactive.cards }}
-              <i class="fal fa-ellipsis-v mx-1"></i>
-            </small>
-            <small v-if="challengeReactive.items && challengeReactive.items.length">
-              <i class="fad fa-backpack colored has-text-info-light"></i>: 
-              <img v-for="item in challengeReactive.items" class="mr-1" style="position: relative; top: 4px" :key="item.id" :src="item.src" width="20px">
-            </small>
+          <p>
+            <span
+              v-if="
+                challengeReactive.is_conquer && !challengeReactive.incomplete
+              "
+            >
+              <small
+                v-if="
+                  challengeReactive.xp ||
+                  challengeReactive.hp ||
+                  challengeReactive.gold ||
+                  challengeReactive.cards
+                "
+                ><i
+                  class="fad fa-chevron-up p-1 colored has-background-dark has-text-light rounded"
+                  :content="trans.get('challenges.attributes')"
+                  v-tippy
+                ></i
+              ></small>
+              <small v-if="challengeReactive.xp != 0">
+                <i class="fas fa-fist-raised colored"></i>
+                {{ challengeReactive.xp }}
+                <i class="fal fa-ellipsis-v mx-1"></i>
+              </small>
+              <small v-if="challengeReactive.hp != 0">
+                <i class="fas fa-heart colored"></i>
+                {{ challengeReactive.hp }}
+                <i class="fal fa-ellipsis-v mx-1"></i>
+              </small>
+              <small v-if="challengeReactive.gold != 0">
+                <i class="fas fa-coins colored"></i>
+                {{ challengeReactive.gold }}
+                <i class="fal fa-ellipsis-v mx-1"></i>
+              </small>
+              <small v-if="challengeReactive.cards != 0">
+                <i class="fas fa-club colored"></i>
+                {{ challengeReactive.cards }}
+                <i class="fal fa-ellipsis-v mx-1"></i>
+              </small>
+              <small
+                v-if="challengeReactive.items && challengeReactive.items.length"
+              >
+                <i
+                  class="fad fa-backpack p-1 colored has-background-dark has-text-light rounded"
+                  v-tippy
+                  :content="trans.get('challenges.items')"
+                ></i>
+                <img
+                  v-for="item in challengeReactive.items"
+                  class="mr-1"
+                  style="position: relative; top: 4px"
+                  :key="item.id"
+                  :src="item.src"
+                  width="20px"
+                />
+              </small>
+            </span>
+            <span v-if="challengeReactive.requirements && challengeReactive.requirements.length && !challengeReactive.incomplete">
+              <small
+                ><i
+                  class="fad fa-tasks ml-2 p-1 colored has-background-dark has-text-light rounded"
+                  v-tippy
+                  :content="trans.get('challenges.requirements')"
+                ></i
+              ></small>
+              <small v-for="req in challenge.requirements" :key="req.id">
+                <img
+                  :src="req.src"
+                  style="position: relative; top: 4px"
+                  :alt="req.alt"
+                  width="20px"
+                />
+              </small>
+            </span>
           </p>
+
           <a
             class="button"
             :href="
@@ -110,10 +164,10 @@
               :question="question"
             ></show-question>
           </div>
-          <div class="mt-5">
+          <div class="mt-5" v-if="!challengeReactive.incomplete">
             <div
               class="p-4 m-3 card rounded card-shadow-s"
-              :class="{ 'columns' : !attachment.mode == 1 }"
+              :class="{ columns: !attachment.mode == 1 }"
               v-for="(attachment, index) in challenge.attachments"
               :key="attachment.id"
             >
@@ -139,7 +193,11 @@
                     'fa-expand': attachment.mode == 1,
                   }"
                 ></i>
-                <span class="ml-2" v-if="attachment.name && attachment.mode == 1">{{ attachment.name }}</span>
+                <span
+                  class="ml-2"
+                  v-if="attachment.name && attachment.mode == 1"
+                  >{{ attachment.name }}</span
+                >
               </div>
               <div class="column" style="word-break: break-all">
                 <a
@@ -306,7 +364,8 @@
               full &&
               !rating &&
               !admin &&
-              challengeReactive.is_conquer
+              challengeReactive.is_conquer &&
+              !challengeReactive.incomplete
             "
           >
             <div class="mt-4 mb-0">
@@ -341,7 +400,8 @@
                 !admin &&
                 (challengeReactive.completion == 2 ||
                   challengeReactive.completion == 1) &&
-                !checkCompletion && !full
+                !checkCompletion &&
+                !full
               "
               class="button is-info"
               @click="markCompleted(challenge)"
@@ -535,6 +595,10 @@ export default {
   ],
   created: function () {
     this.challengeReactive = this.challenge;
+    if (this.challenge.requirements) {
+      if (typeof this.challenge.requirements == "string")
+        this.challenge.requirements = JSON.parse(this.challenge.requirements);
+    }
   },
   data: function () {
     return {
@@ -711,8 +775,13 @@ export default {
               challenge: this.challengeReactive.id,
             })
             .then((response) => {
-              if(this.$parent.$parent.$parent.mutableChallenges.length < response.data.challenges.length) {
-                this.$toast(this.trans.get('challenges.new_challenges'), {type: 'info'})
+              if (
+                this.$parent.$parent.$parent.mutableChallenges.length <
+                response.data.challenges.length
+              ) {
+                this.$toast(this.trans.get("challenges.new_challenges"), {
+                  type: "info",
+                });
               }
               this.$parent.$parent.$parent.mutableChallenges =
                 response.data.challenges;
@@ -765,7 +834,9 @@ export default {
     },
     getBackground() {
       if (this.full) {
-        if (this.challengeReactive.is_conquer == 1) {
+        if (this.challengeReactive.incomplete) {
+          return "has-background-grey-light	";
+        } else if (this.challengeReactive.is_conquer == 1) {
           return "has-background-conquer";
         } else {
           return "has-background-story";

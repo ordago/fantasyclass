@@ -4,6 +4,7 @@
 - Show title in fullscreen attachments and changed layout to increase space.
 - Add card info in log.
 - Assign objects to challenges.
+- Object requirement in challenges.
 
 ### Changed
 - Fixed translations in students' view.

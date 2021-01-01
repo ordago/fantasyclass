@@ -100,6 +100,7 @@
                     false-value="0"
                     @input="toggleChallenge(student.id)"
                     type="is-info"
+                    :disabled="checkDisabled(student)"
                     >{{ student.name }}</b-switch
                   >
                 </div>
@@ -210,6 +211,22 @@ export default {
           this.isModalActive = true;
         });
     },
+    checkDisabled(student) {
+      let foundItems = 0;
+      if (
+        this.currentChallenge.requirements &&
+        this.currentChallenge.requirements.length &&
+        ! student.challenges.length
+      ) {
+        this.currentChallenge.requirements.forEach((element) => {
+          let found = student.items.find((object) => object.id == element.id);
+          if (found) foundItems++;
+        });
+        if (foundItems != this.currentChallenge.requirements.length)
+          return true;
+      }
+      return false;
+    },
     toggleChallenge($id) {
       axios.post("/classroom/" + this.code + "/challenges/toggle", {
         id: $id,
@@ -217,9 +234,10 @@ export default {
       });
     },
     buttonAddChallege(type) {
-      let append = type == 0
-        ? "<span class='ml-2'>" + this.trans.get("challenges.add") + "</span>"
-        : "";
+      let append =
+        type == 0
+          ? "<span class='ml-2'>" + this.trans.get("challenges.add") + "</span>"
+          : "";
       return this.addChallenge
         ? this.trans.get("general.cancel")
         : "<i class='far fa-plus'></i>" + append;
@@ -241,7 +259,6 @@ export default {
       return _.orderBy(this.challenges, "datetime", "desc");
     },
   },
-  updated: function () {
-  },
+  updated: function () {},
 };
 </script>

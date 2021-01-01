@@ -62,9 +62,18 @@ return [
     'permalink' => 'Copy direct link to challenge (only for students)',
     'new_challenges' => 'You have new challenges available!',
     'challenge_hidden' => 'The challenge will remain hidden ultil the student pass this challenge:',
+    'challenge_hidden_object' => 'The challenge will remain hidden until the students has these objects:',
+    'mark_requirement_item' => 'Select objects',
+    'exist_requirement_item' => 'Exists an item requirement',
     'select_challenge' => 'Select one challenge',
     'wo_challenge' => 'Remove selection',
     'mark_prev_challenge' => 'Select the previous challenge',
     'exist_requirement' => 'Exists a challenge requirement',
+
+    'attributes' => 'Attributes',
+    'items' => 'Items',
+    'requirements' => 'Requirements',
+    'objects_required' => 'Objects required 😢',
+
 
 ];

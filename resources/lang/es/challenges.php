@@ -62,9 +62,17 @@ return [
     'permalink' => 'Copiar enlace al reto (solo accesible por estudiantes)',
     'new_challenges' => '¡Tienes nuevos retos disponibles!',
     'challenge_hidden' => 'El desafío estará oculto hasta que el/la estudiante supere este desafío:',
+    'challenge_hidden_object' => 'El desafío estará oculto hasta que el/la estudiante tenga estos objetos:',
+    'mark_requirement_item' => 'Requerimento de objetos',
+    'exist_requirement_item' => 'Hay un requerimento de objetos',
     'select_challenge' => 'Selecciona un desafío',
     'wo_challenge' => 'Deselecciona el desafío',
-    'mark_prev_challenge' => 'Selecciona un desafío previo',
+    'mark_prev_challenge' => 'Requerimiento de desafío',
     'exist_requirement' => 'Hay un requerimiento de desafío',
+
+    'attributes' => 'Atributos',
+    'items' => 'Objetos',
+    'requirements' => 'Requerimentos',
+    'objects_required' => 'Objetos requeridos 😢',
 
 ];

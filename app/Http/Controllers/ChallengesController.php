@@ -44,7 +44,9 @@ class ChallengesController extends Controller
 
         $newChallenge = $challenge->replicate();
         $newChallenge->challenges_group_id = $group->id;
-        $newChallenge->students = json_encode([]);
+        $newChallenge->students = [];
+        $newChallenge->items = null;
+        $newChallenge->requirements = null;
         $newChallenge->push();
 
         return $newChallenge;
@@ -125,6 +127,7 @@ class ChallengesController extends Controller
             'datetime' => ['string'],
             'students' => ['array'],
             'items' => ['array', 'nullable'],
+            'requirements' => ['array', 'nullable'],
             'challenge_required' => ['numeric', 'nullable'],
         ]);
     }
@@ -152,7 +155,7 @@ class ChallengesController extends Controller
         if ($data['type'] == 0) {
             $challenge = Challenge::find($data['challenge']);
             $students = [];
-            $students = $class->students()->whereNotIn('students.id', $challenge->students)->with(['challenges' => function ($query) use ($data) {
+            $students = $class->students()->whereNotIn('students.id', $challenge->students)->with(['items', 'challenges' => function ($query) use ($data) {
                 $query
                     ->where('challenges.id', '=', $data['challenge']);
             }])->get();
@@ -221,7 +224,8 @@ class ChallengesController extends Controller
         $this->authorize('update', $class);
         $data['students'] = json_encode($data['students']);
         $data['items'] = json_encode($data['items']);
-        // try {
+        $data['requirements'] = json_encode($data['requirements']);
+        try {
         $challenge = Challenge::create($data);
 
         return [
@@ -230,13 +234,13 @@ class ChallengesController extends Controller
             "icon" => "check",
             "challenge" => $challenge,
         ];
-        // } catch (\Throwable $th) {
-        //     dump($th);
-        //     return [
-        //         "message" => __('success_error.error'),
-        //         "icon" => "times",
-        //         "type" => "error"
-        //     ];
-        // }
+        } catch (\Throwable $th) {
+            dump($th);
+            return [
+                "message" => __('success_error.error'),
+                "icon" => "times",
+                "type" => "error"
+            ];
+        }
     }
 }
