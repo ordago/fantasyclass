@@ -449,6 +449,40 @@
             </div>
           </div>
         </b-tab-item>
+         <b-tab-item
+          :label="trans.get('students.challenges')"
+          icon="pen-fancy"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <div
+            v-if="!mutableChallenges || mutableChallenges.length === 0"
+            class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning"
+          >
+            <h1>
+              <i class="fas fa-dungeon"></i>
+              {{ trans.get("challenges.challenges_empty") }}
+            </h1>
+          </div>
+
+          <div
+            class="has-text-centered"
+            v-for="(challenge, index) in orderedChallenges"
+            :key="challenge.id"
+          >
+            <show-challenge
+              class="has-text-left"
+              :challenge="challenge"
+              :code="classroom.code"
+              :admin="admin"
+              :edit="false"
+            ></show-challenge>
+            <span v-if="index != orderedChallenges.length - 1"
+              ><i class="far fa-arrow-up"></i
+            ></span>
+          </div>
+        </b-tab-item>
+
         <b-tab-item
           :label="trans.get('menu.adventure')"
           icon="feather-alt"
@@ -718,41 +752,6 @@
             </template>
           </b-table>
         </b-tab-item>
-
-        <b-tab-item
-          :label="trans.get('students.challenges')"
-          icon="pen-fancy"
-          icon-pack="fad"
-          class="p-2"
-        >
-          <div
-            v-if="!mutableChallenges || mutableChallenges.length === 0"
-            class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning"
-          >
-            <h1>
-              <i class="fas fa-dungeon"></i>
-              {{ trans.get("challenges.challenges_empty") }}
-            </h1>
-          </div>
-
-          <div
-            class="has-text-centered"
-            v-for="(challenge, index) in orderedChallenges"
-            :key="challenge.id"
-          >
-            <show-challenge
-              class="has-text-left"
-              :challenge="challenge"
-              :code="classroom.code"
-              :admin="admin"
-              :edit="false"
-            ></show-challenge>
-            <span v-if="index != orderedChallenges.length - 1"
-              ><i class="far fa-arrow-up"></i
-            ></span>
-          </div>
-        </b-tab-item>
-
         <b-tab-item
           v-if="
             (classroom.badges && classroom.badges.length) ||
