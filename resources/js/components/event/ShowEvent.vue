@@ -340,30 +340,4 @@ export default {
 h2.second-appear > * {
   margin: 5px;
 }
-.hiddenName {
-  display: inline-block;
-  font-size: 2.5em;
-  position: relative;
-  min-width: 600px;
-  text-align: center;
-}
-.hideObj {
-  position: absolute;
-  z-index: 1000;
-  background-image: url("/img/hide.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  width: 100%;
-  height: 120%;
-  border-radius: 5px;
-  transition: 1s opacity;
-  cursor: zoom-in;
-}
-.hiddenName:hover .hideObj {
-  opacity: 0;
-  transition-delay: 1s;
-}
-.hiddenMEssage {
-  visibility: hidden;
-}
 </style>

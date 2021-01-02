@@ -256,6 +256,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/monsters/fight', 'MonsterController@battle');
         
         // Utils
+        Route::post('/{code}/utils/impostor', 'UtilsController@impostor');
+        Route::delete('/{code}/utils/impostor/clear', 'UtilsController@impostorClear');
         Route::get('/{code}/utils/meter', 'UtilsController@showMeter');
         Route::post('/{code}/utils/meter', 'UtilsController@meter');
         Route::post('/{code}/utils/massive', 'UtilsController@massive');

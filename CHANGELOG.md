@@ -1,11 +1,12 @@
 # Changelog
-## v1.30 Beta (XX/01/2021)
+## v1.30 Beta (02/01/2021)
 ### Added   
-- Show title in fullscreen attachments and changed layout to increase space.
-- Add card info in log.
+- Select random impostor.
 - Assign objects to challenges.
 - Object requirement in challenges.
 - Object can now allow to carry more cards.
+- Show title in fullscreen attachments and changed layout to increase space.
+- Add card info in log.
 
 ### Changed
 - Fixed translations in students' view.

@@ -343,6 +343,12 @@ class ClassroomsStudentController extends Controller
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
+        $settings['impostor'] = settings()->get('impostor', -1);
+        if($settings['impostor'] != -1) {
+            if($settings['impostor'] == $student->id)
+                $settings['impostor'] = true;
+            else $settings['impostor'] = false;
+        }
 
         $students_money = json_encode([]);
         if ($settings['allow_send_money']) {

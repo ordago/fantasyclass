@@ -6,7 +6,7 @@ $theme = $class->theme;
 @endphp
 <div class="">
   <!-- Utilities -->
-  <show-students :groups="{{ $groups }}" :students="{{ $students }}" :classroom="{{ $class }}"></show-students>
+  <show-students :impostor="{{ $impostor }}" :groups="{{ $groups }}" :students="{{ $students }}" :classroom="{{ $class }}"></show-students>
 
 </div>
 @endsection

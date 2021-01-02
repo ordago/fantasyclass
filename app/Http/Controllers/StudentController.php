@@ -223,26 +223,6 @@ class StudentController extends Controller
             ->selectRaw('students.id, items.id, icon, IFNULL(item_student.count, 0) as count')
             ->get();
 
-
-        // $challenges = DB::table('students')
-        //     ->crossJoin('challenges')
-        //     ->where('challenges.is_conquer', '=', 1)
-        //     ->whereIn('challenges.id', function ($query) use ($class) {
-        //         $query->select('challenges.id')
-        //             ->from('challenges')
-        //             ->join('challenges_groups', 'challenges_groups.id', 'challenges.challenges_group_id')
-        //             ->where('challenges_groups.classroom_id', '=', $class->id)
-        //             ->get();
-        //     })
-        //     ->where('students.id', '=', $student->id)
-        //     ->select('*')
-        //     ->leftJoin('challenge_student', function ($join) use ($student) {
-        //         $join->on('challenges.id', '=', 'challenge_student.challenge_id')
-        //             ->where('challenge_student.student_id', '=', $student->id);
-        //     })
-        //     ->select('*')
-        //     ->get();
-
         $challenges = ClassroomsStudentController::getChallenges($student, $class, true);
 
         $cards = $student->cards;

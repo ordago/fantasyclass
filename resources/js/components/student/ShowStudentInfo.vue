@@ -21,7 +21,16 @@
               </figure>
             </div>
             <div class="media-content">
-              <p class="title is-4">{{ student.name }}</p>
+              <p class="title is-4">
+                {{ student.name }}
+                <span v-if="settings.impostor != -1"
+                  ><i
+                    v-tippy
+                    :content="getImpostor()"
+                    class="fad fa-user-secret"
+                  ></i
+                ></span>
+              </p>
               <p class="subtitle is-6">
                 <small>@{{ student.username }}</small>
               </p>
@@ -449,7 +458,7 @@
             </div>
           </div>
         </b-tab-item>
-         <b-tab-item
+        <b-tab-item
           :label="trans.get('students.challenges')"
           icon="pen-fancy"
           icon-pack="fad"
@@ -1242,8 +1251,6 @@ export default {
   mounted() {
     this.behaviours = this.student.behaviours;
     if (!this.admin) {
-      this.activeTab = 1;
-
       this.updateEmpty();
 
       this.itemsJson = JSON.parse(this.shop.items);
@@ -1251,8 +1258,13 @@ export default {
       this.eq2Json = JSON.parse(this.shop.eq2);
       this.eq3Json = JSON.parse(this.shop.eq3);
     }
-    if (this.$cookies.get("tab") !== undefined)
+    if (this.$cookies.get("tab")) {
       this.activeTab = parseInt(this.$cookies.get("tab"));
+    } else {
+      if (!this.admin) {
+        this.activeTab = 1;
+      }
+    }
   },
   data: function () {
     return {
@@ -1289,6 +1301,10 @@ export default {
     };
   },
   methods: {
+    getImpostor() {
+      if (this.settings.impostor) return "🤫 " + this.trans.get('utils.impostor');
+      else return  this.trans.get('utils.no_impostor');
+    },
     setCookie() {
       this.$cookies.set("tab", this.activeTab, 60 * 5);
     },

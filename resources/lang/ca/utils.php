@@ -28,5 +28,13 @@ return [
     'chat_report' => 'Denúncia usuari',
     'chat_report_confirm' => 'Estàs segur/a de denunciar aquest usuari?',
     'report' => 'Denúncia',
+    
+    'impostor' => 'Ets l\'impostor, no deixes que et descobreixin.',
+    'no_impostor' => 'No ets l\'impostor, has d\'endevinar qui és.',
+    'impostor_select' => 'Selecciona l\'estudiant que serà impostor. Planteja activitats divertides on la resta haurà d\'encertar qui és la persona impostora.',
+    'impostor_generate' => 'Genera nom aleatori',
+    'impostor_apply' => 'Aplica i notifica',
+    'impostor_delete' => 'Esborra l\'impostor actual',
+    'impostor_active' => 'Hi ha un impostor a la classe!',
 
 ];

@@ -30,4 +30,12 @@ return [
     'chat_report_confirm' => '¿Estás seguro/a de denunciar este usuario?',
     'report' => 'Denuncia',
 
+    'impostor' => 'Eres el impostor, no dejes que te descubran.',
+    'no_impostor' => 'No eres el impostor, tienes que encontrar quien es.',
+    'impostor_select' => 'Selecciona el estudiante que será impostor. Plantea actividades divertidas donde el resto tendrá que adivinar quien es la persona impostora.',
+    'impostor_generate' => 'Genera nombre aleatorio',
+    'impostor_apply' => 'Aplica y notifica',
+    'impostor_delete' => 'Borra el impostor actual',
+    'impostor_active' => '¡Hay un impostor la clase!',
+
 ];

@@ -163,6 +163,15 @@
         >
           <i class="fad fa-bullhorn" style="font-size: 2em"></i>
         </a>
+        <a
+          v-tippy
+          v-if="students && students.length"
+          :content="'Impostor'"
+          @click="isImpostorActive = true"
+          class="link outer_glow px-1 cursor-pointer has-text-danger"
+        >
+          <i class="fad fa-user-secret" style="font-size: 2em"></i>
+        </a>
       </div>
       <div
         class="column is-narrow has-text-right is-center-vertically is-flex"
@@ -618,14 +627,16 @@
     <b-modal :active.sync="isMassiveModalActive" has-modal-card full-screen>
       <massive-actions :classroom="classroom"></massive-actions>
     </b-modal>
+    <Impostor v-if="isImpostorActive" :current="impostor" :code="classroom.code" :students="students"> </Impostor>
   </div>
 </template>
 
 <script>
 import confetti from "canvas-confetti";
+import Impostor from "../utils/Impostor.vue";
 
 export default {
-  props: ["students", "classroom", "groups"],
+  props: ["students", "classroom", "groups", "impostor"],
   created() {
     let view = this.$cookies.get("view");
     if (view) {
@@ -648,6 +659,7 @@ export default {
       viewGrid: "",
       buttons: "",
       numItems: 5,
+      isImpostorActive: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
       isRandomGroupActive: false,
@@ -841,6 +853,9 @@ export default {
       this.viewGrid = (this.viewGrid + 1) % 3;
       this.$cookies.set("viewGrid", this.viewGrid, Infinity);
     },
+  },
+  components: {
+    Impostor,
   },
   computed: {
     filteredDataObj() {

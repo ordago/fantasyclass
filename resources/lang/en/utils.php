@@ -29,4 +29,13 @@ return [
     'chat_report' => 'Report user',
     'chat_report_confirm' => 'Are you sure to report this user?',
     'report' => 'Report',
+
+    'impostor' => 'You\'re the impostor, don\'t be cached.',
+    'no_impostor' => 'No ets the impostor, you need to find who is.',
+    'impostor_select' => 'Select the student who will be the impostor. Create awesome activities where all the classroom will guess who is the impostor.',
+    'impostor_generate' => 'Random name',
+    'impostor_apply' => 'Apply and notify',
+    'impostor_delete' => 'Delete current impostor',
+    'impostor_active' => '¡There is an impostor in the class!',
+
 ];

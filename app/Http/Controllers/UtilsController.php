@@ -67,6 +67,32 @@ class UtilsController extends Controller
         return json_encode($images);
     }
 
+    public function impostorClear($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        settings()->forget('impostor');
+
+    }
+
+    public function impostor($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $student = Student::find($data['id']);
+        if($student->classroom->classroom_id != $class->id)
+            abort(403);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        settings()->set('impostor', $student->id);
+        
+    }
+
     public function showChat()
     {
         if(Carbon::parse(auth()->user()->banned)->gt(Carbon::now('Europe/Madrid'))) {

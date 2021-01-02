@@ -422,6 +422,11 @@ class ClassroomsController extends Controller
 
         $showChat = settings()->get('show_chat', false);
 
-        return view('classrooms.show', compact('class', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
+        $impostor = settings()->get('impostor', -1);
+        if($impostor != -1) {
+            $impostor = Student::find($impostor);
+        }
+
+        return view('classrooms.show', compact('class', 'impostor', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
     }
 }
