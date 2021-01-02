@@ -216,7 +216,7 @@
 </template>
 <script>
 export default {
-  props: ["bank", "code", "challenge", "modal"],
+  props: ["bank", "code", "challenge", "modal", "challengegroup"],
   created: function () {
     this.init();
   },
@@ -273,7 +273,7 @@ export default {
             this.$parent.$parent.getQuestions(this.bank.id);
             this.$parent.modal = false;
           } else {
-            this.$parent.$parent.$parent.getChallenges(this.challenge);
+            this.$parent.$parent.$parent.getChallenges(this.challengegroup);
             this.$parent.$parent.$parent.modal = false;
           }
         });

@@ -571,6 +571,7 @@
       :modal="modal"
       bank="wc"
       :code="code"
+      :challengegroup="challenge.challenges_group_id"
     >
     </AddQuestion>
   </div>
