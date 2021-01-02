@@ -88,5 +88,6 @@ return [
     'log_card_delete' => 'Carta eliminada',
     'log_card_use' => 'Carta utilizada',
     'log_card_assign' => 'Carta asignada',
+    'log_pet' => 'Mascota',
 
 ];

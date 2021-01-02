@@ -86,5 +86,6 @@ return [
     'log_card_delete' => 'Deleted card',
     'log_card_use' => 'Used card',
     'log_card_assign' => 'Card assigned',
+    'log_pet' => 'Pet',
 
 ];

@@ -113,7 +113,7 @@
     </div>
     <div class="column pr-0">
       <b-tabs
-        :destroy-on-hide="true"
+        :destroy-on-hide="false"
         multiline
         @input="setCookie()"
         v-model="activeTab"
@@ -1346,6 +1346,9 @@ export default {
           break;
         case "shop":
           return "<i class='fas fa-store colored' style='color: #A52A2A'></i>";
+          break;
+        case "pet":
+          return "<i class='fas fa-dog colored' style='color: #A52A2A'></i>";
           break;
         case "item":
           return "<i class='fas fa-flask-potion colored' style='color: #DC143C'></i>";

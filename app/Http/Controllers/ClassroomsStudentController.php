@@ -558,6 +558,13 @@ class ClassroomsStudentController extends Controller
         $student->pets()->sync([$pet->id]);
         $student->update(['gold' => ($student->gold - $pet->price)]);
 
+        LogEntry::create([
+            'type' => 'gold',
+            'value' => $pet->price * - 1,
+            'student_id' => $student->id,
+            'message' => 'pet',
+        ]);
+        
         return [
             "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
@@ -613,7 +620,7 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => ($student->gold - $item->price)]);
         LogEntry::create([
             'type' => 'gold',
-            'value' => $item->price,
+            'value' => $item->price * -1,
             'student_id' => $student->id,
             'message' => 'shop',
         ]);
@@ -685,7 +692,7 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => $gold]);
         LogEntry::create([
             'type' => 'gold',
-            'value' => $gold,
+            'value' => $price * - 1,
             'student_id' => $student->id,
             'message' => 'shop',
         ]);
