@@ -36,6 +36,6 @@ return [
     'impostor_generate' => 'Genera nombre aleatorio',
     'impostor_apply' => 'Aplica y notifica',
     'impostor_delete' => 'Borra el impostor actual',
-    'impostor_active' => '¡Hay un impostor la clase!',
+    'impostor_active' => '¡Hay un impostor en la clase!',
 
 ];
