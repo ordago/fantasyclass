@@ -222,9 +222,6 @@ class ChallengesController extends Controller
         $challengeGroup = ChallengesGroup::findOrFail(request()->challenges_group_id);
         $class = Classroom::where('id', '=', $challengeGroup->classroom_id)->first();
         $this->authorize('update', $class);
-        $data['students'] = json_encode($data['students']);
-        $data['items'] = json_encode($data['items']);
-        $data['requirements'] = json_encode($data['requirements']);
         try {
         $challenge = Challenge::create($data);
 
