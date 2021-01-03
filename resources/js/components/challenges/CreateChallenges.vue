@@ -63,29 +63,31 @@
       </b-field>-->
       <b-field :label="trans.get('challenges.avaliability')"> </b-field>
       <div class="w-100 buttons mb-2">
-        <b-datetimepicker
-          v-model="datepicker"
-          :placeholder="trans.get('challenges.click_select')"
-          icon-pack="fa"
-          class="button is-rounded"
-          style="height: 40px !important"
-        >
-          <template slot="left">
-            <button
-              class="button is-primary"
-              @click.prevent="datetime = new Date()"
-            >
-              <b-icon icon="clock"></b-icon>
-              <span>Now</span>
-            </button>
-          </template>
-          <template slot="right">
-            <button class="button is-danger" @click.prevent="datetime = null">
-              <b-icon icon="close"></b-icon>
-              <span>Clear</span>
-            </button>
-          </template>
-        </b-datetimepicker>
+        <span v-tippy :content="trans.get('challenges.tz')">
+          <b-datetimepicker
+            v-model="datepicker"
+            :placeholder="trans.get('challenges.click_select')"
+            icon-pack="fa"
+            class="button is-rounded"
+            style="height: 40px !important"
+          >
+            <template slot="left">
+              <button
+                class="button is-primary"
+                @click.prevent="datetime = new Date()"
+              >
+                <b-icon icon="clock"></b-icon>
+                <span>Now</span>
+              </button>
+            </template>
+            <template slot="right">
+              <button class="button is-danger" @click.prevent="datetime = null">
+                <b-icon icon="close"></b-icon>
+                <span>Clear</span>
+              </button>
+            </template>
+          </b-datetimepicker>
+        </span>
         <button
           @click.prevent="selectStudents"
           class="button is-rounded"
@@ -455,7 +457,6 @@ export default {
         if (typeof this.challenge.items == "string")
           this.challenge.items = JSON.parse(this.challenge.items);
       }
-
     }
   },
   mounted: function () {

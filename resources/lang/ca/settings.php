@@ -50,5 +50,6 @@ return [
     'themes_disabled' => "Desactivar pacs d'icones (utilitza <span class='tag is-dark'>Ctrl</span> per a seleccionar o deseleccionar)",
     'custom_pack' => "Crea el teu pack d'imatges",
     'custom_upload' => "Puja una imatge",
+    'timezone' => "Zona horària",
     
 ];

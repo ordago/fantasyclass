@@ -75,4 +75,6 @@ return [
     'requirements' => 'Requerimentos',
     'objects_required' => 'Objetos requeridos 😢',
 
+    'tz' => 'Configura la zona horaria a preferencias',
+
 ];

@@ -50,6 +50,7 @@ return [
     'themes_disabled' => "Disable icon packs (use <span class='tag is-dark'>Ctrl</span> to select or unselect)",
     'custom_pack' => "Create your own image pack",
     'custom_upload' => "Upload an image",
+    'timezone' => "Time zone",
 
     
 ];

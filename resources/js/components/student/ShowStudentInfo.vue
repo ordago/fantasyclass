@@ -705,7 +705,7 @@
                 sortable
                 centered
                 >{{
-                  new Date(props.row.pivot.created_at).toLocaleDateString()
+                  getDate(props.row.pivot.created_at)
                 }}</b-table-column
               >
 
@@ -884,7 +884,7 @@
                 sortable
                 centered
                 >{{
-                  new Date(props.row.created_at).toLocaleDateString()
+                  getDate(props.row.created_at)
                 }}</b-table-column
               >
 
@@ -1622,6 +1622,9 @@ export default {
         _method: "patch",
       });
     },
+    getDate(date) {
+      return Utils.getDate(date);
+    },
     message(item) {
       let message = "";
       if (item.slot > 0)
@@ -1846,8 +1849,8 @@ export default {
       if (this.behaviours) {
         return this.behaviours.filter((entry) => {
           return (
-            (entry.pivot.created_at >= this.dateStart || !this.dateStart) &&
-            (entry.pivot.created_at <= this.dateEnd || !this.dateEnd)
+            (moment(entry.pivot.created_at).isAfter(moment(this.dateStart)) || !this.dateStart) &&
+            (moment(entry.pivot.created_at).isBefore(this.dateEnd) || !this.dateEnd)
           );
         });
       }
@@ -1865,8 +1868,8 @@ export default {
     filteredLogEntries() {
       return this.student.log_entries.filter((entry) => {
         return (
-          (entry.created_at >= this.dateStart || !this.dateStart) &&
-          (entry.created_at <= this.dateEnd || !this.dateEnd)
+          (moment(entry.created_at).isAfter(moment(this.dateStart)) || !this.dateStart) &&
+          (moment(entry.created_at).isBefore(this.dateEnd) || !this.dateEnd)
         );
       });
     },

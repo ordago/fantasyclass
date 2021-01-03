@@ -13,13 +13,21 @@ export default {
         text = text.replace("[HP]", "<i class='fas fa-heart colored'></i>");
         return text;
     },
-    getDate(date) {
-        return moment.utc(date).local().format('DD/MM/YYYY HH:mm');
+    getDate(date, local = true) {
+        if(local)
+            return moment.utc(date).local().format('DD/MM/YYYY HH:mm');
+        return moment(date).format('DD/MM/YYYY HH:mm');
     },
-    getDateFrom(date, lang) {
+    getDateFrom(date, lang, local = true) {
         moment.locale(lang);
-        if(moment.utc(date).local().isBefore())
+        if(local) {
+            if(moment.utc(date).local().isBefore())
             return moment.utc(date).local().fromNow();
+        } else {
+            console.log('not local')
+            return moment(date).fromNow();
+        }
+        
     },
     getEmoji(grade, max) {
 

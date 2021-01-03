@@ -168,7 +168,6 @@ class ClassroomsStudentController extends Controller
                 if ($value['requirements'] && !$student->challenges->contains($value['id'])) {
                     $allItems = true;
                     $content = '';
-                    dump($value['requirements']);
                     foreach ($value['requirements'] as $item) {
                         if (!$student->items->contains($item['id'])) {
                             $allItems = false;

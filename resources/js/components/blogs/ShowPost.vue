@@ -21,13 +21,13 @@
             {{ post.title }}
 
             <span class="tag is-dark ml-2">
-              {{ post.date.split(":00")[0] }}</span
+              {{ getDate(post.date) }}</span
             >
           </h1>
 
           <div v-html="getContent(post.content)"></div>
           <div class="mt-3">
-            <small v-if="post.last_edit" class="is-italic">Edit: {{ post.last_edit }} {{ post.updated_at }}</small>
+            <small v-if="post.last_edit" class="is-italic">Edit: {{ post.last_edit }} {{ getDateFrom(post.updated_at) }}</small>
           </div>
         </div>
         <div class="has-text-right">
@@ -51,13 +51,18 @@ export default {
   props: ["post" , "code", "admin"],
   created: function () {},
   mounted: function () {
-    this.post.updated_at = Utils.getDateFrom(this.post.updated_at, this.trans.locale);
   },
   data: function () {
     return {};
   },
   components: {},
   methods: {
+    getDate(date) {
+      return Utils.getDate(date);
+    },
+    getDateFrom(date) {
+      return Utils.getDateFrom(this.post.updated_at, this.trans.locale);
+    },
     editPost(post) {
       this.$parent.editor = false;
       this.$parent.edit = post.id

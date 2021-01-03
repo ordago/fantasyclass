@@ -47,13 +47,13 @@
                 :content="
                   trans.get('challenges.hidden_until') +
                   ' ' +
-                  challenge.datetime.split(':00')[0]
+                  timeLeft(challengeReactive.datetime)
                 "
               >
                 <i class="fas fa-eye-slash"></i>
               </span>
 
-              {{ challengeReactive.datetime.split(":00")[0] }}</span
+              {{ datetime(challengeReactive.datetime) }}</span
             >
           </h1>
           <p>
@@ -761,6 +761,12 @@ export default {
           this.challenge.attachments.push(response.data);
         });
     },
+    datetime(date) {
+      return Utils.getDate(date, false)
+    },
+    timeLeft(date) {
+      return Utils.getDateFrom(date, this.trans.locale, false);
+    },
     markCompleted(challenge) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("challenges.mark_title"),
@@ -804,6 +810,7 @@ export default {
     },
   },
   computed: {
+    
     orderedComments: function () {
       return _.orderBy(this.challenge.comments, "created_at", "desc").splice(
         0,
@@ -817,21 +824,7 @@ export default {
         return this.challengeReactive.count == 2;
     },
     isHidden() {
-      let now = new Date();
-      now =
-        now.getFullYear() +
-        "-" +
-        (now.getMonth() + 1) +
-        "-" +
-        now.getDate() +
-        " " +
-        now.getHours() +
-        ":" +
-        now.getMinutes();
-      if (this.challengeReactive.datetime.split(":00")[0] > now) {
-        return true;
-      }
-      return false;
+      return moment(this.challengeReactive.datetime).isAfter();
     },
     getBackground() {
       if (this.full) {

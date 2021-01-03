@@ -75,5 +75,6 @@ return [
     'requirements' => 'Requirements',
     'objects_required' => 'Objects required 😢',
 
+    'tz' => 'Set the time zone in preferences',
 
 ];

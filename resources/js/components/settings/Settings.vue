@@ -6,15 +6,6 @@
         {{ trans.get("settings.classroom") }}
       </h1>
 
-      <!-- <div class="form-group">
-        <label>Timezone:<span class="red">&nbsp;*</span></label>
-        <select name="timezone" id="timezone" class="form-control">
-        @foreach (timezone_identifiers_list() as $timezone)
-                <option value="{{ $timezone }}"{{ $timezone == old('timezone') ? ' selected' : '' }}>{{ $timezone }}</option>
-        @endforeach
-        </select>
-        </div> -->
-
       <b-field class="mt-4" :label="trans.get('settings.state')">
         <b-field class="mb-3 pl-4">
           <b-radio-button
@@ -97,6 +88,17 @@
           </p>
         </div>
       </b-field>
+      <b-field  :label="trans.get('settings.timezone')">
+        <b-select class="ml-4" v-model="settings.tz">
+          <option v-for="(zone, index) in tz" :key="index" :value="zone">
+            {{ zone }}
+          </option>
+        </b-select>
+      </b-field>
+       <button class="button is-primary mb-3 ml-4" @click="updateTz">
+          <i class="fas fa-save"></i>
+          {{ trans.get("general.save") }}
+        </button>
       <button class="button is-link mb-3" v-if="user.token" @click="unlink">
         {{ trans.get("settings.classroom_unlink") }}
       </button>
@@ -190,7 +192,10 @@
               <i class="fas fa-trash-alt"></i>
             </button>
           </span>
-          <b-field :label="trans.get('menu.licenses')" v-if="imagesCustom && imagesCustom.length">
+          <b-field
+            :label="trans.get('menu.licenses')"
+            v-if="imagesCustom && imagesCustom.length"
+          >
             <b-input v-model="settings.licenses"></b-input>
           </b-field>
           <button class="button is-primary mb-3" @click="updateLicenses()">
@@ -543,6 +548,12 @@ export default {
     };
   },
   methods: {
+    updateTz() {
+      this.updateClassState("tz", this.settings.tz);
+      this.$toast(this.trans.get("success_error.update_success"), {
+        type: "success",
+      });
+    },
     deleteImage(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
