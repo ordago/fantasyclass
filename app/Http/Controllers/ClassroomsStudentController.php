@@ -241,7 +241,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
-            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now($tz)->toDateTimeString())
             ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
                 $query->select('challenges_groups.id')
                     ->from('challenges_groups')

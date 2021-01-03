@@ -21,7 +21,7 @@ class Comment extends Model
         $student = ClassroomUser::where('user_id', $this->user_id)
         ->where('classroom_id', $challenge->group->classroom_id)
         ->where('role', 0)->first();
-        $date = date_create($this->created_at);
+        $date = $this->created_at;
         if($student) {
             $student = $student->student;
             return ['type' => 'student','name' => $student->name, 'avatar' => $student->getAvatarAttribute(), "datetime" => $date];

@@ -332,7 +332,7 @@
                 <div>
                   <span class="tag is-info p-2">{{ comment.info.name }}</span>
                   <span class="tag is-link p-2">{{
-                    comment.info.datetime
+                    datetime(comment.info.datetime)
                   }}</span>
                   <button
                     class="button tag is-danger has-text-light p-2"

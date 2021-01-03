@@ -34,7 +34,7 @@
           <button class="button is-dark is-outlined" v-if="!post.is_teacher || (admin && post.is_teacher)" @click="editPost(post)">
             <i class="fad fa-edit"></i> {{ trans.get("general.edit") }}
           </button>
-          <button class="button is-danger is-outlined" v-if="!post.is_teacher || (admin && post.is_teacher)" @click="deletePost(post.id)">
+          <button class="button is-danger is-outlined" v-if="(!post.is_teacher && !admin) || (admin && post.is_teacher)" @click="deletePost(post.id)">
             <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
           </button>
         </div>

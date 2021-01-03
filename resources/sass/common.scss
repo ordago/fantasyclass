@@ -650,13 +650,14 @@
   }
 
   .content {
-      overflow-y: visible !important;
+      overflow-y: visible;
       z-index: 10 !important;
 
       &::-webkit-scrollbar {
           width: 10px;
       }
   }
+
 
   /* width */
 
