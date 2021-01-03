@@ -1,4 +1,10 @@
 # Changelog
+## v1.31 Beta (XX/01/2021)
+### Added   
+- Teachers can write posts in students adventures.
+
+### Changed
+
 ## v1.30 Beta (02/01/2021)
 ### Added   
 - Select random impostor.

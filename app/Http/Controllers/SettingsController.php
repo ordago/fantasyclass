@@ -36,6 +36,7 @@ class SettingsController extends Controller
         $settings['disabled_themes'] = json_decode(settings()->get('disabled_themes', json_encode([])));
         $settings['custom_images'] = $class->getMedia('avatars');
         $settings['licenses'] = settings()->get('licenses', '');
+        $settings['tz'] = settings()->get('tz', 'Europe/Madrid');
         
         $teachers = $class->users->where('pivot.role', '>', 0);     
         

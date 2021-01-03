@@ -46,7 +46,7 @@ class NewMessage extends Notification
             'type' => $this->type,
             'user' => $this->user,
             'classroom' => $this->classroom,
-            'created' => Carbon::now('Europe/Madrid')->toIso8601String()
+            'created' => Carbon::now(),
         ];
     }
     

@@ -72,7 +72,7 @@ class User extends Authenticatable implements MustVerifyEmail
         $from['title'] = __('notifications.message');
         $from['name'] = auth()->user()->name;
         $from['username'] = auth()->user()->username;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
 
         Notification::send($this, new NewMessage($content, $from, $classroom, 'student', null, $type));
     }

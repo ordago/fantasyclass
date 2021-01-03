@@ -20,7 +20,7 @@ return [
     'money_sent_taxes' => 'que després d\'aplicar taxes es queda en ',
     'money_sent_thief' => ' però ... Uns lladres han robat ',
     'money_sent_total' => ' així que et queda: ',
-    'new_post' => 'Nou post en: ',
+    'post' => 'Nou post en: ',
     'mark_challenge' => 'Ha completat un repte: ',
 
 ];

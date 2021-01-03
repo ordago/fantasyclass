@@ -216,7 +216,7 @@ class Student extends Model implements HasMedia
 
         $from['title'] = 'notifications.new_behaviour';
         $from['name'] = "FantasyClass";
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
 
         $behaviourText = $behaviour->custom_text ? $behaviour->custom_text : __($behaviour->name);
 

@@ -45,7 +45,7 @@ class NewInteractionStudent extends Notification
             'section' => $this->section,
             'classroom' => $this->classroom,
             'user' => 'student',
-            'created' => Carbon::now('Europe/Madrid')->toIso8601String()
+            'created' => Carbon::now(),
         ];
     }
     

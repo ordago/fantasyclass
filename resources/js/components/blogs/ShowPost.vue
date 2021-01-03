@@ -1,9 +1,9 @@
 <template>
-  <div class="box card-shadow-s mb-3 has-background-story">
+  <div class="box card-shadow-s mb-3" :class="{'has-background-story' : !post.is_teacher, 'has-background-white-ter' : post.is_teacher }">
     <section class="media">
       <div class="media-content is-relative">
         <div class="challenge-category has-background-light">
-          <i class="fad fa-file-alt"></i>
+          <i class="fad" :class="{ 'fa-file-alt' : !post.is_teacher, 'fa-user-graduate' : post.is_teacher }"></i>
         </div>
         <!-- <span
           @click="copyPermalink"
@@ -26,12 +26,15 @@
           </h1>
 
           <div v-html="getContent(post.content)"></div>
+          <div class="mt-3">
+            <small v-if="post.last_edit" class="is-italic">Edit: {{ post.last_edit }} {{ post.updated_at }}</small>
+          </div>
         </div>
         <div class="has-text-right">
-          <button class="button is-dark is-outlined" @click="editPost(post)">
+          <button class="button is-dark is-outlined" v-if="!post.is_teacher || (admin && post.is_teacher)" @click="editPost(post)">
             <i class="fad fa-edit"></i> {{ trans.get("general.edit") }}
           </button>
-          <button class="button is-danger is-outlined" v-if="!admin" @click="deletePost(post.id)">
+          <button class="button is-danger is-outlined" v-if="!post.is_teacher || (admin && post.is_teacher)" @click="deletePost(post.id)">
             <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
           </button>
         </div>
@@ -47,6 +50,9 @@ import Utils from "../../utils.js";
 export default {
   props: ["post" , "code", "admin"],
   created: function () {},
+  mounted: function () {
+    this.post.updated_at = Utils.getDateFrom(this.post.updated_at, this.trans.locale);
+  },
   data: function () {
     return {};
   },

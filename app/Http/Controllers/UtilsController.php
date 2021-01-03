@@ -95,7 +95,7 @@ class UtilsController extends Controller
 
     public function showChat()
     {
-        if(Carbon::parse(auth()->user()->banned)->gt(Carbon::now('Europe/Madrid'))) {
+        if(Carbon::parse(auth()->user()->banned)->gt(Carbon::now())) {
             abort(403, "You're banned until ". Carbon::parse(auth()->user()->banned)->toDateTimeString());
         }
         auth()->user()->removePending();
@@ -106,7 +106,7 @@ class UtilsController extends Controller
         $from['title'] = __('notifications.message');
         $from['name'] = auth()->user()->name;
         $from['username'] = auth()->user()->username;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
         foreach (request()->users as $user) {
             if($user != auth()->user()->id) {
                 $userobj = User::find($user);

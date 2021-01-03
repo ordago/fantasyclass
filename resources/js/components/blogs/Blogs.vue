@@ -179,6 +179,7 @@ export default {
           content: this.content,
           title: this.title,
           student: student,
+          is_teacher: this.admin ? 1 : 0,
         })
         .then((response) => {
           this.modal = false;

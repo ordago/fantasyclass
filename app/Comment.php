@@ -22,7 +22,6 @@ class Comment extends Model
         ->where('classroom_id', $challenge->group->classroom_id)
         ->where('role', 0)->first();
         $date = date_create($this->created_at);
-        $date = date_format($date, 'd/m/Y H:i');
         if($student) {
             $student = $student->student;
             return ['type' => 'student','name' => $student->name, 'avatar' => $student->getAvatarAttribute(), "datetime" => $date];

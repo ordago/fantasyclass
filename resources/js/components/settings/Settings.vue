@@ -6,6 +6,15 @@
         {{ trans.get("settings.classroom") }}
       </h1>
 
+      <!-- <div class="form-group">
+        <label>Timezone:<span class="red">&nbsp;*</span></label>
+        <select name="timezone" id="timezone" class="form-control">
+        @foreach (timezone_identifiers_list() as $timezone)
+                <option value="{{ $timezone }}"{{ $timezone == old('timezone') ? ' selected' : '' }}>{{ $timezone }}</option>
+        @endforeach
+        </select>
+        </div> -->
+
       <b-field class="mt-4" :label="trans.get('settings.state')">
         <b-field class="mb-3 pl-4">
           <b-radio-button
@@ -485,7 +494,7 @@ import VueSlider from "vue-slider-component";
 import "vue-slider-component/theme/antd.css";
 
 export default {
-  props: ["classroom", "settings", "teachers", "isAdmin", "user"],
+  props: ["classroom", "settings", "teachers", "isAdmin", "user", "tz"],
   created() {
     this.state = "" + this.classroom.state;
     this.value[0] = 0;

@@ -71,12 +71,12 @@
                   'fa-feather': notification.data.type == 'post',
                 }"
               ></i>
-              {{ trans.get(notification.data.from.title) }}
+              {{ trans.get(notification.data.from.title) }} {{ getDateFrom(notification.data.from.datetime) }}
               <span class="left-auto"
                 ><time
                   :datetime="notification.data.from.datetime"
                   class="tag is-light"
-                  >{{ notification.data.from.datetime }}</time
+                  >{{ getDate(notification.data.from.datetime) }}</time
                 ></span
               >
               <i
@@ -196,6 +196,8 @@
   </div>
 </template>
 <script>
+import Utils from "../../utils.js";
+
 export default {
   props: {
     pending: {
@@ -240,6 +242,12 @@ export default {
     };
   },
   methods: {
+    getDate(date) {
+      return Utils.getDate(date);
+    },
+    getDateFrom(date) {
+      return Utils.getDateFrom(date, this.trans.locale);
+    },
     redirect(url) {
       location.href = url;
     },

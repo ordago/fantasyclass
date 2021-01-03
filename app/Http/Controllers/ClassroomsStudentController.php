@@ -144,9 +144,11 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
         $challenges = [];
 
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $tz = settings()->get('tz', 'Europe/Madrid');
 
         foreach ($class->challengeGroups as $group) {
-            array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
                     ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
@@ -166,6 +168,7 @@ class ClassroomsStudentController extends Controller
                 if ($value['requirements'] && !$student->challenges->contains($value['id'])) {
                     $allItems = true;
                     $content = '';
+                    dump($value['requirements']);
                     foreach ($value['requirements'] as $item) {
                         if (!$student->items->contains($item['id'])) {
                             $allItems = false;
@@ -208,12 +211,15 @@ class ClassroomsStudentController extends Controller
     }
     public static function getChallenges($student, $class, $admin = false)
     {
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $tz = settings()->get('tz', 'Europe/Madrid');
+
         $challenges = DB::table('students')
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
             ->whereRaw('not JSON_CONTAINS(challenges.students, ?)', [json_encode($student->id)])
-            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now($tz)->toDateTimeString())
             ->whereIn('challenges.id', function ($query) use ($class) {
                 $query->select('challenges.id')
                     ->from('challenges')
@@ -236,7 +242,7 @@ class ClassroomsStudentController extends Controller
             ->crossJoin('challenges')
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
-            ->where('challenges.datetime', '<=', Carbon::now('Europe/Madrid')->toDateTimeString())
+            ->where('challenges.datetime', '<=', Carbon::now()->toDateTimeString())
             ->whereIn('challenges.challenges_group_id', function ($query) use ($class) {
                 $query->select('challenges_groups.id')
                     ->from('challenges_groups')
@@ -430,7 +436,7 @@ class ClassroomsStudentController extends Controller
 
         $from['title'] = 'notifications.money_sent';
         $from['name'] = $student->name;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
 
         $message = __('notifications.money_sent') . ' ' . request()->money . ' <i class="fas fa-coins colored"></i> ' . __('notifications.money_sent_taxes') . ($gold + $steal) . " <i class='fas fa-coins colored'></i> ";
 
@@ -480,7 +486,7 @@ class ClassroomsStudentController extends Controller
         $from['title'] = $challenge->title;
         $from['name'] = $student->name;
         $from['username'] = $student->username;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
 
         NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_challenge", __("notifications.mark_challenge") . $from['title'], $from, "challenge", "challenges");
 
@@ -521,7 +527,7 @@ class ClassroomsStudentController extends Controller
         $from['title'] = __("notifications.mark_card");
         $from['name'] = $student->name;
         $from['username'] = $student->username;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['datetime'] = Carbon::now();
 
         NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
 

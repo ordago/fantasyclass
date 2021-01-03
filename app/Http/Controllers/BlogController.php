@@ -84,18 +84,23 @@ class BlogController extends Controller
             $this->authorize('update', $class);
             if($student->classroom->classroom_id != $class->id)
                 abort(403);
+            $name = auth()->user()->name;
         } else {
             $student = Functions::getCurrentStudent($class, []);
+            $name = $student->name;
         }
         $post = Posts::find($data['id']);
         if ($post->blog->student_id != $student->id)
             abort(403);
-    
+
+
         $post->update([
             'title' => $data['title'],
             'content' => $data['content'],
-            'date' => Carbon::now('Europe/Madrid'),
-        ]);
+            'last_edit' => $name,
+        ]);        
+        $post->touch();
+
     }
     public function storePost($code)
     {
@@ -105,6 +110,7 @@ class BlogController extends Controller
             'blog' => ['numeric', 'required'],
             'title' => ['string', 'required'],
             'content' => ['string', 'required'],
+            'is_teacher' => ['nullable'],
         ]);
 
         if(request()->student) {
@@ -120,19 +126,27 @@ class BlogController extends Controller
         if ($blog->student_id != $student->id)
             abort(403);
 
-        $from['title'] = __("notifications.new_post") . $blog->name;
-        $from['name'] = $student->name;
-        $from['username'] = $student->username;
-        $from['datetime'] = date_format(Carbon::now('Europe/Madrid'), 'd/m/Y H:i');
+        $from['title'] = __("notifications.post") . $blog->name;
+        
+        if(!$data['is_teacher']) {
+            $from['datetime'] = Carbon::now();
+            $from['name'] = $student->name;
+            $from['username'] = $student->username;
+    
+            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.post", $data['title'] , $from, "post", $student->id);
+        } else {
+            $student->classroom->user->sendMessage($from['title'], $class->code, "post");
+            // NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.post", $data['title'] , $from, "post", $student->id);
 
-        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.new_post", $data['title'] , $from, "post", $student->id);
+        }
 
 
         return Posts::create([
             'title' => $data['title'],
             'content' => $data['content'],
             'blog_id' => $blog->id,
-            'date' => Carbon::now('Europe/Madrid'),
+            'date' => Carbon::now(),
+            'is_teacher' => $data['is_teacher'],
         ]);
     }
 

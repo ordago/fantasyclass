@@ -13,6 +13,14 @@ export default {
         text = text.replace("[HP]", "<i class='fas fa-heart colored'></i>");
         return text;
     },
+    getDate(date) {
+        return moment.utc(date).local().format('DD/MM/YYYY HH:mm');
+    },
+    getDateFrom(date, lang) {
+        moment.locale(lang);
+        if(moment.utc(date).local().isBefore())
+            return moment.utc(date).local().fromNow();
+    },
     getEmoji(grade, max) {
 
         let gradeCalc = grade * 5 / max;

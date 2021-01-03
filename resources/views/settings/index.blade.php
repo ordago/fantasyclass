@@ -22,5 +22,5 @@
 @endsection
 
 @section('content')
-<settings :settings="{{ json_encode($settings) }}" :teachers="{{ $teachers }}" :user="{{ auth()->user() }}" :is-admin="{{ $isAdmin ?? 0 }}" :classroom="{{ $class }}"></settings>
+<settings :tz="{{ json_encode(timezone_identifiers_list()) }}" :settings="{{ json_encode($settings) }}" :teachers="{{ $teachers }}" :user="{{ auth()->user() }}" :is-admin="{{ $isAdmin ?? 0 }}" :classroom="{{ $class }}"></settings>
 @endsection
