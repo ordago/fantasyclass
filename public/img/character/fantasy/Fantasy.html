@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>New chars</title>
+
+  <style>
+    .character {
+      width: 140px;
+      height: 245px;
+      position: relative;
+      padding: 0;
+      margin: 0;
+      transform: scale(0.8);
+      float: left;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      margin-left: 10px;
+    }
+
+    .wraith-body {
+      position: absolute;
+      top: 58px;
+      left: 15px;
+    }
+
+    .wraith-head {
+      position: absolute;
+      top: -26px;
+      left: 2px;
+      transform: scale(0.9, 0.9);
+    }
+
+    .wraith-arms {
+      position: absolute;
+      left:-5px;
+      top: 68px;
+    }
+
+    .wraith-ball {
+      position: absolute;
+      left: -10px;
+      top: 40px;
+      z-index: 2;
+      animation-name: ball;
+      animation-duration: 1.5s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .golem-weapon {
+      position: absolute;
+      left: 60px;
+      top: -25px;
+      animation-name: golem;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+
+    .character:hover .golem-weapon {
+      animation-duration: 0.5s;
+    }
+
+    .character:hover .wraith-ball {
+      animation-duration: 0.5s;
+    }
+
+    .golem-head {
+      position: absolute;
+      top: -50px;
+      left: 2px;
+    }
+    .golem-body {
+      position: absolute;
+      top: 20px;
+      left: -2px;
+    }
+    .golem-bottom {
+      position: absolute;
+      top: 85px;
+      left: 5px;
+      z-index: 2;
+    }
+
+
+    @keyframes float {
+      0% {
+        transform: translatey(0px);
+      }
+
+      50% {
+        transform: translatey(-20px);
+      }
+
+      100% {
+        transform: translatey(0px);
+      }
+    }
+
+    @keyframes golem {
+      0% {
+        transform: rotate(20deg);
+      }
+
+      50% {
+        transform: rotate(-20deg);
+      }
+
+      100% {
+        transform: rotate(20deg);
+      }
+    }
+    
+    @keyframes ball {
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes floathover {
+      0% {
+        transform: translatey(-35px);
+      }
+
+      50% {
+        transform: translatey(-28px);
+      }
+
+      100% {
+        transform: translatey(-35px);
+      }
+    }
+
+    /**************/
+
+  </style>
+</head>
+<body>
+	<br><br><br>
+  <div class="character">
+     <img src="wraith_arms_0.png" class="wraith-arms">
+    <img src="wraith_body_0.png" class="wraith-body">
+    <img src="wraith_head_0.png" class="wraith-head">
+    <img src="wraith_ball_0.png" class="wraith-ball">
+  </div>
+  <div class="character">
+     <img src="wraith_arms_1.png" class="wraith-arms">
+    <img src="wraith_body_1.png" class="wraith-body">
+    <img src="wraith_head_1.png" class="wraith-head">
+    <img src="wraith_ball_1.png" class="wraith-ball">
+  </div>
+  <div class="character">
+     <img src="wraith_arms_2.png" class="wraith-arms">
+    <img src="wraith_body_2.png" class="wraith-body">
+    <img src="wraith_head_2.png" class="wraith-head">
+    <img src="wraith_ball_2.png" class="wraith-ball">
+  </div>
+  <div class="character">
+     <img src="wraith_arms_3.png" class="wraith-arms">
+    <img src="wraith_body_3.png" class="wraith-body">
+    <img src="wraith_head_3.png" class="wraith-head">
+    <img src="wraith_ball_3.png" class="wraith-ball">
+  </div>
+  <br><br>
+  <div class="character">
+     <img src="golem_weapon_0.png" class="golem-weapon">
+    <img src="golem_bottom_0.png" class="golem-bottom">
+    <img src="golem_body_0.png" class="golem-body">
+    <img src="golem_head_0.png" class="golem-head">
+  </div>
+  <div class="character">
+     <img src="golem_weapon_1.png" class="golem-weapon">
+    <img src="golem_bottom_1.png" class="golem-bottom">
+    <img src="golem_body_1.png" class="golem-body">
+    <img src="golem_head_1.png" class="golem-head">
+  </div>
+  <div class="character">
+     <img src="golem_weapon_2.png" class="golem-weapon">
+    <img src="golem_bottom_2.png" class="golem-bottom">
+    <img src="golem_body_2.png" class="golem-body">
+    <img src="golem_head_2.png" class="golem-head">
+  </div>
+  <div class="character">
+     <img src="golem_weapon_3.png" class="golem-weapon">
+    <img src="golem_bottom_3.png" class="golem-bottom">
+    <img src="golem_body_3.png" class="golem-body">
+    <img src="golem_head_3.png" class="golem-head">
+  </div>
+</body>
+</html>
+
