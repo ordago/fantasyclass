@@ -1,5 +1,5 @@
 # Changelog
-## v1.31 Beta (XX/01/2021)
+## v1.31 Beta (04/01/2021)
 ### Added
 - Teachers can write posts in student adventures.
 - Setting in classroom to change timezone.
