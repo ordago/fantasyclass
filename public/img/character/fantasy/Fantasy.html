@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>New chars</title>
-
+  <link href="../../../css/app.css" rel="stylesheet">
   <style>
     .character {
       width: 140px;
@@ -32,25 +32,22 @@
 
     .wraith-arms {
       position: absolute;
-      left:-5px;
+      left:10px;
       top: 68px;
     }
 
     .wraith-ball {
       position: absolute;
-      left: -10px;
+      left: -5px;
       top: 40px;
       z-index: 2;
-      animation-name: ball;
-      animation-duration: 1.5s;
-      animation-iteration-count: infinite;
-      animation-timing-function: linear;
+      animation: ball 1.5s infinite linear;
     }
 
     .golem-weapon {
       position: absolute;
       left: 60px;
-      top: -25px;
+      top: -40px;
       animation-name: golem;
       animation-duration: 1s;
       animation-iteration-count: infinite;
@@ -83,20 +80,6 @@
     }
 
 
-    @keyframes float {
-      0% {
-        transform: translatey(0px);
-      }
-
-      50% {
-        transform: translatey(-20px);
-      }
-
-      100% {
-        transform: translatey(0px);
-      }
-    }
-
     @keyframes golem {
       0% {
         transform: rotate(20deg);
@@ -118,6 +101,20 @@
       }
     }
 
+    @keyframes floatball {
+    0% {
+        transform: translatey(0px);
+    }
+
+    50% {
+        transform: translatey(-20px), rotate(180deg);
+      }
+      
+      100% {
+        transform: translatey(0px), rotate(180deg);
+    }
+}
+
     @keyframes floathover {
       0% {
         transform: translatey(-35px);
@@ -138,25 +135,25 @@
 </head>
 <body>
 	<br><br><br>
-  <div class="character">
+  <div class="character fly">
      <img src="wraith_arms_0.png" class="wraith-arms">
     <img src="wraith_body_0.png" class="wraith-body">
     <img src="wraith_head_0.png" class="wraith-head">
     <img src="wraith_ball_0.png" class="wraith-ball">
   </div>
-  <div class="character">
+  <div class="character fly">
      <img src="wraith_arms_1.png" class="wraith-arms">
     <img src="wraith_body_1.png" class="wraith-body">
     <img src="wraith_head_1.png" class="wraith-head">
     <img src="wraith_ball_1.png" class="wraith-ball">
   </div>
-  <div class="character">
+  <div class="character fly">
      <img src="wraith_arms_2.png" class="wraith-arms">
     <img src="wraith_body_2.png" class="wraith-body">
     <img src="wraith_head_2.png" class="wraith-head">
     <img src="wraith_ball_2.png" class="wraith-ball">
   </div>
-  <div class="character">
+  <div class="character fly">
      <img src="wraith_arms_3.png" class="wraith-arms">
     <img src="wraith_body_3.png" class="wraith-body">
     <img src="wraith_head_3.png" class="wraith-head">
