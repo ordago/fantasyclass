@@ -48,16 +48,19 @@
       </span>
       <div
         v-if="
-          classroom.character_theme != 0 && classroom.character_theme != null
+          classroom.character_theme != null && classroom.character_theme.id != 0 
         "
-        class="character-container character character-small is-relative"
+        class="character-container character is-relative"
+        :class="classroom.character_theme.classes"
       >
+        <div :class="student.character.classes">
         <img
           :src="'/img/character/' + element.src"
           :class="element.classes"
           v-for="element in student.equipment"
           v-bind:key="element.id"
         />
+      </div>
       </div>
       <div v-else class="is-flex has-all-centered py-3">
         <img

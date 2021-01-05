@@ -392,17 +392,22 @@ class ClassroomsController extends Controller
 
     public function show($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('theme', 'behaviours', 'grouping.groups')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'teacher')->get();
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $students = $class->students()->with('equipment', 'pets')->get();
+        $students = $class->students()->with('equipment', 'pets', 'character')->get();
         $groups = $class->grouping->first()->groups;
         $students->each->append('numcards');
         $students->each->append('boost');
+
+        foreach ($students as $student) {
+            if($student->characterTheme)
+            dump($student->characterTheme->attributes);
+        }
 
         $pending = collect();
         foreach ($class->students as $student) {

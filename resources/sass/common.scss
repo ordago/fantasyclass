@@ -169,6 +169,7 @@
       font: 13px/1 'Oxygen', sans-serif !important;
       scroll-behavior: smooth;
       background-attachment: fixed;
+      overflow-x: hidden;
   }
 
   .cursor-pointer {
@@ -732,7 +733,8 @@
   }
 
   .item {
-      width: 60px;
+      max-width: 60px;
+      max-height: 70px;
   }
 
   .slidecontainer {

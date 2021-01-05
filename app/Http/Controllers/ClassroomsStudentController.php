@@ -295,6 +295,7 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class);
 
         $student->append('numcards');
+        $student->load('character');
 
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);

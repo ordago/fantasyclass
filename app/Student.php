@@ -120,6 +120,11 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Group::class);
     }
 
+    public function character()
+    {
+        return $this->belongsTo(Character::class, 'character_id', 'id');
+    }
+
     public function pets()
     {
         return $this->belongsToMany(Pet::class)->withPivot('hp');
@@ -541,6 +546,15 @@ class Student extends Model implements HasMedia
                 break;
             case '22':
                 $ids = [430, 434, 438, 442, 446];
+                break;
+            case '23':
+                $ids = [450, 454, 458, 462];
+                break;
+            case '24':
+                $ids = [470, 474, 478, 482];
+                break;
+            case '25':
+                $ids = [490, 494, 498, 502];
                 break;
         }
 

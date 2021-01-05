@@ -46,7 +46,11 @@
             <b-tab-item :label="trans.get('classroom.char_theme')" icon="mask" icon-pack="far">
                 <h1 class="is-size-2 my-4"><i class="fal fa-ghost faa-float animated"></i> {{ trans.get('classroom.char_theme') }}</h1>
                 <label>
-                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="1">
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="7">
+                    <img src="/img/character/themes-preview/fantasy.png" class="themePreview">
+                </label>
+                <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="1">
                     <img src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
                 </label>
                 <label>
@@ -135,7 +139,7 @@ export default {
         adventure_name: "FantasyClass",
         goal_type: 1,
         bg_theme: 1,
-        character_theme: 1,
+        character_theme: 7,
       },
     };
   },
