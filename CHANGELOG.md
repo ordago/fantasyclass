@@ -1,6 +1,7 @@
 # Changelog
-## v1.31 Beta (04/01/2021)
+## v1.32 Beta (05/01/2021)
 ### Added
+- New Fantasy theme.
 - Teachers can write posts in student adventures.
 - Setting in classroom to change timezone.
 
