@@ -43,7 +43,6 @@
         "font-awesome-animation": "^0.2.1",
         "lang.js": "^1.1.14",
         "laravel-mix-bundle-analyzer": "^1.0.5",
-        "moment": "^2.29.1",
         "moment-timezone": "^0.5.32",
         "save": "^2.4.0",
         "tiptap": "^1.30.0",
