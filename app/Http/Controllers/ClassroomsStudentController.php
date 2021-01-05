@@ -90,7 +90,7 @@ class ClassroomsStudentController extends Controller
 
     public function index($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.pets', 'students.groups', 'theme')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
 
@@ -101,7 +101,7 @@ class ClassroomsStudentController extends Controller
         $class->students->each->append('grouplogopublic');
         $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
             return collect($user->toArray())
-                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'equipment', 'pets', 'level', 'groups'])
+                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups'])
                 ->all();
         });
 

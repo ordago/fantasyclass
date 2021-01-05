@@ -6,6 +6,7 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
+use App\Equipment;
 use App\Mail\RegisterStudent;
 use App\Pet;
 use App\Student;
@@ -241,8 +242,54 @@ class StudentController extends Controller
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
 
-        return view('students.show', compact('student', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
+        $eq0 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 0)->get();
+        $eq1 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 1)->get();
+        $eq2 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 2)->get();
+        $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
+    
+        $shop = [
+            'eq0' => json_encode($eq0),
+            'eq1' => json_encode($eq1),
+            'eq2' => json_encode($eq2),
+            'eq3' => json_encode($eq3),
+            'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
+            'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
+            'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
+        ];
+
+
+        return view('students.show', compact('student', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
+
+    public function assignEquipment($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $student = Student::findOrFail(request()->student);
+        if($student->classroom->classroom_id != $class->id || $student->hp <= 0)
+            abort(403);
+
+        $new = Equipment::where('id', '=', request()->new)->firstOrFail();
+
+        // $old = Equipment::where('id', '=', request()->old)->firstOrFail();
+        $old = DB::table('equipment_student')
+            ->join('equipment', 'equipment.id', 'equipment_student.equipment_id')
+            ->where('equipment_student.student_id', '=', $student->id)
+            ->where('equipment.type', '=', $new->type)
+            ->select('*')
+            ->first();
+
+        $student->equipment()->detach($old->id);
+        $student->equipment()->attach($new->id);
+        return [
+            "message" => " " . __('success_error.equipment_success'),
+            "icon" => "check",
+            "type" => "success",
+            "equipment" => $student->fresh()->equipment,
+            "boost" => $student->fresh()->getBoost(),
+        ];
+    }
+
 
     public function deleteLog(Request $request)
     {

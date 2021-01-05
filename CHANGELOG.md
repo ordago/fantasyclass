@@ -1,4 +1,10 @@
 # Changelog
+## v1.33 Beta (XX/01/2021)
+### Added
+- Teachers can assign equipment.
+
+### Changed
+
 ## v1.32 Beta (05/01/2021)
 ### Added
 - New Fantasy theme.

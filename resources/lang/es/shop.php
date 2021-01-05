@@ -31,6 +31,8 @@ return [
     'buy_item' => 'Compra objeto',
     'buy_text' => 'Quieres comprar el objeto ',
     'assign_text' => '¿Quieres asignar la mascota? No se cobrará nada',
+    'assign_eq_text' => '?Quieres asignar el equipo? No se cobrará nada',
+
     'pet_warning' => 'Solo puedes tener una mascota, si compras una perderás la que tenías.',
     
     'item_slot' => 'Asigna un valor si el objeto sirve para poder tener más cartas',

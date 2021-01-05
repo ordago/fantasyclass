@@ -313,6 +313,80 @@
             </article>
           </div>
 
+          <div v-if="admin">
+            <div
+              class="w-100 is-flex mb-5 content"
+              v-if="classroom.character_theme"
+              :key="forceReload"
+            >
+              <div
+                v-for="gear in orderedEquipment"
+                v-bind:key="gear.id"
+                v-tippy
+                :content="propertiesMessage(gear)"
+                :ref="'item' + gear.id"
+                class="inventory-item inv-item-armor relative"
+                v-bind:class="{
+                  'inv-item-armor-bronce': gear.offset == 1,
+                  'inv-item-armor-silver': gear.offset == 2,
+                  'inv-item-armor-gold': gear.offset == 3,
+                }"
+              >
+                <img
+                  :src="'/img/character/' + gear.src"
+                  :alt="gear.id"
+                  class="item"
+                />
+                <div>
+                  <i class="fas fa-plus"></i>
+                </div>
+                <div
+                  class="w-100 shop-sub-item"
+                  style="position: absolute; top: 100px; left: 0"
+                >
+                  <div
+                    v-for="(i, index) in getProperties()"
+                    :key="index"
+                  >
+                    <div
+                      v-for="itemStore in filterEquipment(i, gear.type)"
+                      v-bind:key="itemStore.id"
+                      class="inventory-item inv-item-armor w-100"
+                      v-bind:class="{
+                        'inv-item-armor-bronce': index == 1,
+                        'inv-item-armor-silver': index == 2,
+                        'inv-item-armor-gold': index == 3,
+                      }"
+                    >
+                      <img
+                        v-tippy
+                        :content="propertiesMessage(itemStore)"
+                        :src="'/img/character/' + itemStore.src"
+                        :alt="itemStore.id"
+                        class="item"
+                      />
+                      <div
+                        class="price-buy rounded"
+                        v-if="!admin"
+                        @click="buyEquipment(gear, itemStore)"
+                      >
+                        {{ calculate(itemStore) }}
+                        <i class="fas fa-coins colored"></i>
+                      </div>
+                      <div
+                        v-if="admin"
+                        class="price-buy rounded"
+                        @click="assignEquipment(gear, itemStore)"
+                      >
+                        {{ trans.get("general.assign") }}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div class="columns is-multiline is-variable" v-if="admin">
             <div
               v-for="item in items"
@@ -393,7 +467,7 @@
                   style="position: absolute; top: 100px; left: 0"
                 >
                   <div
-                    v-for="(i, index) in [eq1Json, eq2Json, eq3Json]"
+                    v-for="(i, index) in getProperties()"
                     :key="index"
                   >
                     <div
@@ -502,7 +576,7 @@
           <Blogs
             :code="classroom.code"
             :student="student"
-            :admin="admin"
+            ="admin"
             :blogs="student.blogs"
           ></Blogs>
         </b-tab-item>
@@ -704,9 +778,7 @@
                 :label="trans.get('students.created_at')"
                 sortable
                 centered
-                >{{
-                  getDate(props.row.pivot.created_at)
-                }}</b-table-column
+                >{{ getDate(props.row.pivot.created_at) }}</b-table-column
               >
 
               <b-table-column
@@ -883,9 +955,7 @@
                 :label="trans.get('students.created_at')"
                 sortable
                 centered
-                >{{
-                  getDate(props.row.created_at)
-                }}</b-table-column
+                >{{ getDate(props.row.created_at) }}</b-table-column
               >
 
               <b-table-column
@@ -1254,10 +1324,12 @@ export default {
       this.updateEmpty();
 
       this.itemsJson = JSON.parse(this.shop.items);
-      this.eq1Json = JSON.parse(this.shop.eq1);
-      this.eq2Json = JSON.parse(this.shop.eq2);
-      this.eq3Json = JSON.parse(this.shop.eq3);
     }
+    if(this.admin)
+      this.eq0Json = JSON.parse(this.shop.eq0);
+    this.eq1Json = JSON.parse(this.shop.eq1);
+    this.eq2Json = JSON.parse(this.shop.eq2);
+    this.eq3Json = JSON.parse(this.shop.eq3);
     if (this.$cookies.get("tab")) {
       this.activeTab = parseInt(this.$cookies.get("tab"));
     } else {
@@ -1277,6 +1349,7 @@ export default {
       update: 0,
       inventoryRemaining: 0,
       itemsJson: null,
+      eq0Json: null,
       eq1Json: null,
       eq2Json: null,
       eq3Json: null,
@@ -1301,9 +1374,15 @@ export default {
     };
   },
   methods: {
+     getProperties() {
+      if(this.admin)
+        return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];
+      return [this.eq1Json, this.eq2Json, this.eq3Json]
+    },
     getImpostor() {
-      if (this.settings.impostor) return "🤫 " + this.trans.get('utils.impostor');
-      else return  this.trans.get('utils.no_impostor');
+      if (this.settings.impostor)
+        return "🤫 " + this.trans.get("utils.impostor");
+      else return this.trans.get("utils.no_impostor");
     },
     setCookie() {
       this.$cookies.set("tab", this.activeTab, 60 * 5);
@@ -1756,6 +1835,60 @@ export default {
         },
       });
     },
+    assignEquipment(oldItem, newItem) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.assign"),
+        message:
+          this.trans.get("shop.assign_eq_text"),
+        confirmText: this.trans.get("general.assign"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post(
+              "/classroom/" + this.classroom.code + "/student/assignequipment",
+              {
+                student: this.student.id,
+                new: newItem,
+              }
+            )
+            .then((response) => {
+              this.$toast(response.data.message, { type: response.data.type });
+
+              if (response.data.type == "success") {
+                this.student.equipment = response.data.equipment;
+                oldItem.src = newItem.src;
+                let reference = "item" + oldItem.id;
+                this.student.boost = response.data.boost;
+                let newClass = "";
+                  this.$refs[reference][0].classList.remove("inv-item-armor-bronce");
+                  this.$refs[reference][0].classList.remove("inv-item-armor-silver");
+                  this.$refs[reference][0].classList.remove("inv-item-armor-gold");
+                switch (newItem.offset) {
+                  case 1:
+                    newClass = "inv-item-armor-bronce";
+                    break;
+                  case 2:
+                    newClass = "inv-item-armor-silver";
+                    break;
+                  case 3:
+                    newClass = "inv-item-armor-gold";
+                    break;
+                  default:
+                    newClass = "";
+                    break;
+                }
+                if(newClass)
+                  this.$refs[reference][0].classList.add(newClass);
+                this.$forceUpdate();
+                this.$refs.showStd.$forceUpdate();
+              }
+            });
+        },
+      });
+    },
     buyEquipment(oldItem, newItem) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("shop.buy_item"),
@@ -1849,8 +1982,10 @@ export default {
       if (this.behaviours) {
         return this.behaviours.filter((entry) => {
           return (
-            (moment(entry.pivot.created_at).isAfter(moment(this.dateStart)) || !this.dateStart) &&
-            (moment(entry.pivot.created_at).isBefore(this.dateEnd) || !this.dateEnd)
+            (moment(entry.pivot.created_at).isAfter(moment(this.dateStart)) ||
+              !this.dateStart) &&
+            (moment(entry.pivot.created_at).isBefore(this.dateEnd) ||
+              !this.dateEnd)
           );
         });
       }
@@ -1868,7 +2003,8 @@ export default {
     filteredLogEntries() {
       return this.student.log_entries.filter((entry) => {
         return (
-          (moment(entry.created_at).isAfter(moment(this.dateStart)) || !this.dateStart) &&
+          (moment(entry.created_at).isAfter(moment(this.dateStart)) ||
+            !this.dateStart) &&
           (moment(entry.created_at).isBefore(this.dateEnd) || !this.dateEnd)
         );
       });
