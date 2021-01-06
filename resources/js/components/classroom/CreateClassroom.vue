@@ -31,15 +31,27 @@
             <b-tab-item :label="trans.get('classroom.theme')" icon="palette" icon-pack="far">
             <h1 class="is-size-2 mt-4">{{ trans.get('classroom.theme') }}</h1>
             <h6 class="my-3">{{ trans.get('classroom.theme_text') }}</h6>
-            <div class="themes">
-                <label v-for="(theme, index) in themesJson" v-bind:key="theme.id">
-                      <input type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios" :checked="index === 0" :value="theme.id">
+            <div class="">
+            <b-tabs class="w-100" type="is-toggle-rounded">
+            <b-tab-item label="Base themes">
+              <div class="themes p-2 mt-2">
+              <label v-for="(theme) in themesJson" v-bind:key="theme.id">
+                      <input @click="classForm.bg_image=null" type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios" :class="{ 'selected' : theme.id == classForm.bg_theme }" :value="theme.id">
                         <div class="theme bg_color_theme" :style="'background-color:' + theme.color">
-                          <img :src="'/img/bg/thumb_' + theme.name" v-if="theme.type == 1">                      
-                          <img src="/img/bg/empty.png" v-else> 
+                          <img :src="'/img/bg/base/thumb_' + theme.name" v-if="theme.type == 1">                      
+                          <img src="/img/bg/base/empty.png" v-else> 
                         </div>
                 </label>
                 <div class="my-3"><a href="https://www.freepik.es/fotos-vectores-gratis/fondo">Vector de fondo creado por freepik - www.freepik.es</a></div>                  
+                </div>
+            </b-tab-item>
+            <input type="hidden" v-model="classForm.bg_image" name="background">
+            <b-tab-item v-for="(themePack, index) in imgThemes" :key="index" :label="themePack.name">
+              <div class="themes p-2 mt-2">
+                <img class="m-2" :src="'/img/bg/' + themePack.name + '/' + img" v-for="(img, index) in themePack.images" :key="index" :class=" { 'selected2' : classForm.bg_image.includes(themePack.name + '/' + img ) }" @click="selectImg">
+                </div>
+            </b-tab-item>
+            </b-tabs>
             </div>
             </b-tab-item>
 
@@ -117,15 +129,24 @@
 export default {
   props: ["goals", "themes", "classroom"],
   mounted: function () {
-    this.goalsJson = JSON.parse(this.goals);
-    this.themesJson = JSON.parse(this.themes);
-    if (this.classroom) {
-      this.classForm.name = this.classroom.name;
-      this.classForm.adventure_name = this.classroom.adventure_name;
-      this.classForm.goal_type = this.classroom.goal_type;
-      this.classForm.bg_theme = this.classroom.theme.id;
-      this.classForm.character_theme = this.classroom.character_theme;
-    }
+    axios.get("/utils/get/themes").then((response) => {
+      this.imgThemes = response.data;
+      this.goalsJson = JSON.parse(this.goals);
+      this.themesJson = JSON.parse(this.themes);
+      if (this.classroom) {
+        this.classForm.name = this.classroom.name;
+        this.classForm.adventure_name = this.classroom.adventure_name;
+        this.classForm.goal_type = this.classroom.goal_type;
+        if (!this.classroom.background) {
+          this.classForm.bg_theme = this.classroom.theme.id;
+          this.classForm.bg_image = null;
+        } else {
+          this.classForm.bg_image = this.classroom.background;
+          this.classForm.bg_theme = null;
+        }
+        this.classForm.character_theme = this.classroom.character_theme;
+      }
+    });
   },
   data: function () {
     return {
@@ -133,22 +154,54 @@ export default {
       activeTab: 0,
       goalsJson: [],
       themesJson: [],
+      imgThemes: null,
       goalSelected: 1,
       classForm: {
         name: "",
         adventure_name: "FantasyClass",
         goal_type: 1,
         bg_theme: 1,
+        bg_image: "",
         character_theme: 7,
       },
     };
   },
   methods: {
+    selectImg(e) {
+      document.querySelectorAll(".themes img ").forEach(function (imgSelector) {
+        imgSelector.classList.remove("selected");
+      });
+
+      this.classForm.bg_theme = null;
+      document
+        .querySelectorAll("input[name=bgtheme]")
+        .forEach(function (inputImg) {
+          inputImg.checked = false;
+        });
+
+      let img = e.target;
+
+      img.classList.add("selected");
+      this.classForm.bg_image = img.src;
+    },
+    selectTheme(e) {
+      let img = e.target;
+      // console.log(e.target);
+      document.querySelectorAll(".themes img ").forEach(function (imgSelector) {
+        imgSelector.classList.remove("selected");
+      });
+      document
+        .querySelectorAll("input[name=bgtheme]")
+        .forEach(function (inputImg) {
+          inputImg.checked = false;
+        });
+      img.classList.add("selected");
+    },
     getFilledText() {
-      if(this.isFilled) {
-        return this.trans.get('classroom.class_filled_ok');
+      if (this.isFilled) {
+        return this.trans.get("classroom.class_filled_ok");
       }
-      return this.trans.get('classroom.class_filled_ko');
+      return this.trans.get("classroom.class_filled_ko");
     },
     notify: function (id) {
       this.$toast(this.trans.get("classroom.create_info"));

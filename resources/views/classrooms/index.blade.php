@@ -43,7 +43,7 @@
   @endsection
 
   <div class="column py-1 is-6-tablet is-12-mobile is-3-desktop is-3-fullhdbox mb-0 is-flex has-all-centered">
-    <div class="box w-100 h-100 d-flex is-relative rounded classroom-round text-center" @if($theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('/img/bg/thumb_{{ $theme->name }}');background-size: cover" @endif>
+    <div class="box w-100 h-100 d-flex is-relative rounded classroom-round text-center" @if(isset($theme) && $theme->type == 0) style="background-color: {{ $theme->color }}" @else style="background: url('{{ $classroom->background }}');background-size: cover" @endif>
       <h3 class="is-size-4 has-text-light">
         @if($classroom->pivot->role == 2)
         {!! $icon !!}

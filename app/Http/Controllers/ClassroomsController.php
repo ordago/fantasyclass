@@ -61,7 +61,8 @@ class ClassroomsController extends Controller
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'adventureName' => ['required', 'string', 'min:3', 'max:255'],
             'goalType' => ['required', 'integer'],
-            'bgtheme' => ['required', 'integer'],
+            'bgtheme' => ['nullable'],
+            'background' => ['nullable'],
             'charTheme' => ['required', 'integer'],
         ]);
 
@@ -69,9 +70,17 @@ class ClassroomsController extends Controller
             'name' => $data['name'],
             'adventure_name' => $data['adventureName'],
             'character_theme' => $data['charTheme'],
-            'theme_id' => $data['bgtheme'],
+            'theme_id' => isset($data['bgtheme']) ? $data['bgtheme'] : null,
             'goal_type' => $data['goalType'],
         ]);
+        dump($data['background']);
+        
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        if(!isset($data['background']) || !$data['background']) {
+            settings()->forget('background');
+        } else {
+            settings()->set('background', $data['background']);
+        }
 
         return redirect('/classroom/' . $code);
     }
@@ -253,7 +262,8 @@ class ClassroomsController extends Controller
             'name' => ['required', 'string', 'min:2', 'max:255'],
             'adventureName' => ['required', 'string', 'min:3', 'max:255'],
             'goalType' => ['required', 'integer'],
-            'bgtheme' => ['required', 'integer'],
+            'bgtheme' => ['nullable'],
+            'background' => ['nullable'],
             'charTheme' => ['required', 'integer'],
             'filled' => ['nullable'],
         ]);
@@ -270,9 +280,13 @@ class ClassroomsController extends Controller
             'code' => $this->reference(8),
             'enrollment_code' => $this->reference(5),
             'character_theme' => $data['charTheme'],
-            'theme_id' => $data['bgtheme'],
+            'theme_id' => isset($data['bgtheme']) ? $data['bgtheme'] : null,
             'goal_type' => $data['goalType'],
         ]);
+
+        settings()->setExtraColumns(['classroom_id' => $classroom->id]);
+        dump($data['background']);
+        settings()->set('background', isset($data['background']) ? $data['background'] : null);
 
         if (isset($data['filled']) && $data['filled']) {
             // Assign basic items

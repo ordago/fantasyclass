@@ -265,12 +265,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
         Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
-
+        
     });
-
+    
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
     Route::get('/utils/online', 'UtilsController@online');
+    Route::get('/utils/get/themes', 'UtilsController@getThemes');
 
     // User
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');

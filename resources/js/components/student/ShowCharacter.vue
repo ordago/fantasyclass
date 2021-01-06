@@ -22,13 +22,7 @@
     </span>
     <div
       class="card-image card-shadow-s rounded-top char-bg"
-      :style="
-        'background-color:' +
-        classroom.theme.color +
-        ';background-image: url(/img/bg/thumb_' +
-        classroom.theme.name +
-        ');'
-      "
+      :style="getStyle()"
     >
       <span
         v-if="student.boost"
@@ -99,6 +93,12 @@ export default {
     return {};
   },
   methods: {
+    getStyle() {
+      console.log(this.classroom.background)
+      return 'background-position-x: left; background-position-y: bottom;background-image: url(' +
+        this.classroom.background +
+        ');'
+    },
     petMessage(pet) {
       let name = pet.name ? "<strong>" + pet.name + ":</strong> " : "";
 

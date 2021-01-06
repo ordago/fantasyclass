@@ -28,13 +28,24 @@ class Classroom extends Model implements HasMedia
         'enrollment_code', 'user_id', 'character_theme'
     ];
 
-    protected $appends = ['state'];
+    protected $appends = ['state', 'background'];
 
     public function getStateAttribute() {
 
         settings()->setExtraColumns(['classroom_id' => $this->id]);
         return settings()->get('state', 0);
     }
+
+        public function getBackgroundAttribute() {
+
+        settings()->setExtraColumns(['classroom_id' => $this->id]);
+        $default = "";
+        if($this->theme) {
+            $default = "/img/bg/base/thumb_" . $this->theme->name;
+        }
+        return settings()->get('background', $default);
+    }
+
 
     public function users()
     {

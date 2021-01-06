@@ -165,6 +165,16 @@ class UtilsController extends Controller
 
         return $result;
     }
+    public function getThemes()
+    {
+        $array = array_diff(scandir(public_path() . '/img/bg/'), array('..', '.', 'old', 'base'));
+        
+        foreach($array as $theme) {
+            $images[$theme]['images'] = preg_grep('~\.(png)$~', scandir(public_path() . '/img/bg/'.$theme));
+            $images[$theme]['name'] = $theme;
+        }
+        return json_encode($images);
+    }
 
     public function online()
     {
