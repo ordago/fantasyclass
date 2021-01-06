@@ -576,7 +576,7 @@
           <Blogs
             :code="classroom.code"
             :student="student"
-            ="admin"
+            :admin="admin"
             :blogs="student.blogs"
           ></Blogs>
         </b-tab-item>

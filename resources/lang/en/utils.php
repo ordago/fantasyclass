@@ -31,7 +31,7 @@ return [
     'report' => 'Report',
 
     'impostor' => 'You\'re the impostor, don\'t be cached.',
-    'no_impostor' => 'No ets the impostor, you need to find who is.',
+    'no_impostor' => 'You are not the impostor, you need to find who is.',
     'impostor_select' => 'Select the student who will be the impostor. Create awesome activities where all the classroom will guess who is the impostor.',
     'impostor_generate' => 'Random name',
     'impostor_apply' => 'Apply and notify',
