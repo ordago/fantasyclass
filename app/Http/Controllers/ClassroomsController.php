@@ -73,10 +73,9 @@ class ClassroomsController extends Controller
             'theme_id' => isset($data['bgtheme']) ? $data['bgtheme'] : null,
             'goal_type' => $data['goalType'],
         ]);
-        dump($data['background']);
         
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        if(!isset($data['background']) || !$data['background']) {
+        if(isset($data['bgtheme'])) {
             settings()->forget('background');
         } else {
             settings()->set('background', $data['background']);
