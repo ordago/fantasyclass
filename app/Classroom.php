@@ -128,6 +128,10 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(Monster::class);
     }
 
+    public function skills() {
+        return $this->hasMany(Skill::class);
+    }
+
     public function rules() {
         return $this->hasOne(Rules::class);
     }

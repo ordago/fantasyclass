@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Skill extends Model
 {
-    //
+
+    protected $fillable = [
+        'name',
+        'icon',
+        'type',
+        'description',
+        'classroom_id',
+        'properties',
+    ];
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class)->withPivot('count');
+    }
 }

@@ -256,6 +256,16 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/monsters/{id}', 'MonsterController@destroy');
         Route::post('/monsters/fight', 'MonsterController@battle');
         
+        // Skills
+        Route::get('/{code}/skills', 'SkillsController@index');
+        Route::get('/{code}/skills/get', 'SkillsController@get');
+        Route::post('/{code}/skill', 'SkillsController@store');
+
+        // Route::post('/{code}/monsters', 'MonsterController@store');
+        // Route::patch('/{code}/monsters', 'MonsterController@update');
+        // Route::delete('/monsters/{id}', 'MonsterController@destroy');
+        // Route::post('/monsters/fight', 'MonsterController@battle');
+        
         // Utils
         Route::post('/{code}/utils/impostor', 'UtilsController@impostor');
         Route::delete('/{code}/utils/impostor/clear', 'UtilsController@impostorClear');

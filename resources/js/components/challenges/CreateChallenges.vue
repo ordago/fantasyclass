@@ -522,7 +522,6 @@ export default {
   },
   methods: {
     onSelectMultipleImageRequirements(items) {
-      console.log(this.challenge.requirements);
       this.challenge.requirements = items;
     },
     onSelectMultipleImage(items) {

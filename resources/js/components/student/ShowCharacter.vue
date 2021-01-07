@@ -94,7 +94,6 @@ export default {
   },
   methods: {
     getStyle() {
-      console.log(this.classroom.background)
       return 'background-position-x: left; background-position-y: bottom;background-image: url(' +
         this.classroom.background +
         ');'

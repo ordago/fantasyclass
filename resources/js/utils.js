@@ -24,7 +24,6 @@ export default {
             if(moment.utc(date).local().isBefore())
             return moment.utc(date).local().fromNow();
         } else {
-            console.log('not local')
             return moment(date).fromNow();
         }
         

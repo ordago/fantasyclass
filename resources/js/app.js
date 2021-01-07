@@ -115,6 +115,8 @@ Vue.component('show-events', () => import('./components/event/ShowEvents.vue'));
 Vue.component('show-pets', () => import('./components/pet/ShowPets.vue'));
 Vue.component('show-monsters', () => import('./components/monster/ShowMonsters.vue'));
 
+Vue.component('show-skills', () => import('./components/skill/ShowSkills.vue'));
+
 Vue.component('edit-rules', () => import('./components/rules/EditRules.vue'));
 
 Vue.component('profile', () => import('./components/profile/Profile.vue'));

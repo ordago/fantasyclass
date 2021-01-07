@@ -46,6 +46,9 @@
             <a href="/classroom/{{ $class->code }}/monsters" class="navbar-item">
                 <i class="fad fa-dragon mr-2"></i> {{ __('menu.monsters') }}
             </a>
+            <a href="/classroom/{{ $class->code }}/skills" class="navbar-item">
+                <i class="fad fa-sparkles mr-2"></i> {{ __('menu.skills') }}
+            </a>
         </div>
     </div>
     <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
