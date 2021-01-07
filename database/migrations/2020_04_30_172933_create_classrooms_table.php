@@ -21,10 +21,10 @@ class CreateClassroomsTable extends Migration
             $table->string('enrollment_code', 6);
             $table->smallInteger('character_theme');
             $table->unsignedBigInteger('goal_type');
-            $table->unsignedBigInteger('theme_id');
+            $table->unsignedBigInteger('theme_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('theme_id')->references('id')->on('themes');
+            // $table->foreign('theme_id')->references('id')->on('themes');
             $table->foreign('goal_type')->references('id')->on('goal_themes');
         });
     }
