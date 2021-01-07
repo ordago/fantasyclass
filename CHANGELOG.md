@@ -1,4 +1,10 @@
 # Changelog
+## v1.34 Beta (XX/01/2021)
+### Added
+- Skills added.
+
+### Changed
+
 ## v1.33 Beta (07/01/2021)
 ### Added
 - Teachers can assign equipment.
