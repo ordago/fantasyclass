@@ -39,7 +39,6 @@
                       <input @click="classForm.bg_image=null" type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios"  :value="theme.id">
                         <div class="theme bg_color_theme" :style="'background-color:' + theme.color">
                           <img :src="'/img/bg/base/thumb_' + theme.name" :class="{ 'selected2' : theme.id == classForm.bg_theme || classForm.bg_image && classForm.bg_image.includes('/img/bg/base/thumb_' + theme.name ) }">                      
-  
                         </div>
                 </label>
                 <div class="my-3"><a href="https://www.freepik.es/fotos-vectores-gratis/fondo">Vector de fondo creado por freepik - www.freepik.es</a></div>                  

@@ -1,5 +1,5 @@
 # Changelog
-## v1.33 Beta (XX/01/2021)
+## v1.33 Beta (07/01/2021)
 ### Added
 - Teachers can assign equipment.
 - Added backgrounds to classroom.
