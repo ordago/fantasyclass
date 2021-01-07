@@ -577,7 +577,7 @@
                   ref="student1"
                   :student="student1"
                   :character-theme="classroom.character_theme"
-                  :theme="classroom.theme"
+                  :theme="classroom.background"
                 ></show-student>
               </div>
               <div
@@ -743,7 +743,7 @@
                   ref="student2"
                   :student="student2"
                   :character-theme="classroom.character_theme"
-                  :theme="classroom.theme"
+                  :theme="classroom.background"
                 ></show-student>
               </div>
 

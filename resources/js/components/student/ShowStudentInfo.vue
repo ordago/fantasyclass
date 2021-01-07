@@ -344,10 +344,7 @@
                   class="w-100 shop-sub-item"
                   style="position: absolute; top: 100px; left: 0"
                 >
-                  <div
-                    v-for="(i, index) in getProperties()"
-                    :key="index"
-                  >
+                  <div v-for="(i, index) in getProperties()" :key="index">
                     <div
                       v-for="itemStore in filterEquipment(i, gear.type)"
                       v-bind:key="itemStore.id"
@@ -408,30 +405,32 @@
               </b-field>
             </div>
           </div>
-          <div class="inventory" id="inventory" v-if="!admin">
-            <div>
-              <div
-                v-for="item in student.items"
-                v-tippy
-                :content="message(item)"
-                v-show="item.pivot.count > 0"
-                class="inventory-item"
-                v-bind:key="item.id"
-              >
-                <img
-                  :src="item.icon"
-                  @click="item.hp > 0 ? useItem(item, message(item)) : null"
-                  class="item rounded"
-                />
-                <div class="number-items">{{ item.pivot.count }}</div>
+          <div class="" id="inventory" v-if="!admin">
+            <div class="w-100">
+              <div>
+                <div
+                  v-for="item in student.items"
+                  v-tippy
+                  :content="message(item)"
+                  v-show="item.pivot.count > 0"
+                  class="inventory-item"
+                  v-bind:key="item.id"
+                >
+                  <img
+                    :src="item.icon"
+                    @click="item.hp > 0 ? useItem(item, message(item)) : null"
+                    class="item rounded"
+                  />
+                  <div class="number-items">{{ item.pivot.count }}</div>
+                </div>
               </div>
-            </div>
-            <div>
-              <div
-                v-for="index in inventoryRemaining"
-                class="inventory-item"
-                v-bind:key="index"
-              ></div>
+              <div>
+                <div
+                  v-for="index in inventoryRemaining"
+                  class="inventory-item"
+                  v-bind:key="index"
+                ></div>
+              </div>
             </div>
             <div v-if="classroom.character_theme" :key="forceReload">
               <div
@@ -466,10 +465,7 @@
                   class="w-100 shop-sub-item"
                   style="position: absolute; top: 100px; left: 0"
                 >
-                  <div
-                    v-for="(i, index) in getProperties()"
-                    :key="index"
-                  >
+                  <div v-for="(i, index) in getProperties()" :key="index">
                     <div
                       v-for="itemStore in filterEquipment(i, gear.type)"
                       v-bind:key="itemStore.id"
@@ -1325,8 +1321,7 @@ export default {
 
       this.itemsJson = JSON.parse(this.shop.items);
     }
-    if(this.admin)
-      this.eq0Json = JSON.parse(this.shop.eq0);
+    if (this.admin) this.eq0Json = JSON.parse(this.shop.eq0);
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
@@ -1374,10 +1369,10 @@ export default {
     };
   },
   methods: {
-     getProperties() {
-      if(this.admin)
+    getProperties() {
+      if (this.admin)
         return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];
-      return [this.eq1Json, this.eq2Json, this.eq3Json]
+      return [this.eq1Json, this.eq2Json, this.eq3Json];
     },
     getImpostor() {
       if (this.settings.impostor)
@@ -1838,8 +1833,7 @@ export default {
     assignEquipment(oldItem, newItem) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.assign"),
-        message:
-          this.trans.get("shop.assign_eq_text"),
+        message: this.trans.get("shop.assign_eq_text"),
         confirmText: this.trans.get("general.assign"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
@@ -1863,9 +1857,15 @@ export default {
                 let reference = "item" + oldItem.id;
                 this.student.boost = response.data.boost;
                 let newClass = "";
-                  this.$refs[reference][0].classList.remove("inv-item-armor-bronce");
-                  this.$refs[reference][0].classList.remove("inv-item-armor-silver");
-                  this.$refs[reference][0].classList.remove("inv-item-armor-gold");
+                this.$refs[reference][0].classList.remove(
+                  "inv-item-armor-bronce"
+                );
+                this.$refs[reference][0].classList.remove(
+                  "inv-item-armor-silver"
+                );
+                this.$refs[reference][0].classList.remove(
+                  "inv-item-armor-gold"
+                );
                 switch (newItem.offset) {
                   case 1:
                     newClass = "inv-item-armor-bronce";
@@ -1880,8 +1880,7 @@ export default {
                     newClass = "";
                     break;
                 }
-                if(newClass)
-                  this.$refs[reference][0].classList.add(newClass);
+                if (newClass) this.$refs[reference][0].classList.add(newClass);
                 this.$forceUpdate();
                 this.$refs.showStd.$forceUpdate();
               }

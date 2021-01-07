@@ -228,13 +228,12 @@
       background-color: #cebf8f;
   }
 
-
   .inventory-item {
       box-sizing: border-box;
       padding: 10px;
       width: 16.666666666%;
       height: 100px;
-      margin: 0;
+      margin: 0 1px;
       background-image: url('/img/inv_item.png');
       background-size: cover;
       background-size: 100% 100%;
@@ -247,6 +246,7 @@
       display: -ms-flex;
       display: flex;
       cursor: url('/img/cursor.png'), auto;
+      max-width: 120px;
   }
 
   .shop-sub-item {

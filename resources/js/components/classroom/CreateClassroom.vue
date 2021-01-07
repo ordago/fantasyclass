@@ -4,11 +4,11 @@
             <b-tab-item :label="trans.get('classroom.name_and_goals')" icon="scroll" icon-pack="far">         
                 <h1 class="is-size-2 mt-4"><i class="fal fa-cog faa-spin animated faa-slow"></i> {{ trans.get('classroom.prepare') }}</h1>
                 <div class="my-4">
-                    <label for="wizardName" class="my-2">{{ trans.get('classroom.wizard_name') }} <small><i>{{ trans.get('classroom.wizard_name_example') }}</i></small></label>
+                    <label for="wizardName" class="my-2"><span class="has-text-danger"><i class="far fa-asterisk mr-1"></i></span>{{ trans.get('classroom.wizard_name') }} <small><i>{{ trans.get('classroom.wizard_name_example') }}</i></small></label>
                     <input type="text" name="name" v-model="classForm.name" required minlength="2" class="input my-2">
                 </div>
                 <div class="my-4">
-                    <label for="adventureName" class="my-4">{{ trans.get('classroom.adventure_name') }} <small><i>{{ trans.get('classroom.adventure_name_example') }}</i></small></label>
+                    <label for="adventureName" class="my-4"><span class="has-text-danger"><i class="far fa-asterisk mr-1"></i></span>{{ trans.get('classroom.adventure_name') }} <small><i>{{ trans.get('classroom.adventure_name_example') }}</i></small></label>
                     <input type="text" v-model="classForm.adventure_name" required minlength="3" value="FantasyClass" class="input my-2" name="adventureName" id='adventureName'></input>
                 </div>
                 <div class="my-4">
@@ -36,10 +36,10 @@
             <b-tab-item label="Base themes">
               <div class="themes p-2 mt-2">
               <label v-for="(theme) in themesJson" v-bind:key="theme.id">
-                      <input @click="classForm.bg_image=null" type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios" :class="{ 'selected' : theme.id == classForm.bg_theme }" :value="theme.id">
+                      <input @click="classForm.bg_image=null" type="radio" v-model="classForm.bg_theme" name="bgtheme" class="hide-radios"  :value="theme.id">
                         <div class="theme bg_color_theme" :style="'background-color:' + theme.color">
-                          <img :src="'/img/bg/base/thumb_' + theme.name" v-if="theme.type == 1">                      
-                          <img src="/img/bg/base/empty.png" v-else> 
+                          <img :src="'/img/bg/base/thumb_' + theme.name" :class="{ 'selected2' : theme.id == classForm.bg_theme || classForm.bg_image && classForm.bg_image.includes('/img/bg/base/thumb_' + theme.name ) }">                      
+  
                         </div>
                 </label>
                 <div class="my-3"><a href="https://www.freepik.es/fotos-vectores-gratis/fondo">Vector de fondo creado por freepik - www.freepik.es</a></div>                  
@@ -48,7 +48,7 @@
             <input type="hidden" v-model="classForm.bg_image" name="background">
             <b-tab-item v-for="(themePack, index) in imgThemes" :key="index" :label="themePack.name">
               <div class="themes p-2 mt-2">
-                <img class="m-2" :src="'/img/bg/' + themePack.name + '/' + img" v-for="(img, index) in themePack.images" :key="index" :class=" { 'selected2' : classForm.bg_image.includes(themePack.name + '/' + img ) }" @click="selectImg">
+                <img class="m-2" :src="'/img/bg/' + themePack.name + '/' + img" v-for="(img, index) in themePack.images" :key="index" :class=" { 'selected2' : classForm.bg_image && classForm.bg_image.includes(themePack.name + '/' + img ) }" @click="selectImg">
                 </div>
             </b-tab-item>
             </b-tabs>
@@ -117,9 +117,9 @@
                       <i class="fas fa-exclamation-triangle"></i>
                       </span>
                   </button>
-                  <button class="button is-link"><i class="fas fa-edit mr-2"></i> {{ trans.get('classroom.edit') }}</button>
+                  <button :disabled="(classForm.name == '' || classForm.name.length < 3) || (classForm.adventure_name == '' || classForm.adventure_name.length < 3)" class="button is-link"><i class="fas fa-edit mr-2"></i> {{ trans.get('classroom.edit') }}</button>
               </div>
-              <button class="button is-success mb-3 left-auto" v-else>{{ trans.get('classroom.end_wizard') }}</button>
+              <button :disabled="(classForm.name == '' || classForm.name.length < 3)|| (classForm.adventure_name == '' || classForm.adventure_name.length < 3)" class="button is-success mb-3 left-auto" v-else>{{ trans.get('classroom.end_wizard') }}</button>
             </div>
         </div>
     </section>

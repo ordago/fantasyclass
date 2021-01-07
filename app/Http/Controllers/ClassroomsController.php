@@ -284,8 +284,9 @@ class ClassroomsController extends Controller
         ]);
 
         settings()->setExtraColumns(['classroom_id' => $classroom->id]);
-        dump($data['background']);
-        settings()->set('background', isset($data['background']) ? $data['background'] : null);
+        if(!isset($data['bgtheme'])) {
+            settings()->set('background', $data['background']);
+        }
 
         if (isset($data['filled']) && $data['filled']) {
             // Assign basic items
@@ -416,11 +417,6 @@ class ClassroomsController extends Controller
         $groups = $class->grouping->first()->groups;
         $students->each->append('numcards');
         $students->each->append('boost');
-
-        foreach ($students as $student) {
-            if($student->characterTheme)
-            dump($student->characterTheme->attributes);
-        }
 
         $pending = collect();
         foreach ($class->students as $student) {
