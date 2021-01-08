@@ -45,6 +45,8 @@ return [
     'monsters' => 'Monstres',
     'mobile' => 'Versió mòbil',
     'battles' => 'Batalles',
+    'skills' => 'Habilitats',
+    'config' => 'Configuració',
 
     'view_list' => 'Vista de llista',
     'view_group' => 'Vista de grups',

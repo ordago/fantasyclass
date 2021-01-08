@@ -4,9 +4,71 @@
       <i class="fas fa-sparkles mr-2"></i>
       {{ trans.get("skills.new") }}
     </button>
-    <button class="button is-primary mb-5">
+    <button @click="importDefault" class="button is-primary mb-5">
       {{ trans.get("skills.import_default") }}
     </button>
+    <button class="button is-dark mb-5">
+      <i class="fas fa-cog mr-2"></i> {{ trans.get("menu.config") }}
+    </button>
+
+    <b-table
+      v-if="mutableSkills.length"
+      :data="mutableSkills"
+      :default-sort="['name', 'desc']"
+      icon-pack="fas"
+      sort-icon="arrow-up"
+    >
+      <template slot-scope="props">
+        <b-table-column
+          field="icon"
+          style="width: 80px"
+          :label="trans.get('skills.image')"
+          centered
+        >
+          <img class="rounded" :src="props.row.icon" />
+        </b-table-column>
+
+        <b-table-column
+          field="title"
+          :label="trans.get('skills.name')"
+          sortable
+          >{{ trans.get(props.row.name) }}</b-table-column
+        >
+
+        <b-table-column
+          field="description"
+          :label="trans.get('skills.description')"
+          sortable
+          >{{ trans.get(props.row.description) }}</b-table-column
+        >
+
+        <b-table-column
+          field="hp"
+          :label="trans.get('skills.type')"
+          sortable
+          centered
+        >
+          {{
+            props.row.type == 0
+              ? trans.get("skills.active")
+              : trans.get("skills.passive")
+          }}
+        </b-table-column>
+
+        <b-table-column
+          field="name"
+          :label="trans.get('menu.settings')"
+          centered
+        >
+          <a class="button is-info is-small">
+            <i class="fas fa-edit"></i>
+          </a>
+          <b-button type="is-danger is-small" @click="deleteItem(props.row.id)">
+            <i class="fas fa-trash-alt"></i>
+          </b-button>
+        </b-table-column>
+      </template>
+    </b-table>
 
     <b-modal
       :active.sync="isModalActive"
@@ -63,7 +125,7 @@
                 :native-value="0"
                 type="is-link"
               >
-                <span>{{ trans.get('skills.active') }}</span>
+                <span>{{ trans.get("skills.active") }}</span>
               </b-radio-button>
 
               <b-radio-button
@@ -71,12 +133,11 @@
                 :native-value="1"
                 type="is-info"
               >
-                <span>{{ trans.get('skills.passive') }}</span>
+                <span>{{ trans.get("skills.passive") }}</span>
               </b-radio-button>
             </b-field>
             <article class="message is-warning">
-              <div class="message-body" v-html="getType()">
-              </div>
+              <div class="message-body" v-html="getType()"></div>
             </article>
           </section>
           <footer class="modal-card-foot">
@@ -85,7 +146,7 @@
               type="button"
               @click="
                 isModalActive = false;
-                resetMonster();
+                resetSkill();
               "
             >
               {{ trans.get("general.close") }}
@@ -101,7 +162,8 @@
       </form>
     </b-modal>
 
-    <SelectSkill :code="code" v-model="skill.icon" v-if="isImageModalActive"> </SelectSkill>
+    <SelectSkill :code="code" v-model="skill.icon" v-if="isImageModalActive">
+    </SelectSkill>
   </div>
 </template>
 
@@ -113,7 +175,9 @@ import SelectSkill from "../utils/SelectSkill.vue";
 export default {
   props: ["code", "skills"],
 
-  created() {},
+  created() {
+    this.mutableSkills = this.skills;
+  },
   data: function () {
     return {
       isLoading: false,
@@ -139,15 +203,27 @@ export default {
         ? this.trans.get("skills.active_info")
         : this.trans.get("skills.passive_info");
     },
-    // resetMonster: function () {
-    //   this.edit = false;
-    //   this.monster = {
-    //     image: null,
-    //     name: "",
-    //     reward_xp: 0,
-    //     reward_gold: 0,
-    //   };
-    // },
+    resetSkill: function () {
+      this.edit = false;
+      this.skill = {
+        icon: null,
+        name: "",
+        description: null,
+        properties: null,
+        type: 0,
+      };
+    },
+    importDefault() {
+      axios
+        .get("/classroom/" + this.code + "/skills/import")
+        .then((response) => {
+          this.mutableSkills = response.data;
+          this.$forceUpdate();
+          this.$toast(this.trans.get("success_error.import_success"), {
+            type: "success",
+          });
+        });
+    },
     selectImage: function (e) {
       this.$refs.selectbutton.classList.remove("is-danger");
       this.isLoading = true;
@@ -166,7 +242,7 @@ export default {
     //     })
     //     .then((response) => {
     //       this.isModalActive = false;
-    //       this.resetMonster();
+    //       this.resetSkill();
     //     });
     // },
     addSkill: function () {
@@ -180,7 +256,10 @@ export default {
         })
         .then((response) => {
           this.isModalActive = false;
-          this.skills.push(response.data);
+          this.mutableSkills.push(response.data);
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
           this.$forceUpdate();
         });
     },
@@ -188,31 +267,35 @@ export default {
     //   if (name) return name + " 🍅🍖";
     //   else return "🍅🍖";
     // },
-    // deleteItem(id) {
-    //   this.$buefy.dialog.confirm({
-    //     title: this.trans.get("general.delete"),
-    //     message: this.trans.get("general.confirm_delete"),
-    //     confirmText: this.trans.get("general.delete"),
-    //     cancelText: this.trans.get("general.cancel"),
-    //     type: "is-danger",
-    //     hasIcon: true,
-    //     icon: "times-circle",
-    //     iconPack: "fa",
-    //     ariaRole: "alertdialog",
-    //     ariaModal: true,
-    //     onConfirm: () => {
-    //       var index = this.monsters.findIndex(function (monster, i) {
-    //         return monster.id === id;
-    //       });
-    //       axios.delete("/classroom/monsters/" + id).then((response) => {
-    //         if (response.data === 1) {
-    //           this.monsters.splice(index, 1);
-    //           this.$forceUpdate();
-    //         }
-    //       });
-    //     },
-    //   });
-    // },
+    deleteItem(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          var index = this.mutableSkills.findIndex(function (skill, i) {
+            return skill.id === id;
+          });
+          axios.delete("/classroom/skills/" + id).then((response) => {
+            if (response.data === 1) {
+              this.mutableSkills.splice(index, 1);
+              this.$toast(this.trans.get("success_error.delete_success"), {
+                type: "success",
+              });
+
+              this.$forceUpdate();
+            }
+          });
+        },
+      });
+    },
   },
 };
 </script>

@@ -23,7 +23,7 @@
             <div class="media-content">
               <p class="title is-4">
                 {{ student.name }}
-                <span v-if="settings.impostor != -1"
+                <span v-if="!admin && settings.impostor != -1"
                   ><i
                     v-tippy
                     :content="getImpostor()"
@@ -405,8 +405,8 @@
               </b-field>
             </div>
           </div>
-          <div class="" id="inventory" v-if="!admin">
-            <div class="w-100">
+          <div class="is-flex is-flex-direction-column" id="inventory" v-if="!admin">
+            <div class="">
               <div>
                 <div
                   v-for="item in student.items"

@@ -12,7 +12,9 @@ return [
 
     'add_success' => 'L\'element s\'ha afegit correctament',
     'update_success' => 'L\'element s\'ha actualitzat correctament',
+    'delete_success' => 'L\'element s\'ha eliminat correctament',
     'copy_success' => 'Enllaç copiat al portapapers',
+    'import_success' => 'Importació correcta',
     
     'error' => 'Alguna cosa ha anat malament :(',
 

@@ -16,6 +16,10 @@ class Skill extends Model
         'properties',
     ];
 
+    protected $casts = [
+        'properties' => 'array',
+    ];
+
     public function students()
     {
         return $this->belongsToMany(Student::class)->withPivot('count');

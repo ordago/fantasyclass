@@ -61,7 +61,97 @@ class SkillsController extends Controller
         - Carry 1 more card.
     */
 
-    public function useActive() {
+    
+    public function importDefault($code) {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        // Active skills
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'question',
+            'description' => 'question_desc',
+            'icon' => '/img/skills/t1/rpg-priest_active_12.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'type' => 'common',
+            ]),
+        ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'music',
+            'description' => 'music_desc',
+            'icon' => '/img/skills/t1/skills_skill_icon_7.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'type' => 'common',
+            ]),
+        ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'heal',
+            'description' => 'heal_self',
+            'icon' => ' /img/skills/t1/rpg-priest_active_11.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'hp_min' => 5,
+                'hp_max' => 20,
+                'type' => 'heal_self',
+            ]),
+        ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'heal_group',
+            'description' => 'heal_group_desc',
+            'icon' => ' /img/skills/t1/rpg-priest_active_2.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'hp_min' => 5,
+                'hp_max' => 20,
+                'type' => 'heal_group',
+            ]),
+        ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'heal_classroom',
+            'description' => 'heal_classroom_desc',
+            'icon' => ' /img/skills/t1/rpg-priest_active_3.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'hp_min' => 5,
+                'hp_max' => 20,
+                'type' => 'heal_classroom',
+            ]),
+        ]);
+
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'steal_money',
+            'description' => 'steal_money_desc',
+            'icon' => ' /img/skills/t1/rpg-rogue_active12.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'money_min' => 50,
+                'money_max' => 150,
+                'type' => 'steal_money',
+            ]),
+        ]);
+
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'steal_xp',
+            'description' => 'steal_xp_desc',
+            'icon' => '/img/skills/t1/rpg-rogue_active10.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'xp_min' => 50,
+                'xp_max' => 100,
+                'type' => 'steal_xp',
+            ]),
+        ]);
+
+        return $class->fresh()->skills;
+
     }
 
 
@@ -120,17 +210,17 @@ class SkillsController extends Controller
 
 
 
-    // public function destroy($id) {
+    public function destroy($id) {
 
-    //     $monster = Monster::where('id', '=', $id)->first();
-    //     $class = Classroom::where('id', '=', $monster->classroom_id)->first();
-    //     $this->authorize('update', $class);
-    //     try {
-    //         $monster->delete();
-    //     } catch (\Throwable $th) {
-    //         return ['error' => $th];
-    //     }
-    //     return 1;
+        $skill = Skill::where('id', '=', $id)->first();
+        $class = Classroom::where('id', '=', $skill->classroom_id)->first();
+        $this->authorize('update', $class);
+        try {
+            $skill->delete();
+        } catch (\Throwable $th) {
+            return ['error' => $th];
+        }
+        return 1;
 
-    // }
+    }
 }

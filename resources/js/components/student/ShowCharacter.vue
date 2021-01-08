@@ -42,7 +42,7 @@
       </span>
       <div
         v-if="
-          classroom.character_theme != null && classroom.character_theme.id != 0 
+          classroom.character_theme != null && classroom.character_theme != 0 
         "
         class="character-container character is-relative"
         :class="classroom.character_theme.classes"

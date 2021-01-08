@@ -42,7 +42,7 @@
 
       <div class="field has-addons" v-if="type == 0">
         <p class="control">
-          <IconSelector></IconSelector>
+          <IconSelectorPro></IconSelectorPro>
         </p>
         <p class="control">
           <input
@@ -190,7 +190,7 @@
 </template>
 
 <script>
-const IconSelector = () => import("../utils/IconSelector.vue");
+const IconSelectorPro = () => import("../utils/IconSelectorPro.vue");
 
 export default {
   props: ["code", "badge"],
@@ -224,7 +224,7 @@ export default {
     };
   },
   components: {
-    IconSelector,
+    IconSelectorPro,
   },
   methods: {
     formSubmit: function (e) {

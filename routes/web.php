@@ -260,10 +260,11 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/skills', 'SkillsController@index');
         Route::get('/{code}/skills/get', 'SkillsController@get');
         Route::post('/{code}/skill', 'SkillsController@store');
+        Route::delete('/skills/{id}', 'SkillsController@destroy');
+        Route::get('/{code}/skills/import', 'SkillsController@importDefault');
 
         // Route::post('/{code}/monsters', 'MonsterController@store');
         // Route::patch('/{code}/monsters', 'MonsterController@update');
-        // Route::delete('/monsters/{id}', 'MonsterController@destroy');
         // Route::post('/monsters/fight', 'MonsterController@battle');
         
         // Utils
