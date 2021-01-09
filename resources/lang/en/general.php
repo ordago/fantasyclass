@@ -22,6 +22,7 @@ return [
     'help' => "Help",
     'import' => "Import",
     'assign' => "Assign",
+    'search' => "Search",
 
     'name' => "Name",
     'optional' => "optional",

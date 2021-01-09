@@ -22,6 +22,7 @@ return [
     'help' => "Ajuda",
     'import' => "Importa",
     'assign' => "Assigna",
+    'search' => "Cerca",
     
     'name' => "Nom",
     'optional' => "opcional",
