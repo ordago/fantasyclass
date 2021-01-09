@@ -60,7 +60,7 @@
           class="m-2 p-3 fs-2 cursor-pointer icon-selector-pro rounded"
           @click="updateValue(icon)"
         ></i>
-
+        <div>{{ total }} icons</div>
         <b-pagination
           :total="total"
           :current.sync="current"
