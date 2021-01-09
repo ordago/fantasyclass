@@ -42,7 +42,7 @@
 
       <div class="field has-addons" v-if="type == 0">
         <p class="control">
-          <IconSelectorPro></IconSelectorPro>
+          <IconSelectorPro v-model="icon"></IconSelectorPro>
         </p>
         <p class="control">
           <input

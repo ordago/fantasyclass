@@ -5,6 +5,7 @@
 
 ### Changed
 - Fixed showing character with custom theme.
+- New icon selector with all icons.
 
 ## v1.33 Beta (07/01/2021)
 ### Added

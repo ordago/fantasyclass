@@ -221,7 +221,7 @@
           <label class="label">{{ trans.get("challenges.icon") }}</label>
           <div class="field has-addons">
             <p class="control">
-              <IconSelector></IconSelector>
+              <IconSelectorPro v-model="icon"></IconSelectorPro>
             </p>
             <p class="control is-expanded">
               <input
@@ -430,7 +430,7 @@
 </template>
 <script>
 const Editor = () => import("../utils/Editor.vue");
-const IconSelector = () => import("../utils/IconSelector.vue");
+const IconSelectorPro = () => import("../utils/IconSelectorPro.vue");
 
 import VueSelectImage from "vue-select-image";
 require("vue-select-image/dist/vue-select-image.css");
@@ -608,7 +608,7 @@ export default {
   },
   components: {
     Editor,
-    IconSelector,
+    IconSelectorPro,
     VueSelectImage,
   },
 

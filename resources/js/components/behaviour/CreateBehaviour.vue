@@ -9,23 +9,7 @@
 
       <div class="field has-addons">
         <p class="control">
-          <IconSelector></IconSelector>
-          <!-- <vfa-picker is-both="false">
-                      <template v-slot:activator="{ on }">
-                        <button class="button is-link fullIcon" type="button" @click="on">
-                          <span ref="iconPreview">
-                            <i :class="'fas fa-image'" v-show="!fullIcon"></i>
-                            <i :class="fullIcon" v-if="fullIcon"></i>
-                          </span>
-                          <i class="fas fa-caret-down ml-1"></i>
-                        </button>
-                      </template>
-                        <template v-slot:icon="{ icon, picked }">
-                          <div @click="parent(icon); picked(icon);fullIcon = parent(icon) + ' fa-' + icon.class;updateIcon(icon);" :title="icon.label">
-                            <span :class="[parent(icon), `fa-${icon.class}`, 'vfa-icon-preview']" />
-                          </div>
-                        </template>
-              </vfa-picker> -->
+          <IconSelectorPro v-model="icon"></IconSelectorPro>
         </p>
         <p class="control">
           <input
@@ -179,7 +163,7 @@
 </template>
 
 <script>
-const IconSelector = () => import("../utils/IconSelector.vue");
+const IconSelectorPro = () => import("../utils/IconSelectorPro.vue");
 
 export default {
   props: ["code", "behaviour"],
@@ -209,7 +193,7 @@ export default {
     };
   },
   components: {
-    IconSelector,
+    IconSelectorPro,
   },
   methods: {
     formSubmit: function (e) {
