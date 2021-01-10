@@ -4,7 +4,7 @@
       <i class="fas fa-sparkles mr-2"></i>
       {{ trans.get("skills.new") }}
     </button>
-    <button @click="importDefault" class="button is-primary mb-5">
+    <button v-if="mutableSkills.length < 6" @click="importDefault" class="button is-primary mb-5">
       {{ trans.get("skills.import_default") }}
     </button>
     <button class="button is-dark mb-5">
@@ -32,14 +32,14 @@
           field="title"
           :label="trans.get('skills.name')"
           sortable
-          >{{ trans.get(props.row.name) }}</b-table-column
+          >{{ trans.get("skills." + props.row.name) }}</b-table-column
         >
 
         <b-table-column
           field="description"
           :label="trans.get('skills.description')"
           sortable
-          >{{ trans.get(props.row.description) }}</b-table-column
+          >{{ trans.get("skills." + props.row.description) }}</b-table-column
         >
 
         <b-table-column

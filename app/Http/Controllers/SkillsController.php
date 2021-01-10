@@ -41,27 +41,7 @@ class SkillsController extends Controller
             $images[2]['name'] = "t3";
             return $images;
     }
-
-    /* Active types:
-        - Ask a question (yes or not) to the teacher in an exam.
-        - Heal.
-        - Heal group.
-        - Heal everybody.
-        - Steal random student money.
-        - Steal random xp.
-        - Undo last lose (50% rate).
-    */
-
-    /* Passive types:
-        - Health individual.
-        - Health group.
-        - Health everybody.
-        - Protection. (rate 50%)
-        - Protection against steals (rate 70%).
-        - Carry 1 more card.
-    */
-
-    
+   
     public function importDefault($code) {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('update', $class);
@@ -89,8 +69,8 @@ class SkillsController extends Controller
         ]);
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'heal',
-            'description' => 'heal_self',
+            'name' => 'heal_self',
+            'description' => 'heal_self_desc',
             'icon' => ' /img/skills/t1/rpg-priest_active_11.png',
             'type' => 0,
             'properties' => json_encode([
@@ -149,6 +129,112 @@ class SkillsController extends Controller
                 'type' => 'steal_xp',
             ]),
         ]);
+
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'undo_action',
+            'description' => 'undo_action_desc',
+            'icon' => '/img/skills/t1/game_skill_17.png',
+            'type' => 0,
+            'properties' => json_encode([
+                'success' => 60,
+                'type' => 'undo_action',
+            ]),
+        ]);
+
+           /* Active types:
+                - Ask a question (yes or not) to the teacher in an exam.
+                - Heal.
+                - Heal group.
+                - Heal everybody.
+                - Steal random student money.
+                - Steal random xp.
+                - Undo last lose (50% rate).
+            */
+
+            // Passive
+
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'heal_passive',
+                'description' => 'heal_passive_desc',
+                'icon' => '/img/skills/t1/skills_skill_icon_44.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'success' => 50,
+                    'hp_increment' => 50,
+                    'type' => 'heal_passive',
+                ]),
+            ]);
+
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'protection',
+                'description' => 'protection_desc',
+                'icon' => '/img/skills/t1/rpg-knight_active6.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'success' => 20,
+                    'type' => 'protection',
+                ]),
+            ]);
+
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'protection',
+                'description' => 'protection_desc',
+                'icon' => '/img/skills/t1/rpg-knight_active13.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'success' => 40,
+                    'type' => 'protection',
+                ]),
+            ]);
+            
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'protection_steal',
+                'description' => 'protection_steal_desc',
+                'icon' => '/img/skills/t1/rpg-mage_active12.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'success' => 70,
+                    'type' => 'protection_steal',
+                ]),
+            ]);
+
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'cards',
+                'description' => 'cards_desc',
+                'icon' => '/img/skills/t1/rpg-rogue_active1.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'cards' => 1,
+                    'type' => 'cards',
+                ]),
+            ]);
+
+            Skill::create([
+                'classroom_id' => $class->id,
+                'name' => 'protection_death',
+                'description' => 'protection_death_desc',
+                'icon' => '/img/skills/t1/game_skill_32.png',
+                'type' => 1,
+                'properties' => json_encode([
+                    'success' => 90,
+                    'type' => 'protection_death',
+                ]),
+            ]);
+
+            /* Passive types:
+                - Health individual.
+                X Health group.
+                X Health everybody.
+                - Protection. (rate 50%)
+                - Protection against steals (rate 70%).
+                - Carry 1 more card.
+            */
 
         return $class->fresh()->skills;
 
