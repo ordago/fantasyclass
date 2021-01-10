@@ -23,7 +23,11 @@ class SkillsController extends Controller
 
         $skills = $class->skills;
 
-        return view('skills.index', compact('class', 'skills'));
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $settings['skill_price'] = settings()->get('skill_price', 600);
+        $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
+
+        return view('skills.index', compact('class', 'skills', 'settings'));
     }
 
     public function get($code) {

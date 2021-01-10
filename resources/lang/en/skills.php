@@ -22,6 +22,8 @@ return [
       't2' => 'Tema 2',
       't3' => 'Tema 3',
 
+      'info' => 'Les habilitats permeten a estudiants realitzar accions d\'un ús (actives) o tenir avantatges o proteccions durant l\'aventura (passives). Les trobaran a la botiga i al comprar-les, obtindran una habilitat aleatòria. S\'habiliten a la configuració. Poden tenir un màxim de 4 habilitats, hauran d\'utilitzar o eliminar les que ja tenen per adquirir-ne de noves.',
+
       'question' => 'Transferència',
       'question_desc' => 'Fes una pregunta al professor durant un examen de sí o no',
       'music' => 'Privilegi',

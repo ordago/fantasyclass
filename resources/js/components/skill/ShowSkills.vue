@@ -4,12 +4,20 @@
       <i class="fas fa-sparkles mr-2"></i>
       {{ trans.get("skills.new") }}
     </button>
-    <button v-if="mutableSkills.length < 6" @click="importDefault" class="button is-primary mb-5">
+    <button
+      v-if="mutableSkills.length < 6"
+      @click="importDefault"
+      class="button is-primary mb-5"
+    >
       {{ trans.get("skills.import_default") }}
     </button>
-    <button class="button is-dark mb-5">
+    <button class="button is-dark mb-5" @click="isPrefsModalActive = true">
       <i class="fas fa-cog mr-2"></i> {{ trans.get("menu.config") }}
     </button>
+
+    <article class="message is-warning m-2">
+      <div class="message-body has-text-justified">{{ trans.get("skills.info") }}</div>
+    </article>
 
     <b-table
       v-if="mutableSkills.length"
@@ -164,6 +172,55 @@
 
     <SelectSkill :code="code" v-model="skill.icon" v-if="isImageModalActive">
     </SelectSkill>
+
+    <b-modal
+      :active.sync="isPrefsModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="updatePrefs">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">{{ trans.get("skills.config") }}</p>
+          </header>
+          <section class="modal-card-body">
+            <div class="field">
+              <label class="label">{{ trans.get("skills.price") }}</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="number"
+                  v-model="settings.skill_price"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <b-switch
+                true-value="1"
+                false-value="0"
+                v-model="settings.skill_enabled"
+                >{{ trans.get("skills.enabled") }}</b-switch
+              >
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button"
+              type="button"
+              @click="isPrefsModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary" @click="updatePrefs">
+              {{ trans.get("general.update") }}
+            </button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
@@ -173,7 +230,7 @@ import Utils from "../../utils.js";
 import SelectSkill from "../utils/SelectSkill.vue";
 
 export default {
-  props: ["code", "skills"],
+  props: ["code", "skills", "settings"],
 
   created() {
     this.mutableSkills = this.skills;
@@ -183,6 +240,7 @@ export default {
       isLoading: false,
       isModalActive: false,
       isImageModalActive: false,
+      isPrefsModalActive: false,
       images: null,
       edit: false,
       skill: {
@@ -198,6 +256,21 @@ export default {
     SelectSkill,
   },
   methods: {
+    updatePrefs() {
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "skill_price",
+        value: this.settings.skill_price,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "skill_enabled",
+        value: this.settings.skill_enabled,
+        action: "update",
+      });
+      this.isPrefsModalActive = false;
+    },
     getType() {
       return this.skill.type == 0
         ? this.trans.get("skills.active_info")

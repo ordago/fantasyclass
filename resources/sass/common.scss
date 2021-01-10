@@ -6,36 +6,39 @@
   /* Events */
 
   .hiddenName {
-    display: inline-block;
-    font-size: 2.5em;
-    position: relative;
-    min-width: 600px;
-    text-align: center;
+      display: inline-block;
+      font-size: 2.5em;
+      position: relative;
+      min-width: 600px;
+      text-align: center;
   }
+
   .hideObj {
-    position: absolute;
-    z-index: 1000;
-    background-image: url("/img/hide.png");
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    width: 100%;
-    height: 120%;
-    border-radius: 5px;
-    transition: 1s opacity;
-    cursor: zoom-in;
+      position: absolute;
+      z-index: 1000;
+      background-image: url("/img/hide.png");
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      width: 100%;
+      height: 120%;
+      border-radius: 5px;
+      transition: 1s opacity;
+      cursor: zoom-in;
   }
+
   .hiddenName:hover .hideObj {
-    opacity: 0;
-    transition-delay: 1s;
+      opacity: 0;
+      transition-delay: 1s;
   }
+
   .hiddenMEssage {
-    visibility: hidden;
+      visibility: hidden;
   }
 
   /************************/
 
   .has-hr {
-    border-bottom: 1px dashed rgb(153, 153, 153);
+      border-bottom: 1px dashed rgb(153, 153, 153);
   }
 
   .monsters-bar {
@@ -50,73 +53,86 @@
 
   /* Rubrics */
   .rubricRow {
-    overflow-x: auto;
+      overflow-x: auto;
   }
+
   .rubricSubitems {
-    display: flex;
+      display: flex;
   }
+
   .marginRadius {
-    border: 1px solid #575757;
-    margin: 5px;
-    padding: 30px;
-    border-radius: 10px;
+      border: 1px solid #575757;
+      margin: 5px;
+      padding: 30px;
+      border-radius: 10px;
   }
+
   .rubricSubitem {
-    flex-grow: 1;
-    position: relative;
+      flex-grow: 1;
+      position: relative;
   }
+
   .rubricDetails {
-    font-size: 1.5em;
-    padding-right: 35px;
+      font-size: 1.5em;
+      padding-right: 35px;
   }
+
   .rubricSubitem:hover {
-    background-color: #dcedc8;
-    cursor: pointer;
+      background-color: #dcedc8;
+      cursor: pointer;
   }
+
   .selectedSubItem {
-    background-color: #dcedc8;
+      background-color: #dcedc8;
   }
+
   .rubricScore {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background-color: #ffe0b2;
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-left: 1px solid #575757;
-    height: 100%;
-    text-align: center;
-    box-sizing: border-box;
-    padding: 20px;
-    font-size: 1.25em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #ffe0b2;
+      border-top-right-radius: 8px;
+      border-bottom-right-radius: 8px;
+      border-left: 1px solid #575757;
+      height: 100%;
+      text-align: center;
+      box-sizing: border-box;
+      padding: 20px;
+      font-size: 1.25em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
   }
+
   .rubricInfo {
-    padding: 30px;
-    background-color: rgba(250, 250, 250, 1);
-    margin: -10px -10px 10px -10px;
-    position: sticky;
-    top: 0;
-    z-index: 9;
-    border-bottom: 1px solid #575757;
+      padding: 30px;
+      background-color: rgba(250, 250, 250, 1);
+      margin: -10px -10px 10px -10px;
+      position: sticky;
+      top: 0;
+      z-index: 9;
+      border-bottom: 1px solid #575757;
   }
+
   .rubricInfo h2 {
-    padding-right: 90px;
+      padding-right: 90px;
   }
+
   .optional {
-    background-color: #cfd8dc;
+      background-color: #cfd8dc;
   }
+
   /*******************/
 
   .fs-1 {
       font-size: 1em;
   }
+
   .fs-2 {
       font-size: 2em;
   }
+
   .fs-1-2 {
       font-size: 1.2em;
   }
@@ -202,18 +218,6 @@
 
   .night {
       filter: brightness(50%);
-  }
-
-  .level-hidden {
-      z-index: 10;
-      position: absolute;
-      top: 0;
-      left: 50px;
-      display: none;
-  }
-
-  .level-top:hover+.level-hidden {
-      display: initial;
   }
 
   .cursor-default {
@@ -592,9 +596,10 @@
       top: 0px;
       left: 10px;
       z-index: 2;
-    }
-    .attribute-info-props {
-        top: 3px;
+  }
+
+  .attribute-info-props {
+      top: 3px;
   }
 
   .firstRowChar .attribute {
@@ -846,9 +851,9 @@
       font-size: 1.25em;
       margin: 2px;
       filter: drop-shadow(1px 1px 1px black);
-    //   -webkit-text-stroke: .75px #000;
-    //   stroke: black;
-    //   stroke-width: 1px;
+      //   -webkit-text-stroke: .75px #000;
+      //   stroke: black;
+      //   stroke-width: 1px;
       /* left */
       outline: 0;
   }
@@ -1527,28 +1532,32 @@
       height: 100%;
   }
 
-  .top-right  {
+  .top-right {
       position: absolute;
       z-index: 12;
-     
-    }
 
-    .top-right.custom {
-        top: 10px;
-        right: 19px;
-    }
-    
+  }
+
+  .top-right.custom {
+      top: 10px;
+      right: 19px;
+  }
+
 
   .lang,
   .group-logo {
       position: absolute;
-      width: 75px;
+      width: 60px;
       z-index: 2;
       color: #ccc;
       background-color: rgba(0, 0, 0, 0.2);
-      padding: 5px;
+      padding: 1px;
+      padding-bottom: 0;
       font-size: 2em;
+      right: 2px !important;
+      top: 2px !important;
   }
+
 
   @media screen and (max-width: 500px) {
       .iosBanner {

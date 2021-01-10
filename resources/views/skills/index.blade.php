@@ -22,5 +22,5 @@
 @endsection
 
 @section('content')
-    <show-skills code="{{ $class->code }}" :skills="{{ $skills }}"></show-skills>
+    <show-skills code="{{ $class->code }}" :settings="{{ json_encode($settings) }}" :skills="{{ $skills }}"></show-skills>
 @endsection

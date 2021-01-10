@@ -12,8 +12,25 @@
           ref="showStd"
           :student="student"
           :classroom="classroom"
+          :show-skills="false"
         ></show-character>
         <div class="card-content">
+          <div class="is-flex is-flex-direction-row has-text-center mb-2" style="justify-content: center;margin-top: -20px">
+            <span class="skills-big mx-1">
+              <img
+                src="/img/skills/t1/rpg-priest_active_12.png"
+                class="skill-item skill-item-big"
+            />
+            </span>
+            <span class="skills-big mx-1">
+              <img
+                src="/img/skills/t1/rpg-rogue_active10.png"
+                class="skill-item skill-item-big"
+              />
+            </span>
+            <span class="skills-big mx-1"> </span>
+            <span class="skills-big mx-1"> </span>
+          </div>
           <div class="media mb-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
               <figure class="image is-48x48">
@@ -285,9 +302,6 @@
           icon="backpack"
           icon-pack="fad"
         >
-          <!-- <div  class="notification is-light cursor-default mb-3 mt-0">
-          </div> -->
-
           <article
             class="message is-dark mb-3"
             v-tippy
@@ -405,7 +419,11 @@
               </b-field>
             </div>
           </div>
-          <div class="is-flex is-flex-direction-column" id="inventory" v-if="!admin">
+          <div
+            class="is-flex is-flex-direction-column"
+            id="inventory"
+            v-if="!admin"
+          >
             <div class="">
               <div>
                 <div

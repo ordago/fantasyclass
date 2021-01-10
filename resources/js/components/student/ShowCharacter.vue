@@ -1,18 +1,6 @@
 <template>
   <span class="rounded">
     <span
-      class="level-top rounded p-4 has-background-light"
-      v-if="student.level"
-    >
-      {{ student.level.number }}
-    </span>
-    <show-level
-      class="level-hidden"
-      style
-      :level="student.level"
-      :edit="false"
-    ></show-level>
-    <span
       v-if="student.grouplogo"
       v-tippy="{ arrow: true }"
       :content="'<i class=\'fas fa-users\'></i> ' + student.groups[0].name"
@@ -20,10 +8,39 @@
     >
       <img :src="student.grouplogo" class="is-full-rounded" />
     </span>
+
     <div
       class="card-image card-shadow-s rounded-top char-bg"
       :style="getStyle()"
     >
+      <span class="level-top rounded p-3" v-if="student.level" :class="{ 'level-top-ns' : !showSkills }">
+        {{ student.level.number }}
+      </span>
+      <show-level
+        class="level-hidden"
+        style
+        :level="student.level"
+        :edit="false"
+      ></show-level>
+      <div v-if="showSkills" class="is-flex is-flex-direction-column skills">
+        <span class="skill-container">
+          <img
+            src="/img/skills/t1/rpg-priest_active_12.png"
+            class="skill-item"
+            width="40px"
+          />
+        </span>
+        <span class="skill-container">
+          <img
+            src="/img/skills/t1/rpg-rogue_active10.png"
+            class="skill-item"
+            width="40px"
+          />
+        </span>
+        <span class="skill-container"> </span>
+        <span class="skill-container"> </span>
+      </div>
+
       <span
         v-if="student.boost"
         class="boost-right outer_glow_dark"
@@ -42,19 +59,19 @@
       </span>
       <div
         v-if="
-          classroom.character_theme != null && classroom.character_theme != 0 
+          classroom.character_theme != null && classroom.character_theme != 0
         "
         class="character-container character is-relative"
         :class="classroom.character_theme.classes"
       >
         <div :class="student.character.classes">
-        <img
-          :src="'/img/character/' + element.src"
-          :class="element.classes"
-          v-for="element in student.equipment"
-          v-bind:key="element.id"
-        />
-      </div>
+          <img
+            :src="'/img/character/' + element.src"
+            :class="element.classes"
+            v-for="element in student.equipment"
+            v-bind:key="element.id"
+          />
+        </div>
       </div>
       <div v-else class="is-flex has-all-centered py-3">
         <img
@@ -84,7 +101,14 @@
 
 <script>
 export default {
-  props: ["student", "classroom"],
+  props: {
+    student: null,
+    classroom: null,
+    showSkills: {
+      type: Boolean,
+      default: true,
+    },
+  },
   created() {
     if (!this.student.grouplogo && this.student.grouplogopublic)
       this.student.grouplogo = this.student.grouplogopublic;
@@ -94,9 +118,11 @@ export default {
   },
   methods: {
     getStyle() {
-      return 'background-position-x: left; background-position-y: bottom;background-image: url(' +
+      return (
+        "background-position-x: left; background-position-y: bottom;background-image: url(" +
         this.classroom.background +
-        ');'
+        ");"
+      );
     },
     petMessage(pet) {
       let name = pet.name ? "<strong>" + pet.name + ":</strong> " : "";
@@ -115,36 +141,36 @@ export default {
 };
 </script>
 <style>
-
 @keyframes hmovement {
-    0% {
-        transform: translateX(0px)
-    }
+  0% {
+    transform: translateX(0px);
+  }
 
-    20% {
-        transform: translateX(8px);
-    }
+  20% {
+    transform: translateX(8px);
+  }
 
-    40% {
-        transform: translateX(8px) scale(-1, 1)
-    }
+  40% {
+    transform: translateX(8px) scale(-1, 1);
+  }
 
-    60% {
-        transform: translateX(-8px) scale(-1, 1)
-    }
+  60% {
+    transform: translateX(-8px) scale(-1, 1);
+  }
 
-    80% {
-        transform: translateX(-8px)
-    }
+  80% {
+    transform: translateX(-8px);
+  }
 }
 
-.pet-character:hover, .pet-battle:hover  {
+.pet-character:hover,
+.pet-battle:hover {
   animation: none;
 }
 .pet-character {
   position: absolute;
   bottom: 5px;
-  left: 50%;
+  left: 60%;
   animation-name: hmovement;
   animation-duration: 10s;
   animation-iteration-count: infinite;
@@ -163,5 +189,35 @@ export default {
   transform: rotate(180deg);
   top: 10px;
 }
-
+.skills {
+  position: absolute;
+  width: 40px;
+  top: 0;
+  left: 1px;
+  z-index: 10;
+}
+.skill-container {
+  position: relative;
+  background-image: url("/img/skill.png");
+  width: 40px;
+  height: 40px;
+}
+.skills-big {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-image: url("/img/skill-big.png");
+}
+.skill-item {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: 38px;
+  height: 38px;
+  border-radius: 5px;
+}
+.skill-item-big {
+  width: 48px;
+  height: 48px;
+}
 </style>
