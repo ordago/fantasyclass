@@ -417,6 +417,7 @@ class ClassroomsController extends Controller
         $groups = $class->grouping->first()->groups;
         $students->each->append('numcards');
         $students->each->append('boost');
+        $students->each->load('skills');
 
         $pending = collect();
         foreach ($class->students as $student) {
@@ -431,16 +432,18 @@ class ClassroomsController extends Controller
         $chat['id'] = '999999-' . auth()->user()->id;
         $chat['name'] = 'Teacher';
         $chat['avatar'] = env('APP_URL') . '/img/icons/teacher.svg';
-
+        
         $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . 'delete' . env('CHATBRO_KEY'));
-
+        
         $showChat = settings()->get('show_chat', false);
+        
+        $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
 
         $impostor = settings()->get('impostor', -1);
         if($impostor != -1) {
             $impostor = Student::find($impostor);
         }
 
-        return view('classrooms.show', compact('class', 'impostor', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
+        return view('classrooms.show', compact('class', 'settings', 'impostor', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
     }
 }

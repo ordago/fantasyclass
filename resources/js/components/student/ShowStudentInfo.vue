@@ -16,7 +16,7 @@
         ></show-character>
         <div class="card-content">
           <div
-            class="is-flex is-flex-direction-row has-text-center mb-2"
+            class="is-flex is-flex-direction-row has-text-center mb-2 "
             style="justify-content: center; margin-top: -20px"
             v-if="settings.skill_enabled == 1 || admin"
           >
@@ -32,7 +32,7 @@
             <span
               v-for="index in 4 - student.skills.length"
               :key="index"
-              class="skills-big mx-1 is-flex has-all-centered"
+              class="mx-1 is-flex has-all-centered skill-container-big"
               @click="buySkill()"
             >
               <i class="p-4 cursor-pointer fas fa-plus has-text-light"></i>
@@ -1406,8 +1406,11 @@ export default {
         iconPack: "fa",
         hasIcon: false,
         onConfirm: () => {
+          let id;
+          if(this.admin)
+            id = this.student.id
           axios
-            .get("/classroom/" + this.classroom.code + "/student/skills/buy")
+            .post("/classroom/" + this.classroom.code + "/student/skills/buy", {id: id})
             .then((response) => {
               this.$toast(response.data.message, { type: response.data.type });
 

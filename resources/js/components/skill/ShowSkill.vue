@@ -1,10 +1,10 @@
 <template>
-  <span class="skills-big mx-1 is-flex has-all-centered">
+  <span class="mr-1 has-all-centered" :class="{'skill-container' : !use, 'skill-container-big' : use}">
     <img
       :src="skill.icon"
-      @click="removeSkill()"
-      class="skill-item skill-item-big cursor-pointer"
-      v-tippy="{interactive : true}"
+      class="cursor-pointer skill-item"
+      :class="{'skill-item-big' : use}"
+      v-tippy="{ interactive: true, theme: 'light', arrow: true, trigger : 'click' }"
       :content="getSkillMessage()"
     />
     <span
@@ -24,13 +24,15 @@ import SelectSkill from "../utils/SelectSkill.vue";
 export default {
   props: ["code", "skill", "admin", "use"],
 
-  created() {},
+  created() {
+    window.removeSkill = this.removeSkill;
+  },
   data: function () {
     return {};
   },
   components: {},
   methods: {
-        getSkillMessage() {
+    getSkillMessage() {
       let message =
         '<h4 class="is-size-4 has-text-left"> ' +
         this.trans.get(this.skill.name) +
@@ -41,40 +43,89 @@ export default {
         "</h5>";
       message += `<div class='has-text-left my-2'><small class="is-italic">${this.trans.get(
         "skills.type"
-      )}: <span class="tag is-light ml-1 pl-1 pr-2">${
+      )}: <span class="tag is-dark ml-1 pl-1 pr-2">${
         this.skill.type == 0
           ? this.trans.get("skills.active")
           : this.trans.get("skills.passive")
-      }</span></small></div>`;
+      }</span></small>`;
 
-      if(this.skill.properties.success) {
-        message += `<div class='has-text-left my-2'><small class="is-italic">Success: ${this.skill.properties.success}%</small></div>`
+      if (this.skill.properties.success) {
+        message += `<div class="my-2"><small class="is-italic my-2">Success: ${this.skill.properties.success}%</small></div>`;
       }
-      if(this.skill.properties.hp_increment) {
-        message += `<div class='has-text-left my-2'><small class="is-italic"><i class="fas fa-heart colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.hp_increment}%</small></div>`
+      if (this.skill.properties.hp_min) {
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-heart colored"></i>: ${this.skill.properties.hp_min} - ${this.skill.properties.hp_max}</small></div>`;
       }
-      if(this.skill.properties.cards) {
-        message += `<div class='has-text-left my-2'><small class="is-italic"><i class="fas fa-club colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`
+      if (this.skill.properties.hp_increment) {
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-heart colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.hp_increment}%</small></div>`;
       }
-      if(this.use && this.skill.type == 0) {
-        message += `<small><button class="button is-success mx-2">${this.trans.get('cards.use')}</button></small>`
+      if (this.skill.properties.cards) {
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-club colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`;
       }
-      if(this.use) {
-        message += `<button class="button is-danger"><small>${this.trans.get('cards.delete')}</small></button>`
+      message += "</div>";
+      message += "<div class='has-text-left'>";
+      if (this.use && this.skill.type == 0) {
+        message += `<small><span class="tag is-success mx-2">${this.trans.get(
+          "cards.use"
+        )}</span></small>`;
       }
+      if (this.use) {
+        message += `<small><span class="tag is-danger cursor-pointer" onclick="removeSkill()">${this.trans.get(
+          "cards.delete"
+        )}</span></small>`;
+      }
+      message += "</div>";
 
       return message;
     },
     removeSkill() {
-      axios
-        .get(
-          "/classroom/" + this.code + "/student/skills/delete/" + this.skill.id
-        )
-        .then((response) => {
-          this.$parent.student.skills = response.data;
-          this.$parent.$forceUpdate();
-        });
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .get(
+              "/classroom/" +
+                this.code +
+                "/student/skills/delete/" +
+                this.skill.id
+            )
+            .then((response) => {
+              this.$parent.student.skills = response.data;
+              this.$parent.$forceUpdate();
+            });
+        },
+      });
     },
   },
 };
 </script>
+<style>
+.skill-item {
+  z-index: 100;
+  width: 38px;
+  border-radius: 5px;
+}
+.skill-item-big {
+  width: 48px;
+}
+.skill-container {
+  position: relative;
+  background-image: url("/img/skill.png");
+  width: 40px;
+  height: 40px;
+}
+.skill-container-big {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  background-image: url("/img/skill-big.png");
+}
+</style>

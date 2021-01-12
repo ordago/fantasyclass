@@ -361,6 +361,7 @@
         v-bind:key="student.id"
       >
         <show-student-teacher
+          :show-skills="settings.skill_enabled == 1 ? true: false"
           :behaviours="mainBehavioursJson"
           :behaviourshidden="otherBehavioursJson"
           :student="student"
@@ -416,6 +417,7 @@
       class="has-text-centered overflow-show"
     >
       <show-student-teacher
+        :show-skills="settings.skill_enabled == 1 ? true: false"
         :behaviours="mainBehavioursJson"
         :behaviourshidden="otherBehavioursJson"
         :character-theme="classroom.character_theme"
@@ -636,7 +638,7 @@ import confetti from "canvas-confetti";
 import Impostor from "../utils/Impostor.vue";
 
 export default {
-  props: ["students", "classroom", "groups", "impostor"],
+  props: ["students", "classroom", "groups", "impostor", "settings"],
   created() {
     let view = this.$cookies.get("view");
     if (view) {

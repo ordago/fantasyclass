@@ -9,6 +9,7 @@
       v-bind:key="student.id"
     >
       <show-student
+        :show-skills="settings.skill_enabled == 1 ? true: false"
         :character-theme="characterTheme"
         :student="student"
         :theme="theme"
@@ -77,7 +78,7 @@
 import Utils from "../../utils.js";
 
 export default {
-  props: ["students", "theme", "characterTheme", "monsters", "rating"],
+  props: ["students", "theme", "characterTheme", "monsters", "rating", "settings"],
   mounted() {},
   data: function () {
     return {

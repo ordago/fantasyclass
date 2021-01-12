@@ -1,6 +1,6 @@
 <template>
   <div class="card rounded card-shadow-s" style="overflow: visible;">
-    <show-character :student="student" :classroom="classroom"></show-character>
+    <show-character :show-skills="showSkills" :student="student" :classroom="classroom"></show-character>
     <div class="card-content">
       <div class="media mb-0">
         <div class="media-left" v-if="characterTheme">
@@ -61,7 +61,15 @@
 
 <script>
 export default {
-  props: ["student", "theme", "characterTheme"],
+  props: {
+    student: {},
+    theme: {},
+    characterTheme: {},
+    showSkills: {
+      type: Boolean,
+      default: false,
+    }
+  },
   created() {
     this.classroom = { background: this.theme, character_theme: this.characterTheme }
     if(this.student.groups.length)

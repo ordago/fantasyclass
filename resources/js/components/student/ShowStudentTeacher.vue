@@ -1,6 +1,6 @@
 <template>
   <div class="card rounded card-shadow-s h-100" style="overflow: visible">
-    <show-character :student="student" :classroom="classroom"></show-character>
+    <show-character :show-skills="showSkills" :student="student" :classroom="classroom"></show-character>
     <div
       class="card-content is-relative"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
@@ -357,7 +357,17 @@
 
 <script>
 export default {
-  props: ["student", "classroom", "behaviours", "behaviourshidden", "random"],
+  props: {
+    student: {},
+    classroom: {},
+    behaviours: {},
+    behaviourshidden: {},
+    random: {},
+    showSkills: {
+      type: Boolean,
+      default: false,
+    },
+  },
   mounted() {},
   data: function () {
     return {

@@ -91,7 +91,7 @@ class ClassroomsStudentController extends Controller
 
     public function index($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
 
@@ -102,7 +102,7 @@ class ClassroomsStudentController extends Controller
         $class->students->each->append('grouplogopublic');
         $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
             return collect($user->toArray())
-                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups'])
+                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
                 ->all();
         });
 
@@ -134,7 +134,9 @@ class ClassroomsStudentController extends Controller
         $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . env('CHATBRO_KEY'));
         $showChat = settings()->get('show_chat', false);
 
-        return view('studentsview.index', compact('class', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
+        $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
+
+        return view('studentsview.index', compact('class', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
     public function challenges($code)
@@ -615,7 +617,13 @@ class ClassroomsStudentController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $student = Functions::getCurrentStudent($class, []);
+        if(isset(request()->id)) {
+            $student = Student::findOrFail(request()->id);
+            if($student->classroom->classroom_id != $class->id)
+                abort(403);
+        } else {
+            $student = Functions::getCurrentStudent($class, []);
+        }
 
         if ($student->hp == 0 || settings()->get('skill_enabled', 0) == 0 || $student->skills->count() >= 4)
             return false;

@@ -13,7 +13,11 @@
       class="card-image card-shadow-s rounded-top char-bg"
       :style="getStyle()"
     >
-      <span class="level-top rounded p-3" v-if="student.level" :class="{ 'level-top-ns' : !showSkills }">
+      <span
+        class="level-top rounded p-3"
+        v-if="student.level"
+        :class="{ 'level-top-ns': !showSkills }"
+      >
         {{ student.level.number }}
       </span>
       <show-level
@@ -23,22 +27,21 @@
         :edit="false"
       ></show-level>
       <div v-if="showSkills" class="is-flex is-flex-direction-column skills">
-        <span class="skill-container">
-          <img
-            src="/img/skills/t1/rpg-priest_active_12.png"
-            class="skill-item"
-            width="40px"
-          />
+        <ShowSkill
+          v-for="skill in student.skills"
+          :key="skill.id"
+          :skill="skill"
+          :code="classroom.code"
+          :admin="false"
+          :use="false"
+        ></ShowSkill>
+        <span
+          v-for="index in 4 - student.skills.length"
+          :key="index"
+          class="mr-1 is-flex has-all-centered skill-container"
+        >
+          
         </span>
-        <span class="skill-container">
-          <img
-            src="/img/skills/t1/rpg-rogue_active10.png"
-            class="skill-item"
-            width="40px"
-          />
-        </span>
-        <span class="skill-container"> </span>
-        <span class="skill-container"> </span>
       </div>
 
       <span
@@ -100,6 +103,8 @@
 </template>
 
 <script>
+import ShowSkill from "../skill/ShowSkill.vue";
+
 export default {
   props: {
     student: null,
@@ -108,6 +113,9 @@ export default {
       type: Boolean,
       default: true,
     },
+  },
+  components: {
+    ShowSkill,
   },
   created() {
     if (!this.student.grouplogo && this.student.grouplogopublic)
@@ -195,29 +203,5 @@ export default {
   top: 0;
   left: 1px;
   z-index: 10;
-}
-.skill-container {
-  position: relative;
-  background-image: url("/img/skill.png");
-  width: 40px;
-  height: 40px;
-}
-.skills-big {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  background-image: url("/img/skill-big.png");
-}
-.skill-item {
-  position: absolute;
-  top: 1px;
-  left: 1px;
-  width: 38px;
-  height: 38px;
-  border-radius: 5px;
-}
-.skill-item-big {
-  width: 48px;
-  height: 48px;
 }
 </style>
