@@ -18,6 +18,7 @@
           <div
             class="is-flex is-flex-direction-row has-text-center mb-2"
             style="justify-content: center; margin-top: -20px"
+            v-if="settings.skill_enabled == 1 || admin"
           >
             <ShowSkill
               v-for="skill in student.skills"

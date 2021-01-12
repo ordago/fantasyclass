@@ -5,6 +5,7 @@
       @click="removeSkill()"
       class="skill-item skill-item-big cursor-pointer"
       v-tippy
+      interactive
       :content="getSkillMessage()"
     />
     <span
@@ -41,7 +42,7 @@ export default {
         "</h5>";
       message += `<div class='has-text-left my-2'><small class="is-italic">${this.trans.get(
         "skills.type"
-      )}: <span class="tag is-light">${
+      )}: <span class="tag is-light ml-1 pl-1 pr-2">${
         this.skill.type == 0
           ? this.trans.get("skills.active")
           : this.trans.get("skills.passive")
@@ -49,6 +50,12 @@ export default {
 
       if(this.skill.properties.success) {
         message += `<div class='has-text-left my-2'><small class="is-italic">Success: ${this.skill.properties.success}%</small></div>`
+      }
+      if(this.skill.properties.hp_increment) {
+        message += `<div class='has-text-left my-2'><small class="is-italic"><i class="fas fa-heart colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.hp_increment}%</small></div>`
+      }
+      if(this.skill.properties.cards) {
+        message += `<div class='has-text-left my-2'><small class="is-italic"><i class="fas fa-club colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`
       }
 
       return message;
