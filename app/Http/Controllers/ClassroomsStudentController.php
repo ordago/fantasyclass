@@ -19,6 +19,7 @@ use App\Notifications\NewInteractionStudent;
 use App\Pet;
 use App\Rating;
 use App\Rules;
+use App\Skill;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
@@ -171,9 +172,9 @@ class ClassroomsStudentController extends Controller
                     foreach ($value['requirements'] as $item) {
                         if (!$student->items->contains($item['id'])) {
                             $allItems = false;
-                            $content .= "<img class='coloredGray m-2' title='". $item['alt'] ."' alt='". $item['alt'] ."' src='" . $item['src'] . "' width='48px'>";
+                            $content .= "<img class='coloredGray m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
                         } else {
-                            $content .= "<img class='m-2' title='". $item['alt'] ."' alt='". $item['alt'] ."' src='" . $item['src'] . "' width='48px'>";
+                            $content .= "<img class='m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
                         }
                     }
                     if (!$allItems) {
@@ -273,7 +274,7 @@ class ClassroomsStudentController extends Controller
                         $continue = true;
                     }
                 }
-                if($continue)
+                if ($continue)
                     continue;
             }
             $challenge->permalink = Crypt::encryptString($challenge->id);
@@ -337,6 +338,7 @@ class ClassroomsStudentController extends Controller
 
         $student->load('pets');
         $student->load('blogs');
+        $student->load('skills');
 
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {
@@ -350,11 +352,14 @@ class ClassroomsStudentController extends Controller
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['impostor'] = settings()->get('impostor', -1);
-        if($settings['impostor'] != -1) {
-            if($settings['impostor'] == $student->id)
+        if ($settings['impostor'] != -1) {
+            if ($settings['impostor'] == $student->id)
                 $settings['impostor'] = true;
             else $settings['impostor'] = false;
         }
+        $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
+        if ($settings['skill_enabled'] != 0)
+            $settings['skill_price'] = settings()->get('skill_price', 600);
 
         $students_money = json_encode([]);
         if ($settings['allow_send_money']) {
@@ -566,17 +571,119 @@ class ClassroomsStudentController extends Controller
 
         LogEntry::create([
             'type' => 'gold',
-            'value' => $pet->price * - 1,
+            'value' => $pet->price * -1,
             'student_id' => $student->id,
             'message' => 'pet',
         ]);
-        
+
         return [
             "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",
             "type" => "success",
             "pets" => $student->fresh()->pets,
             "boost" => $student->fresh()->getBoost(),
+        ];
+    }
+    public function deleteSkill($code, $id)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
+
+        $lastSkill = $student->skills()->where('skill_id', $id)->first();
+        if($lastSkill->pivot->count == 1) {
+            $student->skills()->detach($lastSkill);
+        } else {
+            $student->skills()->sync([$lastSkill->id => ['count' => $lastSkill->pivot->count - 1]], false);
+        }
+        // $student->skills()->detach($id);
+        return $student->fresh()->skills;
+    }
+
+    public static function getRandomSkill($class)
+    {
+        return Skill::where('classroom_id', $class->id)
+            ->inRandomOrder()
+            ->first();
+    }
+
+    public function buySkill($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+
+        $student = Functions::getCurrentStudent($class, []);
+
+        if ($student->hp == 0 || settings()->get('skill_enabled', 0) == 0 || $student->skills->count() >= 4)
+            return false;
+
+        $price = settings()->get('skill_price', 600);
+        if ($price > $student->gold) {
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        $have = [];
+        foreach ($student->skills->pluck('properties')->toArray() as $line) {
+            array_push($have, $line['type']);
+        }
+
+        $flag = true;
+        $protection = 0;
+        while (true && $protection < 100) {
+            $skill = $this::getRandomSkill($class);
+            if ($skill->type == 0) {
+                $flag = true;
+                break;
+            }
+            foreach ($student->skills as $skillStd) {
+                if ($skill->properties['type'] == $skillStd->properties['type']) {
+                    $flag = false;
+                    $protection++;
+                    continue;
+                }
+            }
+            if (!$flag) {
+                $flag = true;
+                continue;
+            }
+            $protection++;
+            $flag = true;
+            break;
+        }
+        if ($flag && $protection != 100) {
+            $studentSkill = $student->skills->where('id', $skill->id)->first();
+            if ($studentSkill)
+                $count = $studentSkill->pivot->count + 1;
+            else $count = 1;
+            // TODO, has count the same time.
+            $student->skills()->sync([$skill->id => ['count' => $count]], false);
+            // $student->skills()->attach([$skill->id => ['count' => $count]]);
+            $student->update(['gold' => ($student->gold - $price)]);
+            LogEntry::create([
+                'type' => 'gold',
+                'value' => $price * -1,
+                'student_id' => $student->id,
+                'message' => 'skill',
+            ]);
+
+            return [
+                "message" => " " . __('success_error.equipment_success'),
+                "icon" => "check",
+                "type" => "success",
+                "skills" => $student->fresh()->skills,
+            ];
+        }
+        return [
+            "message" => " " . __('skills.no_available'),
+            "icon" => "times",
+            "type" => "error",
         ];
     }
     public function buyItem($code)
@@ -698,7 +805,7 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => $gold]);
         LogEntry::create([
             'type' => 'gold',
-            'value' => $price * - 1,
+            'value' => $price * -1,
             'student_id' => $student->id,
             'message' => 'shop',
         ]);

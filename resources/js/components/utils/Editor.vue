@@ -24,6 +24,12 @@ import Vue from "vue";
 import ElementUI from "element-ui";
 import { ElementTiptapPlugin } from "element-tiptap";
 
+import codemirror from "codemirror";
+import "codemirror/lib/codemirror.css"; // import base style
+import "codemirror/mode/xml/xml.js"; // language
+import "codemirror/addon/selection/active-line.js"; // require active-line.js
+import "codemirror/addon/edit/closetag.js"; // autoCloseTags
+
 // import ElementUI's styles
 import "element-ui/lib/theme-chalk/index.css";
 // import this package's styles
@@ -71,12 +77,13 @@ import {
   Fullscreen,
   FontType,
   FontSize,
+  CodeView,
 } from "element-tiptap";
 
 export default {
   props: ["code", "height"],
   mounted() {
-    this.content = this.$attrs.value; 
+    this.content = this.$attrs.value;
   },
   data: function () {
     return {
@@ -91,10 +98,15 @@ export default {
         new Underline(), // render command-button in bubble menu but not in menubar.
         new Italic(),
         new Strike(),
+        new FontType(),
+        new FontSize(),
+        new TextColor(),
+        new TextHighlight(),
         new ListItem(),
         new BulletList(),
         new OrderedList(),
         new Link(),
+        new HardBreak(),
         new Image({
           uploadRequest(file) {
             let formData = new FormData();
@@ -115,17 +127,29 @@ export default {
         new TableHeader(),
         new TableCell(),
         new TableRow(),
-        new FontType(),
-        new FontSize(),
-        new TextColor(),
-        new TextHighlight(),
         new FormatClear(),
         new Print(),
         new Fullscreen(),
+        new CodeView({
+          codemirror,
+          codemirrorOptions: {
+            styleActiveLine: true,
+            autoCloseTags: true,
+          },
+        }),
       ],
     };
   },
   methods: {
+    getLang() {
+      switch(this.trans.locale) {
+        case 'ca':
+        case 'es':
+            return 'es';
+        default:
+            return 'en';
+      }
+    },
     sendImage() {},
     updateValue: function () {
       this.$emit("input", this.content);
@@ -139,6 +163,7 @@ export default {
 </script>
 <style>
 .el-tiptap-editor > .el-tiptap-editor__content {
-  background-color: #e7daa8;
+  /* background-color: #e7daa8; */
 }
+
 </style>

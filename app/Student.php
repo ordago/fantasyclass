@@ -223,13 +223,13 @@ class Student extends Model implements HasMedia
         $valXp = $this->setProperty('xp', $behaviour->xp, true, 'behaviour');
         $valGold = $this->setProperty('gold', $behaviour->gold, true, 'behaviour');
 
-        $from['title'] = 'notifications.new_behaviour';
+        $from['title'] = __('notifications.new_behaviour');
         $from['name'] = "FantasyClass";
         $from['datetime'] = Carbon::now();
 
         $behaviourText = $behaviour->custom_text ? $behaviour->custom_text : __($behaviour->name);
 
-        Notification::send($this->classroom->user, new NewInteractionStudent('notifications.new_behaviour', __($behaviourText), $from, "new_behaviour", $this->classroom->classroom->code));
+        Notification::send($this->classroom->user, new NewInteractionStudent(__('notifications.new_behaviour'), __($behaviourText), $from, "new_behaviour", $this->classroom->classroom->code));
 
         return [
             'hp' => $valHp,

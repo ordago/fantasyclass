@@ -40,14 +40,14 @@
           field="title"
           :label="trans.get('skills.name')"
           sortable
-          >{{ trans.get("skills." + props.row.name) }}</b-table-column
+          >{{ trans.get(props.row.name) }}</b-table-column
         >
 
         <b-table-column
           field="description"
           :label="trans.get('skills.description')"
           sortable
-          >{{ trans.get("skills." + props.row.description) }}</b-table-column
+          >{{ trans.get(props.row.description) }}</b-table-column
         >
 
         <b-table-column

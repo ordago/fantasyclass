@@ -15,21 +15,27 @@
           :show-skills="false"
         ></show-character>
         <div class="card-content">
-          <div class="is-flex is-flex-direction-row has-text-center mb-2" style="justify-content: center;margin-top: -20px">
-            <span class="skills-big mx-1">
-              <img
-                src="/img/skills/t1/rpg-priest_active_12.png"
-                class="skill-item skill-item-big"
-            />
+          <div
+            class="is-flex is-flex-direction-row has-text-center mb-2"
+            style="justify-content: center; margin-top: -20px"
+          >
+            <ShowSkill
+              v-for="skill in student.skills"
+              :key="skill.id"
+              :skill="skill"
+              :code="classroom.code"
+              :admin="admin"
+              :use="true"
+            ></ShowSkill>
+
+            <span
+              v-for="index in 4 - student.skills.length"
+              :key="index"
+              class="skills-big mx-1 is-flex has-all-centered"
+              @click="buySkill()"
+            >
+              <i class="p-4 cursor-pointer fas fa-plus has-text-light"></i>
             </span>
-            <span class="skills-big mx-1">
-              <img
-                src="/img/skills/t1/rpg-rogue_active10.png"
-                class="skill-item skill-item-big"
-              />
-            </span>
-            <span class="skills-big mx-1"> </span>
-            <span class="skills-big mx-1"> </span>
           </div>
           <div class="media mb-0 has-all-centered">
             <div class="media-left" v-if="classroom.character_theme">
@@ -1299,6 +1305,7 @@ import Vue from "vue";
 import Utils from "../../utils.js";
 
 import ShowBadge from "../badge/ShowBadge.vue";
+import ShowSkill from "../skill/ShowSkill.vue";
 
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
@@ -1328,6 +1335,7 @@ export default {
     Blogs,
     Hp,
     ShowBadge,
+    ShowSkill,
   },
   created() {
     this.mutableChallenges = this.challenges;
@@ -1387,6 +1395,31 @@ export default {
     };
   },
   methods: {
+    buySkill() {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("skill.buy_skill"),
+        message: this.trans.get("skill.buy_skill_info") + "?",
+        confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .get("/classroom/" + this.classroom.code + "/student/skills/buy")
+            .then((response) => {
+              this.$toast(response.data.message, { type: response.data.type });
+
+              if (response.data.type == "success") {
+                this.student.skills = response.data.skills;
+                this.student.gold =
+                  this.student.gold - this.settings.skill_price;
+                this.$forceUpdate();
+              }
+            });
+        },
+      });
+    },
     getProperties() {
       if (this.admin)
         return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];

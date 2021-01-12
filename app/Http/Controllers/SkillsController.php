@@ -53,97 +53,96 @@ class SkillsController extends Controller
         // Active skills
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'question',
-            'description' => 'question_desc',
+            'name' => 'skills.question',
+            'description' => 'skills.question_desc',
             'icon' => '/img/skills/t1/rpg-priest_active_12.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'type' => 'common',
-            ]),
+            ],
         ]);
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'music',
-            'description' => 'music_desc',
+            'name' => 'skills.music',
+            'description' => 'skills.music_desc',
             'icon' => '/img/skills/t1/skills_skill_icon_7.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'type' => 'common',
-            ]),
+            ],
         ]);
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'heal_self',
-            'description' => 'heal_self_desc',
+            'name' => 'skills.heal_self',
+            'description' => 'skills.heal_self_desc',
             'icon' => ' /img/skills/t1/rpg-priest_active_11.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'hp_min' => 5,
                 'hp_max' => 20,
                 'type' => 'heal_self',
-            ]),
+            ],
         ]);
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'heal_group',
-            'description' => 'heal_group_desc',
+            'name' => 'skills.heal_group',
+            'description' => 'skills.heal_group_desc',
             'icon' => ' /img/skills/t1/rpg-priest_active_2.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'hp_min' => 5,
                 'hp_max' => 20,
                 'type' => 'heal_group',
-            ]),
+            ],
         ]);
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'heal_classroom',
-            'description' => 'heal_classroom_desc',
+            'name' => 'skills.heal_classroom',
+            'description' => 'skills.heal_classroom_desc',
             'icon' => ' /img/skills/t1/rpg-priest_active_3.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'hp_min' => 5,
                 'hp_max' => 20,
                 'type' => 'heal_classroom',
-            ]),
+            ],
         ]);
 
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'steal_money',
-            'description' => 'steal_money_desc',
+            'name' => 'skills.steal_money',
+            'description' => 'skills.steal_money_desc',
             'icon' => ' /img/skills/t1/rpg-rogue_active12.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'money_min' => 50,
                 'money_max' => 150,
                 'type' => 'steal_money',
-            ]),
+            ],
         ]);
 
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'steal_xp',
-            'description' => 'steal_xp_desc',
+            'name' => 'skills.steal_xp',
+            'description' => 'skills.steal_xp_desc',
             'icon' => '/img/skills/t1/rpg-rogue_active10.png',
             'type' => 0,
-            'properties' => json_encode([
+            'properties' => [
                 'xp_min' => 50,
                 'xp_max' => 100,
                 'type' => 'steal_xp',
-            ]),
+            ],
         ]);
 
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'undo_action',
-            'description' => 'undo_action_desc',
+            'name' => 'skills.undo_action',
+            'description' => 'skills.undo_action_desc',
             'icon' => '/img/skills/t1/game_skill_17.png',
             'type' => 0,
-            'properties' => json_encode([
-                'success' => 60,
+            'properties' => [
                 'type' => 'undo_action',
-            ]),
+            ],
         ]);
 
            /* Active types:
@@ -160,75 +159,75 @@ class SkillsController extends Controller
 
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'heal_passive',
-                'description' => 'heal_passive_desc',
+                'name' => 'skills.heal_passive',
+                'description' => 'skills.heal_passive_desc',
                 'icon' => '/img/skills/t1/skills_skill_icon_44.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'success' => 50,
                     'hp_increment' => 50,
                     'type' => 'heal_passive',
-                ]),
+                ],
             ]);
 
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'protection',
-                'description' => 'protection_desc',
+                'name' => 'skills.protection',
+                'description' => 'skills.protection_desc',
                 'icon' => '/img/skills/t1/rpg-knight_active6.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'success' => 20,
                     'type' => 'protection',
-                ]),
+                ],
             ]);
 
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'protection',
-                'description' => 'protection_desc',
+                'name' => 'skills.protection',
+                'description' => 'skills.protection_desc',
                 'icon' => '/img/skills/t1/rpg-knight_active13.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'success' => 40,
                     'type' => 'protection',
-                ]),
+                ],
             ]);
             
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'protection_steal',
-                'description' => 'protection_steal_desc',
+                'name' => 'skills.protection_steal',
+                'description' => 'skills.protection_steal_desc',
                 'icon' => '/img/skills/t1/rpg-mage_active12.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'success' => 70,
                     'type' => 'protection_steal',
-                ]),
+                ],
             ]);
 
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'cards',
-                'description' => 'cards_desc',
+                'name' => 'skills.cards',
+                'description' => 'skills.cards_desc',
                 'icon' => '/img/skills/t1/rpg-rogue_active1.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'cards' => 1,
                     'type' => 'cards',
-                ]),
+                ],
             ]);
 
             Skill::create([
                 'classroom_id' => $class->id,
-                'name' => 'protection_death',
-                'description' => 'protection_death_desc',
+                'name' => 'skills.protection_death',
+                'description' => 'skills.protection_death_desc',
                 'icon' => '/img/skills/t1/game_skill_32.png',
                 'type' => 1,
-                'properties' => json_encode([
+                'properties' => [
                     'success' => 90,
                     'type' => 'protection_death',
-                ]),
+                ],
             ]);
 
             /* Passive types:
@@ -293,6 +292,8 @@ class SkillsController extends Controller
             'skill.type' => ['numeric', 'required'],
             'skill.properties' => ['json', 'nullable'],
         ]);
+        if(!isset($data['skill']['properties']))
+            $data['skill']['properties'] = ['type' => 'common'];
 
         $data['skill']['classroom_id'] = $class->id;
         return Skill::create($data['skill']);
