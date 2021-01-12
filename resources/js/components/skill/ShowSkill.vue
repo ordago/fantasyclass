@@ -4,8 +4,7 @@
       :src="skill.icon"
       @click="removeSkill()"
       class="skill-item skill-item-big cursor-pointer"
-      v-tippy
-      interactive
+      v-tippy="{interactive : true}"
       :content="getSkillMessage()"
     />
     <span
@@ -56,6 +55,12 @@ export default {
       }
       if(this.skill.properties.cards) {
         message += `<div class='has-text-left my-2'><small class="is-italic"><i class="fas fa-club colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`
+      }
+      if(this.use && this.skill.type == 0) {
+        message += `<small><button class="button is-success mx-2">${this.trans.get('cards.use')}</button></small>`
+      }
+      if(this.use) {
+        message += `<button class="button is-danger"><small>${this.trans.get('cards.delete')}</small></button>`
       }
 
       return message;
