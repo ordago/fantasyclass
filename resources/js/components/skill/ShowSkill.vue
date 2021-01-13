@@ -26,6 +26,7 @@ export default {
 
   created() {
     window.removeSkill = this.removeSkill;
+    window.useSkill = this.useSkill;
   },
   data: function () {
     return {};
@@ -64,12 +65,12 @@ export default {
       message += "</div>";
       message += "<div class='has-text-left'>";
       if (this.use && this.skill.type == 0) {
-        message += `<small><span class="tag is-success mx-2">${this.trans.get(
+        message += `<small><span class="tag is-success mx-2 cursor-pointer" onclick="useSkill(${this.skill.id})">${this.trans.get(
           "cards.use"
         )}</span></small>`;
       }
       if (this.use) {
-        message += `<small><span class="tag is-danger cursor-pointer" onclick="removeSkill()">${this.trans.get(
+        message += `<small><span class="tag is-danger cursor-pointer" onclick="removeSkill(${this.skill.id})">${this.trans.get(
           "cards.delete"
         )}</span></small>`;
       }
@@ -77,7 +78,7 @@ export default {
 
       return message;
     },
-    removeSkill() {
+    removeSkill(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
@@ -90,16 +91,60 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
+          let student;
+          if(this.admin)
+            student = this.$parent.student.id
           axios
-            .get(
+            .post(
               "/classroom/" +
                 this.code +
-                "/student/skills/delete/" +
-                this.skill.id
+                "/student/skills/delete/",
+                {skill: id, student: student}
             )
             .then((response) => {
               this.$parent.student.skills = response.data;
               this.$parent.$forceUpdate();
+              this.notify();
+            });
+        },
+      });
+    },
+    notify(type) {
+      this.$toast(this.trans.get('success_error.update_success', {type: 'success'}))
+    },
+    useSkill(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("skills.use"),
+        message: this.trans.get("skills.use_info"),
+        confirmText: this.trans.get("skills.use"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "exclamation-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          let student;
+          if(this.admin)
+            student = this.$parent.student.id
+          axios
+            .post(
+              "/classroom/" +
+                this.code +
+                "/student/skills/use"
+            , {
+              skill: id,
+              student: student,
+            })
+            .then((response) => {
+              this.$parent.student.gold = response.data.gold;
+              this.$parent.student.hp = response.data.hp;
+              this.$parent.student.xp = response.data.xp;
+              this.$parent.student.skills = response.data.skills;
+              this.$parent.student.logEntries = response.data.logEntries;
+              this.$parent.$forceUpdate();
+              this.notify();
             });
         },
       });

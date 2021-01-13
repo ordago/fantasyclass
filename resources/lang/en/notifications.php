@@ -13,6 +13,8 @@ return [
     'new_comment' => 'New comment',    
     'mark_card' => 'Card waiting',
     'mark_card_content' => 'wants to use or delete one card',
+    'use_skill' => 'Skill used',
+    'use_skill_content' => 'has used skill',
     'new_behaviour' => 'New behaviour',
     'go_to' => 'Go to',
     'message' => 'New message',

@@ -98,7 +98,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
         Route::post('/{code}/student/skills/buy', 'ClassroomsStudentController@buySkill');
-        Route::get('/{code}/student/skills/delete/{id}', 'ClassroomsStudentController@deleteSkill');
+        Route::post('/{code}/student/skills/use', 'ClassroomsStudentController@useSkill');
+        Route::post('/{code}/student/skills/delete', 'ClassroomsStudentController@deleteSkill');
         Route::post('/{code}/student/buypet', 'ClassroomsStudentController@buyPet');
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
         Route::post('/{code}/student/assignequipment', 'StudentController@assignEquipment');

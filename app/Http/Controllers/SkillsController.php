@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Skill;
+use Illuminate\Support\Facades\DB;
 
 class SkillsController extends Controller
 {
@@ -78,8 +79,8 @@ class SkillsController extends Controller
             'icon' => ' /img/skills/t1/rpg-priest_active_11.png',
             'type' => 0,
             'properties' => [
-                'hp_min' => 5,
-                'hp_max' => 20,
+                'hp_min' => 20,
+                'hp_max' => 40,
                 'type' => 'heal_self',
             ],
         ]);
@@ -279,6 +280,18 @@ class SkillsController extends Controller
     //     ]);
 
     // }
+
+    public static function undoAction($student) {
+
+        $row = $student->logEntries()
+            ->where('value', '<', 0)
+            ->orderByDesc('created_at')
+            ->first();
+
+        $student->setProperty($row->type, $row->value * -1, false, null, true);
+        $row->delete();
+
+    }
 
     public function store($code) {
 

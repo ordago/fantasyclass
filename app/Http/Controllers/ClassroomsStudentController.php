@@ -586,19 +586,79 @@ class ClassroomsStudentController extends Controller
             "boost" => $student->fresh()->getBoost(),
         ];
     }
-    public function deleteSkill($code, $id)
+
+
+    public function useSkill($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
-        $student = Functions::getCurrentStudent($class, []);
 
-        $lastSkill = $student->skills()->where('skill_id', $id)->first();
+        if(isset(request()->student)) {
+            $student = Student::findOrFail(request()->student);
+            if($student->classroom->classroom_id != $class->id)
+                abort(403);
+        } else {
+            $student = Functions::getCurrentStudent($class, []);
+        }
+
+        $skill = Skill::findOrFail(request()->skill);
+
+        if(!$student->skills->contains($skill->id))
+            abort(403);
+            
+        switch ($skill->properties['type']) {
+            case 'undo_action':
+                SkillsController::undoAction($student);
+                break;
+            case 'steal_xp':
+                # code...
+                break;
+            case 'steal_money':
+                # code...
+                break;
+            case 'heal_classroom':
+                # code...
+                break;
+            case 'heal_group':
+                # code...
+                break;
+            case 'heal_self':
+                $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
+                $student->setProperty('hp', $hp, true, 'skill');
+                break;
+            
+        }
+
+        $from['title'] = __("notifications.use_skill");
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = Carbon::now();
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.use_skill", __("notifications.use_skill_content") . ": " . __($skill->name), $from, "use_skill", '');
+        // $this->deleteSkill($code, request()->skill);
+        $student = $student->fresh();
+        $student->load('skills');
+        $student->load('logEntries');
+        return $student;
+    }
+
+    public function deleteSkill($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        if(isset(request()->student)) {
+            $student = Student::findOrFail(request()->student);
+            if($student->classroom->classroom_id != $class->id)
+                abort(403);
+        } else {
+            $student = Functions::getCurrentStudent($class, []);
+        }
+        $lastSkill = $student->skills()->where('skill_id', request()->skill)->first();
         if($lastSkill->pivot->count == 1) {
             $student->skills()->detach($lastSkill);
         } else {
             $student->skills()->sync([$lastSkill->id => ['count' => $lastSkill->pivot->count - 1]], false);
         }
-        // $student->skills()->detach($id);
         return $student->fresh()->skills;
     }
 
