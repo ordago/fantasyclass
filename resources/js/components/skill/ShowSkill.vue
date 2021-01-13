@@ -56,6 +56,12 @@ export default {
       if (this.skill.properties.hp_min) {
         message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-heart colored"></i>: ${this.skill.properties.hp_min} - ${this.skill.properties.hp_max}</small></div>`;
       }
+      if (this.skill.properties.money_min) {
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-coins colored"></i>: ${this.skill.properties.money_min} - ${this.skill.properties.money_max} x ${this.skill.properties.users} <i class="fas fa-user"></i></small></div>`;
+      }
+      if (this.skill.properties.xp_min) {
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-fist-raised colored"></i>: ${this.skill.properties.xp_min} - ${this.skill.properties.xp_max} x ${this.skill.properties.users} <i class="fas fa-user"></i></small></div>`;
+      }
       if (this.skill.properties.hp_increment) {
         message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-heart colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.hp_increment}%</small></div>`;
       }

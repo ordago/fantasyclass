@@ -614,7 +614,13 @@ class ClassroomsStudentController extends Controller
                 # code...
                 break;
             case 'steal_money':
-                # code...
+                $gold = rand($skill->properties['money_min'], $skill->properties['money_max']);
+                $students = $class->students()->where('id', '!=', $student->id)->inRandomOrder()->take($skill->properties['users']);
+                $goldStd = 0;
+                foreach ($students as $std) {
+                    $goldStd += $std->setProperty("gold", $gold * - 1, true, 'skill', true);
+                }
+                $student->setProperty("gold", $goldStd, true, 'skill', true);
                 break;
             case 'heal_classroom':
                 $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
@@ -719,6 +725,14 @@ class ClassroomsStudentController extends Controller
         $have = [];
         foreach ($student->skills->pluck('properties')->toArray() as $line) {
             array_push($have, $line['type']);
+        }
+
+        if($class->skills->count() == 0) {
+            return [
+                "message" => " " . __('skills.no_available'),
+                "icon" => "times",
+                "type" => "error",
+            ];
         }
 
         $flag = true;

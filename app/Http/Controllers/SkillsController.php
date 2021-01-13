@@ -18,7 +18,8 @@ class SkillsController extends Controller
         $this->middleware('verified');
     }
 
-    public function index($code) {
+    public function index($code)
+    {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('view', $class);
 
@@ -31,23 +32,25 @@ class SkillsController extends Controller
         return view('skills.index', compact('class', 'skills', 'settings'));
     }
 
-    public function get($code) {
-            $class = Classroom::where('code', $code)->firstOrFail();
-            $this->authorize('view', $class);
-            
-            $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t1'));
-            $images[0]['images'] = $array;
-            $images[0]['name'] = "t1";
-            $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t2'));
-            $images[1]['images'] = $array;
-            $images[1]['name'] = "t2";
-            $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t3'));
-            $images[2]['images'] = $array;
-            $images[2]['name'] = "t3";
-            return $images;
+    public function get($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('view', $class);
+
+        $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t1'));
+        $images[0]['images'] = $array;
+        $images[0]['name'] = "t1";
+        $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t2'));
+        $images[1]['images'] = $array;
+        $images[1]['name'] = "t2";
+        $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/skills/t3'));
+        $images[2]['images'] = $array;
+        $images[2]['name'] = "t3";
+        return $images;
     }
-   
-    public function importDefault($code) {
+
+    public function importDefault($code)
+    {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('update', $class);
 
@@ -130,8 +133,9 @@ class SkillsController extends Controller
             'icon' => '/img/skills/t1/rpg-rogue_active10.png',
             'type' => 0,
             'properties' => [
-                'xp_min' => 50,
-                'xp_max' => 100,
+                'xp_min' => 10,
+                'xp_max' => 40,
+                'users' => 3,
                 'type' => 'steal_xp',
             ],
         ]);
@@ -147,7 +151,7 @@ class SkillsController extends Controller
             ],
         ]);
 
-           /* Active types:
+        /* Active types:
                 - Ask a question (yes or not) to the teacher in an exam.
                 - Heal.
                 - Heal group.
@@ -157,82 +161,82 @@ class SkillsController extends Controller
                 - Undo last lose (50% rate).
             */
 
-            // Passive
+        // Passive
 
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.heal_passive',
-                'description' => 'skills.heal_passive_desc',
-                'icon' => '/img/skills/t1/skills_skill_icon_44.png',
-                'type' => 1,
-                'properties' => [
-                    'success' => 50,
-                    'hp_increment' => 50,
-                    'type' => 'heal_passive',
-                ],
-            ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.heal_passive',
+            'description' => 'skills.heal_passive_desc',
+            'icon' => '/img/skills/t1/skills_skill_icon_44.png',
+            'type' => 1,
+            'properties' => [
+                'success' => 50,
+                'hp_increment' => 50,
+                'type' => 'heal_passive',
+            ],
+        ]);
 
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.protection',
-                'description' => 'skills.protection_desc',
-                'icon' => '/img/skills/t1/rpg-knight_active6.png',
-                'type' => 1,
-                'properties' => [
-                    'success' => 20,
-                    'type' => 'protection',
-                ],
-            ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.protection',
+            'description' => 'skills.protection_desc',
+            'icon' => '/img/skills/t1/rpg-knight_active6.png',
+            'type' => 1,
+            'properties' => [
+                'success' => 20,
+                'type' => 'protection',
+            ],
+        ]);
 
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.protection',
-                'description' => 'skills.protection_desc',
-                'icon' => '/img/skills/t1/rpg-knight_active13.png',
-                'type' => 1,
-                'properties' => [
-                    'success' => 40,
-                    'type' => 'protection',
-                ],
-            ]);
-            
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.protection_steal',
-                'description' => 'skills.protection_steal_desc',
-                'icon' => '/img/skills/t1/rpg-mage_active12.png',
-                'type' => 1,
-                'properties' => [
-                    'success' => 70,
-                    'type' => 'protection_steal',
-                ],
-            ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.protection',
+            'description' => 'skills.protection_desc',
+            'icon' => '/img/skills/t1/rpg-knight_active13.png',
+            'type' => 1,
+            'properties' => [
+                'success' => 40,
+                'type' => 'protection',
+            ],
+        ]);
 
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.cards',
-                'description' => 'skills.cards_desc',
-                'icon' => '/img/skills/t1/rpg-rogue_active1.png',
-                'type' => 1,
-                'properties' => [
-                    'cards' => 1,
-                    'type' => 'cards',
-                ],
-            ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.protection_steal',
+            'description' => 'skills.protection_steal_desc',
+            'icon' => '/img/skills/t1/rpg-mage_active12.png',
+            'type' => 1,
+            'properties' => [
+                'success' => 70,
+                'type' => 'protection_steal',
+            ],
+        ]);
 
-            Skill::create([
-                'classroom_id' => $class->id,
-                'name' => 'skills.protection_death',
-                'description' => 'skills.protection_death_desc',
-                'icon' => '/img/skills/t1/game_skill_32.png',
-                'type' => 1,
-                'properties' => [
-                    'success' => 90,
-                    'type' => 'protection_death',
-                ],
-            ]);
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.cards',
+            'description' => 'skills.cards_desc',
+            'icon' => '/img/skills/t1/rpg-rogue_active1.png',
+            'type' => 1,
+            'properties' => [
+                'cards' => 1,
+                'type' => 'cards',
+            ],
+        ]);
 
-            /* Passive types:
+        Skill::create([
+            'classroom_id' => $class->id,
+            'name' => 'skills.protection_death',
+            'description' => 'skills.protection_death_desc',
+            'icon' => '/img/skills/t1/game_skill_32.png',
+            'type' => 1,
+            'properties' => [
+                'success' => 90,
+                'type' => 'protection_death',
+            ],
+        ]);
+
+        /* Passive types:
                 - Health individual.
                 X Health group.
                 X Health everybody.
@@ -242,7 +246,6 @@ class SkillsController extends Controller
             */
 
         return $class->fresh()->skills;
-
     }
 
 
@@ -250,7 +253,7 @@ class SkillsController extends Controller
     // public function update($code) {
     //     $class = Classroom::where('code', $code)->firstOrFail();
     //     $this->authorize('update', $class);
-    
+
     //     $data = request()->validate([
     //         'monster.id' => ['numeric'],
     //         'monster.name' => ['required', 'string'],
@@ -258,7 +261,7 @@ class SkillsController extends Controller
     //         'monster.hp' => ['numeric', 'required'],
     //         'monster.reward_xp' => ['numeric', 'required'],
     //         'monster.reward_gold' => ['numeric', 'required'],
-    
+
     //     ]);
 
     //     $data['monster']['hp'] = max($data['monster']['hp'], 0); 
@@ -267,7 +270,7 @@ class SkillsController extends Controller
     //     $monster = Monster::find($data['monster']['id']);
     //     if($monster->classroom_id != $class->id)
     //         abort(403, 'What are you trying? :(');
-        
+
     //     $monster->update($data['monster']);
     // }
 
@@ -282,7 +285,8 @@ class SkillsController extends Controller
 
     // }
 
-    public static function undoAction($student) {
+    public static function undoAction($student)
+    {
 
         $row = $student->logEntries()
             ->where('value', '<', 0)
@@ -291,10 +295,10 @@ class SkillsController extends Controller
 
         $student->setProperty($row->type, $row->value * -1, false, null, true);
         $row->delete();
-
     }
 
-    public function store($code) {
+    public function store($code)
+    {
 
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('update', $class);
@@ -306,7 +310,7 @@ class SkillsController extends Controller
             'skill.type' => ['numeric', 'required'],
             'skill.properties' => ['json', 'nullable'],
         ]);
-        if(!isset($data['skill']['properties']))
+        if (!isset($data['skill']['properties']))
             $data['skill']['properties'] = ['type' => 'common'];
 
         $data['skill']['classroom_id'] = $class->id;
@@ -315,7 +319,8 @@ class SkillsController extends Controller
 
 
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
 
         $skill = Skill::where('id', '=', $id)->first();
         $class = Classroom::where('id', '=', $skill->classroom_id)->first();
@@ -326,6 +331,5 @@ class SkillsController extends Controller
             return ['error' => $th];
         }
         return 1;
-
     }
 }
