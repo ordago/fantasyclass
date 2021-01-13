@@ -389,7 +389,7 @@
               />
             </div>
             <div class="column is-flex align-items-center">
-              <i class="fas fa-club colored mr-2"></i>
+              <i class="fak fa-deck colored mr-2"></i>
               {{ trans.get("settings.cards") }}
             </div>
           </div>

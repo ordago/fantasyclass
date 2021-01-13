@@ -950,13 +950,13 @@
                     ><i class="fas fa-heart colored"></i
                   ></span>
                   <span v-else-if="props.row.type == 'card_use'"
-                    ><i class="fas fa-club colored"></i
+                    ><i class="fak fa-deck colored"></i
                   ></span>
                   <span v-else-if="props.row.type == 'card_delete'"
-                    ><i class="fas fa-club colored"></i
+                    ><i class="fak fa-deck colored"></i
                   ></span>
                   <span v-else-if="props.row.type == 'card_assign'"
-                    ><i class="fas fa-club colored"></i
+                    ><i class="fak fa-deck colored"></i
                   ></span>
                 </span>
               </b-table-column>
@@ -1495,7 +1495,7 @@ export default {
           return "<i class='fas fa-pen-fancy colored' style='color: #eee'></i>";
           break;
         case "card":
-          return "<i class='fas fa-club colored' style='color: black'></i>";
+          return "<i class='fak fa-deck colored' style='color: black'></i>";
           break;
         case "badge":
           return "<i class='fas fa-award colored' style='color: #ADD8E6'></i>";
@@ -1761,7 +1761,7 @@ export default {
           this.trans.get("shop.slot") +
           " +" +
           item.slot +
-          " <i class='fas fa-club colored mx-1'></i>. ";
+          " <i class='fak fa-deck colored mx-1'></i>. ";
       if (item.hp > 0)
         message +=
           this.trans.get("shop.recovers_hp") +

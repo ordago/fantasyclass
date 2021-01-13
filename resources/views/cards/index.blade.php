@@ -13,7 +13,7 @@
 <li class="is-active">
     <a href="#">
         <span class="icon is-small">
-            <i class="fad fa-club" aria-hidden="true"></i>
+            <i class="fak fa-deck" aria-hidden="true"></i>
         </span>
         <span>{{ __('menu.cards') }}</span>
     </a>

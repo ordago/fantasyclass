@@ -94,7 +94,7 @@
                 <i class="fal fa-ellipsis-v mx-1"></i>
               </small>
               <small v-if="challengeReactive.cards != 0">
-                <i class="fas fa-club colored"></i>
+                <i class="fak fa-deck colored"></i>
                 {{ challengeReactive.cards }}
                 <i class="fal fa-ellipsis-v mx-1"></i>
               </small>

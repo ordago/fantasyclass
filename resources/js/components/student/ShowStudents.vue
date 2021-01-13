@@ -65,7 +65,7 @@
               @click="getRandomCard"
               v-if="students.length || classroom.grouping[0].groups.length"
             >
-              <i class="fad fa-club mr-2"></i>
+              <i class="fak fa-deck mr-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.card") }}
             </a>
             <a class="dropdown-item" @click="isWheelModalActive = true">

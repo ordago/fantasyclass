@@ -320,7 +320,7 @@
             <div class="field has-addons">
               <p class="control">
                 <span class="button is-static">
-                  <i class="fas fa-club colored"></i>
+                  <i class="fak fa-deck colored"></i>
                 </span>
               </p>
               <p class="control is-expanded">

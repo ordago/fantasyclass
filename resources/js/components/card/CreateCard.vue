@@ -562,7 +562,7 @@
                       v-tippy
                       :content="trans.get('cards.slot_help')"
                     >
-                      <i class="fas fa-club colored"></i>
+                      <i class="fak fa-deck colored"></i>
                       <i class="fas fa-question-circle ml-2"></i>
                     </a>
                   </p>

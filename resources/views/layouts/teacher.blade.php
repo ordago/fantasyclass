@@ -26,7 +26,7 @@
                 <i class="fad fa-trophy mr-2"></i> {{ __('menu.levels') }}
             </a>
             <a href="/classroom/{{ $class->code }}/cards" class="navbar-item">
-                <i class="fad fa-club mr-2"></i> {{ __('menu.cards') }}
+                <i class="fak fa-deck mr-2"></i> {{ __('menu.cards') }}
             </a>
             <a href="/classroom/{{ $class->code }}/badges" class="navbar-item">
                 <i class="fad fa-award mr-2"></i> {{ __('menu.badges') }}

@@ -66,7 +66,7 @@ export default {
         message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-heart colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.hp_increment}%</small></div>`;
       }
       if (this.skill.properties.cards) {
-        message += `<div class="my-2"><small class="is-italic my-2"><i class="fas fa-club colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`;
+        message += `<div class="my-2"><small class="is-italic my-2"><i class="fak fa-deck colored"></i><i class="fas fa-arrow-up"></i>: ${this.skill.properties.cards}</small></div>`;
       }
       message += "</div>";
       message += "<div class='has-text-left'>";

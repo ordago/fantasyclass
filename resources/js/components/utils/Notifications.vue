@@ -14,7 +14,7 @@
       "
       v-if="countCards()"
     >
-      <i class="fad fa-club" style="font-size: 1.25em"></i>
+      <i class="fak fa-deck" style="font-size: 1.25em"></i>
       <span class="tag is-danger tag-notif" v-html="countCards()"></span>
     </div>
     <div

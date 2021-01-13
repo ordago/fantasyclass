@@ -86,7 +86,7 @@
                   <div class="field has-addons">
                     <p class="control">
                       <a class="button is-static">
-                        <i class="fas fa-club colored"></i>
+                        <i class="fak fa-deck colored"></i>
                       </a>
                     </p>
                     <p class="control is-expanded">

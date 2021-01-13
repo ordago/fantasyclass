@@ -50,7 +50,7 @@
           ></span>
           <span class="tag is-dark ml-1" @click="redirect(student.id)">
             {{ student.numcards[0] }} / {{ student.numcards[1]
-            }}<i class="fas fa-club ml-1"></i>
+            }}<i class="fak fa-deck ml-1"></i>
           </span>
           <span
             class="tag is-success ml-1"
