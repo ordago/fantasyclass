@@ -7,6 +7,7 @@
 ### Changed
 - Fixed showing character with custom theme.
 - Default icons changed.
+- Updated card icon.
 
 ## v1.33 Beta (07/01/2021)
 ### Added
