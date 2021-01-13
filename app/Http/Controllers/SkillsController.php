@@ -116,8 +116,9 @@ class SkillsController extends Controller
             'icon' => ' /img/skills/t1/rpg-rogue_active12.png',
             'type' => 0,
             'properties' => [
-                'money_min' => 50,
-                'money_max' => 150,
+                'money_min' => 200,
+                'money_max' => 400,
+                'users' => 3,
                 'type' => 'steal_money',
             ],
         ]);

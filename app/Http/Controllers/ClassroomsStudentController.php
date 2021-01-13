@@ -617,10 +617,29 @@ class ClassroomsStudentController extends Controller
                 # code...
                 break;
             case 'heal_classroom':
-                # code...
+                $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
+                foreach ($class->students as $std) {
+                    if($std->hp == 0)
+                        continue;
+                    $mult = 1;
+                    if($student->id == $std->id)
+                        $mult = -1;
+                    $std->setProperty('hp', $hp * $mult, true, 'skill', true);
+                }
                 break;
             case 'heal_group':
-                # code...
+                $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
+                $group = $student->groups->first();
+                if($group) {
+                    foreach ($group->students as $std) {
+                        if($std->hp == 0)
+                            continue;
+                        $mult = 1;
+                        if($student->id == $std->id)
+                            $mult = -1;
+                        $std->setProperty('hp', $hp * $mult, true, 'skill', true);
+                    }
+                } else abort(403);
                 break;
             case 'heal_self':
                 $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
