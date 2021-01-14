@@ -35,6 +35,7 @@ return [
       'protection_success' => 'T\'has protegit de la pèrdua de vida!',
       'heal_passive_effective' => 'L\'habilitat ha sigut efectiva i has guanyat més punts de vida!',
       'protection_death_effective' => 'T\'has lliurat de la mort! Uffff Però compte, ara tens 1 punt de vida.',
+      'protect' => 'L\'estudiant s\'ha protegit',
 
       'question' => 'Transferència',
       'question_desc' => 'Fes una pregunta al professor durant un examen de sí o no',

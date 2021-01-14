@@ -454,7 +454,7 @@ class Student extends Model implements HasMedia
         if ($prop == "hp") {
             if($value < 0 && $this->checkSkill('protection')) {
                 $this->classroom->user->sendMessage("<i class='fad fa-shield'></i> ". __('skills.protection_success'), $this->classroom->classroom->code, 'skill', false);
-                return $this->hp;
+                return 'protect';
             }
             if ($value >= 0) {
                 $value = min($this->$prop + $value, 100);

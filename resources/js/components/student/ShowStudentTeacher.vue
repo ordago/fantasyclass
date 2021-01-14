@@ -1,11 +1,18 @@
 <template>
   <div class="card rounded card-shadow-s h-100" style="overflow: visible">
-    <show-character :show-skills="showSkills" :student="student" :classroom="classroom"></show-character>
+    <show-character
+      :show-skills="showSkills"
+      :student="student"
+      :classroom="classroom"
+    ></show-character>
     <div
       class="card-content is-relative"
       v-bind:class="{ 'has-background-hidden': student.hidden == 1 }"
     >
-      <div class="dropdown is-right top-right  custom is-hoverable" style="right: 10px;">
+      <div
+        class="dropdown is-right top-right custom is-hoverable"
+        style="right: 10px"
+      >
         <div class="dropdown-trigger fs-2">
           <span class="pl-5 py-2">
             <i class="far fa-bars"></i>
@@ -14,13 +21,19 @@
         <div class="dropdown-menu has-text-left" id="dropdown-menu" role="menu">
           <div class="dropdown-content">
             <a class="dropdown-item" @click="redirect(student.id)">
-              <i class="fal fa-info-square" style="width:20px"></i> {{ trans.get('students.student_area') }}
+              <i class="fal fa-info-square" style="width: 20px"></i>
+              {{ trans.get("students.student_area") }}
             </a>
             <a class="dropdown-item" @click="byPassStudent(student.id)">
-              <i class="fal fa-eye"  style="width:20px"></i> {{ trans.get('students.student_view') }}
+              <i class="fal fa-eye" style="width: 20px"></i>
+              {{ trans.get("students.student_view") }}
             </a>
-            <a class="dropdown-item" @click="$parent.sendMessage(0, student.id)">
-              <i class="fal fa-paper-plane"  style="width:20px"></i> {{ trans.get('students.send_message') }}
+            <a
+              class="dropdown-item"
+              @click="$parent.sendMessage(0, student.id)"
+            >
+              <i class="fal fa-paper-plane" style="width: 20px"></i>
+              {{ trans.get("students.send_message") }}
             </a>
             <!-- <hr class="dropdown-divider" /> -->
           </div>
@@ -42,10 +55,12 @@
           </p>
         </div>
 
-        <span
-          class="bottom-right cursor-pointer is-flex has-all-centered"
-        >
-          <span class="tag is-danger" v-if="student.google_uid" @click="redirect(student.id)">
+        <span class="bottom-right cursor-pointer is-flex has-all-centered">
+          <span
+            class="tag is-danger"
+            v-if="student.google_uid"
+            @click="redirect(student.id)"
+          >
             <i class="fab fa-google"></i
           ></span>
           <span class="tag is-dark ml-1" @click="redirect(student.id)">
@@ -60,7 +75,12 @@
           >
             <i class="fad fa-wifi"></i>
           </span>
-          <span v-else class="tag is-light border ml-1" v-tippy content="Offline">
+          <span
+            v-else
+            class="tag is-light border ml-1"
+            v-tippy
+            content="Offline"
+          >
             <i class="fas fa-wifi-slash"></i>
           </span>
         </span>
@@ -81,7 +101,7 @@
               </div>
             </article>
           </div>
-          
+
           <hp :hp="student.hp" :size="2" class="mb-3"></hp>
 
           <div class="my-1 has-text-centered">
@@ -231,11 +251,7 @@
               </template>
               <span>
                 <div class="is-flex">
-                  <input
-                    type="number"
-                    v-model="custom"
-                    class="input mr-1"
-                  />
+                  <input type="number" v-model="custom" class="input mr-1" />
                   <button
                     @click="updateProp(student.id, 'xp', custom)"
                     class="button is-primary is-inline"
@@ -302,21 +318,14 @@
                 arrow
               >
                 <template v-slot:trigger>
-                  <button
-                    type="submit"
-                    class="button is-primary px-3"
-                  >
+                  <button type="submit" class="button is-primary px-3">
                     <i class="fas fa-hashtag"></i>
                   </button>
                 </template>
 
                 <span>
                   <div class="is-flex">
-                    <input
-                      type="number"
-                      v-model="custom"
-                      class="input mr-1"
-                    />
+                    <input type="number" v-model="custom" class="input mr-1" />
                     <button
                       @click="updateProp(student.id, 'gold', custom)"
                       class="button is-primary col-4 pl-1"
@@ -395,7 +404,7 @@ export default {
       }
     },
     updateProp: function (id, prop, value) {
-      let options = { id: id, prop: prop, value: value, type: 'teacher' };
+      let options = { id: id, prop: prop, value: value, type: "teacher" };
       let student;
 
       axios.post("/classroom/students/update", options).then((response) => {
@@ -424,8 +433,11 @@ export default {
         if (this.random)
           student = this.$parent.$parent.students.find((el) => el.id === id);
         else student = this.$parent.students.find((el) => el.id === id);
-
-        student.hp = response.data.hp;
+        if (response.data.hp == "protect") {
+          this.$toast(this.trans.get("skills.protect"));
+        } else {
+          student.hp = response.data.hp;
+        }
         student.xp = response.data.xp.xp;
         student.gold = response.data.gold;
         student.level = response.data.xp.level;

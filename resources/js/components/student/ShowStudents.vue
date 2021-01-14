@@ -772,7 +772,6 @@ export default {
       setTimeout(() => {
         var end = Date.now() + 15 * 125;
 
-        // go Buckeyes!
         var colors = ["#bb0000", "#00bb00", "#0000bb", "#bbbb00"];
 
         (function frame() {

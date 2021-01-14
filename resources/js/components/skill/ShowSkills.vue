@@ -64,6 +64,20 @@
         </b-table-column>
 
         <b-table-column
+          field="hp"
+          :label="trans.get('skills.type')"
+          sortable
+          centered
+          class="has-all-centered"
+        >
+          <span v-for="(value, key, index) in props.row.properties" :key="index" class="tag is-dark m-1">
+               {{ key }}: {{ value }}
+            <!-- <span v-if="key != 'type'">{{ key }}: {{ value }}</span> -->
+
+          </span>
+        </b-table-column>
+
+        <b-table-column
           field="name"
           :label="trans.get('menu.settings')"
           centered
