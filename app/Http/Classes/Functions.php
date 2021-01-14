@@ -10,7 +10,7 @@ class Functions
 
   public static function getProbability($success) {
     $v = rand(0, 99);
-    // dump($success . "%: " .$v);
+    dump($success . "%: " .$v);
     if($v < $success) {
       return true;
     } return false;

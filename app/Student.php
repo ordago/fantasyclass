@@ -433,6 +433,18 @@ class Student extends Model implements HasMedia
         return false;
     }
 
+    public function skillRemove($type)
+    {
+        $skill = $this->skills()->where('properties->type', $type)->first();
+        $this->skills()->detach($skill->id);
+    }
+
+    public function getIncrement($type, $value)
+    {
+        $skill = $this->skills()->where('properties->type', $type)->first();
+        return $value * $skill->properties['hp_increment']/100;
+    }
+
     public function setProperty($prop, $value, $log = true, $type = null, $byPassBoost = false)
     {
         $boost = $this->getBoost();
@@ -470,9 +482,15 @@ class Student extends Model implements HasMedia
             $checkAlive = $this->hp == 0 ? false : true;
             if ($isAlive != $checkAlive) {
                 if ($isAlive) {
-                    $this->setUndead();
-                    $this->setProperty('xp', $this->xp * -1);
-                    $this->setProperty('gold', $this->gold * -1);
+                    if($this->checkSkill('protection_death')) {
+                        $this->update(['hp' => 1]);
+                        $this->classroom->user->sendMessage(__('skills.protection_death_effective'), $this->classroom->classroom->code, 'skill', false);
+                        $this->skillRemove('protection_death');
+                    } else {
+                        $this->setUndead();
+                        $this->setProperty('xp', $this->xp * -1);
+                        $this->setProperty('gold', $this->gold * -1);
+                    }
                 } else {
                     $this->setBasicEquipment();
                 }

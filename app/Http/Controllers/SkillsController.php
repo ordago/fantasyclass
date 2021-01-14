@@ -152,13 +152,13 @@ class SkillsController extends Controller
         ]);
 
         /* Active types:
-                - Ask a question (yes or not) to the teacher in an exam.
-                - Heal.
-                - Heal group.
-                - Heal everybody.
-                - Steal random student money.
-                - Steal random xp.
-                - Undo last lose (50% rate).
+                - Ask a question (yes or not) to the teacher in an exam. (OK)
+                - Heal. (OK)
+                - Heal group. (OK)
+                - Heal everybody. (OK)
+                - Steal random student money. (OK)
+                - Steal random xp. (OK)
+                - Undo last lose. (OK)
             */
 
         // Passive
@@ -236,13 +236,12 @@ class SkillsController extends Controller
             ],
         ]);
 
-        /* Passive types:
-                - Health individual.
-                X Health group.
-                X Health everybody.
-                - Protection. (rate 50%)
-                - Protection against steals (rate 70%).
-                - Carry 1 more card.
+            /* Passive types:
+                - Health individual. (OK)
+                - Protection. (OK)
+                - Protection against steals (rate 70%). (OK)
+                - Carry 1 more card. (OK)
+                - Probability don't die. (OK)
             */
 
         return $class->fresh()->skills;

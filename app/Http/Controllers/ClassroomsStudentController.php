@@ -965,14 +965,21 @@ class ClassroomsStudentController extends Controller
         } else
             $student->items()->updateExistingPivot($item->id, ['count' => $item->pivot->count - 1]);
 
+        $extra = 0;
         if ($item->hp > 0) {
+            if($student->checkSkill('heal_passive')) {
+                $extra = $student->getIncrement('heal_passive', $item->hp);
+                $student->setProperty('hp', $extra, true, 'skill');
+                $student->classroom->user->sendMessage(__('skills.heal_passive_effective'), $class->code, 'skill', false);
+            }
+            
             $student->setProperty('hp', $item->hp, true, 'item');
         }
         if ($item->xp > 0) {
             $student->setProperty('xp', $item->xp, true, 'item');
         }
 
-        return ['xp' => $item->xp, 'hp' => $item->hp];
+        return ['xp' => $item->xp, 'hp' => $item->hp + $extra];
     }
 
     public function map($code)
