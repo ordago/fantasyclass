@@ -68,10 +68,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return 'remember_token';
     }
 
-    public function sendMessage($content, $classroom, $type = "message") {
+    public function sendMessage($content, $classroom, $type = "message", $showUserName = true) {
         $from['title'] = __('notifications.message');
-        $from['name'] = auth()->user()->name;
-        $from['username'] = auth()->user()->username;
+        $from['username'] = "";
+        $from['name'] = "";
+        if($showUserName) {
+            $from['name'] = auth()->user()->name;
+            $from['username'] = auth()->user()->username;
+        }
         $from['datetime'] = Carbon::now();
 
         Notification::send($this, new NewMessage($content, $from, $classroom, 'student', null, $type));

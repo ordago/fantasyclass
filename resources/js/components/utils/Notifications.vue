@@ -69,6 +69,7 @@
                   'fa-heart': notification.data.type == 'new_behaviour',
                   'fa-coins': notification.data.type == 'money_sent',
                   'fa-feather': notification.data.type == 'post',
+                  'fa-sparkles': notification.data.type == 'skill',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }} {{ getDateFrom(notification.data.from.datetime) }}
@@ -102,7 +103,7 @@
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
                 ></strong
-              >: <span v-html="trans.get(notification.data.content)"></span>
+              ><span v-if="notification.data.from.name != ''">:</span> <span v-html="trans.get(notification.data.content)"></span>
             </div>
           </div>
           <footer class="card-footer">

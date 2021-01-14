@@ -432,8 +432,8 @@ class ClassroomsStudentController extends Controller
 
         $gold = request()->money - request()->money * $fee / 100;
         $steal = 0;
-        $thief = rand(0, 99);
-        if ($thief >= 60) {
+
+        if (Functions::getProbability(60)) {
             $steal = ($gold * rand(0, 20) / 100);
             $gold = $gold - $steal;
         }
@@ -611,14 +611,34 @@ class ClassroomsStudentController extends Controller
                 SkillsController::undoAction($student);
                 break;
             case 'steal_xp':
-                # code...
+                $xp = rand($skill->properties['xp_min'], $skill->properties['xp_max']);
+                $students = $class->students()->where('students.id', '!=', $student->id)->inRandomOrder()->limit($skill->properties['users'])->get();
+                $xpStd = 0;
+                foreach ($students as $std) {
+                    if(!$std->checkSkill('protection_steal')) {
+                        $xpStd += min($xp, $std->xp);
+                        $std->setProperty("xp", $xp * - 1, true, 'skill', true);
+                        $std->classroom->user->sendMessage($student->name . " " . __('skills.stolen_you') . " <i class='fas fa-fist-raised colored'></i>", $class->code, 'skill', false);
+                    } else {
+                        $student->classroom->user->sendMessage($std->name . " " . __('skills.stopped_stolen'), $class->code, 'skill', false);
+                        $std->classroom->user->sendMessage(__('skills.have_stopped') . " " . $student->name, $class->code, 'skill', false);
+                    }
+                }
+                $student->setProperty("xp", $xpStd, true, 'skill', true);
                 break;
             case 'steal_money':
                 $gold = rand($skill->properties['money_min'], $skill->properties['money_max']);
-                $students = $class->students()->where('id', '!=', $student->id)->inRandomOrder()->take($skill->properties['users']);
+                $students = $class->students()->where('students.id', '!=', $student->id)->inRandomOrder()->limit($skill->properties['users'])->get();
                 $goldStd = 0;
                 foreach ($students as $std) {
-                    $goldStd += $std->setProperty("gold", $gold * - 1, true, 'skill', true);
+                    if(!$std->checkSkill('protection_steal')) {
+                        $goldStd += min($gold, $std->gold);
+                        $std->setProperty("gold", $gold * - 1, true, 'skill', true);
+                        $std->classroom->user->sendMessage($student->name . " " . __('skills.stolen_you') . " <i class='fas fa-coins colored'></i>", $class->code, 'skill', false);
+                    } else {
+                        $student->classroom->user->sendMessage($std->name . " " . __('skills.stopped_stolen'), $class->code, 'skill', false);
+                        $std->classroom->user->sendMessage(__('skills.have_stopped') . " " . $student->name, $class->code, 'skill', false);
+                    }
                 }
                 $student->setProperty("gold", $goldStd, true, 'skill', true);
                 break;
@@ -660,7 +680,7 @@ class ClassroomsStudentController extends Controller
         $from['datetime'] = Carbon::now();
 
         NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.use_skill", __("notifications.use_skill_content") . ": " . __($skill->name), $from, "use_skill", '');
-        // $this->deleteSkill($code, request()->skill);
+        $this->deleteSkill($code, request()->skill);
         $student = $student->fresh();
         $student->load('skills');
         $student->load('logEntries');

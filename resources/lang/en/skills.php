@@ -29,6 +29,11 @@ return [
       'use' => 'Utilitzar',
       'use_info' => 'Segur que vols utilitzar aquesta habilitat?',
 
+      'stopped_stolen' => 'ha aturat el robatori!',
+      'have_stopped' => 'Has aturat un robatori de',
+      'stolen_you' => 't\'ha robat',
+      'protection_success' => 'T\'has protegit de la pèrdua de vida!',
+
       'question' => 'Transferència',
       'question_desc' => 'Fes una pregunta al professor durant un examen de sí o no',
       'music' => 'Privilegi',

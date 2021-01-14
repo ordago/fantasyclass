@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Classes\Functions;
 use App\Http\Controllers\CardsController;
 use App\Notifications\NewInteraction;
 use App\Notifications\NewInteractionStudent;
@@ -85,6 +86,10 @@ class Student extends Model implements HasMedia
         $num = 0;
         $max = settings()->get('num_cards', 5);
 
+        $skill = $this->skills()->where('properties->type', "cards")->first();
+        if($skill)
+            $max += $skill->properties['cards'];
+        
         foreach ($this->cards as $card) {
             if ($card->special != 1)
                 $num++;
@@ -420,6 +425,14 @@ class Student extends Model implements HasMedia
         ];
     }
 
+    public function checkSkill($type)
+    {
+        $skill = $this->skills()->where('properties->type', $type)->first();
+        if($skill && Functions::getProbability($skill->properties['success']))
+            return true;
+        return false;
+    }
+
     public function setProperty($prop, $value, $log = true, $type = null, $byPassBoost = false)
     {
         $boost = $this->getBoost();
@@ -427,6 +440,10 @@ class Student extends Model implements HasMedia
 
         $old = $value;
         if ($prop == "hp") {
+            if($value < 0 && $this->checkSkill('protection')) {
+                $this->classroom->user->sendMessage("<i class='fad fa-shield'></i> ". __('skills.protection_success'), $this->classroom->classroom->code, 'skill', false);
+                return $this->hp;
+            }
             if ($value >= 0) {
                 $value = min($this->$prop + $value, 100);
             } else {

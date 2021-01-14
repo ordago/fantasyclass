@@ -8,6 +8,13 @@ use Google_Service_Drive_AboutDriveThemes;
 class Functions
 {
 
+  public static function getProbability($success) {
+    $v = rand(0, 99);
+    // dump($success . "%: " .$v);
+    if($v < $success) {
+      return true;
+    } return false;
+  }
   /***
    * Replace special chars
    */

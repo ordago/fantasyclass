@@ -183,7 +183,7 @@ class SkillsController extends Controller
             'icon' => '/img/skills/t1/rpg-knight_active6.png',
             'type' => 1,
             'properties' => [
-                'success' => 20,
+                'success' => 15,
                 'type' => 'protection',
             ],
         ]);
@@ -195,7 +195,7 @@ class SkillsController extends Controller
             'icon' => '/img/skills/t1/rpg-knight_active13.png',
             'type' => 1,
             'properties' => [
-                'success' => 40,
+                'success' => 30,
                 'type' => 'protection',
             ],
         ]);
