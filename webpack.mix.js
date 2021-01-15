@@ -10,10 +10,16 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-mix.config.webpackConfig.output = {
-    chunkFilename: 'scripts/[name].[chunkhash].js',
-    publicPath: '/',
-};
+// mix.config.webpackConfig.output = {
+//     chunkFilename: 'scripts/[name].[chunkhash].js',
+//     publicPath: '/',
+// };
+
+// mix.webpackConfig({
+//     output: {
+//         chunkFilename: '[name].js?id=[chunkhash]',
+//     }
+// });
 
 mix.js([
         'resources/js/app.js',
@@ -40,6 +46,6 @@ if (mix.isWatching()) {
 
 mix.webpackConfig({
     output: {
-        chunkFilename: 'js/vuejs_code_split/[name].js',
+        chunkFilename: 'js/vuejs_code_split/[name].[chunkhash].js',
     }
 });
