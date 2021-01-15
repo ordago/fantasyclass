@@ -58,18 +58,18 @@
           <header class="card-header">
             <p class="card-header-title">
               <i
-                class="fad mr-2"
+                class="mr-2"
                 :class="{
-                  'fa-comment': notification.data.type == 'comment',
-                  'fa-paper-plane': notification.data.type == 'message',
-                  'fa-bullhorn': notification.data.type == 'notification',
-                  'fa-comments-alt': notification.data.type == 'chat',
-                  'fa-club': notification.data.type == 'mark_card',
-                  'fa-pen-fancy': notification.data.type == 'challenge',
-                  'fa-heart': notification.data.type == 'new_behaviour',
-                  'fa-coins': notification.data.type == 'money_sent',
-                  'fa-feather': notification.data.type == 'post',
-                  'fa-sparkles': notification.data.type == 'skill',
+                  'fad fa-comment': notification.data.type == 'comment',
+                  'fad fa-paper-plane': notification.data.type == 'message',
+                  'fad fa-bullhorn': notification.data.type == 'notification',
+                  'fad fa-comments-alt': notification.data.type == 'chat',
+                  'fak fa-deck': notification.data.type == 'mark_card',
+                  'fad fa-pen-fancy': notification.data.type == 'challenge',
+                  'fad fa-heart': notification.data.type == 'new_behaviour',
+                  'fad fa-coins': notification.data.type == 'money_sent',
+                  'fad fa-feather': notification.data.type == 'post',
+                  'fad fa-sparkles': notification.data.type == 'skill',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }} {{ getDateFrom(notification.data.from.datetime) }}

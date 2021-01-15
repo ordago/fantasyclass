@@ -694,7 +694,8 @@
         </b-tab-item>
         <b-tab-item v-if="admin || cards.length">
           <template slot="header">
-            <b-icon pack="fad" icon="club" />
+            <!-- <b-icon pack="fad" icon="club" /> -->
+            <span class="icon"><i class="fak fa-deck fa-lg"></i></span>
             {{ trans.get("students.cards") }}
             <span
               class="tag is-link tag-notif"
