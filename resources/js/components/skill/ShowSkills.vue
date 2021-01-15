@@ -16,7 +16,9 @@
     </button>
 
     <article class="message is-warning m-2">
-      <div class="message-body has-text-justified">{{ trans.get("skills.info") }}</div>
+      <div class="message-body has-text-justified">
+        {{ trans.get("skills.info") }}
+      </div>
     </article>
 
     <b-table
@@ -70,10 +72,50 @@
           centered
           class="has-all-centered"
         >
-          <span v-for="(value, key, index) in props.row.properties" :key="index" class="tag is-dark m-1">
-               {{ key }}: {{ value }}
-            <!-- <span v-if="key != 'type'">{{ key }}: {{ value }}</span> -->
+          <span
+            v-for="(value, key, index) in props.row.properties"
+            :key="index"
+            class="tag is-dark m-1"
+          >
+            <span v-if="key == 'type'">
+              <i
+                class="mx-0 my-0"
+                :class="{
+                  'fas fa-hand-point-up': value == 'common',
+                  'fas fa-heart':
+                    value == 'heal_passive' ||
+                    value == 'heal_self' ||
+                    value == 'heal_group' ||
+                    value == 'heal_classroom',
+                  'fas fa-user-secret':
+                    value == 'steal_money' || value == 'steal_xp',
+                  'fas fa-skull-crossbones': value == 'protection_death',
+                  'fas fa-shield-alt':
+                    value == 'protection' || value == 'protection_steal',
+                  'fak fa-deck': value == 'cards',
+                  'fas fa-undo': value == 'undo_action',
+                }"
+              ></i>
 
+              <i
+                class="my-0 ml-1"
+                v-if="
+                  value == 'heal_self' ||
+                  value == 'heal_classroom' ||
+                  value == 'heal_group' ||
+                  value == 'protection_steal'
+                "
+                :class="{
+                  'fas fa-user': value == 'heal_self',
+                  'fas fa-users': value == 'heal_group',
+                  'fas fa-chalkboard': value == 'heal_classroom',
+                  'fas fa-user-secret': value == 'protection_steal',
+                }"
+              ></i>
+            </span>
+            <span v-else>
+              <span v-html="trans.get('skills.' + key)"></span>: {{ value }}
+            </span>
           </span>
         </b-table-column>
 
@@ -82,7 +124,7 @@
           :label="trans.get('menu.settings')"
           centered
         >
-          <a class="button is-info is-small">
+          <a class="button is-info is-small" @click="editSkill(props.row)">
             <i class="fas fa-edit"></i>
           </a>
           <b-button type="is-danger is-small" @click="deleteItem(props.row.id)">
@@ -99,6 +141,7 @@
       :destroy-on-hide="false"
       aria-role="dialog"
       aria-modal
+      :can-cancel="false"
     >
       <form @submit.prevent="addSkill">
         <div class="modal-card" style="width: auto">
@@ -146,6 +189,7 @@
                 v-model="skill.type"
                 :native-value="0"
                 type="is-link"
+                @input="updateTypes"
               >
                 <span>{{ trans.get("skills.active") }}</span>
               </b-radio-button>
@@ -154,6 +198,7 @@
                 v-model="skill.type"
                 :native-value="1"
                 type="is-info"
+                @input="updateTypes"
               >
                 <span>{{ trans.get("skills.passive") }}</span>
               </b-radio-button>
@@ -161,6 +206,33 @@
             <article class="message is-warning">
               <div class="message-body" v-html="getType()"></div>
             </article>
+            <b-field :label="trans.get('skills.type')">
+              <b-select
+                @input="updateProps"
+                v-model="skill.properties.type"
+                expanded
+              >
+                <option
+                  v-for="(sType, index) in types"
+                  :key="index"
+                  :value="sType"
+                >
+                  {{ trans.get("skills.type_" + sType) }}
+                </option>
+              </b-select>
+            </b-field>
+            <div v-for="(value, key, index) in skill.properties" :key="index">
+              <b-field v-if="key != 'type'">
+                <template slot="label">
+                  <span class="mt-2" v-html="trans.get('skills.' + key)"></span>
+                </template>
+                <b-numberinput
+                  v-model="skill.properties[key]"
+                  controls-position="compact"
+                  controls-rounded
+                ></b-numberinput>
+              </b-field>
+            </div>
           </section>
           <footer class="modal-card-foot">
             <button
@@ -173,10 +245,10 @@
             >
               {{ trans.get("general.close") }}
             </button>
-            <button class="button is-primary" v-if="!edit">
+            <button class="button is-primary" v-if="!skill.id">
               {{ trans.get("general.add") }}
             </button>
-            <button @click.prevent="sendEdit" v-else class="button is-link">
+            <button v-else @click.prevent="sendEdit" class="button is-link">
               {{ trans.get("general.edit") }}
             </button>
           </footer>
@@ -202,7 +274,10 @@
           </header>
           <section class="modal-card-body">
             <div class="field">
-              <label class="label">{{ trans.get("skills.price") }}</label>
+              <label class="label"
+                >{{ trans.get("skills.price") }}
+                <i class="fas fa-coins colored"></i
+              ></label>
               <div class="control">
                 <input
                   class="input"
@@ -248,6 +323,7 @@ export default {
 
   created() {
     this.mutableSkills = this.skills;
+    this.updateTypes();
   },
   data: function () {
     return {
@@ -257,11 +333,30 @@ export default {
       isPrefsModalActive: false,
       images: null,
       edit: false,
+      types: [],
+      typesActive: [
+        "common",
+        "heal_self",
+        "heal_group",
+        "heal_classroom",
+        "steal_money",
+        "steal_xp",
+        "undo_action",
+      ],
+      typesPassive: [
+        "common",
+        "heal_passive",
+        "protection",
+        "protection_steal",
+        "cards",
+        "protection_death",
+      ],
+      type: "common",
       skill: {
         icon: null,
         name: "",
         description: null,
-        properties: null,
+        properties: { type: "common" },
         type: 0,
       },
     };
@@ -270,6 +365,105 @@ export default {
     SelectSkill,
   },
   methods: {
+    editSkill(skill) {
+      this.type = this.skill.type;
+      this.updateTypes(true);
+
+      this.skill = skill;
+      this.skill.name = this.trans.get(this.skill.name);
+      this.skill.description = this.trans.get(this.skill.description);
+      this.isModalActive = true;
+      this.$forceUpdate;
+    },
+    updateProps() {
+      switch (this.type) {
+        case "heal_self":
+          this.skill.properties = {
+            hp_min: 20,
+            hp_max: 40,
+            type: "heal_self",
+          };
+          break;
+        case "heal_group":
+          this.skill.properties = {
+            hp_min: 5,
+            hp_max: 20,
+            type: "heal_group",
+          };
+          break;
+        case "heal_classroom":
+          this.skill.properties = {
+            hp_min: 5,
+            hp_max: 20,
+            type: "heal_classroom",
+          };
+          break;
+        case "steal_money":
+          this.skill.properties = {
+            money_min: 200,
+            money_max: 400,
+            users: 3,
+            type: "steal_money",
+          };
+          break;
+        case "steal_xp":
+          this.skill.properties = {
+            xp_min: 10,
+            xp_max: 40,
+            users: 3,
+            type: "steal_xp",
+          };
+          break;
+        case "heal_passive":
+          this.skill.properties = {
+            success: 50,
+            hp_increment: 50,
+            type: "heal_passive",
+          };
+          break;
+        case "protection":
+          this.skill.properties = {
+            success: 15,
+            type: "protection",
+          };
+          break;
+        case "protection_steal":
+          this.skill.properties = {
+            success: 70,
+            type: "protection_steal",
+          };
+          break;
+        case "protection_death":
+          this.skill.properties = {
+            success: 90,
+            type: "protection_death",
+          };
+          break;
+        case "cards":
+          this.skill.properties = {
+            cards: 1,
+            type: "cards",
+          };
+          break;
+
+        default:
+          this.skill.properties = {
+            type: this.type,
+          };
+          break;
+      }
+    },
+    updateTypes(bypass = false) {
+      if (!bypass) {
+        this.type = "common";
+        this.skills.properties = {
+          type: "common",
+        };
+      }
+      if (this.skill.type == 0) {
+        this.types = this.typesActive;
+      } else this.types = this.typesPassive;
+    },
     updatePrefs() {
       axios.patch("/classroom/" + this.code + "/setting", {
         _method: "patch",
@@ -296,9 +490,10 @@ export default {
         icon: null,
         name: "",
         description: null,
-        properties: null,
+        properties: { type: "common" },
         type: 0,
       };
+      this.$forceUpdate();
     },
     importDefault() {
       axios
@@ -317,21 +512,19 @@ export default {
       this.isImageModalActive = true;
     },
 
-    // editMonster: function (monster) {
-    //   this.edit = true;
-    //   this.monster = monster;
-    //   this.isModalActive = true;
-    // },
-    // sendEdit: function () {
-    //   axios
-    //     .patch("/classroom/" + this.code + "/skills", {
-    //       monster: this.monster,
-    //     })
-    //     .then((response) => {
-    //       this.isModalActive = false;
-    //       this.resetSkill();
-    //     });
-    // },
+    sendEdit: function () {
+      axios
+        .patch("/classroom/" + this.code + "/skill", {
+          skill: this.skill,
+        })
+        .then((response) => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+          this.isModalActive = false;
+          this.resetSkill();
+        });
+    },
     addSkill: function () {
       if (this.skill.icon == null) {
         this.$refs.selectbutton.classList.add("is-danger");

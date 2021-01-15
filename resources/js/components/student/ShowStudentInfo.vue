@@ -1398,8 +1398,8 @@ export default {
   methods: {
     buySkill() {
       this.$buefy.dialog.confirm({
-        title: this.trans.get("skill.buy_skill"),
-        message: this.trans.get("skill.buy_skill_info") + "?",
+        title: this.trans.get("skills.buy_skill"),
+        message: "<span class='message-buy'>" + this.trans.get("skills.buy_skill_info") + " (" + this.settings.skill_price + " <i class='fas fa-coins colored'></i>)</span>",
         confirmText: this.trans.get("shop.buy"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
@@ -1949,7 +1949,7 @@ export default {
         message:
           this.trans.get("shop.buy_text") +
           newItem.price +
-          "<i class='fas fa-coins colored'></i>? (" +
+          "<i class='fas fa-coins colored'></i>? <br> (" +
           newItem.hp +
           "% <i class='fas fa-heart colored'></i> | " +
           newItem.xp +
@@ -2151,3 +2151,8 @@ export default {
   },
 };
 </script>
+<style>
+.message-buy {
+  line-height: 20px; 
+}
+ </style>

@@ -151,16 +151,6 @@ class SkillsController extends Controller
             ],
         ]);
 
-        /* Active types:
-                - Ask a question (yes or not) to the teacher in an exam. (OK)
-                - Heal. (OK)
-                - Heal group. (OK)
-                - Heal everybody. (OK)
-                - Steal random student money. (OK)
-                - Steal random xp. (OK)
-                - Undo last lose. (OK)
-            */
-
         // Passive
 
         Skill::create([
@@ -214,7 +204,7 @@ class SkillsController extends Controller
 
         Skill::create([
             'classroom_id' => $class->id,
-            'name' => 'skills.cards',
+            'name' => 'skills.cards_name',
             'description' => 'skills.cards_desc',
             'icon' => '/img/skills/t1/rpg-rogue_active1.png',
             'type' => 1,
@@ -236,53 +226,29 @@ class SkillsController extends Controller
             ],
         ]);
 
-            /* Passive types:
-                - Health individual. (OK)
-                - Protection. (OK)
-                - Protection against steals (rate 70%). (OK)
-                - Carry 1 more card. (OK)
-                - Probability don't die. (OK)
-            */
-
         return $class->fresh()->skills;
     }
 
+    public function update($code) {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
 
+        $data = request()->validate([
+            'skill.id' => ['required', 'numeric'],
+            'skill.name' => ['required', 'string'],
+            'skill.description' => ['nullable', 'string'],
+            'skill.icon' => ['required', 'string'],
+            'skill.type' => ['numeric', 'required'],
+            'skill.properties' => ['array', 'nullable'],
+        ]);
 
-    // public function update($code) {
-    //     $class = Classroom::where('code', $code)->firstOrFail();
-    //     $this->authorize('update', $class);
+        $skill = Skill::find($data['skill']['id']);
+        if($skill->classroom_id != $class->id)
+            abort(403, 'What are you trying? :(');
 
-    //     $data = request()->validate([
-    //         'monster.id' => ['numeric'],
-    //         'monster.name' => ['required', 'string'],
-    //         'monster.image' => ['required', 'string'],
-    //         'monster.hp' => ['numeric', 'required'],
-    //         'monster.reward_xp' => ['numeric', 'required'],
-    //         'monster.reward_gold' => ['numeric', 'required'],
+        $skill->update($data['skill']);
+    }
 
-    //     ]);
-
-    //     $data['monster']['hp'] = max($data['monster']['hp'], 0); 
-    //     $data['monster']['hp'] = min($data['monster']['hp'], 100); 
-
-    //     $monster = Monster::find($data['monster']['id']);
-    //     if($monster->classroom_id != $class->id)
-    //         abort(403, 'What are you trying? :(');
-
-    //     $monster->update($data['monster']);
-    // }
-
-    // public function battle() {
-    //     $monster = Monster::findOrFail(request()->id);
-    //     $class = Classroom::findOrFail($monster->classroom_id);
-    //     $this->authorize('update', $class);
-
-    //     $monster->update([
-    //         'hp' => max(0 , $monster->hp + request()->value), 
-    //     ]);
-
-    // }
 
     public static function undoAction($student)
     {
@@ -307,7 +273,7 @@ class SkillsController extends Controller
             'skill.description' => ['nullable', 'string'],
             'skill.icon' => ['required', 'string'],
             'skill.type' => ['numeric', 'required'],
-            'skill.properties' => ['json', 'nullable'],
+            'skill.properties' => ['array', 'nullable'],
         ]);
         if (!isset($data['skill']['properties']))
             $data['skill']['properties'] = ['type' => 'common'];

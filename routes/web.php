@@ -260,6 +260,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/skills', 'SkillsController@index');
         Route::get('/{code}/skills/get', 'SkillsController@get');
         Route::post('/{code}/skill', 'SkillsController@store');
+        Route::patch('/{code}/skill', 'SkillsController@update');
         Route::delete('/skills/{id}', 'SkillsController@destroy');
         Route::get('/{code}/skills/import', 'SkillsController@importDefault');
 
