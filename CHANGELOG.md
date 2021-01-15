@@ -1,5 +1,5 @@
 # Changelog
-## v1.34 Beta (XX/01/2021)
+## v1.34 Beta (15/01/2021)
 ### Added
 - Skills added.
 - New icon selector with all icons.

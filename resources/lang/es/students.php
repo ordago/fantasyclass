@@ -89,5 +89,6 @@ return [
     'log_card_use' => 'Carta utilizada',
     'log_card_assign' => 'Carta asignada',
     'log_pet' => 'Mascota',
+    'log_skill' => 'Resultado de una habilidad, tuya o de alguien.',
 
 ];

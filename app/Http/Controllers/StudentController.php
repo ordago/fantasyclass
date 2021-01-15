@@ -241,6 +241,7 @@ class StudentController extends Controller
         $evaluation[0] = EvaluationController::individualReport($class, $student);
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
+        $settings['skill_price'] = settings()->get('skill_price', 600);
 
         $eq0 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 0)->get();
         $eq1 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 1)->get();
