@@ -27,6 +27,10 @@ if (mix.inProduction()) {
     mix.version();
 }
 
+mix.config.webpackConfig.output = {
+    chunkFilename: 'scripts/[name].[chunkhash].js',
+    publicPath: '/',
+};
 
 require('laravel-mix-bundle-analyzer');
 
