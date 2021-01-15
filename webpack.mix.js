@@ -10,7 +10,10 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
+mix.config.webpackConfig.output = {
+    chunkFilename: 'scripts/[name].[chunkhash].js',
+    publicPath: '/',
+};
 
 mix.js([
         'resources/js/app.js',
@@ -27,10 +30,7 @@ if (mix.inProduction()) {
     mix.version();
 }
 
-mix.config.webpackConfig.output = {
-    chunkFilename: 'scripts/[name].[chunkhash].js',
-    publicPath: '/',
-};
+
 
 require('laravel-mix-bundle-analyzer');
 
