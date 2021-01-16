@@ -25,6 +25,7 @@ Help and sponsors
 - [Ander García.](https://aprendecoreano.com/) 
 - Isabel Hernández.
 - [Kiean Wong (graphics).](https://www.instagram.com/kieanwong.art/)  
+- Trini Arid
 
 ## Contribute to the project
 ### To import the project

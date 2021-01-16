@@ -42,7 +42,7 @@
             native-value="fal"
             type="is-info"
           >
-            <span>Regular <i class="fal fa-alien-monster"></i></span>
+            <span>Light <i class="fal fa-alien-monster"></i></span>
           </b-radio-button>
           <b-radio-button
             v-model="classappend"

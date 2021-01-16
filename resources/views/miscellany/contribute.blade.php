@@ -98,6 +98,9 @@
             <li>
               <h5>Isabel Hernández <i class="fas fa-hand-peace"></i></h5>
             </li>
+            <li>
+              <h5>Trini Ardid <i class="fas fa-hand-spock"></i></h5>
+            </li>
             </ul>
             </details>
             <p><strong>¡Muchísimas gracias por ayudar a que FantasyClass continue adelante!</strong></p>
