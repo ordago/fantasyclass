@@ -321,6 +321,7 @@
                   v-if="comment.info.type == 'student'"
                   width="32px"
                   height="32px"
+                  class="rounded"
                   :src="comment.info.avatar"
                 />
                 <i

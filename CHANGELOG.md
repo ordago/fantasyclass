@@ -1,4 +1,9 @@
 # Changelog
+## v1.36 Beta (XX/01/2021)
+
+### Changed
+- Fix: show rounded image in comments.
+
 ## v1.35 Beta (15/01/2021)
 ### Added
 - Skills added.
