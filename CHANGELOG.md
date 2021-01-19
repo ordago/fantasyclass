@@ -3,6 +3,7 @@
 
 ### Changed
 - Fix: show rounded image in comments.
+- Overflow: fix content hidden in mobile.
 
 ## v1.35 Beta (15/01/2021)
 ### Added

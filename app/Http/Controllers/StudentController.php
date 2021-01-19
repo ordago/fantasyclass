@@ -159,7 +159,7 @@ class StudentController extends Controller
     public static function getRandomStudent($class)
     {
 
-        return $class->students->where('hidden', 0)->random(1)->first();
+        return $class->students()->where('hidden', '=', 0)->inRandomOrder()->first();
     }
 
     public function addBehaviour()
