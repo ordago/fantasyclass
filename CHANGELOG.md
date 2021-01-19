@@ -1,4 +1,9 @@
 # Changelog
+## v1.36 Beta (XX/01/2021)
+### Added
+
+### Changed
+
 ## v1.35.1 Beta (19/01/2021)
 ### Added
 - Skills added.
