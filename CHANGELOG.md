@@ -1,16 +1,12 @@
 # Changelog
-## v1.36 Beta (XX/01/2021)
-
-### Changed
-- Fix: show rounded image in comments.
-- Overflow: fix content hidden in mobile.
-
-## v1.35 Beta (15/01/2021)
+## v1.35.1 Beta (19/01/2021)
 ### Added
 - Skills added.
 - New icon selector with all icons.
 
 ### Changed
+- Fix: show rounded image in comments.
+- Overflow: fix content hidden in mobile.
 - Fixed showing character with custom theme.
 - Default icons changed.
 - Updated card icon.
