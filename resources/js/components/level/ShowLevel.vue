@@ -67,8 +67,9 @@
         <p class="my-2" v-if="edit">{{ trans.get("levels.description") }}</p>
         <p v-if="edit">
           <textarea
-            style="resize: none"
             class="input"
+            rows="20"
+            style="height: 100px"
             v-model="level.description"
           ></textarea>
         </p>

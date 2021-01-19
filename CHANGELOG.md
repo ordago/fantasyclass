@@ -3,6 +3,7 @@
 ### Added
 
 ### Changed
+- Height of textarea.
 
 ## v1.35.1 Beta (19/01/2021)
 ### Added
