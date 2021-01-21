@@ -339,11 +339,11 @@ export default {
       const room = await query.get();
       let users = await roomsRef.doc("" + roomId);
 
-      console.log(doc.data().users)
-      console.log(content)
       users
         .get()
         .then(function (doc) {
+          console.log(doc.data().users)
+          console.log(content)
             axios.post('/chat/notify', { users : doc.data().users, message: content})
         })
         .catch(function (error) {
