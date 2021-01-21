@@ -9,7 +9,7 @@
                 </div>
                 <div class="my-4">
                     <label for="adventureName" class="my-4"><span class="has-text-danger"><i class="far fa-asterisk mr-1"></i></span>{{ trans.get('classroom.adventure_name') }} <small><i>{{ trans.get('classroom.adventure_name_example') }}</i></small></label>
-                    <input type="text" v-model="classForm.adventure_name" required minlength="3" value="FantasyClass" class="input my-2" name="adventureName" id='adventureName'></input>
+                    <input type="text" v-model="classForm.adventure_name" required minlength="3" value="FantasyClass" class="input my-2" name="adventureName" id='adventureName'>
                 </div>
                 <div class="my-4">
                     {{ trans.get('classroom.goal_type') }} <small><i>{{ trans.get('classroom.goal_type_example') }}</i></small>

@@ -1060,7 +1060,7 @@
     position: absolute;
     left: 0px;
     top: 80px;
-    z-index: 5;
+    z-index: 100;
     animation: ball 1.5s infinite linear;
 }
 
@@ -1080,7 +1080,7 @@
 }
 
 .character:hover .wraith-ball {
-    animation: arrow 4s;
+    animation: ball-throw 1s, ball 1s infinite linear;
 }
 .character:hover .wraith-arms {
     transform-origin: bottom left;
@@ -1177,6 +1177,7 @@
 .character:hover .archer-arrow {
     transform: rotate(-39deg);
     animation: arrow 1s ease-in;
+    animation-iteration-count: 1
 }
 
 .archer-arrow {
@@ -1187,14 +1188,28 @@
 }
 
 
-@keyframes arrow {
+@keyframes ball-throw {
     0% {
 
     }
     50% {
+        left: 300px;
     }
     100% {
-        transform: translateX(10000px);
+        
+    }
+}
+
+@keyframes arrow {
+    0% {
+
+    }
+    20% {
+        left: 344px;
+        opacity: 0;
+    }
+    100% {
+        opacity: 0;
     }
 }
 

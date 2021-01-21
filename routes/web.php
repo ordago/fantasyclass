@@ -134,6 +134,18 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/levels/{level}', 'LevelsController@update');
         Route::delete('/level/{id}', 'LevelsController@destroy');
 
+        // Documents
+        Route::get('/{code}/docmgr', 'DocumentManagerController@index');
+        Route::post('/{code}/docmgr/group', 'DocumentManagerController@store');
+        Route::post('/{code}/docmgr/group/order', 'DocumentManagerController@order');
+        Route::post('/{code}/documents/get', 'DocumentController@index');
+        Route::delete('/documents/group/{id}', 'DocumentManagerController@destroy');
+        
+        Route::post('/{code}/docmgr/document', 'DocumentController@store');
+        Route::patch('/{code}/document', 'DocumentController@update');
+        Route::delete('/document/{id}', 'DocumentController@destroy');
+        Route::post('/{code}/docmgr/documents/order', 'DocumentController@order');
+        
         // Challenges
         Route::get('/{code}/challenges', 'ChallengesGroupController@index');
         Route::post('/{code}/challenges/group', 'ChallengesGroupController@store');

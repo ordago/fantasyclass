@@ -135,7 +135,7 @@
                 @click="show2l = !show2l"
                 v-if="behaviourshidden.length"
               >
-                <i class="fas fa-plus"></i>
+                <i class="fas" :class="{'fa-plus' : !show2l, 'fa-minus': show2l}"></i>
               </div>
               <a
                 :href="'/classroom/' + classroom.code + '/behaviours/'"

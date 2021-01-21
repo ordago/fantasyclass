@@ -89,6 +89,8 @@ Vue.component('show-level', require('./components/level/ShowLevel.vue').default)
 Vue.component('show-levels', () => import('./components/level/ShowLevels.vue'));
 Vue.component('show-level-student', require('./components/level/ShowLevelStudent.vue').default);
 
+Vue.component('show-document-group', () => import('./components/documents/ShowDocumentGroup.vue'));
+
 Vue.component('show-challenges-group', () => import('./components/challenges/ShowChallengesGroup.vue'));
 Vue.component('show-challenges', () => import('./components/challenges/ShowChallenges.vue'));
 Vue.component('show-challenge', () => import('./components/challenges/ShowChallenge.vue'));

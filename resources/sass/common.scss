@@ -185,11 +185,18 @@
       font: 13px/1 'Oxygen', sans-serif !important;
       scroll-behavior: smooth;
       background-attachment: fixed;
-      overflow-x: auto;
+      overflow-x: visible;
+  }
+
+  .character-container {
+      overflow-x: visible;
   }
 
   .cursor-pointer {
       cursor: pointer;
+  }
+  .cursor-move {
+      cursor: grabbing;
   }
 
   .delete-button-right {
@@ -887,6 +894,7 @@
   .rules .fa-heart {
       color: red;
   }
+
   .colored.fa-deck {
       // lightblue
       color: mistyrose;

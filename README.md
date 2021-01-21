@@ -179,6 +179,12 @@ https://animate.style/
 Vue select image
 https://github.com/mazipan/vue-select-image
 
+Vue.Draggable
+https://github.com/SortableJS/Vue.Draggable
+
+MIME (info)
+https://github.com/hhsadiq/laravel-mime-type
+
 ## 3rd party Licenses
 
 - Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)

@@ -1,9 +1,11 @@
 # Changelog
 ## v1.36 Beta (XX/01/2021)
 ### Added
+- Document manager.
 
 ### Changed
 - Height of textarea.
+- Archer and wizard animation.
 
 ## v1.35.1 Beta (19/01/2021)
 ### Added

@@ -16,6 +16,7 @@ class Classroom extends Model implements HasMedia
     {
         $this->addMediaCollection('pets');
         $this->addMediaCollection('avatars');
+        $this->addMediaCollection('documents');
     }
 
     /**
@@ -141,6 +142,10 @@ class Classroom extends Model implements HasMedia
     }
     public function evaluables() {
         return $this->hasMany(Evaluable::class);
+    }
+
+    public function documents() {
+        return $this->hasMany(DocumentCategory::class);
     }
 
     public static function boot()

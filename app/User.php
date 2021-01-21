@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use NotificationChannels\WebPush\HasPushSubscriptions;
 
@@ -24,6 +25,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_student', 'locale', 'refresh_token', 'expires_in', 'token', 'pending_messages'
     ];
     
+    public function getFilesAttribute()
+    {
+        return DB::table('documents')
+            ->where('uploader', '=', $this->id)
+            ->sum('size');
+    }
+
+    protected $appends = ['files'];
 
     /**
      * The attributes that should be hidden for arrays.
