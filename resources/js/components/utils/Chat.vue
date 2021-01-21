@@ -336,8 +336,8 @@ export default {
 
       const query = roomsRef.doc(roomId);
 
-      // const room = await query.get();
-      // let users = await roomsRef.doc("" + roomId);
+      const room = await query.get();
+      let users = await roomsRef.doc("" + roomId);
 
       users
         .get()
