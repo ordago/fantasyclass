@@ -339,6 +339,8 @@ export default {
       const room = await query.get();
       let users = await roomsRef.doc("" + roomId);
 
+      console.log(doc.data().users)
+      console.log(content)
       users
         .get()
         .then(function (doc) {
