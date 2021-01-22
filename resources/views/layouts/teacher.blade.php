@@ -102,7 +102,7 @@
 <!--Start of Tawk.to Script-->
 <script src="{{ asset('js/config.js') }}"></script>
 
-<script defer>
+<!-- <script defer>
     var Tawk_API = Tawk_API || {},
         Tawk_LoadStart = new Date();
     (function() {
@@ -114,6 +114,6 @@
         s1.setAttribute('crossorigin', '*');
         s0.parentNode.insertBefore(s1, s0);
     })();
-</script>
+</script> -->
 <!--End of Tawk.to Script-->
 @endpush

@@ -48,6 +48,7 @@ return [
     'skills' => 'Skills',
     'config' => 'Settings',
     'documents' => 'Document manager',
+    'resources' => 'Resources',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

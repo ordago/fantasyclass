@@ -9,6 +9,7 @@ use App\Challenge;
 use App\ChallengesGroup;
 use App\Classroom;
 use App\ClassroomUser;
+use App\DocumentCategory;
 use App\Equipment;
 use App\Http\Classes\Functions;
 use App\Item;
@@ -89,6 +90,13 @@ class ClassroomsStudentController extends Controller
             abort(403);
     }
 
+    public function getDocuments($class) {
+        $docs = $class->documents()->with(["documents" => function($q){
+            $q->where('documents.visible', '=', 1)->orderBy('order');
+        }])->get();
+        return $docs;
+    }
+
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
@@ -136,7 +144,9 @@ class ClassroomsStudentController extends Controller
 
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
 
-        return view('studentsview.index', compact('class', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
+        $docs = $this->getDocuments($class);
+
+        return view('studentsview.index', compact('class', 'docs', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
     public function challenges($code)
@@ -198,7 +208,9 @@ class ClassroomsStudentController extends Controller
             return $story['datetime'];
         });
 
-        return view('studentsview.challenges', compact('class', 'student', 'challenges'));
+        $docs = $this->getDocuments($class);
+
+        return view('studentsview.challenges', compact('class', 'docs', 'student', 'challenges'));
     }
 
     public function getChallenge($code, $permalink)
@@ -382,7 +394,9 @@ class ClassroomsStudentController extends Controller
 
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'student')->get();
 
-        return view('studentsview.show', compact('student', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
+        $docs = $this->getDocuments($class);
+
+        return view('studentsview.show', compact('student', 'docs', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
     public function rules($code)

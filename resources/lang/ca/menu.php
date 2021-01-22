@@ -48,6 +48,7 @@ return [
     'skills' => 'Habilitats',
     'config' => 'Configuració',
     'documents' => 'Gestor documents',
+    'resources' => 'Materials',
 
     'view_list' => 'Vista de llista',
     'view_group' => 'Vista de grups',

@@ -115,10 +115,11 @@
                                     <span href="#" class="dropdown-item">
                                         @<span>{{ Auth::user()->username }}</span>
                                     </span>
+                                    @if(Auth::user()->is_student == 0)
                                     <hr class="dropdown-divider">
                                     <span class="m-3">{{ Auth::user()->files }} MB / {{  Auth::user()->quota }}MB</span>
                                     <span class="m-3"><progress max=100 value="{{ Auth::user()->files * 100 / Auth::user()->quota }}"></progress><br></span>
-
+                                    @endif
                                     <hr class="dropdown-divider">
                                     <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}

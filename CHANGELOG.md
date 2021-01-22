@@ -1,11 +1,14 @@
 # Changelog
-## v1.36 Beta (XX/01/2021)
+## v1.36 Beta (22/01/2021)
 ### Added
 - Document manager.
 
 ### Changed
 - Height of textarea.
 - Archer and wizard animation.
+- Tawkt disabled.
+- Challenge background lighter.
+- Fixes.
 
 ## v1.35.1 Beta (19/01/2021)
 ### Added

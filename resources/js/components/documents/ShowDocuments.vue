@@ -206,7 +206,7 @@ export default {
         return true;
       if(this.document.type == 1 && this.document.url == "")
         return true;
-      if(this.document.type == 2 && this.file == null)
+      if(this.document.type == 2 && this.file == null && !this.checkEdit())
         return true;
       return false;
     },

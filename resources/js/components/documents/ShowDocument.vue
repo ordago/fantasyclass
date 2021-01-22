@@ -15,7 +15,7 @@
       </span>
       <span v-else>
         <i class="fas mr-1" :class="getIcon()"></i> <a :href="document.url" :class="{ 'has-text-grey-light': document.visible == 0 }" target="_blank">{{ document.name }}</a> 
-        <small style="font-size: 0.6em" class="is-italic">{{ document.size }} MB</small>
+        <small v-if="document.type == 2" style="font-size: 0.6em" class="is-italic">{{ document.size }} MB</small>
       </span>
     </div>
     <div
@@ -25,7 +25,7 @@
     >
       <small>{{ document.description }}</small>
     </div>
-    <div class="px-2 py-1 document-properties">
+    <div v-if="admin" class="px-2 py-1 document-properties">
       <small>
         <i
           class="mx-1 cursor-pointer fas fa-arrow-left"

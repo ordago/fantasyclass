@@ -1,6 +1,18 @@
 <template>
   <div class="is-flex has-all-centered left-auto">
-    <div class="mr-1 cursor-pointer button" @click="redirect('/inbox')">
+    <div
+      @click="openDocs = true"
+      v-if="docs.length"
+      v-tippy
+      :content="trans.get('menu.resources')"
+      class="mr-1 cursor-pointer button has-background-warning-light"
+    >
+      <i class="fad fa-book" style="font-size: 1.25em"></i>
+    </div>
+    <div
+      class="mr-1 cursor-pointer button has-background-link-light"
+      @click="redirect('/inbox')"
+    >
       <i class="fad fa-comments-alt" style="font-size: 1.25em"></i>
       <span v-if="user.pending_messages" class="tag is-danger tag-notif">{{
         user.pending_messages
@@ -30,7 +42,46 @@
     </div>
     <b-sidebar
       type="is-light"
-      :fullheight="fullheight"
+      :fullheight="true"
+      :fullwidth="false"
+      :overlay="overlay"
+      :right="true"
+      :open.sync="openDocs"
+      icon-pack="fa"
+      mobile="fullwidth"
+    >
+      <div class="close-button" @click="openDocs = false">
+        <button class="button"><i class="fal fa-times"></i></button>
+      </div>
+
+      <b-tabs size="is-small">
+        <b-tab-item
+          v-for="cat in docs"
+          :key="cat.id"
+          :label="cat.name"
+          :icon="cat.icon"
+          icon-pack="far"
+        >
+          <div
+            class="columns my-0 px-3 py-0 panel-block"
+            v-for="document in cat.documents"
+            v-bind:key="document.id"
+          >
+
+            <div class="column my-0 py-1">
+              <ShowDocument
+                class="mb-3"
+                :document="document"
+                :admin="false"
+              ></ShowDocument>
+            </div>
+          </div>
+        </b-tab-item>
+      </b-tabs>
+    </b-sidebar>
+    <b-sidebar
+      type="is-light"
+      :fullheight="true"
       :fullwidth="false"
       :overlay="overlay"
       :right="true"
@@ -72,7 +123,8 @@
                   'fad fa-sparkles': notification.data.type == 'skill',
                 }"
               ></i>
-              {{ trans.get(notification.data.from.title) }} {{ getDateFrom(notification.data.from.datetime) }}
+              {{ trans.get(notification.data.from.title) }}
+              {{ getDateFrom(notification.data.from.datetime) }}
               <span class="left-auto"
                 ><time
                   :datetime="notification.data.from.datetime"
@@ -102,8 +154,9 @@
                 v-tippy
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
-                ></strong
-              ><span v-if="notification.data.from.name != ''">:</span> <span v-html="trans.get(notification.data.content)"></span>
+              ></strong
+              ><span v-if="notification.data.from.name != ''">:</span>
+              <span v-html="trans.get(notification.data.content)"></span>
             </div>
           </div>
           <footer class="card-footer">
@@ -122,7 +175,12 @@
                 notification.data.user == 'teacher' &&
                 notification.data.type == 'post'
               "
-              :href="'/classroom/' + notification.data.classroom + '/student/' + notification.data.section"
+              :href="
+                '/classroom/' +
+                notification.data.classroom +
+                '/student/' +
+                notification.data.section
+              "
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}
               <i class="fad fa-user ml-1"></i>
@@ -198,9 +256,16 @@
 </template>
 <script>
 import Utils from "../../utils.js";
+import ShowDocument from "../documents/ShowDocument.vue";
 
 export default {
   props: {
+    docs: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     pending: {
       type: Array,
       default() {
@@ -236,6 +301,7 @@ export default {
     return {
       open: false,
       show: 0,
+      openDocs: false,
       overlay: true,
       fullheight: true,
       fullwidth: false,
@@ -319,7 +385,9 @@ export default {
       return count;
     },
   },
-  computed: {},
+  components: {
+    ShowDocument,
+  },
 };
 </script>
 <style lang="scss">
