@@ -27,7 +27,7 @@ class DocumentController extends Controller
         return $documents;
     }
 
-    public function update($code)
+    public function updateProp($code)
     {
         $class = Classroom::where('code', '=', $code)->firstorFail();
         $this->authorize('update', $class);
@@ -38,6 +38,24 @@ class DocumentController extends Controller
             request()->prop => request()->value,
         ]);
     }
+    
+    public function update($code) {
+        
+        $class = Classroom::where('code', '=', $code)->firstorFail();
+        $this->authorize('update', $class);
+        $document = Document::findOrFail(request()->document['id']);
+        if ($document->category->classroom_id != $class->id || request()->prop == 'document_category_id')
+            abort(403);
+
+        $data = request()->validate([
+            'document.name' => ['string', 'nullable'],
+            'document.description' => ['string', 'nullable'],
+            'document.url' => ['string', 'nullable'],
+            'document.text' => ['string', 'nullable'],
+        ]);
+
+        $document->update($data['document']);
+    }
 
     public function destroy($id)
     {
@@ -46,6 +64,13 @@ class DocumentController extends Controller
         $class = Classroom::find($document->category->classroom_id);
         $this->authorize('update', $class);
 
+        if($document->type == 2 && $document->url) {
+            foreach ($class->getMedia('documents') as $doc) {
+                if($doc->getUrl() == $document->url) {
+                    $doc->delete();
+                }
+            }
+        }
         return $document->delete();
     }
 

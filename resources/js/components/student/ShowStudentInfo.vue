@@ -1519,6 +1519,7 @@ export default {
           to: this.send_money_student,
         })
         .then((response) => {
+          // console.log(response.data)
           this.student.gold -= this.send_money;
           this.transaction = response.data;
           this.isSendMoneyActive = false;

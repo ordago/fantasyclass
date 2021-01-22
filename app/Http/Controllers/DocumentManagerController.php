@@ -17,7 +17,8 @@ class DocumentManagerController extends Controller
         $class = Classroom::where('code', '=', $code)->firstorFail();
         $this->authorize('view', $class);
         $documents = $class->documents()->orderBy('order')->get();
-        return view('documents.index', compact('class', 'documents'));
+        $user = auth()->user();
+        return view('documents.index', compact('class', 'documents', 'user'));
     }
 
     public function store($code) {

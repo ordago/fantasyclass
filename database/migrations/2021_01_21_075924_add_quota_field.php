@@ -14,7 +14,7 @@ class AddQuotaField extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->integer('quota')->default(20)->after('banned');
+            $table->integer('quota')->default(50)->after('banned');
         });
     }
 

@@ -51,9 +51,21 @@
             </a>
         </div>
     </div>
-    <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
-        <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
-    </a>
+
+    <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+             <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
+        </a>
+
+        <div class="navbar-dropdown">
+            <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
+                 <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
+            </a>
+            <a href="/classroom/{{ $class->code }}/docmgr" class="navbar-item">
+                 <i class="fad fa-book mr-2"></i> {{ __('menu.documents') }}
+            </a>
+        </div>
+    </div>
     <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
             <i class="fad fa-analytics mr-2"></i> {{ __('menu.evaluation') }}

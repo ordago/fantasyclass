@@ -16,7 +16,7 @@
           </button>
         </span>
         <span>
-          <button class="button" @click="modal = true">
+          <button class="button" @click="resetDocument()">
             <span class="is-hidden-mobile">{{
               trans.get("documents.add")
             }}</span>
@@ -25,7 +25,6 @@
       </p>
       <div class="panel-block" v-if="documentsMutable.length == 0">
         <h3 class="is-size-3 p-4 w-100 has-text-centered">
-          <i class="fal fa-smile-wink"></i>
           {{ trans.get("documents.empty") }}
         </h3>
       </div>
@@ -42,7 +41,7 @@
             v-for="document in documentsMutable"
             v-bind:key="document.id"
           >
-            <div class="column is-narrow my-0 py-1">
+            <div class="column flex-fix is-narrow my-0 py-1">
               <i
                 class="far fa-arrows-v handle mr-2 cursor-move"
                 v-if="documentsMutable.length > 1"
@@ -78,11 +77,13 @@
                 :label="trans.get('documents.label')"
                 icon-pack="fad"
                 icon="font-case"
+                :disabled="checkEdit()"
               ></b-tab-item>
               <b-tab-item
                 :label="trans.get('documents.url')"
                 icon-pack="fad"
                 icon="window"
+                :disabled="checkEdit()"
                 class="p-2"
               >
                 <b-field :label="trans.get('documents.url')">
@@ -93,6 +94,7 @@
                 :label="trans.get('documents.upload')"
                 icon-pack="fad"
                 icon="upload"
+                :disabled="checkEdit()"
               >
                 <div v-if="file" class="m-2 p-2">
                   <span class="tag is-primary">
@@ -105,7 +107,7 @@
                   </span>
                 </div>
                 <b-upload
-                  v-else
+                  v-else-if="!document.id"
                   @input="onChange"
                   class="mt-2"
                   expanded
@@ -126,14 +128,13 @@
                 icon-pack="fad"
                 icon="align-justify"
                 class="p-2"
+                :disabled="checkEdit()"
               >
-                <b-field :label="trans.get('documents.content')">
-                  <Editor
-                    v-model="document.text"
-                    height="50vh"
-                    :code="code"
-                  ></Editor>
-                </b-field>
+                <Editor
+                  v-model="document.text"
+                  height="50vh"
+                  :code="code"
+                ></Editor>
               </b-tab-item>
             </b-tabs>
           </template>
@@ -145,18 +146,19 @@
           <button
             class="button is-primary"
             @click="addDocument"
-            :disabled="document.name == ''"
+            :disabled="checkFields()"
+            v-if="!document.id"
           >
             {{ trans.get("general.add") }}
           </button>
-          <!-- <button
+          <button
             class="button is-link"
-            @click="editPost"
+            @click="edit"
             v-else
-            :disabled="title == '' || content == null"
+            :disabled="checkFields()"
           >
             {{ trans.get("general.edit") }}
-          </button> -->
+          </button>
         </footer>
       </div>
     </b-modal>
@@ -199,6 +201,48 @@ export default {
     };
   },
   methods: {
+    checkFields() {
+      if(this.document.name == '')
+        return true;
+      if(this.document.type == 1 && this.document.url == "")
+        return true;
+      if(this.document.type == 2 && this.file == null)
+        return true;
+      return false;
+    },
+    checkEdit() {
+      if(!isNaN(this.document.id))
+        return true;
+      return false;
+    },
+    resetDocument() {
+      (this.document = {
+        name: "",
+        description: "",
+        type: 0,
+        type_document: "",
+        url: "",
+        size: 0,
+        text: "",
+        document_category_id: this.documentgroup.id,
+        indentation: 0,
+        order: this.documents.length,
+        visible: 1,
+      }),
+        (this.modal = true);
+    },
+    edit() {
+      axios
+        .patch("/classroom/" + this.code + "/docmgr/document", {
+          document: this.document,
+        })
+        .then((response) => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+          this.modal = false;
+        });
+    },
     onChange(ev) {
       if (ev.size > 10000000)
         this.$toast(this.trans.get("success_error.max_size") + ": 10MB", {
@@ -266,3 +310,10 @@ export default {
   updated: function () {},
 };
 </script>
+<style>
+.flex-fix {
+  flex-basis: initial;
+  flex-grow: initial;
+  flex-shrink: initial;
+}
+</style>

@@ -427,7 +427,7 @@ class ClassroomsStudentController extends Controller
 
         $to = Student::where('classroom_user_id', '=', request()->to)->firstOrFail();
         if ($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id)
-            abort(403);;
+            abort(403);
         $fee = settings()->get('transfer_fee', 10);
 
         $gold = request()->money - request()->money * $fee / 100;
@@ -452,7 +452,6 @@ class ClassroomsStudentController extends Controller
         }
 
         Notification::send($to->classroom->user, new NewInteractionStudent('notifications.money_sent', $message, $from, "money_sent", $class->code));
-
         return ['gold' => request()->money, 'received' => $gold, 'steal' => $steal];
     }
 

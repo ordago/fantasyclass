@@ -142,7 +142,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/documents/group/{id}', 'DocumentManagerController@destroy');
         
         Route::post('/{code}/docmgr/document', 'DocumentController@store');
-        Route::patch('/{code}/document', 'DocumentController@update');
+        Route::patch('/{code}/docmgr/document', 'DocumentController@update');
+        Route::patch('/{code}/document', 'DocumentController@updateProp');
         Route::delete('/document/{id}', 'DocumentController@destroy');
         Route::post('/{code}/docmgr/documents/order', 'DocumentController@order');
         

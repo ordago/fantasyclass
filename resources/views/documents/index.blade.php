@@ -21,6 +21,9 @@
 @include('layouts.breadcrumbend')
 @endsection
 
+@section('help')
+@endsection
+
 @section('content')
-  <show-document-group :documentgroups="{{ $documents }}" code="{{ $class->code }}"></show-challenges-group>
+  <show-document-group :documentgroups="{{ $documents }}" code="{{ $class->code }}"></show-document-group>
 @endsection

@@ -1,9 +1,6 @@
 <template>
   <div class="columns p-2">
-    <div class="column is-narrow pr-0" style="min-width: 400px" v-if="documentGroupsMutable.length">
-     
-     
-      
+    <div class="column is-narrow pr-0" style="min-width: 400px" v-if="documentGroupsMutable.length"> 
       <article class="panel is-sticky-panel is-info">
         <p
           class="panel-heading is-flex has-space-between align-items-center p-3"

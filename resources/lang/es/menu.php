@@ -47,6 +47,7 @@ return [
     'battles' => 'Batallas',
     'skills' => 'Habilidades',
     'config' => 'Configuración',
+    'documents' => 'Gestor documentos',
 
     'view_list' => 'Vista de lista',
     'view_group' => 'Vista de grupos',

@@ -45,6 +45,10 @@
           }"
         ></i>
         <i
+          @click="edit()"
+          class="mx-1 cursor-pointer fas fa-edit"
+        ></i>
+        <i
           @click="confirmDelete()"
           class="mx-1 cursor-pointer fas fa-times"
         ></i>
@@ -81,6 +85,10 @@ export default {
   },
   components: {},
   methods: {
+    edit() {
+      this.$parent.$parent.document = this.document;
+      this.$parent.$parent.modal = true;
+    },
     getIcon() {
       if(this.document.type == 1)
         return 'fa-globe';
