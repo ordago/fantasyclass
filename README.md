@@ -26,6 +26,7 @@ Help and sponsors
 - Isabel Hernández.
 - [Kiean Wong (graphics).](https://www.instagram.com/kieanwong.art/)  
 - Trini Ardid
+- Luis Navarro Rodríguez
 
 ## Contribute to the project
 ### To import the project

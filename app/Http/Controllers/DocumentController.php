@@ -117,7 +117,6 @@ class DocumentController extends Controller
 
         if (request()->file) {
             $size = request()->file('file')->getSize() / 1000000;
-            dump(auth()->user()->files);
             if (auth()->user()->files + $size > auth()->user()->quota) {
                 return [
                     "message" => __('success_error.quota_exceded'),
