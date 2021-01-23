@@ -1,4 +1,9 @@
 # Changelog
+## v1.37 Beta (XX/01/2021)
+### Added
+
+### Changed
+
 ## v1.36 Beta (22/01/2021)
 ### Added
 - Document manager.
