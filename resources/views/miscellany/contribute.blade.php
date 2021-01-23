@@ -204,35 +204,6 @@
 
         </div>
       </div>
-      <div class="column is-8 is-offset-2">
-        <br>
-        <nav class="level">
-          <div class="level-left">
-            <div class="level-item">
-              <span class="icon">
-                <i class="fab fa-twitter"></i>
-              </span> &emsp;
-              <span class="icon">
-                <i class="fab fa-facebook"></i>
-              </span> &emsp;
-              <span class="icon">
-                <i class="fab fa-instagram"></i>
-              </span> &emsp;
-              <span class="icon">
-                <i class="fab fa-github"></i>
-              </span> &emsp;
-              <span class="icon">
-                <i class="fas mx-2 fa-envelope"></i>
-              </span>
-            </div>
-          </div>
-          <div class="level-right">
-            <small class="level-item" style="color: var(--textLight)">
-              &copy; Super Cool Website. All Rights Reserved.
-            </small>
-          </div>
-        </nav>
-      </div>
     </div>
   </section>
 
