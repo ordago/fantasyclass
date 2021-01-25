@@ -88,5 +88,6 @@ return [
     'log_card_assign' => 'Card assigned',
     'log_pet' => 'Pet',
     'log_skill' => 'Skill result, yours or from another one.',
+    'log_task' => 'You\'ve done one task',
 
 ];

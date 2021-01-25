@@ -1,8 +1,10 @@
 # Changelog
-## v1.37 Beta (XX/01/2021)
+## v1.37 Beta (25/01/2021)
 ### Added
+- Add tasks in document manager
 
 ### Changed
+- Better notification management.
 
 ## v1.36 Beta (22/01/2021)
 ### Added

@@ -68,7 +68,6 @@
             v-for="document in cat.documents"
             v-bind:key="document.id"
           >
-
             <div class="column my-0 py-0">
               <ShowDocument
                 class="ml-4 mb-1"
@@ -83,6 +82,7 @@
     </b-sidebar>
     <b-sidebar
       type="is-light"
+      :can-cancel="false"
       :fullheight="true"
       :fullwidth="false"
       :overlay="overlay"
@@ -271,7 +271,7 @@ export default {
     code: {
       type: String,
       default() {
-        return '';
+        return "";
       },
     },
     pending: {
@@ -327,7 +327,6 @@ export default {
       location.href = url;
     },
     deleteNotification(type, id = null, index = null) {
-      this.open = false;
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
         message: this.trans.get("general.confirm_delete"),
@@ -353,6 +352,8 @@ export default {
               } else {
                 this.notifications.splice(0, this.notifications.length);
               }
+              if(this.notifications.length == 0)
+                this.open = false;
               this.$forceUpdate();
             });
         },

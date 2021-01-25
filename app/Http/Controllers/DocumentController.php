@@ -23,7 +23,7 @@ class DocumentController extends Controller
         $class = Classroom::where('id', '=', $group->classroom_id)->first();
         $this->authorize('view', $class);
 
-        $documents = Document::where('document_category_id', $group->id)->orderBy('order')->get();
+        $documents = Document::where('document_category_id', $group->id)->with('students')->orderBy('order')->get();
 
         return $documents;
     }

@@ -7,21 +7,27 @@
       class="py-2 mt-1 is-flex"
       :style="'margin-left: ' + document.indentation * 20 + 'px'"
     >
-      <span v-if="!admin" @click="markDoc()" v-tippy="{ theme: 'light' }" :content="getMessage()">
+      <span
+        v-if="!admin"
+        @click="markDoc()"
+        v-tippy="{ theme: 'light' }"
+        :content="getMessage()"
+      >
         <b-field class="is-inline is-relative" v-if="document.is_task == 1">
           <b-checkbox
             v-model="isChecked"
-            :class="{ 'check-regular': !admin, 'check-admin': admin, 'cursor-pointer' : !isChecked }"
+            :class="{
+              'check-regular': !admin,
+              'check-admin': admin,
+              'cursor-pointer': !isChecked,
+            }"
             :disabled="true"
           ></b-checkbox>
         </b-field>
       </span>
       <span v-else>
         <b-field class="is-inline is-relative" v-if="document.is_task == 1">
-          <b-checkbox
-            class="check-admin"
-            :disabled="true"
-          ></b-checkbox>
+          <b-checkbox class="check-admin" :disabled="true"></b-checkbox>
         </b-field>
       </span>
       <span v-if="document.type == 0">
@@ -55,6 +61,31 @@
       v-if="document.description"
     >
       <small>{{ document.description }}</small>
+    </div>
+    <div
+      :style="'margin-left: ' + document.indentation * 20 + 'px'"
+      class="py-1 is-italic"
+      v-if="admin && document.students && document.students.length"
+    >
+      <tippy
+        interactive
+        :animate-fill="false"
+        theme="light"
+        placement="top"
+        animation="fade"
+        style="display: inline-block"
+        arrow
+      >
+        <template v-slot:trigger>
+          <small class="tag is-success cursor-default"
+            ><i class="fas fa-check"></i>
+            {{ trans.get("documents.done") }}</small
+          >
+        </template>
+        <span v-for="student in document.students" :key="student.id">
+          {{ student.name }} <i class="fal fa-ellipsis-v mx-1"></i>
+        </span>
+      </tippy>
     </div>
     <div v-if="admin" class="px-2 py-1 document-properties">
       <small>
@@ -190,7 +221,7 @@ export default {
                   origin: { y: 1.0 },
                 });
                 // TODO
-                console.log(this.$parent.$parent.$parent.student)
+                console.log(this.$parent.$parent.$parent.student);
                 this.changed = true;
                 this.$forceUpdate;
               });
@@ -207,8 +238,7 @@ export default {
     },
     getMessage() {
       let tippy = "";
-      if(! this.isChecked)
-        tippy += this.trans.get('documents.mark_done');
+      if (!this.isChecked) tippy += this.trans.get("documents.mark_done");
       if (this.document.xp) {
         tippy +=
           this.document.xp + "<i class='fas fa-fist-raised colored'></i> ";
@@ -263,7 +293,7 @@ export default {
   computed: {
     isChecked: {
       get: function () {
-        if(this.document.students) {
+        if (this.document.students) {
           if (this.document.students.length != 0 || this.changed) {
             return true;
           }

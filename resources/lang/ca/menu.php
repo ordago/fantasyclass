@@ -47,7 +47,7 @@ return [
     'battles' => 'Batalles',
     'skills' => 'Habilitats',
     'config' => 'Configuració',
-    'documents' => 'Gestor documents',
+    'documents' => 'Gestor documents i tasques',
     'resources' => 'Materials',
 
     'view_list' => 'Vista de llista',

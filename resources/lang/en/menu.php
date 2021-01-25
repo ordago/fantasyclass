@@ -47,7 +47,7 @@ return [
     'battles' => 'Battles',
     'skills' => 'Skills',
     'config' => 'Settings',
-    'documents' => 'Document manager',
+    'documents' => 'Document and task manager',
     'resources' => 'Resources',
 
     'view_list' => 'List view',
