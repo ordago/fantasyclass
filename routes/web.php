@@ -146,6 +146,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/document', 'DocumentController@updateProp');
         Route::delete('/document/{id}', 'DocumentController@destroy');
         Route::post('/{code}/docmgr/documents/order', 'DocumentController@order');
+        Route::post('/{code}/docmgr/documents/mark', 'DocumentController@mark');
         
         // Challenges
         Route::get('/{code}/challenges', 'ChallengesGroupController@index');

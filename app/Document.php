@@ -19,9 +19,17 @@ class Document extends Model
         'document_category_id',
         'uploader',
         'order',
+        'is_task',
+        'xp',
+        'hp',
+        'gold',
     ];
 
     public function category() {
         return $this->belongsTo(DocumentCategory::class, 'document_category_id', 'id');
+    }
+    
+    public function students() {
+        return $this->belongsToMany(Student::class);
     }
 }

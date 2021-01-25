@@ -302,6 +302,10 @@ a {
     align-items: center;
 }
 
+.modal {
+    z-index: 50;
+}
+
 .has-background-conquer {
     background-color: #ffd9a3;
 }

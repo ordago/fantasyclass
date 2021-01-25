@@ -65,12 +65,77 @@
           <p class="modal-card-title">{{ trans.get("documents.new") }}</p>
         </header>
         <section class="modal-card-body">
-          <b-field :label="trans.get('documents.name')">
+          <b-field :label="trans.get('documents.name') + '*'">
             <b-input required v-model="document.name"></b-input>
           </b-field>
           <b-field :label="trans.get('documents.description')">
             <b-input v-model="document.description"></b-input>
           </b-field>
+          <b-field>
+            <b-switch
+              v-model="document.is_task"
+              :true-value="1"
+              :false-value="0"
+            >
+              {{ trans.get('documents.is_task') }}
+            </b-switch>
+          </b-field>
+          <div class="columns" v-if="document.is_task == 1">
+            <div class="column">
+              <div class="field has-addons">
+                <p class="control">
+                  <span class="button is-static">
+                    <i class="fas fa-fist-raised colored"></i>
+                  </span>
+                </p>
+                <p class="control is-expanded">
+                  <input
+                    type="number"
+                    name="xp"
+                    class="input"
+                    v-model="document.xp"
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field has-addons">
+                <p class="control">
+                  <span class="button is-static">
+                    <i class="fas fa-heart colored"></i>
+                  </span>
+                </p>
+                <p class="control is-expanded">
+                  <input
+                    type="number"
+                    name="hp"
+                    class="input"
+                    v-model="document.hp"
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+            <div class="column">
+              <div class="field has-addons">
+                <p class="control">
+                  <span class="button is-static">
+                    <i class="fas fa-coins colored"></i>
+                  </span>
+                </p>
+                <p class="control is-expanded">
+                  <input
+                    type="number"
+                    name="gold"
+                    class="input"
+                    v-model="document.gold"
+                    required
+                  />
+                </p>
+              </div>
+            </div>
+          </div>
           <template>
             <b-tabs v-model="document.type" type="is-toggle" expanded>
               <b-tab-item
@@ -86,7 +151,7 @@
                 :disabled="checkEdit()"
                 class="p-2"
               >
-                <b-field :label="trans.get('documents.url')">
+                <b-field :label="trans.get('documents.url')+'*'">
                   <b-input type="url" required v-model="document.url"></b-input>
                 </b-field>
               </b-tab-item>
@@ -187,11 +252,15 @@ export default {
       file: null,
       document: {
         name: "",
+        is_task: 0,
         description: "",
         type: 0,
         type_document: "",
         url: "",
         size: 0,
+        xp: 0,
+        hp: 0,
+        gold: 0,
         text: "",
         document_category_id: this.documentgroup.id,
         indentation: 0,
@@ -202,17 +271,14 @@ export default {
   },
   methods: {
     checkFields() {
-      if(this.document.name == '')
-        return true;
-      if(this.document.type == 1 && this.document.url == "")
-        return true;
-      if(this.document.type == 2 && this.file == null && !this.checkEdit())
+      if (this.document.name == "") return true;
+      if (this.document.type == 1 && this.document.url == "") return true;
+      if (this.document.type == 2 && this.file == null && !this.checkEdit())
         return true;
       return false;
     },
     checkEdit() {
-      if(!isNaN(this.document.id))
-        return true;
+      if (!isNaN(this.document.id)) return true;
       return false;
     },
     resetDocument() {
@@ -220,6 +286,10 @@ export default {
         name: "",
         description: "",
         type: 0,
+        is_task: 0,
+        xp: 0,
+        hp: 0,
+        gold: 0,
         type_document: "",
         url: "",
         size: 0,

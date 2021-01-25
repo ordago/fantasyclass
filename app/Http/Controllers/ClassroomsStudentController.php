@@ -90,8 +90,12 @@ class ClassroomsStudentController extends Controller
             abort(403);
     }
 
-    public function getDocuments($class) {
-        $docs = $class->documents()->with(["documents" => function($q){
+    public function getDocuments($class)
+    {
+        $student = Functions::getCurrentStudent($class);
+        $docs = $class->documents()->with(["documents.students" => function ($q) use ($student) {
+            $q->where('students.id', '=', $student->id);
+        }, "documents" => function ($q) {
             $q->where('documents.visible', '=', 1)->orderBy('order');
         }])->get();
         return $docs;
@@ -606,9 +610,9 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
 
-        if(isset(request()->student)) {
+        if (isset(request()->student)) {
             $student = Student::findOrFail(request()->student);
-            if($student->classroom->classroom_id != $class->id)
+            if ($student->classroom->classroom_id != $class->id)
                 abort(403);
         } else {
             $student = Functions::getCurrentStudent($class, []);
@@ -616,9 +620,9 @@ class ClassroomsStudentController extends Controller
 
         $skill = Skill::findOrFail(request()->skill);
 
-        if(!$student->skills->contains($skill->id))
+        if (!$student->skills->contains($skill->id))
             abort(403);
-            
+
         switch ($skill->properties['type']) {
             case 'undo_action':
                 SkillsController::undoAction($student);
@@ -628,9 +632,9 @@ class ClassroomsStudentController extends Controller
                 $students = $class->students()->where('students.id', '!=', $student->id)->inRandomOrder()->limit($skill->properties['users'])->get();
                 $xpStd = 0;
                 foreach ($students as $std) {
-                    if(!$std->checkSkill('protection_steal')) {
+                    if (!$std->checkSkill('protection_steal')) {
                         $xpStd += min($xp, $std->xp);
-                        $std->setProperty("xp", $xp * - 1, true, 'skill', true);
+                        $std->setProperty("xp", $xp * -1, true, 'skill', true);
                         $std->classroom->user->sendMessage($student->name . " " . __('skills.stolen_you') . " <i class='fas fa-fist-raised colored'></i>", $class->code, 'skill', false);
                     } else {
                         $student->classroom->user->sendMessage($std->name . " " . __('skills.stopped_stolen'), $class->code, 'skill', false);
@@ -644,9 +648,9 @@ class ClassroomsStudentController extends Controller
                 $students = $class->students()->where('students.id', '!=', $student->id)->inRandomOrder()->limit($skill->properties['users'])->get();
                 $goldStd = 0;
                 foreach ($students as $std) {
-                    if(!$std->checkSkill('protection_steal')) {
+                    if (!$std->checkSkill('protection_steal')) {
                         $goldStd += min($gold, $std->gold);
-                        $std->setProperty("gold", $gold * - 1, true, 'skill', true);
+                        $std->setProperty("gold", $gold * -1, true, 'skill', true);
                         $std->classroom->user->sendMessage($student->name . " " . __('skills.stolen_you') . " <i class='fas fa-coins colored'></i>", $class->code, 'skill', false);
                     } else {
                         $student->classroom->user->sendMessage($std->name . " " . __('skills.stopped_stolen'), $class->code, 'skill', false);
@@ -658,10 +662,10 @@ class ClassroomsStudentController extends Controller
             case 'heal_classroom':
                 $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
                 foreach ($class->students as $std) {
-                    if($std->hp == 0)
+                    if ($std->hp == 0)
                         continue;
                     $mult = 1;
-                    if($student->id == $std->id)
+                    if ($student->id == $std->id)
                         $mult = -1;
                     $std->setProperty('hp', $hp * $mult, true, 'skill', true);
                 }
@@ -669,12 +673,12 @@ class ClassroomsStudentController extends Controller
             case 'heal_group':
                 $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
                 $group = $student->groups->first();
-                if($group) {
+                if ($group) {
                     foreach ($group->students as $std) {
-                        if($std->hp == 0)
+                        if ($std->hp == 0)
                             continue;
                         $mult = 1;
-                        if($student->id == $std->id)
+                        if ($student->id == $std->id)
                             $mult = -1;
                         $std->setProperty('hp', $hp * $mult, true, 'skill', true);
                     }
@@ -684,7 +688,6 @@ class ClassroomsStudentController extends Controller
                 $hp = rand($skill->properties['hp_min'], $skill->properties['hp_max']);
                 $student->setProperty('hp', $hp, true, 'skill');
                 break;
-            
         }
 
         $from['title'] = __("notifications.use_skill");
@@ -704,15 +707,15 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
-        if(isset(request()->student)) {
+        if (isset(request()->student)) {
             $student = Student::findOrFail(request()->student);
-            if($student->classroom->classroom_id != $class->id)
+            if ($student->classroom->classroom_id != $class->id)
                 abort(403);
         } else {
             $student = Functions::getCurrentStudent($class, []);
         }
         $lastSkill = $student->skills()->where('skill_id', request()->skill)->first();
-        if($lastSkill->pivot->count == 1) {
+        if ($lastSkill->pivot->count == 1) {
             $student->skills()->detach($lastSkill);
         } else {
             $student->skills()->sync([$lastSkill->id => ['count' => $lastSkill->pivot->count - 1]], false);
@@ -735,9 +738,9 @@ class ClassroomsStudentController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        if(isset(request()->id)) {
+        if (isset(request()->id)) {
             $student = Student::findOrFail(request()->id);
-            if($student->classroom->classroom_id != $class->id)
+            if ($student->classroom->classroom_id != $class->id)
                 abort(403);
         } else {
             $student = Functions::getCurrentStudent($class, []);
@@ -760,7 +763,7 @@ class ClassroomsStudentController extends Controller
             array_push($have, $line['type']);
         }
 
-        if($class->skills->count() == 0) {
+        if ($class->skills->count() == 0) {
             return [
                 "message" => " " . __('skills.no_available'),
                 "icon" => "times",
@@ -980,12 +983,12 @@ class ClassroomsStudentController extends Controller
 
         $extra = 0;
         if ($item->hp > 0) {
-            if($student->checkSkill('heal_passive')) {
+            if ($student->checkSkill('heal_passive')) {
                 $extra = $student->getIncrement('heal_passive', $item->hp);
                 $student->setProperty('hp', $extra, true, 'skill');
                 $student->classroom->user->sendMessage(__('skills.heal_passive_effective'), $class->code, 'skill', false);
             }
-            
+
             $student->setProperty('hp', $item->hp, true, 'item');
         }
         if ($item->xp > 0) {

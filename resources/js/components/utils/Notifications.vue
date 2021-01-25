@@ -41,6 +41,7 @@
       <span class="tag is-danger tag-notif">{{ notifications.length }}</span>
     </div>
     <b-sidebar
+      :can-cancel="false"
       type="is-light"
       :fullheight="true"
       :fullwidth="false"
@@ -68,11 +69,12 @@
             v-bind:key="document.id"
           >
 
-            <div class="column my-0 py-1">
+            <div class="column my-0 py-0">
               <ShowDocument
-                class="mb-3"
+                class="ml-4 mb-1"
                 :document="document"
                 :admin="false"
+                :code="code"
               ></ShowDocument>
             </div>
           </div>
@@ -264,6 +266,12 @@ export default {
       type: Array,
       default() {
         return [];
+      },
+    },
+    code: {
+      type: String,
+      default() {
+        return '';
       },
     },
     pending: {

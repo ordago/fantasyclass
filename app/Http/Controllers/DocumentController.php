@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Document;
 use App\DocumentCategory;
+use App\Http\Classes\Functions;
 
 class DocumentController extends Controller
 {
@@ -52,6 +53,10 @@ class DocumentController extends Controller
             'document.description' => ['string', 'nullable'],
             'document.url' => ['string', 'nullable'],
             'document.text' => ['string', 'nullable'],
+            'document.is_task' => ['boolean', 'required'],
+            'document.xp' => ['numeric', 'nullable'],
+            'document.hp' => ['numeric', 'nullable'],
+            'document.gold' => ['numeric', 'nullable'],
         ]);
 
         $document->update($data['document']);
@@ -72,6 +77,32 @@ class DocumentController extends Controller
             }
         }
         return $document->delete();
+    }
+
+    public function mark($code)
+    {
+        $class = Classroom::where('code', '=', $code)->first();
+        $this->authorize('study', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $student = Functions::getCurrentStudent($class, []);
+        $doc = Document::findOrFail($data['id']);
+        if($student->classroom->classroom_id != $class->id || $doc->category->classroom_id != $class->id)
+            abort(403);
+        if(!$student->documents->contains($doc->id)) {
+            $student->documents()->sync($doc->id, false);
+            if($doc->xp) {
+                $student->setProperty('xp', $doc->xp, true, 'task');
+            }
+            if($doc->hp) {
+                $student->setProperty('hp', $doc->hp, true, 'task');
+            }
+            if($doc->gold) {
+                $student->setProperty('gold', $doc->gold, true, 'task');
+            }
+        }
+        return $student->fresh();
     }
 
     public function order($code)
@@ -105,6 +136,10 @@ class DocumentController extends Controller
             'document.order' => ['numeric', 'nullable'],
             'document.indentation' => ['numeric', 'nullable'],
             'document.visible' => ['numeric', 'nullable'],
+            'document.is_task' => ['boolean', 'nullable'],
+            'document.hp' => ['numeric', 'nullable'],
+            'document.xp' => ['numeric', 'nullable'],
+            'document.gold' => ['numeric', 'nullable'],
             'file' => ['mimes:pdf,doc,ppt,xls,docx,pptx,xlsx,gif,jpeg,jpg,png,svg,zip,rar,odt,mp4,avi,odp,ods,mpeg,txt,mpga,mp3', 'nullable', 'max:10000'],
         ]);
 

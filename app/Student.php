@@ -218,6 +218,10 @@ class Student extends Model implements HasMedia
     {
         return $this->hasMany(Blog::class);
     }
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class);
+    }
 
     public function addBehaviour($behaviourId)
     {

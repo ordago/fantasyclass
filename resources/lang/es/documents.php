@@ -19,6 +19,7 @@ return [
     'upload' => 'Sube',
     'text' => 'Text',
     'empty' => 'No hay documentos en esta sección',
-
+    'is_task' => '¿Es una tarea?',
+    'mark_done' => 'Marca como hecho. ',
 
 ];

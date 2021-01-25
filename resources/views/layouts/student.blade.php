@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('notifications')
-<notifications :docs="{{ $docs ?? '[]' }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="student"></notifications>
+<notifications code="{{ $class->code }}" :docs="{{ $docs ?? '[]' }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="student"></notifications>
 @endsection
 
 
