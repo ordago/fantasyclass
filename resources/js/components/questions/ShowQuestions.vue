@@ -18,6 +18,10 @@
         </span>
         <span v-if="bank.id">
           <Xlsx type="importTest"></Xlsx>
+          <button class="button is-info" v-tippy :content="trans.get('questions.download_test')" @click="download">
+            <i class="fad fa-download mr-1"></i
+            ><i class="fad fa-file-spreadsheet"></i>
+          </button>
           <!-- <button class="button" @click="isImportModalActive = true">
             <i class="fas fa-file-import"></i>
             <span class="is-hidden-mobile ml-2">{{
@@ -107,6 +111,35 @@ export default {
     };
   },
   methods: {
+    download() {
+      axios
+        .post(
+          "/classroom/" + this.code + "/bank/download",
+          { id: this.bank.id },
+          {
+            responseType: "blob",
+          }
+        )
+        .then((response) => {
+          const blob = new Blob([response.data], { type: response.data.type });
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+
+          const contentDisposition = response.headers["content-disposition"];
+          let fileName = "unknown";
+          if (contentDisposition) {
+            const fileNameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+            const matches = fileNameRegex.exec(contentDisposition);
+            if (matches != null && matches[1]) {
+              fileName = matches[1].replace(/['"]/g, "");
+            }
+          }
+
+          link.download = fileName;
+          link.click();
+          URL.revokeObjectURL(link.href);
+        });
+    },
     addFromExcel(questions) {
       questions.forEach((question) => {
         axios
@@ -114,11 +147,15 @@ export default {
             type: 1,
             bank: this.bank.id,
             question: {
-              name: question['Title'],
-              correctAnswer: question['CorrectAnswer'],
-              incorrectAnswer1: question['Incorrect1'],
-              incorrectAnswer2: question['Incorrect2'] ? question['Incorrect2'] : "",
-              incorrectAnswer3: question['Incorrect3'] ? question['Incorrect3'] : "",
+              name: question["Title"],
+              correctAnswer: question["CorrectAnswer"],
+              incorrectAnswer1: question["Incorrect1"],
+              incorrectAnswer2: question["Incorrect2"]
+                ? question["Incorrect2"]
+                : "",
+              incorrectAnswer3: question["Incorrect3"]
+                ? question["Incorrect3"]
+                : "",
             },
           })
           .then((response) => {
@@ -130,7 +167,7 @@ export default {
             }
           })
           .catch((response) => {
-            this.$toast("'" + question['Title'] + "' not imported", {
+            this.$toast("'" + question["Title"] + "' not imported", {
               type: "error",
               timeout: 0,
             });

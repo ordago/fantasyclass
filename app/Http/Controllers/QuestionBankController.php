@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Exports\Export;
 use App\QuestionBank;
+use Maatwebsite\Excel\Facades\Excel;
 
 class QuestionBankController extends Controller
 {
@@ -42,5 +44,47 @@ class QuestionBankController extends Controller
         $this->authorize('update', $class);
 
         return $questionBank->delete();
+    }
+
+    public function downloadQuestionBank($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $bank = QuestionBank::where('classroom_id', '=', $class->id)->where('id', '=', $data['id'])->firstOrFail();
+        
+        $headings = [
+            "Title",
+            "CorrectAnswer",
+            "Incorrect1",
+            "Incorrect2",
+            "Incorrect3",
+        ];
+
+        $questions = [];
+        foreach ($bank->questions()->where('type', 1)->get() as $question) {
+            $correctAnswer = null;
+            $incorrect = [];
+            $correct = 0;
+            foreach ($question->options as $option) {
+                if(isset($option['correctAnswer'])) {
+                    $correct = $option['correctAnswer'];
+                } else {
+                    if($correct == $option['answer']['id']) {
+                        $correctAnswer = $option['answer']['text'];
+                    } else {
+                        array_push($incorrect, $option['answer']['text']);
+                    }
+                }
+            }
+            array_push($questions, ['Title' => $question->name, 'CorrectAnswer' => $correctAnswer, 'Incorrect1' => $incorrect[0], 'Incorrect2' => isset($incorrect[1]) ? $incorrect[1] : '', 'Incorrect3' => isset($incorrect[2]) ? $incorrect[2] : '']);
+            
+        }
+
+        return Excel::download(new Export($headings, $questions), $bank->title . '.xlsx');
+
     }
 }

@@ -23,5 +23,6 @@ return [
     'example2' => 'Las tres opciones serán aceptadas',
     'student_answer' => 'Respuesta',
     'send_answer' => 'Envía respuesta',
+    'download_test' => 'Descarga las preguntas tipo test a un excel',
 
 ];

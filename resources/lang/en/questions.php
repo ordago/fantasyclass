@@ -22,5 +22,6 @@ return [
     'example2' => 'The three answers will be accepted',
     'student_answer' => 'Answer',
     'send_answer' => 'Send answer',
+    'download_test' => 'Download only test questions to excel file',
 
 ];

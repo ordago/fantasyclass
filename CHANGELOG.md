@@ -1,4 +1,11 @@
 # Changelog
+## v1.38 Beta (29/01/2021)
+### Added
+- Export test questions in question bank.
+
+### Changed
+- Better log management.
+
 ## v1.37 Beta (25/01/2021)
 ### Added
 - Add tasks in document manager

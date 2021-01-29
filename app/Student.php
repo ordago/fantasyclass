@@ -474,6 +474,9 @@ class Student extends Model implements HasMedia
                 $value = $this->$prop + $old;
             } else {
                 $value = max($this->$prop + $value, 0);
+                if($value == 0) {
+                    $old = 0 - $this->$prop + $value;
+                }
             }
         }
 
