@@ -17,7 +17,8 @@
         </span>
         <span>
           <button class="button" @click="resetDocument()">
-            <span class="is-hidden-mobile">{{
+            <i class="fas fa-plus"></i>
+            <span class="ml-1">{{
               trans.get("documents.add")
             }}</span>
           </button>
