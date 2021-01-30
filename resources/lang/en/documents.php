@@ -11,7 +11,7 @@ return [
     */
 
     'new' => 'New document',
-    'add' => 'Create',
+    'add' => 'Create document',
     'name' => 'Name',
     'description' => 'Description',
     'label' => 'Label',

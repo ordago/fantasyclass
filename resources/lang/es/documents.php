@@ -11,7 +11,7 @@ return [
     */
     
     'new' => 'Nuevo documento',
-    'add' => 'Crear',
+    'add' => 'Crear documento',
     'name' => 'Nombre',
     'description' => 'Descripción',
     'label' => 'Etiqueta',
