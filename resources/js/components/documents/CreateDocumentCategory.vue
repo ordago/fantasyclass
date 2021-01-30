@@ -2,7 +2,7 @@
   <div class="pl-0-desktop">
     <div class="panel pl-0">
       <p class="panel-heading is-flex has-space-between align-items-center p-4">
-        <span class="pl-3">Create </span>
+        <span class="pl-3">{{ trans.get("challenges.create") }}</span>
       </p>
       <div class="p-4 panel-block">
         <form
