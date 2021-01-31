@@ -147,6 +147,10 @@ class Classroom extends Model implements HasMedia
     public function documents() {
         return $this->hasMany(DocumentCategory::class);
     }
+    
+    public function videochats() {
+        return $this->hasMany(Videochat::class);
+    }
 
     public static function boot()
     {

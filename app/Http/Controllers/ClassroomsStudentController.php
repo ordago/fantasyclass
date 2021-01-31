@@ -101,6 +101,12 @@ class ClassroomsStudentController extends Controller
         return $docs;
     }
 
+    public function getVideochats($class)
+    {
+        $student = Functions::getCurrentStudent($class);
+        return $class->videochats()->where('active', '=', 1)->get();
+    }
+
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
@@ -149,8 +155,9 @@ class ClassroomsStudentController extends Controller
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
 
         $docs = $this->getDocuments($class);
+        $videochats = $this->getVideochats($class);
 
-        return view('studentsview.index', compact('class', 'docs', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
+        return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
     public function challenges($code)
@@ -213,8 +220,9 @@ class ClassroomsStudentController extends Controller
         });
 
         $docs = $this->getDocuments($class);
+        $videochats = $this->getVideochats($class);
 
-        return view('studentsview.challenges', compact('class', 'docs', 'student', 'challenges'));
+        return view('studentsview.challenges', compact('class', 'docs', 'videochats', 'student', 'challenges'));
     }
 
     public function getChallenge($code, $permalink)
@@ -399,8 +407,9 @@ class ClassroomsStudentController extends Controller
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'student')->get();
 
         $docs = $this->getDocuments($class);
+        $videochats = $this->getVideochats($class);
 
-        return view('studentsview.show', compact('student', 'docs', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
+        return view('studentsview.show', compact('student', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
     public function rules($code)

@@ -172,6 +172,14 @@
         >
           <i class="fad fa-user-secret" style="font-size: 2em"></i>
         </a>
+        <a
+          v-tippy
+          :content="trans.get('menu.videochat')"
+          @click="isVideoChatActive = true"
+          class="link outer_glow px-1 cursor-pointer"
+        >
+          <i class="fad fa-video" style="font-size: 2em"></i>
+        </a>
       </div>
       <div
         class="column is-narrow has-text-right is-center-vertically is-flex"
@@ -630,12 +638,14 @@
       <massive-actions :classroom="classroom"></massive-actions>
     </b-modal>
     <Impostor v-if="isImpostorActive" :current="impostor" :code="classroom.code" :students="students"> </Impostor>
+    <Videochat v-if="isVideoChatActive" :code="classroom.code"> </Videochat>
   </div>
 </template>
 
 <script>
 import confetti from "canvas-confetti";
 import Impostor from "../utils/Impostor.vue";
+import Videochat from "../utils/Videochat.vue";
 
 export default {
   props: ["students", "classroom", "groups", "impostor", "settings"],
@@ -662,6 +672,7 @@ export default {
       buttons: "",
       numItems: 5,
       isImpostorActive: false,
+      isVideoChatActive: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
       isRandomGroupActive: false,
@@ -857,6 +868,7 @@ export default {
   },
   components: {
     Impostor,
+    Videochat,
   },
   computed: {
     filteredDataObj() {

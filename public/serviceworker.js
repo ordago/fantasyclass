@@ -210,6 +210,9 @@
     self.addEventListener('notificationclick', function (event) {
         event.notification.close();
         switch (event.action) {
+            case 'open_url':
+                self.clients.openWindow( event.notification.data.url)
+                break;
             case 'open_fantasyclass_teacher':
                 self.clients.openWindow("/classroom/" + event.notification.data.code + "/" + event.notification.data.section)
                 break;

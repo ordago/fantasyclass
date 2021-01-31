@@ -49,6 +49,7 @@ return [
     'config' => 'Settings',
     'documents' => 'Document and task manager',
     'resources' => 'Resources',
+    'videochat' => 'Videochat',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

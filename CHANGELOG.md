@@ -1,4 +1,11 @@
 # Changelog
+## v1.39 Beta (31/01/2021)
+### Added
+- Create videochat rooms.
+
+### Changed
+- Some fixes.
+
 ## v1.38 Beta (29/01/2021)
 ### Added
 - Export test questions in question bank.

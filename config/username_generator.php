@@ -62,7 +62,7 @@ return [
     /*
      * Allowed characters from the original unconverted text
      */
-    'allowed_characters' => 'a-zA-Z ',
+    'allowed_characters' => 'a-zA-Z1-9 ',
 
     /*
      * Run the generator even if the username was provided by the user?

@@ -293,6 +293,12 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
         Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
         
+        Route::get('/{code}/videochats/get', 'VideochatController@index');
+        Route::post('/{code}/videochat', 'VideochatController@store');
+        Route::delete('/videochat/{id}', 'VideochatController@destroy');
+        Route::patch('/videochat/toggle', 'VideochatController@toggle');
+        Route::post('/videochat/toggle', 'VideochatController@toggle');
+        Route::post('/videochat/notify', 'VideochatController@notify');
     });
     
     // Utils

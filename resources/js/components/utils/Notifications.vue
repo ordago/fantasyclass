@@ -1,5 +1,36 @@
 <template>
   <div class="is-flex has-all-centered left-auto">
+    <tippy
+      v-if="videochats.length"
+      interactive
+      class="mr-1"
+      :animate-fill="false"
+      theme="light"
+      placement="bottom"
+      animation="fade"
+      trigger="click"
+      style="display: inline-block"
+      arrow
+    >
+      <template v-slot:trigger>
+        <div
+          class="cursor-pointer button has-background-danger-light"
+        >
+          <i class="fad fa-video" style="font-size: 1.25em"></i>
+        </div>
+      </template>
+      <span>
+        <div class="columns" v-for="video in videochats" :key="video.id">
+          <div class="column is-narrow">
+            <a target="_blank" :href="video.url" class="button is-link"><i class="fad fa-door-open"></i></a>
+          </div>
+          <div class="column is-flex has-all-centered">
+            {{ video.name }}
+          </div>
+        </div>
+      </span>
+    </tippy>
+
     <div
       @click="openDocs = true"
       v-if="docs.length"
@@ -123,6 +154,7 @@
                   'fad fa-coins': notification.data.type == 'money_sent',
                   'fad fa-feather': notification.data.type == 'post',
                   'fad fa-sparkles': notification.data.type == 'skill',
+                  'fad fa-video': notification.data.type == 'videochat',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -173,7 +205,15 @@
               <i class="fad fa-comments-alt ml-1"></i>
             </a>
             <a
-              v-if="
+              v-else-if="notification.data.type == 'videochat'"
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+            >
+              <i class="fad fa-video mr-1"></i>
+              {{ trans.get("videochat.open") }}
+            </a>
+            <a
+              v-else-if="
                 notification.data.user == 'teacher' &&
                 notification.data.type == 'post'
               "
@@ -268,6 +308,12 @@ export default {
         return [];
       },
     },
+    videochats: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
     code: {
       type: String,
       default() {
@@ -352,8 +398,7 @@ export default {
               } else {
                 this.notifications.splice(0, this.notifications.length);
               }
-              if(this.notifications.length == 0)
-                this.open = false;
+              if (this.notifications.length == 0) this.open = false;
               this.$forceUpdate();
             });
         },
