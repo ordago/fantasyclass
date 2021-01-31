@@ -104,7 +104,7 @@ export default {
             .post(
               "/classroom/" +
                 this.code +
-                "/student/skills/delete/",
+                "/student/skills/delete",
                 {skill: id, student: student}
             )
             .then((response) => {
