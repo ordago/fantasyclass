@@ -123,6 +123,9 @@ class UtilsController extends Controller
         ]);
 
         $user = User::where('username', '=', $data['username'])->firstOrFail();
+        if($user->id == auth()->user()->id)
+            abort(403);
+
         return ['id' => $user->id, 'username' => $user->username];
     }
 
