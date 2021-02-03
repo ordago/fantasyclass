@@ -21,6 +21,7 @@ return [
     'email_not_recognised' => 'L\'usuari no està enregistrat. Per favor, demana-li que es registre abans de convidar-lo a la classe.',
     'user_already_invited' => 'L\'usuari ja és profe de la classe.',
     'equipment_success' => 'Equipament afegit correctament',
+    'skill_success' => 'Habilitat afegida correctament',
     'shop_failed_money' => 'Insuficient or',
     'shop_failed_level' => 'Insuficient nivell',
     'shop_failed_exists' => 'Ja tens aquest objecte o un de millor!',

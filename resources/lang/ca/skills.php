@@ -10,6 +10,7 @@ return [
     |
     */
       'new' => 'Nova habilitat',
+      'config' => 'Configura habilitats',
       'name' => 'Nom',
       'type' => 'Tipus',
       'description' => 'Descripció llarga',

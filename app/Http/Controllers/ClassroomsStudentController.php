@@ -287,9 +287,16 @@ class ClassroomsStudentController extends Controller
         foreach ($challenges as $key => $challenge) {
             $challenge->items = json_decode($challenge->items);
             if ($challenge->challenge_required) {
-                if (!$student->challenges->contains($challenge->challenge_required)) {
+                $challengeReq = Challenge::find($challenge->challenge_required);
+                if ($challengeReq->type == 0 && !$student->challenges->contains($challenge->challenge_required)) {
                     unset($challenges[$key]);
                     continue;
+                } else if ($challengeReq->type == 1) {
+                    $group = $student->groups()->first();
+                    if ($group && !$group->challenges->contains($challenge->challenge_required)) {
+                        unset($challenges[$key]);
+                        continue;
+                    }
                 }
             }
             if ($challenge->requirements && !$admin && !$student->challenges->contains($challenge->id)) {
@@ -820,7 +827,7 @@ class ClassroomsStudentController extends Controller
             ]);
 
             return [
-                "message" => " " . __('success_error.equipment_success'),
+                "message" => " " . __('success_error.skill_success'),
                 "icon" => "check",
                 "type" => "success",
                 "skills" => $student->fresh()->skills,

@@ -22,6 +22,7 @@ return [
 ',
     'user_already_invited' => 'El usuario ya es profe de la clase.',
     'equipment_success' => 'Equipamiento añadido correctamente',
+    'skill_success' => 'Habilidad añadida correctamente',
     'shop_failed_money' => 'Insuficiente oro',
     'shop_failed_level' => 'Insuficiente nivel',
     'shop_failed_exists' => 'Ya tienes este objeto o uno de mejor!!',

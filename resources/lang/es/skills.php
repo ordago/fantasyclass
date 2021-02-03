@@ -10,6 +10,7 @@ return [
     |
     */
       'new' => 'Nueva habilidad',
+      'config' => 'Configura habilidades',
       'name' => 'Nombre',
       'type' => 'Tipo',
       'description' => 'Descripción larga',
@@ -74,11 +75,11 @@ return [
       'heal_group' => 'Sacrificio grupal',
       'heal_group_desc' => 'Recupera vida de tus compañeros de equipo. Tu perderás vida.',
       'heal_classroom' => 'Sacrificio de clase',
-      'heal_classroom_desc' => 'Recupera vida dels tus compañeros/as de clase. Tu perderás vida.',
+      'heal_classroom_desc' => 'Recupera vida de tus compañeros/as de clase. Tu perderás vida.',
       'steal_money' => 'El ladrón',
       'steal_money_desc' => 'Roba dinero a personas al azar',
       'steal_xp' => 'El encantador',
-      'steal_xp_desc' => 'Roba experiència a personas al azar',
+      'steal_xp_desc' => 'Roba experiencia a personas al azar',
       'undo_action' => 'Stop',
       'undo_action_desc' => 'Elimina la última acción en la que has perdido puntos.',
       'heal_passive' => 'Sanación',

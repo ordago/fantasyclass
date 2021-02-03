@@ -10,6 +10,7 @@ return [
     |
     */
       'new' => 'New skill',
+      'config' => 'Skill config',
       'name' => 'Name',
       'type' => 'Type',
       'description' => 'Long description',

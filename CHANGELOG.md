@@ -1,10 +1,12 @@
 # Changelog
-## v1.39 Beta (31/01/2021)
+
+## v1.39.1 Beta (03/02/2021)
 ### Added
 - Create videochat rooms.
 
 ### Changed
-- Some fixes.
+- Some fixes and translations.
+- Group challenge dependency fixed.
 
 ## v1.38 Beta (29/01/2021)
 ### Added
