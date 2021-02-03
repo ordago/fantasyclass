@@ -393,7 +393,7 @@
               :is-active="true"
               :is-disabled="false"
             />
-            Feedback: {{ challengeReactive.rating }} / 5
+            Feedback: {{ challengeReactive.rating.toFixed(2) }} / 5
           </div>
           <div class="buttons" v-if="(edit && admin) || !admin">
             <button
