@@ -57,4 +57,5 @@ return [
     'view_full' => 'Vista completa',
     
     'send_message_all' => 'Envia missatge a tots els estudiants',
+    'like' => 'T\'agrada FantasyClass?',
 ];

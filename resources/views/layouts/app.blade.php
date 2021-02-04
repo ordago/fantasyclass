@@ -128,9 +128,9 @@
                                         <i class="fal fa-paper-plane"></i> Telegram
                                     </a>
                                     <a class="dropdown-item is-hidden-mobile" href="/mobile">
-                                        <i class="fal fa-mobile"></i> {{ __('menu.mobile') }}
+                                        <i class="fad fa-mobile-alt"></i> {{ __('menu.mobile') }}
                                     </a>
-                                    <a class="dropdown-item" href="/contribute">
+                                    <a class="dropdown-item" v-tippy :content="trans.get('menu.like')" href="/contribute">
                                         <i class="fad fa-hands-heart" style="--fa-primary-color: red; "></i> {{ __('menu.contribute') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
