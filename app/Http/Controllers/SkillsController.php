@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Skill;
 use Illuminate\Support\Facades\DB;
+use SebastianBergmann\Environment\Console;
 
 class SkillsController extends Controller
 {
@@ -258,7 +259,7 @@ class SkillsController extends Controller
             ->orderByDesc('created_at')
             ->first();
 
-        $student->setProperty($row->type, $row->value * -1, false, null, true);
+        $student->setProperty($row->type, $row->value * -1, true, 'skill', true);
         $row->delete();
     }
 

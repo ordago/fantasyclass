@@ -188,6 +188,9 @@
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   Luis Navarro Rodríguez <i class="fas mx-2 fa-hand-rock"></i>
                 </span>
+                <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
+                  <a href="https://www.instagram.com/teacher_sarraceno/">Jesús Mínguez Corrales</a> <i class="fas mx-2 fa-hand-peace"></i>
+                </span>
               </div>
             </div>
           </div>
