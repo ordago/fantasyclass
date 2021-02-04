@@ -156,6 +156,12 @@
                 <a href="https://www.patreon.com/join/fantasyclass" class="button m-1 is-primary" target="_blank"><i class="fab fa-patreon"></i> Aportación mensual (Sponsors)</a>
                 <a href="https://www.paypal.me/gamificaOnline?locale.x=es_ES" class="button m-1 is-primary" target="_blank"><i class="fab fa-paypal"></i> Aportación única</a>
               </div>
+              <h3>Menciones</h3>
+              <div class="columns fs-2 is-multiline">
+                <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
+                  <a href="https://aprendecoreano.com">Aprende coreano</a></i>
+                </span>
+              </div>
               <h3>Colaboradores</h3>
               <div class="columns fs-2 is-multiline">
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
@@ -180,7 +186,7 @@
                   Isabel Hernández <i class="fas mx-2 fa-hand-peace"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a  href="https://aprendecoreano.com">Ander García</a> <i class="fas mx-2 fa-hand-spock"></i>
+                  <a href="https://aprendecoreano.com">Ander García</a> <i class="fas mx-2 fa-hand-spock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   Trini Ardid <i class="fas mx-2 fa-hand-spock"></i>
@@ -196,7 +202,7 @@
           </div>
           <footer class=" p-4">
             <p class="has-text-centered is-size-6"><strong>¡Muchísimas gracias por ayudar a que FantasyClass continue adelante!</strong></p>
-           
+
           </footer>
         </div>
 

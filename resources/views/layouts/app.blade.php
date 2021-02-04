@@ -117,7 +117,7 @@
                                     </span>
                                     @if(Auth::user()->is_student == 0)
                                     <hr class="dropdown-divider">
-                                    <span class="m-3">{{ Auth::user()->files }} MB / {{  Auth::user()->quota }}MB</span>
+                                    <span class="m-3">{{ Auth::user()->files }} MB / {{ Auth::user()->quota }}MB</span>
                                     <span class="m-3"><progress max=100 value="{{ Auth::user()->files * 100 / Auth::user()->quota }}"></progress><br></span>
                                     @endif
                                     <hr class="dropdown-divider">
@@ -131,7 +131,7 @@
                                         <i class="fal fa-mobile"></i> {{ __('menu.mobile') }}
                                     </a>
                                     <a class="dropdown-item" href="/contribute">
-                                        <i class="fal fa-hands-heart"></i> {{ __('menu.contribute') }}
+                                        <i class="fad fa-hands-heart" style="--fa-primary-color: red; "></i> {{ __('menu.contribute') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
