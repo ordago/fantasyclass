@@ -228,6 +228,13 @@
               <i class="fad fa-user ml-1"></i>
             </a>
             <a
+              v-else-if="notification.data.user == 'student' && notification.data.type == 'comment'"
+              :href="notification.data.url + '/challenges'"
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              {{ trans.get("general.classroom") }}
+            </a>
+            <a
               v-else-if="notification.data.user == 'student'"
               :href="notification.data.url"
               class="card-footer-item has-background-link-light has-text-dark"

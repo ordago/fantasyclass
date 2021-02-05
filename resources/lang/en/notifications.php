@@ -11,6 +11,7 @@ return [
     */
     
     'new_comment' => 'New comment',    
+    'comment' => 'New comment',    
     'mark_card' => 'Card waiting',
     'mark_card_content' => 'wants to use or delete one card',
     'use_skill' => 'Skill used',

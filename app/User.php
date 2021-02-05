@@ -78,7 +78,7 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     public function sendMessage($content, $classroom, $type = "message", $showUserName = true) {
-        $from['title'] = __('notifications.message');
+        $from['title'] = __('notifications.' . $type);
         $from['username'] = "";
         $from['name'] = "";
         if($showUserName) {
