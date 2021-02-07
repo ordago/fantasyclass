@@ -6,6 +6,7 @@ return [
     'title' => 'Title',
     'content' => 'Content',
     'edit' => 'Edit event',
+    'accept' => 'Accept the destiny',
 
     /*
     |--------------------------------------------------------------------------
