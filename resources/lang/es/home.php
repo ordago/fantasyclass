@@ -18,7 +18,7 @@ return [
     'screenshots' => 'Capturas',
     
     'feature_telegram' => '<strong class="has-text-light">Comunidad:</strong> Accede a nuestro telegram para tener soporte y hablar de la plataforma.',
-    'feature_free' => '<strong class="has-text-light">¡Gratuito!</strong> Todo es gratuito, solo se aceptan colaboraciones para mejoras en la plataforma <a class="button has-text-dark mt-2" href="https://fantasyclass.app/contribute" target="_blank"><i class="fad fa-hands-heart" style="--fa-primary-color: red; font-size: 1em;"></i> Colabora</a>',
+    'feature_free' => '<strong class="has-text-light">¡Gratuito!</strong> Todo es gratuito, solo se aceptan colaboraciones para mejoras en la plataforma',
     'feature_open' => '<strong class="has-text-light">Open source. </strong> De código abierto, cualquiera puede contribuir en la plataforma:',
     'feature_easy' => '<strong class="has-text-light">Rápido y fácil. </strong> Configuración intuitiva y de dominio accesible a todos los niveles.',
     'feature_fun' => '<strong class="has-text-light">Diversión garantizada. </strong> Aprende y enseña creando un universo de retos, adivinanzas y niveles a conseguir.',
