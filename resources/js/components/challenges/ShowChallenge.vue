@@ -403,6 +403,7 @@
                   challengeReactive.completion == 1) &&
                 !checkCompletion &&
                 !full
+                && challengeReactive.type == 0
               "
               class="button is-info"
               @click="markCompleted(challenge)"
