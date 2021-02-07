@@ -376,7 +376,7 @@ export default {
       this.$forceUpdate;
     },
     updateProps() {
-      switch (this.type) {
+      switch (this.skill.properties.type) {
         case "heal_self":
           this.skill.properties = {
             hp_min: 20,
