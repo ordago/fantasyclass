@@ -18,7 +18,7 @@ return [
     'screenshots' => 'Screenshots',
     
     'feature_telegram' => '<strong class="has-text-light">Community:</strong> Access our telegram to get support and talk about the platform.',
-    'feature_free' => '<strong class="has-text-light">Free!</strong> Everything is free, we only accept collaborations for improvements in the platform <a class="has-text-light" href="https://fantasyclass.app/contribute" target="_blank">Contribute</a>.',
+    'feature_free' => '<strong class="has-text-light">Free!</strong> Everything is free, we only accept collaborations for improvements in the platform <a class="button has-text-dark mt-2" href="https://fantasyclass.app/contribute" target="_blank"><i class="fad fa-hands-heart" style="--fa-primary-color: red; font-size: 1em;"></i>Contribute</a>',
     'feature_open' => '<strong class="has-text-light">Open source. </strong> Our code is open source, everyone can contribute in the platform:',
     'feature_easy' => '<strong class="has-text-light">Fast and easy. </strong> Intuitive configuration and accessible at all levels.',
     'feature_fun' => '<strong class="has-text-light">Fun guaranteed. </strong> Learn and teach by creating a universe of challenges, riddles and levels to achieve.',

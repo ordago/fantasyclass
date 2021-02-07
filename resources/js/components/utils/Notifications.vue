@@ -413,9 +413,9 @@ export default {
     },
     getText(type) {
       if (type == 1) {
-        return "Use";
+        return this.trans.get('cards.use');
       } else {
-        return "Delete";
+        return this.trans.get('cards.delete');
       }
     },
     setCard(id, line, type, action, index, indexC) {
