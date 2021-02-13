@@ -1,6 +1,6 @@
 # Changelog
 
-## v1.39.2 Beta (05/02/2021)
+## v1.39.3 Beta (13/02/2021)
 ### Added
 - Create videochat rooms.
 
@@ -9,6 +9,7 @@
 - Group challenge dependency fixed.
 - Send messages to students that has commented on challenges.
 - Fix chat
+- Fix show character in group battles.
 
 ## v1.38 Beta (29/01/2021)
 ### Added
