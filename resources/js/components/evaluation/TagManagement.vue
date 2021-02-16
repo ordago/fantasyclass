@@ -340,7 +340,7 @@
             </p>
 
             <div v-if="line.tags && line.tags.length">
-              <details>
+              <details class="cursor-pointer">
                 <summary class="is-size-6">
                   <i class="fas fa-gear"></i>
                   {{ trans.get("evaluation.advanced") }}

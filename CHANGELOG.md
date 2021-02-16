@@ -1,4 +1,11 @@
 # Changelog
+## v1.40 Beta (16/02/2021)
+### Added
+- Music in battles.
+
+### Changed
+- Some fixes and translations.
+- Fix show character in group battles.
 
 ## v1.39.3 Beta (13/02/2021)
 ### Added
@@ -9,7 +16,6 @@
 - Group challenge dependency fixed.
 - Send messages to students that has commented on challenges.
 - Fix chat
-- Fix show character in group battles.
 
 ## v1.38 Beta (29/01/2021)
 ### Added
