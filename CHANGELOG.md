@@ -5,6 +5,7 @@
 
 ### Changed
 - Better undead management.
+- Students can see challenge rating.
 
 ## v1.40 Beta (16/02/2021)
 ### Added

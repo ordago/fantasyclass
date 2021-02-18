@@ -174,7 +174,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -442,7 +442,9 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('id', $challenge->classroom())->firstOrFail();
         $this->authorize('studyOrTeach', $class);
         $student = Functions::getCurrentStudent($class, []);
-        return $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
+        $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
+        return $challenge->fresh()->rating;
+
     }
     public function licenses($code)
     {
