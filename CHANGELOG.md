@@ -1,4 +1,11 @@
 # Changelog
+## v1.41 Beta (19/02/2021)
+### Added
+- New undead character for new theme.
+
+### Changed
+- Better undead management.
+
 ## v1.40 Beta (16/02/2021)
 ### Added
 - Music in battles.
@@ -7,7 +14,7 @@
 - Some fixes and translations.
 - Fix show character in group battles.
 
-## v1.39.3 Beta (13/02/2021)
+## v1.39.3 Beta (13/P02/2021)
 ### Added
 - Create videochat rooms.
 

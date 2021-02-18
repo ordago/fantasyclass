@@ -4,6 +4,7 @@
       :show-skills="showSkills"
       :student="student"
       :classroom="classroom"
+      :key="update"
     ></show-character>
     <div
       class="card-content is-relative"
@@ -382,6 +383,7 @@ export default {
     return {
       show2l: false,
       custom: 0,
+      update: 0,
       visibleXP: false,
       visibleGold: false,
     };
@@ -441,6 +443,8 @@ export default {
         student.xp = response.data.xp.xp;
         student.gold = response.data.gold;
         student.level = response.data.xp.level;
+        student.equipment = response.data.equipment;
+        this.update++;
         this.$forceUpdate();
         this.$parent.$forceUpdate();
       });
