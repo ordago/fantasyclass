@@ -1464,6 +1464,7 @@ export default {
       if (row.info) {
         info += ": " + this.trans.get(row.info);
       }
+      if(row.message)
       return this.trans.get("students.log_" + row.message) + info;
     },
     getIcon(type) {
