@@ -1,4 +1,11 @@
 # Changelog
+## v1.42 Beta (01/03/2021)
+### Added
+- Auto update items when mark a challenge.
+
+### Changed
+- Better verify information for wrong e-mail.
+
 ## v1.41 Beta (19/02/2021)
 ### Added
 - New undead character for new theme.

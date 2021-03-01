@@ -16,7 +16,7 @@ class ProfileController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('verified');
+        $this->middleware('auth');
     }
 
     /**
