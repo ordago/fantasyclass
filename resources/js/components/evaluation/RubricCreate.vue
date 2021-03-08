@@ -45,7 +45,7 @@
               </div>
               <div id="container"></div>
               <div class="pointsItem">
-                <input type="number" v-model="column.points" value="0" style="width: 4em;" min="0" />
+                <input type="number" step="0.01" v-model="column.points" value="0" style="width: 4em;" min="0" />
                 {{ trans.get('evaluation.points') }}
               </div>
               <div

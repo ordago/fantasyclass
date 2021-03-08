@@ -1,10 +1,11 @@
 # Changelog
-## v1.42 Beta (01/03/2021)
+## v1.42.1 Beta (07/03/2021)
 ### Added
 - Auto update items when mark a challenge.
 
 ### Changed
 - Better verify information for wrong e-mail.
+- Rubric accept decimals.
 
 ## v1.41 Beta (19/02/2021)
 ### Added
