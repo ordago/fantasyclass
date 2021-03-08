@@ -107,8 +107,8 @@ export default {
     addColumn(index) {
       let row = this.rubric.rows[index];
       let points =
-        this.rubric.rows[index].items[this.rubric.rows[index].items.length - 1]
-          .points + 1;
+        parseFloat(this.rubric.rows[index].items[this.rubric.rows[index].items.length - 1]
+          .points) + 1;
       row.items.push({ points: points, description: "" });
       this.$forceUpdate();
     },
