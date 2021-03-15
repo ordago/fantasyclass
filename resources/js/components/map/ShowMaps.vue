@@ -87,8 +87,8 @@
       <modal-form v-bind="formProps"></modal-form>
     </b-modal>
     <h1>{{ trans.get("maps.templates") }} (Genial.ly)</h1>
-    <div class="columns">
-      <div class="column">
+    <div class="columns is-multiline is-variable">
+      <div class="column is-6-tablet is-12-mobile is-6-desktop is-4-widescreen">
         <div class="card-content has-text-centered">
           <img src="/img/maps/FantasyClass-1.png" />
         </div>
@@ -117,7 +117,7 @@
           </p>
         </footer>
       </div>
-      <div class="column">
+      <div class="column is-6-tablet is-12-mobile is-6-desktop is-4-widescreen">
         <div class="card-content has-text-centered">
           <img src="/img/maps/FantasyClass-2.png" />
         </div>
@@ -156,7 +156,7 @@
           </p>
         </footer>
       </div>
-      <div class="column">
+      <div class="column is-6-tablet is-12-mobile is-6-desktop is-4-widescreen">
         <div class="card-content has-text-centered">
           <img src="/img/maps/FantasyClass-3.png" />
         </div>
@@ -180,6 +180,44 @@
                 class="has-text-light"
                 ><i class="fas fa-clone"></i>
                 {{ trans.get("maps.use_template") }}</a
+              >
+            </span>
+          </p>
+        </footer>
+      </div>
+      <div class="column is-6-tablet is-12-mobile is-6-desktop is-4-widescreen">
+        <div class="card-content has-text-centered">
+          <img src="/img/maps/FantasyClass-4.png" />
+        </div>
+        <footer class="card-footer">
+          <p class="card-footer-item mb-0 has-background-primary rounded">
+            <span>
+              <a
+                target="_blank"
+                href="https://view.genial.ly/604dd9b840d6e20d26a5c130/interactive-content-fantasyclass-1"
+                class="has-text-light"
+                ><i class="fas fa-eye"></i>
+                {{ trans.get("maps.show_template") }}</a
+              >
+            </span>
+          </p>
+          <p class="card-footer-item mb-0 has-background-info rounded">
+            <span>
+              <a
+                target="_blank"
+                href="https://app.genial.ly/reuse/604dd9b840d6e20d26a5c130"
+                class="has-text-light"
+                ><i class="fas fa-clone"></i>
+                {{ trans.get("maps.use_template") }}</a
+              >
+            </span>
+          </p>
+          <p class="card-footer-item mb-0 has-background-dark rounded">
+            <span>
+              <span
+                class="has-text-light"
+                target="_blank"
+                ><i class="fad fa-image"></i> By Jordi Hernandez</span
               >
             </span>
           </p>

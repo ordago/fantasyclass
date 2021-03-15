@@ -174,7 +174,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'rating', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -183,9 +183,17 @@ class ClassroomsStudentController extends Controller
         foreach ($challenges as $section) {
             foreach ($section as $key => $value) {
                 if ($value['challenge_required']) {
-                    if (!$student->challenges->contains($value['challenge_required'])) {
-                        unset($section[$key]);
-                        continue;
+                    $challenge_required = Challenge::find($value['challenge_required']);
+                    if($challenge_required->type == 0) {
+                        if (!$student->challenges->contains($value['challenge_required'])) {
+                            unset($section[$key]);
+                            continue;
+                        }
+                    } else {
+                        if (!$student->groups->first()->challenges->contains($value['challenge_required'])) {
+                            unset($section[$key]);
+                            continue;
+                        }
                     }
                 }
 

@@ -1,4 +1,11 @@
 # Changelog
+## v1.43 Beta (15/03/2021)
+### Added
+- New map.
+
+### Changed
+- Fixed challenges not showing on challenges section.
+
 ## v1.42.1 Beta (07/03/2021)
 ### Added
 - Auto update items when mark a challenge.
