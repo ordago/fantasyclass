@@ -1,8 +1,9 @@
 # Changelog
-## v1.44 Beta (XX/03/2021)
-
+## v1.44 Beta (17/03/2021)
 ### Changed
 - Usability improvements.
+- Better and unified challenge requirements.
+- Permalink acces improvements.
 
 ## v1.43 Beta (15/03/2021)
 ### Added

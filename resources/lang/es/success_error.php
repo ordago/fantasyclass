@@ -41,4 +41,7 @@ return [
     'file_tyle' => 'Tipo de fichero no aceptado',
     'quota_exceded' => 'Has superado la cuota de usuario',
 
+    '403time' => 'Este reto estará activo el ',
+    '403reqChallenge' => 'Este desafío tiene un requisito: ',
+
 ];

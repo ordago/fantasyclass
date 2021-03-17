@@ -38,4 +38,8 @@ return [
     'max_size' => 'Max file size exceded',
     'file_tyle' => 'File type not accepted',
     'quota_exceded' => 'Yo have exceded your user quota',
+
+    '403time' => 'This challenge will be active at ',
+    '403reqChallenge' => 'This challenge has a requirement: ',
+
 ];
