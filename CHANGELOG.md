@@ -1,4 +1,9 @@
 # Changelog
+## v1.44 Beta (XX/03/2021)
+
+### Changed
+- Usability improvements.
+
 ## v1.43 Beta (15/03/2021)
 ### Added
 - New map.

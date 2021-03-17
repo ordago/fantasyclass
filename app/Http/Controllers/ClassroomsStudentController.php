@@ -239,8 +239,9 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
-        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first();
+        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments', 'questions')->first();
 
+        // Protect challenge
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
     public static function getChallenges($student, $class, $admin = false)

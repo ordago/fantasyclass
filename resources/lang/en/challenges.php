@@ -10,7 +10,8 @@ return [
     'edit' => 'Edit challenge',
     'name' => 'Name',
     'icon' => 'Icon',
-    'parent' => 'Parent group (optional)',
+    'parent' => 'Parent category',
+    'subcategory' => 'Is a subcategory?',
 
     'completion' => 'Select the requirements to set the challenge as completed',
     'completion_teacher' => 'The teacher marks it as completed',
