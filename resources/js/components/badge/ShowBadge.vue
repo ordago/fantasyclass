@@ -1,7 +1,7 @@
 <template>
-  <div class="p-2">
-    <div v-if="admin">
-      <div
+  <span class="p-2">
+    <span v-if="admin">
+      <span
         @click="toggle(badge.id)"
         :class="{
           personalBadge: badge.type == 0,
@@ -14,10 +14,10 @@
       >
         <i :class="badge.icon" v-if="badge.type == 0"></i>
         <img class="rounded" v-else width="80px" :src="badge.image" />
-      </div>
-    </div>
-    <div v-else>
-      <div
+      </span>
+    </span>
+    <span v-else>
+      <span
         v-tippy
          :class="{
           personalBadge: badge.type == 0,
@@ -28,9 +28,9 @@
       >
         <i :class="badge.icon" v-if="badge.type == 0"></i>
         <img class="rounded" v-else width="80px" :src="badge.image" />
-      </div>
-    </div>
-  </div>
+      </span>
+    </span>
+  </span>
 </template>
 
 <script>

@@ -121,6 +121,19 @@
               :href="
                 '/classroom/' +
                 classroom.code +
+                '/students/report'
+              "
+              target="_blank"
+              v-if="students.length"
+            >
+              <i class="fas fa-file mr-2"></i>
+              {{ trans.get("utils.students_report") }}
+            </a>
+            <a
+              class="dropdown-item"
+              :href="
+                '/classroom/' +
+                classroom.code +
                 '/utils/exportConfidentialDataStudent'
               "
               target="_blank"

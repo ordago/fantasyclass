@@ -10,7 +10,8 @@ return [
     'wheel' => '¡Gira la ruleta!',
     'fortune' => 'Ruleta de la fortuna',
     'quantity_rewards' => 'Cantidad de premios',
-
+    
+    'students_report' => 'Informes de estudiantes',
     'reports' => 'Informes',
     'download_confidential_data_students' => 'Descargar contraseñas estudiantes',
     

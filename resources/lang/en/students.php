@@ -90,4 +90,6 @@ return [
     'log_skill' => 'Skill result, yours or from another one.',
     'log_task' => 'You\'ve done one task',
 
+    'student_report' => 'Student report',
+
 ];

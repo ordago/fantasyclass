@@ -11,6 +11,7 @@ return [
     'fortune' => 'Ruleta de la fortuna',
     'quantity_rewards' => 'Quantitat de premis',
 
+    'students_report' => 'Informes d\'estudiants',
     'reports' => 'Informes',
     'download_confidential_data_students' => 'Descarregar contrasenyes estudiants',
     

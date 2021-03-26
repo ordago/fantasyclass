@@ -92,4 +92,6 @@ return [
     'log_skill' => 'Resultado de una habilidad, tuya o de alguien.',
     'log_task' => 'Has realizado una tarea',
 
+    'student_report' => 'Informe de estudiante',
+
 ];

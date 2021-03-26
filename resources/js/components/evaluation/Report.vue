@@ -1,9 +1,9 @@
 <template>
     <div class="w-100 p-2 content">
-        <button class="button is-dark noprint" @click="print">
+        <button class="button is-dark noprint" @click="print" v-if="!individual">
             <i class="fas fa-print"></i>
         </button>
-        <button class="button is-success noprint" v-if="admin" @click="exportReport" formtarget="_blank">
+        <button class="button is-success noprint" v-if="admin && !individual" @click="exportReport" formtarget="_blank">
             <i class="fas fa-file-excel"></i>
         </button>
         <table class="grades has-background-light mt-3" id="evaluationReport">
@@ -46,7 +46,7 @@
     import Utils from "../../utils.js";
 
     export default {
-        props: ["classroom", "grades", "settings", "admin"],
+        props: ["classroom", "grades", "settings", "admin", "individual"],
         created: function () {
         },
         data: function () {

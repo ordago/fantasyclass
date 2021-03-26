@@ -50,7 +50,6 @@ Vue.use(Buefy, {
     defaultIconPack: 'fas',
 })
 
-
 // Crop plugin
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
@@ -81,6 +80,8 @@ Vue.component('create-card', () => import('./components/card/CreateCard.vue'));
 Vue.component('create-behaviour', () => import('./components/behaviour/CreateBehaviour.vue'));
 Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
 
+Vue.component('show-data', () => import('./components/utils/ShowData.vue'));
+Vue.component('individual-report', () => import('./components/utils/IndividualReport.vue'));
 Vue.component('create-badge', () => import('./components/badge/CreateBadge.vue'));
 Vue.component('show-badges', require('./components/badge/ShowBadges.vue').default);
 

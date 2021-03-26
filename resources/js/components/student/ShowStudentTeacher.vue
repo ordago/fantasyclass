@@ -29,6 +29,10 @@
               <i class="fal fa-eye" style="width: 20px"></i>
               {{ trans.get("students.student_view") }}
             </a>
+            <a class="dropdown-item" target="_blank" :href="'/classroom/' + classroom.code + '/student/' + student.id + '/report'">
+              <i class="fal fa-file" style="width: 20px"></i>
+              {{ trans.get("students.student_report") }}
+            </a>
             <a
               class="dropdown-item"
               @click="$parent.sendMessage(0, student.id)"
@@ -136,7 +140,10 @@
                 @click="show2l = !show2l"
                 v-if="behaviourshidden.length"
               >
-                <i class="fas" :class="{'fa-plus' : !show2l, 'fa-minus': show2l}"></i>
+                <i
+                  class="fas"
+                  :class="{ 'fa-plus': !show2l, 'fa-minus': show2l }"
+                ></i>
               </div>
               <a
                 :href="'/classroom/' + classroom.code + '/behaviours/'"
@@ -386,9 +393,24 @@ export default {
       update: 0,
       visibleXP: false,
       visibleGold: false,
+      report: false,
     };
   },
   methods: {
+ 
+    // getReport(id) {
+    //   axios
+    //     .post("/classroom/" + this.classroom.code + "/student/report", {
+    //       student: id,
+    //     })
+    //     .then((response) => {
+    //       this.student.behaviours = response.data.behaviours;
+    //       this.student.evaluation = response.data.evaluation;
+    //       this.student.classSettings = response.data.classSettings;
+    //       this.student.grades = response.data.grades;
+    //       this.report = true;
+    //     });
+    // },
     byPassStudent(id) {
       axios
         .post("/classroom/" + this.classroom.code + "/student/show", { id: id })
@@ -457,3 +479,6 @@ export default {
   computed: {},
 };
 </script>
+<style>
+
+  </style>

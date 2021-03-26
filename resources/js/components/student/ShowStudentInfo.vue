@@ -738,122 +738,13 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div class="is-flex justify-content-center">
-            <apexchart
-              v-if="series.length"
-              width="450"
-              type="donut"
-              :options="{
-                labels: labels,
-                colors: colors,
-              }"
-              :series="series"
-            ></apexchart>
-          </div>
-
-          <div class="columns">
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateStart" />
-            </div>
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateEnd" />
-            </div>
-          </div>
-
-          <b-table
-            v-if="behaviours && behaviours.length"
-            :data="filteredEntries"
-            default-sort-direction="asc"
-            default-sort="created_at"
-            icon-pack="fas"
-            sort-icon="arrow-up"
+          <show-data
+            :admin="admin"
+            :info="behaviours"
+            type="behaviours"
+            :id="student.id"
           >
-            <template slot-scope="props">
-              <b-table-column
-                field="icon"
-                :label="trans.get('students.icon')"
-                centered
-              >
-                <span
-                  class="tag is-light"
-                  v-bind:class="[
-                    props.row.xp + props.row.hp + props.row.gold >= 0
-                      ? 'is-success'
-                      : 'is-danger',
-                  ]"
-                >
-                  <i :class="props.row.icon"></i>
-                </span>
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.name')"
-                centered
-                sortable
-                >{{ trans.get(props.row.name) }}</b-table-column
-              >
-
-              <b-table-column
-                field="created_at"
-                :custom-sort="sortByDate"
-                :label="trans.get('students.created_at')"
-                sortable
-                centered
-                >{{ getDate(props.row.pivot.created_at) }}</b-table-column
-              >
-
-              <b-table-column
-                field="hp"
-                :label="trans.get('students.hp')"
-                centered
-                sortable
-              >
-                <i class="fas fa-heart"></i>
-                {{ props.row.hp }}
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.xp')"
-                sortable
-                centered
-              >
-                <i class="fas fa-fist-raised"></i>
-                {{ props.row.xp }}
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.gold')"
-                sortable
-                centered
-              >
-                <i class="fas fa-coins"></i>
-                {{ props.row.gold }}
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.settings')"
-                v-if="admin"
-                centered
-              >
-                <b-button
-                  type="is-danger is-small"
-                  @click="
-                    confirmDelete(
-                      'behaviour',
-                      props.row,
-                      props.row.pivot.created_at
-                    )
-                  "
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </b-button>
-              </b-table-column>
-            </template>
-          </b-table>
+          </show-data>
         </b-tab-item>
         <b-tab-item
           v-if="
@@ -909,107 +800,14 @@
           icon-pack="fad"
           class="p-2"
         >
-          <div class="columns">
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateStart" />
-            </div>
-            <div class="column">
-              <input type="date" class="input is-rounded" v-model="dateEnd" />
-            </div>
-          </div>
-          <b-table
-            v-if="student.log_entries.length"
-            :data="filteredLogEntries"
-            default-sort-direction="asc"
-            default-sort="created_at"
-            icon-pack="fas"
-            sort-icon="arrow-up"
+          <show-data
+            :admin="admin"
+            :info="student.log_entries"
+            type="log"
+            :id="student.id"
           >
-            <template slot-scope="props">
-              <b-table-column
-                field="type"
-                :label="trans.get('students.type')"
-                centered
-              >
-                <span
-                  class="tag is-light"
-                  v-bind:class="[
-                    props.row.value > 0 ||
-                    props.row.type == 'card_use' ||
-                    props.row.type == 'card_assign'
-                      ? 'is-success'
-                      : 'is-danger',
-                  ]"
-                >
-                  <span v-if="props.row.type == 'xp'"
-                    ><i class="fas fa-fist-raised colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'gold'"
-                    ><i class="fas fa-coins colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'hp'"
-                    ><i class="fas fa-heart colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'card_use'"
-                    ><i class="fak fa-deck colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'card_delete'"
-                    ><i class="fak fa-deck colored"></i
-                  ></span>
-                  <span v-else-if="props.row.type == 'card_assign'"
-                    ><i class="fak fa-deck colored"></i
-                  ></span>
-                </span>
-              </b-table-column>
-
-              <b-table-column
-                field="value"
-                centered
-                :label="trans.get('students.value')"
-                sortable
-                ><span v-if="props.row.value">{{ props.row.value }}</span>
-                <span v-else>----</span>
-              </b-table-column>
-
-              <b-table-column
-                field="created_at"
-                :custom-sort="sortByLogDate"
-                :label="trans.get('students.created_at')"
-                sortable
-                centered
-                >{{ getDate(props.row.created_at) }}</b-table-column
-              >
-
-              <b-table-column
-                field="message"
-                :label="trans.get('students.details')"
-                centered
-              >
-                <span
-                  v-tippy
-                  :content="getMessage(props.row)"
-                  v-html="getIcon(props.row.message)"
-                >
-                </span>
-              </b-table-column>
-
-              <b-table-column
-                field="name"
-                :label="trans.get('students.settings')"
-                v-if="admin"
-                centered
-              >
-                <b-button
-                  type="is-danger is-small"
-                  @click="
-                    confirmDelete('logentry', props.row, props.row.created_at)
-                  "
-                >
-                  <i class="fas fa-trash-alt"></i>
-                </b-button>
-              </b-table-column>
-            </template>
-          </b-table>
+          </show-data>
+          
         </b-tab-item>
         <b-tab-item
           :label="trans.get('students.evaluation')"
@@ -1019,6 +817,7 @@
           icon-pack="fad"
         >
           <report
+            :individual="false"
             :classroom="classroom"
             :admin="admin"
             :grades="evaluation"
@@ -1312,10 +1111,10 @@ import ShowSkill from "../skill/ShowSkill.vue";
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
 
-// Charts
-import VueApexCharts from "vue-apexcharts";
-Vue.use(VueApexCharts);
-Vue.component("apexchart", VueApexCharts);
+// // Charts
+// import VueApexCharts from "vue-apexcharts";
+// Vue.use(VueApexCharts);
+// Vue.component("apexchart", VueApexCharts);
 
 export default {
   props: [
@@ -1366,9 +1165,9 @@ export default {
       activeTab: 0,
       dateStart: null,
       dateEnd: null,
-      series: [],
-      labels: [],
-      colors: [],
+      // series: [],
+      // labels: [],
+      // colors: [],
       update: 0,
       inventoryRemaining: 0,
       itemsJson: null,
@@ -1458,60 +1257,6 @@ export default {
       nextId = this.classroom.students[index].id;
 
       this.goTo(nextId);
-    },
-    getMessage(row) {
-      let info = "";
-      if (row.info) {
-        info += ": " + this.trans.get(row.info);
-      }
-      if(row.message)
-      return this.trans.get("students.log_" + row.message) + info;
-    },
-    getIcon(type) {
-      switch (type) {
-        case "behaviour":
-          return "<i class='fas fa-heart colored'></i>";
-          break;
-        case "teacher":
-          return "<i class='fas fa-user-graduate colored' style='color: white'></i>";
-          break;
-        case "shop":
-          return "<i class='fas fa-store colored' style='color: #A52A2A'></i>";
-          break;
-        case "pet":
-          return "<i class='fas fa-dog colored' style='color: #A52A2A'></i>";
-          break;
-        case "item":
-          return "<i class='fas fa-flask-potion colored' style='color: #DC143C'></i>";
-          break;
-        case "event":
-          return "<i class='fas fa-scroll colored' style='color: #A9A9A9'></i>";
-          break;
-        case "send":
-          return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-right colored'></i>";
-          break;
-        case "received":
-          return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-left colored'></i>";
-          break;
-        case "challenge":
-          return "<i class='fas fa-pen-fancy colored' style='color: #eee'></i>";
-          break;
-        case "card":
-          return "<i class='fak fa-deck colored' style='color: black'></i>";
-          break;
-        case "badge":
-          return "<i class='fas fa-award colored' style='color: #ADD8E6'></i>";
-          break;
-        case "battle":
-          return "<i class='fas fa-swords colored' style='color: #E6E6FA'></i>";
-          break;
-        case "wheel":
-          return "<i class='fas fa-spinner colored' style='color: #E6E6FA'></i>";
-          break;
-        default:
-          return "<i class='fas fa-info-circle colored' style='color: #E6E6FA'></i>";
-          break;
-      }
     },
     sendMoney() {
       axios
@@ -1655,38 +1400,6 @@ export default {
         });
       }
     },
-    confirmDelete(type, row, date) {
-      this.$buefy.dialog.confirm({
-        title: this.trans.get("general.delete"),
-        message: this.trans.get("general.confirm_delete"),
-        confirmText: this.trans.get("general.delete"),
-        cancelText: this.trans.get("general.cancel"),
-        type: "is-danger",
-        hasIcon: true,
-        icon: "times-circle",
-        iconPack: "fa",
-        ariaRole: "alertdialog",
-        ariaModal: true,
-        onConfirm: () => {
-          axios
-            .post("/classroom/student/" + type, {
-              row: row,
-              date: date,
-              student: this.student.id,
-              _method: "delete",
-            })
-            .then((response) => {
-              if (type == "behaviour") {
-                this.behaviours = response.data;
-                this.student.updated_at = new Date();
-                this.forceRerender();
-              } else {
-                location.reload();
-              }
-            });
-        },
-      });
-    },
     updateEmpty() {
       let n = this.student.items.length;
       if (n % 6) n = n + (6 - (n % 6));
@@ -1754,9 +1467,9 @@ export default {
         _method: "patch",
       });
     },
-    getDate(date) {
-      return Utils.getDate(date);
-    },
+    // getDate(date) {
+    //   return Utils.getDate(date);
+    // },
     message(item) {
       let message = "";
       if (item.slot > 0)
@@ -1790,17 +1503,7 @@ export default {
         "% <i class='fas fa-coins colored'></i>"
       );
     },
-    sortByDate(a, b) {
-      return (
-        new Date(b.pivot.created_at).getTime() -
-        new Date(a.pivot.created_at).getTime()
-      );
-    },
-    sortByLogDate(a, b) {
-      return (
-        new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-      );
-    },
+
     getName(name) {
       if (name) return name + " 🍅🍖";
       else return "🍅🍖";
@@ -2035,18 +1738,6 @@ export default {
     },
   },
   computed: {
-    filteredEntries() {
-      if (this.behaviours) {
-        return this.behaviours.filter((entry) => {
-          return (
-            (moment(entry.pivot.created_at).isAfter(moment(this.dateStart)) ||
-              !this.dateStart) &&
-            (moment(entry.pivot.created_at).isBefore(this.dateEnd) ||
-              !this.dateEnd)
-          );
-        });
-      }
-    },
     filteredDataObj() {
       return this.classroom.students.filter((option) => {
         return (
@@ -2057,19 +1748,7 @@ export default {
         );
       });
     },
-    filteredLogEntries() {
-      return this.student.log_entries.filter((entry) => {
-        return (
-          (moment(entry.created_at).isAfter(moment(this.dateStart)) ||
-            !this.dateStart) &&
-          (moment(entry.created_at).isBefore(this.dateEnd) || !this.dateEnd)
-        );
-      });
-    },
-    groupedData() {
-      let array = _.groupBy(this.filteredEntries, "id");
-      return array;
-    },
+
     orderedEquipment: function () {
       return _.orderBy(this.student.equipment, "type");
     },
@@ -2077,81 +1756,7 @@ export default {
       return _.orderBy(this.mutableChallenges, "datetime", "desc");
     },
   },
-  watch: {
-    groupedData: {
-      immediate: true,
-      handler() {
-        let colorsOK = [
-          "#c8e6c9",
-          "#a5d6a7",
-          "#81c784",
-          "#66bb6a",
-          "#4caf50",
-          "#43a047",
-          "#388e3c",
-          "#2e7d32",
-          "#1b5e20",
-          "#003300",
-          "#002200",
-          "#001100",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-        ];
-        let colorsKO = [
-          "#ffccbc",
-          "#ffab91",
-          "#ff8a65",
-          "#ff7043",
-          "#ff5722",
-          "#f4511e",
-          "#e64a19",
-          "#d84315",
-          "#bf360c",
-          "#570000",
-          "#370000",
-          "#170000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-          "#000000",
-        ];
-        this.series = this.labels = [];
-        let data = this.groupedData;
-        let propes = [];
-        for (let property1 in data) {
-          propes.push(data[property1]);
-        }
-        this.labels = [];
-        this.series = [];
-        this.colors = [];
-        propes.forEach((element) => {
-          let behaviour = element[0];
-          this.series.push(element.length);
-          this.labels.push(
-            "<i class='" +
-              behaviour.icon +
-              "'></i> " +
-              this.trans.get(behaviour.name)
-          );
-          if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-            this.colors.push(colorsOK[0]);
-            colorsOK.shift();
-          } else {
-            this.colors.push(colorsKO[0]);
-            colorsKO.shift();
-          }
-        });
-      },
-    },
-  },
+
 };
 </script>
 <style>
