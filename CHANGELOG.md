@@ -1,4 +1,8 @@
 # Changelog
+## v1.45 Beta (26/03/2021)
+### Added
+- Students report.
+
 ## v1.44 Beta (17/03/2021)
 ### Changed
 - Usability improvements.
