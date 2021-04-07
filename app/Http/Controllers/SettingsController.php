@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\ClassroomUser;
+use App\Notifications\NewUrlMessage;
 use App\User;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -14,7 +17,8 @@ class SettingsController extends Controller
         $this->middleware('verified');
     }
 
-    public function index($code) {
+    public function index($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
@@ -37,30 +41,30 @@ class SettingsController extends Controller
         $settings['custom_images'] = $class->getMedia('avatars');
         $settings['licenses'] = settings()->get('licenses', '');
         $settings['tz'] = settings()->get('tz', 'Europe/Madrid');
-        
-        $teachers = $class->users->where('pivot.role', '>', 0);     
-        
-        $user = auth()->user()->id;      
-        $isAdmin = auth()->user()->classrooms->where('id', $class->id)->where('pivot.role', '=', 2)->first() ? 1 : 0;      
+
+        $teachers = $class->users->where('pivot.role', '>', 0);
+
+        $user = auth()->user()->id;
+        $isAdmin = auth()->user()->classrooms->where('id', $class->id)->where('pivot.role', '=', 2)->first() ? 1 : 0;
         return view('settings.index', compact('settings', 'class', 'teachers', 'isAdmin', 'user'));
-        
     }
-    
-    public function themes($code) {
+
+    public function themes($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
         $disabled = request()->themes;
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         settings()->set('disabled_themes', json_encode($disabled));
-        
     }
-    
-    public function destroy($code, $id) {
+
+    public function destroy($code, $id)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $cus = ClassroomUser::where('user_id', '=', auth()->user()->id)->where('classroom_id', '=', $class->id)->firstOrFail();
-        
-        if($cus->role == 1) {
+
+        if ($cus->role == 1) {
             $cus->delete();
             return 2;
         } else {
@@ -68,24 +72,23 @@ class SettingsController extends Controller
             $cus = ClassroomUser::where('user_id', '=', $id)->where('classroom_id', '=', $class->id)->where('role', '=', 1)->firstOrFail();
             return $cus->delete();
         }
-
     }
 
     public function reset($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('admin', $class);
-        switch(request()->type) {
+        switch (request()->type) {
             case 'hp':
-                $value = 100;        
-            break;
+                $value = 100;
+                break;
             case 'gold':
             case 'xp':
                 $value = 0;
-            break;
+                break;
             default:
                 abort(403);
-            break;
+                break;
         }
         foreach ($class->students as $student) {
             $student->update([request()->type => $value]);
@@ -97,7 +100,7 @@ class SettingsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('admin', $class);
         $teacher = User::where('email', '=', request()->email)->first();
-        if(!$teacher) {
+        if (!$teacher) {
             return [
                 "message" => __('success_error.email_not_recognised'),
                 "type" => "error",
@@ -111,6 +114,11 @@ class SettingsController extends Controller
                 'classroom_id' => $class->id,
                 'role' => 1,
             ]);
+            $from['title'] = $class->name;
+            $from['name'] = auth()->user()->name;
+            $from['datetime'] = Carbon::now();
+            $from['type'] = "invitation";
+            Notification::send($teacher, new NewUrlMessage($class->name, __('settings.invited'), '/classroom/' . $class->code, __('settings.open'), $from));
         } catch (\Throwable $th) {
             return [
                 "message" => __('success_error.user_already_invited'),
@@ -132,14 +140,14 @@ class SettingsController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         if (request()->action == 'toggle') {
             $old = 0;
-            if(request()->prop == 'allow_change_class') {
+            if (request()->prop == 'allow_change_class') {
                 $old = 1;
             }
             $value = !settings()->get(request()->prop, $old);
             settings()->set(request()->prop, $value);
-        } else if(request()->action == 'update') {
-            if(request()->prop == "card_probabilities") {
-                
+        } else if (request()->action == 'update') {
+            if (request()->prop == "card_probabilities") {
+
                 $values[0] = request()->value[1];
                 $values[1] = request()->value[2] - request()->value[1];
                 $values[2] = request()->value[3] - request()->value[2];
@@ -152,5 +160,4 @@ class SettingsController extends Controller
         settings()->save();
         return $value ? true : false;
     }
-
 }

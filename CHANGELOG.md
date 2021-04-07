@@ -1,4 +1,9 @@
 # Changelog
+## v1.46 Beta (XX/04/2021)
+### Added
+- Notification when invited to a classroom.
+
+
 ## v1.45 Beta (26/03/2021)
 ### Added
 - Students report.

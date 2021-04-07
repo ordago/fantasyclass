@@ -52,5 +52,8 @@ return [
     'custom_upload' => "Upload an image",
     'timezone' => "Time zone",
 
-    
+    'invited' => "You've been invited to be a teacher in this classroom.",
+    'open' => "Open classroom",
+
+
 ];

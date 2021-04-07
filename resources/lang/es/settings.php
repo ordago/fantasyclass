@@ -52,4 +52,7 @@ return [
     'custom_upload' => "Sube una imagen",
     'timezone' => "Zona horaria",
 
+    'invited' => "Has sido invitado para ser docente de la clase.",
+    'open' => "Abrir la clase",
+
 ];

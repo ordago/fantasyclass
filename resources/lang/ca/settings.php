@@ -52,4 +52,6 @@ return [
     'custom_upload' => "Puja una imatge",
     'timezone' => "Zona horària",
     
+    'invited' => "Has sigut convidat com a docent de la classe.",
+    'open' => "Obrir la classe",
 ];

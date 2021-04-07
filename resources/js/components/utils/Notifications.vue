@@ -155,6 +155,7 @@
                   'fad fa-feather': notification.data.type == 'post',
                   'fad fa-sparkles': notification.data.type == 'skill',
                   'fad fa-video': notification.data.type == 'videochat',
+                  'fad fa-user-graduate': notification.data.type == 'invitation',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -211,6 +212,14 @@
             >
               <i class="fad fa-video mr-1"></i>
               {{ trans.get("videochat.open") }}
+            </a>
+            <a
+              v-else-if="notification.data.type == 'invitation'"
+              :href="notification.data.url"
+              class="card-footer-item has-background-link-light has-text-dark"
+            >
+              <i class="fad fa-chalkboard mr-1"></i>
+              {{ trans.get("settings.open") }}
             </a>
             <a
               v-else-if="
