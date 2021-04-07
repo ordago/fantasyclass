@@ -88,26 +88,30 @@
           </p>
         </div>
       </b-field>
-      <b-field  :label="trans.get('settings.timezone')">
+      <b-field class="is-block mt-0" :label="trans.get('settings.timezone')">
         <b-select class="ml-4" v-model="settings.tz">
           <option v-for="(zone, index) in tz" :key="index" :value="zone">
             {{ zone }}
           </option>
         </b-select>
-      </b-field>
-       <button class="button is-primary mb-3 ml-4" @click="updateTz">
+        <button class="button is-primary my-2 ml-4" @click="updateTz">
           <i class="fas fa-save"></i>
           {{ trans.get("general.save") }}
         </button>
-      <button class="button is-link mb-3" v-if="user.token" @click="unlink">
-        {{ trans.get("settings.classroom_unlink") }}
-      </button>
-      <div class="mt-0 mb-2">
-        <small
-          v-if="user.token"
-          v-html="trans.get('settings.classroom_unlink_info')"
-        ></small>
-      </div>
+      </b-field>
+      <b-field label="Google Classroom" class="is-block" v-if="user.token">
+        <br>
+        <button class="button is-link mb-3" @click="unlink">
+          {{ trans.get("settings.classroom_unlink") }}
+        </button>
+        <div class="mt-0 mb-2">
+          <small
+            v-if="user.token"
+            v-html="trans.get('settings.classroom_unlink_info')"
+          ></small>
+        </div>
+      </b-field>
+
       <div class="">
         <h1>
           <i class="fal fa-mask"></i>

@@ -3,6 +3,8 @@
 ### Added
 - Notification when invited to a classroom.
 
+### Changed
+- Fixed Google Classroom section in settings.
 
 ## v1.45 Beta (26/03/2021)
 ### Added
