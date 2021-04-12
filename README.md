@@ -27,6 +27,7 @@ Help and sponsors
 - [Kiean Wong (graphics).](https://www.instagram.com/kieanwong.art/)  
 - Trini Ardid
 - Luis Navarro Rodríguez
+- [Jesús Mínguez Corrales](https://www.instagram.com/teacher_sarraceno/) 
 
 ## Contribute to the project
 ### To import the project

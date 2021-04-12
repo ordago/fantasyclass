@@ -91,5 +91,6 @@ return [
     'log_pet' => 'Mascota',
     'log_skill' => 'Resultat d\'una habilitat teva o d\'algú.',
     'log_task' => 'Has fet una tasca',
-
+    
+    'student_report' => 'Informe d\'estudiant',
 ];

@@ -160,6 +160,57 @@ class ClassroomsStudentController extends Controller
         return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
+
+    public static function checkRequirements($challenge, $class, $student)
+    {
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $tz = settings()->get('tz', 'Europe/Madrid');
+
+        if (in_array($student->id, $challenge->students)) {
+            return [false, "requirement", "Not allowed"];
+        }
+
+        if ($challenge->challenge_required) {
+            $challenge_required = Challenge::find($challenge->challenge_required);
+            if ($challenge_required->type == 0) {
+                if (!$student->challenges->contains($challenge->challenge_required)) {
+                    return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
+                }
+            } else {
+                if (!$student->groups->first()->challenges->contains($challenge->challenge_required)) {
+                    return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
+                }
+            }
+        }
+
+
+        if ($challenge->datetime >= Carbon::now($tz)->toDateTimeString()) {
+            return [false, "requirement", "ℹ️" . __('success_error.403time') . "⏱️" . $challenge->datetime];
+        }
+
+        if ($challenge->requirements && !$student->challenges->contains($challenge->id)) {
+            $allItems = true;
+            $content = '';
+            foreach ($challenge->requirements as $item) {
+                if (!$student->items->contains($item['id'])) {
+                    $allItems = false;
+                    $content .= "<img class='coloredGray m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
+                } else {
+                    $content .= "<img class='m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
+                }
+            }
+            if (!$allItems) {
+                $challenge->title = __('challenges.objects_required');
+                $challenge->content = $content;
+                $challenge->incomplete = true;
+                return [false, "items", $challenge];
+            }
+        }
+
+        return [true];
+    }
+
     public function challenges($code)
     {
         $class = Classroom::where('code', '=', $code)->with('challengeGroups')->firstOrFail();
@@ -174,35 +225,24 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
 
         $all = [];
         foreach ($challenges as $section) {
+
             foreach ($section as $key => $value) {
-                if ($value['challenge_required']) {
-                    if (!$student->challenges->contains($value['challenge_required'])) {
+                $current = Challenge::find($value['id']);
+                $check = $this::checkRequirements($current, $class, $student);
+                if (!$check[0]) {
+                    if ($check[1] == "requirement") {
                         unset($section[$key]);
                         continue;
-                    }
-                }
-
-                if ($value['requirements'] && !$student->challenges->contains($value['id'])) {
-                    $allItems = true;
-                    $content = '';
-                    foreach ($value['requirements'] as $item) {
-                        if (!$student->items->contains($item['id'])) {
-                            $allItems = false;
-                            $content .= "<img class='coloredGray m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
-                        } else {
-                            $content .= "<img class='m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
-                        }
-                    }
-                    if (!$allItems) {
-                        $value['title'] = __('challenges.objects_required');
-                        $value['content'] = $content;
+                    } else {
+                        $value['title'] = $check[2]['title'];
+                        $value['content'] = $check[2]['content'];
                         $value['incomplete'] = true;
                     }
                 }
@@ -231,10 +271,19 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
-        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first();
+        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first()->append('questioninfo');
+
+        $result = $this::checkRequirements($challenge, $class, $student);
+        if (!$result[0] && $result[1] == "requirement") {
+            abort(403, $result[2]);
+        }
+        if (!$result[0] && $result[1] == "items") {
+            $challenge = $result[2];
+        }
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
+
     public static function getChallenges($student, $class, $admin = false)
     {
         settings()->setExtraColumns(['classroom_id' => $class->id]);
@@ -286,30 +335,21 @@ class ClassroomsStudentController extends Controller
         $challenges = $challenges->merge($groupChallenges);
         foreach ($challenges as $key => $challenge) {
             $challenge->items = json_decode($challenge->items);
-            if ($challenge->challenge_required) {
-                $challengeReq = Challenge::find($challenge->challenge_required);
-                if ($challengeReq->type == 0 && !$student->challenges->contains($challenge->challenge_required)) {
-                    unset($challenges[$key]);
-                    continue;
-                } else if ($challengeReq->type == 1) {
-                    $group = $student->groups()->first();
-                    if ($group && !$group->challenges->contains($challenge->challenge_required)) {
+            if (!$admin) {
+                $current = Challenge::find($challenge->id);
+                $check = ClassroomsStudentController::checkRequirements($current, $class, $student);
+                if (!$check[0]) {
+                    if ($check[1] == "requirement") {
                         unset($challenges[$key]);
                         continue;
+                    } else {
+                        $challenge->title = $check[2]['title'];
+                        $challenge->content = $check[2]['content'];
+                        $challenge->incomplete = true;
                     }
                 }
             }
-            if ($challenge->requirements && !$admin && !$student->challenges->contains($challenge->id)) {
-                $continue = false;
-                foreach (json_decode($challenge->requirements) as $item) {
-                    if (!$student->items->contains($item->id)) {
-                        unset($challenges[$key]);
-                        $continue = true;
-                    }
-                }
-                if ($continue)
-                    continue;
-            }
+  
             $challenge->permalink = Crypt::encryptString($challenge->id);
             $group = ChallengesGroup::find($challenge->challenges_group_id);
             $challenge->group = [
@@ -319,7 +359,7 @@ class ClassroomsStudentController extends Controller
         }
         return $challenges;
     }
-
+  
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -442,7 +482,8 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('id', $challenge->classroom())->firstOrFail();
         $this->authorize('studyOrTeach', $class);
         $student = Functions::getCurrentStudent($class, []);
-        return $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
+        $student->ratings()->sync([$challenge->id => ['rating' => $data['rating']]], false);
+        return $challenge->fresh()->rating;
     }
     public function licenses($code)
     {

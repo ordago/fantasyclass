@@ -10,7 +10,8 @@ return [
     'edit' => 'Edita repte',
     'name' => 'Nom',
     'icon' => 'Icona',
-    'parent' => 'Categoria pare (opcional)',
+    'parent' => 'Categoria pare',
+    'subcategory' => 'És una subcategoria?',
 
     'completion' => 'Selecciona els requeriments per ser marcar com complet',
     'completion_teacher' => 'El/la profe marca el repte com a superat',

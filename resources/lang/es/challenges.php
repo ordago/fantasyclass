@@ -10,7 +10,8 @@ return [
     'edit' => 'Edita desafío',
     'name' => 'Nombre',
     'icon' => 'Icono',
-    'parent' => 'Grupo padre (opcional)',
+    'parent' => 'Categoría padre',
+    'subcategory' => '¿Es una subcategoria?',
 
     'completion' => 'Selecciona los requisitos para ser marcado como completado',
     'completion_teacher' => 'El/la profe marca el desafío como completado',

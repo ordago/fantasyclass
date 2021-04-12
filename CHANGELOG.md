@@ -1,12 +1,54 @@
 # Changelog
+## v1.45 Beta (26/03/2021)
+### Added
+- Students report.
 
-## v1.39.1 Beta (03/02/2021)
+## v1.44 Beta (17/03/2021)
+### Changed
+- Usability improvements.
+- Better and unified challenge requirements.
+- Permalink acces improvements.
+
+## v1.43 Beta (15/03/2021)
+### Added
+- New map.
+
+### Changed
+- Fixed challenges not showing on challenges section.
+
+## v1.42.1 Beta (07/03/2021)
+### Added
+- Auto update items when mark a challenge.
+
+### Changed
+- Better verify information for wrong e-mail.
+- Rubric accept decimals.
+
+## v1.41 Beta (19/02/2021)
+### Added
+- New undead character for new theme.
+
+### Changed
+- Better undead management.
+- Students can see challenge rating.
+
+## v1.40 Beta (16/02/2021)
+### Added
+- Music in battles.
+
+### Changed
+- Some fixes and translations.
+- Fix show character in group battles.
+
+## v1.39.3 Beta (13/P02/2021)
 ### Added
 - Create videochat rooms.
 
 ### Changed
 - Some fixes and translations.
 - Group challenge dependency fixed.
+- Send messages to students that has commented on challenges.
+- Fix chat
 
 ## v1.38 Beta (29/01/2021)
 ### Added

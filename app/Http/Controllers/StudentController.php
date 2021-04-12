@@ -262,6 +262,42 @@ class StudentController extends Controller
         return view('students.show', compact('student', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
 
+    public static function getIndividualReport($id, $class) {
+        $student = Student::findOrFail($id);
+        if($student->classroom->classroom_id != $class->id)
+            abort(403);
+        $student->load('badges', 'behaviours', 'items', 'behaviours', 'challenges', 'questions', 'grades', );
+        foreach ($student->getAutomaticBadges() as $badge) {
+            $student->badges->push($badge);
+        }
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $evaluation[0] = EvaluationController::individualReport($class, $student);
+        $settings = EvaluationController::getEvalSettings($class->id);
+        $student->classSettings = $settings;
+        $student->evaluation = $evaluation;
+        return $student;
+    }
+
+    public function getStudentReport($code, $id)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        $student = StudentController::getIndividualReport($id, $class);
+        return view('students.report', compact('student', 'class'));
+
+    }
+
+    public function getStudentsReport($code) {
+        $students = [];
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        foreach ($class->students as $student) {
+            array_push($students, StudentController::getIndividualReport($student->id, $class));
+        }
+        return view('students.reportclass', compact('students', 'class'));
+
+    }
+
     public function assignEquipment($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

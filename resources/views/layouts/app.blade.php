@@ -58,7 +58,7 @@
 <body @if(!isset($class) && !isset($themes) && !isset($profile)) class="has-background-gradient" @else class="has-background-white-ter" @endif @yield('bg', '' )>
     <div id="app" @if(isset($admin) && !$admin) class="has-bg-student" @endif>
         @auth
-        <nav class="navbar card-shadow-s is-sticky" role="navigation" aria-label="main navigation" @yield('navbarhide')>
+        <nav class="navbar card-shadow-s is-sticky noprint" role="navigation" aria-label="main navigation" @yield('navbarhide')>
             <div class="navbar-brand">
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
@@ -117,7 +117,7 @@
                                     </span>
                                     @if(Auth::user()->is_student == 0)
                                     <hr class="dropdown-divider">
-                                    <span class="m-3">{{ Auth::user()->files }} MB / {{  Auth::user()->quota }}MB</span>
+                                    <span class="m-3">{{ Auth::user()->files }} MB / {{ Auth::user()->quota }}MB</span>
                                     <span class="m-3"><progress max=100 value="{{ Auth::user()->files * 100 / Auth::user()->quota }}"></progress><br></span>
                                     @endif
                                     <hr class="dropdown-divider">
@@ -128,10 +128,10 @@
                                         <i class="fal fa-paper-plane"></i> Telegram
                                     </a>
                                     <a class="dropdown-item is-hidden-mobile" href="/mobile">
-                                        <i class="fal fa-mobile"></i> {{ __('menu.mobile') }}
+                                        <i class="fad fa-mobile-alt"></i> {{ __('menu.mobile') }}
                                     </a>
-                                    <a class="dropdown-item" href="/contribute">
-                                        <i class="fal fa-hands-heart"></i> {{ __('menu.contribute') }}
+                                    <a class="dropdown-item" v-tippy :content="trans.get('menu.like')" href="/contribute">
+                                        <i class="fad fa-hands-heart" style="--fa-primary-color: red; "></i> {{ __('menu.contribute') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

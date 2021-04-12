@@ -52,7 +52,7 @@
                 style="margin-top:0!important"
                 @click="accept"
               >
-                <i class="fas fa-feather-alt"></i> Accept
+                <i class="fas fa-feather-alt"></i> {{ trans.get('events.accept') }}
               </span>
             </div>
           </div>

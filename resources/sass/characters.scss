@@ -1256,3 +1256,56 @@
     }
 }
 /**************/
+
+/**** Skeleton ****/
+
+.skeleton-head
+ {
+    position: absolute;
+    top: 45px;
+    left: 22px;
+    z-index: 3;
+    animation: archerhead 2s infinite;
+}
+
+.skeleton-body {
+    position: absolute;
+    top: 135px;
+    left: 45px;
+    z-index: 2;
+
+}
+.skeleton-arms {
+    position: absolute;
+    top: 135px;
+    left: 15px;
+}
+
+.skeleton-legs {
+    position: absolute;
+    top: 175px;
+    left: 45px;
+}
+
+.character:hover .skeleton-body, .character:hover .skeleton-arms, .character:hover .skeleton-legs, .character:hover .skeleton-head{
+	transition: all .2s linear;
+}
+
+.character:hover .skeleton-body, .character:hover .skeleton-arms, .character:hover .skeleton-legs{
+	animation: none;
+	top: 165px;
+}
+
+.character:hover .skeleton-head {
+	animation: none;
+	top: 105px;
+	left: -20px
+}
+
+.character:hover .skeleton-body {
+	animation: none;
+	top: 140px;
+	left: 60px
+}
+
+/*********************/

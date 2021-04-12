@@ -4,6 +4,7 @@
       :show-skills="showSkills"
       :student="student"
       :classroom="classroom"
+      :key="update"
     ></show-character>
     <div
       class="card-content is-relative"
@@ -27,6 +28,10 @@
             <a class="dropdown-item" @click="byPassStudent(student.id)">
               <i class="fal fa-eye" style="width: 20px"></i>
               {{ trans.get("students.student_view") }}
+            </a>
+            <a class="dropdown-item" target="_blank" :href="'/classroom/' + classroom.code + '/student/' + student.id + '/report'">
+              <i class="fal fa-file" style="width: 20px"></i>
+              {{ trans.get("students.student_report") }}
             </a>
             <a
               class="dropdown-item"
@@ -135,7 +140,10 @@
                 @click="show2l = !show2l"
                 v-if="behaviourshidden.length"
               >
-                <i class="fas" :class="{'fa-plus' : !show2l, 'fa-minus': show2l}"></i>
+                <i
+                  class="fas"
+                  :class="{ 'fa-plus': !show2l, 'fa-minus': show2l }"
+                ></i>
               </div>
               <a
                 :href="'/classroom/' + classroom.code + '/behaviours/'"
@@ -382,11 +390,27 @@ export default {
     return {
       show2l: false,
       custom: 0,
+      update: 0,
       visibleXP: false,
       visibleGold: false,
+      report: false,
     };
   },
   methods: {
+ 
+    // getReport(id) {
+    //   axios
+    //     .post("/classroom/" + this.classroom.code + "/student/report", {
+    //       student: id,
+    //     })
+    //     .then((response) => {
+    //       this.student.behaviours = response.data.behaviours;
+    //       this.student.evaluation = response.data.evaluation;
+    //       this.student.classSettings = response.data.classSettings;
+    //       this.student.grades = response.data.grades;
+    //       this.report = true;
+    //     });
+    // },
     byPassStudent(id) {
       axios
         .post("/classroom/" + this.classroom.code + "/student/show", { id: id })
@@ -441,6 +465,8 @@ export default {
         student.xp = response.data.xp.xp;
         student.gold = response.data.gold;
         student.level = response.data.xp.level;
+        student.equipment = response.data.equipment;
+        this.update++;
         this.$forceUpdate();
         this.$parent.$forceUpdate();
       });
@@ -453,3 +479,6 @@ export default {
   computed: {},
 };
 </script>
+<style>
+
+  </style>

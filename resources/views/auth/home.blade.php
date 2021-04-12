@@ -119,6 +119,7 @@
                             <h2>
                                 {!! __('home.feature_free') !!}
                             </h2>
+                            <a class="button has-text-dark mt-2" href="https://fantasyclass.app/contribute" target="_blank"><i class="fad fa-hands-heart" style="--fa-primary-color: red; font-size: 1em;"></i> {{ __('menu.contribute') }}</a>
                         </div>
                         <div class="column is-4 has-text-centered" data-aos="fade-in" data-aos-easing="linear">
                             <i class="fad fa-code fa-3x"></i>

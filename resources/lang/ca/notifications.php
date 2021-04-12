@@ -11,6 +11,7 @@ return [
     */
     
     'new_comment' => 'Nou comentari',
+    'comment' => 'Nou comentari',
     'mark_card' => 'Carta pendent',
     'mark_card_content' => 'vol utilitzar o eliminar una carta',
     'use_skill' => 'Habilitat utilitzada',

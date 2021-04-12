@@ -39,4 +39,7 @@ return [
     'max_size' => 'Has superat la mida màxima de fitxer',
     'file_tyle' => 'Tipus de fitxer no acceptat',
     'quota_exceded' => 'Has superat la quota d\'usuari',
+
+    '403time' => 'Aquest repte estarà actiu el ',
+    '403reqChallenge' => 'Aquest repte té un requeriment: ',
 ];

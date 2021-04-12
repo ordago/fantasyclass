@@ -386,7 +386,7 @@
           </div>
           <div
             class="mt-2 is-flex is-center-vertically"
-            v-if="admin && challengeReactive.rating"
+            v-if="challengeReactive.rating"
           >
             <vue-reaction-emoji
               :reaction="returnEmoji(challengeReactive.rating)"
@@ -403,6 +403,7 @@
                   challengeReactive.completion == 1) &&
                 !checkCompletion &&
                 !full
+                && challengeReactive.type == 0
               "
               class="button is-info"
               @click="markCompleted(challenge)"
@@ -673,6 +674,7 @@ export default {
           challenge: this.challenge.id,
         })
         .then((response) => {
+          this.challengeReactive.rating = response.data;
           this.$toast(this.trans.get("general.thanks"), { type: "success" });
         });
     },
@@ -803,6 +805,7 @@ export default {
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
                 this.$parent.$parent.$parent.student.xp = response.data.xp;
                 this.$parent.$parent.$parent.student.gold = response.data.gold;
+                this.$parent.$parent.$parent.student.items = response.data.items;
                 this.$parent.$parent.$parent.forceReload++;
               }
             });

@@ -432,14 +432,10 @@
           :class="{
             'has-background-info':
               monsterSelected && monster.id == monsterSelected.id,
-            'has-hr':
-               monster.hp > 0,
+            'has-hr': monster.hp > 0,
           }"
         >
-          <div
-            v-if="monster.hp > 0"
-            class="columns"
-          >
+          <div v-if="monster.hp > 0" class="columns">
             <div class="column is-narrow">
               <img
                 width="81px"
@@ -520,25 +516,52 @@
         disabled
       >
         <div class="content">
-          <h1>{{ trans.get('general.summary') }}</h1>
+          <h1>{{ trans.get("general.summary") }}</h1>
           <ul class="fs-2">
             <li>
-              <i class="fas" :class="{'fa-user': type == 0 || type == 3, 'fa-users': type == 1}"></i>
+              <i
+                class="fas"
+                :class="{
+                  'fa-user': type == 0 || type == 3,
+                  'fa-users': type == 1,
+                }"
+              ></i>
               vs
-              <i class="fas" :class="{'fa-user': type == 0, 'fa-users': type == 1, 'fa-dragon': type == 3}"></i>
+              <i
+                class="fas"
+                :class="{
+                  'fa-user': type == 0,
+                  'fa-users': type == 1,
+                  'fa-dragon': type == 3,
+                }"
+              ></i>
             </li>
             <li>
-              <span v-if="!selectedBank">{{ trans.get('battles.wb') }}</span>
-              <span v-else>{{ trans.get('battles.questions') }}: {{ selectedBank.title }}</span>
+              <span v-if="!selectedBank">{{ trans.get("battles.wb") }}</span>
+              <span v-else
+                >{{ trans.get("battles.questions") }}:
+                {{ selectedBank.title }}</span
+              >
             </li>
             <li v-if="type == 3">
-              <span class="has-text-danger" v-if="type == 3 && !monsterSelected">{{ trans.get('battles.wm') }}</span>
-              <span v-else-if="type == 3">{{ trans.get('battles.monster') }}: {{ monsterSelected.name }}</span>
+              <span
+                class="has-text-danger"
+                v-if="type == 3 && !monsterSelected"
+                >{{ trans.get("battles.wm") }}</span
+              >
+              <span v-else-if="type == 3"
+                >{{ trans.get("battles.monster") }}:
+                {{ monsterSelected.name }}</span
+              >
             </li>
           </ul>
         </div>
         <div class="has-text-centered">
-          <h1 class="button is-size-2 py-3 px-6 is-info m-3" :disabled="type == 3 && !monsterSelected" @click="start">
+          <h1
+            class="button is-size-2 py-3 px-6 is-info m-3"
+            :disabled="type == 3 && !monsterSelected"
+            @click="start"
+          >
             {{ trans.get("battles.start") }}!
           </h1>
         </div>
@@ -553,7 +576,15 @@
     >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ trans.get("menu.battles") }}</p>
+          <p class="modal-card-title is-flex is-center-vertically">
+            {{ trans.get("menu.battles") }}
+            <audio :src="'/music/' + track" loop controls></audio>
+            <select class="select" v-model="track">
+              <option v-for="(trackS, index) in music" :key="index">
+                {{ trackS }}
+              </option>
+            </select>
+          </p>
         </header>
         <section class="modal-card-body is-relative" id="confetti-bg">
           <div class="columns">
@@ -700,7 +731,9 @@
                     {{ trans.get("battles.well_done") }}
                     <span v-if="winnerElem">{{ winnerElem.name }}</span>
                   </h1>
-                  <div class="is-size-3" v-else>{{ monsterSelected.name }} {{ trans.get('battles.defeat') }}</div>
+                  <div class="is-size-3" v-else>
+                    {{ monsterSelected.name }} {{ trans.get("battles.defeat") }}
+                  </div>
                   <button
                     class="button is-success mt-2"
                     v-if="winnerElem"
@@ -894,6 +927,42 @@ export default {
       monsterSelected: null,
       classroom_max_fails: 0,
       classroom_answers: [],
+      track: "Battle theme.mp3",
+      music: [
+        "A legend will rise.mp3",
+        "Happy adveture.mp3",
+        "Action game.mp3",
+        "Kings feast.mp3",
+        "Action track.mp3",
+        "Lonelyhood.ogg",
+        "Adventuring song.mp3",
+        "Mega wall.mp3",
+        "Battle theme.mp3",
+        "Minstrel dance.mp3",
+        "Battle.mp3",
+        "Mythica.mp3",
+        "Boss battle.mp3",
+        "Out there.ogg",
+        "Carnival rides.ogg",
+        "Prepare your swords.mp3",
+        "Dark rainy night.ogg",
+        "Tavern.ogg",
+        "Desert.ogg",
+        "The Bards tale.mp3",
+        "Enchanted tiki.mp3",
+        "The field of dreams.mp3",
+        "Epic Boss battle.mp3",
+        "The Old Tower Inn.mp3",
+        "Eye of the storm.mp3",
+        "Tower defense.mp3",
+        "Fantasy Choir 1.mp3",
+        "Town TPG.mp3",
+        "Fantasy Choir 2.mp3",
+        "Wow chapter 1.ogg",
+        "Fantasy Choir 3.mp3",
+        "Zombies are coming.ogg",
+        "Fantasy orchestral theme.mp3",
+      ],
     };
   },
   methods: {

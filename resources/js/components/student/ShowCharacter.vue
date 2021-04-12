@@ -67,7 +67,7 @@
         class="character-container character is-relative"
         :class="classroom.character_theme.classes"
       >
-        <div :class="student.character.classes">
+        <div :class="getClass()">
           <img
             :src="'/img/character/' + element.src"
             :class="element.classes"
@@ -125,6 +125,10 @@ export default {
     return {};
   },
   methods: {
+    getClass() {
+      if(this.student.hp > 0)
+        return this.student.character.classes;
+    },
     getStyle() {
       return (
         "background-position-x: left; background-position-y: bottom;background-image: url(" +

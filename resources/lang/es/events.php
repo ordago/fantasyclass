@@ -6,6 +6,7 @@ return [
     'title' => 'Título',
     'content' => 'Contenido',
     'edit' => 'Edita evento',
+    'accept' => 'Acepta el destino',
 
     /*
     |--------------------------------------------------------------------------

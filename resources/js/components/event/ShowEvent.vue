@@ -139,7 +139,7 @@
           @click="accept()"
           v-if="info.event.type != 8 && info.event.type != 9 && (info.event.type != 12 || showInfo)"
         >
-          <i class="fas fa-feather-alt"></i> Accept the destiny
+          <i class="fas fa-feather-alt"></i> {{ trans.get('events.accept') }}
         </button>
       </div>
     </transition>

@@ -481,7 +481,6 @@ export default {
               );
               const last_changed =
                 timestampFormat === "HH:mm" ? `today, ${timestamp}` : timestamp;
-              if(user)
               user.status = { ...snapshot.val(), last_changed };
               const roomIndex = this.rooms.findIndex(
                 (r) => room.roomId === r.roomId

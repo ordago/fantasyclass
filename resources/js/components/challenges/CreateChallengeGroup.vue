@@ -62,13 +62,22 @@
               class="input my-3"
             />
           </div>
-          <div class="mt-3" v-if="$parent.challengesgroup.length">
+          <div class="field">
+            <b-switch
+              v-if="$parent.challengesgroup.length"
+              type="is-info"
+              v-model="subcategory"
+              :true-value="1"
+              :false-value="0"
+              >{{ trans.get("challenges.subcategory") }}</b-switch
+            >
+          </div>
+          <div v-if="subcategory == 1" class="mt-3">
             <label for="name">{{ trans.get("challenges.parent") }}</label>
-            <div class="field">
+            <div class="field mt-2">
               <div class="control">
                 <div class="select is-fullwidth">
-                  <select v-model="challengeInfo.challenges_group_id">
-                    <option value="0"></option>
+                  <select required v-model="challengeInfo.challenges_group_id">
                     <option
                       :value="challenge.id"
                       v-for="challenge in $parent.challengesgroup"
@@ -111,6 +120,7 @@ export default {
   },
   data: function () {
     return {
+      subcategory: 0,
       csrfToken: null,
       challengeInfo: {
         challenges_group_id: null,
@@ -126,6 +136,9 @@ export default {
   },
   methods: {
     formSubmit: function (e) {
+      if(this.subcategory == 0) {
+        this.challengeInfo.challenges_group_id = null;
+      }
       this.challengeInfo.icon = this.icon;
       axios
         .post(

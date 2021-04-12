@@ -18,7 +18,7 @@ return [
     'screenshots' => 'Captures',
     
     'feature_telegram' => '<strong class="has-text-light">Comunitat:</strong> Accedeix al nostre telegram per tenir soport i parlar de la plataforma.',
-    'feature_free' => '<strong class="has-text-light">¡Gratuït!</strong> Tot és gratuït, solament s\'accepten colaboracions per a millores en la plataforma <a class="has-text-light" href="https://fantasyclass.app/contribute" target="_blank">Col·labora</a>',
+    'feature_free' => '<strong class="has-text-light">¡Gratuït!</strong> Tot és gratuït, solament s\'accepten colaboracions per a millores en la plataforma',
     'feature_open' => '<strong class="has-text-light">Open source. </strong> De codi obert, qualsevol pot contribuir en la plataforma:',
     'feature_easy' => '<strong class="has-text-light">Ràpid i fàcil. </strong> Configuració intuitiva i de domini accessible a tots els nivells.',
     'feature_fun' => '<strong class="has-text-light">Diversió garantida. </strong> Apren i ensenya creant un univers de reptes, endevinalles i nivells a aconseguir.',
