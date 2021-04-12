@@ -15,3 +15,7 @@ yarn-error.log
 ..env.swp
 /public/css
 /public/js
+/public/img/bg
+/public/img/skills
+/public/img/character/fantasy
+/public/img/shop
