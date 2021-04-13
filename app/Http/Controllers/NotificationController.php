@@ -21,8 +21,10 @@ class NotificationController extends Controller
     public static function sendToTeachers($user, $classroom, $title, $content, $from, $action, $section = null)
     {
         $class = Classroom::where('code', '=', $classroom)->firstOrFail();
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $users_disabled = json_decode(settings()->get('disable_notifications', json_encode([])));
         foreach ($class->users()->where('role', '>', 0)->get() as $teacher) {
-            if ($user != $teacher->id) {
+            if ($user != $teacher->id && ! (array_search($teacher->id, (array)$users_disabled) !== false)) {
                 Notification::send($teacher, new NewInteraction(__($title, [], $teacher->locale) . "(" . $from['title'] . ")", $content, $from, $action, $classroom, $section));
             }
         }

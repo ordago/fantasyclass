@@ -178,7 +178,7 @@ class ClassroomsStudentController extends Controller
                     return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
                 }
             } else {
-                if (!$student->groups->first()->challenges->contains($challenge->challenge_required)) {
+                if ($student->groups->first() && !$student->groups->first()->challenges->contains($challenge->challenge_required)) {
                     return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
                 }
             }

@@ -210,6 +210,22 @@
       </div>
       <div class="mt-5">
         <h1>
+          <i class="fal fa-bell"></i>
+          {{ trans.get("settings.notifications") }}
+        </h1>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
+            @input="updateNotifications()"
+            v-model="settings.notifications_from_classroom"
+            >{{ trans.get("settings.notifications_from_classroom") }}</b-switch
+          >
+        </div>
+      </div>
+      <div class="mt-5">
+        <h1>
           <i class="fal fa-cog"></i>
           {{ trans.get("settings.general_preferences") }}
         </h1>
@@ -552,6 +568,9 @@ export default {
     };
   },
   methods: {
+    updateNotifications() {
+      axios.get('/classroom/' + this.classroom.code + '/toggleClassNotifications');
+    },
     updateTz() {
       this.updateClassState("tz", this.settings.tz);
       this.$toast(this.trans.get("success_error.update_success"), {

@@ -40,6 +40,13 @@ class SettingsController extends Controller
         $settings['disabled_themes'] = json_decode(settings()->get('disabled_themes', json_encode([])));
         $settings['custom_images'] = $class->getMedia('avatars');
         $settings['licenses'] = settings()->get('licenses', '');
+        $users_disabled = json_decode(settings()->get('disable_notifications', json_encode([])));
+        $index = array_search(auth()->user()->id, (array) $users_disabled);
+        if ($index !== false) {
+            $settings['notifications_from_classroom'] = 1;
+        } else {
+            $settings['notifications_from_classroom'] = 0;
+        }
         $settings['tz'] = settings()->get('tz', 'Europe/Madrid');
 
         $teachers = $class->users->where('pivot.role', '>', 0);
@@ -57,6 +64,24 @@ class SettingsController extends Controller
         $disabled = request()->themes;
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         settings()->set('disabled_themes', json_encode($disabled));
+    }
+
+    public function toggleClassNotifications($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $users_disabled = json_decode(settings()->get('disable_notifications', json_encode([])));
+        $users_disabled = (array) $users_disabled;
+        $index = array_search(auth()->user()->id, $users_disabled);
+        if ($index !== false) {
+            unset($users_disabled[$index]);
+        } else {
+            array_push($users_disabled, auth()->user()->id);
+        }
+
+        settings()->set('disable_notifications', json_encode($users_disabled));
     }
 
     public function destroy($code, $id)

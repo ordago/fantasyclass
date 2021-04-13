@@ -54,4 +54,7 @@ return [
     
     'invited' => "Has sigut convidat com a docent de la classe.",
     'open' => "Obrir la classe",
+
+    'notifications' => "Notificacions",
+    'notifications_from_classroom' => "Deshabilita les notificacions d'aquesta classe",
 ];

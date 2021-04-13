@@ -55,5 +55,8 @@ return [
     'invited' => "You've been invited to be a teacher in this classroom.",
     'open' => "Open classroom",
 
+    'notifications' => "Notifications",
+    'notifications_from_classroom' => "Disable this classroom notifications",
+
 
 ];

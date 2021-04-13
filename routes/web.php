@@ -212,6 +212,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
         Route::post('/{code}/settings/reset', 'SettingsController@reset');
         Route::post('/{code}/settings/themes', 'SettingsController@themes');
+        Route::get('/{code}/toggleClassNotifications', 'SettingsController@toggleClassNotifications');
 
         // Events
         Route::get('/{code}/events', 'EventController@index');
