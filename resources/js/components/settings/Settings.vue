@@ -5,7 +5,7 @@
         <i class="fal fa-chalkboard"></i>
         {{ trans.get("settings.classroom") }}
       </h1>
-      <a :href="'/google/drive/link/' + classroom.code">Link to GDrive</a>
+      <!-- <a :href="'/google/drive/link/' + classroom.code">Link to GDrive</a> -->
 
       <b-field class="mt-4" :label="trans.get('settings.state')">
         <b-field class="mb-3 pl-4">

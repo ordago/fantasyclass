@@ -412,7 +412,6 @@ class ClassroomsController extends Controller
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'teacher')->get();
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        dump(settings()->all());
 
         $students = $class->students()->with('equipment', 'pets', 'character')->get();
         $groups = $class->grouping->first()->groups;
