@@ -329,6 +329,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/callback/{provider}', 'SocialController@callback');
     Route::get('/google/classroom/link/{code}', 'SocialController@googleClassroom');
     Route::get('/google/classroom/unlink', 'SocialController@unlinkGoogleClassroom');
+    Route::get('/google/drive/link/{code}', 'SocialController@addGoogleDrive');
 
     // Google Classroom
     Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
