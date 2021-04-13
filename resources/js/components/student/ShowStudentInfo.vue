@@ -1009,7 +1009,7 @@
               >
                 <option
                   :value="id"
-                  v-for="(id, name) in students_money"
+                  v-for="id, name in students_money"
                   :key="id"
                 >
                   {{ name }}

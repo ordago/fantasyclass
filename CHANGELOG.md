@@ -1,11 +1,12 @@
 # Changelog
-## v1.46 Beta (09/04/2021)
+## v1.46 Beta (13/04/2021)
 ### Added
 - Notification when invited to a classroom.
 - Option to disable notifications in one classroom.
 
 ### Changed
 - Fixed Google Classroom section in settings.
+- More options in reset assistant.
 
 ## v1.45 Beta (26/03/2021)
 ### Added

@@ -103,7 +103,8 @@ class SettingsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('admin', $class);
-        switch (request()->type) {
+        $type = request()->type;
+        switch ($type) {
             case 'hp':
                 $value = 100;
                 break;
@@ -111,12 +112,17 @@ class SettingsController extends Controller
             case 'xp':
                 $value = 0;
                 break;
-            default:
-                abort(403);
-                break;
         }
         foreach ($class->students as $student) {
-            $student->update([request()->type => $value]);
+            if ($type == 'hp' || $type == 'gold' || $type == "xp") {
+                $student->update([request()->type => $value]);
+            } else if($type == 'cards' || $type == 'skills' || $type == 'badges' || $type == 'items') {
+                $student->$type()->sync([]);
+            } else if($type == 'logEntries') {
+                $student->$type()->delete();
+            } else if($type == 'equipment') {
+                $student->setBasicEquipment();
+            }
         }
     }
 

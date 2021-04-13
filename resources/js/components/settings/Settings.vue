@@ -487,20 +487,56 @@
           </p>
         </header>
         <section class="modal-card-body">
-          <button @click="reset('hp', 'heart')" class="button is-danger w-100">
-            Reset <i class="fas fa-heart colored"></i>
+          <button @click="reset('hp', 'fas fa-heart')" class="button is-danger w-100">
+            Reset {{ trans.get('menu.behaviours') }}<i class="fas fa-heart colored"></i>
           </button>
           <button
-            @click="reset('xp', 'fist-raised')"
+            @click="reset('xp', 'fas fa-fist-raised')"
             class="button is-dark w-100 mt-2"
           >
-            Reset <i class="fas fa-fist-raised colored"></i>
+            Reset {{ trans.get('students.xp') }}<i class="fas fa-fist-raised colored"></i>
           </button>
           <button
-            @click="reset('gold', 'coins')"
+            @click="reset('gold', 'fas fa-coins')"
             class="button is-warning w-100 mt-2"
           >
-            Reset <i class="fas fa-coins colored"></i>
+            Reset {{ trans.get('students.gold') }}<i class="fas fa-coins colored"></i>
+          </button>
+          <button
+            @click="reset('cards', 'fak fa-deck')"
+            class="button is-info w-100 mt-2"
+          >
+            Reset {{ trans.get('menu.cards') }}<i class="fak fa-deck colored"></i>
+          </button>
+          <button
+            @click="reset('skills', 'fas fa-sparkles')"
+            class="button is-primary w-100 mt-2"
+          >
+            Reset {{ trans.get('menu.skills') }}<i class="fas fa-sparkles colored"></i>
+          </button>
+          <button
+            @click="reset('badges', 'fas fa-award')"
+            class="button is-dark w-100 mt-2"
+          >
+            Reset {{ trans.get('menu.badges') }}<i class="fas fa-award colored"></i>
+          </button>
+          <button
+            @click="reset('logEntries', 'fas fa-file')"
+            class="button is-white w-100 mt-2"
+          >
+            Reset {{ trans.get('menu.log') }}<i class="fas fa-file colored"></i>
+          </button>
+          <button
+            @click="reset('items', 'fas fa-store')"
+            class="button is-success w-100 mt-2"
+          >
+            Reset {{ trans.get('shop.items') }}<i class="fas fa-store colored"></i>
+          </button>
+          <button
+            @click="reset('equipment', 'fas fa-swords')"
+            class="button is-danger w-100 mt-2"
+          >
+            Reset {{ trans.get('shop.equipment') }}<i class="fas fa-swords colored"></i>
           </button>
           <!-- <button class="button is-link w-100 mt-2">Reset {{ trans.get('menu.shop') }}</button> -->
         </section>
@@ -629,7 +665,7 @@ export default {
         title: this.trans.get("general.delete"),
         message:
           this.trans.get("general.confirm_delete_class") +
-          " (<i class='fas fa-" +
+          " (<i class='" +
           icon +
           " colored'></i>)",
         confirmText: this.trans.get("general.delete"),

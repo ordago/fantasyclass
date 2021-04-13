@@ -11,6 +11,7 @@ return [
     */
 
     'items' => 'Objectes',
+    'equipment' => 'Equipament',
     'eq1' => 'Equipament 1',
     'eq2' => 'Equipament 2',
     'eq3' => 'Equipament 3',
