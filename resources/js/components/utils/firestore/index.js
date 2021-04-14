@@ -22,6 +22,7 @@ export const storageRef = firebaseApp.storage().ref()
 
 export const usersRef = db.collection('users')
 export const roomsRef = db.collection('chatRooms')
+export const messagesRef = roomId => roomsRef.doc(roomId).collection('messages')
 
 export const filesRef = storageRef.child('files')
 

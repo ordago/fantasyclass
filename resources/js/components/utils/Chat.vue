@@ -1,28 +1,34 @@
 <template>
-<div>
-  <chat-window
-    height="calc(100vh - 56px)"
-    :loadFirstRoom="false"
-    :styles="styles"
-    :currentUserId="currentUserId"
-    :rooms="rooms"
-    :loadingRooms="loadingRooms"
-    :messages="messages"
-    :messagesLoaded="messagesLoaded"
-    :menuActions="menuActions"
-    @fetchMessages="fetchMessages"
-    @sendMessage="sendMessage"
-    @editMessage="editMessage"
-    @deleteMessage="deleteMessage"
-    @openFile="openFile"
-    @addRoom="addRoom"
-    @menuActionHandler="menuActionHandler"
-    @messageActionHandler="messageActionHandler"
-    @sendMessageReaction="sendMessageReaction"
-    @typingMessage="typingMessage"
-  >
-  </chat-window>
-</div>
+  <div>
+    <chat-window
+      height="calc(100vh - 56px)"
+      :loadFirstRoom="false"
+      :styles="styles"
+      :current-user-id="currentUserId"
+      :room-id="roomId"
+      :rooms="loadedRooms"
+      :loading-rooms="loadingRooms"
+      :messages="messages"
+      :messages-loaded="messagesLoaded"
+      :rooms-loaded="roomsLoaded"
+      :menu-actions="menuActions"
+      :room-message="roomMessage"
+      @fetch-more-rooms="fetchMoreRooms"
+      @fetch-messages="fetchMessages"
+      @send-message="sendMessage"
+      @edit-message="editMessage"
+      @delete-message="deleteMessage"
+      @open-file="openFile"
+      @open-user-tag="openUserTag"
+      @add-room="addRoom"
+      @room-action-handler="menuActionHandler"
+      @menu-action-handler="menuActionHandler"
+      @send-message-reaction="sendMessageReaction"
+      @typing-message="typingMessage"
+      @toggle-rooms-list="$emit('show-demo-options', $event.opened)"
+    >
+    </chat-window>
+  </div>
 </template>
 
 <script>
@@ -35,6 +41,7 @@ import {
   firebase,
   roomsRef,
   usersRef,
+  messagesRef,
   filesRef,
   deleteDbField,
 } from "./firestore";
@@ -49,16 +56,26 @@ export default {
   },
   data() {
     return {
-      perPage: 20,
+      roomsPerPage: 15,
+      rooms: [],
+      roomId: "",
+      startRooms: null,
+      endRooms: null,
+      roomsLoaded: false,
       loadingRooms: true,
+      allUsers: [],
+      loadingLastMessageByRoom: 0,
+      roomsLoadedCount: false,
       selectedRoom: null,
+      messagesPerPage: 20,
       messages: [],
       messagesLoaded: false,
-      start: null,
-      end: null,
+      roomMessage: "",
+      startMessages: null,
+      endMessages: null,
       roomsListeners: [],
-      typingMessageCache: '',
       listeners: [],
+      typingMessageCache: "",
       disableForm: false,
       addNewRoom: null,
       addRoomUsername: "",
@@ -69,7 +86,7 @@ export default {
       removeUsers: [],
       menuActions: [
         { name: "inviteUser", title: "Invite User" },
-        { name: "report", title: this.trans.get('utils.chat_report') },
+        { name: "report", title: this.trans.get("utils.chat_report") },
         // { name: "deleteRoom", title: "Delete Room" },
       ],
       styles: { container: { borderRadius: "4px" } },
@@ -77,8 +94,26 @@ export default {
       messages: [],
     };
   },
+  computed: {
+    loadedRooms() {
+      return this.rooms.slice(0, this.roomsLoadedCount);
+    },
+    screenHeight() {
+      return this.isDevice ? window.innerHeight + "px" : "calc(100vh - 80px)";
+    },
+  },
   mounted() {
-    this.$toast(this.trans.get('utils.chat_warning'), {type: 'warning', timeout: 3000})
+    roomsRef.get().then((rooms) => {
+      rooms.forEach((room) => {
+        if (!room.data().lastUpdated) {
+          roomsRef.doc(room.id).update({ lastUpdated: new Date() });
+        }
+      });
+    });
+    this.$toast(this.trans.get("utils.chat_warning"), {
+      type: "warning",
+      timeout: 3000,
+    });
     // this.$toast(this.trans.get('utils.chat_reminder'), {type: 'default'})
     axios.get("/inbox/token").then((response) => {
       firebase
@@ -109,63 +144,67 @@ export default {
     },
     resetRooms() {
       this.loadingRooms = true;
+      this.loadingLastMessageByRoom = 0;
+      this.roomsLoadedCount = 0;
       this.rooms = [];
+      this.roomsLoaded = true;
+      this.startRooms = null;
+      this.endRooms = null;
       this.roomsListeners.forEach((listener) => listener());
+      this.roomsListeners = [];
       this.resetMessages();
     },
     resetMessages() {
       this.messages = [];
       this.messagesLoaded = false;
-      this.start = null;
-      this.end = null;
+      this.startMessages = null;
+      this.endMessages = null;
       this.listeners.forEach((listener) => listener());
       this.listeners = [];
     },
-    async fetchRooms() {
+    fetchRooms() {
       this.resetRooms();
-      const query = roomsRef.where(
-        "users",
-        "array-contains",
-        this.currentUserId
-      );
+      this.fetchMoreRooms();
+    },
+    async fetchMoreRooms() {
+      if (this.endRooms && !this.startRooms) return (this.roomsLoaded = true);
+      let query = roomsRef
+        .where("users", "array-contains", "" + this.currentUserId)
+        .orderBy("lastUpdated", "desc")
+        .limit(this.roomsPerPage);
+      if (this.startRooms) query = query.startAfter(this.startRooms);
       const rooms = await query.get();
-      const roomList = [];
-      const rawRoomUsers = [];
-      const rawMessages = [];
+      // this.incrementDbCounter('Fetch Rooms', rooms.size)
+      this.roomsLoaded = rooms.empty || rooms.size < this.roomsPerPage;
+      if (this.startRooms) this.endRooms = this.startRooms;
+      this.startRooms = rooms.docs[rooms.docs.length - 1];
+      const roomUserIds = [];
+      rooms.forEach((room) => {
+        room.data().users.forEach((userId) => {
+          const foundUser = this.allUsers.find((user) => user._id === userId);
+          if (!foundUser && roomUserIds.indexOf(userId) === -1) {
+            roomUserIds.push(userId);
+          }
+        });
+      });
+      // this.incrementDbCounter('Fetch Room Users', roomUserIds.length)
+      const rawUsers = [];
+      roomUserIds.forEach((userId) => {
+        const promise = usersRef
+          .doc(userId)
+          .get()
+          .then((user) => user.data());
+        rawUsers.push(promise);
+      });
+      this.allUsers = [...this.allUsers, ...(await Promise.all(rawUsers))];
+      const roomList = {};
       rooms.forEach((room) => {
         roomList[room.id] = { ...room.data(), users: [] };
-        const rawUsers = [];
-        room.data().users.map((userId) => {
-          const promise = usersRef
-            .doc(userId)
-            .get()
-            .then((user) => {
-              return {
-                ...user.data(),
-                ...{
-                  roomId: room.id,
-                  username: user.data().username,
-                },
-              };
-            });
-          rawUsers.push(promise);
-        });
-        rawUsers.map((users) => rawRoomUsers.push(users));
-        rawMessages.push(this.getLastMessage(room));
-      });
-      const users = await Promise.all(rawRoomUsers);
-      users.map((user) => roomList[user.roomId].users.push(user));
-      const roomMessages = await Promise.all(rawMessages).then((messages) => {
-        return messages.map((message) => {
-          return {
-            lastMessage: this.formatLastMessage(message),
-            roomId: message.roomId,
-          };
+        room.data().users.forEach((userId) => {
+          const foundUser = this.allUsers.find((user) => user._id === userId);
+          if (foundUser) roomList[room.id].users.push(foundUser);
         });
       });
-      roomMessages.map(
-        (ms) => (roomList[ms.roomId].lastMessage = ms.lastMessage)
-      );
       const formattedRooms = [];
       Object.keys(roomList).forEach((key) => {
         const room = roomList[key];
@@ -179,19 +218,100 @@ export default {
             ? roomContacts[0].avatar
             : require("./assets/no_group_avatar.png");
         formattedRooms.push({
-          ...{
-            roomId: key,
-            avatar: roomAvatar,
-            ...room,
+          ...room,
+          roomId: key,
+          avatar: roomAvatar,
+          index: room.lastUpdated.seconds,
+          lastMessage: {
+            content: "Room created",
+            timestamp: this.formatTimestamp(
+              new Date(room.lastUpdated.seconds),
+              room.lastUpdated
+            ),
           },
         });
       });
       this.rooms = this.rooms.concat(formattedRooms);
-      this.loadingRooms = false;
-      this.rooms.map((room, index) => this.listenLastMessage(room, index));
-      this.listenUsersOnlineStatus();
-      this.listenRoomsTypingUsers(query);
+      formattedRooms.map((room) => this.listenLastMessage(room));
+      if (!this.rooms.length) {
+        this.loadingRooms = false;
+        this.roomsLoadedCount = 0;
+      }
+      this.listenUsersOnlineStatus(formattedRooms);
+      this.listenRooms(query);
+      // setTimeout(() => console.log('TOTAL', this.dbRequestCount), 2000)
     },
+    // async fetchRooms() {
+    //   this.resetRooms();
+    //   const query = roomsRef.where(
+    //     "users",
+    //     "array-contains",
+    //     this.currentUserId
+    //   );
+    //   const rooms = await query.get();
+    //   const roomList = [];
+    //   const rawRoomUsers = [];
+    //   const rawMessages = [];
+    //   rooms.forEach((room) => {
+    //     roomList[room.id] = { ...room.data(), users: [] };
+    //     const rawUsers = [];
+    //     room.data().users.map((userId) => {
+    //       const promise = usersRef
+    //         .doc(userId)
+    //         .get()
+    //         .then((user) => {
+    //           return {
+    //             ...user.data(),
+    //             ...{
+    //               roomId: room.id,
+    //               username: user.data().username,
+    //             },
+    //           };
+    //         });
+    //       rawUsers.push(promise);
+    //     });
+    //     rawUsers.map((users) => rawRoomUsers.push(users));
+    //     rawMessages.push(this.getLastMessage(room));
+    //   });
+    //   const users = await Promise.all(rawRoomUsers);
+    //   users.map((user) => roomList[user.roomId].users.push(user));
+    //   const roomMessages = await Promise.all(rawMessages).then((messages) => {
+    //     return messages.map((message) => {
+    //       return {
+    //         lastMessage: this.formatLastMessage(message),
+    //         roomId: message.roomId,
+    //       };
+    //     });
+    //   });
+    //   roomMessages.map(
+    //     (ms) => (roomList[ms.roomId].lastMessage = ms.lastMessage)
+    //   );
+    //   const formattedRooms = [];
+    //   Object.keys(roomList).forEach((key) => {
+    //     const room = roomList[key];
+    //     const roomContacts = room.users.filter(
+    //       (user) => user._id !== this.currentUserId
+    //     );
+    //     room.roomName =
+    //       roomContacts.map((user) => user.username).join(", ") || "Myself";
+    //     const roomAvatar =
+    //       roomContacts.length === 1 && roomContacts[0].avatar
+    //         ? roomContacts[0].avatar
+    //         : require("./assets/no_group_avatar.png");
+    //     formattedRooms.push({
+    //       ...{
+    //         roomId: key,
+    //         avatar: roomAvatar,
+    //         ...room,
+    //       },
+    //     });
+    //   });
+    //   this.rooms = this.rooms.concat(formattedRooms);
+    //   this.loadingRooms = false;
+    //   this.rooms.map((room, index) => this.listenLastMessage(room, index));
+    //   this.listenUsersOnlineStatus();
+    //   this.listenRoomsTypingUsers(query);
+    // },
     getLastMessage(room) {
       return this.messagesRef(room.id)
         .orderBy("timestamp", "desc")
@@ -203,34 +323,47 @@ export default {
           return { ...array[0], roomId: room.id };
         });
     },
-    listenLastMessage(room, index) {
-      const listener = this.messagesRef(room.roomId)
+    listenLastMessage(room) {
+      const listener = messagesRef(room.roomId)
         .orderBy("timestamp", "desc")
         .limit(1)
         .onSnapshot((messages) => {
+          // this.incrementDbCounter('Listen Last Room Message', messages.size)
           messages.forEach((message) => {
             const lastMessage = this.formatLastMessage(message.data());
-            this.rooms[index].lastMessage = lastMessage;
+            const roomIndex = this.rooms.findIndex(
+              (r) => room.roomId === r.roomId
+            );
+            this.rooms[roomIndex].lastMessage = lastMessage;
+            this.rooms = [...this.rooms];
           });
+          if (this.loadingLastMessageByRoom < this.rooms.length) {
+            this.loadingLastMessageByRoom++;
+            if (this.loadingLastMessageByRoom === this.rooms.length) {
+              this.loadingRooms = false;
+              this.roomsLoadedCount = this.rooms.length;
+            }
+          }
         });
       this.roomsListeners.push(listener);
     },
+
     formatLastMessage(message) {
       if (!message.timestamp) return;
-      const date = new Date(message.timestamp.seconds * 1000);
-      const timestampFormat = isSameDay(date, new Date())
-        ? "HH:mm"
-        : "DD/MM/YY";
-      let timestamp = parseTimestamp(message.timestamp, timestampFormat);
-      if (timestampFormat === "HH:mm") timestamp = `Today, ${timestamp}`;
       let content = message.content;
-      if (message.file) content = `${message.file.name}.${message.file.type}`;
+      if (message.file)
+        content = `${message.file.name}.${
+          message.file.extension || message.file.type
+        }`;
       return {
         ...message,
         ...{
           content,
-          timestamp,
-          date: message.timestamp.seconds,
+          timestamp: this.formatTimestamp(
+            new Date(message.timestamp.seconds * 1000),
+            message.timestamp
+          ),
+          distributed: true,
           seen: message.sender_id === this.currentUserId ? message.seen : null,
           new:
             message.sender_id !== this.currentUserId &&
@@ -238,27 +371,45 @@ export default {
         },
       };
     },
+    formatTimestamp(date, timestamp) {
+      const timestampFormat = isSameDay(date, new Date())
+        ? "HH:mm"
+        : "DD/MM/YY";
+      if (timestamp != "Invalid Date") {
+        const result = parseTimestamp(timestamp, timestampFormat);
+        return timestampFormat === "HH:mm" ? `Today, ${result}` : result;
+      }
+    },
     fetchMessages({ room, options = {} }) {
-      if (options.reset) this.resetMessages();
-      if (this.end && !this.start) return (this.messagesLoaded = true);
-      let ref = this.messagesRef(room.roomId);
-      let query = ref.orderBy("timestamp", "desc").limit(this.perPage);
-      if (this.start) query = query.startAfter(this.start);
+      this.$emit("show-demo-options", false);
+      if (options.reset) {
+        this.resetMessages();
+        this.roomId = room.roomId;
+      }
+      if (this.endMessages && !this.startMessages)
+        return (this.messagesLoaded = true);
+      let ref = messagesRef(room.roomId);
+      let query = ref.orderBy("timestamp", "desc").limit(this.messagesPerPage);
+      if (this.startMessages) query = query.startAfter(this.startMessages);
       this.selectedRoom = room.roomId;
       query.get().then((messages) => {
+        // this.incrementDbCounter('Fetch Room Messages', messages.size)
         if (this.selectedRoom !== room.roomId) return;
         if (messages.empty) this.messagesLoaded = true;
-        if (this.start) this.end = this.start;
-        this.start = messages.docs[messages.docs.length - 1];
+        if (this.startMessages) this.endMessages = this.startMessages;
+        this.startMessages = messages.docs[messages.docs.length - 1];
         let listenerQuery = ref.orderBy("timestamp");
-        if (this.start) listenerQuery = listenerQuery.startAfter(this.start);
-        if (this.end) listenerQuery = listenerQuery.endAt(this.end);
+        if (this.startMessages)
+          listenerQuery = listenerQuery.startAfter(this.startMessages);
+        if (this.endMessages)
+          listenerQuery = listenerQuery.endAt(this.endMessages);
         if (options.reset) this.messages = [];
         messages.forEach((message) => {
           const formattedMessage = this.formatMessage(room, message);
           this.messages.unshift(formattedMessage);
         });
         const listener = listenerQuery.onSnapshot((snapshots) => {
+          // this.incrementDbCounter('Listen Room Messages', snapshots.size)
           this.listenMessages(snapshots, room);
         });
         this.listeners.push(listener);
@@ -283,7 +434,7 @@ export default {
         message.data().sender_id !== this.currentUserId &&
         (!message.data().seen || !message.data().seen[this.currentUserId])
       ) {
-        this.messagesRef(room.roomId)
+        messagesRef(room.roomId)
           .doc(message.id)
           .update({
             [`seen.${this.currentUserId}`]: new Date(),
@@ -298,15 +449,18 @@ export default {
       return {
         ...message.data(),
         ...{
-          sender_id,
+          senderId: sender_id,
           _id: message.id,
           seconds: timestamp.seconds,
           timestamp: parseTimestamp(timestamp, "HH:mm"),
           date: parseTimestamp(timestamp, "DD MMMM YYYY"),
           username: senderUser ? senderUser.username : null,
+          // avatar: senderUser ? senderUser.avatar : null,
+          distributed: true,
         },
       };
     },
+
     async sendMessage({ content, roomId, file, replyMessage }) {
       const message = {
         sender_id: this.currentUserId,
@@ -318,41 +472,86 @@ export default {
           name: file.name,
           size: file.size,
           type: file.type,
+          extension: file.extension || file.type,
           url: file.localUrl,
         };
+        if (file.audio) {
+          message.file.audio = true;
+          message.file.duration = file.duration;
+        }
       }
       if (replyMessage) {
         message.replyMessage = {
           _id: replyMessage._id,
           content: replyMessage.content,
-          sender_id: replyMessage.sender_id,
+          sender_id: replyMessage.senderId,
         };
         if (replyMessage.file) {
           message.replyMessage.file = replyMessage.file;
         }
       }
-      const { id } = await this.messagesRef(roomId).add(message);
-      if (file) this.uploadFile({ file, messageId: id, roomId });
+      const { id } = await messagesRef(roomId).add(message);
 
-      const query = roomsRef.doc(roomId);
-
-      const room = await query.get();
       let users = await roomsRef.doc("" + roomId);
-
       users
         .get()
         .then(function (doc) {
-          console.log(doc.data().users)
-          console.log(content)
-            axios.post('/chat/notify', { users : doc.data().users, message: content})
+          axios.post("/chat/notify", {
+            users: doc.data().users,
+            message: content,
+          });
         })
         .catch(function (error) {
           console.log("Error getting document:", error);
         });
 
+      if (file) this.uploadFile({ file, messageId: id, roomId });
+      roomsRef.doc(roomId).update({ lastUpdated: new Date() });
     },
-    openFile({ message, action }) {
+    openFile({ message }) {
       window.open(message.file.url, "_blank");
+    },
+    async openUserTag({ user }) {
+      let roomId;
+      this.rooms.forEach((room) => {
+        if (room.users.length === 2) {
+          const userId1 = room.users[0]._id;
+          const userId2 = room.users[1]._id;
+          if (
+            (userId1 === user._id || userId1 === this.currentUserId) &&
+            (userId2 === user._id || userId2 === this.currentUserId)
+          ) {
+            roomId = room.roomId;
+          }
+        }
+      });
+      if (roomId) return (this.roomId = roomId);
+      const query1 = await roomsRef
+        .where("users", "==", [this.currentUserId, user._id])
+        .get();
+      if (!query1.empty) {
+        return this.loadRoom(query1);
+      }
+      let query2 = await roomsRef
+        .where("users", "==", [user._id, this.currentUserId])
+        .get();
+      if (!query2.empty) {
+        return this.loadRoom(query2);
+      }
+      const room = await roomsRef.add({
+        users: [user._id, this.currentUserId],
+        lastUpdated: new Date(),
+      });
+      this.roomId = room.id;
+      this.fetchRooms();
+    },
+    async loadRoom(query) {
+      query.forEach(async (room) => {
+        if (this.loadingRooms) return;
+        await roomsRef.doc(room.id).update({ lastUpdated: new Date() });
+        this.roomId = room.id;
+        this.fetchRooms();
+      });
     },
     async editMessage({ messageId, newContent, roomId, file }) {
       const newMessage = { edited: new Date() };
@@ -362,26 +561,44 @@ export default {
           name: file.name,
           size: file.size,
           type: file.type,
+          extension: file.extension || file.type,
           url: file.url || file.localUrl,
         };
+        if (file.audio) {
+          newMessage.file.audio = true;
+          newMessage.file.duration = file.duration;
+        }
       } else {
         newMessage.file = deleteDbField;
       }
-      await this.messagesRef(roomId).doc(messageId).update(newMessage);
+      await messagesRef(roomId).doc(messageId).update(newMessage);
+      if (file?.blob) this.uploadFile({ file, messageId, roomId });
     },
-    async deleteMessage({ messageId, roomId }) {
-      await this.messagesRef(roomId)
-        .doc(messageId)
+    async deleteMessage({ message, roomId }) {
+      await messagesRef(roomId)
+        .doc(message._id)
         .update({ deleted: new Date() });
+      const { file } = message;
+      if (file) {
+        const deleteFileRef = filesRef
+          .child(this.currentUserId)
+          .child(message._id)
+          .child(`${file.name}.${file.extension || file.type}`);
+        await deleteFileRef.delete();
+      }
     },
     async uploadFile({ file, messageId, roomId }) {
+      let type = file.extension || file.type;
+      if (type === "svg" || type === "pdf") {
+        type = file.type;
+      }
       const uploadFileRef = filesRef
         .child(this.currentUserId)
         .child(messageId)
-        .child(`${file.name}.${file.type}`);
-      await uploadFileRef.put(file.blob, { contentType: file.type });
+        .child(`${file.name}.${type}`);
+      await uploadFileRef.put(file.blob, { contentType: type });
       const url = await uploadFileRef.getDownloadURL();
-      await this.messagesRef(roomId)
+      await messagesRef(roomId)
         .doc(messageId)
         .update({
           ["file.url"]: url,
@@ -406,21 +623,21 @@ export default {
       const dbAction = remove
         ? firebase.firestore.FieldValue.arrayRemove(this.currentUserId)
         : firebase.firestore.FieldValue.arrayUnion(this.currentUserId);
-      await this.messagesRef(roomId)
+      await messagesRef(roomId)
         .doc(messageId)
         .update({
           [`reactions.${reaction.name}`]: dbAction,
         });
     },
     typingMessage({ message, roomId }) {
+      if (!roomId) return;
       if (message?.length > 1) {
-				return (this.typingMessageCache = message)
-			}
-			if (message?.length === 1 && this.typingMessageCache) {
-				return (this.typingMessageCache = message)
-			}
-      this.typingMessageCache = message
-      
+        return (this.typingMessageCache = message);
+      }
+      if (message?.length === 1 && this.typingMessageCache) {
+        return (this.typingMessageCache = message);
+      }
+      this.typingMessageCache = message;
       const dbAction = message
         ? firebase.firestore.FieldValue.arrayUnion(this.currentUserId)
         : firebase.firestore.FieldValue.arrayRemove(this.currentUserId);
@@ -428,25 +645,38 @@ export default {
         typingUsers: dbAction,
       });
     },
-    async listenRoomsTypingUsers(query) {
-      query.onSnapshot((rooms) => {
+    async listenRooms(query) {
+      const listener = query.onSnapshot((rooms) => {
+        // this.incrementDbCounter('Listen Rooms Typing Users', rooms.size)
         rooms.forEach((room) => {
           const foundRoom = this.rooms.find((r) => r.roomId === room.id);
-          if (foundRoom) foundRoom.typingUsers = room.data().typingUsers;
+          if (foundRoom) {
+            foundRoom.typingUsers = room.data().typingUsers;
+            foundRoom.index = room.data().lastUpdated.seconds;
+          }
         });
       });
+      this.roomsListeners.push(listener);
     },
+    // async listenRoomsTypingUsers(query) {
+    //   query.onSnapshot((rooms) => {
+    //     rooms.forEach((room) => {
+    //       const foundRoom = this.rooms.find((r) => r.roomId === room.id);
+    //       if (foundRoom) foundRoom.typingUsers = room.data().typingUsers;
+    //     });
+    //   });
+    // },
     updateUserOnlineStatus() {
       const userStatusRef = firebase
         .database()
         .ref("/status/" + this.currentUserId);
       const isOfflineData = {
         state: "offline",
-        last_changed: firebase.database.ServerValue.TIMESTAMP,
+        lastChanged: firebase.database.ServerValue.TIMESTAMP,
       };
       const isOnlineData = {
         state: "online",
-        last_changed: firebase.database.ServerValue.TIMESTAMP,
+        lastChanged: firebase.database.ServerValue.TIMESTAMP,
       };
       firebase
         .database()
@@ -461,32 +691,25 @@ export default {
             });
         });
     },
-    listenUsersOnlineStatus() {
-      this.rooms.map((room) => {
+    listenUsersOnlineStatus(rooms) {
+      rooms.map((room) => {
         room.users.map((user) => {
-          firebase
+          const listener = firebase
             .database()
             .ref("/status/" + user._id)
             .on("value", (snapshot) => {
-              if (!snapshot.val()) return;
-              const timestampFormat = isSameDay(
-                new Date(snapshot.val().last_changed),
-                new Date()
-              )
-                ? "HH:mm"
-                : "DD MMMM, HH:mm";
-              const timestamp = parseTimestamp(
-                new Date(snapshot.val().last_changed),
-                timestampFormat
+              if (!snapshot || !snapshot.val()) return;
+              const lastChanged = this.formatTimestamp(
+                new Date(snapshot.val().lastChanged),
+                new Date(snapshot.val().lastChanged)
               );
-              const last_changed =
-                timestampFormat === "HH:mm" ? `today, ${timestamp}` : timestamp;
-              user.status = { ...snapshot.val(), last_changed };
+              user.status = { ...snapshot.val(), lastChanged };
               const roomIndex = this.rooms.findIndex(
                 (r) => room.roomId === r.roomId
               );
               this.$set(this.rooms, roomIndex, room);
             });
+          this.roomsListeners.push(listener);
         });
       });
     },
@@ -516,14 +739,27 @@ export default {
       });
     },
 
+    // async createRoom(uid, username) {
+    //   this.disableForm = true;
+    //   await usersRef.doc("" + uid).set({ _id: uid, username: username });
+    //   await roomsRef.add({ users: ["" + uid, this.currentUserId] });
+    //   this.fetchRooms();
+    // },
     async createRoom(uid, username) {
       this.disableForm = true;
-      await usersRef.doc("" + uid).set({ _id: uid, username: username });
-      await roomsRef.add({ users: ["" + uid, this.currentUserId] });
+      // await usersRef.add({ _id: uid + "",  username: username });
+      await usersRef.doc("" + uid).set({ _id: uid + "", username: username });
+
+      // await usersRef.doc("" + uid).update({ _id: uid + "" });
+      await roomsRef.add({
+        users: [uid + "", "" + this.currentUserId],
+        lastUpdated: new Date(),
+      });
+      this.addNewRoom = false;
+      this.addRoomUsername = "";
       this.fetchRooms();
     },
     report(messages) {
-
       this.$buefy.dialog.confirm({
         title: this.trans.get("utils.report"),
         message: this.trans.get("utils.chat_report_confirm"),
@@ -533,14 +769,15 @@ export default {
         iconPack: "fa",
         hasIcon: false,
         onConfirm: () => {
-            axios.post('/chat/send2admin', { messages: this.messages, room: this.selectedRoom}).then(response => {
-              Utils.toast(
-                this,
-                "User has been reported",
-                TYPE.SUCCESS
-              );
+          axios
+            .post("/chat/send2admin", {
+              messages: this.messages,
+              room: this.selectedRoom,
             })
-        }
+            .then((response) => {
+              Utils.toast(this, "User has been reported", TYPE.SUCCESS);
+            });
+        },
       });
     },
     inviteUser(roomId) {
@@ -570,11 +807,15 @@ export default {
         },
       });
     },
-    async addRoomUser(uid, username, roomId) {
-      await usersRef.doc("" + uid).set({ _id: uid, username: username });
+    async addRoomUser() {
+      this.disableForm = true;
+      const { id } = await usersRef.add({ username: this.invitedUsername });
+      await usersRef.doc(id).update({ _id: id });
       await roomsRef
-        .doc(roomId)
-        .update({ users: firebase.firestore.FieldValue.arrayUnion(uid + "") });
+        .doc(this.inviteRoomId)
+        .update({ users: firebase.firestore.FieldValue.arrayUnion(id) });
+      this.inviteRoomId = null;
+      this.invitedUsername = "";
       this.fetchRooms();
     },
     removeUser(roomId) {
@@ -584,6 +825,7 @@ export default {
         (room) => room.roomId === roomId
       ).users;
     },
+
     async deleteRoomUser() {
       this.disableForm = true;
       await roomsRef.doc(this.removeRoomId).update({
@@ -594,7 +836,14 @@ export default {
       this.fetchRooms();
     },
     async deleteRoom(roomId) {
-      const ref = this.messagesRef(roomId);
+      const room = this.rooms.find((r) => r.roomId === roomId);
+      if (
+        room.users.find((user) => user._id === "SGmFnBZB4xxMv9V4CVlW") ||
+        room.users.find((user) => user._id === "6jMsIXUrBHBj7o2cRlau")
+      ) {
+        return alert("Nope, for demo purposes you cannot delete this room");
+      }
+      const ref = messagesRef(roomId);
       ref.get().then((res) => {
         if (res.empty) return;
         res.docs.map((doc) => ref.doc(doc.id).delete());
@@ -619,58 +868,61 @@ export default {
 .window-container {
   width: 100%;
 }
-.chat-forms {
-  padding-bottom: 20px;
+.window-mobile {
   form {
-    padding-top: 20px;
+    padding: 0 10px 10px;
   }
-  input {
-    padding: 5px;
-    width: 180px;
-    height: 21px;
-    border-radius: 4px;
-    border: 1px solid #d2d6da;
-    outline: none;
-    font-size: 14px;
-    vertical-align: middle;
-    &::placeholder {
-      color: #9ca6af;
-    }
+}
+form {
+  padding-bottom: 20px;
+}
+input {
+  padding: 5px;
+  width: 140px;
+  height: 21px;
+  border-radius: 4px;
+  border: 1px solid #d2d6da;
+  outline: none;
+  font-size: 14px;
+  vertical-align: middle;
+  &::placeholder {
+    color: #9ca6af;
   }
-  button {
-    background: #1976d2;
-    color: #fff;
-    outline: none;
-    cursor: pointer;
-    border-radius: 4px;
-    padding: 8px 12px;
-    margin-left: 10px;
-    border: none;
-    font-size: 14px;
-    transition: 0.3s;
-    vertical-align: middle;
-    &:hover {
-      opacity: 0.8;
-    }
-    &:active {
-      opacity: 0.6;
-    }
-    &:disabled {
-      cursor: initial;
-      background: #c6c9cc;
-      opacity: 0.6;
-    }
+}
+button {
+  background: #1976d2;
+  color: #fff;
+  outline: none;
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 8px 12px;
+  margin-left: 10px;
+  border: none;
+  font-size: 14px;
+  transition: 0.3s;
+  vertical-align: middle;
+  &:hover {
+    opacity: 0.8;
   }
-  .button-cancel {
-    color: #a8aeb3;
-    background: none;
-    margin-left: 5px;
+  &:active {
+    opacity: 0.6;
   }
-  select {
-    vertical-align: middle;
-    height: 33px;
-    width: 120px;
-    font-size: 13px;
+  &:disabled {
+    cursor: initial;
+    background: #c6c9cc;
+    opacity: 0.6;
   }
+}
+.button-cancel {
+  color: #a8aeb3;
+  background: none;
+  margin-left: 5px;
+}
+select {
+  vertical-align: middle;
+  height: 33px;
+  width: 152px;
+  font-size: 13px;
+  margin: 0 !important;
 }
 </style>
