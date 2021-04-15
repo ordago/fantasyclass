@@ -104,13 +104,13 @@ export default {
   },
   mounted() {
     // TODO delete
-    roomsRef.get().then((rooms) => {
-      rooms.forEach((room) => {
-        if (!room.data().lastUpdated) {
-          roomsRef.doc(room.id).update({ lastUpdated: new Date() });
-        }
-      });
-    });
+    // roomsRef.get().then((rooms) => {
+    //   rooms.forEach((room) => {
+    //     if (!room.data().lastUpdated) {
+    //       roomsRef.doc(room.id).update({ lastUpdated: new Date() });
+    //     }
+    //   });
+    // });
     this.$toast(this.trans.get("utils.chat_warning"), {
       type: "warning",
       timeout: 3000,
