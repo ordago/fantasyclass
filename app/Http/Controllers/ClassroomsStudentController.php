@@ -499,11 +499,10 @@ class ClassroomsStudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('study', $class);
         $student = Functions::getCurrentStudent($class, []);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $to = Student::where('classroom_user_id', '=', request()->to)->firstOrFail();
         if ($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id) {
-            dump(request()->money . " > " . $student->gold);
-            dump(settings()->all());
             abort(403);
         }
         $fee = settings()->get('transfer_fee', 10);
