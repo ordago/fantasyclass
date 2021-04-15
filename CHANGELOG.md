@@ -1,5 +1,5 @@
 # Changelog
-## v1.47 Beta (XX/04/2021)
+## v1.47 Beta (15/04/2021)
 ### Added
 - Random assign to groups.
 

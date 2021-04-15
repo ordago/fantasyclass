@@ -103,6 +103,7 @@ export default {
     },
   },
   mounted() {
+    // TODO delete
     roomsRef.get().then((rooms) => {
       rooms.forEach((room) => {
         if (!room.data().lastUpdated) {
