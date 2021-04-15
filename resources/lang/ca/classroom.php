@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "all" => "Totes les classes",
     "add" => "Afegeix classe",
     "edit" => "Edita classe",
     "join" => "Unir-se a classe",

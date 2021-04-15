@@ -60,7 +60,7 @@
         @auth
         <nav class="navbar card-shadow-s is-sticky noprint" role="navigation" aria-label="main navigation" @yield('navbarhide')>
             <div class="navbar-brand">
-                <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
+                <a href="/classroom" v-tippy :content="trans.get('classroom.all')" class="is-flex align-items-center" style="text-decoration: none">
                     <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
                 </a>
                 @if(isset($class))

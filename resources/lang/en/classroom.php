@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "all" => "All classrooms",
     "add" => "Add classroom",
     "edit" => "Edit classroom",
     "join" => "Join classroom",
