@@ -1,4 +1,13 @@
 # Changelog
+## v1.47 Beta (XX/04/2021)
+### Added
+- Random assign to groups.
+
+### Changed
+- Literals translated.
+- Usability: clicking in the classroom name goes to students view.
+- Updated chat for new functionalities.
+
 ## v1.46 Beta (13/04/2021)
 ### Added
 - Notification when invited to a classroom.

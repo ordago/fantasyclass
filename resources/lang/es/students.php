@@ -91,6 +91,7 @@ return [
     'log_pet' => 'Mascota',
     'log_skill' => 'Resultado de una habilidad, tuya o de alguien.',
     'log_task' => 'Has realizado una tarea',
+    'log_volume' => 'Volumen excedido',
 
     'student_report' => 'Informe de estudiante',
 

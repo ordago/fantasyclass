@@ -15,4 +15,5 @@ return [
     'create' => 'Crear',
     'new_group' => 'Crea un nou grup',
     'edit_groups' => 'Edita els grups',
+    'random' => 'Assignació aleatòria',
 ];

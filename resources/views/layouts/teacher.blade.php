@@ -6,6 +6,14 @@
 </span>
 @endsection
 
+@section('mainLink')
+<a href="/classroom/{{ $class->code }}" class="is-flex align-items-center" style="text-decoration: none">
+    <label class="label-title px-2 cursor-pointer">
+        @yield('title','FantasyClass')
+    </label>
+</a>
+@endsection
+
 @section('notifications')
 <notifications :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '[]' }}"></notifications>
 @endsection
@@ -54,15 +62,15 @@
 
     <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
-             <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
+            <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
         </a>
 
         <div class="navbar-dropdown">
             <a href="/classroom/{{ $class->code }}/challenges" class="navbar-item">
-                 <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
+                <i class="fad fa-pen-fancy mr-2"></i> {{ __('menu.challenges') }}
             </a>
             <a href="/classroom/{{ $class->code }}/docmgr" class="navbar-item">
-                 <i class="fad fa-book mr-2"></i> {{ __('menu.documents') }}
+                <i class="fad fa-book mr-2"></i> {{ __('menu.documents') }}
             </a>
         </div>
     </div>

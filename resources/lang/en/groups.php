@@ -15,4 +15,6 @@ return [
     'create' => 'Create',
     'new_group' => 'Create new group',
     'edit_groups' => 'Edit groups',
+    'random' => 'Random assign',
+
 ];

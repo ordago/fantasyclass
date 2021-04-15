@@ -62,10 +62,16 @@
             <div class="navbar-brand">
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
+                </a>
+                @if(isset($class))
+                    @yield('mainLink')
+                @else
+                <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <label class="label-title px-2 cursor-pointer">
                         @yield('title','FantasyClass')
                     </label>
                 </a>
+                @endif
                 <div class="is-flex has-all-centered left-auto is-hidden-desktop">
 
                     @yield('notifications')

@@ -4,6 +4,13 @@
 <notifications code="{{ $class->code }}" :videochats="{{ $videochats ?? '[]' }}" :docs="{{ $docs ?? '[]' }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="student"></notifications>
 @endsection
 
+@section('mainLink')
+<a href="/classroom/show/{{ $class->code }}" class="is-flex align-items-center" style="text-decoration: none">
+    <label class="label-title px-2 cursor-pointer">
+        @yield('title','FantasyClass')
+    </label>
+</a>
+@endsection
 
 @section('title')
 <span style="display:initial" class="pointer" title="{{ $class->adventure_name }}">
