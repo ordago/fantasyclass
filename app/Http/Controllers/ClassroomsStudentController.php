@@ -503,7 +503,7 @@ class ClassroomsStudentController extends Controller
         $to = Student::where('classroom_user_id', '=', request()->to)->firstOrFail();
         if ($to->classroom->classroom_id != $class->id || request()->money > $student->gold || !settings()->get('allow_send_money', 0) || $to->id == $student->id) {
             dump(request()->money . " > " . $student->gold);
-            dump(settings()->get('allow_send_money', 0));
+            dump(settings()->all());
             abort(403);
         }
         $fee = settings()->get('transfer_fee', 10);
