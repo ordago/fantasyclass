@@ -1158,14 +1158,16 @@ export default {
         this.activeTab = 1;
       }
     }
-    const sendPostRequest = async () => {
-        axios
-          .get("/classroom/" + this.classroom.code + "/students/all")
-          .then((response) => {
-            this.students = response.data;
-          }); 
+    if(this.admin) {
+      const sendPostRequest = async () => {
+          axios
+            .get("/classroom/" + this.classroom.code + "/students/all")
+            .then((response) => {
+              this.students = response.data;
+            }); 
+      }
+      sendPostRequest();
     }
-    sendPostRequest();
 
   },
   data: function () {

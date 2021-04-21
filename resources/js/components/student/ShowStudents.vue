@@ -777,7 +777,8 @@ export default {
           if (students.length) {
             this.students.push(...students);
             $state.loaded();
-          } else {
+          } 
+          if(!students.length || students.length < this.max) {
             $state.complete();
           }
           this.page++;

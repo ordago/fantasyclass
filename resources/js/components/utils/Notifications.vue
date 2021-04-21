@@ -346,14 +346,15 @@ export default {
         return {};
       },
     },
+    pending: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
   mounted() {
-    if (this.code)
-      axios
-        .post("/classroom/" + this.code + "/students/pending")
-        .then((response) => {
-          this.cards = response.data;
-        });
+    this.cards = this.pending;
   },
   data: function () {
     return {

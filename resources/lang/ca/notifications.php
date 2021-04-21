@@ -10,6 +10,7 @@ return [
     |
     */
     
+    'notification' => 'Nova notificació',
     'new_comment' => 'Nou comentari',
     'comment' => 'Nou comentari',
     'mark_card' => 'Carta pendent',

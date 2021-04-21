@@ -17,6 +17,12 @@ return [
     'completion_teacher' => 'The teacher marks it as completed',
     'completion_student' => 'The student marks it as completed',
     'completion_both' => 'Both teacher and estudent should mark it as completed',
+    'completion_password' => 'Password is required to pass the challenge',
+    
+    'password' => 'Password',
+    'password_info' => 'Insert the password to pass the challenge',
+    'password_check' => 'Check',
+    'password_error' => 'Incorrect password :(',
     
     'empty' => 'Let\'s create some challenges!',
     'challenges_empty' => 'The adventure hasn\'t started yet...',

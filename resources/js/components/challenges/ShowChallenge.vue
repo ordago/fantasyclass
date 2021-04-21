@@ -116,7 +116,13 @@
                 />
               </small>
             </span>
-            <span v-if="challengeReactive.requirements && challengeReactive.requirements.length && !challengeReactive.incomplete">
+            <span
+              v-if="
+                challengeReactive.requirements &&
+                challengeReactive.requirements.length &&
+                !challengeReactive.incomplete
+              "
+            >
               <small
                 ><i
                   class="fad fa-tasks ml-2 p-1 colored has-background-dark has-text-light rounded"
@@ -402,11 +408,11 @@
                 (challengeReactive.completion == 2 ||
                   challengeReactive.completion == 1) &&
                 !checkCompletion &&
-                !full
-                && challengeReactive.type == 0
+                !full &&
+                challengeReactive.type == 0
               "
               class="button is-info"
-              @click="markCompleted(challenge)"
+              @click="markCompleted"
               :class="{ 'is-loading': isLoading }"
             >
               <span class="icon is-small">
@@ -414,6 +420,34 @@
               </span>
               <span>{{ trans.get("challenges.mark_title") }}</span>
             </button>
+            <div
+              v-if="
+                !admin &&
+                challengeReactive.completion == 3 &&
+                !checkCompletion &&
+                !full &&
+                challengeReactive.type == 0
+              "
+            >
+              <article class="message is-warning">
+                <div class="message-body">
+                  {{ trans.get('challenges.password_info') }}
+                </div>
+              </article>
+              <div class="field has-addons">
+                <div class="control">
+                  <input
+                    class="input"
+                    type="text"
+                    v-model="password"
+                    :placeholder="trans.get('challenges.password')"
+                  />
+                </div>
+                <div class="control" @click="checkPassword(challenge)">
+                  <a class="button is-info" :disabled="!password.length"> {{ trans.get('challenges.password_check') }} </a>
+                </div>
+              </div>
+            </div>
             <button
               v-if="admin"
               class="button is-outlined is-link"
@@ -439,7 +473,10 @@
               class="button is-success"
               v-tippy
               :content="trans.get('challenges.mark_tooltip')"
-              @click="$parent.isLoading=true;$parent.showModal(challenge)"
+              @click="
+                $parent.isLoading = true;
+                $parent.showModal(challenge);
+              "
               :class="{ 'is-loading': $parent.isLoading }"
             >
               <span class="icon is-small">
@@ -608,6 +645,7 @@ export default {
   data: function () {
     return {
       rating: "",
+      password: "",
       challengeReactive: null,
       allowComment: false,
       maxComments: 3,
@@ -767,12 +805,49 @@ export default {
         });
     },
     datetime(date) {
-      return Utils.getDate(date, false)
+      return Utils.getDate(date, false);
     },
     timeLeft(date) {
       return Utils.getDateFrom(date, this.trans.locale, false);
     },
-    markCompleted(challenge) {
+    checkPassword() {
+      if(this.password)
+      axios
+        .post("/classroom/" + this.code + "/student/passwordChallenge", {
+          challenge: this.challengeReactive.id,
+          password: this.password,
+        })
+        .then((response) => {
+          if (
+            this.$parent.$parent.$parent.mutableChallenges.length <
+            response.data.challenges.length
+          ) {
+            this.$toast(this.trans.get("challenges.new_challenges"), {
+              type: "info",
+            });
+          }
+          this.$parent.$parent.$parent.mutableChallenges =
+            response.data.challenges;
+          if (response.data.success == true) {
+            confetti({
+              particleCount: 200,
+              spread: 100,
+              origin: { y: 1.0 },
+            });
+            this.challengeReactive.count++;
+            this.$parent.$parent.$parent.student.hp = response.data.hp;
+            this.$parent.$parent.$parent.student.xp = response.data.xp;
+            this.$parent.$parent.$parent.student.gold = response.data.gold;
+            this.$parent.$parent.$parent.student.items = response.data.items;
+            this.$parent.$parent.$parent.forceReload++;
+          } else {
+            this.$toast(this.trans.get("challenges.password_error"), {
+              type: "error",
+            });
+          }
+        });
+    },
+    markCompleted() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("challenges.mark_title"),
         message: this.trans.get("challenges.mark_text"),
@@ -807,7 +882,8 @@ export default {
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
                 this.$parent.$parent.$parent.student.xp = response.data.xp;
                 this.$parent.$parent.$parent.student.gold = response.data.gold;
-                this.$parent.$parent.$parent.student.items = response.data.items;
+                this.$parent.$parent.$parent.student.items =
+                  response.data.items;
                 this.$parent.$parent.$parent.forceReload++;
               }
             });
@@ -816,7 +892,6 @@ export default {
     },
   },
   computed: {
-    
     orderedComments: function () {
       return _.orderBy(this.challenge.comments, "created_at", "desc").splice(
         0,
@@ -824,7 +899,10 @@ export default {
       );
     },
     checkCompletion() {
-      if (this.challengeReactive.completion == 1)
+      if (
+        this.challengeReactive.completion == 1 ||
+        this.challengeReactive.completion == 3
+      )
         return this.challengeReactive.count == 1;
       if (this.challengeReactive.completion == 2)
         return this.challengeReactive.count == 2;
@@ -848,6 +926,7 @@ export default {
         switch (this.challengeReactive.completion) {
           case 0:
           case 1:
+          case 3:
             return this.challengeReactive.count == 1
               ? "has-background-success-light"
               : "has-background-danger-light";

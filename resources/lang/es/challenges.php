@@ -17,6 +17,12 @@ return [
     'completion_teacher' => 'El/la profe marca el desafío como completado',
     'completion_student' => 'El/la estudiante marca el desafío como completado',
     'completion_both' => 'Tanto profe como estudiantes tienen que marcar el desafío como completado',
+    'completion_password' => 'Requiere contraseña para marcar como superado',
+    
+    'password' => 'Contraseña',
+    'password_info' => 'Introduce la contraseña para superar el reto',
+    'password_check' => 'Comprueba',
+    'password_error' => 'Contraseña incorrecta :(',
     
     'empty' => '¡Creemos unos desafíos!',
     'challenges_empty' => 'La aventura aún no ha empezado...',

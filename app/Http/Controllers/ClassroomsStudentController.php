@@ -563,6 +563,62 @@ class ClassroomsStudentController extends Controller
         return ['gold' => request()->money, 'received' => $gold, 'steal' => $steal];
     }
 
+    public function passwordChallenge($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
+
+        $data = request()->validate([
+            'challenge' => ['numeric', 'required'],
+            'password' => ['string', 'required'],
+        ]);
+
+        $update = false;
+
+        $challenge = Challenge::findOrFail($data['challenge']);
+        $challengeStudent = $student->challenges->where('id', $challenge->id)->first();
+        $update = false;
+        if ($challenge->completion == 3 && $data['password'] == $challenge->password) {
+            if (!$challengeStudent) {
+                $student->challenges()->attach($challenge->id);
+                $update = true;
+            }
+        } else {
+            return [
+                'success' => false,
+                'hp' => $student->hp,
+                'xp' => $student->xp,
+                'gold' => $student->gold,
+                'challenges' => $this::getChallenges($student->fresh(), $class),
+            ];
+        }
+
+        if ($update) {
+            $cards = [];
+            if ($challenge->auto_assign == 1) {
+                for ($i = 0; $i < $challenge->cards; $i++) {
+                    array_push($cards, CardsController::getRandomCard($class->code));
+                }
+            }
+            $student->assignChallenge($challenge, 1, $cards);
+        }
+
+        $from['title'] = $challenge->title;
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = Carbon::now();
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.challenge_password", __("notifications.challenge_password") . $from['title'], $from, "challenge", "challenges");
+
+        return [
+            'success' => true,
+            'hp' => $student->hp,
+            'xp' => $student->xp,
+            'gold' => $student->gold,
+            'challenges' => $this::getChallenges($student->fresh(), $class),
+        ];
+    }
     public function markChallenge($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

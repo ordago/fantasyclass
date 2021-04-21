@@ -9,7 +9,7 @@ return [
     |
     |
     */
-    
+    'notification' => 'Nueva notificación',
     'new_comment' => 'Nuevo comentario',
     'comment' => 'Nuevo comentario',
     'mark_card' => 'Carta pendiente',

@@ -91,7 +91,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/students/report', 'StudentController@getStudentsReport');
         
         Route::post('/{code}/students/get', 'ClassroomsController@getStudentPage');
-        Route::post('/{code}/students/pending', 'ClassroomsController@pendingCards');
+        // Route::post('/{code}/students/pending', 'ClassroomsController@pendingCards');
         Route::get('/{code}/students/all', 'ClassroomsController@getAllStudents');
 
         // Student View
@@ -111,6 +111,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/buyequipment', 'ClassroomsStudentController@buyEquipment');
         Route::post('/{code}/student/assignequipment', 'StudentController@assignEquipment');
         Route::post('/{code}/student/markchallenge', 'ClassroomsStudentController@markChallenge');
+        Route::post('/{code}/student/passwordChallenge', 'ClassroomsStudentController@passwordChallenge');
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
         Route::post('/{code}/send/money', 'ClassroomsStudentController@sendMoney');

@@ -1,9 +1,11 @@
 # Changelog
-## v1.48 Beta (XX/04/2021)
+## v1.48 Beta (21/04/2021)
+- Option to pass challenge by password.
 
 ### Changed
 - Prepared to use in MOOC.
 - Bug fixes and a lot of new created.
+- Some optimizations.
 
 ## v1.47 Beta (15/04/2021)
 ### Added

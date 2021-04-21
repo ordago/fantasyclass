@@ -1,6 +1,6 @@
 <template>
   <div>
-    <button class="button is-info" @click="isModalActive = true">
+    <button class="button is-info" @click="loadIcons">
       {{ trans.get("students.select_image") }}
     </button>
 
@@ -20,7 +20,11 @@
           <div v-if="custom && custom.length" class="my-2">
             <span v-for="(image, index) in custom" :key="index">
               <img
-                @click="updateAvatar('/storage/avatars/' + image.uuid + '/' + image.file_name)"
+                @click="
+                  updateAvatar(
+                    '/storage/avatars/' + image.uuid + '/' + image.file_name
+                  )
+                "
                 :src="'/storage/avatars/' + image.uuid + '/' + image.file_name"
                 width="81px"
                 class="m-2 cursor-pointer"
@@ -30,7 +34,7 @@
           <div class="mb-3" v-if="custom && custom.length && licenses != ''">
             {{ licenses }}
           </div>
-          <hr v-if="categories && categories.length">
+          <hr v-if="categories && categories.length" />
           <div class="columns is-multiline" v-if="images">
             <img
               width="75px"
@@ -90,29 +94,31 @@
 <script>
 export default {
   props: ["code", "admin", "student"],
-  created() {
-    axios
-      .get("/classroom/" + this.code + "/utils/icon-packs")
-      .then((response) => {
-        this.custom = response.data[0];
-        this.categories = response.data[1];
-        this.licenses = response.data[2];
-      });
-  },
+
+  created() {},
   data() {
     return {
       custom: null,
       categories: null,
       images: null,
       isModalActive: false,
-      licenses: '',
-
+      licenses: "",
     };
   },
 
   mounted() {},
 
   methods: {
+    loadIcons() {
+      axios
+        .get("/classroom/" + this.code + "/utils/icon-packs")
+        .then((response) => {
+          this.custom = response.data[0];
+          this.categories = response.data[1];
+          this.licenses = response.data[2];
+          this.isModalActive = true;
+        });
+    },
     updateAvatar: function (image) {
       let formData = new FormData();
       formData.append("url", image);

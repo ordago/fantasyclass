@@ -17,6 +17,12 @@ return [
     'completion_teacher' => 'El/la profe marca el repte com a superat',
     'completion_student' => 'El/la estudiant marca el repte com a superat',
     'completion_both' => 'Tant profe com estudiants han de marcar el repte com a superat',
+    'completion_password' => 'Requereix contrasenya per marcar com a superat',
+    
+    'password' => 'Contrasenya',
+    'password_info' => 'Introdueix la contrasenya per superar el repte',
+    'password_check' => 'Comprova',
+    'password_error' => 'Contrasenya incorrecta :(',
     
     'empty' => 'Creem uns reptes!',
     'challenges_empty' => 'L\'aventura encara no ha començat...',

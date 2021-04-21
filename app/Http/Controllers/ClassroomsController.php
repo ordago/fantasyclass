@@ -519,6 +519,8 @@ class ClassroomsController extends Controller
             $impostor = Student::find($impostor);
         }
 
-        return view('classrooms.show', compact('class', 'settings', 'impostor', 'notifications', 'groups', 'chat', 'showChat'));
+        $pending = $this->pendingCards($code);
+
+        return view('classrooms.show', compact('class', 'pending', 'settings', 'impostor', 'notifications', 'groups', 'chat', 'showChat'));
     }
 }

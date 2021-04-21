@@ -9,22 +9,22 @@
       v-bind:key="student.id"
     >
       <show-student
-        :show-skills="settings.skill_enabled == 1 ? true: false"
+        :show-skills="settings.skill_enabled == 1 ? true : false"
         :character-theme="characterTheme"
         :student="student"
         :theme="theme"
       ></show-student>
     </div>
-       <infinite-loading
-        ref="infiniteComponent"
-        :distance="100"
-        spinner="waveDots"
-        force-use-infinite-wrapper=".infinite"
-        :on-infinite="infiniteHandler"
-      >
-        <div slot="no-more"></div>
-        <div slot="no-results"></div>
-      </infinite-loading>
+    <infinite-loading
+      ref="infiniteComponent"
+      :distance="100"
+      spinner="waveDots"
+      force-use-infinite-wrapper=".infinite"
+      :on-infinite="infiniteHandler"
+    >
+      <div slot="no-more"></div>
+      <div slot="no-results"></div>
+    </infinite-loading>
 
     <b-sidebar
       type="is-light"
@@ -68,10 +68,17 @@
               width="81px"
               class="pet-selector mt-2"
               v-tippy
-              :content="'<strong class=\'has-text-light\'>' + monster.name + '</strong> <i class=\'fas fa-fist-raised colored\'></i>: ' + monster.reward_xp + ', <i class=\'fas fa-coins colored\'></i>: ' + monster.reward_gold"
+              :content="
+                '<strong class=\'has-text-light\'>' +
+                monster.name +
+                '</strong> <i class=\'fas fa-fist-raised colored\'></i>: ' +
+                monster.reward_xp +
+                ', <i class=\'fas fa-coins colored\'></i>: ' +
+                monster.reward_gold
+              "
               :class="{
-                  'pet-battle': monster.hp > 0,
-                  'pet-dead': monster.hp == 0,
+                'pet-battle': monster.hp > 0,
+                'pet-dead': monster.hp == 0,
               }"
             />
           </div>
@@ -110,9 +117,12 @@ export default {
           if (students.length) {
             this.students.push(...students);
             $state.loaded();
-          } else {
+          }
+
+          if (!students.length || students.length < this.max) {
             $state.complete();
           }
+
           this.page++;
         });
     },

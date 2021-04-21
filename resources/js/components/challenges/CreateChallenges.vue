@@ -52,15 +52,6 @@
           />
         </div>
       </div>
-      <!-- <b-field label="Password">
-        <b-input
-          type="password"
-          icon-pack="fas"
-          placeholder="Don't abuse of this :D"
-          v-model="challenge.password"
-          password-reveal
-        ></b-input>
-      </b-field>-->
       <b-field :label="trans.get('challenges.avaliability')"> </b-field>
       <div class="w-100 buttons mb-2">
         <span v-tippy :content="trans.get('challenges.tz')">
@@ -357,12 +348,25 @@
                   <option value="1">
                     {{ trans.get("challenges.completion_student") }}
                   </option>
+                  <option value="3">
+                    {{ trans.get("challenges.completion_password") }}
+                  </option>
                   <!-- <option value="2">{{ trans.get('challenges.completion_both') }}</option> -->
                 </select>
               </div>
             </div>
           </div>
         </div>
+        <b-field :label="trans.get('challenges.password')" class="pl-3 mt-2" v-if="challenge.completion == 3">
+          <b-input
+            type="password"
+            icon-pack="fas"
+            placeholder=""
+            required
+            v-model="challenge.password"
+            password-reveal
+          ></b-input>
+        </b-field>
         <div class="field mt-3">
           <b-switch
             type="is-info"
