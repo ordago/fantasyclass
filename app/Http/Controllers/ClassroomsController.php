@@ -441,11 +441,13 @@ class ClassroomsController extends Controller
         $pending = collect();
 
         $allStudents = DB::table('students')
-        ->leftJoin('classroom_user', function ($join) use ($class) {
+        ->join('classroom_user', function ($join) use ($class) {
             $join->on('students.classroom_user_id', '=', 'classroom_user.id')
-                ->where('classroom_user.id', '=', $class->id);
+                ->where('classroom_user.classroom_id', '=', $class->id);
         })
         ->pluck('students.id');
+
+
         $pendingCards = DB::table('card_student')
         ->join('cards', function ($join) {
             $join->on('card_student.card_id', '=', 'cards.id')
@@ -453,7 +455,7 @@ class ClassroomsController extends Controller
         })
         ->join('students', function ($join) use($allStudents) {
             $join->on('students.id', '=', 'card_student.student_id')
-            ->whereIn('students.classroom_user_id', $allStudents);
+            ->whereIn('students.id', $allStudents);
         })
         ->selectRaw('cards.*, card_student.*, students.name, students.id')
         ->get();
