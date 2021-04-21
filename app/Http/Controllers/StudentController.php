@@ -134,6 +134,15 @@ class StudentController extends Controller
             return $error;
     }
 
+    public function getStudent($id)
+    {
+        $student = Student::where('id', '=', $id)->with('equipment', 'skills', 'character', 'groups', 'pets', 'classroom')->first();
+        $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+        $student->append('numcards');
+        return json_encode($student);
+    }
+
     public function generateUsername($name)
     {
         $generator = new Generator();
@@ -209,7 +218,7 @@ class StudentController extends Controller
         if ($student->classroom->classroom->code != $code)
             abort(404);
         $admin = true;
-        $class = Classroom::where('code', $code)->with('pets', 'badges', 'students', 'theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('pets', 'badges', 'theme', 'characterTheme.characters')->firstOrFail();
         $this->authorize('view', $class);
 
         $items = DB::table('students')
@@ -291,10 +300,12 @@ class StudentController extends Controller
         $students = [];
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
-        foreach ($class->students as $student) {
-            array_push($students, StudentController::getIndividualReport($student->id, $class));
-        }
-        return view('students.reportclass', compact('students', 'class'));
+        if($class->students->count() < env('MIX_MAX_STUDENTS')) {
+            foreach ($class->students as $student) {
+                array_push($students, StudentController::getIndividualReport($student->id, $class));
+            }
+            return view('students.reportclass', compact('students', 'class'));
+        } else abort(403, 'Exceded number of students');
 
     }
 

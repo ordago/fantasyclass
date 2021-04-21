@@ -10,6 +10,23 @@
         class="column px-0 is-12-mobile is-flex is-center-vertically"
         style="flex-flow: wrap"
       >
+        <span v-if="allStudents.length" class="is-flex has-all-centered">
+          <a
+            class="has-text-light p-2 has-background-link rounded"
+            v-tippy
+            :content="trans.get('users_groups.add_students')"
+            :href="'/classroom/' + classroom.code + '/students/add'"
+          >
+            <i class="fad fa-user" style="font-size: 1.75em"></i>
+            <i
+              class="fas fa-plus"
+              style="font-size: 1em; position: relative; top: 4px; left: -3px"
+            ></i>
+            <!-- <span class="pl-1">{{
+              trans.get("users_groups.add_students")
+            }}</span> -->
+          </a>
+        </span>
         <a
           class="link outer_glow has-text-dark pr-2"
           v-tippy
@@ -63,7 +80,7 @@
             <a
               class="dropdown-item"
               @click="getRandomCard"
-              v-if="students.length || classroom.grouping[0].groups.length"
+              v-if="allStudents.length || classroom.grouping[0].groups.length"
             >
               <i class="fak fa-deck mr-2"></i>
               {{ trans.get("utils.random") }}: {{ trans.get("menu.card") }}
@@ -118,13 +135,9 @@
           <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
-              :href="
-                '/classroom/' +
-                classroom.code +
-                '/students/report'
-              "
+              :href="'/classroom/' + classroom.code + '/students/report'"
               target="_blank"
-              v-if="students.length"
+              v-if="allStudents.length"
             >
               <i class="fas fa-file mr-2"></i>
               {{ trans.get("utils.students_report") }}
@@ -137,7 +150,7 @@
                 '/utils/exportConfidentialDataStudent'
               "
               target="_blank"
-              v-if="students.length"
+              v-if="allStudents.length"
             >
               <i class="fas fa-file-excel mr-2"></i>
               {{ trans.get("utils.download_confidential_data_students") }}
@@ -169,7 +182,7 @@
         </a>
         <a
           v-tippy
-          v-if="students && students.length"
+          v-if="allStudents && allStudents.length"
           :content="trans.get('menu.send_message_all')"
           @click="sendMessage(1)"
           class="link outer_glow px-1 cursor-pointer has-text-dark"
@@ -178,7 +191,7 @@
         </a>
         <a
           v-tippy
-          v-if="students && students.length"
+          v-if="allStudents && allStudents.length"
           :content="'Impostor'"
           @click="isImpostorActive = true"
           class="link outer_glow px-1 cursor-pointer has-text-danger"
@@ -196,7 +209,7 @@
       </div>
       <div
         class="column is-narrow has-text-right is-center-vertically is-flex"
-        v-if="students.length > 0"
+        v-if="allStudents.length > 0"
       >
         <span class="p-2 py-3 mr-2 has-background-white border rounded">
           <span>
@@ -283,7 +296,10 @@
       </div>
     </div>
 
-    <div class="panel-block mt-1 mb-0 px-1" v-if="students.length && view != 1">
+    <div
+      class="panel-block mt-1 mb-0 px-1"
+      v-if="allStudents.length && view != 1"
+    >
       <b-autocomplete
         v-model="search"
         :placeholder="trans.get('students.search')"
@@ -292,17 +308,16 @@
         field="name"
         icon-pack="fas"
         icon="search"
+        @input="searchStudents"
+        :loading="loading"
         :clearable="false"
       >
       </b-autocomplete>
     </div>
+    <!-- @typing="getAsyncData" -->
 
     <div class="column px-1" v-if="view == 2">
-      <article
-        class="media"
-        v-for="student in orderedStudents"
-        :key="student.id"
-      >
+      <article class="media" v-for="student in students" :key="student.id">
         <figure class="media-left">
           <p class="image is-64x64">
             <img class="rounded" :src="student.avatar" />
@@ -359,52 +374,75 @@
                           <span class="icon is-small"><i class="fas fa-heart"></i></span>
                         </a>
                       </div>
-                    </nav> -->
+                    </nav>-->
         </div>
         <div class="media-right"></div>
       </article>
+      <infinite-loading
+        ref="infiniteComponent"
+        :distance="100"
+        spinner="waveDots"
+        force-use-infinite-wrapper=".infinite"
+        :on-infinite="infiniteHandler"
+      >
+        <div slot="no-more"></div>
+        <div slot="no-results"></div>
+      </infinite-loading>
     </div>
 
-    <div class="column px-1" v-else-if="view == 1">
+    <div class="column px-1" v-if="view == 1">
       <show-group-view
         :behaviours="mainBehavioursJson"
         :behaviourshidden="otherBehavioursJson"
         :groups="groups"
+        v-if="allStudents && allStudents.length < max"
         :classroom="classroom"
         :students="students"
       ></show-group-view>
+      <div v-else>Too many students to show group view</div>
     </div>
 
-    <div class="columns is-multiline is-variable is-1 my-2" v-else>
+    <div class="columns is-multiline is-variable is-1 my-2" v-if="view == 0">
       <div
         class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
-        v-for="student in orderedStudents"
+        v-for="student in students"
         v-bind:key="student.id"
+        ref="wrapper"
       >
         <show-student-teacher
-          :show-skills="settings.skill_enabled == 1 ? true: false"
+          :show-skills="settings.skill_enabled == 1 ? true : false"
           :behaviours="mainBehavioursJson"
           :behaviourshidden="otherBehavioursJson"
           :student="student"
           :classroom="classroom"
         ></show-student-teacher>
       </div>
-
-      <div
-        class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+      <infinite-loading
+        ref="infiniteComponent"
+        :distance="100"
+        spinner="waveDots"
+        force-use-infinite-wrapper=".infinite"
+        :on-infinite="infiniteHandler"
       >
-        <div
-          class="box card-shadow-s is-flex has-background-link has-all-centered h-100"
-        >
-          <a
-            :href="'/classroom/' + classroom.code + '/students/add'"
-            style="color: white"
+        <div slot="no-more"></div>
+        <div slot="no-results">
+          <div
+            class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
           >
-            <img src="/img/new_std.svg" class="ml-1" />
-            <strong>{{ trans.get("users_groups.add_students") }}</strong>
-          </a>
+            <div
+              class="box card-shadow-s is-flex has-background-link has-all-centered h-100"
+            >
+              <a
+                :href="'/classroom/' + classroom.code + '/students/add'"
+                style="color: white"
+              >
+                <img src="/img/new_std.svg" class="ml-1" />
+                <strong>{{ trans.get("users_groups.add_students") }}</strong>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      </infinite-loading>
     </div>
 
     <!-- Modals -->
@@ -438,7 +476,7 @@
       class="has-text-centered overflow-show"
     >
       <show-student-teacher
-        :show-skills="settings.skill_enabled == 1 ? true: false"
+        :show-skills="settings.skill_enabled == 1 ? true : false"
         :behaviours="mainBehavioursJson"
         :behaviourshidden="otherBehavioursJson"
         :character-theme="classroom.character_theme"
@@ -450,6 +488,7 @@
         class="button is-link m-2"
         v-if="shuffledStudents && shuffledStudents.length"
         @click="uppdateCurrentStudent"
+        :class="{ 'is-loading': isLoading }"
       >
         <i class="fad fa-random mr-3"></i>
         {{ trans.get("utils.random") }}
@@ -554,7 +593,7 @@
                     <option value="0">Student</option>
                     <option
                       :value="student.id"
-                      v-for="student in students"
+                      v-for="student in allStudents"
                       :key="student.id"
                     >
                       {{ student.name }}
@@ -638,7 +677,7 @@
           <p class="modal-card-title">{{ trans.get("utils.fortune") }}</p>
         </header>
         <section class="modal-card-body is-flex has-all-centered">
-          <wheel :students="students"></wheel>
+          <wheel :students="allStudents"></wheel>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="refresh">
@@ -648,9 +687,15 @@
       </div>
     </b-modal>
     <b-modal :active.sync="isMassiveModalActive" has-modal-card full-screen>
-      <massive-actions :classroom="classroom"></massive-actions>
+      <massive-actions :students="allStudents" :classroom="classroom"></massive-actions>
     </b-modal>
-    <Impostor v-if="isImpostorActive" :current="impostor" :code="classroom.code" :students="students"> </Impostor>
+    <Impostor
+      v-if="isImpostorActive"
+      :current="impostor"
+      :code="classroom.code"
+      :students="allStudents"
+    >
+    </Impostor>
     <Videochat v-if="isVideoChatActive" :code="classroom.code"> </Videochat>
   </div>
 </template>
@@ -659,9 +704,10 @@
 import confetti from "canvas-confetti";
 import Impostor from "../utils/Impostor.vue";
 import Videochat from "../utils/Videochat.vue";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  props: ["students", "classroom", "groups", "impostor", "settings"],
+  props: ["classroom", "groups", "impostor", "settings"],
   created() {
     let view = this.$cookies.get("view");
     if (view) {
@@ -670,14 +716,22 @@ export default {
     }
   },
   mounted() {
+    axios
+      .get("/classroom/" + this.classroom.code + "/students/all")
+      .then((response) => {
+        this.allStudents = response.data;
+      });
     this.mainBehavioursJson = this.orderedBehaviours.slice(0, this.numItems);
     this.otherBehavioursJson = this.orderedBehaviours.slice(this.numItems);
     this.sortKey = $cookies.get("order") ?? "name";
   },
+
   data: function () {
     return {
+      students: [],
+      allStudents: [],
       view: "0",
-      search: "",
+      search: null,
       mainBehavioursJson: [],
       otherBehavioursJson: [],
       sortKey: "",
@@ -688,6 +742,7 @@ export default {
       isVideoChatActive: false,
       isQrModalActive: false,
       isRandomStudentActive: false,
+      isLoading: false,
       isRandomGroupActive: false,
       isCardModalActive: false,
       isCountDownModalActive: false,
@@ -704,9 +759,30 @@ export default {
       studentSelected: 0,
       groupSelected: 0,
       event: null,
+      page: 0,
+      loading: false,
+      firstLoad: true,
+      max: process.env.MIX_MAX_STUDENTS,
     };
   },
   methods: {
+    infiniteHandler($state) {
+      axios
+        .post("/classroom/" + this.classroom.code + "/students/get", {
+          page: this.page,
+          order: this.sortKey,
+        })
+        .then((response) => {
+          let students = response.data.students;
+          if (students.length) {
+            this.students.push(...students);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+          this.page++;
+        });
+    },
     sendMessage(type, id = null) {
       this.$buefy.dialog.prompt({
         message: this.trans.get("students.send_message"),
@@ -828,13 +904,18 @@ export default {
       this.dice = true;
     },
     uppdateCurrentStudent() {
-      this.currentStudent = this.shuffledStudents.shift();
-      if (this.currentStudent.hidden == 1) this.uppdateCurrentStudent();
+      this.isLoading = true;
+      let idRandom = this.shuffledStudents.shift().id;
+      axios.get("/classroom/student/" + idRandom + "/get/").then((response) => {
+        this.currentStudent = response.data;
+        if (this.currentStudent.hidden == 1) this.uppdateCurrentStudent();
+        this.isRandomStudentActive = true;
+        this.isLoading = false;
+      });
     },
     randomStudents() {
-      this.shuffledStudents = _.shuffle(this.students);
+      this.shuffledStudents = _.shuffle(this.allStudents);
       this.uppdateCurrentStudent();
-      this.isRandomStudentActive = true;
     },
 
     randomGroups() {
@@ -861,8 +942,13 @@ export default {
       this.isQrModalActive = true;
     },
     orderBy: function (sorKey) {
-      this.$cookies.set("order", sorKey, Infinity);
+      this.students = [];
+      this.page = 0;
       this.sortKey = sorKey;
+      this.$nextTick(() => {
+        this.$refs.infiniteComponent.stateChanger.reset();
+      });
+      this.$cookies.set("order", sorKey, Infinity);
     },
     updateSlice() {
       this.numItems--;
@@ -874,6 +960,22 @@ export default {
         this.numItems
       );
     },
+    typing() {
+      console.log("typing");
+    },
+    searchStudents() {
+      this.loading = true;
+      axios
+        .post("/classroom/" + this.classroom.code + "/students/get", {
+          page: 0,
+          order: this.sortKey,
+          search: this.search.toLowerCase(),
+        })
+        .then((response) => {
+          this.students = response.data.students;
+          this.loading = false;
+        });
+    },
     changeView: function () {
       this.viewGrid = (this.viewGrid + 1) % 3;
       this.$cookies.set("viewGrid", this.viewGrid, Infinity);
@@ -882,38 +984,51 @@ export default {
   components: {
     Impostor,
     Videochat,
+    InfiniteLoading,
   },
   computed: {
     filteredDataObj() {
-      return this.students.filter((option) => {
-        return (
-          option.name
-            .toString()
-            .toLowerCase()
-            .indexOf(this.search.toLowerCase()) >= 0
-        );
-      });
+      // console.log(this.firstLoad)
+      // if(!this.firstLoad) {
+      if (this.search !== null) {
+        // this.loading = true;
+        // axios
+        //   .post("/classroom/" + this.classroom.code + "/students/get", {
+        //     page: 0,
+        //     order: this.sortKey,
+        //     search: this.search.toLowerCase(),
+        //   })
+        //   .then((response) => {
+        //     this.students = response.data.students;
+        //     this.loading = false;
+        //   });
+      }
     },
     orderedBehaviours: function () {
       return _.orderBy(this.classroom.behaviours, "count_number", "desc");
     },
-    orderedStudents: function () {
-      let order = "desc";
-      if (this.sortKey == "name") order = "asc";
-      return _.orderBy(
-        _.orderBy(
-          this.students.filter((student) => {
-            return student.name
-              .toLowerCase()
-              .includes(this.search.toLowerCase());
-          }),
-          this.sortKey,
-          order
-        ),
-        "hidden",
-        "asc"
-      );
-    },
+    // orderedStudents: function () {
+    //   let order = "desc";
+    //   if (this.sortKey == "name") order = "asc";
+    //   return _.orderBy(
+    //     _.orderBy(
+    //       this.students.filter((student) => {
+    //         return student.name
+    //           .toLowerCase()
+    //           .includes(this.search.toLowerCase());
+    //       }),
+    //       this.sortKey,
+    //       order
+    //     ),
+    //     "hidden",
+    //     "asc"
+    //   );
+    // },
   },
 };
 </script>
+<style>
+.infinite-loading-container {
+  width: 100%;
+}
+</style>

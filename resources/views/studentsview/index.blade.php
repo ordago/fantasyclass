@@ -1,7 +1,7 @@
 @extends('layouts.student')
 
 @section('content')
-       <show-students-student :settings="{{ json_encode($settings) }}" :rating="{{ $rating }}" :monsters="{{ $monsters }}" :character-theme="{{ $class->character_theme }}" :students="{{ json_encode($students) }}" theme="{{ $class->background }}"></show-students-student>
+       <show-students-student code="{{ $class->code }}" :settings="{{ json_encode($settings) }}" :rating="{{ $rating }}" :monsters="{{ $monsters }}" :character-theme="{{ $class->character_theme }}" theme="{{ $class->background }}"></show-students-student>
 @endsection
 
 @push('scriptchat')

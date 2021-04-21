@@ -15,7 +15,7 @@
 @endsection
 
 @section('notifications')
-<notifications :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '[]' }}"></notifications>
+<notifications code="{{ $class->code }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '[]' }}"></notifications>
 @endsection
 
 @section('menu')

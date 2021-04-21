@@ -6,6 +6,9 @@
     .tabs {
         display: none;
     }
+    #app, body, html {
+        overflow-y: visible;
+    }
 }
 
 /* PWA */

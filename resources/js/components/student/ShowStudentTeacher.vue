@@ -29,7 +29,17 @@
               <i class="fal fa-eye" style="width: 20px"></i>
               {{ trans.get("students.student_view") }}
             </a>
-            <a class="dropdown-item" target="_blank" :href="'/classroom/' + classroom.code + '/student/' + student.id + '/report'">
+            <a
+              class="dropdown-item"
+              target="_blank"
+              :href="
+                '/classroom/' +
+                classroom.code +
+                '/student/' +
+                student.id +
+                '/report'
+              "
+            >
               <i class="fal fa-file" style="width: 20px"></i>
               {{ trans.get("students.student_report") }}
             </a>
@@ -397,7 +407,6 @@ export default {
     };
   },
   methods: {
- 
     // getReport(id) {
     //   axios
     //     .post("/classroom/" + this.classroom.code + "/student/report", {
@@ -432,16 +441,13 @@ export default {
       let student;
 
       axios.post("/classroom/students/update", options).then((response) => {
+        if (this.random) {
+          student = this.$parent.$parent.currentStudent;
+        } else student = this.$parent.students.find((el) => el.id === id);
         if (prop == "xp") {
-          if (this.random)
-            student = this.$parent.$parent.students.find((el) => el.id === id);
-          else student = this.$parent.students.find((el) => el.id === id);
           student.xp = response.data.xp;
           student.level = response.data.level;
         } else if (prop == "gold") {
-          if (this.random)
-            student = this.$parent.$parent.students.find((el) => el.id === id);
-          else student = this.$parent.students.find((el) => el.id === id);
           student.gold = response.data;
         }
         this.custom = 0;
@@ -454,8 +460,7 @@ export default {
       let options = { id: id, behaviour: behaviour };
       let student;
       axios.post("/classroom/student/behaviour", options).then((response) => {
-        if (this.random)
-          student = this.$parent.$parent.students.find((el) => el.id === id);
+        if (this.random) student = this.$parent.$parent.currentStudent;
         else student = this.$parent.students.find((el) => el.id === id);
         if (response.data.hp == "protect") {
           this.$toast(this.trans.get("skills.protect"));
@@ -480,5 +485,4 @@ export default {
 };
 </script>
 <style>
-
-  </style>
+</style>

@@ -16,7 +16,7 @@
         ></show-character>
         <div class="card-content">
           <div
-            class="is-flex is-flex-direction-row has-text-center mb-2 "
+            class="is-flex is-flex-direction-row has-text-center mb-2"
             style="justify-content: center; margin-top: -20px"
             v-if="settings.skill_enabled == 1 || admin"
           >
@@ -807,7 +807,6 @@
             :id="student.id"
           >
           </show-data>
-          
         </b-tab-item>
         <b-tab-item
           :label="trans.get('students.evaluation')"
@@ -1009,7 +1008,7 @@
               >
                 <option
                   :value="id"
-                  v-for="id, name in students_money"
+                  v-for="(id, name) in students_money"
                   :key="id"
                 >
                   {{ name }}
@@ -1159,6 +1158,15 @@ export default {
         this.activeTab = 1;
       }
     }
+    const sendPostRequest = async () => {
+        axios
+          .get("/classroom/" + this.classroom.code + "/students/all")
+          .then((response) => {
+            this.students = response.data;
+          }); 
+    }
+    sendPostRequest();
+
   },
   data: function () {
     return {
@@ -1193,13 +1201,19 @@ export default {
       selected: null,
       clearable: false,
       mutableChallenges: [],
+      students: [],
     };
   },
   methods: {
     buySkill() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("skills.buy_skill"),
-        message: "<span class='message-buy'>" + this.trans.get("skills.buy_skill_info") + " (" + this.settings.skill_price + " <i class='fas fa-coins colored'></i>)</span>",
+        message:
+          "<span class='message-buy'>" +
+          this.trans.get("skills.buy_skill_info") +
+          " (" +
+          this.settings.skill_price +
+          " <i class='fas fa-coins colored'></i>)</span>",
         confirmText: this.trans.get("shop.buy"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
@@ -1207,10 +1221,11 @@ export default {
         hasIcon: false,
         onConfirm: () => {
           let id;
-          if(this.admin)
-            id = this.student.id
+          if (this.admin) id = this.student.id;
           axios
-            .post("/classroom/" + this.classroom.code + "/student/skills/buy", {id: id})
+            .post("/classroom/" + this.classroom.code + "/student/skills/buy", {
+              id: id,
+            })
             .then((response) => {
               this.$toast(response.data.message, { type: response.data.type });
 
@@ -1739,7 +1754,7 @@ export default {
   },
   computed: {
     filteredDataObj() {
-      return this.classroom.students.filter((option) => {
+      return this.students.filter((option) => {
         return (
           option.name
             .toString()
@@ -1756,11 +1771,10 @@ export default {
       return _.orderBy(this.mutableChallenges, "datetime", "desc");
     },
   },
-
 };
 </script>
 <style>
 .message-buy {
-  line-height: 20px; 
+  line-height: 20px;
 }
- </style>
+</style>

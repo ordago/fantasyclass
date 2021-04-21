@@ -13,16 +13,16 @@
       arrow
     >
       <template v-slot:trigger>
-        <div
-          class="cursor-pointer button has-background-danger-light"
-        >
+        <div class="cursor-pointer button has-background-danger-light">
           <i class="fad fa-video" style="font-size: 1.25em"></i>
         </div>
       </template>
       <span>
         <div class="columns" v-for="video in videochats" :key="video.id">
           <div class="column is-narrow">
-            <a target="_blank" :href="video.url" class="button is-link"><i class="fad fa-door-open"></i></a>
+            <a target="_blank" :href="video.url" class="button is-link"
+              ><i class="fad fa-door-open"></i
+            ></a>
           </div>
           <div class="column is-flex has-all-centered">
             {{ video.name }}
@@ -155,7 +155,8 @@
                   'fad fa-feather': notification.data.type == 'post',
                   'fad fa-sparkles': notification.data.type == 'skill',
                   'fad fa-video': notification.data.type == 'videochat',
-                  'fad fa-user-graduate': notification.data.type == 'invitation',
+                  'fad fa-user-graduate':
+                    notification.data.type == 'invitation',
                 }"
               ></i>
               {{ trans.get(notification.data.from.title) }}
@@ -237,7 +238,10 @@
               <i class="fad fa-user ml-1"></i>
             </a>
             <a
-              v-else-if="notification.data.user == 'student' && notification.data.type == 'comment'"
+              v-else-if="
+                notification.data.user == 'student' &&
+                notification.data.type == 'comment'
+              "
               :href="notification.data.url + '/challenges'"
               class="card-footer-item has-background-link-light has-text-dark"
               >{{ trans.get("notifications.go_to") }}
@@ -266,47 +270,35 @@
         </div>
       </div>
       <div v-if="show == 1">
-        <div v-for="(line, index) in pending" :key="index">
-          <div
-            class="columns has-all-centered"
-            v-for="(card, indexC) in line.cards"
-            :key="indexC"
-          >
-            <div class="column is-narrow">
-              <show-card
-                style="zoom: 0.75"
-                :card="card"
-                admin="false"
-              ></show-card>
-            </div>
-            <div class="column is-narrow is-flex has-all-centered">
-              <h4 class="is-size-4">{{ line.student.name }}</h4>
-            </div>
-            <div class="column is-flex is-narrow has-all-centered">
-              <button
-                class="button is-success"
-                @click="
-                  setCard(card.id, line, card.pivot.marked, true, index, indexC)
-                "
-                v-text="getText(card.pivot.marked)"
-              ></button>
-              <button
-                class="button is-danger ml-2"
-                @click="
-                  setCard(
-                    card.id,
-                    line,
-                    card.pivot.marked,
-                    false,
-                    index,
-                    indexC
-                  )
-                "
-              >
-                Cancel
-              </button>
-            </div>
+        <div
+          class="columns has-all-centered"
+          v-for="(card, index) in cards"
+          :key="index"
+        >
+          <div class="column is-narrow">
+            <show-card
+              style="zoom: 0.75"
+              :card="card"
+              admin="false"
+            ></show-card>
           </div>
+          <div class="column is-narrow is-flex has-all-centered">
+            <h4 class="is-size-4">{{ card.name }}</h4>
+          </div>
+          <div class="column is-flex is-narrow has-all-centered">
+            <button
+              class="button is-success"
+              @click="setCard(card.card_id, card, card.marked, true, index)"
+              v-text="getText(card.marked)"
+            ></button>
+            <button
+              class="button is-danger ml-2"
+              @click="setCard(card.card_id, card, card.marked, false, index)"
+            >
+              Cancel
+            </button>
+          </div>
+          <!-- </div> -->
         </div>
       </div>
     </b-sidebar>
@@ -336,12 +328,6 @@ export default {
         return "";
       },
     },
-    pending: {
-      type: Array,
-      default() {
-        return [];
-      },
-    },
     notifications: {
       type: Array,
       default() {
@@ -362,10 +348,12 @@ export default {
     },
   },
   mounted() {
-    this.cards = this.pending;
-    for (let i = 0; i < this.cards.length; i++) {
-      this.cards[i].cards = Object.values(this.cards[i].cards);
-    }
+    if (this.code)
+      axios
+        .post("/classroom/" + this.code + "/students/pending")
+        .then((response) => {
+          this.cards = response.data;
+        });
   },
   data: function () {
     return {
@@ -422,25 +410,26 @@ export default {
     },
     getText(type) {
       if (type == 1) {
-        return this.trans.get('cards.use');
+        return this.trans.get("cards.use");
       } else {
-        return this.trans.get('cards.delete');
+        return this.trans.get("cards.delete");
       }
     },
-    setCard(id, line, type, action, index, indexC) {
+    setCard(id, line, type, action, index) {
       if (!action) {
-        this.cards[index].cards.splice(indexC, 1);
-        if (!this.cards[index].cards.length) this.open = false;
+        this.cards.splice(index, 1);
+        if (!this.cards.length) this.open = false;
       }
       this.$forceUpdate();
       axios
         .post("/classroom/card/usedelete/" + id, {
-          student: line.student.id,
+          student: line.student_id,
           action: action,
           type: type,
         })
         .then((response) => {
-          this.$toast(response.data.message, { type: response.data.type });
+          if (response.data.message)
+            this.$toast(response.data.message, { type: response.data.type });
 
           if (action) {
             if (response.data.type == "success") location.reload();
@@ -448,11 +437,7 @@ export default {
         });
     },
     countCards() {
-      let count = 0;
-      this.pending.forEach((element) => {
-        count += _.size(element.cards);
-      });
-      return count;
+      return this.cards.length;
     },
   },
   components: {

@@ -57,6 +57,8 @@
         "vue-drag-n-drop": "^1.2.1",
         "vue-feedback-reaction": "^1.2.0",
         "vue-fortune-wheel": "^1.0.1",
+        "vue-infinite-loading": "^2.4.5",
+        "vue-infinite-scroll": "^2.0.2",
         "vue-json-excel": "^0.2.99",
         "vue-select-image": "^1.9.0",
         "vue-slider-component": "^3.2.9",

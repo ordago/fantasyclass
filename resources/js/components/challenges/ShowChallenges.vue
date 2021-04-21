@@ -146,6 +146,7 @@ export default {
   data: function () {
     return {
       addChallenge: false,
+      isLoading: false,
       search: "",
       importFlag: false,
       challengeEdit: null,
@@ -209,6 +210,7 @@ export default {
           if (challenge.type == 0) this.students = response.data;
           else this.groups = response.data;
           this.isModalActive = true;
+          this.isLoading = false;
         });
     },
     checkDisabled(student) {
@@ -216,7 +218,7 @@ export default {
       if (
         this.currentChallenge.requirements &&
         this.currentChallenge.requirements.length &&
-        ! student.challenges.length
+        !student.challenges.length
       ) {
         this.currentChallenge.requirements.forEach((element) => {
           let found = student.items.find((object) => object.id == element.id);

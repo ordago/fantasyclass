@@ -221,7 +221,7 @@ export default {
                   origin: { y: 1.0 },
                 });
                 // TODO
-                console.log(this.$parent.$parent.$parent.student);
+                // console.log(this.$parent.$parent.$parent.student);
                 this.changed = true;
                 this.$forceUpdate;
               });

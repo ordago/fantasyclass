@@ -51,6 +51,7 @@
                 class="button is-size-6 acceptDestiny ml-2"
                 style="margin-top:0!important"
                 @click="accept"
+                :class="{ 'is-loading': isLoading }"
               >
                 <i class="fas fa-feather-alt"></i> {{ trans.get('events.accept') }}
               </span>
@@ -113,13 +114,15 @@ export default {
       countGold: 0,
       hp: 1,
       xp: 5,
-      gold: 10
+      gold: 10,
+      isLoading: false,
     };
   },
   computed: {},
   mounted() {},
   methods: {
     accept() {
+      this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/utils/meter", {
           gold: this.gold * this.alarmCount * this.countGold * -1,

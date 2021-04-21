@@ -59,6 +59,7 @@ class Student extends Model implements HasMedia
 
     public function getGrouplogoAttribute()
     {
+        if($this->groups)
         $group = $this->groups->first();
         if ($group) {
             if ($group->logo)
@@ -110,6 +111,7 @@ class Student extends Model implements HasMedia
 
     public function getLevelAttribute()
     {
+        if($this->xp !== null)
         return Level::where('xp', '<=', $this->xp)->where('classroom_id', $this->classroom->classroom_id)->orderByDesc('xp')->first();
     }
 
@@ -137,11 +139,13 @@ class Student extends Model implements HasMedia
 
     public function getUserId()
     {
+        if($this->classroom)
         return $this->classroom->user->id;
     }
 
     public function getUsernameAttribute()
     {
+        if($this->classroom)
         return $this->classroom->user->username;
     }
 

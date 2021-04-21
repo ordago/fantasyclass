@@ -1,4 +1,10 @@
 # Changelog
+## v1.48 Beta (XX/04/2021)
+
+### Changed
+- Prepared to use in MOOC.
+- Bug fixes and a lot of new created.
+
 ## v1.47 Beta (15/04/2021)
 ### Added
 - Random assign to groups.

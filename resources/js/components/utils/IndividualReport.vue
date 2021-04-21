@@ -7,7 +7,7 @@
         </button>
         <h1 class="is-size-1 mt-1 mb-1">{{ student.name }} </h1>
         <span class="is-size-4 mt-0"><i class="fas fa-heart"></i> {{ student.hp }} 
-        | <i class="fas fa-fist-raised"></i> {{ student.xp }} <small>lvl {{ student.level.number }}</small>
+        | <i class="fas fa-fist-raised"></i> {{ student.xp }} <small v-if="student.level">lvl {{ student.level.number }}</small>
         | <i class="fas fa-coins"></i> {{ student.gold }}</span>
         <h3 class="is-size-4">{{ trans.get("menu.evaluation") }}</h3>
 
@@ -147,7 +147,7 @@ export default {
 <style>
 body {
   /* overflow: auto !important; */
-  height: auto !important;
+  /* height: 100vh; */
   -webkit-print-color-adjust: exact;
 }
 .page-break {

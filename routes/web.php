@@ -70,6 +70,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/group/reward', 'GroupsController@reward');
         
         // Students
+        Route::get('/student/{id}/get', 'StudentController@getStudent');
         Route::get('/{code}/students/add', 'StudentController@create');
         Route::get('/{code}/students/add/{flag}', 'StudentController@create');
         Route::post('/students/', 'StudentController@store');
@@ -88,7 +89,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/assignpet', 'StudentController@assignPet');
         Route::get('/{code}/student/{id}/report', 'StudentController@getStudentReport');
         Route::get('/{code}/students/report', 'StudentController@getStudentsReport');
-
+        
+        Route::post('/{code}/students/get', 'ClassroomsController@getStudentPage');
+        Route::post('/{code}/students/pending', 'ClassroomsController@pendingCards');
+        Route::get('/{code}/students/all', 'ClassroomsController@getAllStudents');
 
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
@@ -110,6 +114,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/card/mark/{id}', 'ClassroomsStudentController@markCard');
         Route::post('/challenge/rate', 'ClassroomsStudentController@addRating');
         Route::post('/{code}/send/money', 'ClassroomsStudentController@sendMoney');
+        Route::post('/{code}/studentsview/get', 'ClassroomsStudentController@getStudentPage');
+
 
         // Behaviours
         Route::get('/{code}/behaviours', 'BehaviourController@index');

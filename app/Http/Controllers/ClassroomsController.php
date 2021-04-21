@@ -15,6 +15,8 @@ use App\Item;
 use App\QuestionBank;
 use App\Rules;
 use App\Student;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -404,6 +406,90 @@ class ClassroomsController extends Controller
         return "/classroom";
     }
 
+    public function getPaginatedStudents($class, $perPage, $offset, $order, $search = "") {
+        if($order == "name")
+            $orderType = "orderBy";
+        else $orderType = "orderByDesc";
+        if($search) {
+            return $class->students()->whereRaw("LOWER(name) LIKE ?", '%'.strtolower($search).'%')->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
+        } else return $class->students()->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
+    
+    }
+
+    public function getStudentPage($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        $data = request()->validate([
+            'page' => ['required', 'integer'],
+            'order' => ['required', 'string'],
+            'search' => ['nullable', 'string'],
+        ]);
+        $students = $this->getPaginatedStudents($class, env('MIX_MAX_STUDENTS'), $data['page'], $data['order'], isset($data['search']) ? $data['search'] : '');
+        $students->each->load('equipment');
+        $students->each->load('pets');
+        $students->each->load('character');
+
+        $students->each->append('numcards');
+        $students->each->append('boost');
+        $students->each->load('skills');
+        return ['students' => $students];
+    }
+
+    public function pendingCards($code) {
+        $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
+        $this->authorize('view', $class);
+        $pending = collect();
+
+        $allStudents = DB::table('students')
+        ->leftJoin('classroom_user', function ($join) use ($class) {
+            $join->on('students.classroom_user_id', '=', 'classroom_user.id')
+                ->where('classroom_user.id', '=', $class->id);
+        })
+        ->pluck('students.id');
+        $pendingCards = DB::table('card_student')
+        ->join('cards', function ($join) {
+            $join->on('card_student.card_id', '=', 'cards.id')
+            ->where('card_student.marked', '>', 0);
+        })
+        ->join('students', function ($join) use($allStudents) {
+            $join->on('students.id', '=', 'card_student.student_id')
+            ->whereIn('students.classroom_user_id', $allStudents);
+        })
+        ->selectRaw('cards.*, card_student.*, students.name, students.id')
+        ->get();
+        // dump($pendingCards);
+        // ->where('card_user.marked', '>', 0)
+        // ->selectRaw('cards.*, card_student.student_id as pivot_student_id, card_student.card_id as pivot_card_id, card_student.marked as pivot_market')
+        // dump($pendingCards);
+
+
+        // foreach ($class->students as $student) {
+        //     $cards = $student->cards->where('pivot.marked', ">", 0);
+        //     if ($cards->count())
+        //     $pending->add(['student' => $student, 'cards' => $cards]);
+        // }
+        return $pendingCards;
+    }
+
+    public function searchStudents($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+
+    }
+    
+    public function getAllStudents($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        $allStudents = DB::table('students')
+        ->join('classroom_user', function ($join) use ($class) {
+            $join->on('students.classroom_user_id', '=', 'classroom_user.id')
+                ->where('classroom_user.classroom_id', '=', $class->id);
+        })
+        ->selectRaw('students.name, students.id, students.avatar_url')
+        ->get();
+        return $allStudents;
+    }
+
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
@@ -413,18 +499,7 @@ class ClassroomsController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $students = $class->students()->with('equipment', 'pets', 'character')->get();
         $groups = $class->grouping->first()->groups;
-        $students->each->append('numcards');
-        $students->each->append('boost');
-        $students->each->load('skills');
-
-        $pending = collect();
-        foreach ($class->students as $student) {
-            $cards = $student->cards->where('pivot.marked', ">", 0);
-            if ($cards->count())
-                $pending->add(['student' => $student, 'cards' => $cards]);
-        }
 
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
@@ -444,6 +519,6 @@ class ClassroomsController extends Controller
             $impostor = Student::find($impostor);
         }
 
-        return view('classrooms.show', compact('class', 'settings', 'impostor', 'students', 'notifications', 'pending', 'groups', 'chat', 'showChat'));
+        return view('classrooms.show', compact('class', 'settings', 'impostor', 'notifications', 'groups', 'chat', 'showChat'));
     }
 }

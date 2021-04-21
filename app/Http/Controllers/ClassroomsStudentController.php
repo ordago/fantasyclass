@@ -107,6 +107,37 @@ class ClassroomsStudentController extends Controller
         return $class->videochats()->where('active', '=', 1)->get();
     }
 
+    public function getPaginatedStudents($class, $perPage, $offset) {
+        $students = $class->students()->where('hidden', '=', 0)->offset($offset * $perPage)->take($perPage)->get()->map(function ($user) {
+                $user->append('grouplogopublic');
+                $user->load('equipment');
+                $user->load('skills');
+                $user->load('pets');
+                $user->load('character');
+                return collect($user->toArray())
+                    ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
+                    ->all();
+            });
+        return $students;
+    }
+
+    public function getStudentPage($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('study', $class);
+        $data = request()->validate([
+            'page' => ['required', 'integer'],
+        ]);
+        $students = $this->getPaginatedStudents($class, env('MIX_MAX_STUDENTS'), $data['page']);
+        // $students->each->load('equipment');
+        // $students->each->load('pets');
+        // $students->each->load('character');
+
+        // $students->each->append('numcards');
+        // $students->each->append('boost');
+        // $students->each->load('skills');
+        return ['students' => $students];
+    }
+
     public function index($code)
     {
         $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
@@ -117,12 +148,12 @@ class ClassroomsStudentController extends Controller
 
         $student = Functions::getCurrentStudent($class);
 
-        $class->students->each->append('grouplogopublic');
-        $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
-            return collect($user->toArray())
-                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
-                ->all();
-        });
+        // $class->students->each->append('grouplogopublic');
+        // $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
+        //     return collect($user->toArray())
+        //         ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
+        //         ->all();
+        // });
 
         $rating = 0;
         $count = 0;
@@ -157,7 +188,7 @@ class ClassroomsStudentController extends Controller
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
 
-        return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'students', 'chat', 'showChat', 'monsters', 'rating'));
+        return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
 

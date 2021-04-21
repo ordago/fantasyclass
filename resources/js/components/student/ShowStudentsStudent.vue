@@ -15,6 +15,16 @@
         :theme="theme"
       ></show-student>
     </div>
+       <infinite-loading
+        ref="infiniteComponent"
+        :distance="100"
+        spinner="waveDots"
+        force-use-infinite-wrapper=".infinite"
+        :on-infinite="infiniteHandler"
+      >
+        <div slot="no-more"></div>
+        <div slot="no-results"></div>
+      </infinite-loading>
 
     <b-sidebar
       type="is-light"
@@ -76,17 +86,37 @@
 
 <script>
 import Utils from "../../utils.js";
+import InfiniteLoading from "vue-infinite-loading";
 
 export default {
-  props: ["students", "theme", "characterTheme", "monsters", "rating", "settings"],
+  props: ["theme", "characterTheme", "monsters", "rating", "settings", "code"],
   mounted() {},
   data: function () {
     return {
       monsterBar: false,
       sortKey: "xp",
+      page: 0,
+      students: [],
     };
   },
-  methods: {},
+  methods: {
+    infiniteHandler($state) {
+      axios
+        .post("/classroom/" + this.code + "/studentsview/get", {
+          page: this.page,
+        })
+        .then((response) => {
+          let students = response.data.students;
+          if (students.length) {
+            this.students.push(...students);
+            $state.loaded();
+          } else {
+            $state.complete();
+          }
+          this.page++;
+        });
+    },
+  },
   computed: {
     orderedStudents: function () {
       let order = "desc";

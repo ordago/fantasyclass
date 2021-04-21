@@ -407,6 +407,7 @@
               "
               class="button is-info"
               @click="markCompleted(challenge)"
+              :class="{ 'is-loading': isLoading }"
             >
               <span class="icon is-small">
                 <i class="fas fa-check"></i>
@@ -438,7 +439,8 @@
               class="button is-success"
               v-tippy
               :content="trans.get('challenges.mark_tooltip')"
-              @click="$parent.showModal(challenge)"
+              @click="$parent.isLoading=true;$parent.showModal(challenge)"
+              :class="{ 'is-loading': $parent.isLoading }"
             >
               <span class="icon is-small">
                 <i class="fas fa-check"></i>
