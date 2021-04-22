@@ -308,16 +308,15 @@
         field="name"
         icon-pack="fas"
         icon="search"
-        @input="searchStudents"
         :loading="loading"
         :clearable="false"
+        @input="searchStudents"
       >
       </b-autocomplete>
     </div>
-    <!-- @typing="getAsyncData" -->
 
     <div class="column px-1" v-if="view == 2">
-      <article class="media" v-for="student in students" :key="student.id">
+      <article class="media" v-for="student in orderedStudents" :key="student.id">
         <figure class="media-left">
           <p class="image is-64x64">
             <img class="rounded" :src="student.avatar" />
@@ -405,7 +404,7 @@
     <div class="columns is-multiline is-variable is-1 my-2" v-if="view == 0">
       <div
         class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
-        v-for="student in students"
+        v-for="student in orderedStudents"
         v-bind:key="student.id"
         ref="wrapper"
       >
@@ -687,7 +686,10 @@
       </div>
     </b-modal>
     <b-modal :active.sync="isMassiveModalActive" has-modal-card full-screen>
-      <massive-actions :students="allStudents" :classroom="classroom"></massive-actions>
+      <massive-actions
+        :students="allStudents"
+        :classroom="classroom"
+      ></massive-actions>
     </b-modal>
     <Impostor
       v-if="isImpostorActive"
@@ -731,7 +733,7 @@ export default {
       students: [],
       allStudents: [],
       view: "0",
-      search: null,
+      search: "",
       mainBehavioursJson: [],
       otherBehavioursJson: [],
       sortKey: "",
@@ -777,8 +779,8 @@ export default {
           if (students.length) {
             this.students.push(...students);
             $state.loaded();
-          } 
-          if(!students.length || students.length < this.max) {
+          }
+          if (!students.length || students.length < this.max) {
             $state.complete();
           }
           this.page++;
@@ -961,21 +963,20 @@ export default {
         this.numItems
       );
     },
-    typing() {
-      console.log("typing");
-    },
     searchStudents() {
-      this.loading = true;
-      axios
-        .post("/classroom/" + this.classroom.code + "/students/get", {
-          page: 0,
-          order: this.sortKey,
-          search: this.search.toLowerCase(),
-        })
-        .then((response) => {
-          this.students = response.data.students;
-          this.loading = false;
-        });
+      if (this.allStudents.length > this.max) {
+        this.loading = true;
+        axios
+          .post("/classroom/" + this.classroom.code + "/students/get", {
+            page: 0,
+            order: this.sortKey,
+            search: this.search.toLowerCase(),
+          })
+          .then((response) => {
+            this.students = response.data.students;
+            this.loading = false;
+          });
+      }
     },
     changeView: function () {
       this.viewGrid = (this.viewGrid + 1) % 3;
@@ -989,6 +990,16 @@ export default {
   },
   computed: {
     filteredDataObj() {
+      if (this.allStudents.length < this.max) {
+        return this.allStudents.filter((option) => {
+          return (
+            option.name
+              .toString()
+              .toLowerCase()
+              .indexOf(this.search.toLowerCase()) >= 0
+          );
+        });
+      }
       // console.log(this.firstLoad)
       // if(!this.firstLoad) {
       if (this.search !== null) {
@@ -1008,23 +1019,13 @@ export default {
     orderedBehaviours: function () {
       return _.orderBy(this.classroom.behaviours, "count_number", "desc");
     },
-    // orderedStudents: function () {
-    //   let order = "desc";
-    //   if (this.sortKey == "name") order = "asc";
-    //   return _.orderBy(
-    //     _.orderBy(
-    //       this.students.filter((student) => {
-    //         return student.name
-    //           .toLowerCase()
-    //           .includes(this.search.toLowerCase());
-    //       }),
-    //       this.sortKey,
-    //       order
-    //     ),
-    //     "hidden",
-    //     "asc"
-    //   );
-    // },
+    orderedStudents: function () {
+      return this.students.filter((student) => {
+            return student.name
+              .toLowerCase()
+              .includes(this.search.toLowerCase());
+          })
+    },
   },
 };
 </script>
