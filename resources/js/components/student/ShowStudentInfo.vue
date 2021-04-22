@@ -1263,15 +1263,15 @@ export default {
       let index;
       if (next) {
         index =
-          (this.classroom.students.findIndex(currentStudent) + 1) %
-          this.classroom.students.length;
+          (this.students.findIndex(currentStudent) + 1) %
+          this.students.length;
       } else {
         index =
-          (this.classroom.students.findIndex(currentStudent) - 1) %
-          this.classroom.students.length;
-        if (index == -1) index = this.classroom.students.length - 1;
+          (this.students.findIndex(currentStudent) - 1) %
+          this.students.length;
+        if (index == -1) index = this.students.length - 1;
       }
-      nextId = this.classroom.students[index].id;
+      nextId = this.students[index].id;
 
       this.goTo(nextId);
     },
