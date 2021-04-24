@@ -698,7 +698,7 @@
       :students="allStudents"
     >
     </Impostor>
-    <Videochat v-if="isVideoChatActive" :code="classroom.code"> </Videochat>
+    <Videochat v-if="isVideoChatActive" :groups="groups" :code="classroom.code"> </Videochat>
   </div>
 </template>
 
@@ -990,7 +990,7 @@ export default {
   },
   computed: {
     filteredDataObj() {
-      if (this.allStudents.length < this.max) {
+      if (this.allStudents.length <= this.max) {
         return this.allStudents.filter((option) => {
           return (
             option.name
@@ -999,21 +999,6 @@ export default {
               .indexOf(this.search.toLowerCase()) >= 0
           );
         });
-      }
-      // console.log(this.firstLoad)
-      // if(!this.firstLoad) {
-      if (this.search !== null) {
-        // this.loading = true;
-        // axios
-        //   .post("/classroom/" + this.classroom.code + "/students/get", {
-        //     page: 0,
-        //     order: this.sortKey,
-        //     search: this.search.toLowerCase(),
-        //   })
-        //   .then((response) => {
-        //     this.students = response.data.students;
-        //     this.loading = false;
-        //   });
       }
     },
     orderedBehaviours: function () {

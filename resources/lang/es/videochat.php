@@ -20,6 +20,12 @@ return [
 
     'videochat' => 'Videoconferencia',
     'new_videochat' => 'Tienes una nueva sala de videoconferencias',
+    'general' => 'General',
+    'custom' => 'Servicio personalizado',
+    'url' => 'Dirección URL',
+    'available_some' => 'Disponible para',
+    'available_all' => 'Disponible para todos los grupos',
+    'available_groups' => 'grupos',
 
 
 

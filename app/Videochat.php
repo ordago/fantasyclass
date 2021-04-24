@@ -11,6 +11,10 @@ class Videochat extends Model
         'active',
         'url',
         'classroom_id',
+        'groups',
+    ];
+    protected $casts = [
+        'groups' => 'array',
     ];
 
     public function classroom() {

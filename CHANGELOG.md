@@ -1,5 +1,14 @@
 # Changelog
+## v1.49 Beta (24/04/2021)
+### Added
+- Assign videochats to groups.
+- Custom videochats URL.
+
+### Changed
+- Fixes in search for small classrooms (40 max students).
+
 ## v1.48 Beta (21/04/2021)
+### Added
 - Option to pass challenge by password.
 
 ### Changed

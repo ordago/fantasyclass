@@ -62,10 +62,27 @@ class VideochatController extends Controller
         $from['type'] = "videochat";
 
         foreach ($class->students as $std) {
-            Notification::send($std->classroom->user, new NewUrlMessage(__('videochat.videochat'), __('videochat.new_videochat'), $video->url, __('videochat.open'), $from));
+            $notify = true;
+            if($video->groups && (!$std->groups->first() || array_search($std->groups->first()->id, $video->groups) !== false)) {
+                $notify = false;
+            } 
+            if($notify)
+                Notification::send($std->classroom->user, new NewUrlMessage(__('videochat.videochat'), __('videochat.new_videochat'), $video->url, __('videochat.open'), $from));
         }
-        
+    
+    }
+    public function updateGroups()
+    {
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+            'groups' => ['array'],
+        ]);
+        $video = Videochat::find($data['id']);
+        $class = Classroom::where('id', $video->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
 
+        $video->update(['groups' => $data['groups']]);
+    
     }
 
     public function store($code)
@@ -75,14 +92,20 @@ class VideochatController extends Controller
 
         $data = request()->validate([
             'name' => ['string', 'required'],
+            'url' => ['string', 'nullable'],
         ]);
         $generator = new Generator();
         $name = $generator->generate($data['name']);
 
+        if(isset($data['url'])) {
+            $url = $data['url'];
+        } else {
+            $url = env('VIDEO_PROVIDER') . env('APP_NAME') . '-' . $class->code . '-' . $name;
+        }
         Videochat::create([
             'name' => $data['name'],
             'active' => false,
-            'url' => env('VIDEO_PROVIDER') . env('APP_NAME') . '-' . $class->code . '-' . $name,
+            'url' => $url,
             'classroom_id' => $class->id,
         ]);
     }

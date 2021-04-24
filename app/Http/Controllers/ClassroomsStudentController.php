@@ -104,7 +104,14 @@ class ClassroomsStudentController extends Controller
     public function getVideochats($class)
     {
         $student = Functions::getCurrentStudent($class);
-        return $class->videochats()->where('active', '=', 1)->get();
+        return $class->videochats()
+        ->where('active', '=', 1)
+        ->where(function ($query) use($student) {
+            $query->whereRaw('not JSON_CONTAINS(videochats.groups, ?)', [json_encode($student->groups->first()->id ?? '')])
+                   ->orWhereNull('videochats.groups');
+        })
+        ->get();
+        
     }
 
     public function getPaginatedStudents($class, $perPage, $offset) {

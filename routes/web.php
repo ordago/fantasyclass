@@ -310,6 +310,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/videochat/toggle', 'VideochatController@toggle');
         Route::post('/videochat/toggle', 'VideochatController@toggle');
         Route::post('/videochat/notify', 'VideochatController@notify');
+        Route::post('/videochat/groups', 'VideochatController@updateGroups');
     });
     
     // Utils

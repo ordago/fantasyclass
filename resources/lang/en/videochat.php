@@ -20,7 +20,12 @@ return [
 
     'videochat' => 'Videochat',
     'new_videochat' => 'You have a new videochat room',
-
+    'general' => 'General',
+    'custom' => 'Curtom service',
+    'url' => 'URL',
+    'available_some' => 'Available to',
+    'available_all' => 'Available to all groups',
+    'available_groups' => 'groups',
 
 
 ];

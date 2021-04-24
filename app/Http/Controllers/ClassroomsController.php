@@ -459,17 +459,6 @@ class ClassroomsController extends Controller
         })
         ->selectRaw('cards.*, card_student.*, students.name, students.id')
         ->get();
-        // dump($pendingCards);
-        // ->where('card_user.marked', '>', 0)
-        // ->selectRaw('cards.*, card_student.student_id as pivot_student_id, card_student.card_id as pivot_card_id, card_student.marked as pivot_market')
-        // dump($pendingCards);
-
-
-        // foreach ($class->students as $student) {
-        //     $cards = $student->cards->where('pivot.marked', ">", 0);
-        //     if ($cards->count())
-        //     $pending->add(['student' => $student, 'cards' => $cards]);
-        // }
         return $pendingCards;
     }
 

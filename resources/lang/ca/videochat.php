@@ -20,6 +20,13 @@ return [
 
     'videochat' => 'Videoconferència',
     'new_videochat' => 'Tens una nova sala de videoconferències',
+    'general' => 'General',
+    'custom' => 'Servei personalitzat',
+    'url' => 'Direcció URL',
+    'available_some' => 'Disponible per',
+    'available_all' => 'Disponible per tots els grups',
+    'available_groups' => 'grups',
+    
 
 
 ];
