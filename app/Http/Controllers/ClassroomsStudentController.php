@@ -105,30 +105,31 @@ class ClassroomsStudentController extends Controller
     {
         $student = Functions::getCurrentStudent($class);
         return $class->videochats()
-        ->where('active', '=', 1)
-        ->where(function ($query) use($student) {
-            $query->whereRaw('not JSON_CONTAINS(videochats.groups, ?)', [json_encode($student->groups->first()->id ?? '')])
-                   ->orWhereNull('videochats.groups');
-        })
-        ->get();
-        
+            ->where('active', '=', 1)
+            ->where(function ($query) use ($student) {
+                $query->whereRaw('not JSON_CONTAINS(videochats.groups, ?)', [json_encode($student->groups->first()->id ?? '')])
+                    ->orWhereNull('videochats.groups');
+            })
+            ->get();
     }
 
-    public function getPaginatedStudents($class, $perPage, $offset) {
+    public function getPaginatedStudents($class, $perPage, $offset)
+    {
         $students = $class->students()->where('hidden', '=', 0)->offset($offset * $perPage)->take($perPage)->get()->map(function ($user) {
-                $user->append('grouplogopublic');
-                $user->load('equipment');
-                $user->load('skills');
-                $user->load('pets');
-                $user->load('character');
-                return collect($user->toArray())
-                    ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
-                    ->all();
-            });
+            $user->append('grouplogopublic');
+            $user->load('equipment');
+            $user->load('skills');
+            $user->load('pets');
+            $user->load('character');
+            return collect($user->toArray())
+                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
+                ->all();
+        });
         return $students;
     }
 
-    public function getStudentPage($code) {
+    public function getStudentPage($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('study', $class);
         $data = request()->validate([
@@ -263,7 +264,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'rating', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -282,6 +283,18 @@ class ClassroomsStudentController extends Controller
                         $value['title'] = $check[2]['title'];
                         $value['content'] = $check[2]['content'];
                         $value['incomplete'] = true;
+                    }
+                } else {
+                    if ($current->is_conquer == 1) {
+                        if ($current->type == 0) {
+                            if ($student->challenges->contains($current->id)) {
+                                $value['completed'] = true;
+                            } else $value['completed'] = false;
+                        } else {
+                            if ($student->groups->first()->challenges->contains($current->id)) {
+                                $value['completed'] = true;
+                            } else $value['completed'] = false;
+                        }
                     }
                 }
 
@@ -317,6 +330,17 @@ class ClassroomsStudentController extends Controller
         }
         if (!$result[0] && $result[1] == "items") {
             $challenge = $result[2];
+        }
+        if ($challenge->is_conquer == 1) {
+            if ($challenge->type == 0) {
+                if ($student->challenges->contains($challenge->id)) {
+                    $challenge->completed = true;
+                } else $challenge->completed = false;
+            } else {
+                if ($student->groups->first()->challenges->contains($challenge->id)) {
+                    $challenge->completed = true;
+                } else $challenge->completed = false;
+            }
         }
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
@@ -387,7 +411,7 @@ class ClassroomsStudentController extends Controller
                     }
                 }
             }
-  
+
             $challenge->permalink = Crypt::encryptString($challenge->id);
             $group = ChallengesGroup::find($challenge->challenges_group_id);
             $challenge->group = [
@@ -397,8 +421,8 @@ class ClassroomsStudentController extends Controller
         }
         return $challenges;
     }
-  
-    public function show($code)
+
+    public function show($code, $section = false)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
         $this->checkVisibility($class->id);
@@ -493,8 +517,11 @@ class ClassroomsStudentController extends Controller
 
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
+        
+        if($section)
+            $tab = $section;
 
-        return view('studentsview.show', compact('student', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
+        return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
     public function rules($code)

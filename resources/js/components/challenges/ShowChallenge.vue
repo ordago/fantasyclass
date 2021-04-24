@@ -38,8 +38,15 @@
               class="fas fa-users is-size-4 colored"
             ></i>
             {{ challengeReactive.title }}
-
-            <span class="tag is-dark ml-2" v-if="!challengeReactive.incomplete">
+            <span class="tag ml-2 is-light" :class="{'is-success': challengeReactive.completed, 'is-danger': !challengeReactive.completed }" v-if="!admin && challengeReactive.is_conquer == 1 && full">
+            <span class="is-success is-light" v-if="challengeReactive.completed">
+              <i class="far fa-check"></i>
+            </span>
+            <span class="is-danger is-light" v-else>
+              <i class="far fa-times"></i>
+            </span>
+            </span>
+            <span class="tag is-dark ml-1" v-if="!challengeReactive.incomplete">
               <span
                 v-if="admin && isHidden"
                 class="mr-2"
@@ -307,6 +314,18 @@
               </div>
             </div>
           </div>
+          <article
+            v-if="
+              challenge.completion != 0 &&
+              !challenge.completed &&
+              !admin &&
+              full
+            "
+            class="message is-warning"
+          >
+            <div v-html="getMessage(challenge)" class="message-body">
+            </div>
+          </article>
           <button
             class="button"
             v-if="!allowComment && (full || edit)"
@@ -431,7 +450,7 @@
             >
               <article class="message is-warning">
                 <div class="message-body">
-                  {{ trans.get('challenges.password_info') }}
+                  {{ trans.get("challenges.password_info") }}
                 </div>
               </article>
               <div class="field has-addons">
@@ -444,7 +463,9 @@
                   />
                 </div>
                 <div class="control" @click="checkPassword(challenge)">
-                  <a class="button is-info" :disabled="!password.length"> {{ trans.get('challenges.password_check') }} </a>
+                  <a class="button is-info" :disabled="!password.length">
+                    {{ trans.get("challenges.password_check") }}
+                  </a>
                 </div>
               </div>
             </div>
@@ -676,6 +697,12 @@ export default {
     AddQuestion,
   },
   methods: {
+    getMessage(challenge) {
+      let append = this.trans.get('challenges.go_to_challenges_mark');
+      if(challenge.completion == 3)
+        append = this.trans.get('challenges.go_to_challenges_password');
+      return  "<i class='fal fa-exclamation-circle'></i> " + this.trans.get('challenges.go_to_challenges') + " <a href='/classroom/show/" + this.code + "/section/2'>" + this.trans.get('menu.challenges') + "</a> " + append;
+    },
     copyPermalink() {
       let url =
         window.location.origin +
@@ -811,41 +838,41 @@ export default {
       return Utils.getDateFrom(date, this.trans.locale, false);
     },
     checkPassword() {
-      if(this.password)
-      axios
-        .post("/classroom/" + this.code + "/student/passwordChallenge", {
-          challenge: this.challengeReactive.id,
-          password: this.password,
-        })
-        .then((response) => {
-          if (
-            this.$parent.$parent.$parent.mutableChallenges.length <
-            response.data.challenges.length
-          ) {
-            this.$toast(this.trans.get("challenges.new_challenges"), {
-              type: "info",
-            });
-          }
-          this.$parent.$parent.$parent.mutableChallenges =
-            response.data.challenges;
-          if (response.data.success == true) {
-            confetti({
-              particleCount: 200,
-              spread: 100,
-              origin: { y: 1.0 },
-            });
-            this.challengeReactive.count++;
-            this.$parent.$parent.$parent.student.hp = response.data.hp;
-            this.$parent.$parent.$parent.student.xp = response.data.xp;
-            this.$parent.$parent.$parent.student.gold = response.data.gold;
-            this.$parent.$parent.$parent.student.items = response.data.items;
-            this.$parent.$parent.$parent.forceReload++;
-          } else {
-            this.$toast(this.trans.get("challenges.password_error"), {
-              type: "error",
-            });
-          }
-        });
+      if (this.password)
+        axios
+          .post("/classroom/" + this.code + "/student/passwordChallenge", {
+            challenge: this.challengeReactive.id,
+            password: this.password,
+          })
+          .then((response) => {
+            if (
+              this.$parent.$parent.$parent.mutableChallenges.length <
+              response.data.challenges.length
+            ) {
+              this.$toast(this.trans.get("challenges.new_challenges"), {
+                type: "info",
+              });
+            }
+            this.$parent.$parent.$parent.mutableChallenges =
+              response.data.challenges;
+            if (response.data.success == true) {
+              confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 1.0 },
+              });
+              this.challengeReactive.count++;
+              this.$parent.$parent.$parent.student.hp = response.data.hp;
+              this.$parent.$parent.$parent.student.xp = response.data.xp;
+              this.$parent.$parent.$parent.student.gold = response.data.gold;
+              this.$parent.$parent.$parent.student.items = response.data.items;
+              this.$parent.$parent.$parent.forceReload++;
+            } else {
+              this.$toast(this.trans.get("challenges.password_error"), {
+                type: "error",
+              });
+            }
+          });
     },
     markCompleted() {
       this.$buefy.dialog.confirm({

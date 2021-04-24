@@ -1130,6 +1130,7 @@ export default {
     "allcards",
     "pets",
     "students_money",
+    "section",
   ],
   components: {
     Blogs,
@@ -1151,7 +1152,9 @@ export default {
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
-    if (this.$cookies.get("tab")) {
+    if(this.section) {
+      this.activeTab = parseInt(this.section);
+    } else if (this.$cookies.get("tab")) {
       this.activeTab = parseInt(this.$cookies.get("tab"));
     } else {
       if (!this.admin) {

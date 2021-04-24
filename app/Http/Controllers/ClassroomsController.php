@@ -182,6 +182,30 @@ class ClassroomsController extends Controller
             $newMap->classroom_id = $new->id;
             $newMap->push();
         }
+        
+        // Clone question banks
+        foreach ($class->questionBanks as $qb) {
+            $newQb = $qb->replicate();
+            $newQb->classroom_id = $new->id;
+            $newQb->push();
+            foreach ($qb->questions as $question) {
+                $newQuestion = $question->replicate();
+                $newQuestion->question_bank_id = $newQb->id;
+                $newQuestion->push();
+            }
+        }
+
+        // Clone documents
+        foreach ($class->documents as $documentcat) {
+            $newDocument = $documentcat->replicate();
+            $newDocument->classroom_id = $new->id;
+            $newDocument->push();
+            foreach ($documentcat->documents as $document) {
+                $newDoc = $document->replicate();
+                $newDoc->document_category_id = $newDocument->id;
+                $newDoc->push();
+            }
+        }
 
         // Clone challenge groups and challenges
         foreach ($class->challengeGroups as $challengeGroup) {
@@ -240,6 +264,20 @@ class ClassroomsController extends Controller
             $newPet = $pet->replicate();
             $newPet->classroom_id = $new->id;
             $newPet->push();
+        }
+        
+        // Clone Monsters
+        foreach ($class->monsters as $monster) {
+            $newMonster = $monster->replicate();
+            $newMonster->classroom_id = $new->id;
+            $newMonster->push();
+        }
+
+        // Clone skills
+        foreach ($class->skills as $skill) {
+            $newSkill = $skill->replicate();
+            $newSkill->classroom_id = $new->id;
+            $newSkill->push();
         }
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);

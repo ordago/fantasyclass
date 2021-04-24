@@ -82,7 +82,7 @@
       icon-pack="fa"
       mobile="fullwidth"
     >
-      <div class="close-button" @click="openDocs = false">
+      <div class="close-button" @click="openDocs = false" style="z-index: 100">
         <button class="button"><i class="fal fa-times"></i></button>
       </div>
 

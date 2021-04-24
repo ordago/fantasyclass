@@ -96,6 +96,7 @@ Route::group(['middleware' => 'language'], function () {
 
         // Student View
         Route::get('/show/{code}', 'ClassroomsStudentController@show');
+        Route::get('/show/{code}/section/{section}', 'ClassroomsStudentController@show');
         Route::get('/show/{code}/users', 'ClassroomsStudentController@index');
         Route::get('/show/{code}/challenges', 'ClassroomsStudentController@challenges');
         Route::get('/show/{code}/challenges/{permalink}', 'ClassroomsStudentController@getChallenge');

@@ -53,6 +53,9 @@ return [
     'mark_tooltip' => 'Asigna las recompensas a estudiantes que han superado el reto',
     'mark_confirm' => 'Confirmo la superación',
     'mark_text' => '¿Estás seguro/a que has superado la tarea? La confianza es necesaria.',
+    'go_to_challenges' => 'Ves a la sección de',
+    'go_to_challenges_mark' => 'para marcar la tarea como superada cuando esté finalizada.',
+    'go_to_challenges_password' => 'para poner la contraseña.',
 
     'comment' => 'Comenta',
     'show_challenge' => 'Muestra desafío',

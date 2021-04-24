@@ -1,4 +1,11 @@
 # Changelog
+## v1.50 Beta (XX/04/2021)
+### Added
+
+### Changed
+- Added more options in clone classrooms.
+- Better feedback in challenge pass.
+
 ## v1.49 Beta (24/04/2021)
 ### Added
 - Assign videochats to groups.

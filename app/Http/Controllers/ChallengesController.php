@@ -48,6 +48,12 @@ class ChallengesController extends Controller
         $newChallenge->items = null;
         $newChallenge->requirements = null;
         $newChallenge->push();
+        
+        foreach ($challenge->attachments as $attachment) {
+            $newAttachment = $attachment->replicate();
+            $newAttachment->challenge_id = $newChallenge->id;
+            $newAttachment->push();
+        }
 
         return $newChallenge;
     }
