@@ -303,6 +303,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/utils/massive', 'UtilsController@massive');
         Route::get('/{code}/utils/icon-packs', 'UtilsController@iconPacks');
         Route::get('/utils/icon-packs/{category}', 'UtilsController@iconPack');
+        Route::get('/utils/get-shop', 'UtilsController@getShop');
         Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
         
         Route::get('/{code}/videochats/get', 'VideochatController@index');

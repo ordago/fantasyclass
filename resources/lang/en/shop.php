@@ -33,6 +33,7 @@ return [
     'buy_text' => 'Do you want to buy the item ',
     'assign_text' => 'Do you want to assign the pet? It\'ll be free',
     'assign_eq_text' => 'Do you want to assign the equioment? It\'ll be free',
+    'load_gallery' => 'Load from gallery',
 
     'pet_warning' => 'You can only have one pet, if you buy one, you\'ll lose the pet you had',
 

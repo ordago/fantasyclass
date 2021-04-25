@@ -66,6 +66,13 @@ class UtilsController extends Controller
         array_walk($images, function(&$value, $key) use ($category) { $value = '/img/icon-packs/' . $category . '/' . $value; } );
         return json_encode($images);
     }
+    
+    public function getShop()
+    {
+        $images = preg_grep('~\.(png)$~', scandir(public_path() . '/img/shop/craft/'));
+        array_walk($images, function(&$value, $key) { $value = '/img/shop/craft/' . $value; } );
+        return json_encode($images);
+    }
 
     public function impostorClear($code)
     {

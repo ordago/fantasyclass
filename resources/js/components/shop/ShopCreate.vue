@@ -15,8 +15,11 @@
         :show-loading="true"
         :loading-size="50"
         :initial-image="prevImage"
+        :aspectRatio="1 / 1"
+        :initialAspectRatio="1 / 1"
       ></croppa>
     </div>
+    <button class="button is-info" @click="isModalActive = true"><i class="fad fa-images mr-1"></i> {{ trans.get('shop.load_gallery') }}</button>
     <div class="columns mt-2">
       <div class="column">
         <div class="field is-horizontal">
@@ -143,12 +146,52 @@
     <button class="button is-link" v-if="item" @click="createItem()">
       <i class="fas fa-edit"></i> {{ trans.get("general.edit") }}
     </button>
+    <b-modal
+      :active.sync="isModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("students.select_image_title") }}
+          </p>
+        </header>
+        <section class="modal-card-body is-relative mb-2">
+          <div class="columns is-multiline" v-if="images">
+            <img
+              width="60px"
+              @click="updateImg(image)"
+              v-for="image in images"
+              :key="image"
+              :src="image"
+            />
+          </div>
+        </section>
+        <footer
+          class="modal-card-foot columns is-multiline"
+          style="overflow-x: auto"
+        >
+          <div class="column is-narrow">
+            <button class="button" type="button" @click="isModalActive = false">
+              {{ trans.get("general.close") }}
+            </button>
+          </div>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
 <script>
 export default {
   props: ["code", "item"],
+  mounted() {
+    axios.get("/classroom/utils/get-shop").then((response) => {
+      this.images = response.data;
+    });
+  },
   created() {
     if (this.item) {
       this.id = this.item.id;
@@ -163,6 +206,7 @@ export default {
   },
   data: function () {
     return {
+      images: [],
       image: {},
       hp: 0,
       xp: 0,
@@ -172,9 +216,15 @@ export default {
       description: "",
       prevImage: "",
       id: null,
+      isModalActive: false,
     };
   },
   methods: {
+    updateImg(img) {
+      this.prevImage = img;
+      this.isModalActive = false;
+      this.image.refresh();
+    },
     createItem() {
       this.image.generateBlob(
         (blob) => {
