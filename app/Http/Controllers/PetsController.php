@@ -23,8 +23,10 @@ class PetsController extends Controller
         $this->authorize('view', $class);
         
         $array = preg_grep('~\.(png)$~', scandir(public_path() . '/img/pets'));
+        $array_craft = preg_grep('~\.(png)$~', scandir(public_path() . '/img/pets/craft'));
         $images[0] = $array;
         $images[1] = $class->getMedia('pets');
+        $images[2] = $array_craft;
         return $images;
 
     }

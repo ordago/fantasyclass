@@ -1,7 +1,8 @@
 # Changelog
-## v1.50 Beta (25/04/2021)
+## v1.50-1 Beta (25/04/2021)
 ### Added
 - Gallery to shop objects.
+- New pets.
 
 ### Changed
 - Added more options in clone classrooms.
