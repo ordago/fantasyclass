@@ -261,7 +261,6 @@ export default {
         (blob) => {
           if (blob != null) {
             let formData = new FormData();
-            console.log(this.imageChanged)
             if(this.imageChanged)
               formData.append("icon", blob, "item.png");
             formData.append("hp", this.hp);

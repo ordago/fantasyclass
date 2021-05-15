@@ -107,7 +107,7 @@ class ShopController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
-        try {
+        // try {
 
             $data = request()->validate([
                 'id' => ['numeric', 'nullable'],
@@ -121,7 +121,7 @@ class ShopController extends Controller
                 'craft' => ['string', 'nullable'],
             ]);
 
-            if(isset($data['icon'])) {
+            if(isset($data['icon']) && $data['icon']) {
                 $image = $data['icon'];
                 $data['icon'] = '';
             } else $image = null;
@@ -135,18 +135,19 @@ class ShopController extends Controller
                 $item->update($data);
             }
 
-            if($image)
-            $item->addMedia(request()->file('icon'))
-                ->toMediaCollection('item');
-
-            $itemPath = $item->getMedia('item')->first();
-            $imgPath = $itemPath->collection_name . "/" . $itemPath->uuid . '/' . $itemPath->file_name;
-            $path = Storage::disk('public')->path('/') . $imgPath;
-            if ($itemPath->mime_type != "image/gif" || $itemPath->size >= 500000) {
-                Image::make($path)->resize(60, 60)->save();
+            if($image) {
+                $item->addMedia(request()->file('icon'))
+                    ->toMediaCollection('item');
+    
+                $itemPath = $item->getMedia('item')->first();
+                $imgPath = $itemPath->collection_name . "/" . $itemPath->uuid . '/' . $itemPath->file_name;
+                $path = Storage::disk('public')->path('/') . $imgPath;
+                if ($itemPath->mime_type != "image/gif" || $itemPath->size >= 500000) {
+                    Image::make($path)->resize(60, 60)->save();
+                }
+    
+                $item->update(['icon' => '/storage/' . $imgPath]);
             }
-
-            $item->update(['icon' => '/storage/' . $imgPath]);
             $message = __('success_error.add_success');
             if ($action == 'update')
                 $message = __('success_error.update_success');
@@ -155,12 +156,12 @@ class ShopController extends Controller
                 "type" => "check",
                 "type" => "success"
             ];
-        } catch (\Throwable $th) {
-            return [
-                "message" => __('success_error.error'),
-                "type" => "times",
-                "type" => "error"
-            ];
-        }
+        // } catch (\Throwable $th) {
+        //     return [
+        //         "message" => __('success_error.error'),
+        //         "type" => "times",
+        //         "type" => "error"
+        //     ];
+        // }
     }
 }
