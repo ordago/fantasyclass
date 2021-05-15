@@ -1605,7 +1605,7 @@ export default {
       let n = this.student.items.length;
       if (n % 6) n = n + (6 - (n % 6));
       this.inventoryRemaining =
-        n - this.student.items.length ? n - this.student.items.length : 6;
+        n - this.student.items.length ? n - this.student.items.length -1 : 5;
     },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({
