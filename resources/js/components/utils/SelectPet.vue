@@ -12,7 +12,7 @@
       <section class="modal-card-body is-relative">
         <div>
           <button class="button" @click="customUpload = !customUpload">
-            {{ trans.get('classroom.upload_pet') }}
+            {{ trans.get("classroom.upload_pet") }}
           </button>
         </div>
         <div v-if="customUpload" class="mt-2">
@@ -33,7 +33,9 @@
             :show-loading="true"
             :loading-size="50"
           ></croppa>
-          <button @click="addPetToClass" class="button is-link"><i class="fas fa-upload mr-1"></i> {{ trans.get('general.send') }}</button>
+          <button @click="addPetToClass" class="button is-link">
+            <i class="fas fa-upload mr-1"></i> {{ trans.get("general.send") }}
+          </button>
         </div>
         <div v-if="imagesCustom.length">
           <span v-for="(image, index) in imagesCustom" :key="index">
@@ -47,11 +49,28 @@
               width="81px"
               class="m-2 cursor-pointer"
             />
-            <button @click="deleteImage(image.id)" style="margin-left: -20px" class="has-text-light has-background-danger"><i class="fas fa-trash-alt"></i></button>
+            <button
+              @click="deleteImage(image.id)"
+              style="margin-left: -20px"
+              class="has-text-light has-background-danger"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
           </span>
         </div>
         <hr />
-        All pet images are from:
+        <div class="columns is-multiline" v-if="imagesCraft">
+          <img
+            width="75px"
+            class="cursor-pointer"
+            @click="clickImage('/img/pets/craft/' + image)"
+            v-for="image in imagesCraft"
+            :key="image"
+            :src="'/img/pets/craft/' + image"
+          />
+        </div>
+        <hr />
+        Next pet images are from:
         <a href="https://github.com/HabitRPG/habitica"
           >https://github.com/HabitRPG/habitica</a
         >
@@ -97,6 +116,7 @@ export default {
     axios.get("/classroom/" + this.code + "/pets/get").then((response) => {
       this.imagesCustom = response.data[1];
       this.images = response.data[0];
+      this.imagesCraft = response.data[2];
       this.isModalActive = true;
       this.$parent.isLoading = false;
     });
@@ -107,6 +127,7 @@ export default {
       isModalActive: false,
       images: null,
       imagesCustom: [],
+      imagesCraft: [],
       image: null,
       imageUpload: null,
     };

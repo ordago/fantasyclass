@@ -316,7 +316,11 @@
     </div>
 
     <div class="column px-1" v-if="view == 2">
-      <article class="media" v-for="student in orderedStudents" :key="student.id">
+      <article
+        class="media"
+        v-for="student in orderedStudents"
+        :key="student.id"
+      >
         <figure class="media-left">
           <p class="image is-64x64">
             <img class="rounded" :src="student.avatar" />
@@ -698,7 +702,8 @@
       :students="allStudents"
     >
     </Impostor>
-    <Videochat v-if="isVideoChatActive" :groups="groups" :code="classroom.code"> </Videochat>
+    <Videochat v-if="isVideoChatActive" :groups="groups" :code="classroom.code">
+    </Videochat>
   </div>
 </template>
 
@@ -711,11 +716,11 @@ import InfiniteLoading from "vue-infinite-loading";
 export default {
   props: ["classroom", "groups", "impostor", "settings"],
   created() {
-    let view = this.$cookies.get("view");
-    if (view) {
-      if (view == 1 && !this.groups.length) this.view = 0;
-      else this.view = this.$cookies.get("view");
-    }
+    // let view = this.$cookies.get("view");
+    // if (view) {
+    //   if (view == 1 && !this.groups.length) this.view = 0;
+    //   else this.view = this.$cookies.get("view");
+    // }
   },
   mounted() {
     axios
@@ -1006,10 +1011,8 @@ export default {
     },
     orderedStudents: function () {
       return this.students.filter((student) => {
-            return student.name
-              .toLowerCase()
-              .includes(this.search.toLowerCase());
-          })
+        return student.name.toLowerCase().includes(this.search.toLowerCase());
+      });
     },
   },
 };
