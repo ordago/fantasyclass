@@ -1,5 +1,5 @@
 # Changelog
-## v1.50-1 Beta (25/04/2021)
+## v1.50.2 Beta (25/04/2021)
 ### Added
 - Gallery to shop objects.
 - New pets.
@@ -7,6 +7,7 @@
 ### Changed
 - Added more options in clone classrooms.
 - Better feedback in challenge pass.
+- Always load student's view by default.
 
 ## v1.49 Beta (24/04/2021)
 ### Added
