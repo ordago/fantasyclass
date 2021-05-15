@@ -44,4 +44,7 @@ return [
 
     'max_cards_reached' => 'Max cards reached!',
 
+    'craft_fail' => 'These objects can\'t be crafted',
+
+
 ];

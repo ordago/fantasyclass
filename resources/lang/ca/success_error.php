@@ -44,4 +44,6 @@ return [
     '403reqChallenge' => 'Aquest repte té un requeriment: ',
     
     'max_cards_reached' => 'Màxim de cartes superat!',
+    
+    'craft_fail' => 'Aquests objectes no es poden combinar',
 ];

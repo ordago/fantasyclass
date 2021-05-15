@@ -42,5 +42,9 @@ return [
     'random_card' => 'Compra una carta aleatòria',
     'buy_card' => 'Compra una carta',
     'buy_card_info' => 'Obtindràs una carta aleatòria, no es pot canviar, sort!',
-
+    
+    'crafting' => 'Creació (craft)',
+    'crafting_shop' => 'Crea l\'objecte a partir dels següents objectes',
+    'crafting_info' => 'Fes clic en un objecte per afegir-lo i començar a crear. Combina objectes per fer-ne de nous!',
+    'craft_success' => 'Has obtingut',
 ];

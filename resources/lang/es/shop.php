@@ -17,7 +17,7 @@ return [
     'eq3' => 'Equipamiento 3',
     'visibility' => 'Visible',
     'new_item' => 'Nuevo objeto',
-    'for_sale' => 'A la venta?',
+    'for_sale' => '¿A la venta?',
     'description' => 'Descripción',
     'price' => 'Precio',
     'min_level' => 'Nivel mínimo',
@@ -43,5 +43,10 @@ return [
     'random_card' => 'Compra una carta aleatoria',
     'buy_card' => 'Compra una carta',
     'buy_card_info' => 'Obtendrás una carta aleatoria, no se puede cambiar, ¡suerte!',
+
+    'crafting' => 'Creación (craft)',
+    'crafting_shop' => 'Crea el objeto a partir de los siguientes objetos',
+    'crafting_info' => 'Clica en un objeto para añadirlo y empezar a crear. ¡Combina objetos para crear nuevos!',
+    'craft_success' => 'Has obtenido',
 
 ];

@@ -80,7 +80,7 @@ return [
     'conquer_title' => 'Conquista',
     'conquer_description' => 'Te permite conquistar un reto cualquiera que no hayas superado.',
     'walking_description' => 'Si mueres, recuperas automáticamente 20 de vida.',
-    'first_title' => 'El primer de la clase',
+    'first_title' => 'El primero de la clase',
     'first_description' => 'Empezarás una prueba 5 minutos antes de que los y las compañeras.',
 
     'import' => 'Banco de cartas',

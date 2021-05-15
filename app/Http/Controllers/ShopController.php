@@ -59,14 +59,16 @@ class ShopController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
-        return view('shop.create', compact('code', 'class'));
+        $items = $class->items;
+        return view('shop.create', compact('code', 'class', 'items'));
     }
     public function show($code, $id)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $item = Item::where('id', '=', $id)->where('classroom_id', '=', $class->id)->firstOrFail();
-        return view('shop.create', compact('code', 'class', 'item'));
+        $items = $class->items;
+        return view('shop.create', compact('code', 'class', 'item', 'items'));
     }
 
     public function destroy($id)
@@ -115,12 +117,16 @@ class ShopController extends Controller
                 'min_lvl' => ['numeric', 'nullable'],
                 'price' => ['numeric', 'nullable'],
                 'description' => ['string', 'nullable'],
-                'icon' => ['image'],
+                'icon' => ['image', 'nullable'],
+                'craft' => ['string', 'nullable'],
             ]);
 
-            $image = $data['icon'];
-            $data['icon'] = '';
+            if(isset($data['icon'])) {
+                $image = $data['icon'];
+                $data['icon'] = '';
+            } else $image = null;
             $data['classroom_id'] = $class->id;
+            $data['craft'] = json_decode($data['craft']);
 
             if ($action == 'store')
                 $item = Item::create($data);
@@ -129,6 +135,7 @@ class ShopController extends Controller
                 $item->update($data);
             }
 
+            if($image)
             $item->addMedia(request()->file('icon'))
                 ->toMediaCollection('item');
 

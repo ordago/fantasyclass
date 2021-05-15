@@ -18,8 +18,13 @@ class Item extends Model implements HasMedia
         'description', 
         'price', 
         'min_lvl', 
+        'craft', 
         'for_sale', 
         'classroom_id' ];
+
+        protected $casts = [
+            'craft' => 'array',
+        ];
 
         public function registerMediaCollections() : void 
         {

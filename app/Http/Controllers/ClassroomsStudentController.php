@@ -422,6 +422,68 @@ class ClassroomsStudentController extends Controller
         return $challenges;
     }
 
+    public function craft($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class);
+
+        $data = request()->validate([
+            'craft' => ['array', 'required'],
+        ]);
+
+        foreach ($data['craft'] as $craft) {
+            if (!$student->items->contains($craft))
+                abort(403);
+        }
+        foreach ($class->items as $item) {
+            if ($item->craft) {
+                $count = count($item->craft);
+                if (count($data['craft']) == $count) {
+                    foreach ($item->craft as $craft) {
+                        if (array_search($craft['id'], $data['craft']) !== false) {
+                            $count--;
+                        }
+                    }
+                    if ($count === 0) {
+                        // Remove the combined objects
+                        foreach ($data['craft'] as $itemRemove) {
+                            $studentItem = $student->items->where('id', $itemRemove)->first();
+                            if ($studentItem)
+                                $count = $studentItem->pivot->count - 1;
+                            else $count = 0;
+                            if($count == 0) {
+                                $student->items()->detach($itemRemove);
+                            } else {
+                                $student->items()->sync([$itemRemove => ['count' => $count]], false);
+                            }
+                        }
+                        // Add new item or update count
+                        $studentItem = $student->items->where('id', $item->id)->first();
+                        if ($studentItem)
+                            $count = $studentItem->pivot->count + 1;
+                        else $count = 1;
+                        $student->items()->sync([$item->id => ['count' => $count]], false);
+
+                        return [
+                            "message" => " " . __('success_error.update_success'),
+                            "icon" => "check",
+                            "type" => "success",
+                            "item" => $item,
+                            "items" => $student->fresh()->items,
+                        ];
+                    }
+                }
+            }
+        }
+        return [
+            "message" => " " . __('success_error.craft_fail'),
+            "icon" => "times",
+            "type" => "error",
+        ];
+    }
+
     public function show($code, $section = false)
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
@@ -519,8 +581,8 @@ class ClassroomsStudentController extends Controller
 
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
-        
-        if($section)
+
+        if ($section)
             $tab = $section;
 
         return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
@@ -920,11 +982,11 @@ class ClassroomsStudentController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $student = Functions::getCurrentStudent($class, []);
         $student->append('numcards');
-    
+
         if ($student->hp == 0 || settings()->get('allow_buy_cards', 0) == 0)
             return false;
 
-        if($student->numcards[0] >= $student->numcards[1]) {
+        if ($student->numcards[0] >= $student->numcards[1]) {
             return [
                 "message" => " " . __('success_error.max_cards_reached'),
                 "icon" => "sad-tear",
@@ -946,13 +1008,13 @@ class ClassroomsStudentController extends Controller
         $student->update(['gold' => ($student->gold - $price)]);
 
         return [
-                "message" => " " . __('success_error.skill_success'),
-                "icon" => "check",
-                "type" => "success",
-                "card" => $card,
-                "cards" => $student->fresh()->cards,
-                "numcards" => $student->fresh()->numcards,
-            ];
+            "message" => " " . __('success_error.skill_success'),
+            "icon" => "check",
+            "type" => "success",
+            "card" => $card,
+            "cards" => $student->fresh()->cards,
+            "numcards" => $student->fresh()->numcards,
+        ];
     }
     public function buySkill($code)
     {

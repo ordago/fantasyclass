@@ -346,7 +346,7 @@
                 v-tippy
                 :content="propertiesMessage(gear)"
                 :ref="'item' + gear.id"
-                class="inventory-item inv-item-armor relative"
+                class="inventory-item inv-item-armor relative rounded"
                 v-bind:class="{
                   'inv-item-armor-bronce': gear.offset == 1,
                   'inv-item-armor-silver': gear.offset == 2,
@@ -434,11 +434,18 @@
             <div class="">
               <div>
                 <div
+                  v-if="student.items.length >= 1"
+                  @click="isCraftingModalActive = true"
+                  class="inventory-item inventory-item-dark has-text-light rounded"
+                >
+                  <i class="fad fa-hammer" style="font-size: 3.5em"></i>
+                </div>
+                <div
                   v-for="item in student.items"
                   v-tippy
                   :content="message(item)"
                   v-show="item.pivot.count > 0"
-                  class="inventory-item"
+                  class="inventory-item rounded"
                   v-bind:key="item.id"
                 >
                   <img
@@ -452,7 +459,7 @@
               <div>
                 <div
                   v-for="index in inventoryRemaining"
-                  class="inventory-item"
+                  class="inventory-item rounded"
                   v-bind:key="index"
                 ></div>
               </div>
@@ -464,7 +471,7 @@
                 v-tippy
                 :content="propertiesMessage(gear)"
                 :ref="'item' + gear.id"
-                class="inventory-item inv-item-armor relative"
+                class="inventory-item inv-item-armor relative rounded"
                 v-bind:class="{
                   'inv-item-armor-bronce': gear.offset == 1,
                   'inv-item-armor-silver': gear.offset == 2,
@@ -531,7 +538,10 @@
             </h2>
             <div v-if="settings.allow_buy_cards == 1">
               <button class="button is-primary m-2 mt-3" @click="buyCard">
-                <i class="fas fa-envelope mr-1"></i><i class="fak fa-deck mr-2"></i> {{ trans.get('shop.random_card') }} ({{ settings.card_price }} <i class="fas fa-coins colored"></i>)
+                <i class="fas fa-envelope mr-1"></i
+                ><i class="fak fa-deck mr-2"></i>
+                {{ trans.get("shop.random_card") }} ({{ settings.card_price }}
+                <i class="fas fa-coins colored"></i>)
               </button>
             </div>
 
@@ -1107,12 +1117,90 @@
         </div>
       </div>
     </b-modal>
-    <random-card :card="randomCard" :admin="0" :code="classroom.code"></random-card>
+    <b-modal
+      :active.sync="isCraftingModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      full-screen
+      v-if="student.items.length >= 1"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("shop.crafting") }}</p>
+        </header>
+        <section class="modal-card-body">
+          <p>
+            {{ trans.get("shop.crafting_info") }}
+          </p>
+          <div class="is-relative">
+            <span
+              class="is-relative"
+              v-for="item in student.items"
+              :key="item.id"
+            >
+              <img
+                @click="addCraft(item)"
+                v-if="checkCraft(item.id)"
+                :src="item.icon"
+                class="m-2 p-2 has-background-dark rounded"
+              />
+              <div
+                v-if="checkCraft(item.id)"
+                @click="addCraft(item)"
+                class="price-buy rounded not-hover"
+              >
+                <i class="fas fa-plus"></i>
+              </div>
+            </span>
+          </div>
+          <div
+            v-if="craft && craft.length"
+            class="p-2 pb-4 has-background-light border m-2"
+          >
+            <span class="is-relative" v-for="craft in craft" :key="craft.id">
+              <img
+                @click="removeCraft(craft.id)"
+                :src="craft.icon"
+                class="m-2 p-2 has-background-dark rounded"
+              />
+              <div
+                @click="removeCraft(craft.id)"
+                class="price-buy rounded not-hover"
+              >
+                <i class="fas fa-minus"></i>
+              </div>
+            </span>
+            <div
+              @click="tryCraft"
+              class="inventory-item inventory-item-dark has-text-light rounded faa-parent animated-hover"
+            >
+              <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isCraftingModalActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
+    <random-card
+      :card="randomCard"
+      :admin="0"
+      :code="classroom.code"
+    ></random-card>
   </div>
 </template>
 
 <script>
-
 import Utils from "../../utils.js";
 import RandomCard from "../utils/RandomCard.vue";
 
@@ -1122,10 +1210,7 @@ import ShowSkill from "../skill/ShowSkill.vue";
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
 
-// // Charts
-// import VueApexCharts from "vue-apexcharts";
-// Vue.use(VueApexCharts);
-// Vue.component("apexchart", VueApexCharts);
+import confetti from "canvas-confetti";
 
 export default {
   props: [
@@ -1200,6 +1285,7 @@ export default {
       forceReload: 0,
       isSendMoneyActive: false,
       prevImage: null,
+      isCraftingModalActive: false,
       image: null,
       behaviours: null,
       isAssignModalActive: false,
@@ -1219,11 +1305,54 @@ export default {
       isCardModalActive: false,
       randomCard: null,
       cardsMutable: this.cards,
+      craft: [],
     };
   },
   methods: {
+    tryCraft() {
+      let ids = [];
+      this.craft.forEach((element) => {
+        ids.push(element.id);
+      });
+      axios
+        .post("/classroom/" + this.classroom.code + "/craft", { craft: ids })
+        .then((response) => {
+          if (response.data.type == "error") {
+            this.$toast(response.data.message, {
+              type: response.data.type,
+            });
+          } else {
+            confetti({
+                particleCount: 200,
+                spread: 100,
+                origin: { y: 1.0 },
+              });
+            this.$buefy.dialog.alert({
+                    title: 'Owww yeaaaa 👏👏',
+                    message: '<div class="has-text-centered">' + this.trans.get('shop.craft_success') + ': <br><br> <img src="'+response.data.item.icon+'"></div>',
+                    type: 'is-success',
+                    ariaRole: 'alertdialog',
+                    ariaModal: true
+                })
+            this.student.items = response.data.items;
+            this.craft = [];
+            this.$forceUpdate();
+          }
+        });
+    },
+    removeCraft(id) {
+      let index = this.craft.find((object) => object.id == id);
+      if (index) this.craft.splice(index, 1);
+    },
+    addCraft(object) {
+      this.craft.push(object);
+      this.$forceUpdate();
+    },
+    checkCraft(id) {
+      return !this.craft.find((object) => object.id == id);
+    },
     buyCard() {
-       this.$buefy.dialog.confirm({
+      this.$buefy.dialog.confirm({
         title: this.trans.get("shop.buy_card"),
         message:
           "<span class='message-buy'>" +
@@ -1240,17 +1369,18 @@ export default {
           axios
             .post("/classroom/" + this.classroom.code + "/student/card/buy")
             .then((response) => {
-
               if (response.data.type == "success") {
                 this.randomCard = response.data.card;
                 this.student.gold =
                   this.student.gold - this.settings.card_price;
-                  this.isCardModalActive = true;
+                this.isCardModalActive = true;
                 this.cardsMutable = response.data.cards;
                 this.student.numcards = response.data.numcards;
                 this.$forceUpdate();
               } else {
-                this.$toast(response.data.message, { type: response.data.type });
+                this.$toast(response.data.message, {
+                  type: response.data.type,
+                });
               }
             });
         },

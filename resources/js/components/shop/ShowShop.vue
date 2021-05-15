@@ -79,6 +79,10 @@
                   >
                     {{ item.description }}
                   </div>
+                  <div class="my-2" v-if="item.craft && item.craft.length">
+                    <i class="fad fa-hammer" style="font-size: 1.5em"></i>: 
+                    <img width="20px" :src="img.src" v-for="img in item.craft" :key="img.id">
+                  </div>
                   <div>
                     <a
                       :href="'/classroom/' + code + '/shop/' + item.id"

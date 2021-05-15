@@ -43,5 +43,10 @@ return [
     'random_card' => 'Buy a random card',
     'buy_card' => 'Buy a card',
     'buy_card_info' => 'You\'ll get a random card, it can\'t be changed, good luck!',
+
+    'crafting' => 'Craft',
+    'crafting_shop' => 'Create this object by combining these objects',
+    'crafting_info' => 'Click on the objects to start creating. Mix object to create new ones!',
+    'craft_success' => 'You\'ve obtained',
     
 ];

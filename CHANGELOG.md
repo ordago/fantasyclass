@@ -1,9 +1,8 @@
 # Changelog
-## v1.51 Beta (XX/05/2021)
+## v1.51 Beta (15/05/2021)
 ### Added
 - Allow to buy random cards.
-~ Crafting of items.
-~ Student's rank.
+- Crafting of items.
 
 ### Changed
 - New shop items template.

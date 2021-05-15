@@ -30,5 +30,5 @@
 @endsection
 
 @section('content')
-  <shop-create code="{{ $code }}" :item="{{ $item ?? 'null' }}"></shop-create>
+  <shop-create code="{{ $code }}" :items="{{ $items }}" :item="{{ $item ?? 'null' }}"></shop-create>
 @endsection

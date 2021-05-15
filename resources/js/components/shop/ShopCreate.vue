@@ -17,6 +17,7 @@
         :initial-image="prevImage"
         :aspectRatio="1 / 1"
         :initialAspectRatio="1 / 1"
+        @file-choose="imageChanged=true"
       ></croppa>
     </div>
     <button class="button is-info" @click="isModalActive = true"><i class="fad fa-images mr-1"></i> {{ trans.get('shop.load_gallery') }}</button>
@@ -140,6 +141,20 @@
         ></textarea>
       </div>
     </div>
+    <div class="m-2">
+      <p class="my-2 is-size-5"><i class="fad fa-hammer"></i> 
+{{ trans.get('shop.crafting') }} <small class="is-italic">{{ trans.get('shop.crafting_shop') }}</small></p>
+      <div class="is-flex">
+         <vue-select-image
+          :dataImages="craftItems"
+          @onselectmultipleimage="onSelectMultipleImage"
+          :is-multiple="true"
+          :selectedImages="craft"
+          w="30px"
+        >
+        </vue-select-image>
+      </div>
+    </div>
     <button class="button is-primary" v-if="!item" @click="createItem()">
       <i class="fas fa-plus"></i> {{ trans.get("general.create") }}
     </button>
@@ -185,9 +200,16 @@
 </template>
 
 <script>
+
+import VueSelectImage from "vue-select-image";
+require("vue-select-image/dist/vue-select-image.css");
+
 export default {
-  props: ["code", "item"],
+  props: ["code", "item", "items"],
   mounted() {
+    this.craftItems = this.items.map(function (row) {
+            return { id: row.id, src: row.icon, alt: row.description };
+    });
     axios.get("/classroom/utils/get-shop").then((response) => {
       this.images = response.data;
     });
@@ -202,10 +224,13 @@ export default {
       this.price = this.item.price ? this.item.price : 0;
       this.description = this.item.description ? this.item.description : "";
       this.prevImage = this.item.icon;
+      this.craft = this.item.craft ? this.item.craft : [];
+      this.imageChanged = false;
     }
   },
   data: function () {
     return {
+      imageChanged: true,
       images: [],
       image: {},
       hp: 0,
@@ -213,16 +238,22 @@ export default {
       slot: 0,
       min_lvl: 0,
       price: 0,
+      craft: [],
       description: "",
       prevImage: "",
       id: null,
+      craftItems: [],
       isModalActive: false,
     };
   },
   methods: {
+    onSelectMultipleImage(items) {
+      this.craft = items;
+    },
     updateImg(img) {
       this.prevImage = img;
       this.isModalActive = false;
+      this.imageChanged = true;
       this.image.refresh();
     },
     createItem() {
@@ -230,12 +261,15 @@ export default {
         (blob) => {
           if (blob != null) {
             let formData = new FormData();
-            formData.append("icon", blob, "item.png");
+            console.log(this.imageChanged)
+            if(this.imageChanged)
+              formData.append("icon", blob, "item.png");
             formData.append("hp", this.hp);
             formData.append("xp", this.xp);
             formData.append("slot", this.slot);
             formData.append("min_lvl", this.min_lvl);
             formData.append("price", this.price);
+            formData.append("craft", JSON.stringify(this.craft));
             formData.append("description", this.description);
 
             if (this.item) {
@@ -259,6 +293,9 @@ export default {
         0.8
       );
     },
+  },
+  components: {
+    VueSelectImage,
   },
   computed: {},
 };
