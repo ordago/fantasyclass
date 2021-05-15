@@ -46,6 +46,6 @@ return [
 
     'max_cards_reached' => '¡Máximo de cartas superado!',
 
-    'craft_fail' => 'Estos objectos no se pueden combinar',
+    'craft_fail' => 'Estos objetos no se pueden combinar',
 
 ];
