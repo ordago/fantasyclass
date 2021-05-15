@@ -1,4 +1,12 @@
 # Changelog
+## v1.51 Beta (XX/05/2021)
+### Added
+~ Crafting of items.
+~ Student's rank.
+
+### Changed
+- New shop items template.
+
 ## v1.50.2 Beta (25/04/2021)
 ### Added
 - Gallery to shop objects.

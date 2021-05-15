@@ -20,141 +20,80 @@
         >
 
         <div
-          v-for="item in items"
-          class="columns is-multiline is-variable is-1 has-all-centered p-3 has-hr"
-          v-bind:key="item.id"
+          class="columns is-multiline is-variable is-1 has-all-centered mt-3"
+          style="box-sizing: border-box"
         >
-          <div class="column is-narrow is-relative">
-            <div class="lvl-item-top-left" v-if="item.min_lvl">
-              <img src="/img/cardgen/lvl.png" class="levelCard" />
-              <span class="is-flex has-all-centered">{{ item.min_lvl }}</span>
-            </div>
-            <img :src="item.icon" width="48px" />
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static">
-                        <i class="fas fa-heart colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        disabled
-                        class="input"
-                        style="border: 1px solid; width: 100px"
-                        v-model="item.hp"
-                      />
-                    </p>
+          <div
+            class="p-1 column is-4-tablet is-12-mobile is-2-desktop"
+            v-for="item in items"
+            v-bind:key="item.id"
+            style="box-sizing: border-box"
+          >
+            <div
+              class="card"
+              :class="{ 'has-background-success-light': item.for_sale == 1 }"
+            >
+              <div class="card-image pb-0">
+                <div class="column is-narrow is-relative has-text-centered">
+                  <div class="lvl-item-top-left" v-if="item.min_lvl">
+                    <img src="/img/cardgen/lvl.png" class="levelCard" />
+                    <span class="is-flex has-all-centered">{{
+                      item.min_lvl
+                    }}</span>
+                  </div>
+                  <div>
+                    <img :src="item.icon" width="48px" />
+                  </div>
+                  <div>
+                    <b-switch
+                      v-model="item.for_sale"
+                      @input="updateForSale(item)"
+                      true-value="1"
+                      false-value="0"
+                      >{{ trans.get("shop.for_sale") }}</b-switch
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="card-content pt-0">
+                <div class="content">
+                  <div class="my-1">
+                    {{ trans.get("shop.price") }}: {{ item.price }}
+                    <i class="fas fa-coins colored"></i>
+                  </div>
+                  <div class="my-1" v-if="item.hp">
+                    <i class="fas fa-heart colored"></i>: {{ item.hp }}
+                    <i class="fas fa-arrow-up"></i>
+                  </div>
+                  <div class="my-1" v-if="item.xp">
+                    <i class="fas fa-fist-raised colored"></i>: {{ item.xp }}
+                    <i class="fas fa-arrow-up"></i>
+                  </div>
+                  <div class="my-1" v-if="item.slot">
+                    <i class="fak fa-deck colored"></i>: {{ item.slot }}
+                    <i class="fas fa-arrow-up"></i>
+                  </div>
+                  <div class="my-1 p-2 rounded has-background-link-light border" v-if="item.description">
+                      {{ item.description }}
+                  </div>
+                  <div>
+                    <a
+                      :href="'/classroom/' + code + '/shop/' + item.id"
+                      class="button"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </a>
+                    <button
+                      class="button is-danger ml-2"
+                      @click="deleteItem(item.id)"
+                    >
+                      <i class="fas fa-trash-alt"></i>
+                    </button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static">
-                        <i class="fas fa-fist-raised colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        disabled
-                        style="border: 1px solid; width: 100px"
-                        v-model="item.xp"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static">
-                        <i class="fak fa-deck colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        disabled
-                        style="border: 1px solid; width: 100px"
-                        v-model="item.slot"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-static">
-                        Price
-                        <i class="fas fa-coins colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        disabled
-                        style="border: 1px solid; width: 100px"
-                        v-model="item.price"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="column is-narrow">
-            <div class="field">
-              <b-switch
-                v-model="item.for_sale"
-                @input="updateForSale(item)"
-                true-value="1"
-                false-value="0"
-                >{{ trans.get('shop.for_sale') }}</b-switch
-              >
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <textarea
-              class="input"
-              :placeholder="trans.get('shop.description')"
-              disabled
-              style="border: 1px solid"
-              v-model="item.description"
-            ></textarea>
-          </div>
-          <a :href="'/classroom/' + code + '/shop/' + item.id" class="button">
-            <i class="fas fa-edit"></i>
-          </a>
-          <button class="button is-danger ml-2" @click="deleteItem(item.id)">
-            <i class="fas fa-trash-alt"></i>
-          </button>
         </div>
       </b-tab-item>
 
@@ -345,7 +284,9 @@ export default {
           id: item.id,
           for_sale: item.for_sale,
         })
-        .then((response) => {});
+        .then((response) => {
+          this.$forceUpdate();
+        });
     },
     save(eq) {
       let key;
