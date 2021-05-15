@@ -39,4 +39,8 @@ return [
     'item_slot' => 'Assigna un valor si l\'objecte serveix per poder tenir més cartes',
     'slot' => 'Aquest objecte et permet portar',
 
+    'random_card' => 'Compra una carta aleatòria',
+    'buy_card' => 'Compra una carta',
+    'buy_card_info' => 'Obtindràs una carta aleatòria, no es pot canviar, sort!',
+
 ];

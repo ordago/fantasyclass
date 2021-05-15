@@ -44,4 +44,6 @@ return [
     '403time' => 'Este reto estará activo el ',
     '403reqChallenge' => 'Este desafío tiene un requisito: ',
 
+    'max_cards_reached' => '¡Máximo de cartas superado!',
+
 ];

@@ -522,8 +522,19 @@
             </div>
             <div class style="clear: both"></div>
           </div>
-          <div class="shop pt-3" v-if="itemsJson">
-            <h2 class="is-size-2"><i class="fas fa-store"></i> Shop</h2>
+          <div
+            class="shop pt-3"
+            v-if="itemsJson || settings.allow_buy_cards == 1"
+          >
+            <h2 class="is-size-2">
+              <i class="fas fa-store"></i> {{ trans.get("menu.shop") }}
+            </h2>
+            <div v-if="settings.allow_buy_cards == 1">
+              <button class="button is-primary m-2 mt-3" @click="buyCard">
+                <i class="fas fa-envelope mr-1"></i><i class="fak fa-deck mr-2"></i> {{ trans.get('shop.random_card') }} ({{ settings.card_price }} <i class="fas fa-coins colored"></i>)
+              </button>
+            </div>
+
             <div
               class="columns p-4 m-2 rounded"
               v-for="item in itemsJson"
@@ -715,7 +726,7 @@
           </button>
           <div class="columns is-multiline is-variable">
             <div
-              v-for="(card, index) in cards"
+              v-for="(card, index) in cardsMutable"
               :key="index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
@@ -1096,13 +1107,14 @@
         </div>
       </div>
     </b-modal>
+    <random-card :card="randomCard" :admin="0" :code="classroom.code"></random-card>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
 
 import Utils from "../../utils.js";
+import RandomCard from "../utils/RandomCard.vue";
 
 import ShowBadge from "../badge/ShowBadge.vue";
 import ShowSkill from "../skill/ShowSkill.vue";
@@ -1137,6 +1149,7 @@ export default {
     Hp,
     ShowBadge,
     ShowSkill,
+    RandomCard,
   },
   created() {
     this.mutableChallenges = this.challenges;
@@ -1152,7 +1165,7 @@ export default {
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
-    if(this.section) {
+    if (this.section) {
       this.activeTab = parseInt(this.section);
     } else if (this.$cookies.get("tab")) {
       this.activeTab = parseInt(this.$cookies.get("tab"));
@@ -1161,26 +1174,22 @@ export default {
         this.activeTab = 1;
       }
     }
-    if(this.admin) {
+    if (this.admin) {
       const sendPostRequest = async () => {
-          axios
-            .get("/classroom/" + this.classroom.code + "/students/all")
-            .then((response) => {
-              this.students = response.data;
-            }); 
-      }
+        axios
+          .get("/classroom/" + this.classroom.code + "/students/all")
+          .then((response) => {
+            this.students = response.data;
+          });
+      };
       sendPostRequest();
     }
-
   },
   data: function () {
     return {
       activeTab: 0,
       dateStart: null,
       dateEnd: null,
-      // series: [],
-      // labels: [],
-      // colors: [],
       update: 0,
       inventoryRemaining: 0,
       itemsJson: null,
@@ -1207,9 +1216,46 @@ export default {
       clearable: false,
       mutableChallenges: [],
       students: [],
+      isCardModalActive: false,
+      randomCard: null,
+      cardsMutable: this.cards,
     };
   },
   methods: {
+    buyCard() {
+       this.$buefy.dialog.confirm({
+        title: this.trans.get("shop.buy_card"),
+        message:
+          "<span class='message-buy'>" +
+          this.trans.get("shop.buy_card_info") +
+          " (" +
+          this.settings.card_price +
+          " <i class='fas fa-coins colored'></i>)</span>",
+        confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/student/card/buy")
+            .then((response) => {
+
+              if (response.data.type == "success") {
+                this.randomCard = response.data.card;
+                this.student.gold =
+                  this.student.gold - this.settings.card_price;
+                  this.isCardModalActive = true;
+                this.cardsMutable = response.data.cards;
+                this.student.numcards = response.data.numcards;
+                this.$forceUpdate();
+              } else {
+                this.$toast(response.data.message, { type: response.data.type });
+              }
+            });
+        },
+      });
+    },
     buySkill() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("skills.buy_skill"),
@@ -1266,12 +1312,10 @@ export default {
       let index;
       if (next) {
         index =
-          (this.students.findIndex(currentStudent) + 1) %
-          this.students.length;
+          (this.students.findIndex(currentStudent) + 1) % this.students.length;
       } else {
         index =
-          (this.students.findIndex(currentStudent) - 1) %
-          this.students.length;
+          (this.students.findIndex(currentStudent) - 1) % this.students.length;
         if (index == -1) index = this.students.length - 1;
       }
       nextId = this.students[index].id;

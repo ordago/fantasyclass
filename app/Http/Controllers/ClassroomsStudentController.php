@@ -482,6 +482,8 @@ class ClassroomsStudentController extends Controller
 
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['allow_upload'] = settings()->get('allow_upload', 0);
+        $settings['allow_buy_cards'] = settings()->get('allow_buy_cards', 0);
+        $settings['card_price'] = settings()->get('card_price', 600);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
@@ -910,9 +912,50 @@ class ClassroomsStudentController extends Controller
             ->first();
     }
 
+    public function buyCard($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $student = Functions::getCurrentStudent($class, []);
+        $student->append('numcards');
+    
+        if ($student->hp == 0 || settings()->get('allow_buy_cards', 0) == 0)
+            return false;
+
+        if($student->numcards[0] >= $student->numcards[1]) {
+            return [
+                "message" => " " . __('success_error.max_cards_reached'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        $price = settings()->get('card_price', 600);
+        if ($price > $student->gold) {
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        $card = CardsController::getRandomCard($code);
+        $student->cards()->attach($card->id);
+        $student->update(['gold' => ($student->gold - $price)]);
+
+        return [
+                "message" => " " . __('success_error.skill_success'),
+                "icon" => "check",
+                "type" => "success",
+                "card" => $card,
+                "cards" => $student->fresh()->cards,
+                "numcards" => $student->fresh()->numcards,
+            ];
+    }
     public function buySkill($code)
     {
-
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
 

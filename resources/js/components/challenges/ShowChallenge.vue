@@ -432,7 +432,7 @@
               "
               class="button is-info"
               @click="markCompleted"
-              :class="{ 'is-loading': isLoading }"
+              :class="{ 'is-loading': $parent.isLoading }"
             >
               <span class="icon is-small">
                 <i class="fas fa-check"></i>

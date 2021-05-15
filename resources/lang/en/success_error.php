@@ -42,4 +42,6 @@ return [
     '403time' => 'This challenge will be active at ',
     '403reqChallenge' => 'This challenge has a requirement: ',
 
+    'max_cards_reached' => 'Max cards reached!',
+
 ];

@@ -73,8 +73,11 @@
                     <i class="fak fa-deck colored"></i>: {{ item.slot }}
                     <i class="fas fa-arrow-up"></i>
                   </div>
-                  <div class="my-1 p-2 rounded has-background-link-light border" v-if="item.description">
-                      {{ item.description }}
+                  <div
+                    class="my-1 p-2 rounded has-background-link-light border"
+                    v-if="item.description"
+                  >
+                    {{ item.description }}
                   </div>
                   <div>
                     <a
@@ -97,6 +100,28 @@
         </div>
       </b-tab-item>
 
+      <b-tab-item :label="trans.get('menu.cards')" icon-pack="fa" class="p-4">
+        <div class="field">
+          <b-switch
+            :value="true"
+            type="is-success"
+            v-model="allow_buy_cards"
+            passive-type="is-danger"
+            @input="toggleVisibility('allow_buy_cards')"
+            >{{ trans.get("shop.visibility") }}</b-switch
+          >
+        </div>
+        <b-field :label="trans.get('shop.price')" class="mt-4">
+            <b-numberinput
+              controls-position="compact"
+              v-model="config.card_price"
+            ></b-numberinput>
+        </b-field>
+         <button class="button is-primary" @click="save(99)">
+            <i class="fas fa-save mr-2"></i>
+            {{ trans.get("general.save") }}
+          </button>
+      </b-tab-item>
       <b-tab-item
         v-if="character"
         :label="trans.get('shop.eq1')"
@@ -262,6 +287,7 @@ export default {
       equipment_1_visibility: this.config.equipment_1_visibility ? true : false,
       equipment_2_visibility: this.config.equipment_2_visibility ? true : false,
       equipment_3_visibility: this.config.equipment_3_visibility ? true : false,
+      allow_buy_cards: this.config.allow_buy_cards ? true : false,
       forceUpdate: 0,
       nom: "",
       visible: false,
@@ -303,6 +329,10 @@ export default {
         case 3:
           key = "shop_multiplier_3";
           value = this.config.multiplier3;
+          break;
+        case 99:
+          key = "card_price";
+          value = this.config.card_price;
           break;
       }
       axios

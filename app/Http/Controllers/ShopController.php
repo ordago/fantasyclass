@@ -27,6 +27,8 @@ class ShopController extends Controller
             'equipment_1_visibility' => settings()->get('equipment_1_visibility', false) ? true : false,
             'equipment_2_visibility' => settings()->get('equipment_2_visibility', false) ? true : false,
             'equipment_3_visibility' => settings()->get('equipment_3_visibility', false) ? true : false,
+            'allow_buy_cards' => settings()->get('allow_buy_cards', false) ? true : false,
+            'card_price' => (integer) settings()->get('card_price', 600),
             'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
             'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),

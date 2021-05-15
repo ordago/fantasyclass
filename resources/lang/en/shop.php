@@ -39,5 +39,9 @@ return [
 
     'item_slot' => 'Assign un value if this is an item taht allows students to has more cards',
     'slot' => 'With this object, you can carry',
+
+    'random_card' => 'Buy a random card',
+    'buy_card' => 'Buy a card',
+    'buy_card_info' => 'You\'ll get a random card, it can\'t be changed, good luck!',
     
 ];
