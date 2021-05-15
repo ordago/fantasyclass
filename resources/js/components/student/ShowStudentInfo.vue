@@ -1328,7 +1328,7 @@ export default {
               origin: { y: 1.0 },
             });
             this.$buefy.dialog.alert({
-              title: "Owww yeaaaa 👏👏",
+              title: "Owww yeaahhhh 👏👏",
               message:
                 '<div class="has-text-centered">' +
                 this.trans.get("shop.craft_success") +
