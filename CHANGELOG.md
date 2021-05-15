@@ -1,5 +1,5 @@
 # Changelog
-## v1.51 Beta (15/05/2021)
+## v1.51 Beta (16/05/2021)
 ### Added
 - Allow to buy random cards.
 - Crafting of items.

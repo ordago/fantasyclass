@@ -1323,17 +1323,22 @@ export default {
             });
           } else {
             confetti({
-                particleCount: 200,
-                spread: 100,
-                origin: { y: 1.0 },
-              });
+              particleCount: 200,
+              spread: 100,
+              origin: { y: 1.0 },
+            });
             this.$buefy.dialog.alert({
-                    title: 'Owww yeaaaa 👏👏',
-                    message: '<div class="has-text-centered">' + this.trans.get('shop.craft_success') + ': <br><br> <img src="'+response.data.item.icon+'"></div>',
-                    type: 'is-success',
-                    ariaRole: 'alertdialog',
-                    ariaModal: true
-                })
+              title: "Owww yeaaaa 👏👏",
+              message:
+                '<div class="has-text-centered">' +
+                this.trans.get("shop.craft_success") +
+                ': <br><br> <img src="' +
+                response.data.item.icon +
+                '"></div>',
+              type: "is-success",
+              ariaRole: "alertdialog",
+              ariaModal: true,
+            });
             this.student.items = response.data.items;
             this.craft = [];
             this.$forceUpdate();
@@ -1341,8 +1346,10 @@ export default {
         });
     },
     removeCraft(id) {
-      let index = this.craft.find((object) => object.id == id);
-      if (index) this.craft.splice(index, 1);
+      var index = this.craft.findIndex(function (item) {
+        return item.id === id;
+      });
+      this.craft.splice(index, 1);
     },
     addCraft(object) {
       this.craft.push(object);
