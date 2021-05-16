@@ -1342,6 +1342,8 @@ export default {
       return msg;
     },
     tryCraft() {
+      let audio = new Audio("/sound/hammer.mp3");
+      audio.play();
       let ids = [];
       this.craft.forEach((element) => {
         ids.push(element.id);
@@ -1354,6 +1356,8 @@ export default {
               type: response.data.type,
             });
           } else {
+            audio = new Audio("/sound/success.mp3");
+            audio.play();
             confetti({
               particleCount: 200,
               spread: 100,
