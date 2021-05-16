@@ -12,7 +12,7 @@
     <!--
        
     -->
-    <div class="column is-narrow has-all-centered is-flex" v-if="prizeSelected">
+    <div class="column is-narrow has-all-centered is-flex" v-if="showWheel">
       <div class="field m-0 is-flex">
         <button class="button is-link" @click="randomStudent()">
           <i class="fad fa-random mr-2"></i> {{ trans.get("utils.random") }}
@@ -34,49 +34,77 @@
           </span>
         </p>
       </div>
-      <button
-        class="button"
-        :class="{
-          'is-danger': prizeSelected.value < 0,
-          'is-success': prizeSelected.value > 0,
-        }"
-        @click="assignPrize()"
-      >
-        {{ prizeSelected.value }} <i class="fas fa-coins colored"></i>
-      </button>
-    </div>
-    <form @submit.prevent="prepareWheel" v-if="!showWheel">
-      <div class="columns p-2">
-        <b-select
-          required
-          v-model="numberPrizes"
-          :placeholder="trans.get('utils.quantity_rewards')"
+      <span v-if="prizeSelected">
+        <button
+          v-if="typew == 0"
+          class="button"
+          :class="{
+            'is-danger': prizeSelected.value < 0,
+            'is-success': prizeSelected.value > 0,
+          }"
+          @click="assignPrize()"
         >
-          <option value="10">10</option>
-          <option value="20">20</option>
-          <option value="30">30</option>
-        </b-select>
-      </div>
-      <div class="columns p-2">
-        <div class="field p-1">
-          <label class="label">Min <i class="fas fa-coins colored"></i></label>
-          <div class="control">
-            <input type="number" required class="input" v-model="min" />
+          {{ prizeSelected.value }} <i class="fas fa-coins colored"></i>
+        </button>
+        <button v-else class="button is-success" @click="assignObject()">
+          <img :src="prizeSelected.imageUri" />
+        </button>
+      </span>
+    </div>
+    <b-tabs type="is-toggle" expanded v-if="!showWheel">
+      <b-tab-item label="Oro" icon-pack="fas" icon="coins" class="p-3">
+        <form @submit.prevent="prepareWheel">
+          <div class="columns p-2">
+            <b-select
+              required
+              v-model="numberPrizes"
+              :placeholder="trans.get('utils.quantity_rewards')"
+            >
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="30">30</option>
+            </b-select>
           </div>
-        </div>
-        <div class="field p-1">
-          <label class="label">Max <i class="fas fa-coins colored"></i></label>
-          <div class="control">
-            <input type="number" required class="input" v-model="max" />
+          <div class="columns p-2">
+            <div class="field p-1">
+              <label class="label"
+                >Min <i class="fas fa-coins colored"></i
+              ></label>
+              <div class="control">
+                <input type="number" required class="input" v-model="min" />
+              </div>
+            </div>
+            <div class="field p-1">
+              <label class="label"
+                >Max <i class="fas fa-coins colored"></i
+              ></label>
+              <div class="control">
+                <input type="number" required class="input" v-model="max" />
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="columns p-2">
-        <button class="button is-primary">
+          <div class="columns p-2">
+            <button class="button is-primary">
+              {{ trans.get("utils.wheel") }}
+            </button>
+          </div>
+        </form>
+      </b-tab-item>
+      <b-tab-item
+        :label="trans.get('utils.objects')"
+        icon-pack="fas"
+        icon="store"
+      >
+        <article class="message is-warning mt-2">
+          <div class="message-body">
+            {{ trans.get('utils.objects_info') }}
+          </div>
+        </article>
+        <button @click="prepareWheelImg" class="button is-primary">
           {{ trans.get("utils.wheel") }}
         </button>
-      </div>
-    </form>
+      </b-tab-item>
+    </b-tabs>
   </div>
 </template>
 
@@ -89,14 +117,22 @@ export default {
   components: {
     FortuneWheel,
   },
-  props: ["students"],
+  props: {
+    students: {
+      type: Array,
+      default: [],
+    },
+    code: {
+      type: String,
+    },
+  },
   data() {
     return {
       canvasOptions: {
         borderWidth: 2,
         textDirection: "vertical",
         borderColor: "#584b43",
-        textRadius: "230",
+        textRadius: "218",
         borderWidth: "2",
       },
       min: -100,
@@ -104,6 +140,7 @@ export default {
       prizeSelected: false,
       numberPrizes: null,
       fontSize: 30,
+      typew: 0,
       studentSelected: null,
       showWheel: false,
       colorsOK: [
@@ -143,6 +180,36 @@ export default {
       const idx = Math.floor(Math.random() * this.students.length);
       this.studentSelected = this.students[idx].id;
     },
+    assignObject() {
+      if (!this.studentSelected) {
+        this.$buefy.dialog.alert({
+          title: "Error",
+          message: "Please, select a student",
+          type: "is-danger",
+          hasIcon: true,
+          icon: "times-circle",
+          iconPack: "fa",
+          ariaRole: "alertdialog",
+          ariaModal: true,
+        });
+        return false;
+      }
+      let options = {
+        id: this.studentSelected,
+        prop: "object",
+        value: this.prizeSelected.id,
+        type: "wheel",
+      };
+
+      axios.post("/classroom/students/update", options).then((response) => {
+        this.$toast(this.trans.get("success_error.update_success"), {
+          type: "success",
+        });
+
+        this.studentSelected = null;
+        this.prizeSelected = null;
+      });
+    },
     assignPrize() {
       if (!this.studentSelected) {
         this.$buefy.dialog.alert({
@@ -161,7 +228,7 @@ export default {
         id: this.studentSelected,
         prop: "gold",
         value: this.prizeSelected.value,
-        type: 'wheel',
+        type: "wheel",
       };
 
       axios.post("/classroom/students/update", options).then((response) => {
@@ -173,7 +240,36 @@ export default {
         this.prizeSelected = null;
       });
     },
+    prepareWheelImg() {
+      this.typew = 1;
+      let color;
+      let colors = _.shuffle(this.colorsOK);
+
+      axios
+        .post("/classroom/" + this.code + "/get/objects")
+        .then((response) => {
+          let items = response.data;
+          if (items && items.length) {
+            items.forEach((element) => {
+              color = colors[element.id % colors.length];
+              this.prizes.push({
+                id: element.id,
+                contentType: "image",
+                imageUri: element.icon,
+                value: element.id,
+                bgColor: color,
+                color: "#ffffff",
+                weight: 1,
+              });
+            });
+          }
+        });
+
+      this.prizes = _.shuffle(this.prizes);
+      this.showWheel = true;
+    },
     prepareWheel() {
+      this.typew = 0;
       for (var i = 0; i <= this.numberPrizes; i++) {
         let value;
         if (i <= this.numberPrizes / 2) {
@@ -216,25 +312,34 @@ export default {
       this.showWheel = true;
     },
     onCanvasRotateStart() {
-      this.studentSelected = null;
       this.prizeSelected = null;
       var audio = new Audio("/sound/wheel.mp3");
       audio.play();
     },
     onRotateEnd(prize) {
-      var audio;
-      if (prize.value > 0) {
+      if (this.typew == 0) {
+        var audio;
+        if (prize.value > 0) {
+          audio = new Audio("/sound/clap.mp3");
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 1.0 },
+          });
+        } else {
+          audio = new Audio("/sound/bad.mp3");
+        }
+      } else {
         audio = new Audio("/sound/clap.mp3");
         confetti({
           particleCount: 200,
           spread: 100,
           origin: { y: 1.0 },
         });
-      } else {
-        audio = new Audio("/sound/bad.mp3");
       }
-      audio.play();
+      console.log(prize);
       this.prizeSelected = prize;
+      audio.play();
       this.$forceUpdate();
     },
   },

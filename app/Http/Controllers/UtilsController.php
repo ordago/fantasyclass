@@ -192,6 +192,15 @@ class UtilsController extends Controller
         Cache::put('user-is-online-' . auth()->user()->id, true, $expiresAt);
     }
 
+    function getObjects($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        return $class->items()->where(function ($query) {
+            $query->whereNull('craft')
+            ->orWhere('craft', 'LIKE', '\[\]');
+        })->get();
+    }
+
     public function music()
     {
         $directory = "/music/";

@@ -31,13 +31,14 @@ class StudentController extends Controller
         $this->authorize('update', $class);
         session()->put('classroom', $class->id);
         $modalVisible = 0;
-        if($flag)
+        if ($flag)
             $modalVisible = 1;
 
         return view('students.create', compact('class', 'modalVisible'));
     }
 
-    public function showAsStudent(){
+    public function showAsStudent()
+    {
         $data = request()->validate([
             'id' => ['numeric', 'required'],
         ]);
@@ -45,7 +46,7 @@ class StudentController extends Controller
         $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
         session()->put('bypass_student', $student->id);
-        return '/classroom/show/'.$class->code;
+        return '/classroom/show/' . $class->code;
     }
 
     public function store(Request $request)
@@ -66,7 +67,7 @@ class StudentController extends Controller
                     ->first()['id'];
             } else {
                 $verified = null;
-                
+
                 if (!isset($student['email'])) {
                     $verified = now();
                     $mail = null;
@@ -182,7 +183,8 @@ class StudentController extends Controller
         return $student->addBehaviour($data['behaviour']);
     }
 
-    public function assignPet($code) {
+    public function assignPet($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
@@ -192,7 +194,7 @@ class StudentController extends Controller
         ]);
 
         $student = Student::findOrFail($data['student']);
-        if($class->id != $student->classroom->classroom_id)
+        if ($class->id != $student->classroom->classroom_id)
             abort(403);
 
         if ($student->hp == 0)
@@ -256,7 +258,7 @@ class StudentController extends Controller
         $eq1 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 1)->get();
         $eq2 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 2)->get();
         $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
-    
+
         $shop = [
             'eq0' => json_encode($eq0),
             'eq1' => json_encode($eq1),
@@ -271,11 +273,12 @@ class StudentController extends Controller
         return view('students.show', compact('student', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
 
-    public static function getIndividualReport($id, $class) {
+    public static function getIndividualReport($id, $class)
+    {
         $student = Student::findOrFail($id);
-        if($student->classroom->classroom_id != $class->id)
+        if ($student->classroom->classroom_id != $class->id)
             abort(403);
-        $student->load('badges', 'behaviours', 'items', 'behaviours', 'challenges', 'questions', 'grades', );
+        $student->load('badges', 'behaviours', 'items', 'behaviours', 'challenges', 'questions', 'grades',);
         foreach ($student->getAutomaticBadges() as $badge) {
             $student->badges->push($badge);
         }
@@ -293,20 +296,19 @@ class StudentController extends Controller
         $this->authorize('view', $class);
         $student = StudentController::getIndividualReport($id, $class);
         return view('students.report', compact('student', 'class'));
-
     }
 
-    public function getStudentsReport($code) {
+    public function getStudentsReport($code)
+    {
         $students = [];
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
-        if($class->students->count() < env('MIX_MAX_STUDENTS')) {
+        if ($class->students->count() < env('MIX_MAX_STUDENTS')) {
             foreach ($class->students as $student) {
                 array_push($students, StudentController::getIndividualReport($student->id, $class));
             }
             return view('students.reportclass', compact('students', 'class'));
         } else abort(403, 'Exceded number of students');
-
     }
 
     public function assignEquipment($code)
@@ -314,7 +316,7 @@ class StudentController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $student = Student::findOrFail(request()->student);
-        if($student->classroom->classroom_id != $class->id || $student->hp <= 0)
+        if ($student->classroom->classroom_id != $class->id || $student->hp <= 0)
             abort(403);
 
         $new = Equipment::where('id', '=', request()->new)->firstOrFail();
@@ -387,11 +389,11 @@ class StudentController extends Controller
     }
     public function update(Request $request)
     {
-        if($request->action == "pay") {
+        if ($request->action == "pay") {
             $info = session()->pull('pending_gold');
             $student = Student::findOrFail($info['student']);
             $gold = $info['gold'];
-            if($gold > $student->gold) {
+            if ($gold > $student->gold) {
                 return ['type' => 'error', 'message' => __('success_error.shop_failed_money')];
             }
             return $student->setProperty('gold', $info['gold'] * -1, true, $request->type);
@@ -402,6 +404,12 @@ class StudentController extends Controller
             if ($request->card_id) {
                 $student->cards()->attach($request->card_id);
                 return true;
+            } else if ($request->prop == "object") {
+                $studentItem = $student->items->where('id', $request->value)->first();
+                if ($studentItem)
+                    $count = $studentItem->pivot->count + 1;
+                else $count = 1;
+                $student->items()->sync([$request->value => ['count' => $count]], false);
             } else {
                 return $student->setProperty($request->prop, $request->value, true, $request->type);
             }

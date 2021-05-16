@@ -10,6 +10,8 @@ return [
     'wheel' => 'Spin the wheel!',
     'fortune' => 'Fortune wheel',
     'quantity_rewards' => 'Quantity of prizes',
+    'objects' => 'Objects',
+    'objects_info' => 'It won\'t appear crafteable objects',
 
     'students_report' => 'Students report',
     'reports' => 'Reports',

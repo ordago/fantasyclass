@@ -578,7 +578,7 @@
           <p class="modal-card-title">{{ trans.get("utils.fortune") }}</p>
         </header>
         <section class="modal-card-body is-flex has-all-centered">
-          <wheel :students="allStudents"></wheel>
+          <wheel :code="classroom.code" :students="allStudents"></wheel>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="refresh">

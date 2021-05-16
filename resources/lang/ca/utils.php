@@ -10,6 +10,8 @@ return [
     'wheel' => 'Gira la ruleta!',
     'fortune' => 'Ruleta de la fortuna',
     'quantity_rewards' => 'Quantitat de premis',
+    'objects' => 'Objectes',
+    'objects_info' => 'No apareixeran els objectes "crafteables"',
 
     'students_report' => 'Informes d\'estudiants',
     'reports' => 'Informes',

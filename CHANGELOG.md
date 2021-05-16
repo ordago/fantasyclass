@@ -1,11 +1,9 @@
 # Changelog
-## v1.52 Beta (XX/05/2021)
+## v1.52 Beta (16/05/2021)
 ### Added
 - Show level up to students.
 - Sound to behaviours.
-
-### Changed
-
+- Object roulette.
 
 ## v1.51.1 Beta (16/05/2021)
 ### Added
