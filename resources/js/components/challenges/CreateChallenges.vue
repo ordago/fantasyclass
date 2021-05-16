@@ -336,6 +336,26 @@
           w="30px"
         >
         </vue-select-image>
+
+        <label class="label">{{ trans.get("challenges.assign_objects") }}</label>
+ 
+        <div class="field has-addons">
+              <p class="control">
+                <span class="button is-static">
+                  <i class="fas fa-store colored" style="color: red"></i>
+                </span>
+              </p>
+              <p class="control is-expanded">
+                <input
+                  type="number"
+                  name="objects"
+                  class="input"
+                  v-model="challenge.objects"
+                  required
+                />
+              </p>
+            </div>
+
         <div class="mt-3" v-if="challenge.type == 0">
           <label for="name">{{ trans.get("challenges.completion") }}</label>
           <div class="field mt-3">
@@ -521,6 +541,7 @@ export default {
         requirements: [],
         _method: "post",
         challenge_required: null,
+        objects: 0,
       },
     };
   },

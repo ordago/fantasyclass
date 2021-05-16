@@ -86,4 +86,5 @@ return [
     'objects_required' => 'Objectes requerits 😢',
     
     'tz' => 'Configura la zona horària a preferències',
+    'assign_objects' => 'Assigna un número determinat d\'objectes aleatòris de la botiga (no "crafteables")',
 ];

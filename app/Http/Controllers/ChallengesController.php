@@ -135,6 +135,7 @@ class ChallengesController extends Controller
             'items' => ['array', 'nullable'],
             'requirements' => ['array', 'nullable'],
             'challenge_required' => ['numeric', 'nullable'],
+            'objects' => ['numeric', 'required'],
         ]);
     }
 

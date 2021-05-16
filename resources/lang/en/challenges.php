@@ -86,5 +86,7 @@ return [
     'objects_required' => 'Objects required 😢',
 
     'tz' => 'Set the time zone in preferences',
+    'assign_objects' => 'Assign a number of random items from the store (not crafteables)',
+
 
 ];

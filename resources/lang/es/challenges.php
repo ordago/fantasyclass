@@ -86,5 +86,7 @@ return [
     'objects_required' => 'Objetos requeridos 😢',
 
     'tz' => 'Configura la zona horaria a preferencias',
+    'assign_objects' => 'Asigna un número detemrinado de objetos aleatorios de la tienda (no "crafteables")',
+
 
 ];

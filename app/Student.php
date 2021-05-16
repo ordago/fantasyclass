@@ -59,8 +59,8 @@ class Student extends Model implements HasMedia
 
     public function getGrouplogoAttribute()
     {
-        if($this->groups)
-        $group = $this->groups->first();
+        if ($this->groups)
+            $group = $this->groups->first();
         if ($group) {
             if ($group->logo)
                 return $group->logo;
@@ -88,9 +88,9 @@ class Student extends Model implements HasMedia
         $max = settings()->get('num_cards', 5);
 
         $skill = $this->skills()->where('properties->type', "cards")->first();
-        if($skill)
+        if ($skill)
             $max += $skill->properties['cards'];
-        
+
         foreach ($this->cards as $card) {
             if ($card->special != 1)
                 $num++;
@@ -111,8 +111,8 @@ class Student extends Model implements HasMedia
 
     public function getLevelAttribute()
     {
-        if($this->xp !== null)
-        return Level::where('xp', '<=', $this->xp)->where('classroom_id', $this->classroom->classroom_id)->orderByDesc('xp')->first();
+        if ($this->xp !== null)
+            return Level::where('xp', '<=', $this->xp)->where('classroom_id', $this->classroom->classroom_id)->orderByDesc('xp')->first();
     }
 
     public function registerMediaCollections(): void
@@ -139,14 +139,14 @@ class Student extends Model implements HasMedia
 
     public function getUserId()
     {
-        if($this->classroom)
-        return $this->classroom->user->id;
+        if ($this->classroom)
+            return $this->classroom->user->id;
     }
 
     public function getUsernameAttribute()
     {
-        if($this->classroom)
-        return $this->classroom->user->username;
+        if ($this->classroom)
+            return $this->classroom->user->username;
     }
 
     public function pet()
@@ -395,6 +395,24 @@ class Student extends Model implements HasMedia
                 }
             }
         }
+        if ($challenge->objects > 0 && $mult == 1) {
+            $class = Classroom::find($challenge->classroom());
+
+            for ($i = 0; $i < $challenge->objects; $i++) {
+
+                $itemA = $class->items()->where(function ($query) {
+                    $query->whereNull('craft')
+                    ->orWhere('craft', 'LIKE', '\[\]');
+                })->inRandomOrder()
+                ->first();
+                $studentItem = $this->items->where('id', $itemA->id)->first();
+                if ($studentItem)
+                    $count = $studentItem->pivot->count + 1;
+                else $count = 1;
+
+                $this->items()->sync([$itemA->id => ['count' => $count]], false);
+            }
+        }
         if ($challenge->requirements) {
             foreach ($challenge->requirements as $item) {
                 $studentItem = $this->fresh()->items->where('id', $item['id'])->first();
@@ -437,7 +455,7 @@ class Student extends Model implements HasMedia
     public function checkSkill($type)
     {
         $skill = $this->skills()->where('properties->type', $type)->first();
-        if($skill && Functions::getProbability($skill->properties['success']))
+        if ($skill && Functions::getProbability($skill->properties['success']))
             return true;
         return false;
     }
@@ -451,7 +469,7 @@ class Student extends Model implements HasMedia
     public function getIncrement($type, $value)
     {
         $skill = $this->skills()->where('properties->type', $type)->first();
-        return $value * $skill->properties['hp_increment']/100;
+        return $value * $skill->properties['hp_increment'] / 100;
     }
 
     public function setProperty($prop, $value, $log = true, $type = null, $byPassBoost = false)
@@ -461,8 +479,8 @@ class Student extends Model implements HasMedia
 
         $old = $value;
         if ($prop == "hp") {
-            if($value < 0 && $this->checkSkill('protection')) {
-                $this->classroom->user->sendMessage("<i class='fad fa-shield'></i> ". __('skills.protection_success'), $this->classroom->classroom->code, 'skill', false);
+            if ($value < 0 && $this->checkSkill('protection')) {
+                $this->classroom->user->sendMessage("<i class='fad fa-shield'></i> " . __('skills.protection_success'), $this->classroom->classroom->code, 'skill', false);
                 return 'protect';
             }
             if ($value >= 0) {
@@ -479,7 +497,7 @@ class Student extends Model implements HasMedia
                 $value = $this->$prop + $old;
             } else {
                 $value = max($this->$prop + $value, 0);
-                if($value == 0) {
+                if ($value == 0) {
                     $old = 0 - $this->$prop + $value;
                 }
             }
@@ -494,7 +512,7 @@ class Student extends Model implements HasMedia
             $checkAlive = $this->hp == 0 ? false : true;
             if ($isAlive != $checkAlive) {
                 if ($isAlive) {
-                    if($this->checkSkill('protection_death')) {
+                    if ($this->checkSkill('protection_death')) {
                         $this->update(['hp' => 1]);
                         $this->classroom->user->sendMessage(__('skills.protection_death_effective'), $this->classroom->classroom->code, 'skill', false);
                         $this->skillRemove('protection_death');
@@ -529,7 +547,7 @@ class Student extends Model implements HasMedia
     public function setUndead()
     {
         $this->equipment()->detach($this->equipment);
-        if($this->classroom->classroom->character_theme == 7) {
+        if ($this->classroom->classroom->character_theme == 7) {
             $this->equipment()->attach([510, 511, 512, 513]);
         } else {
             $this->equipment()->attach([300, 301, 302, 303, 304]);

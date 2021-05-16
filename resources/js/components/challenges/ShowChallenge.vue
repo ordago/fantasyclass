@@ -122,6 +122,16 @@
                   width="20px"
                 />
               </small>
+              <small
+                v-if="challengeReactive.objects > 0"
+              >
+                <i
+                  class="fad fa-store p-1 colored has-background-dark has-text-light rounded"
+                  v-tippy
+                  :content="trans.get('challenges.items')"
+                ></i>
+                {{ challengeReactive.objects }}
+              </small>
             </span>
             <span
               v-if="

@@ -4,6 +4,7 @@
 - Show level up to students.
 - Sound to behaviours.
 - Object roulette.
+- Add random objects in challenges.
 
 ## v1.51.1 Beta (16/05/2021)
 ### Added

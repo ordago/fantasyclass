@@ -31,6 +31,7 @@ class Challenge extends Model
         'requirements',
         'challenges_group_id',
         'challenge_required',
+        'objects',
     ];
 
     protected $casts = [
