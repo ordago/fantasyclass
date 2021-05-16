@@ -2,6 +2,7 @@
 ## v1.52 Beta (XX/05/2021)
 ### Added
 - Show level up to students.
+- Sound to behaviours.
 
 ### Changed
 

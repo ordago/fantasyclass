@@ -135,7 +135,7 @@
                   ')</small>'
                 "
                 class="button m-1 px-3 is-light"
-                @click="addBehaviour(student.id, behaviour.id)"
+                @click="addBehaviour(student.id, behaviour)"
                 v-bind:class="[
                   behaviour.xp + behaviour.hp + behaviour.gold >= 0
                     ? 'is-success'
@@ -186,7 +186,7 @@
                     : 'is-danger',
                 ]"
                 v-bind:key="behaviour.id"
-                @click="addBehaviour(student.id, behaviour.id)"
+                @click="addBehaviour(student.id, behaviour)"
               >
                 <i :class="behaviour.icon"></i>
               </button>
@@ -457,7 +457,15 @@ export default {
       });
     },
     addBehaviour: function (id, behaviour) {
-      let options = { id: id, behaviour: behaviour };
+      let audio;
+      if(behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
+         audio = new Audio("/sound/positive.mp3");
+      } else {
+        audio = new Audio("/sound/boing.mp3");
+      }
+      audio.play();
+
+      let options = { id: id, behaviour: behaviour.id };
       let student;
       axios.post("/classroom/student/behaviour", options).then((response) => {
         if (this.random) student = this.$parent.$parent.currentStudent;
