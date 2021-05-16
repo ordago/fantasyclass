@@ -499,8 +499,10 @@ class ClassroomsStudentController extends Controller
         if($student->level) {
             if(Cache::has('lvl-' . $student->id)) {
                 $lvl = Cache::get('lvl-' . $student->id);
-                if($lvl < $student->level->number) {
-                    $student->notifyLevel = true;
+                if($lvl != $student->level->number) {
+                    if($lvl < $student->level->number) {
+                        $student->notifyLevel = true;
+                    }
                     $expiresAt = Carbon::now()->addDays(365);
                     Cache::put('lvl-' . $student->id, $student->level->number, $expiresAt);
                 }
