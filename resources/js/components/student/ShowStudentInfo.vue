@@ -1269,6 +1269,20 @@ export default {
       };
       sendPostRequest();
     }
+    if (!this.admin && this.student.notifyLevel) {
+      confetti({
+        particleCount: 200,
+        spread: 100,
+        origin: { y: 1.0 },
+      });
+      this.$buefy.dialog.alert({
+        title: "Level up! 👏👏",
+        message: this.getLvlMessage(),
+        type: "is-success",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+      });
+    }
   },
   data: function () {
     return {
@@ -1309,6 +1323,24 @@ export default {
     };
   },
   methods: {
+    getLvlMessage() {
+      let msg =
+        '<div class="content has-text-centered">' +
+        '<span class="has-background-info-light p-2">Level: <strong>' +
+        this.student.level.number +
+        "</strong></span>" +
+        '<br><br><img class="p-2 card-shadow-s is-full-rounded" src="' +
+        this.student.level.imagelvl +
+        '">';
+
+        if(this.student.level.title)
+          msg += "<h3 class='is-size-3 mt-1'>" + this.student.level.title + "</h3>"
+        if(this.student.level.description)
+          msg += "<h5 class='is-size-5 mt-0'>" + this.student.level.description + "</h5>"
+
+        msg += "</div>";
+      return msg;
+    },
     tryCraft() {
       let ids = [];
       this.craft.forEach((element) => {
@@ -1605,7 +1637,7 @@ export default {
       let n = this.student.items.length;
       if (n % 6) n = n + (6 - (n % 6));
       this.inventoryRemaining =
-        n - this.student.items.length ? n - this.student.items.length -1 : 5;
+        n - this.student.items.length ? n - this.student.items.length - 1 : 5;
     },
     confirmChangeClass(subclass) {
       this.$buefy.dialog.confirm({

@@ -23,6 +23,7 @@ use App\Rules;
 use App\Skill;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -491,6 +492,23 @@ class ClassroomsStudentController extends Controller
         $this->authorize('studyOrTeach', $class);
         $admin = false;
         $student = Functions::getCurrentStudent($class);
+
+        $student->notifyLevel = false;
+        
+        // Is there a new level?
+        if($student->level) {
+            if(Cache::has('lvl-' . $student->id)) {
+                $lvl = Cache::get('lvl-' . $student->id);
+                if($lvl < $student->level->number) {
+                    $student->notifyLevel = true;
+                    $expiresAt = Carbon::now()->addDays(365);
+                    Cache::put('lvl-' . $student->id, $student->level->number, $expiresAt);
+                }
+            } else {
+                $expiresAt = Carbon::now()->addDays(365);
+                Cache::put('lvl-' . $student->id, $student->level->number, $expiresAt);
+            }
+        }
 
         $student->append('numcards');
         $student->load('character');
