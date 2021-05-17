@@ -195,10 +195,17 @@ class UtilsController extends Controller
     function getObjects($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
-        return $class->items()->where(function ($query) {
-            $query->whereNull('craft')
-            ->orWhere('craft', 'LIKE', '\[\]');
-        })->get();
+        if(isset(request()->limit) && request()->limit) {
+            return $class->items()->where('for_sale', 1)->where(function ($query) {
+                $query->whereNull('craft')
+                ->orWhere('craft', 'LIKE', '\[\]');
+            })->get();
+        } else {
+            return $class->items()->where(function ($query) {
+                $query->whereNull('craft')
+                ->orWhere('craft', 'LIKE', '\[\]');
+            })->get();
+        }
     }
 
     public function music()

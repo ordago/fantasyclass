@@ -51,7 +51,7 @@
         </button>
       </span>
     </div>
-    <b-tabs type="is-toggle" expanded v-if="!showWheel">
+    <b-tabs type="is-toggle" expanded v-else>
       <b-tab-item label="Oro" icon-pack="fas" icon="coins" class="p-3">
         <form @submit.prevent="prepareWheel">
           <div class="columns p-2">
@@ -97,9 +97,18 @@
       >
         <article class="message is-warning mt-2">
           <div class="message-body">
-            {{ trans.get('utils.objects_info') }}
+            {{ trans.get("utils.objects_info") }}
           </div>
         </article>
+        <div class="mb-2">
+          <b-switch
+            type="is-info"
+            v-model="limitObjects"
+            :true-value="true"
+            :false-value="false"
+            >{{ trans.get("utils.limit_objects") }}</b-switch
+          >
+        </div>
         <button @click="prepareWheelImg" class="button is-primary">
           {{ trans.get("utils.wheel") }}
         </button>
@@ -138,6 +147,7 @@ export default {
       min: -100,
       max: 100,
       prizeSelected: false,
+      limitObjects: false,
       numberPrizes: null,
       fontSize: 30,
       typew: 0,
@@ -246,7 +256,7 @@ export default {
       let colors = _.shuffle(this.colorsOK);
 
       axios
-        .post("/classroom/" + this.code + "/get/objects")
+        .post("/classroom/" + this.code + "/get/objects", {limit: this.limitObjects})
         .then((response) => {
           let items = response.data;
           if (items && items.length) {

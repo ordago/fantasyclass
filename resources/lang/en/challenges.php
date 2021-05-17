@@ -88,5 +88,7 @@ return [
     'tz' => 'Set the time zone in preferences',
     'assign_objects' => 'Assign a number of random items from the store (not crafteables)',
 
+    'show_all_summary' => 'Show all the stories and the complete challenges',
+    'show_all_summary_empty' => 'It is possible that there will be stories to see, please go to ',
 
 ];

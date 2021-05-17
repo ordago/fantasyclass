@@ -87,4 +87,8 @@ return [
     
     'tz' => 'Configura la zona horària a preferències',
     'assign_objects' => 'Assigna un número determinat d\'objectes aleatòris de la botiga (no "crafteables")',
+    
+    'show_all_summary' => 'Mostra totes les històries i reptes complets',
+    'show_all_summary_empty' => 'És possible que hi haja històries per veure, accedeix a ',
+
 ];

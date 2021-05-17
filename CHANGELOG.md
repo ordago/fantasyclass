@@ -1,4 +1,12 @@
 # Changelog
+## v1.53 Beta (17/05/2021)
+### Added
+- Button to access challenges from summary / info when no challenges available.
+- Option to show only for sale objects in the roulette. 
+
+### Changed
+- Prevent to craft an item with level if not meet the requirement. 
+
 ## v1.52 Beta (16/05/2021)
 ### Added
 - Show level up to students.

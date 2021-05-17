@@ -88,5 +88,7 @@ return [
     'tz' => 'Configura la zona horaria a preferencias',
     'assign_objects' => 'Asigna un número detemrinado de objetos aleatorios de la tienda (no "crafteables")',
 
+    'show_all_summary' => 'Muestra todas las historias y desafíos completos',
+    'show_all_summary_empty' => 'Es posible que haya historias para ver, entra en ',
 
 ];

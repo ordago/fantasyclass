@@ -448,6 +448,15 @@ class ClassroomsStudentController extends Controller
                         }
                     }
                     if ($count === 0) {
+                        if($item->min_lvl) {
+                            if(!$student->level || $student->level && $student->level->number < $item->min_lvl) {
+                                return [
+                                    "message" => " " . __('success_error.shop_failed_level'),
+                                    "icon" => "times",
+                                    "type" => "error",
+                                ];
+                            }
+                        }
                         // Remove the combined objects
                         foreach ($data['craft'] as $itemRemove) {
                             $studentItem = $student->items->where('id', $itemRemove)->first();

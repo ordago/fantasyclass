@@ -12,6 +12,7 @@ return [
     'quantity_rewards' => 'Cantidad de premios',
     'objects' => 'Objetos',
     'objects_info' => 'No aparecerán los objetos "crafteables"',
+    'limit_objects' => 'Mostrar únicamente los objetos que están a la venta',
     
     'students_report' => 'Informes de estudiantes',
     'reports' => 'Informes',

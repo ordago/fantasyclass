@@ -12,6 +12,7 @@ return [
     'quantity_rewards' => 'Quantity of prizes',
     'objects' => 'Objects',
     'objects_info' => 'It won\'t appear crafteable objects',
+    'limit_objects' => 'Show only the objects that are for sale',
 
     'students_report' => 'Students report',
     'reports' => 'Reports',

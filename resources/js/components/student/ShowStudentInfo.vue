@@ -582,29 +582,47 @@
         >
           <div
             v-if="!mutableChallenges || mutableChallenges.length === 0"
-            class="content rounded m-3 is-flex has-all-centered p-4 has-background-warning"
+            class=""
           >
-            <h1>
-              <i class="fas fa-dungeon"></i>
-              {{ trans.get("challenges.challenges_empty") }}
-            </h1>
+            <article class="message is-info my-2">
+              <div class="message-body">
+                <i class="fas fa-info-square"></i> {{ trans.get("challenges.show_all_summary_empty") }}
+                <a
+                  :href="'/classroom/show/' + classroom.code + '/challenges'"
+                  >{{ trans.get("menu.challenges") }}</a
+                >
+              </div>
+            </article>
+            <div class="content has-text-centered rounded m-3 has-all-centered p-4 has-background-warning">
+              <h1>
+                <i class="fas fa-dungeon"></i>
+                {{ trans.get("challenges.challenges_empty") }}
+              </h1>
+            </div>
           </div>
-
-          <div
-            class="has-text-centered"
-            v-for="(challenge, index) in orderedChallenges"
-            :key="challenge.id"
-          >
-            <show-challenge
-              class="has-text-left"
-              :challenge="challenge"
-              :code="classroom.code"
-              :admin="admin"
-              :edit="false"
-            ></show-challenge>
-            <span v-if="index != orderedChallenges.length - 1"
-              ><i class="far fa-arrow-up"></i
-            ></span>
+          <div v-else>
+            <a
+              :href="'/classroom/show/' + classroom.code + '/challenges'"
+              class="button is-link mt-2 mb-3"
+            >
+              {{ trans.get("challenges.show_all_summary") }}
+            </a>
+            <div
+              class="has-text-centered"
+              v-for="(challenge, index) in orderedChallenges"
+              :key="challenge.id"
+            >
+              <show-challenge
+                class="has-text-left"
+                :challenge="challenge"
+                :code="classroom.code"
+                :admin="admin"
+                :edit="false"
+              ></show-challenge>
+              <span v-if="index != orderedChallenges.length - 1"
+                ><i class="far fa-arrow-up"></i
+              ></span>
+            </div>
           </div>
         </b-tab-item>
 
@@ -1333,12 +1351,16 @@ export default {
         this.student.level.imagelvl +
         '">';
 
-        if(this.student.level.title)
-          msg += "<h3 class='is-size-3 mt-1'>" + this.student.level.title + "</h3>"
-        if(this.student.level.description)
-          msg += "<h5 class='is-size-5 mt-0'>" + this.student.level.description + "</h5>"
+      if (this.student.level.title)
+        msg +=
+          "<h3 class='is-size-3 mt-1'>" + this.student.level.title + "</h3>";
+      if (this.student.level.description)
+        msg +=
+          "<h5 class='is-size-5 mt-0'>" +
+          this.student.level.description +
+          "</h5>";
 
-        msg += "</div>";
+      msg += "</div>";
       return msg;
     },
     tryCraft() {
