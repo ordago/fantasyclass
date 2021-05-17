@@ -38,7 +38,7 @@
           </b-radio-button>
         </b-field>
       </b-field>
-      <b-field :label="trans.get('settings.config')">
+      <b-field :label="trans.get('settings.config')" v-if="isAdmin">
         <div class="buttons pl-4">
           <a class="button" :href="'/classroom/' + classroom.code + '/edit'"
             ><i class="far fa-cog mr-2"></i>
@@ -48,17 +48,12 @@
             class="button is-link"
             @click="resetAssistant = true"
             v-tippy
-            v-if="isAdmin"
             :content="trans.get('settings.reset_assistant_help')"
           >
             <i class="fas fa-eraser mr-2"></i>
             {{ trans.get("settings.reset_assistant") }}
           </button>
-          <button
-            class="button is-danger"
-            @click="confirmDelete"
-            v-if="isAdmin"
-          >
+          <button class="button is-danger" @click="confirmDelete">
             <i class="fas fa-trash"></i>
             <span class="mx-3">
               {{ trans.get("general.delete") }}
@@ -101,7 +96,7 @@
         </button>
       </b-field>
       <b-field label="Google Classroom" class="is-block" v-if="user.token">
-        <br>
+        <br />
         <button class="button is-link mb-3" @click="unlink">
           {{ trans.get("settings.classroom_unlink") }}
         </button>
@@ -488,56 +483,67 @@
           </p>
         </header>
         <section class="modal-card-body">
-          <button @click="reset('hp', 'fas fa-heart')" class="button is-danger w-100">
-            Reset {{ trans.get('menu.behaviours') }}<i class="fas fa-heart colored"></i>
+          <button
+            @click="reset('hp', 'fas fa-heart')"
+            class="button is-danger w-100"
+          >
+            Reset {{ trans.get("menu.behaviours")
+            }}<i class="fas fa-heart colored"></i>
           </button>
           <button
             @click="reset('xp', 'fas fa-fist-raised')"
             class="button is-dark w-100 mt-2"
           >
-            Reset {{ trans.get('students.xp') }}<i class="fas fa-fist-raised colored"></i>
+            Reset {{ trans.get("students.xp")
+            }}<i class="fas fa-fist-raised colored"></i>
           </button>
           <button
             @click="reset('gold', 'fas fa-coins')"
             class="button is-warning w-100 mt-2"
           >
-            Reset {{ trans.get('students.gold') }}<i class="fas fa-coins colored"></i>
+            Reset {{ trans.get("students.gold")
+            }}<i class="fas fa-coins colored"></i>
           </button>
           <button
             @click="reset('cards', 'fak fa-deck')"
             class="button is-info w-100 mt-2"
           >
-            Reset {{ trans.get('menu.cards') }}<i class="fak fa-deck colored"></i>
+            Reset {{ trans.get("menu.cards")
+            }}<i class="fak fa-deck colored"></i>
           </button>
           <button
             @click="reset('skills', 'fas fa-sparkles')"
             class="button is-primary w-100 mt-2"
           >
-            Reset {{ trans.get('menu.skills') }}<i class="fas fa-sparkles colored"></i>
+            Reset {{ trans.get("menu.skills")
+            }}<i class="fas fa-sparkles colored"></i>
           </button>
           <button
             @click="reset('badges', 'fas fa-award')"
             class="button is-dark w-100 mt-2"
           >
-            Reset {{ trans.get('menu.badges') }}<i class="fas fa-award colored"></i>
+            Reset {{ trans.get("menu.badges")
+            }}<i class="fas fa-award colored"></i>
           </button>
           <button
             @click="reset('logEntries', 'fas fa-file')"
             class="button is-white w-100 mt-2"
           >
-            Reset {{ trans.get('menu.log') }}<i class="fas fa-file colored"></i>
+            Reset {{ trans.get("menu.log") }}<i class="fas fa-file colored"></i>
           </button>
           <button
             @click="reset('items', 'fas fa-store')"
             class="button is-success w-100 mt-2"
           >
-            Reset {{ trans.get('shop.items') }}<i class="fas fa-store colored"></i>
+            Reset {{ trans.get("shop.items")
+            }}<i class="fas fa-store colored"></i>
           </button>
           <button
             @click="reset('equipment', 'fas fa-swords')"
             class="button is-danger w-100 mt-2"
           >
-            Reset {{ trans.get('shop.equipment') }}<i class="fas fa-swords colored"></i>
+            Reset {{ trans.get("shop.equipment")
+            }}<i class="fas fa-swords colored"></i>
           </button>
           <!-- <button class="button is-link w-100 mt-2">Reset {{ trans.get('menu.shop') }}</button> -->
         </section>
@@ -606,7 +612,9 @@ export default {
   },
   methods: {
     updateNotifications() {
-      axios.get('/classroom/' + this.classroom.code + '/toggleClassNotifications');
+      axios.get(
+        "/classroom/" + this.classroom.code + "/toggleClassNotifications"
+      );
     },
     updateTz() {
       this.updateClassState("tz", this.settings.tz);
