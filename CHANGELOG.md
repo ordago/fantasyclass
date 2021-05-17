@@ -1,11 +1,12 @@
 # Changelog
-## v1.53 Beta (17/05/2021)
+## v1.53.1 Beta (17/05/2021)
 ### Added
 - Button to access challenges from summary / info when no challenges available.
-- Option to show only for sale objects in the roulette. 
+- Option to show only for sale objects in the roulette.
 
 ### Changed
-- Prevent to craft an item with level if not meet the requirement. 
+- Prevent to craft an item with level if not meet the requirement.
+- Show new shared cards at beginning.
 
 ## v1.52 Beta (16/05/2021)
 ### Added

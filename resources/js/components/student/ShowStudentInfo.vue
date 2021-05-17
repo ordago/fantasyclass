@@ -1687,6 +1687,7 @@ export default {
       });
     },
     useItem(item, messageItem) {
+      let audio = new Audio("/sound/success.mp3");
       this.$buefy.dialog.confirm({
         message:
           messageItem + " <br><br>" + this.trans.get("students.use_item_info"),
@@ -1707,6 +1708,7 @@ export default {
                 );
                 this.student.xp += response.data.xp;
                 this.forceRerender();
+                audio.play();
               }
             });
         },

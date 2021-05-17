@@ -93,11 +93,14 @@ export default {
     },
     getOwnCards() {
       axios.get("/user/cards").then((response) => {
-        this.ownCards = response.data;
+        let ownCards = response.data;
         axios.get("/card/share/get").then((response) => {
           response.data.forEach((card) => {
-            this.ownCards.push(card);
+            this.ownCards.unshift(card);
           });
+          ownCards.forEach((card) => {
+            this.ownCards.unshift(card);
+          })
           this.isModalActive = true;
         });
       });
