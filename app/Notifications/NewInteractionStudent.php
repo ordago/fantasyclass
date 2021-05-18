@@ -71,10 +71,10 @@ class NewInteractionStudent extends Notification
 
         return (new WebPushMessage)
         ->title($this->title)
+        ->icon('/ic_fc_mono.png')
         ->body($this->from['name'] . ": ".$this->content)
         ->data($data)
         ->action('Open FantasyClass', $action);
     }
     // ->badge('/ic_fc_mono.png')
-    // ->icon('/ic_fc_mono.png')
 }
