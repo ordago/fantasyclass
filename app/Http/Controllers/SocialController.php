@@ -49,7 +49,7 @@ class SocialController extends Controller
 
     public function callback($provider)
     {
-        $auth_user = Socialite::driver($provider)->user();
+        $auth_user = Socialite::driver($provider)->stateless()->user();
         $type = session()->pull('google_action');
         if ($type == "classroom") {
             auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn]);
