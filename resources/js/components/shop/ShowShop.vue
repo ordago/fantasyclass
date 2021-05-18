@@ -10,6 +10,15 @@
             passive-type="is-danger"
             @input="toggleVisibility('items_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
+          ><br>
+          <b-switch
+            :value="true"
+            type="is-info"
+            v-model="show_recipes"
+            passive-type="is-danger"
+            class="mt-2"
+            @input="toggleVisibility('show_recipes')"
+            >{{ trans.get("shop.show_recipes") }}</b-switch
           >
         </div>
 
@@ -291,6 +300,7 @@ export default {
       equipment_1_visibility: this.config.equipment_1_visibility ? true : false,
       equipment_2_visibility: this.config.equipment_2_visibility ? true : false,
       equipment_3_visibility: this.config.equipment_3_visibility ? true : false,
+      show_recipes: this.config.show_recipes ? true : false,
       allow_buy_cards: this.config.allow_buy_cards ? true : false,
       forceUpdate: 0,
       nom: "",

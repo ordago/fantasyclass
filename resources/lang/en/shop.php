@@ -48,5 +48,8 @@ return [
     'crafting_shop' => 'Create this object by combining these objects',
     'crafting_info' => 'Click on the objects to start creating. Mix object to create new ones!',
     'craft_success' => 'You\'ve obtained',
+
+    'show_recipes' => 'Show crafting recipes to students',
+    'recipes' => 'Recipes',
     
 ];

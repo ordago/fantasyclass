@@ -49,4 +49,7 @@ return [
     'crafting_info' => 'Clica en un objeto para añadirlo y empezar a crear. ¡Combina objetos para crear nuevos!',
     'craft_success' => 'Has obtenido',
 
+    'show_recipes' => 'Muestra las recetas a estudiantes (crafting)',
+    'recipes' => 'Recetas',
+
 ];

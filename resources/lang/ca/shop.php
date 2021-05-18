@@ -47,4 +47,7 @@ return [
     'crafting_shop' => 'Crea l\'objecte a partir dels següents objectes',
     'crafting_info' => 'Fes clic en un objecte per afegir-lo i començar a crear. Combina objectes per fer-ne de nous!',
     'craft_success' => 'Has obtingut',
+
+    'show_recipes' => 'Mostra les receptes als estudiants (crafting)',
+    'recipes' => 'Receptes',
 ];

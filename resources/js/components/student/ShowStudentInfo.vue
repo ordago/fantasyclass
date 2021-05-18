@@ -1153,6 +1153,32 @@
           <p>
             {{ trans.get("shop.crafting_info") }}
           </p>
+           <div
+            class="p-2 is-flex pb-4 has-background-light border m-2"
+          >
+            <div
+              @click="tryCraft"
+              style="float: none"
+              :class="{ 'faa-parent animated-hover' : craft.length, 'a5' : !craft.length }"
+              class="inventory-item inventory-item-dark has-text-light rounded"
+            >
+              <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
+            </div>
+            <span class="is-relative" v-for="craft in craft" :key="craft.id">
+              <img
+                @click="removeCraft(craft.id)"
+                :src="craft.icon"
+                class="m-2 p-2 has-background-dark rounded"
+              />
+              <div
+                @click="removeCraft(craft.id)"
+                class="price-buy rounded not-hover"
+              >
+                <i class="fas fa-minus"></i>
+              </div>
+            </span>
+            
+          </div>
           <div class="is-relative">
             <span
               class="is-relative"
@@ -1174,30 +1200,13 @@
               </div>
             </span>
           </div>
-          <div
-            v-if="craft && craft.length"
-            class="p-2 pb-4 has-background-light border m-2"
-          >
-            <span class="is-relative" v-for="craft in craft" :key="craft.id">
-              <img
-                @click="removeCraft(craft.id)"
-                :src="craft.icon"
-                class="m-2 p-2 has-background-dark rounded"
-              />
-              <div
-                @click="removeCraft(craft.id)"
-                class="price-buy rounded not-hover"
-              >
-                <i class="fas fa-minus"></i>
-              </div>
-            </span>
-            <div
-              @click="tryCraft"
-              class="inventory-item inventory-item-dark has-text-light rounded faa-parent animated-hover"
-            >
-              <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
+          <div class="" v-if="craftJson && craftJson.length">
+            <h3 class="is-size-3 mt-2 mb-3">{{ trans.get('shop.recipes') }}</h3>
+            <div v-for="craft in craftJson" :key="craft.id">
+              <img :src="craft.icon" width="32px"> = <span v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" :src="c.src"> <i class="fas fa-plus" v-if="index != craft.craft.length - 1"></i></span>
             </div>
           </div>
+         
         </section>
         <footer class="modal-card-foot">
           <button
@@ -1268,6 +1277,7 @@ export default {
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
+    this.craftJson = JSON.parse(this.shop.craft);
     if (this.section) {
       this.activeTab = parseInt(this.section);
     } else if (this.$cookies.get("tab")) {
@@ -1314,6 +1324,7 @@ export default {
       eq1Json: null,
       eq2Json: null,
       eq3Json: null,
+      craftJson: null,
       forceReload: 0,
       isSendMoneyActive: false,
       prevImage: null,
@@ -1364,6 +1375,8 @@ export default {
       return msg;
     },
     tryCraft() {
+      if(!this.craft || !this.craft.length)
+        return false;
       let audio = new Audio("/sound/hammer.mp3");
       audio.play();
       let ids = [];

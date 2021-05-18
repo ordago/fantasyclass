@@ -527,7 +527,7 @@ class ClassroomsStudentController extends Controller
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $items = $eq1 = $eq2 = $eq3 = null;
+        $items = $eq1 = $eq2 = $eq3 = $craft = null;
         if (settings()->get('items_visibility', false) ? true : false) {
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
@@ -540,7 +540,11 @@ class ClassroomsStudentController extends Controller
         if (settings()->get('equipment_3_visibility', false) ? true : false) {
             $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
         }
-
+        
+        if(settings()->get('show_recipes', false) ? true : false) {
+            $craft = $class->items()->whereNotNull('craft')->where('craft', 'NOT LIKE', '\[\]')->get();
+        }
+        
         $pets = Pet::where('classroom_id', $class->id)->where('for_sale', 1)->get();
 
         $shop = [
@@ -548,6 +552,7 @@ class ClassroomsStudentController extends Controller
             'eq1' => json_encode($eq1),
             'eq2' => json_encode($eq2),
             'eq3' => json_encode($eq3),
+            'craft' => json_encode($craft),
             'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
             'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
