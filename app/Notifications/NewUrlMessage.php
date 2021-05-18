@@ -61,10 +61,10 @@ class NewUrlMessage extends Notification
     
         return (new WebPushMessage)
         ->title($this->title)
-        ->icon('/ic_fc_mono.png')
-        ->badge('/ic_fc_mono.png')
         ->body($this->content)
         ->data($data)
         ->action($this->action_title, $action);
     }
+    // ->icon('/ic_fc_mono.png')
+    // ->badge('/ic_fc_mono.png')
 }
