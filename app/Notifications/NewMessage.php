@@ -69,7 +69,6 @@ class NewMessage extends Notification
         ->title('New message')
         ->body($this->from['name'] . ": ".$this->content)
         ->icon('/ic_fc_mono.png')
-        ->badge('/one.png')
         ->data($data)
         ->action('FantasyClass', $action);
     }
