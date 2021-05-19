@@ -64,7 +64,7 @@
                     <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
                 </a>
                 @if(isset($class))
-                    @yield('mainLink')
+                @yield('mainLink')
                 @else
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <label class="label-title px-2 cursor-pointer">
@@ -173,6 +173,16 @@
         <main class="p-0 m-0">
             @yield('content')
         </main>
+        <div class="ieAlertBg" style="display: none;" id="ieAlert">
+            <article class="message is-danger ieAlert">
+                <div class="message-header">
+                    <p>Browser not supported</p>
+                </div>
+                <div class="message-body">
+                    Internet Explorer is not supported, please, upgrade to a newer browser. </div>
+            </article>
+        </div>
+
     </div>
     @if(isset($showChat) && $showChat == true)
     @stack('scriptchat')
@@ -199,6 +209,15 @@
                 "href": "/cookies"
             }
         });
+
+        function isItIE() {
+            user_agent = navigator.userAgent;
+            var is_it_ie = user_agent.indexOf("MSIE ") > -1 || user_agent.indexOf("Trident/") > -1;
+            return is_it_ie;
+        }
+        if (isItIE()) {
+            document.getElementById('ieAlert').style = "";
+        }
     </script>
     <script src="{{ asset('js/config.js') }}" defer></script>
     <script src="{{ asset('js/enable-push.js') }}" defer></script>
