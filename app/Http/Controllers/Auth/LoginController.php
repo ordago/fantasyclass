@@ -43,9 +43,18 @@ class LoginController extends Controller
         Auth::viaRemember();
         $this->middleware('guest')->except('logout');
     }
+
+    // public function showLoginForm()
+    // {
+    //     if (!session()->has('url.intended')) {
+    //         session(['url.intended' => url()->previous()]);
+    //     }
+    //     return view('auth.login');
+    // }
     
-    public function index($locale) {
-        if (! in_array($locale, ['en', 'es', 'ca'])) {
+    public function index($locale)
+    {
+        if (!in_array($locale, ['en', 'es', 'ca'])) {
             abort(404);
         }
         App::setLocale($locale);
@@ -58,20 +67,22 @@ class LoginController extends Controller
      * @return void
      */
     public function login(Request $request)
-    {   
-        $remember =$request->has('remember');
+    {
+        $remember = $request->has('remember');
 
         $input = $request->all();
-  
+
         $this->validate($request, [
             'username' => 'required',
             'password' => 'required',
         ]);
-  
+
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
-        if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']), true))
-        {
-            return redirect()->route('classrooms');
+        if (auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password']), true)) {
+            $redirect = session()->pull('url.previa');
+            if(!$redirect)
+                $redirect = "/classroom";
+            return redirect($redirect);
         } else {
 
             $errors = new MessageBag();
@@ -80,10 +91,10 @@ class LoginController extends Controller
 
             return view('auth.login')->withErrors($errors);
         }
-          
     }
 
-    protected function loggedOut(Request $request) {
+    protected function loggedOut(Request $request)
+    {
         return redirect('/login');
     }
 }
