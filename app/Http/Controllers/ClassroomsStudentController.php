@@ -801,6 +801,7 @@ class ClassroomsStudentController extends Controller
             'xp' => $student->xp,
             'gold' => $student->gold,
             'challenges' => $this::getChallenges($student->fresh(), $class),
+            'items' => $student->fresh()->items,
         ];
     }
 
