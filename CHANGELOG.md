@@ -1,5 +1,5 @@
 # Changelog
-## v1.54 Beta (20/05/2021)
+## v1.54.1 Beta (20/05/2021)
 ### Added
 - Pinned challenges.
 - New shop icons.
@@ -7,6 +7,7 @@
 
 ### Changed
 - Fixed objects required and mark challenge.
+- Fixes in challenges.
 
 ## v1.53.2 Beta (17/05/2021)
 ### Added

@@ -920,6 +920,7 @@ export default {
             }
             this.$parent.$parent.$parent.mutableChallenges =
               response.data.challenges;
+            
             if (response.data.success == true) {
               confetti({
                 particleCount: 200,
@@ -974,8 +975,10 @@ export default {
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
                 this.$parent.$parent.$parent.student.xp = response.data.xp;
                 this.$parent.$parent.$parent.student.gold = response.data.gold;
-                this.$parent.$parent.$parent.student.items =
-                  response.data.items;
+                if(response.data.items)
+                  this.$parent.$parent.$parent.student.items =
+                    response.data.items;
+                this.$forceUpdate();
                 this.$parent.$parent.$parent.forceReload++;
               }
             });
