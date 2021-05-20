@@ -3,6 +3,7 @@
 ### Added
 - Pinned challenges.
 - New shop icons.
+- New pet / monsters.
 
 ### Changed
 - Fixed objects required and mark challenge.
