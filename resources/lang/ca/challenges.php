@@ -90,5 +90,7 @@ return [
     
     'show_all_summary' => 'Mostra totes les històries i reptes complets',
     'show_all_summary_empty' => 'És possible que hi haja històries per veure, accedeix a ',
+    'pin' => 'Fixar-lo a l\'inici',
+    'pinned' => 'Història fixada',
 
 ];

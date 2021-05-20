@@ -90,5 +90,7 @@ return [
 
     'show_all_summary' => 'Muestra todas las historias y desafíos completos',
     'show_all_summary_empty' => 'Es posible que haya historias para ver, entra en ',
+    'pin' => 'Fijalo al inicio',
+    'pinned' => 'Historia fijada',
 
 ];

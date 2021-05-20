@@ -2,76 +2,110 @@
   <div class="box card-shadow-s mb-0" v-bind:class="getBackground">
     <section class="media">
       <div class="media-content is-relative">
-        <div
-          class="challenge-category has-background-light"
-          v-if="!admin"
-          v-tippy
-          :content="challengeReactive.group.name"
-        >
-          <i :class="challengeReactive.group.icon"></i>
-        </div>
-        <span
-          @click="copyPermalink"
-          v-if="admin"
-          v-tippy
-          :content="trans.get('challenges.permalink')"
-          class="button top-right custom cursor-pointer"
-          style="top: 0; right: 0"
-        >
-          <i class="fad fa-link"></i>
-          <span class="ml-2 is-hidden-mobile">Permalink</span>
-        </span>
         <div class="content">
-          <h1 class="is-flex is-center-vertically">
-            <i
-              v-if="
-                challengeReactive.is_conquer &&
-                challengeReactive.icon &&
-                !challengeReactive.incomplete
-              "
-              class="is-size-4"
-              :style="'color:' + challengeReactive.color"
-              :class="challengeReactive.icon + ' colored'"
-            ></i>
-            <i
-              v-if="challengeReactive.type == 1"
-              class="fas fa-users is-size-4 colored"
-            ></i>
-            {{ challengeReactive.title }}
-            <span class="tag ml-2 is-light" :class="{'is-success': challengeReactive.completed, 'is-danger': !challengeReactive.completed }" v-if="!admin && challengeReactive.is_conquer == 1 && full">
-            <span class="is-success is-light" v-if="challengeReactive.completed">
-              <i class="far fa-check"></i>
-            </span>
-            <span class="is-danger is-light" v-else>
-              <i class="far fa-times"></i>
-            </span>
-            </span>
-            <span class="tag is-dark ml-1" v-if="!challengeReactive.incomplete">
-              <span
-                v-if="admin && isHidden"
-                class="mr-2"
-                v-tippy
-                :content="
-                  trans.get('challenges.hidden_until') +
-                  ' ' +
-                  timeLeft(challengeReactive.datetime)
-                "
-              >
-                <i class="fas fa-eye-slash"></i>
-              </span>
+          <div class="columns mb-0">
+            <div class="column mb-0">
+              <h1 class="is-flex is-center-vertically mb-0">
+                <i
+                  v-if="
+                    challengeReactive.is_conquer &&
+                    challengeReactive.icon &&
+                    !challengeReactive.incomplete
+                  "
+                  class="is-size-4"
+                  :style="'color:' + challengeReactive.color"
+                  :class="challengeReactive.icon + ' colored'"
+                ></i>
+                <i
+                  v-if="challengeReactive.type == 1"
+                  class="fas fa-users is-size-4 colored"
+                ></i>
+                {{ challengeReactive.title }}
 
-              {{ datetime(challengeReactive.datetime) }}</span
-            >
-          </h1>
-          <p>
+                <span
+                  class="tag is-dark ml-1"
+                  v-if="!challengeReactive.incomplete"
+                >
+                  <span
+                    v-if="admin && isHidden"
+                    class="mr-2"
+                    v-tippy
+                    :content="
+                      trans.get('challenges.hidden_until') +
+                      ' ' +
+                      timeLeft(challengeReactive.datetime)
+                    "
+                  >
+                    <i class="fas fa-eye-slash"></i>
+                  </span>
+
+                  {{ datetime(challengeReactive.datetime) }}</span
+                >
+              </h1>
+            </div>
+            <div class="column is-narrow pr-0" v-if="!admin">
+              <div class="is-flex">
+                <i
+                  v-tippy
+                  :content="trans.get('challenges.pinned')"
+                  v-if="challengeReactive.pinned == 1"
+                  class="py-3 px-4 mr-2 has-background-dark has-text-light rounded fas fa-thumbtack"
+                ></i>
+                <span
+                  class="py-3 px-4 mr-2 rounded"
+                  :class="{
+                    'has-background-success-light': challengeReactive.completed,
+                    'has-background-danger-light': !challengeReactive.completed,
+                  }"
+                  v-if="!admin && challengeReactive.is_conquer == 1 && full"
+                >
+                  <span
+                    class="has-text-success"
+                    v-if="challengeReactive.completed"
+                  >
+                    <i class="far fa-check"></i>
+                  </span>
+                  <span class="has-text-danger" v-else>
+                    <i class="far fa-times"></i>
+                  </span>
+                </span>
+                <div
+                  class="p-3 rounded has-background-light"
+                  v-tippy
+                  :content="challengeReactive.group.name"
+                >
+                  <i :class="challengeReactive.group.icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow pr-0" v-else>
+              <button
+                class="button"
+                v-tippy
+                :content="trans.get('challenges.pin')"
+                @click="togglePinned"
+                :class="{ 'is-dark': challengeReactive.pinned == 1 }"
+              >
+                <i class="fas fa-thumbtack"></i>
+              </button>
+              <span
+                @click="copyPermalink"
+                v-tippy
+                :content="trans.get('challenges.permalink')"
+                class="button custom cursor-pointer"
+              >
+                <i class="fad fa-link"></i>
+                <span class="ml-2 is-hidden-mobile">Permalink</span>
+              </span>
+            </div>
+          </div>
+          <p v-if="challengeReactive.description">
             <small>{{ challengeReactive.description }}</small>
           </p>
-          <p>
-            <span
-              v-if="
-                challengeReactive.is_conquer && !challengeReactive.incomplete
-              "
-            >
+          <p
+            v-if="challengeReactive.is_conquer && !challengeReactive.incomplete"
+          >
+            <span>
               <small
                 v-if="
                   challengeReactive.xp ||
@@ -122,9 +156,7 @@
                   width="20px"
                 />
               </small>
-              <small
-                v-if="challengeReactive.objects > 0"
-              >
+              <small v-if="challengeReactive.objects > 0">
                 <i
                   class="fad fa-store p-1 colored has-background-dark has-text-light rounded"
                   v-tippy
@@ -333,8 +365,7 @@
             "
             class="message is-warning"
           >
-            <div v-html="getMessage(challenge)" class="message-body">
-            </div>
+            <div v-html="getMessage(challenge)" class="message-body"></div>
           </article>
           <button
             class="button"
@@ -439,6 +470,7 @@
                 !checkCompletion &&
                 !full &&
                 challengeReactive.type == 0
+                && (!challengeReactive.incomplete)
               "
               class="button is-info"
               @click="markCompleted"
@@ -707,11 +739,31 @@ export default {
     AddQuestion,
   },
   methods: {
+    togglePinned() {
+      axios
+        .post("/classroom/" + this.code + "/challenges/toggleProp", {
+          prop: "pinned",
+          id: this.challengeReactive.id,
+        })
+        .then((response) => {
+          this.challengeReactive.pinned =
+            this.challengeReactive.pinned == 1 ? 0 : 1;
+        });
+    },
     getMessage(challenge) {
-      let append = this.trans.get('challenges.go_to_challenges_mark');
-      if(challenge.completion == 3)
-        append = this.trans.get('challenges.go_to_challenges_password');
-      return  "<i class='fal fa-exclamation-circle'></i> " + this.trans.get('challenges.go_to_challenges') + " <a href='/classroom/show/" + this.code + "/section/2'>" + this.trans.get('menu.challenges') + "</a> " + append;
+      let append = this.trans.get("challenges.go_to_challenges_mark");
+      if (challenge.completion == 3)
+        append = this.trans.get("challenges.go_to_challenges_password");
+      return (
+        "<i class='fal fa-exclamation-circle'></i> " +
+        this.trans.get("challenges.go_to_challenges") +
+        " <a href='/classroom/show/" +
+        this.code +
+        "/section/2'>" +
+        this.trans.get("menu.challenges") +
+        "</a> " +
+        append
+      );
     },
     copyPermalink() {
       let url =

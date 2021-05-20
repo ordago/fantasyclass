@@ -90,5 +90,7 @@ return [
 
     'show_all_summary' => 'Show all the stories and the complete challenges',
     'show_all_summary_empty' => 'It is possible that there will be stories to see, please go to ',
+    'pin' => 'Pin at start',
+    'pinned' => 'Fixed story',
 
 ];

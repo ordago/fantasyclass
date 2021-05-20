@@ -178,6 +178,22 @@ class ChallengesController extends Controller
         }
     }
 
+    public function toggleProp()
+    {
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+            'prop' => ['string', 'required', "regex:(pinned)"],
+        ]);
+
+        $challenge = Challenge::where('id', '=', $data['id'])->first();
+        $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
+        $this->authorize('update', $class);
+
+        $challenge->update(['pinned' => $challenge->pinned == 0 ? 1 : 0]);
+        
+        
+    }
+
     public function toggle()
     {
         $challenge = Challenge::where('id', '=', request()->challenge)->first();

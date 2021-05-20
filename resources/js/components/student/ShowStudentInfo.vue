@@ -437,8 +437,11 @@
                   v-if="student.items.length >= 1"
                   @click="isCraftingModalActive = true"
                   class="inventory-item inventory-item-dark has-text-light rounded"
+                  v-tippy
+                  content="Crafting"
                 >
                   <i class="fad fa-hammer" style="font-size: 3.5em"></i>
+                  <!-- <small class="bl-sz">Crafting</small> -->
                 </div>
                 <div
                   v-for="item in student.items"
@@ -1202,8 +1205,8 @@
           </div>
           <div class="" v-if="craftJson && craftJson.length">
             <h3 class="is-size-3 mt-2 mb-3">{{ trans.get('shop.recipes') }}</h3>
-            <div v-for="craft in craftJson" :key="craft.id">
-              <img :src="craft.icon" width="32px"> = <span v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" :src="c.src"> <i class="fas fa-plus" v-if="index != craft.craft.length - 1"></i></span>
+            <div class="is-flex is-center-vertically my-2" v-for="craft in craftJson" :key="craft.id">
+              <img :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
             </div>
           </div>
          
@@ -2035,5 +2038,14 @@ export default {
 <style>
 .message-buy {
   line-height: 20px;
+}
+.bl-sz {
+  position: absolute;
+  bottom: 3px;
+  right: 4px;
+  font-size: .75em;
+  font-style: italic;
+  color: #aaa;
+  font-weight: bold;
 }
 </style>
