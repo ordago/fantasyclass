@@ -9,6 +9,7 @@
 - Fixed objects required and mark challenge.
 - Fixes in challenges.
 - Challenges now is progress in student area.
+- Show videochats count.
 
 ## v1.53.2 Beta (17/05/2021)
 ### Added

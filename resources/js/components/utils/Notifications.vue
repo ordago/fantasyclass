@@ -15,6 +15,7 @@
       <template v-slot:trigger>
         <div class="cursor-pointer button has-background-danger-light">
           <i class="fad fa-video" style="font-size: 1.25em"></i>
+          <span class="tag is-danger tag-notif ml-1">{{ videochats.length }}</span>
         </div>
       </template>
       <span>
