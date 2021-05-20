@@ -63,6 +63,7 @@
         >
           <div class="column is-narrow">
             <img
+              @contextmenu.prevent=""
               ref="monster"
               :src="monster.image"
               width="81px"

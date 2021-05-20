@@ -275,6 +275,7 @@
                 charclass.property +
                 ' colored\'></i>'
               "
+              @contextmenu.prevent=""
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
               class="p-2 m-2 rounded"
@@ -357,6 +358,7 @@
                   :src="'/img/character/' + gear.src"
                   :alt="gear.id"
                   class="item"
+                  @contextmenu.prevent=""
                 />
                 <div>
                   <i class="fas fa-plus"></i>
@@ -382,6 +384,7 @@
                         :src="'/img/character/' + itemStore.src"
                         :alt="itemStore.id"
                         class="item"
+                        @contextmenu.prevent=""
                       />
                       <div
                         class="price-buy rounded"
@@ -413,7 +416,7 @@
             >
               <b-field>
                 <p class="control">
-                  <img :src="item.icon" />
+                  <img :src="item.icon" @contextmenu.prevent="" />
                 </p>
                 <b-numberinput
                   @input="updateInventory(item.id, item.count)"
@@ -453,6 +456,7 @@
                 >
                   <img
                     :src="item.icon"
+                    @contextmenu.prevent=""
                     @click="item.hp > 0 ? useItem(item, message(item)) : null"
                     class="item rounded"
                   />
@@ -482,6 +486,7 @@
                 }"
               >
                 <img
+                @contextmenu.prevent=""
                   :src="'/img/character/' + gear.src"
                   :alt="gear.id"
                   class="item"
@@ -512,6 +517,7 @@
                       }"
                     >
                       <img
+                      @contextmenu.prevent=""
                         v-tippy
                         :content="propertiesMessage(itemStore)"
                         :src="'/img/character/' + itemStore.src"
@@ -562,7 +568,7 @@
                     item.min_lvl
                   }}</span>
                 </div>
-                <img :src="item.icon" />
+                <img @contextmenu.prevent="" :src="item.icon" />
               </div>
               <div
                 class="column is-flex has-all-centered rounded wheat"
@@ -668,6 +674,7 @@
                       placement: 'bottom',
                       arrow: true,
                     }"
+                    @contextmenu.prevent=""
                     width="81px"
                     :content="getName(pet.name)"
                     :src="pet.image"
@@ -706,6 +713,7 @@
                       placement: 'bottom',
                       arrow: true,
                     }"
+                    @contextmenu.prevent=""
                     :content="getName(pet.name)"
                     :src="pet.image"
                     width="81px"
@@ -1169,6 +1177,7 @@
             </div>
             <span class="is-relative" v-for="craft in craft" :key="craft.id">
               <img
+              @contextmenu.prevent=""
                 @click="removeCraft(craft.id)"
                 :src="craft.icon"
                 class="m-2 p-2 has-background-dark rounded"
@@ -1189,6 +1198,7 @@
               :key="item.id"
             >
               <img
+              @contextmenu.prevent=""
                 @click="addCraft(item)"
                 v-if="checkCraft(item.id)"
                 :src="item.icon"
@@ -1206,7 +1216,7 @@
           <div class="" v-if="craftJson && craftJson.length">
             <h3 class="is-size-3 mt-2 mb-3">{{ trans.get('shop.recipes') }}</h3>
             <div class="is-flex is-center-vertically my-2" v-for="craft in craftJson" :key="craft.id">
-              <img :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
+              <img @contextmenu.prevent="" :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" @contextmenu.prevent="" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
             </div>
           </div>
          
@@ -1280,7 +1290,8 @@ export default {
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
-    this.craftJson = JSON.parse(this.shop.craft);
+    if(this.shop.craft)
+      this.craftJson = JSON.parse(this.shop.craft);
     if (this.section) {
       this.activeTab = parseInt(this.section);
     } else if (this.$cookies.get("tab")) {
@@ -1406,7 +1417,7 @@ export default {
               message:
                 '<div class="has-text-centered">' +
                 this.trans.get("shop.craft_success") +
-                ': <br><br> <img src="' +
+                ': <br><br> <img style="pointer-events: none" src="' +
                 response.data.item.icon +
                 '"></div>',
               type: "is-success",

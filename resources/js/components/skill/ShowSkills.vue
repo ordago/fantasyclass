@@ -35,7 +35,7 @@
           :label="trans.get('skills.image')"
           centered
         >
-          <img class="rounded" :src="props.row.icon" />
+          <img class="rounded" @contextmenu.prevent="" :src="props.row.icon" />
         </b-table-column>
 
         <b-table-column
@@ -163,6 +163,7 @@
                 {{ trans.get("skills.image") + " *" }}
               </button>
               <img
+              @contextmenu.prevent=""
                 width="60px"
                 :src="skill.icon"
                 v-if="skill.icon"

@@ -438,6 +438,7 @@
           <div v-if="monster.hp > 0" class="columns">
             <div class="column is-narrow">
               <img
+                @contextmenu.prevent=""
                 width="81px"
                 :src="monster.image"
                 class="pet-selector mt-2"
@@ -820,6 +821,7 @@
               </div>
               <div ref="monsterdiv" v-if="type == 3 && monsterSelected">
                 <img
+                  @contextmenu.prevent=""
                   ref="monster"
                   :src="monsterSelected.image"
                   width="250px"

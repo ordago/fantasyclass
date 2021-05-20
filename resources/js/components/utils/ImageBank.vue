@@ -20,6 +20,7 @@
           <div v-if="custom && custom.length" class="my-2">
             <span v-for="(image, index) in custom" :key="index">
               <img
+                @contextmenu.prevent=""
                 @click="
                   updateAvatar(
                     '/storage/avatars/' + image.uuid + '/' + image.file_name
@@ -37,6 +38,7 @@
           <hr v-if="categories && categories.length" />
           <div class="columns is-multiline" v-if="images">
             <img
+              @contextmenu.prevent=""
               width="75px"
               @click="updateAvatar(image)"
               v-for="image in images"

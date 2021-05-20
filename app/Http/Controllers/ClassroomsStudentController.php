@@ -235,9 +235,9 @@ class ClassroomsStudentController extends Controller
             foreach ($challenge->requirements as $item) {
                 if (!$student->items->contains($item['id'])) {
                     $allItems = false;
-                    $content .= "<img class='coloredGray m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
+                    $content .= "<img style='pointer-events: none;' class='coloredGray m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
                 } else {
-                    $content .= "<img class='m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
+                    $content .= "<img style='pointer-events: none;' class='m-2' title='" . $item['alt'] . "' alt='" . $item['alt'] . "' src='" . $item['src'] . "' width='48px'>";
                 }
             }
             if (!$allItems) {

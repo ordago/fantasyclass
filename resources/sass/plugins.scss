@@ -7,6 +7,10 @@
     opacity: 0.5;
 }
 
+.noDwl {
+    pointer-events: none;
+}
+
 .ieAlertBg {
     position: fixed;
     background-color: rgba($color: #000000, $alpha: 0.5);

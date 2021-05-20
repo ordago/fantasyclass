@@ -17,6 +17,7 @@
             placement: 'bottom',
             arrow: true,
           }"
+          @contextmenu.prevent=""
           :content="getName(pet.name)"
           :src="pet.image"
           width="81px"
@@ -261,7 +262,8 @@
       </form>
     </b-modal>
 
-    <SelectPet :code="code" v-model="pet.image" v-if="isImageModalActive"> </SelectPet>
+    <SelectPet :code="code" v-model="pet.image" v-if="isImageModalActive">
+    </SelectPet>
   </div>
 </template>
 
@@ -366,6 +368,9 @@ export default {
           });
         },
       });
+    },
+    handler: function (e) {
+      e.preventDefault();
     },
   },
 };

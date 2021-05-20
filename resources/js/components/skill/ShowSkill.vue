@@ -1,6 +1,7 @@
 <template>
   <span class="mr-1 has-all-centered" :class="{'skill-container' : !use, 'skill-container-big' : use}">
     <img
+    @contextmenu.prevent=""
       :src="skill.icon"
       class="cursor-pointer skill-item"
       :class="{'skill-item-big' : use}"

@@ -10,7 +10,7 @@
             passive-type="is-danger"
             @input="toggleVisibility('items_visibility')"
             >{{ trans.get("shop.visibility") }}</b-switch
-          ><br>
+          ><br />
           <b-switch
             :value="true"
             type="is-info"
@@ -51,7 +51,11 @@
                     }}</span>
                   </div>
                   <div>
-                    <img :src="item.icon" width="48px" />
+                    <img
+                      @contextmenu.prevent=""
+                      :src="item.icon"
+                      width="48px"
+                    />
                   </div>
                   <div>
                     <b-switch
@@ -89,8 +93,14 @@
                     {{ item.description }}
                   </div>
                   <div class="my-2" v-if="item.craft && item.craft.length">
-                    <i class="fad fa-hammer" style="font-size: 1.5em"></i>: 
-                    <img width="20px" :src="img.src" v-for="img in item.craft" :key="img.id">
+                    <i class="fad fa-hammer" style="font-size: 1.5em"></i>:
+                    <img
+                      width="20px"
+                      @contextmenu.prevent=""
+                      :src="img.src"
+                      v-for="img in item.craft"
+                      :key="img.id"
+                    />
                   </div>
                   <div>
                     <a
@@ -125,15 +135,15 @@
           >
         </div>
         <b-field :label="trans.get('shop.price')" class="mt-4">
-            <b-numberinput
-              controls-position="compact"
-              v-model="config.card_price"
-            ></b-numberinput>
+          <b-numberinput
+            controls-position="compact"
+            v-model="config.card_price"
+          ></b-numberinput>
         </b-field>
-         <button class="button is-primary" @click="save(99)">
-            <i class="fas fa-save mr-2"></i>
-            {{ trans.get("general.save") }}
-          </button>
+        <button class="button is-primary" @click="save(99)">
+          <i class="fas fa-save mr-2"></i>
+          {{ trans.get("general.save") }}
+        </button>
       </b-tab-item>
       <b-tab-item
         v-if="character"
@@ -175,6 +185,7 @@
             class="is-flex has-all-centered m-4 has-border"
           >
             <img
+              @contextmenu.prevent=""
               class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"
@@ -225,6 +236,7 @@
             class="is-flex has-all-centered m-4 has-border"
           >
             <img
+              @contextmenu.prevent=""
               class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"
@@ -275,6 +287,7 @@
             class="is-flex has-all-centered m-4 has-border"
           >
             <img
+              @contextmenu.prevent=""
               class="mr-3"
               :src="'/img/character/' + item.src"
               width="50px"

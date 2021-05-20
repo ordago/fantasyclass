@@ -148,6 +148,7 @@
                   :content="trans.get('challenges.items')"
                 ></i>
                 <img
+                @contextmenu.prevent=""
                   v-for="item in challengeReactive.items"
                   class="mr-1"
                   style="position: relative; top: 4px"
@@ -181,6 +182,7 @@
               ></small>
               <small v-for="req in challenge.requirements" :key="req.id">
                 <img
+                @contextmenu.prevent=""
                   :src="req.src"
                   style="position: relative; top: 4px"
                   :alt="req.alt"
@@ -384,6 +386,7 @@
             >
               <div class="flexCenter imgTeacher">
                 <img
+                @contextmenu.prevent=""
                   v-if="comment.info.type == 'student'"
                   width="32px"
                   height="32px"

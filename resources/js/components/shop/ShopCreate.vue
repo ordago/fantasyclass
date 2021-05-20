@@ -176,6 +176,7 @@
         <section class="modal-card-body is-relative mb-2">
           <div class="columns is-multiline" v-if="images">
             <img
+              @contextmenu.prevent=""
               width="60px"
               @click="updateImg(image)"
               v-for="image in images"

@@ -40,7 +40,6 @@
           :key="index"
           class="mr-1 is-flex has-all-centered skill-container"
         >
-          
         </span>
       </div>
 
@@ -69,6 +68,7 @@
       >
         <div :class="getClass()">
           <img
+            @contextmenu.prevent=""
             :src="'/img/character/' + element.src"
             :class="element.classes"
             v-for="element in student.equipment"
@@ -92,6 +92,7 @@
             placement: 'bottom',
             arrow: true,
           }"
+          @contextmenu.prevent=""
           width="81px"
           :content="petMessage(student.pets[0])"
           :src="student.pets[0].image"
@@ -126,8 +127,7 @@ export default {
   },
   methods: {
     getClass() {
-      if(this.student.hp > 0)
-        return this.student.character.classes;
+      if (this.student.hp > 0) return this.student.character.classes;
     },
     getStyle() {
       return (

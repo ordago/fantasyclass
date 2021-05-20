@@ -47,7 +47,7 @@
           {{ prizeSelected.value }} <i class="fas fa-coins colored"></i>
         </button>
         <button v-else class="button is-success" @click="assignObject()">
-          <img :src="prizeSelected.imageUri" />
+          <img @contextmenu.prevent="" :src="prizeSelected.imageUri" />
         </button>
       </span>
     </div>

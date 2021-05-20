@@ -40,6 +40,7 @@
         <div v-if="imagesCustom.length">
           <span v-for="(image, index) in imagesCustom" :key="index">
             <img
+            @contextmenu.prevent=""
               :src="'/storage/pets/' + image.uuid + '/' + image.file_name"
               @click="
                 clickImage(
@@ -61,6 +62,7 @@
         <hr />
         <div class="columns is-multiline" v-if="imagesCraft">
           <img
+          @contextmenu.prevent=""
             width="75px"
             class="cursor-pointer"
             @click="clickImage('/img/pets/craft/' + image)"
@@ -80,6 +82,7 @@
         >
         <div class="columns is-multiline" v-if="images">
           <img
+          @contextmenu.prevent=""
             width="75px"
             class="cursor-pointer"
             @click="clickImage('/img/pets/' + image)"

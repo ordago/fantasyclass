@@ -15,6 +15,7 @@
             <summary><h1 class="is-inline-block is-size-1 cursor-pointer">{{ trans.get('skills.' + pack.name) }}</h1></summary>
             <div class="columns is-multiline my-2">
               <img
+              @contextmenu.prevent=""
                 width="60px"
                 class="cursor-pointer m-1 rounded"
                 @click="clickImage"
