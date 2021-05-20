@@ -54,7 +54,7 @@ return [
     'mark_confirm' => 'Confirm done',
     'mark_text' => 'Are you sure you have done all the the work? Trust is needed there.',
     'go_to_challenges' => 'Go to',
-    'go_to_challenges_mark' => ' section to mark the task as realized when you finish.',
+    'go_to_challenges_mark' => ' personal section to mark the task as realized when you finish.',
     'go_to_challenges_password' => 'section to put the password.',
 
     'comment' => 'Comment',

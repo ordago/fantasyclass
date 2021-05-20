@@ -53,7 +53,7 @@ return [
     'mark_title' => 'Marcar com a superat',
     'mark_confirm' => 'Confirme la superació',
     'mark_text' => 'Estàs segur/a que has superat la tasca? La confiança és necessària.',
-    'go_to_challenges' => 'Vés a la secció de',
+    'go_to_challenges' => 'Vés a la secció personal de',
     'go_to_challenges_mark' => 'per marcar la tasca com a superada quan estigui finalitzada.',
     'go_to_challenges_password' => 'per posar la contrasenya.',
 

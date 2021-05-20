@@ -975,7 +975,6 @@ export default {
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
                 this.$parent.$parent.$parent.student.xp = response.data.xp;
                 this.$parent.$parent.$parent.student.gold = response.data.gold;
-                console.log(response.data.items)
                 if(response.data.items)
                   this.$parent.$parent.$parent.student.items =
                     response.data.items;
