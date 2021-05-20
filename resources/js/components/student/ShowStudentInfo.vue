@@ -1216,7 +1216,7 @@
           <div class="" v-if="craftJson && craftJson.length">
             <h3 class="is-size-3 mt-2 mb-3">{{ trans.get('shop.recipes') }}</h3>
             <div class="is-flex is-center-vertically my-2" v-for="craft in craftJson" :key="craft.id">
-              <img @contextmenu.prevent="" :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" @contextmenu.prevent="" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
+              <img v-tippy :content="craft.description" @contextmenu.prevent="" :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" @contextmenu.prevent="" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
             </div>
           </div>
          
@@ -1419,7 +1419,9 @@ export default {
                 this.trans.get("shop.craft_success") +
                 ': <br><br> <img style="pointer-events: none" src="' +
                 response.data.item.icon +
-                '"></div>',
+                '"><br><small><em>'+ 
+                this.getDescription(response.data.item.description) +
+                '</em></small></div>',
               type: "is-success",
               ariaRole: "alertdialog",
               ariaModal: true,
@@ -1442,6 +1444,9 @@ export default {
     },
     checkCraft(id) {
       return !this.craft.find((object) => object.id == id);
+    },
+    getDescription(desc) {
+      return desc ? desc : '';
     },
     buyCard() {
       this.$buefy.dialog.confirm({
