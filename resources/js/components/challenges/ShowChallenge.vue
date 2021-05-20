@@ -363,7 +363,7 @@
               challenge.completion != 0 &&
               !challenge.completed &&
               !admin &&
-              full
+              full && !challengeReactive.incomplete
             "
             class="message is-warning"
           >
