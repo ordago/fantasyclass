@@ -140,6 +140,7 @@
         :destroy-on-hide="false"
         multiline
         expanded
+        :animated="false"
         @input="setCookie()"
         v-model="activeTab"
         :key="update"

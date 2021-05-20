@@ -17,7 +17,7 @@ return [
 
     'provider_failed' => 'El e-mail no está grabado.',
     'failed' => 'Las credenciales no son correctas.',
-    'throttle' => 'Massa intentos incorrectos. Por favor, intenta en :seconds segundos.',
+    'throttle' => 'Demasiados intentos incorrectos. Por favor, intenta en :seconds segundos.',
     'email' => 'E-mail o nombre de usuario',
     'login' => 'Inicia sesión',
     'register' => 'Regístrate',
