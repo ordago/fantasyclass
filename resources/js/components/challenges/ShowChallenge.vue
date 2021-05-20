@@ -763,7 +763,7 @@ export default {
         " <a href='/classroom/show/" +
         this.code +
         "/section/2'>" +
-        this.trans.get("menu.challenges") +
+        this.trans.get("menu.progress") +
         "</a> " +
         append
       );

@@ -584,8 +584,8 @@
           </div>
         </b-tab-item>
         <b-tab-item
-          :label="trans.get('students.challenges')"
-          icon="pen-fancy"
+          :label="trans.get('menu.progress')"
+          icon="tasks"
           icon-pack="fad"
           class="p-2"
         >

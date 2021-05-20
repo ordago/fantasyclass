@@ -27,6 +27,7 @@ return [
     'adventure' => 'Your adventure',
     'goals' => 'Goals',
     'challenges' => 'Challenges',
+    'progress' => 'Progress',
     'evaluation' => 'Evaluation',
     'rules' => 'Rules',
     'log' => 'Log',
