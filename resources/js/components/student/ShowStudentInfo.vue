@@ -2041,7 +2041,7 @@ export default {
       return _.orderBy(this.student.equipment, "type");
     },
     orderedChallenges: function () {
-      return _.orderBy(this.mutableChallenges, "datetime", "desc");
+      return _.orderBy(this.mutableChallenges, ['pinned', 'datetime'], ['desc', 'desc']);
     },
   },
 };

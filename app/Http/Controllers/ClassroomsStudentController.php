@@ -373,7 +373,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenges.id, challenges.pinned, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
 
@@ -395,7 +395,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenge_group.group_id, challenges.pinned, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
