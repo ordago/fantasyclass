@@ -149,14 +149,13 @@ class ClassroomsStudentController extends Controller
 
     public function index($code)
     {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('characterTheme', 'students.equipment', 'students.character', 'students.pets', 'students.groups', 'theme', 'characterTheme.characters', 'students.skills')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $student = Functions::getCurrentStudent($class);
-
         // $class->students->each->append('grouplogopublic');
         // $students = $class->students->where('hidden', '=', 0)->map(function ($user) {
         //     return collect($user->toArray())
