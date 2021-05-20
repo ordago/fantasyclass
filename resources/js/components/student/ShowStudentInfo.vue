@@ -1,6 +1,6 @@
 <template>
   <div
-    class="columns p-2 h-100 mr-0"
+    class="columns p-2 pr-0 h-100 mr-0"
     v-bind:class="{ 'has-bg-student': !admin }"
   >
     <div class="column is-narrow pr-0 noprint" ref="studentInfo">
@@ -135,13 +135,15 @@
         </div>
       </div>
     </div>
-    <div class="column pr-0">
+    <div class="column pr-0 pt-0">
       <b-tabs
         :destroy-on-hide="false"
         multiline
+        expanded
         @input="setCookie()"
         v-model="activeTab"
         :key="update"
+        class="pt-1"
       >
         <b-tab-item
           :label="trans.get('students.settings')"
@@ -2063,5 +2065,15 @@ export default {
   font-style: italic;
   color: #aaa;
   font-weight: bold;
+}
+.has-bg-student .tabs {
+  background-color: white;
+  border-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-top: 12px;
+  margin-top: -5px;
+}
+.has-bg-student .tabs a {
+  border-radius: 2px;
 }
 </style>

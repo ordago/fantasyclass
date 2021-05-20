@@ -1,5 +1,5 @@
 # Changelog
-## v1.54.2 Beta (20/05/2021)
+## v1.54.3 Beta (20/05/2021)
 ### Added
 - Pinned challenges.
 - New shop icons.
@@ -10,6 +10,7 @@
 - Fixes in challenges.
 - Challenges now is progress in student area.
 - Show videochats count.
+- New tabs theme.
 
 ## v1.53.2 Beta (17/05/2021)
 ### Added
