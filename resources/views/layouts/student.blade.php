@@ -20,7 +20,7 @@
 
 @section('menu')
 <div class="navbar-start">
-    <a href="/classroom/show/{{ $class->code }}" class="navbar-item" style="border-right: 1px solid #aaa; border-radius: 10px" v-tippy content="{{ $student->name }}">
+    <a href="/classroom/show/{{ $class->code }}" class="navbar-item" style="border-right: 1px solid #aaa; border-radius: 10px;min-width: 120px" v-tippy content="{{ $student->name }}">
         <img class="rounded" src="{{ $student->avatar }}"> <span style="min-width: 70px" class="ml-2 has-text-centered">{{ Str::limit($student->name, 8, $end='...') }}</span>
     </a>
     <a href="/classroom/show/{{ $class->code }}/users" class="navbar-item">

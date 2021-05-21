@@ -340,69 +340,75 @@
 
           <div v-if="admin">
             <div
-              class="w-100 is-flex mb-5 content"
+              class="columns is-mobile is-multiline is-variable"
               v-if="classroom.character_theme"
               :key="forceReload"
             >
               <div
+                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
                 v-for="gear in orderedEquipment"
                 v-bind:key="gear.id"
-                v-tippy
-                :content="propertiesMessage(gear)"
-                :ref="'item' + gear.id"
-                class="inventory-item inv-item-armor relative rounded"
-                v-bind:class="{
-                  'inv-item-armor-bronce': gear.offset == 1,
-                  'inv-item-armor-silver': gear.offset == 2,
-                  'inv-item-armor-gold': gear.offset == 3,
-                }"
               >
-                <img
-                  :src="'/img/character/' + gear.src"
-                  :alt="gear.id"
-                  class="item"
-                  @contextmenu.prevent=""
-                />
-                <div>
-                  <i class="fas fa-plus"></i>
-                </div>
                 <div
-                  class="w-100 shop-sub-item"
-                  style="position: absolute; top: 100px; left: 0"
+                  v-tippy
+                  :content="propertiesMessage(gear)"
+                  :ref="'item' + gear.id"
+                  class="w-100 inventory-item inv-item-armor relative rounded"
+                  v-bind:class="{
+                    'offset0': gear.offset == 0,
+                    'inv-item-armor-bronce': gear.offset == 1,
+                    'inv-item-armor-silver': gear.offset == 2,
+                    'inv-item-armor-gold': gear.offset == 3,
+                  }"
                 >
-                  <div v-for="(i, index) in getProperties()" :key="index">
-                    <div
-                      v-for="itemStore in filterEquipment(i, gear.type)"
-                      v-bind:key="itemStore.id"
-                      class="inventory-item inv-item-armor w-100"
-                      v-bind:class="{
-                        'inv-item-armor-bronce': index == 1,
-                        'inv-item-armor-silver': index == 2,
-                        'inv-item-armor-gold': index == 3,
-                      }"
-                    >
-                      <img
-                        v-tippy
-                        :content="propertiesMessage(itemStore)"
-                        :src="'/img/character/' + itemStore.src"
-                        :alt="itemStore.id"
-                        class="item"
-                        @contextmenu.prevent=""
-                      />
+                  <img
+                    :src="'/img/character/' + gear.src"
+                    :alt="gear.id"
+                    class="item"
+                    @contextmenu.prevent=""
+                  />
+                  <div>
+                    <i class="fas fa-plus"></i>
+                  </div>
+                  <div
+                    class="w-100 shop-sub-item"
+                    style="position: absolute; top: 100px; left: 0"
+                  >
+                    <div v-for="(i, index) in getProperties()" :key="index">
                       <div
-                        class="price-buy rounded"
-                        v-if="!admin"
-                        @click="buyEquipment(gear, itemStore)"
+                        v-for="itemStore in filterEquipment(i, gear.type)"
+                        v-bind:key="itemStore.id"
+                        class="inventory-item inv-item-armor w-100"
+                        v-bind:class="{
+                          'offset0': index == 0,
+                          'inv-item-armor-bronce': index == 1,
+                          'inv-item-armor-silver': index == 2,
+                          'inv-item-armor-gold': index == 3,
+                        }"
                       >
-                        {{ calculate(itemStore) }}
-                        <i class="fas fa-coins colored"></i>
-                      </div>
-                      <div
-                        v-if="admin"
-                        class="price-buy rounded"
-                        @click="assignEquipment(gear, itemStore)"
-                      >
-                        {{ trans.get("general.assign") }}
+                        <img
+                          v-tippy
+                          :content="propertiesMessage(itemStore)"
+                          :src="'/img/character/' + itemStore.src"
+                          :alt="itemStore.id"
+                          class="item"
+                          @contextmenu.prevent=""
+                        />
+                        <div
+                          class="price-buy rounded"
+                          v-if="!admin"
+                          @click="buyEquipment(gear, itemStore)"
+                        >
+                          {{ calculate(itemStore) }}
+                          <i class="fas fa-coins colored"></i>
+                        </div>
+                        <div
+                          v-if="admin"
+                          class="price-buy rounded"
+                          @click="assignEquipment(gear, itemStore)"
+                        >
+                          {{ trans.get("general.assign") }}
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -411,7 +417,7 @@
             </div>
           </div>
 
-          <div class="columns is-multiline is-variable" v-if="admin">
+          <div class="columns is-multiline is-variable mt-3" v-if="admin">
             <div
               v-for="item in items"
               class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
@@ -433,7 +439,7 @@
             </div>
           </div>
           <div
-            class="is-flex is-flex-direction-column"
+            class="is-flex is-flex-direction-column mt-5"
             id="inventory"
             v-if="!admin"
           >
@@ -478,65 +484,75 @@
                 <div class="inventory-item rounded w-100"></div>
               </div>
             </div>
-            <div v-if="classroom.character_theme" :key="forceReload">
+            <div
+              class="columns is-mobile is-multiline is-variable"
+              v-if="classroom.character_theme"
+              :key="forceReload"
+            >
               <div
+                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
                 v-for="gear in orderedEquipment"
                 v-bind:key="gear.id"
-                v-tippy
-                :content="propertiesMessage(gear)"
-                :ref="'item' + gear.id"
-                class="inventory-item inv-item-armor relative rounded"
-                v-bind:class="{
-                  'inv-item-armor-bronce': gear.offset == 1,
-                  'inv-item-armor-silver': gear.offset == 2,
-                  'inv-item-armor-gold': gear.offset == 3,
-                }"
               >
-                <img
-                  @contextmenu.prevent=""
-                  :src="'/img/character/' + gear.src"
-                  :alt="gear.id"
-                  class="item"
-                />
                 <div
-                  class="price-buy rounded not-hover"
-                  v-if="
-                    (eq1Json || eq2Json || eq3Json) &&
-                    gear.id != 41 &&
-                    gear.id != 50
-                  "
+                  v-tippy
+                  :content="propertiesMessage(gear)"
+                  :ref="'item' + gear.id"
+                  class="w-100 inventory-item inv-item-armor relative rounded"
+                  v-bind:class="{
+                    'offset0': gear.offset == 0,
+                    'inv-item-armor-bronce': gear.offset == 1,
+                    'inv-item-armor-silver': gear.offset == 2,
+                    'inv-item-armor-gold': gear.offset == 3,
+                  }"
                 >
-                  <i class="fas fa-plus"></i>
-                </div>
-                <div
-                  class="w-100 shop-sub-item"
-                  style="position: absolute; top: 100px; left: 0"
-                >
-                  <div v-for="(i, index) in getProperties()" :key="index">
-                    <div
-                      v-for="itemStore in filterEquipment(i, gear.type)"
-                      v-bind:key="itemStore.id"
-                      class="inventory-item inv-item-armor w-100"
-                      v-bind:class="{
-                        'inv-item-armor-bronce': index == 0,
-                        'inv-item-armor-silver': index == 1,
-                        'inv-item-armor-gold': index == 2,
-                      }"
-                    >
-                      <img
-                        @contextmenu.prevent=""
-                        v-tippy
-                        :content="propertiesMessage(itemStore)"
-                        :src="'/img/character/' + itemStore.src"
-                        :alt="itemStore.id"
-                        class="item"
-                      />
+                  <img
+                    @contextmenu.prevent=""
+                    :src="'/img/character/' + gear.src"
+                    :alt="gear.id"
+                    class="item"
+                  />
+                  <div
+                    class="price-buy rounded not-hover"
+                    v-if="
+                      (eq1Json || eq2Json || eq3Json) &&
+                      gear.id != 41 &&
+                      gear.id != 50
+                    "
+                  >
+                    <i class="fas fa-plus"></i>
+                  </div>
+                  <div
+                    class="w-100 shop-sub-item p-1"
+                    style="position: absolute; top: 100px; left: 0"
+                  >
+                    <div v-for="(i, index) in getProperties()" :key="index">
                       <div
-                        class="price-buy rounded"
-                        @click="buyEquipment(gear, itemStore)"
+                        v-for="itemStore in filterEquipment(i, gear.type)"
+                        v-bind:key="itemStore.id"
+                        class="inventory-item inv-item-armor w-100"
+                        v-bind:class="{
+                          'offset0': gear.offset == 0,
+                          'inv-item-armor-bronce': index == 0,
+                          'inv-item-armor-silver': index == 1,
+                          'inv-item-armor-gold': index == 2,
+                        }"
                       >
-                        {{ calculate(itemStore) }}
-                        <i class="fas fa-coins colored"></i>
+                        <img
+                          @contextmenu.prevent=""
+                          v-tippy
+                          :content="propertiesMessage(itemStore)"
+                          :src="'/img/character/' + itemStore.src"
+                          :alt="itemStore.id"
+                          class="item"
+                        />
+                        <div
+                          class="price-buy rounded"
+                          @click="buyEquipment(gear, itemStore)"
+                        >
+                          {{ calculate(itemStore) }}
+                          <i class="fas fa-coins colored"></i>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -1177,7 +1193,7 @@
           <div class="p-2 is-flex pb-4 has-background-light border m-2">
             <div
               @click="tryCraft"
-              style="float: none"
+              style="float: none; min-width: 140px"
               :class="{
                 'faa-parent animated-hover': craft.length,
                 a5: !craft.length,
