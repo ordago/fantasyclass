@@ -437,26 +437,30 @@
             id="inventory"
             v-if="!admin"
           >
-            <div class="">
-              <div>
+            <div class="columns is-mobile is-multiline is-variable">
+              <div
+                v-if="student.items.length >= 1"
+                @click="isCraftingModalActive = true"
+                class="column p-1 is-6-mobile is-4-tablet is-2-desktop is-2-fullhd"
+                v-tippy
+                content="Crafting"
+              >
                 <div
-                  v-if="student.items.length >= 1"
-                  @click="isCraftingModalActive = true"
-                  class="inventory-item inventory-item-dark has-text-light rounded"
-                  v-tippy
-                  content="Crafting"
+                  class="w-100 inventory-item inventory-item-dark has-text-light rounded"
                 >
                   <i class="fad fa-hammer" style="font-size: 3.5em"></i>
                   <!-- <small class="bl-sz">Crafting</small> -->
                 </div>
-                <div
-                  v-for="item in student.items"
-                  v-tippy
-                  :content="message(item)"
-                  v-show="item.pivot.count > 0"
-                  class="inventory-item rounded"
-                  v-bind:key="item.id"
-                >
+              </div>
+              <div
+                v-for="item in student.items"
+                v-tippy
+                :content="message(item)"
+                v-show="item.pivot.count > 0"
+                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                v-bind:key="item.id"
+              >
+                <div class="inventory-item rounded w-100">
                   <img
                     :src="item.icon"
                     @contextmenu.prevent=""
@@ -466,12 +470,12 @@
                   <div class="number-items">{{ item.pivot.count }}</div>
                 </div>
               </div>
-              <div>
-                <div
-                  v-for="index in inventoryRemaining"
-                  class="inventory-item rounded"
-                  v-bind:key="index"
-                ></div>
+              <div
+                v-for="index in inventoryRemaining"
+                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                v-bind:key="index"
+              >
+                <div class="inventory-item rounded w-100"></div>
               </div>
             </div>
             <div v-if="classroom.character_theme" :key="forceReload">
@@ -489,7 +493,7 @@
                 }"
               >
                 <img
-                @contextmenu.prevent=""
+                  @contextmenu.prevent=""
                   :src="'/img/character/' + gear.src"
                   :alt="gear.id"
                   class="item"
@@ -520,7 +524,7 @@
                       }"
                     >
                       <img
-                      @contextmenu.prevent=""
+                        @contextmenu.prevent=""
                         v-tippy
                         :content="propertiesMessage(itemStore)"
                         :src="'/img/character/' + itemStore.src"
@@ -598,14 +602,17 @@
           >
             <article class="message is-info my-2">
               <div class="message-body">
-                <i class="fas fa-info-square"></i> {{ trans.get("challenges.show_all_summary_empty") }}
+                <i class="fas fa-info-square"></i>
+                {{ trans.get("challenges.show_all_summary_empty") }}
                 <a
                   :href="'/classroom/show/' + classroom.code + '/challenges'"
                   >{{ trans.get("menu.challenges") }}</a
                 >
               </div>
             </article>
-            <div class="content has-text-centered rounded m-3 has-all-centered p-4 has-background-warning">
+            <div
+              class="content has-text-centered rounded m-3 has-all-centered p-4 has-background-warning"
+            >
               <h1>
                 <i class="fas fa-dungeon"></i>
                 {{ trans.get("challenges.challenges_empty") }}
@@ -1167,20 +1174,21 @@
           <p>
             {{ trans.get("shop.crafting_info") }}
           </p>
-           <div
-            class="p-2 is-flex pb-4 has-background-light border m-2"
-          >
+          <div class="p-2 is-flex pb-4 has-background-light border m-2">
             <div
               @click="tryCraft"
               style="float: none"
-              :class="{ 'faa-parent animated-hover' : craft.length, 'a5' : !craft.length }"
+              :class="{
+                'faa-parent animated-hover': craft.length,
+                a5: !craft.length,
+              }"
               class="inventory-item inventory-item-dark has-text-light rounded"
             >
               <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
             </div>
             <span class="is-relative" v-for="craft in craft" :key="craft.id">
               <img
-              @contextmenu.prevent=""
+                @contextmenu.prevent=""
                 @click="removeCraft(craft.id)"
                 :src="craft.icon"
                 class="m-2 p-2 has-background-dark rounded"
@@ -1192,7 +1200,6 @@
                 <i class="fas fa-minus"></i>
               </div>
             </span>
-            
           </div>
           <div class="is-relative">
             <span
@@ -1201,7 +1208,7 @@
               :key="item.id"
             >
               <img
-              @contextmenu.prevent=""
+                @contextmenu.prevent=""
                 @click="addCraft(item)"
                 v-if="checkCraft(item.id)"
                 :src="item.icon"
@@ -1217,12 +1224,32 @@
             </span>
           </div>
           <div class="" v-if="craftJson && craftJson.length">
-            <h3 class="is-size-3 mt-2 mb-3">{{ trans.get('shop.recipes') }}</h3>
-            <div class="is-flex is-center-vertically my-2" v-for="craft in craftJson" :key="craft.id">
-              <img v-tippy :content="craft.description" @contextmenu.prevent="" :src="craft.icon" width="32px"> <i class="fas fa-equals mx-2"></i> <span class="is-flex is-center-vertically" v-for="(c, index) in craft.craft" :key="c.key"><img width="32px" @contextmenu.prevent="" :src="c.src"> <i class="fas fa-plus mx-2" v-if="index != craft.craft.length - 1"></i></span>
+            <h3 class="is-size-3 mt-2 mb-3">{{ trans.get("shop.recipes") }}</h3>
+            <div
+              class="is-flex is-center-vertically my-2"
+              v-for="craft in craftJson"
+              :key="craft.id"
+            >
+              <img
+                v-tippy
+                :content="craft.description"
+                @contextmenu.prevent=""
+                :src="craft.icon"
+                width="32px"
+              />
+              <i class="fas fa-equals mx-2"></i>
+              <span
+                class="is-flex is-center-vertically"
+                v-for="(c, index) in craft.craft"
+                :key="c.key"
+                ><img width="32px" @contextmenu.prevent="" :src="c.src" />
+                <i
+                  class="fas fa-plus mx-2"
+                  v-if="index != craft.craft.length - 1"
+                ></i
+              ></span>
             </div>
           </div>
-         
         </section>
         <footer class="modal-card-foot">
           <button
@@ -1293,8 +1320,7 @@ export default {
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
-    if(this.shop.craft)
-      this.craftJson = JSON.parse(this.shop.craft);
+    if (this.shop.craft) this.craftJson = JSON.parse(this.shop.craft);
     if (this.section) {
       this.activeTab = parseInt(this.section);
     } else if (this.$cookies.get("tab")) {
@@ -1392,8 +1418,7 @@ export default {
       return msg;
     },
     tryCraft() {
-      if(!this.craft || !this.craft.length)
-        return false;
+      if (!this.craft || !this.craft.length) return false;
       let audio = new Audio("/sound/hammer.mp3");
       audio.play();
       let ids = [];
@@ -1422,9 +1447,9 @@ export default {
                 this.trans.get("shop.craft_success") +
                 ': <br><br> <img style="pointer-events: none" src="' +
                 response.data.item.icon +
-                '"><br><small><em>'+ 
+                '"><br><small><em>' +
                 this.getDescription(response.data.item.description) +
-                '</em></small></div>',
+                "</em></small></div>",
               type: "is-success",
               ariaRole: "alertdialog",
               ariaModal: true,
@@ -1449,7 +1474,7 @@ export default {
       return !this.craft.find((object) => object.id == id);
     },
     getDescription(desc) {
-      return desc ? desc : '';
+      return desc ? desc : "";
     },
     buyCard() {
       this.$buefy.dialog.confirm({
@@ -2049,7 +2074,11 @@ export default {
       return _.orderBy(this.student.equipment, "type");
     },
     orderedChallenges: function () {
-      return _.orderBy(this.mutableChallenges, ['pinned', 'datetime'], ['desc', 'desc']);
+      return _.orderBy(
+        this.mutableChallenges,
+        ["pinned", "datetime"],
+        ["desc", "desc"]
+      );
     },
   },
 };
@@ -2062,7 +2091,7 @@ export default {
   position: absolute;
   bottom: 3px;
   right: 4px;
-  font-size: .75em;
+  font-size: 0.75em;
   font-style: italic;
   color: #aaa;
   font-weight: bold;
