@@ -1,7 +1,10 @@
 # Changelog
-## v1.55 Beta (21/05/2021)
+## v1.55.1 Beta (21/05/2021)
 ### Added
 - Complete challenge by URL.
+
+### Changed
+- Improvements in inventory style.
 
 ## v1.54.3 Beta (20/05/2021)
 ### Added

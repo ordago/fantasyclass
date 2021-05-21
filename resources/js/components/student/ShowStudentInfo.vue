@@ -309,12 +309,12 @@
 
         <b-tab-item
           :label="trans.get('students.inventory')"
-          class="p-2 pt-4"
+          class="p-2"
           icon="backpack"
           icon-pack="fad"
         >
           <article
-            class="message is-dark mb-3"
+            class="message is-dark mt-2 mb-5"
             v-tippy
             :content="trans.get('students.last')"
             v-if="!admin && student.behaviours.length"
@@ -439,7 +439,7 @@
             </div>
           </div>
           <div
-            class="is-flex is-flex-direction-column mt-5"
+            class="is-flex is-flex-direction-column mt-4"
             id="inventory"
             v-if="!admin"
           >
