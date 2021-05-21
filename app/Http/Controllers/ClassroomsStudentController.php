@@ -427,7 +427,7 @@ class ClassroomsStudentController extends Controller
                 }
             }
 
-            $challenge->permalink = Crypt::encryptString($challenge->id);
+            $challenge->permalink = Functions::simple_crypt($challenge->id);
             $group = ChallengesGroup::find($challenge->challenges_group_id);
             $challenge->group = [
                 'name' => $group->name,
