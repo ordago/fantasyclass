@@ -42,4 +42,6 @@ return [
     'impostor_delete' => 'Borra el impostor actual',
     'impostor_active' => '¡Hay un impostor en la clase!',
 
+    'get_challenge' => '¡Enhorabuena, has superado el reto!',
+
 ];

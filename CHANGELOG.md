@@ -1,4 +1,8 @@
 # Changelog
+## v1.55 Beta (21/05/2021)
+### Added
+- Complete challenge by URL.
+
 ## v1.54.3 Beta (20/05/2021)
 ### Added
 - Pinned challenges.

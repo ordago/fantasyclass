@@ -337,24 +337,26 @@
         >
         </vue-select-image>
 
-        <label class="label">{{ trans.get("challenges.assign_objects") }}</label>
- 
+        <label class="label">{{
+          trans.get("challenges.assign_objects")
+        }}</label>
+
         <div class="field has-addons">
-              <p class="control">
-                <span class="button is-static">
-                  <i class="fas fa-store colored" style="color: red"></i>
-                </span>
-              </p>
-              <p class="control is-expanded">
-                <input
-                  type="number"
-                  name="objects"
-                  class="input"
-                  v-model="challenge.objects"
-                  required
-                />
-              </p>
-            </div>
+          <p class="control">
+            <span class="button is-static">
+              <i class="fas fa-store colored" style="color: red"></i>
+            </span>
+          </p>
+          <p class="control is-expanded">
+            <input
+              type="number"
+              name="objects"
+              class="input"
+              v-model="challenge.objects"
+              required
+            />
+          </p>
+        </div>
 
         <div class="mt-3" v-if="challenge.type == 0">
           <label for="name">{{ trans.get("challenges.completion") }}</label>
@@ -371,13 +373,26 @@
                   <option value="3">
                     {{ trans.get("challenges.completion_password") }}
                   </option>
+                  <option value="4">
+                    {{ trans.get("challenges.completion_url") }}
+                  </option>
                   <!-- <option value="2">{{ trans.get('challenges.completion_both') }}</option> -->
                 </select>
               </div>
             </div>
           </div>
+          <article v-if="challenge.completion == 4" class="message is-warning">
+            <div class="message-body">
+              <p>{{ trans.get('challenges.completion_url_info_1') }}</p>
+              <p class="mt-2"><strong>{{ trans.get('challenges.completion_url_info_2') }}</strong></p>
+            </div>
+          </article>
         </div>
-        <b-field :label="trans.get('challenges.password')" class="pl-3 mt-2" v-if="challenge.completion == 3">
+        <b-field
+          :label="trans.get('challenges.password')"
+          class="pl-3 mt-2"
+          v-if="challenge.completion == 3"
+        >
           <b-input
             type="password"
             icon-pack="fas"

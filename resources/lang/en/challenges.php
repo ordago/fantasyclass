@@ -18,6 +18,10 @@ return [
     'completion_student' => 'The student marks it as completed',
     'completion_both' => 'Both teacher and estudent should mark it as completed',
     'completion_password' => 'Password is required to pass the challenge',
+    'completion_url' => 'Completion by URL',
+    'completion_link' => 'Completion link',
+    'completion_url_info_1' => 'The challenge will be completely hidden for students. Copy the completion link and hide it or make it difficult to access. When students access it, they will pass the challenge.',
+    'completion_url_info_2' => 'Visualization requirements will not be applied.',
     
     'password' => 'Password',
     'password_info' => 'Insert the password to pass the challenge',

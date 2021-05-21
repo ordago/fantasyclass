@@ -1,7 +1,7 @@
 <template>
   <div class="box card-shadow-s mb-0" v-bind:class="getBackground">
     <section class="media">
-      <div class="media-content is-relative">
+      <div class="media-content is-relative" style="overflow-y:hidden">
         <div class="content">
           <div class="columns mb-0">
             <div class="column mb-0">
@@ -89,6 +89,7 @@
                 <i class="fas fa-thumbtack"></i>
               </button>
               <span
+                v-if="challengeReactive.completion != 4"
                 @click="copyPermalink"
                 v-tippy
                 :content="trans.get('challenges.permalink')"
@@ -96,6 +97,16 @@
               >
                 <i class="fad fa-link"></i>
                 <span class="ml-2 is-hidden-mobile">Permalink</span>
+              </span>
+              <span
+                v-else
+                @click="copyChallengeUrl"
+                v-tippy
+                :content="trans.get('challenges.completion_url_info_1')"
+                class="button is-dark custom cursor-pointer"
+              >
+                <i class="fad fa-link"></i>
+                <span class="ml-2 is-hidden-mobile">{{ trans.get('challenges.completion_link') }}</span>
               </span>
             </div>
           </div>
@@ -148,7 +159,7 @@
                   :content="trans.get('challenges.items')"
                 ></i>
                 <img
-                @contextmenu.prevent=""
+                  @contextmenu.prevent=""
                   v-for="item in challengeReactive.items"
                   class="mr-1"
                   style="position: relative; top: 4px"
@@ -182,7 +193,7 @@
               ></small>
               <small v-for="req in challenge.requirements" :key="req.id">
                 <img
-                @contextmenu.prevent=""
+                  @contextmenu.prevent=""
                   :src="req.src"
                   style="position: relative; top: 4px"
                   :alt="req.alt"
@@ -363,7 +374,8 @@
               challenge.completion != 0 &&
               !challenge.completed &&
               !admin &&
-              full && !challengeReactive.incomplete
+              full &&
+              !challengeReactive.incomplete
             "
             class="message is-warning"
           >
@@ -386,7 +398,7 @@
             >
               <div class="flexCenter imgTeacher">
                 <img
-                @contextmenu.prevent=""
+                  @contextmenu.prevent=""
                   v-if="comment.info.type == 'student'"
                   width="32px"
                   height="32px"
@@ -472,8 +484,8 @@
                   challengeReactive.completion == 1) &&
                 !checkCompletion &&
                 !full &&
-                challengeReactive.type == 0
-                && (!challengeReactive.incomplete)
+                challengeReactive.type == 0 &&
+                !challengeReactive.incomplete
               "
               class="button is-info"
               @click="markCompleted"
@@ -768,6 +780,18 @@ export default {
         append
       );
     },
+    copyChallengeUrl() {
+      axios
+        .post("/classroom/challenge/getlink", { challenge: this.challenge.id })
+        .then((response) => {
+          let url = response.data;
+          navigator.clipboard.writeText(url).then((response) => {
+            this.$toast(this.trans.get("success_error.copy_success"), {
+              type: "success",
+            });
+          });
+        });
+    },
     copyPermalink() {
       let url =
         window.location.origin +
@@ -920,7 +944,7 @@ export default {
             }
             this.$parent.$parent.$parent.mutableChallenges =
               response.data.challenges;
-            
+
             if (response.data.success == true) {
               confetti({
                 particleCount: 200,
@@ -975,7 +999,7 @@ export default {
                 this.$parent.$parent.$parent.student.hp = response.data.hp;
                 this.$parent.$parent.$parent.student.xp = response.data.xp;
                 this.$parent.$parent.$parent.student.gold = response.data.gold;
-                if(response.data.items)
+                if (response.data.items)
                   this.$parent.$parent.$parent.student.items =
                     response.data.items;
                 this.$forceUpdate();
@@ -1022,6 +1046,7 @@ export default {
           case 0:
           case 1:
           case 3:
+          case 4:
             return this.challengeReactive.count == 1
               ? "has-background-success-light"
               : "has-background-danger-light";

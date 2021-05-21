@@ -18,6 +18,10 @@ return [
     'completion_student' => 'El/la estudiante marca el desafío como completado',
     'completion_both' => 'Tanto profe como estudiantes tienen que marcar el desafío como completado',
     'completion_password' => 'Requiere contraseña para marcar como superado',
+    'completion_url' => 'Superación a través de URL',
+    'completion_link' => 'Enlace de superación',
+    'completion_url_info_1' => 'El desafío estará totalmente oculto para estudiantes. Copia el link de superación y escóndelo o pon difícil su acceso. Cuando los y las estudiantes accedan, superarán el desafío.',
+    'completion_url_info_2' => 'Los requisitos de visuallización no se tienen en cuenta',
     
     'password' => 'Contraseña',
     'password_info' => 'Introduce la contraseña para superar el reto',

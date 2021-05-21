@@ -6,8 +6,10 @@ use App\Challenge;
 use App\ChallengesGroup;
 use App\Classroom;
 use App\Group;
+use App\Http\Classes\Functions;
 use App\Student;
 use GMP;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 
@@ -48,7 +50,7 @@ class ChallengesController extends Controller
         $newChallenge->items = null;
         $newChallenge->requirements = null;
         $newChallenge->push();
-        
+
         foreach ($challenge->attachments as $attachment) {
             $newAttachment = $attachment->replicate();
             $newAttachment->challenge_id = $newChallenge->id;
@@ -190,8 +192,19 @@ class ChallengesController extends Controller
         $this->authorize('update', $class);
 
         $challenge->update(['pinned' => $challenge->pinned == 0 ? 1 : 0]);
+    }
+
+    public function getChallengeLink()
+    {
+        $data = request()->validate([
+            'challenge' => ['numeric', 'required'],
+        ]);
+
+        $challenge = Challenge::findOrFail($data['challenge']);
+        $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
+        $this->authorize('view', $class);
         
-        
+        return env('APP_URL')."/external/challenges/".Functions::simple_crypt($class->code.":".$challenge->id);
     }
 
     public function toggle()
@@ -246,14 +259,14 @@ class ChallengesController extends Controller
         $class = Classroom::where('id', '=', $challengeGroup->classroom_id)->first();
         $this->authorize('update', $class);
         try {
-        $challenge = Challenge::create($data);
+            $challenge = Challenge::create($data);
 
-        return [
-            "message" => __('success_error.add_success'),
-            "type" => "success",
-            "icon" => "check",
-            "challenge" => $challenge,
-        ];
+            return [
+                "message" => __('success_error.add_success'),
+                "type" => "success",
+                "icon" => "check",
+                "challenge" => $challenge,
+            ];
         } catch (\Throwable $th) {
             return [
                 "message" => __('success_error.error'),

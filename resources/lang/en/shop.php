@@ -35,7 +35,7 @@ return [
     'assign_eq_text' => 'Do you want to assign the equioment? It\'ll be free',
     'load_gallery' => 'Load from gallery',
 
-    'pet_warning' => 'You can only have one pet, if you buy one, you\'ll lose the pet you had',
+    'pet_warning' => 'You can only have one pet, if you get one, you\'ll lose the pet you had',
 
     'item_slot' => 'Assign un value if this is an item taht allows students to has more cards',
     'slot' => 'With this object, you can carry',

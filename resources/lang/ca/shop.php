@@ -35,7 +35,7 @@ return [
     'assign_eq_text' => 'Vols assignar l\'equipament? No es cobrarà res',
     'load_gallery' => 'Carrega des de la galeria',
 
-    'pet_warning' => 'Solament pots tenir una mascota, si compres una altra perdràs la que tenies.',
+    'pet_warning' => 'Solament pots tenir una mascota, si esculls una altra perdràs la que tenies.',
     'item_slot' => 'Assigna un valor si l\'objecte serveix per poder tenir més cartes',
     'slot' => 'Aquest objecte et permet portar',
 

@@ -18,6 +18,10 @@ return [
     'completion_student' => 'El/la estudiant marca el repte com a superat',
     'completion_both' => 'Tant profe com estudiants han de marcar el repte com a superat',
     'completion_password' => 'Requereix contrasenya per marcar com a superat',
+    'completion_url' => 'Superació a través de URL',
+    'completion_link' => 'Enllaç de superació',
+    'completion_url_info_1' => 'El repte estarà completament ocult per estudiants. Còpia l\'enllaç de superació i amaga\'l bé o posa difícil el seu accés. Quan accedeixen els i les estudiants, superaran el repte.',
+    'completion_url_info_2' => 'Els requeriments de visualització no es tindran en compte',
     
     'password' => 'Contrasenya',
     'password_info' => 'Introdueix la contrasenya per superar el repte',

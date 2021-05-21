@@ -174,6 +174,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
         Route::post('/{code}/challenges/toggleProp', 'ChallengesController@toggleProp');
         Route::get('/{code}/challenges/all', 'ChallengesController@getAllChallenges');
+        Route::post('/challenge/getlink', 'ChallengesController@getChallengeLink');
+        
 
         // Attachment
         Route::post('/challenge/attachment', 'AttachmentController@store');
@@ -319,6 +321,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/videochat/groups', 'VideochatController@updateGroups');
     });
     
+    // External
+    Route::get('/external/{type}/{code}', 'UtilsController@externalLink');
+
+
     // Utils
     Route::get('/utils/music', 'UtilsController@music');
     Route::get('/utils/online', 'UtilsController@online');

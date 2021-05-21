@@ -35,7 +35,7 @@ return [
     'assign_eq_text' => '?Quieres asignar el equipo? No se cobrará nada',
     'load_gallery' => 'Carga desde la galería',
 
-    'pet_warning' => 'Solo puedes tener una mascota, si compras una perderás la que tenías.',
+    'pet_warning' => 'Solo puedes tener una mascota, si eliges una perderás la que tenías.',
     
     'item_slot' => 'Asigna un valor si el objeto sirve para poder tener más cartas',
     'slot' => 'Este objeto te permite llevar',

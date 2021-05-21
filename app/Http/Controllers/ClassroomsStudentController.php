@@ -274,6 +274,10 @@ class ClassroomsStudentController extends Controller
 
             foreach ($section as $key => $value) {
                 $current = Challenge::find($value['id']);
+                if ($current->completion == 4 && !$student->challenges->contains($current->id)) {
+                    unset($challenges[$key]);
+                    continue;
+                }
                 $check = $this::checkRequirements($current, $class, $student);
                 if (!$check[0]) {
                     if ($check[1] == "requirement") {
@@ -325,7 +329,7 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class, []);
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
-        $challenge = Challenge::where('id', '=', Crypt::decryptString($permalink))->with('attachments', 'group', 'comments')->first()->append('questioninfo');
+        $challenge = Challenge::where('id', '=', Functions::simple_crypt($permalink, "d"))->with('attachments', 'group', 'comments')->first()->append('questioninfo');
 
         $result = $this::checkRequirements($challenge, $class, $student);
         if (!$result[0] && $result[1] == "requirement") {
@@ -345,6 +349,10 @@ class ClassroomsStudentController extends Controller
                 } else $challenge->completed = false;
             }
         }
+
+        if (Rating::where('student_id', $student->id)->where('challenge_id', $challenge->id)->get()->count()) {
+            $challenge->rated = 1;
+        } $challenge->rated = 1;
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
@@ -402,6 +410,10 @@ class ClassroomsStudentController extends Controller
             $challenge->items = json_decode($challenge->items);
             if (!$admin) {
                 $current = Challenge::find($challenge->id);
+                if ($current->completion == 4 && !$student->challenges->contains($current->id)) {
+                    unset($challenges[$key]);
+                    continue;
+                }
                 $check = ClassroomsStudentController::checkRequirements($current, $class, $student);
                 if (!$check[0]) {
                     if ($check[1] == "requirement") {

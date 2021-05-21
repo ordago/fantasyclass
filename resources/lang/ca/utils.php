@@ -40,5 +40,7 @@ return [
     'impostor_apply' => 'Aplica i notifica',
     'impostor_delete' => 'Esborra l\'impostor actual',
     'impostor_active' => 'Hi ha un impostor a la classe!',
+    
+    'get_challenge' => 'Enhorabona! Has superat el repte!',
 
 ];

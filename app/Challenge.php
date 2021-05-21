@@ -45,7 +45,8 @@ class Challenge extends Model
 
     public function getPermalinkAttribute()
     {
-        return Crypt::encryptString($this->id);
+        // return Crypt::encryptString($this->id);
+        return Functions::simple_crypt($this->id);
     }
 
     public function getRatingAttribute()
