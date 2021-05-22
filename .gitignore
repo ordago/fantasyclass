@@ -15,6 +15,7 @@ yarn-error.log
 ..env.swp
 /public/css
 /public/js
+/public/img/contribute.png
 /public/img/bg
 /public/img/skills
 /public/img/badges
