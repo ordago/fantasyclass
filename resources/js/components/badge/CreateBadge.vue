@@ -7,7 +7,7 @@
           <div
             class="personalBadge"
             v-if="type == 0"
-            :style="{ 'background-image: url(\'/img/medal2.png\')': type == 0 }"
+            :style="{ 'background-image: url(\'/img/badges/medal2.png\')': type == 0 }"
             v-tippy
             :content="'<h1>' + title + '</h1><h3>' + description + '</h3>'"
           >
