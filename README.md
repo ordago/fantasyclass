@@ -189,15 +189,6 @@ https://github.com/hhsadiq/laravel-mime-type
 
 ## 3rd party Licenses
 
-- Icons made by [Freepik](http://www.freepik.com/) from [www.flaticon.com]((https://www.flaticon.com/)) is licensed by [CC 3.0 BY](http://creativecommons.org/licenses/by/3.0/)
-- [Vector de negocios creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/negocios)
-- [Vector de fondo creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/fondo)
-- [Vector de Niños creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/ninos)
-- [Vector de Diseño creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/diseno)
-- [Vector de Carácter creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/caracter)
-- [Vector de Moda creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/moda)
-- [Vector de Dibujos animados creado por freepik - www.freepik.es](https://www.freepik.es/fotos-vectores-gratis/dibujos-animados)
-
 - All sprites in "public/img/pets" folder are from habitica (https://habitica.com) with no changes:
 https://github.com/HabitRPG/habitica/ and are licensed by: http://creativecommons.org/licenses/by-nc-sa/3.0/
 
