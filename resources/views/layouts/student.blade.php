@@ -40,7 +40,7 @@
     <a href="/classroom/show/{{ $class->code }}/rules" class="navbar-item">
         <i class="fad fa-pencil-ruler mr-2"></i> {{ __('menu.rules') }}
     </a>
-    <a href="/classroom/show/{{ $class->code }}/licenses" class="navbar-item">
+    <a href="/classroom/show/{{ $class->code }}/licenses" v-if="'{{ $class->background }}'.includes('/bg/base/')" class="navbar-item">
         <i class="fab fa-creative-commons mr-2"></i> {{ __('menu.licenses') }}
     </a>
 </div>

@@ -12,7 +12,7 @@
           '<h1>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
         "
       >
-        <i :class="badge.icon" v-if="badge.type == 0"></i>
+        <i :class="badge.icon" class="has-text-light"  v-if="badge.type == 0"></i>
         <img class="rounded" v-else width="80px" :src="badge.image" />
       </span>
     </span>
@@ -26,7 +26,7 @@
           '<h1>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
         "
       >
-        <i :class="badge.icon" v-if="badge.type == 0"></i>
+        <i :class="badge.icon" class="has-text-light" v-if="badge.type == 0"></i>
         <img class="rounded" v-else width="80px" :src="badge.image" />
       </span>
     </span>
