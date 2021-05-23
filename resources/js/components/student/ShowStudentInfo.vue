@@ -340,7 +340,7 @@
 
           <div v-if="admin">
             <div
-              class="columns is-mobile is-multiline is-variable"
+              class="columns is-mobile is-multiline is-variable mt-1"
               v-if="classroom.character_theme"
               :key="forceReload"
             >
