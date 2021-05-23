@@ -23,7 +23,7 @@
     -ms-transform-origin: center center;
     -webkit-transform-origin: center center;
     transform-origin: center center;
-    top: -33px!important;
+    top: -33px !important;
 
 }
 
@@ -327,8 +327,8 @@
 }
 
 .helmetRobot1 {
-    top: -10px;
     left: 38px;
+    top: -10px;
     z-index: 1;
 }
 
@@ -660,6 +660,7 @@
     top: 7.857px;
     left: 6.119px;
 }
+
 .legs-3 {
     top: 204.594px;
     left: 10.215px;
@@ -675,6 +676,7 @@
     top: 40.34px;
     left: -2px;
 }
+
 .legs-4 {
     top: 182.804px;
     left: 45.163px;
@@ -690,6 +692,7 @@
     top: 10px;
     left: 10.679px;
 }
+
 .legs-5 {
     top: 186.074px;
     left: 33.642px;
@@ -738,22 +741,22 @@
     left: 1px;
     top: 121px;
     z-index: 1;
-  }
+}
 
-  .armor-atlantis {
+.armor-atlantis {
     position: absolute;
     top: 48px;
     left: 1.5px;
-  }
+}
 
-  .helmet-atlantis {
+.helmet-atlantis {
     position: absolute;
     top: -26px;
     left: 2px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-atlantis {
+.arm-left-atlantis {
     position: absolute;
     right: -32px;
     top: 68px;
@@ -761,9 +764,9 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-atlantis {
+.arm-right-atlantis {
     position: absolute;
     left: -41px;
     top: 60px;
@@ -771,42 +774,42 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .boots-desertores {
+.boots-desertores {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 1px;
     top: 175px;
     z-index: 1;
-  }
+}
 
-  .armor-desertores {
+.armor-desertores {
     position: absolute;
     top: 70px;
     left: 11.5px;
-  }
+}
 
-  .helmet-desertores {
+.helmet-desertores {
     position: absolute;
     top: -26px;
     left: 2px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-desertores {
+.arm-left-desertores {
     position: absolute;
     right: -28px;
     top: 78px;
     z-index: 2;
 
-    
+
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-desertores {
+.arm-right-desertores {
     position: absolute;
     left: -17px;
     top: 69px;
@@ -815,30 +818,30 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .boots-fosa {
+.boots-fosa {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 0px;
     top: 119px;
     z-index: 1;
-  }
+}
 
-  .armor-fosa {
+.armor-fosa {
     position: absolute;
     top: 90px;
     left: 13.5px;
-  }
+}
 
-  .helmet-fosa {
+.helmet-fosa {
     position: absolute;
     top: -7px;
     left: 13px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-fosa {
+.arm-left-fosa {
     position: absolute;
     right: -50px;
     top: 68px;
@@ -846,9 +849,9 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-fosa {
+.arm-right-fosa {
     position: absolute;
     left: -46px;
     top: 47px;
@@ -856,31 +859,31 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  
-  .boots-mar {
+
+.boots-mar {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 4px;
     top: 124px;
     z-index: 1;
-  }
+}
 
-  .armor-mar {
+.armor-mar {
     position: absolute;
     top: 90px;
     left: 13.5px;
-  }
+}
 
-  .helmet-mar {
+.helmet-mar {
     position: absolute;
     top: -14px;
     left: 3px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-mar {
+.arm-left-mar {
     position: absolute;
     right: -12px;
     top: 109px;
@@ -888,42 +891,42 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-mar {
+.arm-right-mar {
     position: absolute;
     left: -46px;
     top: 47px;
     z-index: 2;
-  
+
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
 
-  .boots-pescadores {
+.boots-pescadores {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 3px;
     top: 124px;
     z-index: -1;
-  }
+}
 
-  .armor-pescadores {
+.armor-pescadores {
     position: absolute;
     top: 60px;
     left: 3.5px;
-  }
+}
 
-  .helmet-pescadores {
+.helmet-pescadores {
     position: absolute;
     top: -25px;
     left: 3px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-pescadores {
+.arm-left-pescadores {
     position: absolute;
     right: -37px;
     top: 100px;
@@ -931,9 +934,9 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-pescadores {
+.arm-right-pescadores {
     position: absolute;
     left: -46px;
     top: 47px;
@@ -941,31 +944,31 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  
-  .boots-salmuera {
+
+.boots-salmuera {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 3px;
     top: 124px;
     z-index: 0;
-  }
+}
 
-  .armor-salmuera {
+.armor-salmuera {
     position: absolute;
     top: 60px;
     left: 3.5px;
-  }
+}
 
-  .helmet-salmuera {
+.helmet-salmuera {
     position: absolute;
     top: -25px;
     left: 3px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-salmuera {
+.arm-left-salmuera {
     position: absolute;
     right: -37px;
     top: 100px;
@@ -973,9 +976,9 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-salmuera {
+.arm-right-salmuera {
     position: absolute;
     left: -35px;
     top: 65px;
@@ -983,40 +986,40 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  
-  .boots-xebel {
+
+.boots-xebel {
     transform: scale(0.8, 0.8);
     position: absolute;
     left: 3px;
     top: 124px;
     z-index: 0;
-  }
+}
 
-  .armor-xebel {
+.armor-xebel {
     position: absolute;
     top: 60px;
     left: 3.5px;
-  }
+}
 
-  .helmet-xebel {
+.helmet-xebel {
     position: absolute;
     top: -25px;
     left: 3px;
     transform: scale(0.9, 0.9);
-  }
+}
 
-  .arm-left-xebel {
+.arm-left-xebel {
     position: absolute;
     right: -54px;
     top: 64px;
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-xebel {
+.arm-right-xebel {
     position: absolute;
     left: -55px;
     top: 47px;
@@ -1024,17 +1027,24 @@
     animation-name: movementArms;
     animation-duration: 2.5s;
     animation-iteration-count: infinite;
-  }
+}
 
-  .arm-right-xebel:hover, .arm-left-xebel:hover,
-  .arm-right-mar:hover, .arm-left-mar:hover,
-  .arm-right-pescadores:hover, .arm-left-pescadores:hover,
-  .arm-right-desertores:hover, .arm-left-desertores:hover,
-  .arm-right-fosa:hover, .arm-left-fosa:hover,
-  .arm-right-salmuera:hover, .arm-left-salmuera:hover,
-  .arm-right-antis:hover, .arm-left-atlantis:hover {
-      animation: none;
-  }
+.arm-right-xebel:hover,
+.arm-left-xebel:hover,
+.arm-right-mar:hover,
+.arm-left-mar:hover,
+.arm-right-pescadores:hover,
+.arm-left-pescadores:hover,
+.arm-right-desertores:hover,
+.arm-left-desertores:hover,
+.arm-right-fosa:hover,
+.arm-left-fosa:hover,
+.arm-right-salmuera:hover,
+.arm-left-salmuera:hover,
+.arm-right-antis:hover,
+.arm-left-atlantis:hover {
+    animation: none;
+}
 
 
 /**************/
@@ -1089,6 +1099,7 @@
 .character:hover .wraith-ball {
     animation: ball-throw 1s, ball 1s infinite linear;
 }
+
 .character:hover .wraith-arms {
     transform-origin: bottom left;
     transform: rotate(35deg);
@@ -1181,6 +1192,7 @@
     left: 52px;
 
 }
+
 .character:hover .archer-arrow {
     transform: rotate(-39deg);
     animation: arrow 1s ease-in;
@@ -1196,25 +1208,23 @@
 
 
 @keyframes ball-throw {
-    0% {
+    0% {}
 
-    }
     50% {
         left: 300px;
     }
-    100% {
-        
-    }
+
+    100% {}
 }
 
 @keyframes arrow {
-    0% {
+    0% {}
 
-    }
     20% {
         left: 344px;
         opacity: 0;
     }
+
     100% {
         opacity: 0;
     }
@@ -1224,9 +1234,11 @@
     0% {
         transform: rotate3d(0, 0, 0, 0deg);
     }
+
     49% {
         transform: rotate3d(0, 0, 0, 0deg);
     }
+
     50% {
         transform: rotate3d(0, 1, 0, 180deg);
     }
@@ -1234,9 +1246,11 @@
     75% {
         transform: rotate3d(0, 1, 0, 180deg);
     }
+
     76% {
         transform: rotate3d(0, 0, 0, 0deg);
     }
+
     100% {
         transform: rotate3d(0, 0, 0, 0deg);
     }
@@ -1262,12 +1276,67 @@
         transform: rotate(360deg);
     }
 }
+
+/**************/
+
+/**** space ****/
+.a2-body {
+    top: 80px;
+    left: -25px;
+    z-index: 2;
+}
+.a1-body {
+    top: 88px;
+    left: -25px;
+    z-index: 2;
+}
+
+.a1-cape {
+    top: 80px;
+    left: -13px;
+    z-index: 1
+}
+
+.a1-head {
+    top: 13px;
+    left: -8px;
+    z-index: 3;
+}
+
+.a3-head {
+    top: 5px;
+    left: -14px;
+    z-index: 2;
+}
+
+.a3-body {
+    top: 75px;
+    left: -20px;
+    z-index: 3;
+}
+
+.a3-cape {
+    top: 68px;
+    left: -16px;
+    z-index: 1
+}
+
+.a2-cape {
+    top: 122px;
+    left: 19px;
+    z-index: 1
+}
+.a2-head {
+    top: 29px;
+    left: -4px;
+    z-index: 3;
+}
+
 /**************/
 
 /**** Skeleton ****/
 
-.skeleton-head
- {
+.skeleton-head {
     position: absolute;
     top: 45px;
     left: 22px;
@@ -1282,6 +1351,7 @@
     z-index: 2;
 
 }
+
 .skeleton-arms {
     position: absolute;
     top: 135px;
@@ -1294,25 +1364,30 @@
     left: 45px;
 }
 
-.character:hover .skeleton-body, .character:hover .skeleton-arms, .character:hover .skeleton-legs, .character:hover .skeleton-head{
-	transition: all .2s linear;
+.character:hover .skeleton-body,
+.character:hover .skeleton-arms,
+.character:hover .skeleton-legs,
+.character:hover .skeleton-head {
+    transition: all .2s linear;
 }
 
-.character:hover .skeleton-body, .character:hover .skeleton-arms, .character:hover .skeleton-legs{
-	animation: none;
-	top: 165px;
+.character:hover .skeleton-body,
+.character:hover .skeleton-arms,
+.character:hover .skeleton-legs {
+    animation: none;
+    top: 165px;
 }
 
 .character:hover .skeleton-head {
-	animation: none;
-	top: 105px;
-	left: -20px
+    animation: none;
+    top: 105px;
+    left: -20px
 }
 
 .character:hover .skeleton-body {
-	animation: none;
-	top: 140px;
-	left: 60px
+    animation: none;
+    top: 140px;
+    left: 60px
 }
 
 /*********************/

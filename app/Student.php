@@ -629,6 +629,15 @@ class Student extends Model implements HasMedia
             case '25':
                 $ids = [490, 494, 498, 502];
                 break;
+            case '27':
+                $ids = [520, 524, 528];
+                break;
+            case '28':
+                $ids = [540, 544, 548];
+                break;
+            case '29':
+                $ids = [560, 564, 568];
+                break;
         }
 
         $this->equipment()->attach($ids);

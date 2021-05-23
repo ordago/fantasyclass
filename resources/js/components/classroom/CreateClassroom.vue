@@ -65,6 +65,10 @@
                     <img src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
                 </label>
                 <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="9">
+                    <img src="/img/character/themes-preview/space.png" class="themePreview">
+                </label>
+                <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="2">
                     <img src="/img/character/themes-preview/robots.png" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/ideemaestramari'><i class='fab fa-twitter'></i> @ideemaestramari</a>">
                 </label>
