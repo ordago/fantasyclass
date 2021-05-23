@@ -1,4 +1,9 @@
 # Changelog
+## v1.56 Beta (23/05/2021)
+### Added
+- Space theme.
+- Fix robots theme.
+
 ## v1.55.1 Beta (21/05/2021)
 ### Added
 - Complete challenge by URL.
