@@ -53,10 +53,10 @@
               :key="category"
               @click="populate(category)"
             >
-              <h4 style="display: inline-block">{{ category }}</h4>
+              <h4 style="display: inline-block">{{ category }} </h4>
             </div>
           </div>
-          <div class="my-3" v-if="categories && categories.length">
+          <div class="my-3">
             Icons made by
             <a href="http://www.freepik.com" title="Freepik">Freepik</a> from
             <a href="https://www.flaticon.com/" title="Flaticon"
