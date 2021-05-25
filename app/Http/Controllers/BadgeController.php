@@ -23,14 +23,18 @@ class BadgeController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $badges = $class->badges;
-        return view('badges.index', compact('badges', 'class'));
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $style = settings()->get('badge_background', '/img/badges/badge_0.png');
+        return view('badges.index', compact('badges', 'class', 'style'));
     }
 
     public function create($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        return view('badges.create', compact('class'));
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $style = settings()->get('badge_background', '/img/badges/badge_0.png');
+        return view('badges.create', compact('class', 'style'));
     }
 
     public function show($code, $id)
@@ -154,6 +158,7 @@ class BadgeController extends Controller
             'xp' => ['required', 'numeric'],
             'hp' => ['required', 'numeric'],
             'gold' => ['required', 'numeric'],
+            'image' => ['nullable', 'string'],
         ]);
     }
 

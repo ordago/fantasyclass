@@ -1,4 +1,11 @@
 # Changelog
+## v1.57 Beta (XX/05/2021)
+### Added
+- New badge styles.
+
+### Changed
+- Show icons in challenge teacher preview.
+
 ## v1.56 Beta (23/05/2021)
 ### Added
 - Space theme.

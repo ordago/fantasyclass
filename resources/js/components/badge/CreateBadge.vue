@@ -5,9 +5,10 @@
       <div class="columns mb-2">
         <div class="column is-narrow">
           <div
-            class="personalBadge"
+            class="personalBadge has-text-light"
             v-if="type == 0"
-            :style="{ 'background-image: url(\'/img/badges/medal2.png\')': type == 0 }"
+            :style="getBg()"
+            ref="badge"
             v-tippy
             :content="'<h1>' + title + '</h1><h3>' + description + '</h3>'"
           >
@@ -63,6 +64,19 @@
             ></small
           ></label
         >
+      </div>
+
+      <div class="my-3" v-if="type == 0">
+        <h4 class="is-size-4 mb-1 ml-2">
+          {{ trans.get("badges.theme") }}
+        </h4>
+        <img
+          @click="updateTheme(index)"
+          :class="{ selected: getSelected(index) }"
+          :src="'/img/badges/badge_' + (index - 1) + '.png'"
+          v-for="index in 18"
+          :key="index"
+        />
       </div>
 
       <div class="mt-4">
@@ -193,7 +207,7 @@
 const IconSelectorPro = () => import("../utils/IconSelectorPro.vue");
 
 export default {
-  props: ["code", "badge"],
+  props: ["code", "badge", "background"],
   created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
@@ -207,7 +221,8 @@ export default {
       this.gold = this.badge.gold;
       this.icon = this.badge.icon;
       this.id = this.badge.id;
-    }
+      this.bgstyle = this.badge.background;
+    } 
   },
   data: function () {
     return {
@@ -221,6 +236,8 @@ export default {
       gold: 0,
       type: 0,
       id: null,
+      theme: null,
+      bgstyle: '',
     };
   },
   components: {
@@ -230,12 +247,36 @@ export default {
     formSubmit: function (e) {
       e.preventDefault();
     },
+    getSelected(index) {
+      if (
+        this.badge &&
+        this.badge.background == "/img/badges/badge_" + (index - 1) + ".png"
+      ) {
+        return true;
+      }
+      if (this.theme == index - 1) {
+        return true;
+      }
+      return false;
+    },
+    updateTheme(index) {
+      this.theme = index - 1;
+      this.$refs.badge.style = this.getBg(this.theme);
+      this.$forceUpdate()
+    },
+    getBg(index = null) {
+      if(index) 
+        return "background-image: url('/img/badges/badge_" + index + ".png')";
+      if (!this.badge)
+        return "background-image: url('" + this.background + "')";
+      return "background-image: url('" + this.badge.background + "')";
+    },
     sendInfo(formData) {
-      axios.post('/classroom/' + this.code + '/badges', formData)
-        .then(response => {
+      axios
+        .post("/classroom/" + this.code + "/badges", formData)
+        .then((response) => {
           this.$toast(response.data.message, { type: response.data.type });
-          if(!this.badge)
-            location.href = "/classroom/" + this.code + "/badges";
+          location.href = "/classroom/" + this.code + "/badges";
         });
     },
     createBadge() {
@@ -252,12 +293,14 @@ export default {
       }
       if (this.type == 0) {
         formData.append("icon", this.icon);
+        if(this.theme !== null)
+          formData.append("image", "/img/badges/badge_" + this.theme + ".png");
         this.sendInfo(formData);
       } else {
         this.image.generateBlob(
           (blob) => {
             if (blob != null) {
-                formData.append("image", blob, "badge.png");
+              formData.append("image", blob, "badge.png");
             }
             this.sendInfo(formData);
           },

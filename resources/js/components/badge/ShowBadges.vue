@@ -10,6 +10,11 @@
       </div>
     </div>
 
+    <div class="my-3">
+      <h4 class="is-size-4 mb-1 ml-2">{{ trans.get('badges.base_theme') }}</h4>
+      <img @click="changeDefault(index)" :class="{ 'selected' : getSelected(index) }" :src="'/img/badges/badge_'+ (index - 1) +'.png'" v-for="index in 18" :key="index">
+    </div>
+
     <b-table
       v-if="data.length"
       :data="data"
@@ -94,7 +99,7 @@
 import ShowBadge from "./ShowBadge.vue";
 
 export default {
-  props: ["badges", "code"],
+  props: ["badges", "code", "background"],
   created() {
     this.data = JSON.parse(this.badges);
   },
@@ -117,6 +122,16 @@ export default {
     ShowBadge,
   },
   methods: {
+    changeDefault(index) {
+      axios.patch('/classroom/' + this.code + '/setting', {action: 'update', prop: 'badge_background', value: '/img/badges/badge_' + (index-1) + ".png" })
+      location.reload();
+    },
+    getSelected(index) {
+      if(this.background == '/img/badges/badge_' + (index -1) + ".png") {
+        return true;
+      }
+      return false;
+    },
     confirmDelete(badgeId) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),

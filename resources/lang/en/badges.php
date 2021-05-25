@@ -23,4 +23,6 @@ return [
     'academic_info' => 'All grades above ',
     'challenge_info' => 'You\'ve passed all the challenges at ":name", keep it up!',
 
+    'base_theme' => 'Base theme for badges',
+
 ];

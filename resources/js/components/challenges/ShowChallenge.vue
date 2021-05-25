@@ -840,8 +840,7 @@ export default {
       );
     },
     getContent(content) {
-      if (!this.admin && content) return Utils.replaceSpecial(content);
-      return content;
+      return Utils.replaceSpecial(content);
     },
     deleteComment(id) {
       axios.delete("/classroom/challenge/comment/" + id).then((response) => {

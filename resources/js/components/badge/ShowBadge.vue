@@ -4,30 +4,30 @@
       <span
         @click="toggle(badge.id)"
         :class="{
-          personalBadge: badge.type == 0,
           notColored: findInStudent(badge.id),
         }"
+        class="personalBadge"
+        :style="'background-image: url(\'' + badge.background + '\')'"
         v-tippy
         :content="
-          '<h1>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
+          '<h1 class=\'is-size-5\'>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
         "
       >
         <i :class="badge.icon" class="has-text-light"  v-if="badge.type == 0"></i>
-        <img class="rounded" v-else width="80px" :src="badge.image" />
+        <!-- <img class="rounded" v-else width="80px" :src="badge.image" /> -->
       </span>
     </span>
     <span v-else>
       <span
         v-tippy
-         :class="{
-          personalBadge: badge.type == 0,
-        }"
+         class="personalBadge"
+        :style="'background-image: url(\'' + badge.background + '\')'"
         :content="
-          '<h1>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
+          '<h1 class=\'is-size-5\'>' + badge.title + '</h1><h3>' + badge.description + '</h3>'
         "
       >
         <i :class="badge.icon" class="has-text-light" v-if="badge.type == 0"></i>
-        <img class="rounded" v-else width="80px" :src="badge.image" />
+        <!-- <img class="rounded" v-else width="80px" :src="badge.image" /> -->
       </span>
     </span>
   </span>

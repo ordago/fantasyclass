@@ -23,6 +23,6 @@
 
 @section('content')
 <div>
-  <show-badges code="{{ $class->code }}" badges="{{ $badges }}"></show-badges>
+  <show-badges code="{{ $class->code }}" background="{{ $style }}" badges="{{ $badges }}"></show-badges>
 </div>
 @endsection

@@ -23,6 +23,17 @@ class Badge extends Model implements HasMedia
         'gold',
     ];
 
+    protected $appends = ['background'];
+
+    public function getBackgroundAttribute() {
+        if($this->type == 1 || $this->image) {
+            return $this->image;
+        } else {
+            settings()->setExtraColumns(['classroom_id' => $this->classroom_id]);
+            return settings()->get('badge_background', '/img/badges/badge_0.png');
+        }
+    }
+
     public function registerMediaCollections() : void 
     {
         $this
