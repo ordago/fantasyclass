@@ -42,7 +42,7 @@
         <div class="columns is-multiline is-variable mt-3">
           <div
             class="column p-3 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
-            v-for="student in students"
+            v-for="student in orderedStudents"
             :key="student.id"
             v-bind:class="{ hidden: student.hidden == 1 }"
           >
@@ -52,7 +52,11 @@
               @click="toggle(student.id)"
               class="student-massive p-3 is-flex has-all-centered rounded"
             >
-              <img :src="getAvatar(student.avatar_url)" width="64px" class="mr-3 rounded" />
+              <img
+                :src="getAvatar(student.avatar_url)"
+                width="64px"
+                class="mr-3 rounded"
+              />
               {{ student.name }}
             </div>
           </div>
@@ -91,8 +95,7 @@ export default {
   },
   methods: {
     getAvatar(url) {
-      if(url)
-        return url;
+      if (url) return url;
       return "/img/no_avatar.png";
     },
     accept() {
@@ -143,7 +146,26 @@ export default {
       return text;
     },
   },
-  computed: {},
+  computed: {
+    orderedStudents: function () {
+      return this.students.sort((a, b) => {
+        let a1, b1;
+        console.log(a.name);
+        console.log(b.name);
+        if (a.name.includes(" ")) {
+          a1 = a.name.split(" ")[1];
+        } else {
+          a1 = a.name;
+        }
+        if (b.name.includes(" ")) b1 = b.name.split(" ")[1];
+        else b1 = b.name;
+        if (a1 === b1) {
+          return 0;
+        }
+        return a1 > b1 ? 1 : -1;
+      });
+    },
+  },
 };
 </script>
 <style scoped>
