@@ -8,6 +8,7 @@ use App\Rubric;
 use App\Student;
 use App\Tag;
 use App\Exports\Export;
+use App\Http\Classes\Functions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -164,8 +165,16 @@ class EvaluationController extends Controller
 
         $student = Student::find($data['student']);
         $class = Classroom::find($student->classroom->classroom_id);
-        $this->authorize('update', $class);
+
+        if(auth()->user()->id == $student->getUserId()) {   
+            $this->authorize('study', $class);
+        }  else {
+            $this->authorize('update', $class);
+        }
+
         $rubric = Rubric::find($data['rubric']);
+
+        
 
         $rows = [];
 

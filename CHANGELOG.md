@@ -1,11 +1,12 @@
 # Changelog
-## v1.57 Beta (25/05/2021)
+## v1.57.1 Beta (27/05/2021)
 ### Added
 - New badge styles.
 
 ### Changed
 - Show icons in challenge teacher preview.
 - Order by surname in massive actions.
+- Fixes in show challenges and in show rubric.
 
 ## v1.56 Beta (23/05/2021)
 ### Added
