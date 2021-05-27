@@ -314,7 +314,8 @@ class ClassroomsStudentController extends Controller
             return $story['datetime'];
         });
         $challenges = Arr::sort($challenges, function ($story) {
-            return $story['pinned'];
+            if(isset($story['pinned']) && $story['pinned'] === 1) return 99999999999999;
+            return $story['datetime'];
         });
 
         $docs = $this->getDocuments($class);
