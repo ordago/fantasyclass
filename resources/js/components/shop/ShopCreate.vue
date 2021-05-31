@@ -3,8 +3,8 @@
     <div class="rounded">
       <croppa
         v-model="image"
-        :width="60"
-        :height="60"
+        :width="80"
+        :height="80"
         accept="image/*"
         placeholder="Image"
         :placeholder-font-size="16"

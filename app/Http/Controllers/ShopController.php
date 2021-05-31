@@ -144,7 +144,7 @@ class ShopController extends Controller
                 $imgPath = $itemPath->collection_name . "/" . $itemPath->uuid . '/' . $itemPath->file_name;
                 $path = Storage::disk('public')->path('/') . $imgPath;
                 if ($itemPath->mime_type != "image/gif" || $itemPath->size >= 500000) {
-                    Image::make($path)->resize(60, 60)->save();
+                    Image::make($path)->resize(80, 80)->save();
                 }
     
                 $item->update(['icon' => '/storage/' . $imgPath]);
