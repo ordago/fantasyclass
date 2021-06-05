@@ -1,4 +1,11 @@
 # Changelog
+## v1.58 Beta (XX/06/2021)
+### Added
+- Demo access to try the platform.
+
+### Changed
+
+
 ## v1.57.1 Beta (27/05/2021)
 ### Added
 - New badge styles.

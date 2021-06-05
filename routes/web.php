@@ -375,6 +375,8 @@ Route::group(['middleware' => 'language'], function () {
     
     // Mobile
     Route::get('/mobile', 'MiscellanyController@mobile');
-
+    
+    // Demo
+    Route::get('/demo', 'MiscellanyController@demo');
     
 });

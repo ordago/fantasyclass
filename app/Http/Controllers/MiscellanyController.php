@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MiscellanyController extends Controller
 {
@@ -19,5 +21,12 @@ class MiscellanyController extends Controller
     public function mobile()
     {
         return view('utils.mobile');
+    }
+    
+    public function demo()
+    {
+        $user = User::where('username', 'demo')->first();
+        Auth::login($user, true);
+        return redirect("/classroom");
     }
 }
