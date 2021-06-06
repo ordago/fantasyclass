@@ -5,6 +5,7 @@
       'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered': edit,
       column: !edit,
     }"
+    :style="getStyle()"
   >
     <div
       :class="{ 'min-width': !edit }"
@@ -88,7 +89,17 @@
 
 <script>
 export default {
-  props: ["level", "last", "code", "edit"],
+  // props: ["level", "last", "code", "edit", "resize"],
+  props: {
+    level: Object,
+    last: Boolean,
+    code: String,
+    edit: Boolean,
+    resize: {
+      type: Boolean,
+      default: false,
+    }
+  },
   created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     if (this.level) {
@@ -130,6 +141,10 @@ export default {
         "image/png",
         0.8
       );
+    },
+    getStyle() {
+      if(this.resize)
+        return 'zoom: 60%;';
     },
     remove: function () {
       axios.delete("/classroom/level/" + this.level.id).then((response) => {

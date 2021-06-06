@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Level;
+use App\LevelGroup;
+use App\LevelShared;
+use App\Mail\NewLevelsNotification;
+use Illuminate\Support\Facades\Mail;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class LevelsController extends Controller
 {
@@ -87,6 +92,85 @@ class LevelsController extends Controller
                 "type" => "error"
             ];
         }
+    }
+
+    public function importLevels()
+    {
+        $data = request()->validate([
+            'code' => ['string', 'required'],
+            'id' => ['numeric', 'required'],
+        ]);
+        $class = Classroom::where('code', $data['code'])->firstOrFail();
+        $this->authorize('update', $class);
+        $class->levels()->delete();
+        $levelg = LevelGroup::where('id', $data['id'])->with('levels')->firstOrFail();
+        foreach ($levelg->levels as $levels) {
+            $newLvl = Level::create([
+                'number' => $levels->number,
+                'xp' => $levels->xp,
+                'title' => $levels->title,
+                'description' => $levels->description,
+                'classroom_id' => $class->id,
+            ]);
+            $levels->media->each(function (Media $media) use ($newLvl) {
+                $props = $media->toArray();
+                dump($props);
+                unset($props['uuid']);
+                unset($props['id']);
+                $props['collection_name'] = 'level';
+                $newLvl->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->withProperties($props)
+                    ->toMediaCollection($media->collection_name);
+            });
+        }
+    }
+
+    public function getSharedLevels()
+    {
+        $levels = LevelGroup::all();
+        $levels->each->load('levels');
+        foreach ($levels as $levelg) {
+            foreach ($levelg->levels as $level) {
+                dump($level->media);
+            }
+        }
+        return $levels;
+    }
+
+    public function share()
+    {
+        $data = request()->validate([
+            'code' => ['required', 'string'],
+            'name' => ['required', 'string'],
+        ]);
+
+        $class = Classroom::where('code', '=', $data['code'])->firstOrFail();
+        $this->authorize('update', $class);
+
+        $lvlgroup = LevelGroup::create([
+            'name' => $data['name'],
+        ]);
+        foreach ($class->levels as $level) {
+            $newLvl = LevelShared::create([
+                'number' => $level->number,
+                'xp' => $level->xp,
+                'title' => $level->title,
+                'description' => $level->description,
+                'level_group_id' => $lvlgroup->id,
+            ]);
+            $level->media->each(function (Media $media) use ($newLvl) {
+                $props = $media->toArray();
+                unset($props['uuid']);
+                unset($props['id']);
+                $newLvl->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->withProperties($props)
+                    ->toMediaCollection($media->collection_name);
+            });
+        }
+
+        Mail::to(env('EMAIL'))->send(new NewLevelsNotification());
     }
 
     public function destroy($id)

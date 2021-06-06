@@ -23,6 +23,7 @@ return [
     'import' => "Importa",
     'assign' => "Asigna",
     'search' => "Busca",
+    'share' => "Comparte",
 
     'name' => "Nombre",
     'optional' => "opcional",

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Classes\Queries;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -12,8 +13,13 @@ class HomeController extends Controller
 
     public function index()
     {
-        if(auth()->user())
+        if(auth()->user()) {
+            if(auth()->user()->username == "demo") {
+                Auth::logout();
+                return redirect('/');
+            }
             return redirect('/classroom');
+        }
         $locale = session('locale', 'es');
         App::setLocale($locale);
         return view('auth.home', compact('locale'));

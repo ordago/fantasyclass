@@ -19,6 +19,11 @@ return [
     'title' => 'Títol (opcional)',
     'description' => 'Descripció (opcional)',
     'add' => 'Afegeix nou nivell',
-
+    'bank' => 'Banc de nivells',
+    'import_empty' => 'No hi ha nivells disponibles',
+    'import_alert' => 'Els nivells d\'aquesta classe seran substituïts, <strong>aquesta acció no es pot desfer</strong>, estàs segur/a?',
+    'share' => 'Comparteix nivells',
+    'name' => 'Nom del pack',
+    'placeholder' => 'Per exemple, el nom de la matèria',
 
 ];

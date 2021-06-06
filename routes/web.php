@@ -334,10 +334,15 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/user/challenges', 'ChallengesController@getUserChallenges');
     Route::post('/user/challenges/import/{id}', 'ChallengesController@importChallenge');
 
-    // User card
+    // Banks
     Route::get('/user/cards', 'CardsController@getUserCards');
     Route::post('/card/share', 'CardsController@share');
     Route::get('/card/share/get', 'CardsController@getSharedCards');
+    
+    Route::post('/levels/share', 'LevelsController@share');
+    Route::get('/levels/share/get', 'LevelsController@getSharedLevels');
+    Route::post('/levels/import', 'LevelsController@importLevels');
+
 
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

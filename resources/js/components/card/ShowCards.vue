@@ -16,8 +16,9 @@
           {{ trans.get("cards.import_default") }}
         </a>
         <button class="button is-dark is-outlined" @click="getOwnCards">
-          {{ trans.get("cards.import") }}
+          <i class="fak fa-deck colored mr-2"></i> {{ trans.get("cards.import") }}
         </button>
+        
       </div>
     </div>
     <div class="p-2 is-flex flex-wrap justify-content-center">
