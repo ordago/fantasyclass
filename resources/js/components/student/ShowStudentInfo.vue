@@ -1207,6 +1207,7 @@
                 @contextmenu.prevent=""
                 @click="removeCraft(craft.id)"
                 :src="craft.icon"
+                width="64px"
                 class="m-2 p-2 has-background-dark rounded"
               />
               <div
@@ -1226,6 +1227,7 @@
               <img
                 @contextmenu.prevent=""
                 @click="addCraft(item)"
+                width="64px"
                 v-if="checkCraft(item.id)"
                 :src="item.icon"
                 class="m-2 p-2 has-background-dark rounded"
