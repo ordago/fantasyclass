@@ -114,7 +114,6 @@ class LevelsController extends Controller
             ]);
             $levels->media->each(function (Media $media) use ($newLvl) {
                 $props = $media->toArray();
-                dump($props);
                 unset($props['uuid']);
                 unset($props['id']);
                 $props['collection_name'] = 'level';
@@ -130,11 +129,6 @@ class LevelsController extends Controller
     {
         $levels = LevelGroup::all();
         $levels->each->load('levels');
-        foreach ($levels as $levelg) {
-            foreach ($levelg->levels as $level) {
-                dump($level->media);
-            }
-        }
         return $levels;
     }
 
