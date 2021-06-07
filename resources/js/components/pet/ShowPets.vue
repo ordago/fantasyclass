@@ -130,7 +130,7 @@
             @input="updateForSale(pet.id)"
             true-value="1"
             false-value="0"
-            >{{ trans.get("shop.for_sale") }}</b-switch
+            >{{ trans.get("shop.for_adoption") }}</b-switch
           >
         </div>
       </div>

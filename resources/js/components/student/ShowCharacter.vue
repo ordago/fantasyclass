@@ -89,14 +89,16 @@
         <img
           v-tippy="{
             theme: 'light bordered',
-            placement: 'bottom',
+            placement: 'left',
+            interactive: true,
             arrow: true,
           }"
+          ref="pet"
           @contextmenu.prevent=""
           width="81px"
           :content="petMessage(student.pets[0])"
           :src="student.pets[0].image"
-          class="pet-character"
+          :class="getPetClass(student.pets[0])"
         />
       </div>
     </div>
@@ -114,11 +116,17 @@ export default {
       type: Boolean,
       default: true,
     },
+    feed: {
+      type: Boolean,
+      default: false,
+    },
   },
   components: {
     ShowSkill,
   },
   created() {
+    window.feedPet = this.feedPet;
+
     if (!this.student.grouplogo && this.student.grouplogopublic)
       this.student.grouplogo = this.student.grouplogopublic;
   },
@@ -126,6 +134,30 @@ export default {
     return {};
   },
   methods: {
+    feedPet(id) {
+      axios.post('/classroom/student/pet/feed', {id: id})
+        .then(response => {
+          this.$toast(response.data.message, { type: response.data.type });
+          if(response.data.type == 'success') {
+            let audio = new Audio("/sound/eat.mp3");
+            audio.play();
+            this.$refs.pet.classList.add("animated");
+            this.$refs.pet.classList.add("faa-bounce");
+            setTimeout(() => {
+              this.$refs.pet.classList.remove("animated");
+              this.$refs.pet.classList.remove("faa-bounce");
+            }, 2000);
+            this.student.pets = response.data.student.pets;
+            this.$parent.student.gold = response.data.student.gold;
+            this.$parent.$forceUpdate();
+            this.$forceUpdate();
+          }
+        });
+    },
+    getPetClass(pet) {
+      if (pet.pivot.hp <= 0) return "pet-character show-pet-dead";
+      return "pet-character";
+    },
     getClass() {
       if (this.student.hp > 0) return this.student.character.classes;
     },
@@ -138,14 +170,24 @@ export default {
     },
     petMessage(pet) {
       let name = pet.name ? "<strong>" + pet.name + ":</strong> " : "";
-
+      if (pet.pivot.hp > 0) name += "<span>";
+      else name += "<span style='text-decoration: line-through'>";
       name +=
         pet.hp_boost +
         "% <i class='fas fa-heart colored'></i> |" +
         pet.xp_boost +
         "% <i class='fas fa-fist-raised colored'></i> |" +
         pet.gold_boost +
-        "% <i class='fas fa-coins colored'></i>";
+        "% <i class='fas fa-coins colored'></i>" +
+        "<br><progress class='mt-2 progress is-danger w-100' value='" +
+        pet.pivot.hp +
+        "' max=100 min=0></progress>";
+      name += "</span>";
+
+      if (this.feed && pet.pivot.hp > 0 && pet.pivot.hp < 100)
+        name += `<br><small><span class="tag is-success mx-2 cursor-pointer" onclick="feedPet(${this.student.id})">🍅🍖 ${this.trans.get(
+          "pets.feed"
+        )} 100 <i class="fas fa-coins colored"></i></span></small>`;
 
       return name;
     },
@@ -200,6 +242,11 @@ export default {
   transition: all 0.5s ease 0.5s;
   transform: rotate(180deg);
   top: 10px;
+}
+.show-pet-dead {
+  transform-origin: 50% 75%;
+  transform: rotate(180deg);
+  animation: none;
 }
 .skills {
   position: absolute;

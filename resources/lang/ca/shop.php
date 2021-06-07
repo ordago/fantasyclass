@@ -18,6 +18,7 @@ return [
     'visibility' => 'Visible',
     'new_item' => 'Nou objecte',
     'for_sale' => 'A la venda?',
+    'for_adoption' => 'En adopció?',
     'description' => 'Descripció',
     'price' => 'Preu',
     'min_level' => 'Nivell mínim',
@@ -50,4 +51,8 @@ return [
 
     'show_recipes' => 'Mostra les receptes als estudiants (crafting)',
     'recipes' => 'Receptes',
+
+    'adopt' => 'Adopta',
+    'adopt_text' => 'Vols adoptar aquesta mascota?',
+    'adopt_success' => 'Mascota adoptada! Cuida-la :)',
 ];

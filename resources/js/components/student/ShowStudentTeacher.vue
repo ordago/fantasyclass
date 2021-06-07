@@ -473,12 +473,13 @@ export default {
         if (response.data.hp == "protect") {
           this.$toast(this.trans.get("skills.protect"));
         } else {
-          student.hp = response.data.hp;
+          student.hp = response.data.student.hp;
         }
-        student.xp = response.data.xp.xp;
-        student.gold = response.data.gold;
-        student.level = response.data.xp.level;
-        student.equipment = response.data.equipment;
+        student.xp = response.data.student.xp;
+        student.gold = response.data.student.gold;
+        student.level = response.data.student.level;
+        student.equipment = response.data.student.equipment;
+        student.pets = response.data.student.pets;
         this.update++;
         this.$forceUpdate();
         this.$parent.$forceUpdate();

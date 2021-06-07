@@ -244,11 +244,11 @@ class Student extends Model implements HasMedia
 
         Notification::send($this->classroom->user, new NewInteractionStudent(__('notifications.new_behaviour'), __($behaviourText), $from, "new_behaviour", $this->classroom->classroom->code));
 
+        $student = $this->fresh();
+        $student->load('equipment', 'pets');
         return [
             'hp' => $valHp,
-            'xp' => $valXp,
-            'gold' => $valGold,
-            'equipment' => $this->fresh()->equipment,
+            'student' => $student,
             'level' => $this->getLevelAttribute(),
         ];
     }
@@ -439,7 +439,7 @@ class Student extends Model implements HasMedia
         }
 
         $pet = $this->pets->first();
-        if ($pet) {
+        if ($pet && $pet->pivot->hp > 0) {
             $xp += $pet->xp_boost;
             $gold += $pet->gold_boost;
             $hp += $pet->hp_boost;
@@ -486,6 +486,11 @@ class Student extends Model implements HasMedia
             if ($value >= 0) {
                 $value = min($this->$prop + $value, 100);
             } else {
+                $pet = $this->pets->first();
+                if($pet) {
+                    $hp = max($pet->pivot->hp + $value * 2, 0);
+                    $this->pets()->sync([$pet->id => ['hp' => $hp]], false); 
+                }
                 if (!$byPassBoost)
                     $old = $value - $value * $boost["hp"] / 100;
                 $value = max($this->$prop + $old, 0);

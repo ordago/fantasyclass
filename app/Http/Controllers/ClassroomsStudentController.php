@@ -83,6 +83,42 @@ class ClassroomsStudentController extends Controller
         }
     }
 
+    public function feed()
+    {
+        $data = request()->validate([
+            'id' => ['required', 'numeric']
+        ]);
+        
+        $student = Student::findOrFail($data['id']);
+        $class = Classroom::findOrFail($student->classroom->classroom_id);
+        $this->authorize('study', $class);
+        
+        if($student->gold < 100)
+            return [
+                "message" => " " . __('success_error.shop_failed_level'),
+                "icon" => "times",
+                "type" => "error",
+            ];
+        
+        $student->setProperty('gold', -100, true, 'feed', true);
+        $pet = $student->pets()->first();
+        if($pet) {
+            $value = rand(20, 40);
+            $hp = min($pet->pivot->hp + $value, 100);
+            $student->pets()->sync([$pet->id => ['hp' => $hp]], false);
+            // dump('hit');
+            $student = $student->fresh();
+            $student->load('pets');
+            return [
+                "message" => " " . __('success_error.update_success'),
+                "icon" => "check",
+                "type" => "success",
+                "student" => $student,
+            ];
+        }
+
+    }
+
     public function checkVisibility($class)
     {
         settings()->setExtraColumns(['classroom_id' => $class]);
@@ -879,6 +915,7 @@ class ClassroomsStudentController extends Controller
             ];
         }
 
+        $student->pets()->sync([]);
         $student->pets()->sync([$pet->id]);
         $student->update(['gold' => ($student->gold - $pet->price)]);
 
@@ -890,7 +927,7 @@ class ClassroomsStudentController extends Controller
         ]);
 
         return [
-            "message" => " " . __('success_error.equipment_success'),
+            "message" => " " . __('shop.adopt_success'),
             "icon" => "check",
             "type" => "success",
             "pets" => $student->fresh()->pets,

@@ -15,5 +15,6 @@ return [
       'xx_boost' => 'Bonus in ',
       'price' => 'Price in ',
       'image' => 'Image',
+      'feed' => 'Feed',
 
 ];

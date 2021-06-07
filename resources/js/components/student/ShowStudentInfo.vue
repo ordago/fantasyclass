@@ -10,6 +10,7 @@
       >
         <show-character
           ref="showStd"
+          :feed="!admin"
           :student="student"
           :classroom="classroom"
           :show-skills="false"
@@ -22,7 +23,7 @@
           >
             <ShowSkill
               v-for="skill in student.skills"
-              :key="skill.id"
+              :key="'skill-' + skill.id"
               :skill="skill"
               :code="classroom.code"
               :admin="admin"
@@ -31,7 +32,7 @@
 
             <span
               v-for="index in 4 - student.skills.length"
-              :key="index"
+              :key="'index-' + index"
               class="mx-1 is-flex has-all-centered skill-container-big"
               @click="buySkill()"
             >
@@ -284,7 +285,7 @@
               class="p-2 m-2 rounded"
               :src="'/img/character/characters/' + charclass.id + '.png'"
               v-for="charclass in classroom.character_theme.characters"
-              v-bind:key="charclass.id"
+              v-bind:key="'char' + charclass.id"
             />
           </div>
           <div v-if="admin">
@@ -347,7 +348,7 @@
               <div
                 class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
                 v-for="gear in orderedEquipment"
-                v-bind:key="gear.id"
+                v-bind:key="'gear-' + gear.id"
               >
                 <div
                   v-tippy
@@ -377,7 +378,7 @@
                     <div v-for="(i, index) in getProperties()" :key="index">
                       <div
                         v-for="itemStore in filterEquipment(i, gear.type)"
-                        v-bind:key="itemStore.id"
+                        v-bind:key="'store-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
                           'offset0': index == 0,
@@ -421,7 +422,7 @@
             <div
               v-for="item in items"
               class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
-              v-bind:key="item.id"
+              v-bind:key="'item2-' + item.id"
             >
               <b-field>
                 <p class="control">
@@ -464,7 +465,7 @@
                 :content="message(item)"
                 v-show="item.pivot.count > 0"
                 class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
-                v-bind:key="item.id"
+                v-bind:key="'item3-' + item.id"
               >
                 <div class="inventory-item rounded w-100">
                   <img
@@ -479,7 +480,7 @@
               <div
                 v-for="index in inventoryRemaining"
                 class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
-                v-bind:key="index"
+                v-bind:key="'index2' + index"
               >
                 <div class="inventory-item rounded w-100"></div>
               </div>
@@ -492,7 +493,7 @@
               <div
                 class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
                 v-for="gear in orderedEquipment"
-                v-bind:key="gear.id"
+                v-bind:key="'gear2-' + gear.id"
               >
                 <div
                   v-tippy
@@ -526,10 +527,10 @@
                     class="w-100 shop-sub-item p-1"
                     style="position: absolute; top: 100px; left: 0"
                   >
-                    <div v-for="(i, index) in getProperties()" :key="index">
+                    <div v-for="(i, index) in getProperties()" :key="'index3-'+index">
                       <div
                         v-for="itemStore in filterEquipment(i, gear.type)"
-                        v-bind:key="itemStore.id"
+                        v-bind:key="'item4-'+ itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
                           'offset0': gear.offset == 0,
@@ -580,7 +581,7 @@
             <div
               class="columns p-4 m-2 rounded"
               v-for="item in itemsJson"
-              :key="item.id"
+              :key="'item5-' + item.id"
             >
               <div
                 class="column is-relative is-flex has-all-centered is-narrow"
@@ -645,7 +646,7 @@
             <div
               class="has-text-centered"
               v-for="(challenge, index) in orderedChallenges"
-              :key="challenge.id"
+              :key="'challenge-' + challenge.id"
             >
               <show-challenge
                 class="has-text-left"
@@ -691,7 +692,7 @@
             </div>
           </article>
           <div v-if="!admin">
-            <div v-for="pet in pets" :key="pet.id" class="p-2 m-2">
+            <div v-for="pet in pets" :key="'pet-' + pet.id" class="p-2 m-2">
               <div class="columns mb-0">
                 <div class="column is-narrow">
                   <img
@@ -721,7 +722,7 @@
                 </div>
                 <div class="column is-narrow">
                   <button class="button is-success" @click="buyPet(pet)">
-                    {{ trans.get("shop.buy") }} {{ pet.price }}
+                    {{ trans.get("shop.adopt") }} {{ pet.price }}
                     <i class="fas fa-coins colored" style="z-index: 0"></i>
                   </button>
                 </div>
@@ -730,7 +731,7 @@
             </div>
           </div>
           <div v-else>
-            <div v-for="pet in classroom.pets" :key="pet.id" class="p-2 m-2">
+            <div v-for="pet in classroom.pets" :key="'pet2-'+pet.id" class="p-2 m-2">
               <div class="columns mb-0">
                 <div class="column is-narrow">
                   <img
@@ -792,7 +793,7 @@
           <div class="columns is-multiline is-variable">
             <div
               v-for="(card, index) in cardsMutable"
-              :key="index"
+              :key="'index5-' + index"
               class="column is-6-tablet is-12-mobile is-6-desktop is-4-fullhd"
             >
               <show-card
@@ -842,14 +843,14 @@
             >
           </template>
           <div v-if="admin" class="is-flex pl-4">
-            <div class="mx-2" v-for="badge in classroom.badges" :key="badge.id">
+            <div class="mx-2" v-for="badge in classroom.badges" :key="'badge-' + badge.id">
               <ShowBadge
                 :student="student"
                 :badge="badge"
                 :admin="true"
               ></ShowBadge>
             </div>
-            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
+            <div class="mx-2" v-for="badge in student.badges" :key="'badge2-' +badge.id">
               <ShowBadge
                 v-if="!badge.classroom_id"
                 :student="student"
@@ -859,7 +860,7 @@
             </div>
           </div>
           <div class="is-flex pl-4" v-if="!admin">
-            <div class="mx-2" v-for="badge in student.badges" :key="badge.id">
+            <div class="mx-2" v-for="badge in student.badges" :key="'badge3-' +badge.id">
               <ShowBadge
                 :student="student"
                 :badge="badge"
@@ -904,7 +905,7 @@
               <th>{{ trans.get("evaluation.grade_number") }}</th>
               <th>{{ trans.get("evaluation.tags") }}</th>
               <th>{{ trans.get("evaluation.feedback") }}</th>
-              <tr v-for="(grade, index) in student.grades" :key="index">
+              <tr v-for="(grade, index) in student.grades" :key="'index6-' +index">
                 <td>{{ grade.description }}</td>
                 <td>
                   <span
@@ -974,7 +975,7 @@
                       tag.pivot.weight +
                       ')'
                     "
-                    :key="index"
+                    :key="'index7-' +index"
                     >{{ tag.short }}</span
                   >
                 </td>
@@ -1035,14 +1036,14 @@
           <div
             class="div_rounded rubricRow marginRadius"
             v-for="rubricRow in rubric.rows"
-            :key="rubricRow.id"
+            :key="'rubric-' +rubricRow.id"
           >
             <h2 class="description">{{ rubricRow.description }}</h2>
             <div class="rubricSubitems">
               <div
                 class="rubricSubitem marginRadius"
                 v-for="item in rubricRow.items"
-                :key="item.id"
+                :key="'rubrici-' +item.id"
                 :row="'row' + rubricRow.id"
                 :item="'item' + item.id"
               >
@@ -1085,7 +1086,7 @@
                 <option
                   :value="id"
                   v-for="(id, name) in students_money"
-                  :key="id"
+                  :key="'money-' +id"
                 >
                   {{ name }}
                 </option>
@@ -1202,7 +1203,7 @@
             >
               <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
             </div>
-            <span class="is-relative" v-for="craft in craft" :key="craft.id">
+            <span class="is-relative" v-for="craft in craft" :key="'crafting-' +craft.id">
               <img
                 @contextmenu.prevent=""
                 @click="removeCraft(craft.id)"
@@ -1222,7 +1223,7 @@
             <span
               class="is-relative"
               v-for="item in student.items"
-              :key="item.id"
+              :key="'item-' + item.id"
             >
               <img
                 @contextmenu.prevent=""
@@ -1246,7 +1247,7 @@
             <div
               class="is-flex is-center-vertically my-2"
               v-for="craft in craftJson"
-              :key="craft.id"
+              :key="'craft' + craft.id"
             >
               <img
                 v-tippy
@@ -1259,7 +1260,7 @@
               <span
                 class="is-flex is-center-vertically"
                 v-for="(c, index) in craft.craft"
-                :key="c.key"
+                :key="'c-' + c.key"
                 ><img width="32px" @contextmenu.prevent="" :src="c.src" />
                 <i
                   class="fas fa-plus mx-2"
@@ -1602,7 +1603,6 @@ export default {
           to: this.send_money_student,
         })
         .then((response) => {
-          // console.log(response.data)
           this.student.gold -= this.send_money;
           this.transaction = response.data;
           this.isSendMoneyActive = false;
@@ -1877,9 +1877,9 @@ export default {
     },
     buyPet(pet) {
       this.$buefy.dialog.confirm({
-        title: this.trans.get("shop.buy_item"),
-        message: this.trans.get("shop.buy_text") + "?",
-        confirmText: this.trans.get("shop.buy"),
+        title: this.trans.get("shop.adopt"),
+        message: this.trans.get("shop.adopt_text") + "?",
+        confirmText: this.trans.get("shop.adopt"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",

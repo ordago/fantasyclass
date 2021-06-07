@@ -150,8 +150,6 @@ export default {
     orderedStudents: function () {
       return this.students.sort((a, b) => {
         let a1, b1;
-        console.log(a.name);
-        console.log(b.name);
         if (a.name.includes(" ")) {
           a1 = a.name.split(" ")[1];
         } else {

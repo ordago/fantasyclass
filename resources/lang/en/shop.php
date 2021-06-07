@@ -18,6 +18,7 @@ return [
     'visibility' => 'Visible',
     'new_item' => 'New item',
     'for_sale' => 'For sale?',
+    'for_adoption' => 'Allow adoption?',
     'description' => 'Description',
     'price' => 'Price',
     'min_level' => 'Minimum level',
@@ -52,4 +53,8 @@ return [
     'show_recipes' => 'Show crafting recipes to students',
     'recipes' => 'Recipes',
     
+    'adopt' => 'Adopt',
+    'adopt_text' => 'Do you want to adopt this pet?',
+    'adopt_success' => 'Pet adopted! Take care of it :)',
+
 ];

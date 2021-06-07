@@ -189,7 +189,6 @@ export default {
     },
     selectTheme(e) {
       let img = e.target;
-      // console.log(e.target);
       document.querySelectorAll(".themes img ").forEach(function (imgSelector) {
         imgSelector.classList.remove("selected");
       });

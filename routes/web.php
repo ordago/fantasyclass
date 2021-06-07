@@ -119,6 +119,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/send/money', 'ClassroomsStudentController@sendMoney');
         Route::post('/{code}/studentsview/get', 'ClassroomsStudentController@getStudentPage');
         Route::post('/{code}/craft', 'ClassroomsStudentController@craft');
+        Route::post('/student/pet/feed', 'ClassroomsStudentController@feed');
 
 
         // Behaviours

@@ -15,5 +15,6 @@ return [
       'xx_boost' => 'Bonificación en ',
       'price' => 'Precio en ',
       'image' => 'Imagen',
+      'feed' => 'Alimenta',
 
 ];

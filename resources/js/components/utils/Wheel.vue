@@ -347,7 +347,6 @@ export default {
           origin: { y: 1.0 },
         });
       }
-      console.log(prize);
       this.prizeSelected = prize;
       audio.play();
       this.$forceUpdate();

@@ -201,7 +201,7 @@ class StudentController extends Controller
             return false;
 
         $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->firstOrFail();
-
+        $student->pets()->sync([]);
         $student->pets()->sync([$pet->id]);
 
         return [
