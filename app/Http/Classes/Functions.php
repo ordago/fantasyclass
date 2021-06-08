@@ -83,7 +83,7 @@ class Functions
         $class->pivot->student->id
       )->with($with)->first();
     }
-    abort(403);
+    abort(403, "Are you a teacher? This link is only for students");
   }
 
   /**
