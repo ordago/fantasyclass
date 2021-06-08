@@ -106,7 +106,6 @@ class ClassroomsStudentController extends Controller
             $value = rand(20, 40);
             $hp = min($pet->pivot->hp + $value, 100);
             $student->pets()->sync([$pet->id => ['hp' => $hp]], false);
-            // dump('hit');
             $student = $student->fresh();
             $student->load('pets');
             return [
@@ -1364,10 +1363,10 @@ class ClassroomsStudentController extends Controller
             $student->setProperty('hp', $item->hp, true, 'item');
         }
         if ($item->xp > 0) {
-            $student->setProperty('xp', $item->xp, true, 'item');
+            $xp = $student->setProperty('xp', $item->xp, true, 'item');
         }
 
-        return ['xp' => $item->xp, 'hp' => $item->hp + $extra];
+        return ['xp' => $xp['xp'], 'hp' => $item->hp + $extra];
     }
 
     public function map($code)

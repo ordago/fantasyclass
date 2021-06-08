@@ -471,7 +471,7 @@
                   <img
                     :src="item.icon"
                     @contextmenu.prevent=""
-                    @click="item.hp > 0 ? useItem(item, message(item)) : null"
+                    @click="item.hp > 0 || item.xp > 0 ? useItem(item, message(item)) : null"
                     class="item rounded"
                   />
                   <div class="number-items">{{ item.pivot.count }}</div>
@@ -1784,7 +1784,7 @@ export default {
                   this.student.hp + response.data.hp,
                   100
                 );
-                this.student.xp += response.data.xp;
+                this.student.xp = response.data.xp;
                 this.forceRerender();
                 audio.play();
               }

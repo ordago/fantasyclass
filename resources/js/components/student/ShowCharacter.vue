@@ -42,7 +42,7 @@
         >
         </span>
       </div>
-
+      <!-- <i class="fas fa-backpack has-text-light fs-2 outer_glow_dark"></i> -->
       <span
         v-if="student.boost"
         class="boost-right outer_glow_dark"

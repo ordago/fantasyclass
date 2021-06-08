@@ -1,7 +1,10 @@
 # Changelog
-## v1.60 Beta (XX/06/2021)
+## v1.60 Beta (08/06/2021)
 ### Added
 - Pet bank
+
+### Changed
+- Fix item XP
 
 ## v1.59 Beta (07/06/2021)
 ### Changed
