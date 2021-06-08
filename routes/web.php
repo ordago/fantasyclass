@@ -343,7 +343,10 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/levels/share', 'LevelsController@share');
     Route::get('/levels/share/get', 'LevelsController@getSharedLevels');
     Route::post('/levels/import', 'LevelsController@importLevels');
-
+    
+    Route::post('/pets/share', 'PetsController@share');
+    Route::get('/pets/share/get', 'PetsController@getSharedPets');
+    Route::post('/pets/import', 'PetsController@importPet');
 
     // Profile
     Route::get('/profile/promote', 'ProfileController@promote');

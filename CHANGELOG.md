@@ -1,4 +1,8 @@
 # Changelog
+## v1.60 Beta (XX/06/2021)
+### Added
+- Pet bank
+
 ## v1.59 Beta (07/06/2021)
 ### Changed
 - Pets can be feeded, and they lose life points.

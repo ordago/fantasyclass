@@ -1,8 +1,11 @@
 <template>
   <div class="p-2">
     <button class="button is-link mb-5" @click="isModalActive = true">
-      <i class="fas fa-dog mr-2"></i>
+      <i class="fas fa-plus mr-2"></i>
       {{ trans.get("pets.new_pet") }}
+    </button>
+    <button class="button is-dark is-outlined" @click="getPets()">
+      <i class="fas fa-dog mr-2"></i> {{ trans.get("pets.bank") }}
     </button>
 
     <div
@@ -134,6 +137,15 @@
           >
         </div>
       </div>
+      <button
+        class="button is-success ml-2"
+        v-if="pet.shared == 0"
+        v-tippy
+        :content="trans.get('general.share_teachers')"
+        @click="sharePet(pet)"
+      >
+        <i class="fas fa-share-alt"></i>
+      </button>
       <button class="button ml-2" @click="editPet(pet)">
         <i class="fas fa-edit"></i>
       </button>
@@ -261,6 +273,48 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isModalImportActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("general.import") }}</p>
+        </header>
+        <section class="modal-card-body is-flex">
+          <div v-if="!petsimport.length">
+            {{ trans.get("pets.import_empty") }}
+          </div>
+          <div class="p-2 justify-content-center w-100" v-else>
+            <span
+              class="mb-2"
+              v-for="peti in petsimport"
+              :key="'pet-' + peti.id"
+            >
+              <img
+                width="81px"
+                @click="importPet(peti.id)"
+                class="cursor-pointer pet"
+                :src="peti.image"
+                v-tippy
+                :content="getInfoPet(peti)"
+              />
+            </span>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isModalImportActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
 
     <SelectPet :code="code" v-model="pet.image" v-if="isImageModalActive">
     </SelectPet>
@@ -283,6 +337,8 @@ export default {
     return {
       isLoading: false,
       isModalActive: false,
+      isModalImportActive: false,
+      petsimport: [],
       isImageModalActive: false,
       images: null,
       edit: false,
@@ -310,6 +366,50 @@ export default {
       this.$refs.selectbutton.classList.remove("is-danger");
       this.isLoading = true;
       this.isImageModalActive = true;
+    },
+    getPets: function () {
+      axios.get("/pets/share/get").then((response) => {
+        this.petsimport = response.data;
+        this.isModalImportActive = true;
+      });
+    },
+    importPet: function (id) {
+      axios.post("/pets/import", { id: id, code: this.code }).then((response) => {
+        location.reload();
+      });
+    },
+    sharePet: function (pet) {
+      axios.post("/pets/share", { id: pet.id }).then((response) => {
+        this.$toast(this.trans.get("success_error.update_success"), {
+          type: "success",
+        });
+        pet.shared = 1;
+        this.$forceUpdate();
+      });
+    },
+    getInfoPet: function (pet) {
+      let text = "";
+      if (pet.name) text = pet.name + ": ";
+      if (pet.hp_boost)
+        text +=
+          "<i class='fal fa-ellipsis-v mx-1'></i>" +
+          pet.hp_boost +
+          "<i class='fas fa-heart colored mx-1'></i>";
+      if (pet.xp_boost)
+        text +=
+          "<i class='fal fa-ellipsis-v mx-1'></i>" +
+          pet.xp_boost +
+          "<i class='fas fa-fist-raised mx-1 colored'></i>";
+      if (pet.gold_boost)
+        text +=
+          "<i class='fal fa-ellipsis-v mx-1'></i>" +
+          pet.gold_boost +
+          "<i class='fas fa-coins colored mx-1'></i>";
+      text +=
+        "<i class='fal fa-ellipsis-v mx-1'></i> Price: " +
+        pet.price +
+        "<i class='fas fa-coins colored'></i>";
+      return text;
     },
     updateForSale: function (id) {
       axios.get("/classroom/pets/" + id + "/for-sale");
@@ -375,3 +475,9 @@ export default {
   },
 };
 </script>
+<style>
+.pet:hover {
+  background-color: skyblue;
+  border-radius: 5px;
+}
+</style>

@@ -24,6 +24,7 @@ return [
     'assign' => "Assign",
     'search' => "Search",
     'share' => "Share",
+    'share_teachers' => "Share with other teachers",
 
     'name' => "Name",
     'optional' => "optional",

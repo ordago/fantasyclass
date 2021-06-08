@@ -24,6 +24,7 @@ return [
     'assign' => "Assigna",
     'search' => "Cerca",
     'share' => "Comparteix",
+    'share_teachers' => "Comparteix amb altres docents",
     
     'name' => "Nom",
     'optional' => "opcional",

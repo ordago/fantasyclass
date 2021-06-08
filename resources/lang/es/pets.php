@@ -16,5 +16,7 @@ return [
       'price' => 'Precio en ',
       'image' => 'Imagen',
       'feed' => 'Alimenta',
+      'import_empty' => 'No hay mascotas para importar',
+      'bank' => 'Banco de mascotas',
 
 ];

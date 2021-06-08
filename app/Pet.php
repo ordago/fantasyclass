@@ -16,6 +16,7 @@ class Pet extends Model
         'price',
         'classroom_id',
         'for_sale',
+        'shared',
     ];
 
     public function students() {
