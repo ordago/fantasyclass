@@ -567,7 +567,7 @@ class Student extends Model implements HasMedia
 
     public function setUndead()
     {
-        $this->equipment()->detach($this->equipment);
+        $this->equipment()->sync([]);
         if ($this->classroom->classroom->character_theme == 7) {
             $this->equipment()->attach([510, 511, 512, 513]);
         } else {

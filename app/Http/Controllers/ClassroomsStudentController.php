@@ -91,7 +91,7 @@ class ClassroomsStudentController extends Controller
         ]);
         $student = Student::findOrFail($data['id']);
         $class = Classroom::findOrFail($student->classroom->classroom_id);
-        $this->authorize('study', $class);
+        $this->authorize('studyOrTeach', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $gold = settings()->get('repair_equipment', 100);
 
@@ -104,7 +104,7 @@ class ClassroomsStudentController extends Controller
 
         $student->setProperty('gold', $gold * -1, true, 'repair', true);
         $eq = $student->equipment()->where('equipment_id', $data['gear'])->first();
-        $durability = min(100, $eq->pivot->durability + rand(20, 40));
+        $durability = min(100, $eq->pivot->durability + rand(20, 80));
         $student->equipment()->sync([$data['gear'] => ['durability' => $durability]], false);
         $student = $student->fresh();
         return [
@@ -125,7 +125,7 @@ class ClassroomsStudentController extends Controller
 
         $student = Student::findOrFail($data['id']);
         $class = Classroom::findOrFail($student->classroom->classroom_id);
-        $this->authorize('study', $class);
+        $this->authorize('studyOrTeach', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $feed = settings()->get('feed', 100);
