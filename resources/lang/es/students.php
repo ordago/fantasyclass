@@ -92,6 +92,8 @@ return [
     'log_skill' => 'Resultado de una habilidad, tuya o de alguien.',
     'log_task' => 'Has realizado una tarea',
     'log_volume' => 'Volumen excedido',
+    'log_feed' => 'Alimento de mascotas',
+    'log_repair' => 'Reparación de equipamento',
 
     'student_report' => 'Informe de estudiante',
 

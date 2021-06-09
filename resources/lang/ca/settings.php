@@ -57,4 +57,7 @@ return [
 
     'notifications' => "Notificacions",
     'notifications_from_classroom' => "Deshabilita les notificacions d'aquesta classe",
+    
+    'feed' => "Preu alimentació mascotes",
+    'repair_equipment' => "Preu reparació d'equipament",
 ];

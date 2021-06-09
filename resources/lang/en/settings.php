@@ -58,5 +58,7 @@ return [
     'notifications' => "Notifications",
     'notifications_from_classroom' => "Disable this classroom notifications",
 
+    'feed' => "Pet food price",
+    'repair_equipment' => "Reparing equipment price",
 
 ];

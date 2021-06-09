@@ -92,6 +92,8 @@ return [
     'log_skill' => 'Resultat d\'una habilitat teva o d\'algú.',
     'log_task' => 'Has fet una tasca',
     'log_volume' => 'Excès de soroll',
+    'log_feed' => 'Aliment de mascota',
+    'log_repair' => 'Reparació d\'equipament',
     
     'student_report' => 'Informe d\'estudiant',
 ];

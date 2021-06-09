@@ -83,26 +83,63 @@ class ClassroomsStudentController extends Controller
         }
     }
 
+    public function repair()
+    {
+        $data = request()->validate([
+            'id' => ['required', 'numeric'],
+            'gear' => ['required', 'numeric'],
+        ]);
+        $student = Student::findOrFail($data['id']);
+        $class = Classroom::findOrFail($student->classroom->classroom_id);
+        $this->authorize('study', $class);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $gold = settings()->get('repair_equipment', 100);
+
+        if ($student->gold < $gold)
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "times",
+                "type" => "error",
+            ];
+
+        $student->setProperty('gold', $gold * -1, true, 'repair', true);
+        $eq = $student->equipment()->where('equipment_id', $data['gear'])->first();
+        $durability = min(100, $eq->pivot->durability + rand(20, 40));
+        $student->equipment()->sync([$data['gear'] => ['durability' => $durability]], false);
+        $student = $student->fresh();
+        return [
+            "message" => " " . __('success_error.update_success'),
+            "icon" => "check",
+            "type" => "success",
+            "gold" => $student->gold,
+            "equipment" => $student->equipment,
+            "durability" => $durability,
+        ];
+    }
+
     public function feed()
     {
         $data = request()->validate([
             'id' => ['required', 'numeric']
         ]);
-        
+
         $student = Student::findOrFail($data['id']);
         $class = Classroom::findOrFail($student->classroom->classroom_id);
         $this->authorize('study', $class);
-        
-        if($student->gold < 100)
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $feed = settings()->get('feed', 100);
+
+        if ($student->gold < $feed)
             return [
-                "message" => " " . __('success_error.shop_failed_level'),
+                "message" => " " . __('success_error.shop_failed_money'),
                 "icon" => "times",
                 "type" => "error",
             ];
-        
-        $student->setProperty('gold', -100, true, 'feed', true);
+
+        $student->setProperty('gold', $feed * -1, true, 'feed', true);
         $pet = $student->pets()->first();
-        if($pet) {
+        if ($pet) {
             $value = rand(20, 40);
             $hp = min($pet->pivot->hp + $value, 100);
             $student->pets()->sync([$pet->id => ['hp' => $hp]], false);
@@ -115,7 +152,6 @@ class ClassroomsStudentController extends Controller
                 "student" => $student,
             ];
         }
-
     }
 
     public function checkVisibility($class)
@@ -349,7 +385,7 @@ class ClassroomsStudentController extends Controller
             return $story['datetime'];
         });
         $challenges = Arr::sort($challenges, function ($story) {
-            if(isset($story['pinned']) && $story['pinned'] === 1) return 99999;
+            if (isset($story['pinned']) && $story['pinned'] === 1) return 99999;
             return $story['datetime'];
         });
 
@@ -388,7 +424,8 @@ class ClassroomsStudentController extends Controller
 
         if (Rating::where('student_id', $student->id)->where('challenge_id', $challenge->id)->get()->count()) {
             $challenge->rated = 1;
-        } $challenge->rated = 1;
+        }
+        $challenge->rated = 1;
 
         return view('studentsview.challenge', compact('challenge', 'class', 'student'));
     }
@@ -498,8 +535,8 @@ class ClassroomsStudentController extends Controller
                         }
                     }
                     if ($count === 0) {
-                        if($item->min_lvl) {
-                            if(!$student->level || $student->level && $student->level->number < $item->min_lvl) {
+                        if ($item->min_lvl) {
+                            if (!$student->level || $student->level && $student->level->number < $item->min_lvl) {
                                 return [
                                     "message" => " " . __('success_error.shop_failed_level'),
                                     "icon" => "times",
@@ -513,7 +550,7 @@ class ClassroomsStudentController extends Controller
                             if ($studentItem)
                                 $count = $studentItem->pivot->count - 1;
                             else $count = 0;
-                            if($count == 0) {
+                            if ($count == 0) {
                                 $student->items()->detach($itemRemove);
                             } else {
                                 $student->items()->sync([$itemRemove => ['count' => $count]], false);
@@ -553,13 +590,13 @@ class ClassroomsStudentController extends Controller
         $student = Functions::getCurrentStudent($class);
 
         $student->notifyLevel = false;
-        
+
         // Is there a new level?
-        if($student->level) {
-            if(Cache::has('lvl-' . $student->id)) {
+        if ($student->level) {
+            if (Cache::has('lvl-' . $student->id)) {
                 $lvl = Cache::get('lvl-' . $student->id);
-                if($lvl != $student->level->number) {
-                    if($lvl < $student->level->number) {
+                if ($lvl != $student->level->number) {
+                    if ($lvl < $student->level->number) {
                         $student->notifyLevel = true;
                     }
                     $expiresAt = Carbon::now()->addDays(365);
@@ -590,11 +627,11 @@ class ClassroomsStudentController extends Controller
         if (settings()->get('equipment_3_visibility', false) ? true : false) {
             $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
         }
-        
-        if(settings()->get('show_recipes', false) ? true : false) {
+
+        if (settings()->get('show_recipes', false) ? true : false) {
             $craft = $class->items()->whereNotNull('craft')->where('craft', 'NOT LIKE', '\[\]')->get();
         }
-        
+
         $pets = Pet::where('classroom_id', $class->id)->where('for_sale', 1)->get();
 
         $shop = [
@@ -634,6 +671,8 @@ class ClassroomsStudentController extends Controller
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
+        $settings['feed'] = settings()->get('feed', 100);
+        $settings['repair_equipment'] = settings()->get('repair_equipment', 100);
         $settings['impostor'] = settings()->get('impostor', -1);
         if ($settings['impostor'] != -1) {
             if ($settings['impostor'] == $student->id)
@@ -1362,11 +1401,13 @@ class ClassroomsStudentController extends Controller
 
             $student->setProperty('hp', $item->hp, true, 'item');
         }
+        $xp = $student->xp;
         if ($item->xp > 0) {
             $xp = $student->setProperty('xp', $item->xp, true, 'item');
+            $xp = $xp['xp'];
         }
 
-        return ['xp' => $xp['xp'], 'hp' => $item->hp + $extra];
+        return ['xp' => $xp, 'hp' => $item->hp + $extra];
     }
 
     public function map($code)

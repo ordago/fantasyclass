@@ -90,6 +90,8 @@ return [
     'log_skill' => 'Skill result, yours or from another one.',
     'log_task' => 'You\'ve done one task',
     'log_volume' => 'Volume exceded',
+    'log_feed' => 'Pet food',
+    'log_repair' => 'Equipment repair',
 
     'student_report' => 'Student report',
 

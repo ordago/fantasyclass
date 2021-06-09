@@ -1,4 +1,9 @@
 # Changelog
+## v1.61 Beta (09/06/2021)
+### Changed
+- Damage in equipment and repair.
+- Bug fixes.
+
 ## v1.60 Beta (08/06/2021)
 ### Added
 - Pet bank

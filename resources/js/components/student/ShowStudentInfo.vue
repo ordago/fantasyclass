@@ -346,7 +346,11 @@
               :key="forceReload"
             >
               <div
-                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                class="
+                  column
+                  p-1
+                  is-4-tablet is-6-mobile is-2-desktop is-2-fullhd
+                "
                 v-for="gear in orderedEquipment"
                 v-bind:key="'gear-' + gear.id"
               >
@@ -356,7 +360,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'offset0': gear.offset == 0,
+                    offset0: gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -381,7 +385,7 @@
                         v-bind:key="'store-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          'offset0': index == 0,
+                          offset0: index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -421,7 +425,11 @@
           <div class="columns is-multiline is-variable mt-3" v-if="admin">
             <div
               v-for="item in items"
-              class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+              class="
+                column
+                py-2
+                is-6-tablet is-12-mobile is-4-desktop is-3-fullhd
+              "
               v-bind:key="'item2-' + item.id"
             >
               <b-field>
@@ -448,12 +456,21 @@
               <div
                 v-if="student.items.length >= 1"
                 @click="isCraftingModalActive = true"
-                class="column p-1 is-6-mobile is-4-tablet is-2-desktop is-2-fullhd"
+                class="
+                  column
+                  p-1
+                  is-6-mobile is-4-tablet is-2-desktop is-2-fullhd
+                "
                 v-tippy
                 content="Crafting"
               >
                 <div
-                  class="w-100 inventory-item inventory-item-dark has-text-light rounded"
+                  class="
+                    w-100
+                    inventory-item inventory-item-dark
+                    has-text-light
+                    rounded
+                  "
                 >
                   <i class="fad fa-hammer" style="font-size: 3.5em"></i>
                   <!-- <small class="bl-sz">Crafting</small> -->
@@ -464,14 +481,22 @@
                 v-tippy
                 :content="message(item)"
                 v-show="item.pivot.count > 0"
-                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                class="
+                  column
+                  p-1
+                  is-4-tablet is-6-mobile is-2-desktop is-2-fullhd
+                "
                 v-bind:key="'item3-' + item.id"
               >
                 <div class="inventory-item rounded w-100">
                   <img
                     :src="item.icon"
                     @contextmenu.prevent=""
-                    @click="item.hp > 0 || item.xp > 0 ? useItem(item, message(item)) : null"
+                    @click="
+                      item.hp > 0 || item.xp > 0
+                        ? useItem(item, message(item))
+                        : null
+                    "
                     class="item rounded"
                   />
                   <div class="number-items">{{ item.pivot.count }}</div>
@@ -479,7 +504,11 @@
               </div>
               <div
                 v-for="index in inventoryRemaining"
-                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                class="
+                  column
+                  p-1
+                  is-4-tablet is-6-mobile is-2-desktop is-2-fullhd
+                "
                 v-bind:key="'index2' + index"
               >
                 <div class="inventory-item rounded w-100"></div>
@@ -488,10 +517,13 @@
             <div
               class="columns is-mobile is-multiline is-variable"
               v-if="classroom.character_theme"
-              :key="forceReload"
             >
               <div
-                class="column p-1 is-4-tablet is-6-mobile is-2-desktop is-2-fullhd"
+                class="
+                  column
+                  p-1
+                  is-4-tablet is-6-mobile is-2-desktop is-2-fullhd
+                "
                 v-for="gear in orderedEquipment"
                 v-bind:key="'gear2-' + gear.id"
               >
@@ -501,7 +533,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'offset0': gear.offset == 0,
+                    offset0: gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -513,6 +545,25 @@
                     :alt="gear.id"
                     class="item"
                   />
+                  <div
+                    class="price-buy rounded"
+                    style="left: 2px; right: initial"
+                    v-if="gear.offset != 0"
+                    v-tippy
+                    :key="forceReload"
+                    :content="
+                      'Repair: ' +
+                      settings.repair_equipment +
+                      ' <i class=\'fas fa-coins colored\'></i>'
+                    "
+                    @click="repair(gear)"
+                  >
+                    <i
+                      v-if="gear.pivot.durability < 100"
+                      class="fad fa-gavel faa-wrench animated"
+                    ></i>
+                    {{ gear.pivot.durability }} %
+                  </div>
                   <div
                     class="price-buy rounded not-hover"
                     v-if="
@@ -527,13 +578,16 @@
                     class="w-100 shop-sub-item p-1"
                     style="position: absolute; top: 100px; left: 0"
                   >
-                    <div v-for="(i, index) in getProperties()" :key="'index3-'+index">
+                    <div
+                      v-for="(i, index) in getProperties()"
+                      :key="'index3-' + index"
+                    >
                       <div
                         v-for="itemStore in filterEquipment(i, gear.type)"
-                        v-bind:key="'item4-'+ itemStore.id"
+                        v-bind:key="'item4-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          'offset0': gear.offset == 0,
+                          offset0: gear.offset == 0,
                           'inv-item-armor-bronce': index == 0,
                           'inv-item-armor-silver': index == 1,
                           'inv-item-armor-gold': index == 2,
@@ -628,7 +682,15 @@
               </div>
             </article>
             <div
-              class="content has-text-centered rounded m-3 has-all-centered p-4 has-background-warning"
+              class="
+                content
+                has-text-centered
+                rounded
+                m-3
+                has-all-centered
+                p-4
+                has-background-warning
+              "
             >
               <h1>
                 <i class="fas fa-dungeon"></i>
@@ -731,7 +793,11 @@
             </div>
           </div>
           <div v-else>
-            <div v-for="pet in classroom.pets" :key="'pet2-'+pet.id" class="p-2 m-2">
+            <div
+              v-for="pet in classroom.pets"
+              :key="'pet2-' + pet.id"
+              class="p-2 m-2"
+            >
               <div class="columns mb-0">
                 <div class="column is-narrow">
                   <img
@@ -843,14 +909,22 @@
             >
           </template>
           <div v-if="admin" class="is-flex pl-4">
-            <div class="mx-2" v-for="badge in classroom.badges" :key="'badge-' + badge.id">
+            <div
+              class="mx-2"
+              v-for="badge in classroom.badges"
+              :key="'badge-' + badge.id"
+            >
               <ShowBadge
                 :student="student"
                 :badge="badge"
                 :admin="true"
               ></ShowBadge>
             </div>
-            <div class="mx-2" v-for="badge in student.badges" :key="'badge2-' +badge.id">
+            <div
+              class="mx-2"
+              v-for="badge in student.badges"
+              :key="'badge2-' + badge.id"
+            >
               <ShowBadge
                 v-if="!badge.classroom_id"
                 :student="student"
@@ -860,7 +934,11 @@
             </div>
           </div>
           <div class="is-flex pl-4" v-if="!admin">
-            <div class="mx-2" v-for="badge in student.badges" :key="'badge3-' +badge.id">
+            <div
+              class="mx-2"
+              v-for="badge in student.badges"
+              :key="'badge3-' + badge.id"
+            >
               <ShowBadge
                 :student="student"
                 :badge="badge"
@@ -905,7 +983,10 @@
               <th>{{ trans.get("evaluation.grade_number") }}</th>
               <th>{{ trans.get("evaluation.tags") }}</th>
               <th>{{ trans.get("evaluation.feedback") }}</th>
-              <tr v-for="(grade, index) in student.grades" :key="'index6-' +index">
+              <tr
+                v-for="(grade, index) in student.grades"
+                :key="'index6-' + index"
+              >
                 <td>{{ grade.description }}</td>
                 <td>
                   <span
@@ -975,7 +1056,7 @@
                       tag.pivot.weight +
                       ')'
                     "
-                    :key="'index7-' +index"
+                    :key="'index7-' + index"
                     >{{ tag.short }}</span
                   >
                 </td>
@@ -1036,14 +1117,14 @@
           <div
             class="div_rounded rubricRow marginRadius"
             v-for="rubricRow in rubric.rows"
-            :key="'rubric-' +rubricRow.id"
+            :key="'rubric-' + rubricRow.id"
           >
             <h2 class="description">{{ rubricRow.description }}</h2>
             <div class="rubricSubitems">
               <div
                 class="rubricSubitem marginRadius"
                 v-for="item in rubricRow.items"
-                :key="'rubrici-' +item.id"
+                :key="'rubrici-' + item.id"
                 :row="'row' + rubricRow.id"
                 :item="'item' + item.id"
               >
@@ -1086,7 +1167,7 @@
                 <option
                   :value="id"
                   v-for="(id, name) in students_money"
-                  :key="'money-' +id"
+                  :key="'money-' + id"
                 >
                   {{ name }}
                 </option>
@@ -1203,7 +1284,11 @@
             >
               <i class="fad fa-hammer faa-wrench" style="font-size: 3.5em"></i>
             </div>
-            <span class="is-relative" v-for="craft in craft" :key="'crafting-' +craft.id">
+            <span
+              class="is-relative"
+              v-for="craft in craft"
+              :key="'crafting-' + craft.id"
+            >
               <img
                 @contextmenu.prevent=""
                 @click="removeCraft(craft.id)"
@@ -1327,6 +1412,7 @@ export default {
   },
   created() {
     this.mutableChallenges = this.challenges;
+    this.classroom.settings = this.settings;
   },
   mounted() {
     this.behaviours = this.student.behaviours;
@@ -1388,6 +1474,7 @@ export default {
       eq3Json: null,
       craftJson: null,
       forceReload: 0,
+      forceReloadEq: 0,
       isSendMoneyActive: false,
       prevImage: null,
       isCraftingModalActive: false,
@@ -1564,6 +1651,31 @@ export default {
         },
       });
     },
+    repair(gear) {
+      if (gear.pivot.durability >= 100) return false;
+      let audio = new Audio("/sound/repair.mp3");
+      axios
+        .post("/classroom/student/equipment/repair", {
+          id: this.student.id,
+          gear: gear.id,
+        })
+        .then((response) => {
+          this.$toast(response.data.message, { type: response.data.type });
+          if (response.data.type == "success") {
+            audio.play();
+            // setTimeout(() => {
+            //   location.reload();
+            // }, 1000);
+            this.student.gold = response.data.gold;
+            gear.pivot.durability = response.data.durability;
+            // this.student.equipment = response.data.equipment;
+            // this.forceReloadEq++;
+            // this.$refs.equipment.$forceUpdate();
+            // this.$parent.$forceUpdate();
+            this.$forceUpdate();
+          }
+        });
+    },
     getProperties() {
       if (this.admin)
         return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];
@@ -1613,9 +1725,8 @@ export default {
         });
     },
     lastBehaviour: function () {
-      let behaviour = this.student.behaviours[
-        this.student.behaviours.length - 1
-      ];
+      let behaviour =
+        this.student.behaviours[this.student.behaviours.length - 1];
       let text;
       if (behaviour.custom_text == null) text = behaviour.name;
       else text = behaviour.custom_text;

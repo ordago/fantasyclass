@@ -58,4 +58,6 @@ return [
     'notifications' => "Notificaciones",
     'notifications_from_classroom' => "Deshabilita las notificaciones de esta clase",
 
+    'feed' => "Precio alimentación de mascotas",
+    'repair_equipment' => "Precio reparación de equipamento",
 ];

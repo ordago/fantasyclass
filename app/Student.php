@@ -166,7 +166,7 @@ class Student extends Model implements HasMedia
 
     public function equipment()
     {
-        return $this->belongsToMany(Equipment::class);
+        return $this->belongsToMany(Equipment::class)->withPivot('durability');
     }
 
     public function logEntries()
@@ -402,9 +402,9 @@ class Student extends Model implements HasMedia
 
                 $itemA = $class->items()->where(function ($query) {
                     $query->whereNull('craft')
-                    ->orWhere('craft', 'LIKE', '\[\]');
+                        ->orWhere('craft', 'LIKE', '\[\]');
                 })->inRandomOrder()
-                ->first();
+                    ->first();
                 $studentItem = $this->items->where('id', $itemA->id)->first();
                 if ($studentItem)
                     $count = $studentItem->pivot->count + 1;
@@ -487,9 +487,25 @@ class Student extends Model implements HasMedia
                 $value = min($this->$prop + $value, 100);
             } else {
                 $pet = $this->pets->first();
-                if($pet) {
+                if ($pet) {
                     $hp = max($pet->pivot->hp + $value * 2, 0);
-                    $this->pets()->sync([$pet->id => ['hp' => $hp]], false); 
+                    $this->pets()->sync([$pet->id => ['hp' => $hp]], false);
+                }
+                foreach ($this->equipment as $eq) {
+                    $damage = rand(-1, $value) * 2;
+                    if ($eq->offset != 0) {
+                        $durability =  $eq->pivot->durability + $damage;
+                        if ($durability <= 0) {
+                            $newEq = Equipment::where('character_id', $eq->character_id)
+                                ->where('type', $eq->type)
+                                ->where('offset', 0)
+                                ->first();
+                            $this->equipment()->detach($eq->id);
+                            $this->equipment()->attach($newEq->id);
+                        } else {
+                            $this->equipment()->sync([$eq->id => ['durability' => $durability]], false);
+                        }
+                    }
                 }
                 if (!$byPassBoost)
                     $old = $value - $value * $boost["hp"] / 100;

@@ -367,7 +367,7 @@
             </div>
             <div class="column is-flex align-items-center">
               <i class="fas fa-coins colored mr-2"></i>
-              {{ trans.get("settings.transfer_fee") }}
+              {{ trans.get("settings.transfer_fee") }} (%)
             </div>
           </div>
           <div class="columns">
@@ -407,6 +407,32 @@
             <div class="column is-flex align-items-center">
               <i class="fak fa-deck colored mr-2"></i>
               {{ trans.get("settings.cards") }}
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.repair_equipment"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              <i class="fad fa-hammer colored mr-2"></i>
+              {{ trans.get("settings.repair_equipment") }}
+            </div>
+          </div>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.feed"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              <i class="fad fa-dog colored mr-2"></i>
+              {{ trans.get("settings.feed") }}
             </div>
           </div>
         </div>
@@ -844,6 +870,18 @@ export default {
         prop: "num_cards",
         action: "update",
         value: this.settings.num_cards,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "feed",
+        action: "update",
+        value: this.settings.feed,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "repair_equipment",
+        action: "update",
+        value: this.settings.repair_equipment,
       });
       this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",

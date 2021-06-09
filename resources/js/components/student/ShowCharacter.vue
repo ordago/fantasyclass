@@ -183,11 +183,10 @@ export default {
         pet.pivot.hp +
         "' max=100 min=0></progress>";
       name += "</span>";
-
       if (this.feed && pet.pivot.hp > 0 && pet.pivot.hp < 100)
         name += `<br><small><span class="tag is-success mx-2 cursor-pointer" onclick="feedPet(${this.student.id})">🍅🍖 ${this.trans.get(
           "pets.feed"
-        )} 100 <i class="fas fa-coins colored"></i></span></small>`;
+        )} `+ this.classroom.settings.feed +` <i class="fas fa-coins colored"></i></span></small>`;
 
       return name;
     },
