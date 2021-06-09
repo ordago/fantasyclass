@@ -15,6 +15,7 @@ return [
     'excel_template' => 'Descarrega la plantilla',
     'dnd' => 'Arrossega el fitxer o clica per pujar',
     'search' => 'Cerca per nom',
+    'repair' => 'Repara',
 
     'name_surname' => 'Nom i cognoms',
     'name' => 'Nom',

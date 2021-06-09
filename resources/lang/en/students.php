@@ -15,6 +15,7 @@ return [
     'excel_template' => 'Download the template',
     'dnd' => 'Drop your file here or click to upload',
     'search' => 'Search by name',
+    'repair' => 'Repair',
     
     'name_surname' => 'Name and surname',
     'name' => 'Name',

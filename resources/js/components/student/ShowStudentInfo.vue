@@ -552,7 +552,7 @@
                     v-tippy
                     :key="forceReload"
                     :content="
-                      'Repair: ' +
+                      trans.get('students.repair') + ': ' +
                       settings.repair_equipment +
                       ' <i class=\'fas fa-coins colored\'></i>'
                     "

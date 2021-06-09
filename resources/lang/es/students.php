@@ -15,6 +15,7 @@ return [
     'excel_template' => 'Descarga la plantilla',
     'dnd' => 'Arrastra el fichero o haz clic para subir',
     'search' => 'Busca por nombre',
+    'repair' => 'Repara',
     
     'name_surname' => 'Nombre y apellidos',
     'name' => 'Nombre',
