@@ -57,9 +57,11 @@ Configure .env:
  MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-To protect chat:
+To enable and protect chat:
 ```
- CHAT_KEY=
+CHAT_KEY=
+CHATBRO_KEY=
+CHATBRO_ID=
 ```
 
 To enable Google Login:
@@ -68,8 +70,24 @@ Go to https://console.developers.google.com/, register a project and get the Oau
 ```
 GOOGLE_CLIENT_ID=
 GOOGLE_SECRET=
-GOOGLE_APP_ID=
 GOOGLE_REDIRECT=http://localhost:8000/callback/google
+GOOGLE_APP_ID=
+GOOGLE_ANALYTICS=
+```
+
+Other settings:
+
+```
+# Max students in pagination
+MIX_MAX_STUDENTS=40
+
+# To encrypt / decrypt some URL
+SECRET_CRYPT=
+SECRET_CRYPT_IV=
+
+# To enable notifications
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_KEY=
 ```
 
 ### After every pull from the server
