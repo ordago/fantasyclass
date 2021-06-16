@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Evaluable;
+use App\EvaluablesGroup;
 use App\Rubric;
 use App\Student;
 use App\Tag;
@@ -71,16 +72,22 @@ class EvaluationController extends Controller
 
     public function index($code)
     {
-        $class = Classroom::where('code', $code)->firstOrFail();
+        $data = request()->validate([
+            'id' => ['numeric']
+        ]);
+        $evaluableGroup = EvaluablesGroup::findOrFail($data['id']);
+        $class = Classroom::where('id', $evaluableGroup->classroom_id)->first();
         $this->authorize('view', $class);
 
-        $tags = Tag::where('classroom_id', $class->id)->get();
-        $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
-        $lines = Evaluable::where('classroom_id', $class->id)->with('tags')->get();
+        $children = EvaluablesGroup::where('evaluables_group_id', $data['id'])->pluck('id')->toArray();
+        $evaluables = Evaluable::where('evaluables_group_id', $evaluableGroup->id)->orWhereIn('evaluables_group_id', $children)->get();
 
+        $evaluationlines = Evaluable::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->with('tags')->get();
+        $tags = Tag::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->get();
+        $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $settings = EvaluationController::getEvalSettings($class->id);
 
-        return view('evaluation.index', compact('class', 'tags', 'rubrics', 'lines', 'settings'));
+        return array('evaluables' => $evaluables, 'tags' => $tags, 'evaluationlines'=> $evaluationlines, 'rubrics' => $rubrics,'settings' => $settings);
     }
 
     public function evaluate($id)
@@ -90,7 +97,6 @@ class EvaluationController extends Controller
         $this->authorize('update', $class);
 
         foreach (request()->grades as $grades) {
-
             $student = Student::find($grades['id']);
             if ($student->classroom->classroom_id != $class->id)
                 return false;
@@ -143,7 +149,6 @@ class EvaluationController extends Controller
     }
     public function getShowRubric()
     {
-
         $data = request()->validate([
             'rubric' => ['numeric', 'required'],
         ]);
@@ -152,12 +157,10 @@ class EvaluationController extends Controller
         $rubric->load('rows.items');
 
         return $rubric;
-
     }
 
     public function getRubric()
     {
-
         $data = request()->validate([
             'student' => ['numeric', 'required'],
             'rubric' => ['numeric', 'required'],
@@ -209,6 +212,7 @@ class EvaluationController extends Controller
             'description' => ['required', 'string'],
             'type' => ['required', 'numeric'],
             'rubric' => ['nullable', 'numeric'],
+            'evaluables_group_id' => ['nullable', 'numeric']
         ]);
 
         $evaluable = Evaluable::create([
@@ -216,6 +220,7 @@ class EvaluationController extends Controller
             'type' => $data['type'],
             'rubric_id' => $data['rubric'],
             'classroom_id' => $class->id,
+            'evaluables_group_id' => $data['evaluables_group_id']
         ]);
 
         foreach ($data['tags'] as $tag) {

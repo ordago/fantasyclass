@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'add' => 'Añade historia / desafío',
     'add_category' => 'Añade categoria',
     'create_challenge' => 'Crea desafío',

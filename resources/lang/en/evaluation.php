@@ -43,5 +43,9 @@ return [
     'weight' => 'Weight',
     'weight_info' => 'Weight in the tag',
 
-  
+    'evaluations' => 'Evaluaciones',
+    'add_evaluation' => 'Add evaluation',
+    'create' => 'Create evaluation',
+    'icon' => 'Icon',
+    'parent' => 'Parent group (optional)',
 ];

@@ -11,6 +11,7 @@ class Tag extends Model
         'description',
         'percent',
         'classroom_id',
+        'evaluables_group_id'
     ];
 
     public function classroom() {

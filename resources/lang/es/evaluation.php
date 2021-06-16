@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     'add_tag' => 'Añade etiqueta de evaluación',
     'add' => 'Añade etiqueta',
     'description' => 'Descripción',
@@ -42,4 +41,10 @@ return [
 
     'weight' => 'Peso',
     'weight_info' => 'Peso dentro de la etiqueta',
+
+    'evaluations' => 'Evaluations',
+    'add_evaluation' => 'Añade evaluación',
+    'create' => 'Crear evaluación',
+    'icon' => 'Icono',
+    'parent' => 'Grupo padre (opcional)',
 ];

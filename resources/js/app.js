@@ -42,7 +42,7 @@ Vue.component("tippy", TippyComponent);
 
 // Cookies
 import VueCookies from 'vue-cookies'
-Vue.use(VueCookies)
+Vue.use(VueCookies);
 
 // Buefy
 import Buefy from 'buefy'
@@ -54,7 +54,7 @@ Vue.use(Buefy, {
 import Croppa from 'vue-croppa'
 import 'vue-croppa/dist/vue-croppa.css'
 
-Vue.use(Croppa)
+Vue.use(Croppa);
 
 Vue.component('create-classroom', () => import('./components/classroom/CreateClassroom.vue'));
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
@@ -128,6 +128,7 @@ Vue.component('tag-management', () => import('./components/evaluation/TagManagem
 Vue.component('grade', () => import('./components/evaluation/Grade.vue'));
 Vue.component('report', () => import('./components/evaluation/Report.vue'));
 Vue.component('rubric-management', () => import('./components/evaluation/RubricManagement.vue'));
+Vue.component('show-evaluations-group', () => import('./components/evaluation/ShowEvaluationGroup.vue'));
 Vue.component('rubric-create', () => import('./components/evaluation/RubricCreate.vue'));
 
 Vue.component('question-banks', () => import('./components/questions/ShowQuestionBanks.vue'));
@@ -253,5 +254,5 @@ const app = new Vue({
         //             console.log('Show error notification!')
         //             return Promise.reject(error)
         //         })
-    },
+    }
 });

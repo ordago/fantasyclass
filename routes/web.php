@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Middleware\Localization;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -245,16 +244,23 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/maps/{id}', 'MapsController@show');
         Route::patch('/maps/{id}', 'MapsController@update');
 
+        // Evaluable Group
+        Route::get('/{code}/evaluation', 'EvaluablesGroupController@index');
+        Route::post('/{code}/evaluation/group', 'EvaluablesGroupController@store');
+        Route::delete('/evaluation/group/{id}', 'EvaluablesGroupController@destroy');
+
         // Evaluation
-        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
-        Route::get('/{code}/evaluation', 'EvaluationController@index');
+        Route::post('/{code}/evaluation/get', 'EvaluationController@index');
+        Route::post('/{code}/evaluation', 'EvaluationController@store');
+        Route::delete('/evaluation/{id}', 'EvaluationController@destroy');
+
         Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');
+        Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
+        Route::get('/{code}/evaluation/report', 'EvaluationController@report');
+
         Route::post('/evaluation/student/rubric', 'EvaluationController@getRubric');
         Route::post('/evaluation/rubric', 'EvaluationController@getShowRubric');
         Route::post('/evaluation/{id}/evaluate/rubric', 'EvaluationController@evaluateRubric');
-        Route::post('/evaluation/{id}/evaluate', 'EvaluationController@evaluate');
-        Route::post('/{code}/evaline', 'EvaluationController@store');
-        Route::delete('/evaline/{id}', 'EvaluationController@destroy');
         Route::get('/{code}/rubrics', 'RubricController@index');
         Route::get('/{code}/rubric/create', 'RubricController@create');
         Route::post('/{code}/rubric', 'RubricController@store');

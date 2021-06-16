@@ -7,12 +7,11 @@ use App\Card;
 use App\ChallengesGroup;
 use App\Classroom;
 use App\ClassroomUser;
-use App\Event;
+use App\EvaluablesGroup;
 use App\GoalThemes;
 use App\Grouping;
 use App\Theme;
 use App\Item;
-use App\QuestionBank;
 use App\Rules;
 use App\Student;
 use Illuminate\Pagination\Paginator;
@@ -366,6 +365,13 @@ class ClassroomsController extends Controller
             'content' => file_get_contents(public_path() . '/rules/' . auth()->user()->locale . '.txt')
         ]);
 
+        // Create default evaluables group
+        EvaluablesGroup::create([
+            'name' => 'General',
+            'icon' => 'fas fa-chart-line',
+            'classroom_id' => $classroom->id,
+        ]);
+
         auth()->user()->classrooms()->attach([
             $classroom->id => ['role' => 2],
         ]);
@@ -385,7 +391,8 @@ class ClassroomsController extends Controller
                 'classroom_id' => $classId,
                 'role' => 0,
             ]);
-        } catch (\Throwable $th) {
+        }
+        catch (\Throwable $th) {
             return false;
         }
 
@@ -404,7 +411,7 @@ class ClassroomsController extends Controller
             'character_id' => Classroom::findOrFail($classId)->characterTheme->characters->random(1)->first()->id,
         ]);
 
-        // Assign basic equipment        
+        // Assign basic equipment
         $student->setBasicEquipment();
 
         return redirect('/classroom');

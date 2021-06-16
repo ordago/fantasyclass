@@ -108,62 +108,62 @@
   </div>
 </template>
 <script>
-export default {
-  props: ["classroom", "evaluable", "students", "rubric", "settings"],
-  created: function () {},
-  data: function () {
-    return {
-      showRubric: false,
-      studentActive: null,
-      grade: null,
-      rowsSelected: [],
-      isLoading: false,
-    };
-  },
-  methods: {
-    selectItem: function (target, row, item) {
-      let element = document.querySelector("[item=item" + item.id + "]");
-      document
-        .querySelectorAll("[row=row" + row + "]")
-        .forEach(function (rowItem) {
-          rowItem.classList.remove("selectedSubItem");
-        });
+    export default {
+        props: ["classroom", "evaluable", "students", "rubric", "settings"],
+        created: function () { },
+        data: function () {
+            return {
+                showRubric: false,
+                studentActive: null,
+                grade: null,
+                rowsSelected: [],
+                isLoading: false
+            };
+        },
+        methods: {
+            selectItem: function (target, row, item) {
+                let element = document.querySelector("[item=item" + item.id + "]");
+                document
+                    .querySelectorAll("[row=row" + row + "]")
+                    .forEach(function (rowItem) {
+                        rowItem.classList.remove("selectedSubItem");
+                    });
 
-      element.classList.add("selectedSubItem");
-      this.recalculate();
-    },
-    recalculate: function () {
-      let total = 0;
-      let totalSelected = 0;
-      let totalOptional = 0;
+                element.classList.add("selectedSubItem");
+                this.recalculate();
+            },
+            recalculate: function () {
+                let total = 0;
+                let totalSelected = 0;
+                let totalOptional = 0;
 
-      document
-        .querySelectorAll(
-          ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
-        )
-        .forEach(function (rowItem) {
-          totalSelected += parseFloat(
-            rowItem.querySelector(".rubricScore").innerHTML
-          );
-        });
+                document
+                    .querySelectorAll(
+                        ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
+                    )
+                    .forEach(function (rowItem) {
+                        totalSelected += parseFloat(
+                            rowItem.querySelector(".rubricScore").innerHTML
+                        );
+                    });
 
-      document
-        .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
-        .forEach(function (row) {
-          var max = 0;
-          row.querySelectorAll(".rubricSubitem").forEach((item) => {
-            let score = parseFloat(
-              item.querySelector(".rubricScore").innerHTML
-            );
-            if (score > max) max = score;
-          });
-          total += max;
-        });
+                document
+                    .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
+                    .forEach(function (row) {
+                        var max = 0;
+                        row.querySelectorAll(".rubricSubitem").forEach((item) => {
+                            let score = parseFloat(
+                                item.querySelector(".rubricScore").innerHTML
+                            );
+                            if (score > max) max = score;
+                        });
+                        total += max;
+                    });
 
-      // TODO optional rows
-      // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
-      //     totalOptional += parseFloat($(this).find('.rubricScore').html());
-      // });
+                // TODO optional rows
+                // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
+                //     totalOptional += parseFloat($(this).find('.rubricScore').html());
+                // });
 
       this.grade = Math.min(
         this.settings.eval_max,

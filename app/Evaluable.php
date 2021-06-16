@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Evaluable extends Model
 {
-
     protected $fillable = [
         'description',
         'classroom_id',
         'type',
         'rubric_id',
         'challenge_id',
+        'evaluables_group_id'
     ];
-    
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class)->withPivot('weight');
@@ -30,13 +30,12 @@ class Evaluable extends Model
 
     public static function boot()
     {
-        parent::boot();    
-    
+        parent::boot();
+
         // cause a delete of a product to cascade to children so they are also deleted
         static::deleted(function($evaluable)
         {
             $evaluable->students()->sync([]);
         });
-    } 
-
+    }
 }
