@@ -6,9 +6,9 @@
 <div class="top-right custom lang rounded" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/login/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/en">en</a>
 </div>
-<h1 class="fantasyTitle mt-4 mb-3">FantasyClass</h1>
+<h1 class="fantasyTitle mt-4 mb-3">{{ env('APP_NAME')  }}</h1>
 <div class="box form p-5">
-    <div class="thumbnail p-3"><img src="/img/login-logo.png" width="200px" /></div>
+    <div class="thumbnail p-3"><img src="{{ env('LOGO') }}" width="200px" /></div>
     <article class="message is-warning">
         <div class="message-body mb-2">
             {{ __('auth.privacy_info') }} <a target="_blank" href="/policy">{{ __('auth.privacy') }}</a>

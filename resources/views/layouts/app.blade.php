@@ -42,8 +42,8 @@
     <!-- PWA -->
 
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ env('FAVICON32') }}">
+    <link rel="icon" type="/png" sizes="16x16" href="{{ env('FAVICON32') }}">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <meta name="apple-mobile-web-app-title" content="FantasyClass">
@@ -61,7 +61,7 @@
         <nav class="navbar card-shadow-s is-sticky noprint" role="navigation" aria-label="main navigation" @yield('navbarhide')>
             <div class="navbar-brand">
                 <a href="/classroom" v-tippy :content="trans.get('classroom.all')" class="is-flex align-items-center" style="text-decoration: none">
-                    <img src="/img/logo.png" width="36px" height="38px" class="mx-3">
+                    <img src="{{ env('LOGO_SMALL') }}" width="36px" height="38px" class="mx-3">
                 </a>
                 @if(isset($class))
                 @yield('mainLink')
