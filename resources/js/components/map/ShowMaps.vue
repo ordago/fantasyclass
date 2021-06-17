@@ -239,6 +239,9 @@ const ModalForm = {
                     <button class="button" @click="$parent.close()" type="button">{{ trans.get('general.close') }}</button>
                 </header>
                 <section class="modal-card-body" >
+                    <div class="fullscr is-relative">
+                      <span class="elem">1</span>
+                    </div>
                     <div>
                     <iframe frameborder="0" id='mapiframe' class="map-iframe" 
                     v-bind:src="url"
@@ -345,5 +348,22 @@ tr.is-info {
 }
 td [data-label="Url"] {
   word-break: break-all;
+}
+.fullscr {
+  width: 1200px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.elem {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  background-color: orange;
+  border-radius: 40%;
 }
 </style>

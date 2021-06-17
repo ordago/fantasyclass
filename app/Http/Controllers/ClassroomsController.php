@@ -214,6 +214,8 @@ class ClassroomsController extends Controller
             foreach ($challengeGroup->challenges as $challenge) {
                 $newChallenge = $challenge->replicate();
                 $newChallenge->challenges_group_id = $newChGr->id;
+                $newChallenge->requirements = [];
+                $newChallenge->items = [];
                 $newChallenge->push();
 
                 foreach ($challenge->questions as $question) {
