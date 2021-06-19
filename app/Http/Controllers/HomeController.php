@@ -13,6 +13,9 @@ class HomeController extends Controller
 
     public function index()
     {
+        if(env('CUSTOM') == 1) {
+            return redirect('/login');
+        }
         if(auth()->user()) {
             if(auth()->user()->username == "demo") {
                 Auth::logout();

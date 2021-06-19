@@ -60,6 +60,7 @@
                     </a>
                     @endif
                 </div>
+                @if(env('CUSTOM') != 1)
                 <div class="has-text-centered">
                     <a href="https://play.google.com/store/apps/details?id=app.fantasyclass.climentjoan" target="_blank"><img width="300px" alt="google play logo" src="/gplay.png" /></a>
                 </div>
@@ -70,6 +71,7 @@
                     <i class="fal fa-ellipsis-v"></i>
                     <a target="_blank" href="https://t.me/joinchat/G9NbVFS50HGQdHpEaawZkA"><i class="fab fa-telegram"></i></a>
                 </div>
+                @endif
             </div>
         </div>
     </form>
