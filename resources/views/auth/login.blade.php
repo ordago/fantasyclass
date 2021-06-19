@@ -3,7 +3,7 @@
 @section('bg', $bg ?? '')
 
 @section('content')
-<div class="top-right custom lang rounded" style="width: auto; font-size: 1em">
+<div class="top-right custom lang rounded p-2" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/login/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/en">en</a>
 </div>
 <h1 class="fantasyTitle mt-4 mb-3">{{ env('APP_NAME')  }}</h1>

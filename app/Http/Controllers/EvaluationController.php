@@ -75,15 +75,24 @@ class EvaluationController extends Controller
         $data = request()->validate([
             'id' => ['numeric']
         ]);
-        $evaluableGroup = EvaluablesGroup::findOrFail($data['id']);
-        $class = Classroom::where('id', $evaluableGroup->classroom_id)->first();
-        $this->authorize('view', $class);
+        if(isset($data['id'])) {
+            $evaluableGroup = EvaluablesGroup::findOrFail($data['id']);
+            $class = Classroom::where('id', $evaluableGroup->classroom_id)->firstOrFail();
+        } else {
+            $class = Classroom::where('code', $code)->firstOrFail();
+        }
+        $this->authorize('update', $class);
 
-        $children = EvaluablesGroup::where('evaluables_group_id', $data['id'])->pluck('id')->toArray();
-        $evaluables = Evaluable::where('evaluables_group_id', $evaluableGroup->id)->orWhereIn('evaluables_group_id', $children)->get();
-
-        $evaluationlines = Evaluable::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->with('tags')->get();
-        $tags = Tag::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->get();
+        if(isset($data['id'])) {
+            $evaluables = Evaluable::where('evaluables_group_id', $evaluableGroup->id)->get();
+            $evaluationlines = Evaluable::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->with('tags')->get();
+            $tags = Tag::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->get();
+        } else {
+            $evaluables = Evaluable::whereNull('evaluables_group_id')->get();
+            $evaluationlines = Evaluable::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->with('tags')->get();
+            $tags = Tag::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->get();
+        }
+        
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $settings = EvaluationController::getEvalSettings($class->id);
 

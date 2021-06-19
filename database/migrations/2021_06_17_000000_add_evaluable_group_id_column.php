@@ -12,7 +12,7 @@ class AddEvaluableGroupIdColumn extends Migration
     public function up()
     {
         Schema::table('evaluables', function ($table) {
-            $table->unsignedBigInteger('evaluables_group_id')->after('id');
+            $table->unsignedBigInteger('evaluables_group_id')->nullable()->after('id');
         });
 
         Schema::table('tags', function ($table) {

@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="top-right custom lang rounded" style="width: auto; font-size: 1em">
+<div class="top-right custom lang rounded p-2" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/register/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/en">en</a>
 </div>
-<div class="box form">
+<div class="box form mt-3">
     <div class="has-text-centered">
-        <img src="/img/login-logo.png" width="100px" />
+        <img src="{{ env('LOGO') }}" width="100px" />
     </div>
     <div class="">
         <form method="POST" action="{{ route('register') }}">

@@ -10,7 +10,6 @@ class EvaluablesGroup extends Model
         'name',
         'icon',
         'classroom_id',
-        'evaluables_group_id',
     ];
 
     protected $appends = ['numEvaluables'];
@@ -49,16 +48,6 @@ class EvaluablesGroup extends Model
         return $this->hasMany(Evaluable::class);
     }
 
-    public function children()
-    {
-        return $this->hasMany(EvaluablesGroup::class, 'evaluables_group_id', 'id');
-    }
-
-    public function allChildren()
-    {
-        return $this->children()->with('children');
-    }
-
     public function parent()
     {
         return $this->belongsTo(EvaluablesGroup::class);
@@ -72,8 +61,6 @@ class EvaluablesGroup extends Model
         static::deleted(function ($group)
         {
             $group->evaluables()->delete();
-            $group->children()->delete();
-            $group->allChildren()->delete();
         });
     }
 }

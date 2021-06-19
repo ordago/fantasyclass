@@ -18,7 +18,6 @@ class CreateEvaluablesGroupTable extends Migration
             $table->string('name', 100);
             $table->string('icon', 100);
             $table->unsignedBigInteger('classroom_id');
-            $table->unsignedBigInteger('evaluables_group_id')->nullable();
             $table->timestamps();
         });
     }

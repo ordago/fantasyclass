@@ -1,5 +1,5 @@
 <template>
-    <div class="pl-0-desktop">
+    <div class="pl-0-desktop p-2">
         <div class="panel pl-0">
             <p class="panel-heading is-flex has-space-between align-items-center p-4">
                 <span class="pl-3">Create </span>
@@ -25,19 +25,6 @@
                         <label for="name"><span class="help is-danger is-inline">* </span> {{ trans.get('evaluation.name') }}</label>
                         <input type="text" id="name" v-model="evaluationInfo.name" name="name" required class="input my-3">
                     </div>
-                    <div class="mt-3" v-if="$parent.evaluablesgroup.length">
-                        <label for="name">{{ trans.get('evaluation.parent') }}</label>
-                        <div class="field">
-                            <div class="control">
-                                <div class="select is-fullwidth">
-                                    <select v-model="evaluationInfo.evaluables_group_id">
-                                        <option value="0"></option>
-                                        <option :value="evaluation.id" v-for="evaluation in $parent.evaluablesgroup" v-bind:key="evaluation.id">{{ evaluation.name }}</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <div class="mt-3">
                         <button class="button is-link" @click="update" v-if="evaluation" type="button">{{ trans.get('evaluation.edit') }}</button>
                         <button class="button is-success" type="submit" v-if="!evaluation">{{ trans.get('evaluation.create') }}</button>
@@ -62,7 +49,6 @@
             return {
                 csrfToken: null,
                 evaluationInfo: {
-                    evaluables_group_id: null,
                     id: null,
                     icon: this.icon,
                     name: null,

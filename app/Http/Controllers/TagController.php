@@ -46,7 +46,7 @@ class TagController extends Controller
             'short' => ['required', 'string', 'max:15'],
             'description' => ['required', 'string'],
             'percent' => ['required', 'numeric'],
-            'evaluables_group_id' => ['required', 'numeric']
+            'evaluables_group_id' => ['nullable', 'numeric']
         ]);
 
         return Tag::create([
@@ -54,7 +54,7 @@ class TagController extends Controller
             'description' => $data['description'],
             'percent' => $data['percent'],
             'classroom_id' => $class->id,
-            'evaluables_group_id' => $data['evaluables_group_id']
+            'evaluables_group_id' => isset($data['evaluables_group_id']) ? $data['evaluables_group_id'] : null,
         ]);
     }
 }

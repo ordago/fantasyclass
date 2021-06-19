@@ -15,7 +15,7 @@ class EvaluablesGroupController extends Controller
     public function index($code) {
         $class = Classroom::where('code', '=', $code)->firstorFail();
         $this->authorize('view', $class);
-        $evaluablesGroup = EvaluablesGroup::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->with('children')->get();
+        $evaluablesGroup = EvaluablesGroup::where('classroom_id', $class->id)->get();
         return view('evaluation.index', compact('class', 'evaluablesGroup'));
     }
 
@@ -36,17 +36,14 @@ class EvaluablesGroupController extends Controller
                 'name' => ['string'],
                 'icon' => ['string'],
                 'id' => ['numeric', 'nullable'],
-                'evaluables_group_id' => ['numeric', 'nullable'],
             ]);
 
             $evaluableGroup = EvaluablesGroup::create([
                 'name' => $data['name'],
                 'icon' => $data['icon'],
-                'evaluables_group_id' => $data['evaluables_group_id'],
                 'classroom_id' => $class->id,
             ]);
 
-            $evaluableGroup['children'] = [];
             return [
                     "message" => __('success_error.add_success'),
                     "type" => "success",

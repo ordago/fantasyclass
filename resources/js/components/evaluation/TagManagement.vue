@@ -1,5 +1,5 @@
 <template>
-    <div class="panel is-primary pl-0">
+    <div class="panel is-primary pl-0 pb-2">
         <p class="panel-heading is-flex has-space-between align-items-center p-3">
             <span>
                 <i :class="evaluablegroup.icon"></i>
@@ -23,7 +23,7 @@
                 </button>
             </span>
         </p>
-        <div class="my-3">
+        <div class="my-3 px-3">
             <span class="tag is-dark is-medium mr-2"
                   v-for="(tag, index) in tagsReactive"
                   :key="tag.id"
