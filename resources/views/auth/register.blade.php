@@ -6,7 +6,7 @@
 </div>
 <div class="box form">
     <div class="has-text-centered">
-        <img src="env('LOGO')" width="100px" />
+        <img src="{{env('LOGO')}}" width="100px" />
     </div>
     <div class="">
         <form method="POST" action="{{ route('register') }}">
