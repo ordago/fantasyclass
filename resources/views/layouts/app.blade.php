@@ -68,7 +68,7 @@
                 @else
                 <a href="/classroom" class="is-flex align-items-center" style="text-decoration: none">
                     <label class="label-title px-2 cursor-pointer">
-                        @yield('title','FantasyClass')
+                        @yield('title', env('APP_NAME'))
                     </label>
                 </a>
                 @endif
@@ -130,6 +130,7 @@
                                     <a class="dropdown-item" href="/profile">
                                         <i class="fal fa-cog"></i> {{ __('menu.profile') }}
                                     </a>
+                                    @if(env('CUSTOM') != 1)
                                     <a class="dropdown-item" href="https://t.me/fantasyclass">
                                         <i class="fal fa-paper-plane"></i> Telegram
                                     </a>
@@ -139,6 +140,7 @@
                                     <a class="dropdown-item" v-tippy :content="trans.get('menu.like')" href="/contribute">
                                         <i class="fad fa-hands-heart" style="--fa-primary-color: red; "></i> {{ __('menu.contribute') }}
                                     </a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         <i class="fal fa-sign-out"></i> {{ __('general.logout') }}
@@ -146,10 +148,12 @@
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
+                                    @if(env('CUSTOM') != 1)
                                     <hr class="dropdown-divider">
                                     <div class="has-text-right">
                                         <small class="p-3"><em><a href="https://github.com/climentjoan/fantasyclass/blob/master/CHANGELOG.md" target="_blank">FantasyClass {{ config('app.version') }}</a></em></small>
                                     </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

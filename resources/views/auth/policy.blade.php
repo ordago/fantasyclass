@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>FantasyClass</title>
+    <title>{{env('APP_NAME')}}</title>
     <!-- Bulma Version 0.9.0-->
     <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.1/css/bulma.min.css" />
     <link rel="stylesheet" type="text/css" href="/css/home.css" />
