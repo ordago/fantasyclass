@@ -249,7 +249,12 @@ class StudentController extends Controller
         $allcards = $class->cards->sortBy('type');
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $evaluation[0] = EvaluationController::individualReport($class, $student);
+        $grades = collect();
+        $grades->push(["namegroup" => __('evaluation.first'), "icon" => 'fas fa-chart-line', "evaluation" => EvaluationController::individualReport($class, [$student], null)]);
+        foreach ($class->evalgroups as $evalg) {
+            $grades->push(["namegroup" => $evalg->name, "icon" => $evalg->icon, "evaluation" => EvaluationController::individualReport($class, [$student], $evalg)]);
+        }
+        $evaluation[0] = $grades;
         $settings = EvaluationController::getEvalSettings($class->id);
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['skill_price'] = settings()->get('skill_price', 600);

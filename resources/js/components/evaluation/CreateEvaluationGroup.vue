@@ -12,7 +12,7 @@
                     </div>
                     <div class="field has-addons">
                         <p class="control">
-                            <IconSelector></IconSelector>
+                            <IconSelectorPro v-model="icon"></IconSelectorPro>
                         </p>
                         <p class="control is-expanded">
                             <input v-model="icon" ref="icon" name="icon" class="input" required :placeholder="trans.get('behaviours.icon_select')" type="text" />
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-    const IconSelector = () => import("../utils/IconSelector.vue");
+    const IconSelectorPro = () => import("../utils/IconSelectorPro.vue");
 
     export default {
         props: ['code', 'evaluation', 'editgroup'],
@@ -50,27 +50,27 @@
                 csrfToken: null,
                 evaluationInfo: {
                     id: null,
-                    icon: this.icon,
+                    icon: 'fas fa-chart-line',
                     name: null,
                 },
                 icon: 'fas fa-chart-line',
             }
         },
         components: {
-            IconSelector
+            IconSelectorPro
         },
         methods: {
             formSubmit: function (e) {
                 this.evaluationInfo.icon = this.icon;
                 axios.post('/classroom/' + this.code + '/evaluation/group', this.$data.evaluationInfo)
                     .then(response => {
-                        this.$toasted.show(response.data.message, {
-                            position: "top-center",
-                            duration: 3000,
-                            iconPack: 'fontawesome',
-                            icon: response.data.icon,
-                            type: response.data.type,
-                        })
+                        // this.$toasted.show(response.data.message, {
+                        //     position: "top-center",
+                        //     duration: 3000,
+                        //     iconPack: 'fontawesome',
+                        //     icon: response.data.icon,
+                        //     type: response.data.type,
+                        // })
 
                         if (response.data.evaluable) {
                             this.$parent.refresh(response.data.evaluable);

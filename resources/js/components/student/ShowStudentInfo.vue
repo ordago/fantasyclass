@@ -974,7 +974,7 @@
             :individual="false"
             :classroom="classroom"
             :admin="admin"
-            :grades="evaluation"
+            :grades="evaluation[0]"
             :settings="settings"
           ></report>
           <div class="content">

@@ -13,7 +13,7 @@
           ></button>
         </p>
 
-<div
+        <div
           class="panel-block is-flex is-flex-column p-0"
           style="align-items: flex-start"
         >
@@ -33,16 +33,14 @@
           >
             <span class="p-2">
               <span class="panel-icon">
-                <i class="fad fa-analytics" aria-hidden="true"></i>
+                <i class="fas fa-chart-line" aria-hidden="true"></i>
               </span>
-              <span title="__First">
-                __First
-              </span>
+              <span :title="trans.get('evaluation.first')"> {{trans.get('evaluation.first')}} </span>
             </span>
             <span class="p-2 arrow rounded-right">
               <i class="fal fa-angle-right"></i>
             </span>
-          </div>    
+          </div>
         </div>
         <div
           class="panel-block is-flex is-flex-column p-0"
@@ -80,52 +78,26 @@
               <i class="fal fa-angle-right"></i>
             </span>
           </div>
-          <div
-            @click="activeGroup = evaluationGroupChild"
-            class="
-              highlight-arrow
-              is-flex
-              has-space-between
-              w-100
-              is-fullwidth
-              cursor-pointer
-              pl-5
-              pr-4
-              py-3
-            "
-            v-for="evaluationGroupChild in evaluableGroup.children"
-            v-bind:key="evaluationGroupChild.id"
-          >
-            <span class="p-2">
-              <span class="panel-icon">
-                <i :class="evaluationGroupChild.icon" aria-hidden="true"></i>
-              </span>
-              <span :title="evaluationGroupChild.name">
-                {{
-                  evaluationGroupChild.name.length > 30
-                    ? evaluationGroupChild.name.substring(0, 30) + "..."
-                    : evaluationGroupChild.name
-                }}
-              </span>
-            </span>
-            <span class="p-2 arrow rounded-right">
-              <i class="fal fa-angle-right"></i>
-            </span>
-          </div>
         </div>
       </article>
     </div>
     <div class="column pr-0">
+      <b-loading
+        :is-full-page="true"
+        :active.sync="isLoading"
+        :can-cancel="false"
+      ></b-loading>
       <CreateEvaluationGroup
         :code="code"
         v-if="activeAddGroup"
         key
       ></CreateEvaluationGroup>
       <TagManagement
+        ref="tags"
         :code="code"
         :evaluablegroup="activeGroup"
         :key="activeGroup.id"
-        v-if="!activeAddGroup && activeGroup && !isLoading"
+        v-if="!activeAddGroup && activeGroup"
       ></TagManagement>
     </div>
   </div>
@@ -139,7 +111,7 @@ export default {
   data: function () {
     return {
       activeAddGroup: false,
-      activeGroup: false,
+      activeGroup: -1,
       updated: false,
       evaluables: [],
       evaluationlines: [],
@@ -151,15 +123,8 @@ export default {
   },
   methods: {
     refresh: function (elem) {
-      if (elem.evaluables_group_id) {
-        let evaluablesgroup = this.evaluablesgroup.filter(function (data) {
-          return data.id == elem.evaluables_group_id;
-        });
-        evaluablesgroup[0].children.push(elem);
-      } else {
-        this.evaluablesgroup.push(elem);
-      }
-
+      this.evaluablesgroup.push(elem);
+      this.activeGroup = elem;
       this.$forceUpdate();
     },
   },

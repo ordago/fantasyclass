@@ -47,6 +47,11 @@ class EvaluablesGroup extends Model
     {
         return $this->hasMany(Evaluable::class);
     }
+    
+    public function tags()
+    {
+        return $this->hasMany(Tag::class);
+    }
 
     public function parent()
     {

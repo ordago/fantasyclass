@@ -47,4 +47,6 @@ return [
     'create' => 'Crear evaluación',
     'icon' => 'Icono',
     'parent' => 'Grupo padre (opcional)',
+    'info_tags' => 'Crea nuevas etiquetas para añadir nuevas líneas de evaluación. Las etiquetas pueden ser resultados de aprendizaje, estándares, agrupaciones como teoria / práctica, etc. Tienen un peso en el cálculo de la nota final.',
+    'first' => 'Primera',
 ];

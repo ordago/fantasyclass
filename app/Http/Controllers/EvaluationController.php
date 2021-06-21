@@ -31,27 +31,37 @@ class EvaluationController extends Controller
         return $settings;
     }
 
-    public static function individualReport($class, $student) {
-        $tags = collect();
-        foreach ($class->tags as $tag) {
-            $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'evaluables' => collect()]);
+    public static function individualReport($class, $students, $eval)
+    {
+        if (!$eval) {
+            $etags = Tag::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->get();
+        } else {
+            $etags = $eval->tags;
         }
 
-        foreach ($student->grades as $grade) {
-            if ($grade->pivot->grade !== null) {
-                $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
-                foreach ($evaluable->tags as $evalTag) {
-                    $tags->transform(function ($item, $key) use ($evalTag, $grade) {
-                        if ($item['id'] == $evalTag->id) {
-                            $evalTag->grade = $grade->pivot->grade;
-                            $item['evaluables']->push($evalTag);
-                        }
-                        return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'evaluables' => $item['evaluables']];
-                    });
+        $grades = collect();
+        foreach ($students as $student) {
+            $tags = collect();
+            foreach ($etags as $tag) {
+                $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'evaluables' => collect()]);
+            }
+            foreach ($student->grades as $grade) {
+                if ($grade->pivot->grade !== null) {
+                    $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
+                    foreach ($evaluable->tags as $evalTag) {
+                        $tags->transform(function ($item, $key) use ($evalTag, $grade) {
+                            if ($item['id'] == $evalTag->id) {
+                                $evalTag->grade = $grade->pivot->grade;
+                                $item['evaluables']->push($evalTag);
+                            }
+                            return ['id' => $item['id'], 'name' => $item['name'], 'percent' => $item['percent'], 'evaluables' => $item['evaluables']];
+                        });
+                    }
                 }
             }
+            $grades->push(['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags]);
         }
-        return ['student_id' => $student->id, 'name' => $student->name, 'grades' => $tags];
+        return $grades;
     }
 
     public function report($code)
@@ -61,9 +71,9 @@ class EvaluationController extends Controller
 
         $grades = collect();
         $students = $class->students;
-        foreach ($students as $student) {
-
-            $grades->push(EvaluationController::individualReport($class, $student));
+        $grades->push(["namegroup" => __('evaluation.first'), "icon" => 'fas fa-chart-line', "evaluation" => EvaluationController::individualReport($class, $students, null)]);
+        foreach ($class->evalgroups as $evalg) {
+            $grades->push(["namegroup" => $evalg->name, "icon" => $evalg->icon, "evaluation" => EvaluationController::individualReport($class, $students, $evalg)]);
         }
         $settings = EvaluationController::getEvalSettings($class->id);
 
@@ -75,7 +85,7 @@ class EvaluationController extends Controller
         $data = request()->validate([
             'id' => ['numeric']
         ]);
-        if(isset($data['id'])) {
+        if (isset($data['id'])) {
             $evaluableGroup = EvaluablesGroup::findOrFail($data['id']);
             $class = Classroom::where('id', $evaluableGroup->classroom_id)->firstOrFail();
         } else {
@@ -83,7 +93,7 @@ class EvaluationController extends Controller
         }
         $this->authorize('update', $class);
 
-        if(isset($data['id'])) {
+        if (isset($data['id'])) {
             $evaluables = Evaluable::where('evaluables_group_id', $evaluableGroup->id)->get();
             $evaluationlines = Evaluable::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->with('tags')->get();
             $tags = Tag::where('classroom_id', $class->id)->where('evaluables_group_id', $evaluableGroup->id)->get();
@@ -92,11 +102,11 @@ class EvaluationController extends Controller
             $evaluationlines = Evaluable::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->with('tags')->get();
             $tags = Tag::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->get();
         }
-        
+
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $settings = EvaluationController::getEvalSettings($class->id);
 
-        return array('evaluables' => $evaluables, 'tags' => $tags, 'evaluationlines'=> $evaluationlines, 'rubrics' => $rubrics,'settings' => $settings);
+        return array('evaluables' => $evaluables, 'tags' => $tags, 'evaluationlines' => $evaluationlines, 'rubrics' => $rubrics, 'settings' => $settings);
     }
 
     public function evaluate($id)
@@ -178,15 +188,15 @@ class EvaluationController extends Controller
         $student = Student::find($data['student']);
         $class = Classroom::find($student->classroom->classroom_id);
 
-        if(auth()->user()->id == $student->getUserId()) {   
+        if (auth()->user()->id == $student->getUserId()) {
             $this->authorize('study', $class);
-        }  else {
+        } else {
             $this->authorize('update', $class);
         }
 
         $rubric = Rubric::find($data['rubric']);
 
-        
+
 
         $rows = [];
 
@@ -229,7 +239,7 @@ class EvaluationController extends Controller
             'type' => $data['type'],
             'rubric_id' => $data['rubric'],
             'classroom_id' => $class->id,
-            'evaluables_group_id' => $data['evaluables_group_id']
+            'evaluables_group_id' => isset($data['evaluables_group_id']) ? $data['evaluables_group_id'] : null,
         ]);
 
         foreach ($data['tags'] as $tag) {

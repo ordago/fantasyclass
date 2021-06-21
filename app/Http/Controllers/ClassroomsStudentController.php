@@ -660,7 +660,12 @@ class ClassroomsStudentController extends Controller
 
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {
-            $evaluation[0] = EvaluationController::individualReport($class, $student);
+            $grades = collect();
+            $grades->push(["namegroup" => __('evaluation.first'), "icon" => 'fas fa-chart-line', "evaluation" => EvaluationController::individualReport($class, [$student], null)]);
+            foreach ($class->evalgroups as $evalg) {
+                $grades->push(["namegroup" => $evalg->name, "icon" => $evalg->icon, "evaluation" => EvaluationController::individualReport($class, [$student], $evalg)]);
+            }
+            $evaluation[0] = $grades;
         }
 
         $settings = EvaluationController::getEvalSettings($class->id);

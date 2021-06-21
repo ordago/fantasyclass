@@ -47,4 +47,6 @@ return [
     'create' => 'Crea avaluació',
     'icon' => 'Icona',
     'parent' => 'Categoria pare (opcional)',
+    'info_tags' => 'Crea noves etiquetes per afefir linies d\'avaluació. Les etiquetes poden ser resultats d\'aprenentatge, estàndards, agrupacions com teoria / pràctiques, etc. I tenen un pes en el càlcul de la nota final',
+    'first' => 'Primera',
 ];

@@ -73,9 +73,9 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(QuestionBank::class);
     }
     
-    public function tags()
+    public function evalgroups()
     {
-        return $this->hasMany(Tag::class);
+        return $this->hasMany(EvaluablesGroup::class);
     }
 
     public function theme()
