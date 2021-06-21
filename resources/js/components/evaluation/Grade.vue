@@ -183,6 +183,7 @@
         .post("/classroom/evaluation/student/rubric", {
           student: student.id,
           rubric: this.rubric.id,
+          evaluable: this.evaluable.id,
         })
         .then((response) => {
           this.isLoading = false;
@@ -208,6 +209,7 @@
           {
             student: this.studentActive.id,
             rows: this.rowsSelected,
+            evaluable: this.evaluable.id,
           }
         )
         .then((response) => {

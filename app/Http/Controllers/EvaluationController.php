@@ -156,6 +156,7 @@ class EvaluationController extends Controller
         $data = request()->validate([
             'student' => ['numeric', 'required'],
             'rows' => ['array', 'required'],
+            'evaluable' => ['numeric', 'required'],
         ]);
 
         $student = Student::findOrFail($data['student']);
@@ -163,7 +164,19 @@ class EvaluationController extends Controller
         $this->authorize('update', $class);
 
         foreach ($data['rows'] as $row) {
-            $student->rows()->syncWithoutDetaching(array($row['0'] => array('rubric_row_item_id' => $row['1'])));
+            $find = DB::table('rubric_row_student')
+                ->where('rubric_row_id', $row['0'])
+                ->where('evaluable_id', $data['evaluable'])
+                ->selectRaw('rubric_row_student.id')
+                ->first();
+            if ($find) {
+                DB::table('rubric_row_student')
+                    ->where('id', $find->id)
+                    ->delete();
+                 $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'])));
+            } else {
+                $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'])));
+            }
         }
     }
     public function getShowRubric()
@@ -183,6 +196,7 @@ class EvaluationController extends Controller
         $data = request()->validate([
             'student' => ['numeric', 'required'],
             'rubric' => ['numeric', 'required'],
+            'evaluable' => ['numeric', 'required'],
         ]);
 
         $student = Student::find($data['student']);
@@ -201,7 +215,9 @@ class EvaluationController extends Controller
         $rows = [];
 
         foreach ($rubric->rows as $row) {
-            $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->first();
+            $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->where('evaluable_id', $data['evaluable'])->first();
+            if(!$rowQuery)
+                $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->first();
             if ($rowQuery) {
                 $pivot = $rowQuery->pivot;
                 $rows[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id];

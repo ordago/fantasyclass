@@ -552,7 +552,8 @@
                     v-tippy
                     :key="forceReload"
                     :content="
-                      trans.get('students.repair') + ': ' +
+                      trans.get('students.repair') +
+                      ': ' +
                       settings.repair_equipment +
                       ' <i class=\'fas fa-coins colored\'></i>'
                     "
@@ -998,7 +999,7 @@
                     <span
                       v-if="grade.type == 1 && grade.rubric_id"
                       class="cursor-pointer"
-                      @click="loadRubric(grade.rubric_id)"
+                      @click="loadRubric(grade)"
                     >
                       <span
                         class="tag is-size-6"
@@ -1748,10 +1749,13 @@ export default {
     getEmoji: function (grade) {
       return Utils.getEmoji(grade, this.settings.eval_max);
     },
-    loadRubric: function (rubric) {
+    loadRubric: function (grade) {
+      var lights = document.getElementsByClassName("selectedSubItem");
+      while (lights.length) lights[0].classList.remove("selectedSubItem");
+      // console.log(grade);
       axios
         .post("/classroom/evaluation/rubric", {
-          rubric: rubric,
+          rubric: grade.rubric_id,
         })
         .then((response) => {
           this.rubric = response.data;
@@ -1760,7 +1764,8 @@ export default {
           axios
             .post("/classroom/evaluation/student/rubric", {
               student: this.student.id,
-              rubric: rubric,
+              rubric: grade.rubric_id,
+              evaluable: grade.id,
             })
             .then((response) => {
               response.data.forEach((row) => {
