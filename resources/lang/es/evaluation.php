@@ -42,7 +42,7 @@ return [
     'weight' => 'Peso',
     'weight_info' => 'Peso dentro de la etiqueta',
 
-    'evaluations' => 'Evaluations',
+    'evaluations' => 'Evaluaciones',
     'add_evaluation' => 'Añade evaluación',
     'create' => 'Crear evaluación',
     'icon' => 'Icono',
