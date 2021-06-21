@@ -1,4 +1,8 @@
 # Changelog
+## v1.62 Beta (21/06/2021)
+### Added
+- More than one evaluations.
+
 ## v1.61 Beta (09/06/2021)
 ### Changed
 - Damage in equipment and repair.
