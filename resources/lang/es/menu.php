@@ -51,6 +51,7 @@ return [
     'documents' => 'Gestor documentos y tareas',
     'resources' => 'Materiales',
     'videochat' => 'Videollamadas',
+    'collections' => 'Colecciones',
 
     'view_list' => 'Vista de lista',
     'view_group' => 'Vista de grupos',

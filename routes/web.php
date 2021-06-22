@@ -303,6 +303,14 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/skill', 'SkillsController@update');
         Route::delete('/skills/{id}', 'SkillsController@destroy');
         Route::get('/{code}/skills/import', 'SkillsController@importDefault');
+        
+        // Collections
+        Route::get('/{code}/collections', 'CollectionController@index');
+        // Route::get('/{code}/skills/get', 'SkillsController@get');
+        // Route::post('/{code}/skill', 'SkillsController@store');
+        // Route::patch('/{code}/skill', 'SkillsController@update');
+        // Route::delete('/skills/{id}', 'SkillsController@destroy');
+        // Route::get('/{code}/skills/import', 'SkillsController@importDefault');
 
         // Route::post('/{code}/monsters', 'MonsterController@store');
         // Route::patch('/{code}/monsters', 'MonsterController@update');

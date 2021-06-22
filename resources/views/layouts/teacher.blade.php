@@ -57,6 +57,9 @@
             <a href="/classroom/{{ $class->code }}/skills" class="navbar-item">
                 <i class="fad fa-sparkles mr-2"></i> {{ __('menu.skills') }}
             </a>
+            <a href="/classroom/{{ $class->code }}/collections" class="navbar-item">
+            <i class="fak fa-collection mr-2"></i> {{ __('menu.collections') }}
+            </a>
         </div>
     </div>
 

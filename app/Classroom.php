@@ -68,6 +68,11 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(Item::class);
     }
 
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
     public function questionBanks()
     {
         return $this->hasMany(QuestionBank::class);

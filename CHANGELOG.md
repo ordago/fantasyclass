@@ -1,4 +1,8 @@
 # Changelog
+## v1.63 Beta (XX/06/2021)
+### Added
+- Collectionables
+
 ## v1.62 Beta (21/06/2021)
 ### Added
 - More than one evaluations.
