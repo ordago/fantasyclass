@@ -17,7 +17,6 @@ class CreateCollectionablesTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('description')->nullable();
-            $table->text('image');
             $table->integer('type')->default(1);
             $table->unsignedBigInteger('collection_id');
             $table->timestamps();

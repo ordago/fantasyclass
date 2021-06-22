@@ -25,5 +25,5 @@
 @endsection
 
 @section('content')
-    <show-collections :collections="{{ $collections }}"></show-collections>
+    <show-collections code="{{ $class->code }}" :collections="{{ json_encode($collections) }}"></show-collections>
 @endsection

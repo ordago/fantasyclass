@@ -14,4 +14,8 @@ class Collection extends Model
     protected $fillable = [
         'name', 'xp', 'gold', 'shared', 'classroom_id',
     ];
+
+    public function collectionables() {
+        return $this->hasMany(Collectionable::class);
+    }
 }
