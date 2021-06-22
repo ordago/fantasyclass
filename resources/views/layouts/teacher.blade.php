@@ -9,7 +9,7 @@
 @section('mainLink')
 <a href="/classroom/{{ $class->code }}" class="is-flex align-items-center" style="text-decoration: none">
     <label class="label-title px-2 cursor-pointer">
-        @yield('title','FantasyClass')
+        @yield('title', env('APP_NAME'))
     </label>
 </a>
 @endsection
