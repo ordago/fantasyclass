@@ -35,4 +35,8 @@ class Collectionable extends Model implements HasMedia
             ->addMediaCollection('collectionable')
             ->singleFile();
     }
+
+    public function collection() {
+        return $this->belongsTo(Collection::class);
+    }
 }

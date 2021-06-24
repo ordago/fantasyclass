@@ -11,7 +11,10 @@
           :key="collection.id"
           @click="selectedCollection = collection"
         >
-          <img src="/img/cardgen/collections/back_small.png" @contextmenu.prevent="" />
+          <img
+            src="/img/cardgen/collections/back_small.png"
+            @contextmenu.prevent=""
+          />
           <h1 class="is-size-4 rounded border py-4">{{ collection.name }}</h1>
         </div>
       </div>
@@ -93,40 +96,59 @@
       <button @click="selectedCollection = null" class="button is-info">
         <i class="fas fa-arrow-left"></i>
       </button>
-      <button
-        @click="isModalCollectionableActive = true"
-        class="button is-dark"
-      >
+      <button @click="showAdd()" class="button is-dark">
         __ Add collectionable
       </button>
       <h1 class="is-size-1">{{ selectedCollection.name }}</h1>
-      <div class="p-2">
+      <div class="p-2 has-text-centered">
         <div
-          class="collectionable mx-1 cursor-pointer"
           v-for="collectionable in selectedCollection.collectionables"
           :key="collectionable.id"
+          class="collectionable-container m-1"
         >
-          <img
-            width="200px"
-            class="top-collection"
-            @contextmenu.prevent=""
-            :src="getImageCollectionable(collectionable.type)"
-          />
-          <img
-            width="200px"
-            class="bg-collection"
-            @contextmenu.prevent=""
-            src="/img/cardgen/collections/bg.png"
-          />
-          <img
-            width="200px"
-            @contextmenu.prevent=""
-            class="img-collection rounded"
-            :src="collectionable.src"
-          />
-          <h1 class="is-size-6">
-            {{ collectionable.name }}
-          </h1>
+          <div class="collectionable">
+            <img
+              width="200px"
+              class="top-collection"
+              @contextmenu.prevent=""
+              :src="getImageCollectionable(collectionable.type)"
+            />
+            <img
+              width="200px"
+              class="bg-collection"
+              @contextmenu.prevent=""
+              src="/img/cardgen/collections/bg.png"
+            />
+            <img
+              width="200px"
+              @contextmenu.prevent=""
+              class="img-collection rounded"
+              :src="collectionable.src"
+            />
+            <h1 class="is-size-6">
+              {{ collectionable.name }}
+            </h1>
+          </div>
+          <div style="text-align: center">
+            <button
+              type="submit"
+              @click="edit(collectionable)"
+              v-tippy
+              :content="trans.get('general.edit')"
+              class="button is-dark"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              type="submit"
+              @click="confirmDelete(collectionable)"
+              v-tippy
+              :content="trans.get('general.delete')"
+              class="button is-danger"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
       </div>
       <b-modal
@@ -161,8 +183,8 @@
                 remove-button-color="black"
                 :show-loading="true"
                 :loading-size="50"
+                :initial-image="collectionable.src"
               ></croppa>
-              <!-- :initial-image="prevImage" -->
               <b-field :label="trans.get('collection.name')" class="mt-4">
                 <b-input
                   v-model="collectionable.name"
@@ -190,13 +212,20 @@
               <button
                 class="button"
                 type="button"
-                @click="isModalCollectionableActive = false"
+                @click="
+                  isModalCollectionableActive = false;
+                  isEditing = false;
+                "
               >
                 {{ trans.get("general.close") }}
               </button>
-              <button class="button is-primary">
+              <button class="button is-primary" v-if="!isEditing">
                 {{ trans.get("general.add") }}
               </button>
+              <button class="button is-info" v-else>
+                {{ trans.get("general.edit") }}
+              </button>
+
               <!-- <button @click.prevent="sendEdit" v-else class="button is-link">
               {{ trans.get("general.edit") }}
             </button> -->
@@ -220,6 +249,7 @@ export default {
       collectionsReactive: [],
       selectedCollection: null,
       isModalActive: false,
+      isEditing: false,
       isModalCollectionableActive: false,
       collection: {
         name: "",
@@ -230,10 +260,51 @@ export default {
       collectionable: {
         name: "",
         type: 1,
+        src: null,
       },
     };
   },
   methods: {
+    showAdd() {
+      if (this.image && Object.keys(this.image).length) {
+        this.collectionable = {};
+        this.image.refresh();
+      }
+      this.isModalCollectionableActive = true;
+    },
+    confirmDelete(collectionable) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/collectionable/" + collectionable.id).then((response) => {
+            if (response.data === 1) {
+                var index = this.selectedCollection.collectionables.findIndex(function (item, i) {
+                  return item.id === collectionable.id;
+                });
+                this.selectedCollection.collectionables.splice(index, 1);
+
+            }
+          });
+        },
+      });
+    },
+    edit(collectionable) {
+      this.collectionable = collectionable;
+      if (this.image && Object.keys(this.image).length) {
+        this.image.refresh();
+      }
+      this.isEditing = true;
+      this.isModalCollectionableActive = true;
+    },
     getImageCollectionable(type) {
       switch (type) {
         case 1:
@@ -263,19 +334,27 @@ export default {
       formData.append("collection_id", this.selectedCollection.id);
       formData.append("name", this.collectionable.name);
       formData.append("type", this.collectionable.type);
+      if(this.isEditing)
+        formData.append("id", this.collectionable.id);
 
       this.image.generateBlob(
         (blob) => {
           if (!blob) return false;
 
           formData.append("image", blob, "collectionable.png");
-
+          let url = "/classroom/" + this.code + "/collectionable";
+          if(this.isEditing)
+            url = "/classroom/" + this.code + "/collectionable/edit"
           axios
-            .post("/classroom/" + this.code + "/collectionable", formData)
+            .post(url, formData)
             .then((response) => {
               this.selectedCollection = response.data;
               this.isModalCollectionableActive = false;
               this.$forceUpdate();
+              if(this.isEditing)
+                this.$toast(this.trans.get("success_error.update_success"), { type: "success" });
+              else this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
+              this.isEditing = false;
             });
         },
         "image/png",
@@ -300,11 +379,14 @@ export default {
   width: 90%;
   text-align: center;
 }
+.collectionable-container {
+  width: 200px;
+  display: inline-block;
+}
 .collectionable {
   width: 200px;
   height: 280px;
   position: relative;
-  display: inline-block;
 }
 .img-collection {
   width: 150px;
@@ -312,7 +394,7 @@ export default {
   z-index: 2;
   left: 25px;
   top: 45px;
-   filter: drop-shadow(0rem 0rem 3px rgb(255, 255, 255));
+  filter: drop-shadow(0rem 0rem 3px rgb(255, 255, 255));
 }
 .collectionable h1 {
   position: absolute;

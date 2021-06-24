@@ -308,14 +308,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/collections', 'CollectionController@index');
         Route::post('/{code}/collections', 'CollectionController@store');
         Route::post('/{code}/collectionable', 'CollectionableController@store');
-        // Route::get('/{code}/skills/get', 'SkillsController@get');
-        // Route::patch('/{code}/skill', 'SkillsController@update');
-        // Route::delete('/skills/{id}', 'SkillsController@destroy');
-        // Route::get('/{code}/skills/import', 'SkillsController@importDefault');
-
-        // Route::post('/{code}/monsters', 'MonsterController@store');
-        // Route::patch('/{code}/monsters', 'MonsterController@update');
-        // Route::post('/monsters/fight', 'MonsterController@battle');
+        Route::delete('/collectionable/{id}', 'CollectionableController@destroy');
+        Route::post('/{code}/collectionable/edit', 'CollectionableController@update');
         
         // Utils
         Route::post('/{code}/utils/impostor', 'UtilsController@impostor');
