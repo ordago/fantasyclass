@@ -18,4 +18,15 @@ class Collection extends Model
     public function collectionables() {
         return $this->hasMany(Collectionable::class);
     }
+
+    public static function boot()
+    {
+        parent::boot();    
+    
+        // cause a delete of a product to cascade to children so they are also deleted
+        static::deleted(function($collection)
+        {
+            $collection->collectionables()->delete();
+        });
+    } 
 }

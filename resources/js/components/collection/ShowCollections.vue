@@ -1,21 +1,49 @@
 <template>
   <div>
     <div class="p-2" v-if="!selectedCollection">
-      <button @click="isModalActive = true" class="button is-dark">
+      <button
+        @click="
+          isEditing = false;
+          collection = {};
+          isModalActive = true;
+        "
+        class="button is-dark"
+      >
         __ Add collection
       </button>
       <div class="p-2">
         <div
-          class="collection mx-1 cursor-pointer"
+          class="collection-container"
           v-for="collection in collectionsReactive"
           :key="collection.id"
-          @click="selectedCollection = collection"
         >
-          <img
-            src="/img/cardgen/collections/back_small.png"
-            @contextmenu.prevent=""
-          />
-          <h1 class="is-size-4 rounded border py-4">{{ collection.name }}</h1>
+          <div class="collection mx-1 cursor-pointer" @click="selectedCollection = collection">
+            <img
+              src="/img/cardgen/collections/back_small.png"
+              @contextmenu.prevent=""
+            />
+            <h1 class="is-size-4 rounded border py-4">{{ collection.name }}</h1>
+          </div>
+          <div style="text-align: center">
+            <button
+              type="submit"
+              @click="editCollection(collection)"
+              v-tippy
+              :content="trans.get('general.edit')"
+              class="button is-dark"
+            >
+              <i class="fas fa-edit"></i>
+            </button>
+            <button
+              type="submit"
+              @click="confirmDeleteCollection(collection)"
+              v-tippy
+              :content="trans.get('general.delete')"
+              class="button is-danger"
+            >
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
       </div>
       <b-modal
@@ -81,12 +109,12 @@
               >
                 {{ trans.get("general.close") }}
               </button>
-              <button class="button is-primary">
+              <button class="button is-primary" v-if="!isEditing">
                 {{ trans.get("general.add") }}
               </button>
-              <!-- <button @click.prevent="sendEdit" v-else class="button is-link">
-              {{ trans.get("general.edit") }}
-            </button> -->
+              <button class="button is-info" v-else>
+                {{ trans.get("general.edit") }}
+              </button>
             </footer>
           </div>
         </form>
@@ -96,7 +124,7 @@
       <button @click="selectedCollection = null" class="button is-info">
         <i class="fas fa-arrow-left"></i>
       </button>
-      <button @click="showAdd()" class="button is-dark">
+      <button @click="showAddCollectionable()" class="button is-dark">
         __ Add collectionable
       </button>
       <h1 class="is-size-1">{{ selectedCollection.name }}</h1>
@@ -225,10 +253,6 @@
               <button class="button is-info" v-else>
                 {{ trans.get("general.edit") }}
               </button>
-
-              <!-- <button @click.prevent="sendEdit" v-else class="button is-link">
-              {{ trans.get("general.edit") }}
-            </button> -->
             </footer>
           </div>
         </form>
@@ -265,7 +289,7 @@ export default {
     };
   },
   methods: {
-    showAdd() {
+    showAddCollectionable() {
       if (this.image && Object.keys(this.image).length) {
         this.collectionable = {};
         this.image.refresh();
@@ -285,15 +309,18 @@ export default {
         ariaRole: "alertdialog",
         ariaModal: true,
         onConfirm: () => {
-          axios.delete("/classroom/collectionable/" + collectionable.id).then((response) => {
-            if (response.data === 1) {
-                var index = this.selectedCollection.collectionables.findIndex(function (item, i) {
-                  return item.id === collectionable.id;
-                });
+          axios
+            .delete("/classroom/collectionable/" + collectionable.id)
+            .then((response) => {
+              if (response.data === 1) {
+                var index = this.selectedCollection.collectionables.findIndex(
+                  function (item, i) {
+                    return item.id === collectionable.id;
+                  }
+                );
                 this.selectedCollection.collectionables.splice(index, 1);
-
-            }
-          });
+              }
+            });
         },
       });
     },
@@ -304,6 +331,39 @@ export default {
       }
       this.isEditing = true;
       this.isModalCollectionableActive = true;
+    },
+    confirmDeleteCollection(collection) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/collections/" + collection.id)
+            .then((response) => {
+              if (response.data === 1) {
+                var index = this.collectionsReactive.findIndex(
+                  function (item, i) {
+                    return item.id === collection.id;
+                  }
+                );
+                this.collectionsReactive.splice(index, 1);
+              }
+            });
+        },
+      });
+    },
+    editCollection(collection) {
+      this.collection = collection;
+      this.isEditing = true;
+      this.isModalActive = true;
     },
     getImageCollectionable(type) {
       switch (type) {
@@ -318,12 +378,14 @@ export default {
       }
     },
     addCollection() {
+      let url = "/classroom/" + this.code + "/collections";
+      if(this.isEditing)
+        url += "/edit"
       axios
-        .post("/classroom/" + this.code + "/collections", {
+        .post(url, {
           collection: this.collection,
         })
         .then((response) => {
-          console.log(response.data);
           this.collectionsReactive = response.data;
           this.isModalActive = false;
           this.$forceUpdate();
@@ -334,8 +396,7 @@ export default {
       formData.append("collection_id", this.selectedCollection.id);
       formData.append("name", this.collectionable.name);
       formData.append("type", this.collectionable.type);
-      if(this.isEditing)
-        formData.append("id", this.collectionable.id);
+      if (this.isEditing) formData.append("id", this.collectionable.id);
 
       this.image.generateBlob(
         (blob) => {
@@ -343,19 +404,22 @@ export default {
 
           formData.append("image", blob, "collectionable.png");
           let url = "/classroom/" + this.code + "/collectionable";
-          if(this.isEditing)
-            url = "/classroom/" + this.code + "/collectionable/edit"
-          axios
-            .post(url, formData)
-            .then((response) => {
-              this.selectedCollection = response.data;
-              this.isModalCollectionableActive = false;
-              this.$forceUpdate();
-              if(this.isEditing)
-                this.$toast(this.trans.get("success_error.update_success"), { type: "success" });
-              else this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
-              this.isEditing = false;
-            });
+          if (this.isEditing)
+            url = "/classroom/" + this.code + "/collectionable/edit";
+          axios.post(url, formData).then((response) => {
+            this.selectedCollection = response.data;
+            this.isModalCollectionableActive = false;
+            this.$forceUpdate();
+            if (this.isEditing)
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+            else
+              this.$toast(this.trans.get("success_error.add_success"), {
+                type: "success",
+              });
+            this.isEditing = false;
+          });
         },
         "image/png",
         0.8
@@ -378,6 +442,10 @@ export default {
   background-color: rgba(255, 255, 255, 0.8);
   width: 90%;
   text-align: center;
+}
+.collection-container {
+  width: 200px;
+  display: inline-block;
 }
 .collectionable-container {
   width: 200px;

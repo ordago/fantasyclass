@@ -175,6 +175,14 @@ class Classroom extends Model implements HasMedia
             $classroom->rules()->delete();
             $classroom->badges()->delete();
             $classroom->evaluables()->delete();
+            $classroom->skills()->delete();
+            $classroom->monsters()->delete();
+            $classroom->events()->delete();
+            $classroom->documents()->delete();
+            $classroom->collections()->delete();
+            $classroom->questionBanks()->delete();
+            $classroom->rules()->delete();
+            $classroom->videochats()->delete();
         });
     } 
 }

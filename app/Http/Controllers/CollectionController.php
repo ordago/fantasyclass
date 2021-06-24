@@ -37,4 +37,37 @@ class CollectionController extends Controller
         return $class->fresh()->collections;
 
     }
+
+    public function destroy($id)
+    {
+        $collection = Collection::findOrFail($id);
+        $class = Classroom::findOrFail($collection->classroom_id);
+        $this->authorize('update', $class);
+        try {
+            $collection->delete();
+        } catch (\Throwable $th) {
+            return ['error' => $th];
+        }
+        return 1;
+    }
+
+    public function update($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'collection.name' => ['string', 'required'],
+            'collection.xp' => ['numeric', 'required'],
+            'collection.gold' => ['numeric', 'required'],
+            'collection.id' => ['numeric', 'required'],
+        ]);
+        $collection = collection::findOrFail($data['collection']['id']);
+        if($collection->classroom_id != $class->id)
+            abort(403);
+        $collection->update($data['collection']);
+        
+        return $class->fresh()->collections;
+
+    }
 }
