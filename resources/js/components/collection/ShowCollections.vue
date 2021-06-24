@@ -11,7 +11,7 @@
           :key="collection.id"
           @click="selectedCollection = collection"
         >
-          <img src="/img/cardgen/collections/back_small.png" />
+          <img src="/img/cardgen/collections/back_small.png" @contextmenu.prevent="" />
           <h1 class="is-size-4 rounded border py-4">{{ collection.name }}</h1>
         </div>
       </div>
@@ -109,15 +109,18 @@
           <img
             width="200px"
             class="top-collection"
+            @contextmenu.prevent=""
             :src="getImageCollectionable(collectionable.type)"
           />
           <img
             width="200px"
             class="bg-collection"
+            @contextmenu.prevent=""
             src="/img/cardgen/collections/bg.png"
           />
           <img
             width="200px"
+            @contextmenu.prevent=""
             class="img-collection rounded"
             :src="collectionable.src"
           />
