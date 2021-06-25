@@ -217,6 +217,10 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Skill::class)->withPivot('count');
     }
+    public function collections()
+    {
+        return $this->belongsToMany(Collection::class)->withPivot('count');
+    }
 
     public function blogs()
     {

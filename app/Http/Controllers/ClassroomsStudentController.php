@@ -583,7 +583,7 @@ class ClassroomsStudentController extends Controller
 
     public function show($code, $section = false)
     {
-        $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('theme', 'collections.collectionables', 'characterTheme.characters')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
         $admin = false;
@@ -610,6 +610,7 @@ class ClassroomsStudentController extends Controller
 
         $student->append('numcards');
         $student->load('character');
+        $student->load('collections.collectionables');
 
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);

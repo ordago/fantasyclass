@@ -102,6 +102,7 @@ Vue.component('create-challenges', () => require('./components/challenges/Create
 Vue.component('show-question', () => import('./components/challenges/ShowQuestion.vue'));
 
 Vue.component('show-collections', () => import('./components/collection/ShowCollections.vue'));
+Vue.component('show-collectionable', () => import('./components/collection/ShowCollectionable.vue'));
 
 Vue.component('create-group', () => import('./components/group/CreateGroups.vue'));
 Vue.component('edit-group', () => import('./components/group/EditGroup.vue'));

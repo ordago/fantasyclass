@@ -836,6 +836,42 @@
             </div>
           </div>
         </b-tab-item>
+        <b-tab-item
+          class="p-2"
+          v-if="classroom.collections && classroom.collections.length"
+        >
+          <template slot="header">
+            <!-- <b-icon pack="fad" icon="club" /> -->
+            <span class="icon"><i class="fak fa-collection fa-lg"></i></span>
+            {{ trans.get("menu.collections") }}
+          </template>
+
+          <div
+            v-for="collection in classroom.collections"
+            :key="'collection-' + collection.id"
+          >
+            <h3 class="is-size-3">
+              <i class="fak fa-collection mr-2"></i> {{ collection.name }}
+              <small
+                >({{ collection.xp }}
+                <i class="fas fa-fist-raised colored"></i>,
+                {{ collection.gold }}
+                <i class="fas fa-coins colored"></i>)</small
+              >
+            </h3>
+            <div
+              v-for="collectionable in orderedCollectionables(collection.collectionables)"
+              :key="collectionable.id"
+              class="collectionable-container m-1"
+            >
+              <show-collectionable
+              style="filter: grayscale(100%);"
+                :collectionable="collectionable"
+                :admin="false"
+              ></show-collectionable>
+            </div>
+          </div>
+        </b-tab-item>
         <b-tab-item v-if="admin || cards.length">
           <template slot="header">
             <!-- <b-icon pack="fad" icon="club" /> -->
@@ -2191,8 +2227,12 @@ export default {
         0.8
       );
     },
+     orderedCollectionables: function (collectionables) {
+      return _.orderBy(collectionables, "type", "asc");
+    },
   },
   computed: {
+    
     filteredDataObj() {
       return this.students.filter((option) => {
         return (

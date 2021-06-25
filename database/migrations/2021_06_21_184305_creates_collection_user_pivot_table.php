@@ -13,10 +13,11 @@ class CreatesCollectionUserPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('collection_user', function (Blueprint $table) {
+        Schema::create('collection_student', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('collection_id');
+            $table->integer('count');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreatesCollectionUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collection_user');
+        Schema::dropIfExists('collection_student');
     }
 }
