@@ -9,15 +9,18 @@
         "
         class="button is-dark"
       >
-        __ Add collection
+        {{ trans.get("collections.add_collection") }}
       </button>
-      <div class="p-2">
+      <div class="p-2 has-text-centered">
         <div
-          class="collection-container"
+          class="collection-container mx-2"
           v-for="collection in collectionsReactive"
           :key="collection.id"
         >
-          <div class="collection mx-1 cursor-pointer" @click="selectedCollection = collection">
+          <div
+            class="collection mx-1 cursor-pointer"
+            @click="selectedCollection = collection"
+          >
             <img
               src="/img/cardgen/collections/back_small.png"
               @contextmenu.prevent=""
@@ -25,6 +28,13 @@
             <h1 class="is-size-4 rounded border py-4">{{ collection.name }}</h1>
           </div>
           <div style="text-align: center">
+            <span
+              class="button is-info cursor-default"
+              v-tippy
+              :content="getContent(collection)"
+            >
+              <i class="fas fa-info"></i>
+            </span>
             <button
               type="submit"
               @click="editCollection(collection)"
@@ -59,22 +69,26 @@
             <header class="modal-card-head">
               <p class="modal-card-title">
                 <i class="fak fa-collection mr-2"></i
-                >{{ trans.get("collection.new_collection") }}
+                >{{ trans.get("collections.new_collection") }}
               </p>
             </header>
             <section class="modal-card-body">
-              <b-field :label="trans.get('collection.name')" class="mt-4">
+              <b-field :label="trans.get('collections.name')" class="mt-4">
                 <b-input
                   v-model="collection.name"
                   maxlength="50"
                   required
                 ></b-input>
               </b-field>
+              <div class="mb-3">
+                <b-field expanded :label="trans.get('collections.reward')">
+                </b-field>
+              </div>
               <div class="columns">
                 <div class="column">
                   <b-field>
                     <template slot="label">
-                      {{ trans.get("collection.xp") }}
+                      {{ trans.get("collections.xp") }}
                       <i class="fas fa-fist-raised colored"></i>
                     </template>
                     <b-input
@@ -88,8 +102,8 @@
                 <div class="column">
                   <b-field>
                     <template slot="label">
-                      {{ trans.get("collection.gold") }}
-                      <i class="fas fa-coins colored"></i> %
+                      {{ trans.get("collections.gold") }}
+                      <i class="fas fa-coins colored"></i>
                     </template>
                     <b-input
                       v-model="collection.gold"
@@ -125,10 +139,18 @@
         <i class="fas fa-arrow-left"></i>
       </button>
       <button @click="showAddCollectionable()" class="button is-dark">
-        __ Add collectionable
+        {{ trans.get("collections.add_collectionable") }}
       </button>
-      <h1 class="is-size-1">{{ selectedCollection.name }}</h1>
-      <div class="p-2 has-text-centered">
+      <h1 class="is-size-1 has-text-centered mb-3">
+        <i class="fak fa-collection mr-2"></i> {{ selectedCollection.name }}
+      </h1>
+      <div
+        class="p-2 has-text-centered"
+        v-if="
+          selectedCollection.collectionables &&
+          selectedCollection.collectionables.length
+        "
+      >
         <div
           v-for="collectionable in selectedCollection.collectionables"
           :key="collectionable.id"
@@ -179,6 +201,13 @@
           </div>
         </div>
       </div>
+      <div class="p-2" v-else>
+        <article class="message is-info">
+          <div class="message-body">
+            {{ trans.get("collections.empty") }}
+          </div>
+        </article>
+      </div>
       <b-modal
         :active.sync="isModalCollectionableActive"
         has-modal-card
@@ -192,46 +221,48 @@
             <header class="modal-card-head">
               <p class="modal-card-title">
                 <i class="fak fa-collection mr-2"></i
-                >{{ trans.get("collection.new_collectionable") }}
+                >{{ trans.get("collections.new_collectionable") }}
               </p>
             </header>
             <section class="modal-card-body">
-              <croppa
-                class="card-shadow-s"
-                v-model="image"
-                :width="300"
-                :height="300"
-                :quality="1"
-                style="z-index: 15"
-                accept="image/*"
-                placeholder="Image"
-                :placeholder-font-size="16"
-                canvas-color="transparent"
-                :show-remove-button="true"
-                remove-button-color="black"
-                :show-loading="true"
-                :loading-size="50"
-                :initial-image="collectionable.src"
-              ></croppa>
-              <b-field :label="trans.get('collection.name')" class="mt-4">
+              <div class="has-text-centered">
+                <croppa
+                  class="card-shadow-s"
+                  v-model="image"
+                  :width="150"
+                  :height="150"
+                  :quality="1"
+                  style="z-index: 15"
+                  accept="image/*"
+                  placeholder="Image"
+                  :placeholder-font-size="16"
+                  canvas-color="transparent"
+                  :show-remove-button="true"
+                  remove-button-color="black"
+                  :show-loading="true"
+                  :loading-size="50"
+                  :initial-image="collectionable.src"
+                ></croppa>
+              </div>
+              <b-field :label="trans.get('collections.name')" class="mt-4">
                 <b-input
                   v-model="collectionable.name"
-                  maxlength="50"
+                  maxlength="20"
                   required
                 ></b-input>
               </b-field>
               <b-field>
-                <b-field :label="trans.get('collection.type')">
+                <b-field :label="trans.get('collections.type')">
                   <b-select
                     v-model="collectionable.type"
-                    placeholder="__Select a type"
+                    :placeholder="trans.get('collections.select_type')"
                     required
                     expanded
                   >
-                    <option value="1">__Earth</option>
-                    <option value="2">__Wind</option>
-                    <option value="3">__Water</option>
-                    <option value="4">__Fire</option>
+                    <option value="1">{{ trans.get('collections.earth') }}</option>
+                    <option value="2">{{ trans.get('collections.wind') }}</option>
+                    <option value="3">{{ trans.get('collections.water') }}</option>
+                    <option value="4">{{ trans.get('collections.fire') }}</option>
                   </b-select>
                 </b-field>
               </b-field>
@@ -289,6 +320,14 @@ export default {
     };
   },
   methods: {
+    getContent(collection) {
+      return (
+        collection.xp +
+        "<i class='fas fa-fist-raised colored'></i>, " +
+        collection.gold +
+        "<i class='fas fa-coins colored'></i>"
+      );
+    },
     showAddCollectionable() {
       if (this.image && Object.keys(this.image).length) {
         this.collectionable = {};
@@ -349,11 +388,12 @@ export default {
             .delete("/classroom/collections/" + collection.id)
             .then((response) => {
               if (response.data === 1) {
-                var index = this.collectionsReactive.findIndex(
-                  function (item, i) {
-                    return item.id === collection.id;
-                  }
-                );
+                var index = this.collectionsReactive.findIndex(function (
+                  item,
+                  i
+                ) {
+                  return item.id === collection.id;
+                });
                 this.collectionsReactive.splice(index, 1);
               }
             });
@@ -379,8 +419,7 @@ export default {
     },
     addCollection() {
       let url = "/classroom/" + this.code + "/collections";
-      if(this.isEditing)
-        url += "/edit"
+      if (this.isEditing) url += "/edit";
       axios
         .post(url, {
           collection: this.collection,

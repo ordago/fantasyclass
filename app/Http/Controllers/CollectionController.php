@@ -34,7 +34,7 @@ class CollectionController extends Controller
         $data['collection']['classroom_id'] = $class->id;
         Collection::create($data['collection']);
         
-        return $class->fresh()->collections;
+        return $class->fresh()->collections()->with('collectionables')->get();
 
     }
 
@@ -44,6 +44,9 @@ class CollectionController extends Controller
         $class = Classroom::findOrFail($collection->classroom_id);
         $this->authorize('update', $class);
         try {
+            foreach ($collection->collectionables as $colecctionable) {
+                $colecctionable->delete();
+            }
             $collection->delete();
         } catch (\Throwable $th) {
             return ['error' => $th];
@@ -67,7 +70,7 @@ class CollectionController extends Controller
             abort(403);
         $collection->update($data['collection']);
         
-        return $class->fresh()->collections;
+        return $class->fresh()->collections()->with('collectionables')->get();
 
     }
 }
