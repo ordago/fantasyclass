@@ -156,7 +156,10 @@
           :key="collectionable.id"
           class="collectionable-container m-1"
         >
-          <show-collectionable :admin="true" :collectionable="collectionable"></show-collectionable>
+          <show-collectionable
+            :admin="true"
+            :collectionable="collectionable"
+          ></show-collectionable>
           <div style="text-align: center">
             <button
               type="submit"
@@ -238,10 +241,18 @@
                     required
                     expanded
                   >
-                    <option value="1">{{ trans.get('collections.earth') }}</option>
-                    <option value="2">{{ trans.get('collections.wind') }}</option>
-                    <option value="3">{{ trans.get('collections.water') }}</option>
-                    <option value="4">{{ trans.get('collections.fire') }}</option>
+                    <option value="1">
+                      {{ trans.get("collections.earth") }}
+                    </option>
+                    <option value="2">
+                      {{ trans.get("collections.wind") }}
+                    </option>
+                    <option value="3">
+                      {{ trans.get("collections.water") }}
+                    </option>
+                    <option value="4">
+                      {{ trans.get("collections.fire") }}
+                    </option>
                   </b-select>
                 </b-field>
               </b-field>
@@ -268,14 +279,81 @@
         </form>
       </b-modal>
     </div>
+    <b-modal
+      :active.sync="isPrefsModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="updatePrefs">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">{{ trans.get("evaluation.config") }}</p>
+          </header>
+          <section class="modal-card-body" v-if="settings">
+            <div class="field">
+              <div class="field">
+                <b-switch
+                  true-value="1"
+                  false-value="0"
+                  v-model="settings.buy_collectionable"
+                  >{{ trans.get("collections.buy_collection") }}</b-switch
+                >
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="label">{{
+                trans.get("collections.buy_collectionable_count")
+              }}</label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="number"
+                  min="1"
+                  v-model="settings.buy_collectionable_count"
+                />
+              </div>
+            </div>
+            <div class="field">
+              <label class="label"
+                >{{ trans.get("collections.buy_collectionable_gold_pack") }}
+                <i class="fas fa-coins colored"></i>
+              </label>
+              <div class="control">
+                <input
+                  class="input"
+                  type="number"
+                  v-model="settings.buy_collectionable_gold_pack"
+                />
+              </div>
+            </div>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button"
+              type="button"
+              @click="isPrefsModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-primary" @click="updatePrefs">
+              {{ trans.get("general.update") }}
+            </button>
+          </footer>
+        </div>
+      </form>
+    </b-modal>
   </div>
 </template>
 
 <script>
-import ShowCollectionable from './ShowCollectionable.vue';
+import ShowCollectionable from "./ShowCollectionable.vue";
 export default {
   components: { ShowCollectionable },
-  props: ["code", "collections"],
+  props: ["code", "collections", "settings"],
   created() {
     this.collectionsReactive = this.collections;
   },
@@ -284,6 +362,7 @@ export default {
       image: {},
       collectionsReactive: [],
       selectedCollection: null,
+      isPrefsModalActive: false,
       isModalActive: false,
       isEditing: false,
       isModalCollectionableActive: false,
@@ -306,6 +385,27 @@ export default {
     },
   },
   methods: {
+    updatePrefs() {
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "buy_collectionable",
+        value: this.settings.buy_collectionable,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "buy_collectionable_count",
+        value: this.settings.buy_collectionable_count,
+        action: "update",
+      });
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "buy_collectionable_gold_pack",
+        value: this.settings.buy_collectionable_gold_pack,
+        action: "update",
+      });
+      this.isPrefsModalActive = false;
+    },
     getContent(collection) {
       return (
         collection.xp +

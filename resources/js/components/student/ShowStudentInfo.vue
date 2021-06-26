@@ -850,25 +850,43 @@
             v-for="collection in classroom.collections"
             :key="'collection-' + collection.id"
           >
-            <h3 class="is-size-3">
-              <i class="fak fa-collection mr-2"></i> {{ collection.name }}
-              <small
-                >({{ collection.xp }}
-                <i class="fas fa-fist-raised colored"></i>,
-                {{ collection.gold }}
-                <i class="fas fa-coins colored"></i>)</small
-              >
-            </h3>
             <div
-              v-for="collectionable in orderedCollectionables(collection.collectionables)"
-              :key="collectionable.id"
-              class="collectionable-container m-1"
+              v-if="
+                collection.collectionables && collection.collectionables.length
+              "
             >
-              <show-collectionable
-              style="filter: grayscale(100%);"
-                :collectionable="collectionable"
-                :admin="false"
-              ></show-collectionable>
+              <h3 class="is-size-3 m-2">
+                <i class="fak fa-collection mr-2"></i> {{ collection.name }}
+                <small
+                  >({{ collection.xp }}
+                  <i class="fas fa-fist-raised colored"></i>,
+                  {{ collection.gold }}
+                  <i class="fas fa-coins colored"></i>)</small
+                >
+              </h3>
+              <div>
+                <button
+                  v-if="settings.buy_collectionable == 1"
+                  class="button is-dark mb-1"
+                  @click="buyCollectionablePack(collection.id)"
+                >
+                  <i class="fas fa-envelope mr-1" aria-hidden="true"></i> {{ trans.get('collections.buy_pack') }} ({{ settings.buy_collectionable_count }} <i class="fak fa-collection mx-1" aria-hidden="true"></i> = {{ settings.buy_collectionable_gold_pack }} <i class="fas fa-coins colored"></i>)
+                </button>
+              </div>
+              <div
+                v-for="collectionable in orderedCollectionables(
+                  collection.collectionables
+                )"
+                :key="collectionable.id"
+                class="collectionable-container m-1"
+              >
+                <show-collectionable
+                  :style="getStyle(collectionable.id)"
+                  :collectionable="collectionable"
+                  :count="getCount(collectionable.id)"
+                  :admin="false"
+                ></show-collectionable>
+              </div>
             </div>
           </div>
         </b-tab-item>
@@ -1619,6 +1637,38 @@ export default {
     getDescription(desc) {
       return desc ? desc : "";
     },
+    buyCollectionablePack(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("collections.buy_pack"),
+        message:
+          "<span class='message-buy'>" +
+          this.trans.get("collections.buy_collectionable_pack_info") +
+          " (" +
+          this.settings.buy_collectionable_count + "<i class='mx-2 fak fa-collection'></i> / " +
+          this.settings.buy_collectionable_gold_pack +
+          " <i class='fas fa-coins colored'></i>)</span>",
+        confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post("/classroom/" + this.classroom.code + "/student/collection/buy", {collection: id})
+            .then((response) => {
+              if (response.data.type == "success") {
+                this.student.collectionables = response.data.collectionables;
+                console.log(response.data.get_collectionables);
+                this.$forceUpdate();
+              } else {
+                this.$toast(response.data.message, {
+                  type: response.data.type,
+                });
+              }
+            });
+        },
+      });
+    },
     buyCard() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("shop.buy_card"),
@@ -1760,6 +1810,22 @@ export default {
         .catch((error) => {
           this.$toast(this.trans.get("students.error"), { type: "error" });
         });
+    },
+    getCount: function (collectionable) {
+      let count = 0;
+      let index = this.student.collectionables.findIndex(function (item, i) {
+        if(item.id === collectionable) {
+          count = item.pivot.count;
+          return item.id === collectionable;
+        }
+      });
+      return count;
+    },
+    getStyle: function (collectionable) {
+      var index = this.student.collectionables.findIndex(function (item, i) {
+        return item.id === collectionable;
+      });
+      if (index == -1) return "filter: grayscale(100%);";
     },
     lastBehaviour: function () {
       let behaviour =
@@ -2227,12 +2293,11 @@ export default {
         0.8
       );
     },
-     orderedCollectionables: function (collectionables) {
+    orderedCollectionables: function (collectionables) {
       return _.orderBy(collectionables, "type", "asc");
     },
   },
   computed: {
-    
     filteredDataObj() {
       return this.students.filter((option) => {
         return (

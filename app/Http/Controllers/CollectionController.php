@@ -13,15 +13,22 @@ class CollectionController extends Controller
         $this->middleware('verified');
     }
 
-    public function index($code) {
+    public function index($code)
+    {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('view', $class);
 
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $settings['buy_collectionable'] = settings()->get('buy_collectionable', 0);
+        $settings['buy_collectionable_count'] = settings()->get('buy_collectionable_count', 3);
+        $settings['buy_collectionable_gold_pack'] = settings()->get('buy_collectionable_gold_pack', 200);
+
         $collections = $class->collections()->with('collectionables')->get();
 
-        return view('collections.index', compact('class', 'collections'));
+        return view('collections.index', compact('class', 'collections', 'settings'));
     }
-    public function store($code) {
+    public function store($code)
+    {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('update', $class);
 
@@ -30,12 +37,11 @@ class CollectionController extends Controller
             'collection.xp' => ['numeric', 'required'],
             'collection.gold' => ['numeric', 'required'],
         ]);
-        
+
         $data['collection']['classroom_id'] = $class->id;
         Collection::create($data['collection']);
-        
-        return $class->fresh()->collections()->with('collectionables')->get();
 
+        return $class->fresh()->collections()->with('collectionables')->get();
     }
 
     public function destroy($id)
@@ -66,11 +72,10 @@ class CollectionController extends Controller
             'collection.id' => ['numeric', 'required'],
         ]);
         $collection = collection::findOrFail($data['collection']['id']);
-        if($collection->classroom_id != $class->id)
+        if ($collection->classroom_id != $class->id)
             abort(403);
         $collection->update($data['collection']);
-        
-        return $class->fresh()->collections()->with('collectionables')->get();
 
+        return $class->fresh()->collections()->with('collectionables')->get();
     }
 }

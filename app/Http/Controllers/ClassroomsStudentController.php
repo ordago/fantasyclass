@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Badge;
 use App\Card;
 use App\CardStudent;
 use App\Challenge;
 use App\ChallengesGroup;
 use App\Classroom;
-use App\ClassroomUser;
-use App\DocumentCategory;
 use App\Equipment;
 use App\Http\Classes\Functions;
 use App\Item;
@@ -21,10 +18,11 @@ use App\Pet;
 use App\Rating;
 use App\Rules;
 use App\Skill;
+use App\Collection;
+use App\Collectionable;
 use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
@@ -610,7 +608,7 @@ class ClassroomsStudentController extends Controller
 
         $student->append('numcards');
         $student->load('character');
-        $student->load('collections.collectionables');
+        $student->load('collectionables');
 
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);
@@ -687,13 +685,19 @@ class ClassroomsStudentController extends Controller
         }
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
         if ($settings['skill_enabled'] != 0)
-            $settings['skill_price'] = settings()->get('skill_price', 600);
-
+        $settings['skill_price'] = settings()->get('skill_price', 600);
+        
         $students_money = json_encode([]);
         if ($settings['allow_send_money']) {
             $students_money = $class->students()->pluck('classroom_user_id', 'name');
         }
-
+        
+        $settings['buy_collectionable'] = settings()->get('buy_collectionable', 0);
+        if($settings['buy_collectionable']) {
+            $settings['buy_collectionable_count'] = settings()->get('buy_collectionable_count', 3);
+            $settings['buy_collectionable_gold_pack'] = settings()->get('buy_collectionable_gold_pack', 200);
+        }
+        
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
@@ -979,6 +983,54 @@ class ClassroomsStudentController extends Controller
         ];
     }
 
+    public function buyPackCollectionables($code) {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        $student = Functions::getCurrentStudent($class, []);
+        if ($student->hp == 0)
+            abort(403);
+        
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $settings['buy_collectionable'] = settings()->get('buy_collectionable', 0);
+        if($settings['buy_collectionable'] == 0)
+            abort(403); 
+        $settings['buy_collectionable_count'] = settings()->get('buy_collectionable_count', 3);
+        $settings['buy_collectionable_gold_pack'] = settings()->get('buy_collectionable_gold_pack', 200);
+        
+        if ($settings['buy_collectionable_gold_pack'] > $student->gold) {
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "sad-tear",
+                "type" => "error"
+            ];
+        }
+
+        $data = request()->validate([
+            'collection' => ['numeric', 'required'],
+        ]);
+
+        $collectionables = collect();
+        for($i = 0; $i < $settings['buy_collectionable_count']; $i++) {
+            $collectionable = CollectionableController::getRandomCollectionable($data['collection'], $class->id);
+            $studentCollectionable = $student->collectionables->where('id', $collectionable->id)->first();
+
+            if ($studentCollectionable)
+                $count = $studentCollectionable->pivot->count + 1;
+            else $count = 1;
+            $collectionables->push($collectionable);
+            $student->collectionables()->sync([$collectionable->id => ['count' => $count]], false);
+        }
+        $student->update(['gold' => ($student->gold - $settings['buy_collectionable_gold_pack'])]);
+        
+        return [
+            "type" => "success",
+            "get_collectionables" => $collectionables,
+            "collectionables" => $student->fresh()->collectionables,
+        ];
+        
+
+    }
 
     public function useSkill($code)
     {

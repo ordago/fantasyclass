@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Classroom;
 use App\Collection;
 use App\Collectionable;
+use App\Http\Classes\Functions;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -51,6 +52,23 @@ class CollectionableController extends Controller
         $collection->load('collectionables');
         return $collection;
 
+    }
+
+    public static function getRandomCollectionable($collection, $class) {
+        $collection = Collection::where('id', $collection)->where('classroom_id', $class)->firstOrFail();
+        $collection->load('collectionables');
+
+        settings()->setExtraColumns(['classroom_id' => $class]);
+
+        $probabilites = json_decode(settings()->get('collectionable_probabilities', json_encode([55, 30, 10, 5])));
+        
+        if($collection->collectionables->count() == 0)
+            abort(403);
+        do {
+            $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
+            $collectionable = Collectionable::where('type', $typeValue)->where('collection_id', $collection->id)->inRandomOrder()->first();
+        } while ($collectionable == null);
+        return $collectionable;
     }
 
     public function store($code)

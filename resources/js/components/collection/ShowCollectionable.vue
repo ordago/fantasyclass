@@ -1,5 +1,8 @@
 <template>
   <div class="collectionable">
+    <span class="collectionable-count" v-if="!admin && count > 0">
+      {{ count }}
+    </span>
     <img
       width="200px"
       class="top-collection"
@@ -28,7 +31,7 @@
 // import Utils from "../../utils.js";
 
 export default {
-  props: ['admin', 'collectionable'],
+  props: ['admin', 'collectionable', 'count'],
   created() {},
   data: function () {
     return {};
@@ -50,6 +53,18 @@ export default {
 };
 </script>
 <style>
+.collectionable-count {
+  position: absolute;
+  background-color: royalblue;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+  padding: 5px 8px;
+  top: -5px;
+  left: -10px;
+  z-index: 10;
+  border: 1px solid white;
+}
 .collectionable-container {
   width: 200px;
   display: inline-block;

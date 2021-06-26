@@ -122,6 +122,8 @@ class SettingsController extends Controller
                 $student->$type()->sync([]);
             } else if($type == 'logEntries') {
                 $student->$type()->delete();
+            } else if($type == 'behaviours') {
+                $student->$type()->delete();
             } else if($type == 'equipment') {
                 $student->setBasicEquipment();
             }

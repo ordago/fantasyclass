@@ -3,6 +3,9 @@
 ### Added
 - Collectionables
 
+### Changed
+- Added option to reset behaviours in reset assistant.
+
 ## v1.62 Beta (21/06/2021)
 ### Added
 - More than one evaluations.

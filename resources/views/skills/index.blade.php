@@ -18,9 +18,17 @@
         <span>{{ __('menu.skills') }}</span>
     </a>
 </li>
+<span class="left-auto is-flex">
+    <a @click="$refs.skills.$data.isPrefsModalActive = true">
+        <span class="icon is-small">
+            <i class="mx-2 fas fa-cog"></i>
+        </span>
+        <span class="is-hidden-mobile">{{ __('menu.config') }}</span>
+    </a>
+</span>
 @include('layouts.breadcrumbend')
 @endsection
 
 @section('content')
-    <show-skills code="{{ $class->code }}" :settings="{{ json_encode($settings) }}" :skills="{{ $skills }}"></show-skills>
+    <show-skills code="{{ $class->code }}" ref="skills" :settings="{{ json_encode($settings) }}" :skills="{{ $skills }}"></show-skills>
 @endsection

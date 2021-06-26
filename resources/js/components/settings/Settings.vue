@@ -513,7 +513,7 @@
             @click="reset('hp', 'fas fa-heart')"
             class="button is-danger w-100"
           >
-            Reset {{ trans.get("menu.behaviours")
+            Reset {{ trans.get("students.hp")
             }}<i class="fas fa-heart colored"></i>
           </button>
           <button
@@ -552,6 +552,12 @@
             }}<i class="fas fa-award colored"></i>
           </button>
           <button
+            @click="reset('behaviours', 'fas fa-heart colored')"
+            class="button is-danger w-100 mt-2"
+          >
+            Reset {{ trans.get("menu.behaviours") }}<i class="fas fa-heart colored"></i>
+          </button>
+          <button
             @click="reset('logEntries', 'fas fa-file')"
             class="button is-white w-100 mt-2"
           >
@@ -566,7 +572,7 @@
           </button>
           <button
             @click="reset('equipment', 'fas fa-swords')"
-            class="button is-danger w-100 mt-2"
+            class="button is-link w-100 mt-2"
           >
             Reset {{ trans.get("shop.equipment")
             }}<i class="fas fa-swords colored"></i>

@@ -221,6 +221,10 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Collection::class)->withPivot('count');
     }
+    public function collectionables()
+    {
+        return $this->belongsToMany(Collectionable::class)->withPivot('count');
+    }
 
     public function blogs()
     {

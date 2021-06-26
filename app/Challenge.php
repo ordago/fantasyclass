@@ -33,6 +33,8 @@ class Challenge extends Model
         'challenge_required',
         'objects',
         'pinned',
+        'collectionable',
+        'collection',
     ];
 
     protected $casts = [

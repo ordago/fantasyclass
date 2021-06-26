@@ -19,4 +19,9 @@ return [
     'water' => 'Aigua',
     'fire' => 'Foc',
     
+    'buy_collectionable_pack_info' => 'Obtindràs diversos col·leccionables aleatoris, sort!',
+    'buy_pack' => 'Compra un paquet de col·leccionables',
+    'buy_collection' => 'Permet la compra de paquets de col·leccionables',
+    'buy_collectionable_count' => 'Nombre de col·lecionables en cada paquet',
+    'buy_collectionable_gold_pack' => 'Preu per cada paquet',
 ];

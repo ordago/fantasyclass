@@ -18,5 +18,11 @@ return [
     'wind' => 'Viento',
     'water' => 'Agua',
     'fire' => 'Fuego',
+
+    'buy_collectionable_pack_info' => 'Obtendrás varios coleccionables aleatorios, ¡suerte!',
+    'buy_pack' => 'Compra un paquete de coleccionables',
+    'buy_collection' => 'Permite la compra de paquetes de coleccionables',
+    'buy_collectionable_count' => 'Número de colecionables en cada paquete',
+    'buy_collectionable_gold_pack' => 'Precio por paquete',
     
 ];

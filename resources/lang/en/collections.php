@@ -18,4 +18,10 @@ return [
     'wind' => 'Wind',
     'water' => 'Water',
     'fire' => 'Fire',
+
+    'buy_collectionable_pack_info' => 'You\'ll get random collectionables, good luck!',
+    'buy_pack' => 'Buy a collectionable pack',
+    'buy_collection' => 'Allow to buy packs of collectionables',
+    'buy_collectionable_count' => 'Number of collectionables in each pack',
+    'buy_collectionable_gold_pack' => 'Price for pack',
 ];
