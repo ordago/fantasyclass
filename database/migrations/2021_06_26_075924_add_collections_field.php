@@ -15,8 +15,8 @@ class AddCollectionsField extends Migration
     {
         Schema::table('challenges', function (Blueprint $table) {
             $table->integer('collectionables')->default(0)->after('challenge_required');
-            $table->unsignedBigInteger('collection_id')->nullable()->after('collectionable');
-            $table->integer('type_collectionable')->nullable()->after('collection');
+            $table->unsignedBigInteger('collection_id')->nullable()->after('collectionables');
+            $table->integer('type_collectionable')->nullable()->after('collection_id');
         });
     }
 
