@@ -1013,7 +1013,7 @@ class ClassroomsStudentController extends Controller
         $collectionables = collect();
         for($i = 0; $i < $settings['buy_collectionable_count']; $i++) {
             $collectionable = CollectionableController::getRandomCollectionable($data['collection'], $class->id);
-            $studentCollectionable = $student->collectionables->where('id', $collectionable->id)->first();
+            $studentCollectionable = $student->fresh()->collectionables->where('id', $collectionable->id)->first();
 
             if ($studentCollectionable)
                 $count = $studentCollectionable->pivot->count + 1;

@@ -870,7 +870,13 @@
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(collection.id)"
                 >
-                  <i class="fas fa-envelope mr-1" aria-hidden="true"></i> {{ trans.get('collections.buy_pack') }} ({{ settings.buy_collectionable_count }} <i class="fak fa-collection mx-1" aria-hidden="true"></i> = {{ settings.buy_collectionable_gold_pack }} <i class="fas fa-coins colored"></i>)
+                  <i class="fas fa-envelope mr-1" aria-hidden="true"></i>
+                  {{ trans.get("collections.buy_pack") }} ({{
+                    settings.buy_collectionable_count
+                  }}
+                  <i class="fak fa-collection mx-1" aria-hidden="true"></i> =
+                  {{ settings.buy_collectionable_gold_pack }}
+                  <i class="fas fa-coins colored"></i>)
                 </button>
               </div>
               <div
@@ -1421,6 +1427,56 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal
+      :active.sync="isCollectionableModalActive"
+      has-modal-card
+      trap-focus
+      :full-screen="true"
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("collections.get_collectionables") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <div class="py-3 is-flex center-collectionables">
+            <div
+              class="is-block"
+              v-for="collectionable in getCollectionables"
+              :key="'getModal-' + collectionable.id"
+            >
+              <vue-flip v-if="isCollectionableModalActive" width="200px" height="280px" active-click :horizontal="true">
+                <template v-slot:front>
+                  <img
+                    src="/img/cardgen/collections/back_small.png"
+                    @contextmenu.prevent=""
+                  />
+                </template>
+                <template v-slot:back>
+                  <show-collectionable
+                    :collectionable="collectionable"
+                    :admin="false"
+                  ></show-collectionable>
+                </template>
+              </vue-flip>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isCollectionableModalActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
     <random-card
       :card="randomCard"
       :admin="0"
@@ -1438,6 +1494,8 @@ import ShowSkill from "../skill/ShowSkill.vue";
 
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
+
+import VueFlip from "vue-flip";
 
 import confetti from "canvas-confetti";
 
@@ -1464,6 +1522,7 @@ export default {
     ShowBadge,
     ShowSkill,
     RandomCard,
+    "vue-flip": VueFlip,
   },
   created() {
     this.mutableChallenges = this.challenges;
@@ -1531,6 +1590,7 @@ export default {
       forceReload: 0,
       forceReloadEq: 0,
       isSendMoneyActive: false,
+      isCollectionableModalActive: false,
       prevImage: null,
       isCraftingModalActive: false,
       image: null,
@@ -1549,6 +1609,7 @@ export default {
       clearable: false,
       mutableChallenges: [],
       students: [],
+      getCollectionables: [],
       isCardModalActive: false,
       randomCard: null,
       cardsMutable: this.cards,
@@ -1638,13 +1699,15 @@ export default {
       return desc ? desc : "";
     },
     buyCollectionablePack(id) {
+      let audio = new Audio("/sound/success.mp3");
       this.$buefy.dialog.confirm({
         title: this.trans.get("collections.buy_pack"),
         message:
           "<span class='message-buy'>" +
           this.trans.get("collections.buy_collectionable_pack_info") +
           " (" +
-          this.settings.buy_collectionable_count + "<i class='mx-2 fak fa-collection'></i> / " +
+          this.settings.buy_collectionable_count +
+          "<i class='mx-2 fak fa-collection'></i> / " +
           this.settings.buy_collectionable_gold_pack +
           " <i class='fas fa-coins colored'></i>)</span>",
         confirmText: this.trans.get("shop.buy"),
@@ -1654,11 +1717,21 @@ export default {
         hasIcon: false,
         onConfirm: () => {
           axios
-            .post("/classroom/" + this.classroom.code + "/student/collection/buy", {collection: id})
+            .post(
+              "/classroom/" + this.classroom.code + "/student/collection/buy",
+              { collection: id }
+            )
             .then((response) => {
               if (response.data.type == "success") {
+                audio.play();
                 this.student.collectionables = response.data.collectionables;
-                console.log(response.data.get_collectionables);
+                this.getCollectionables = response.data.get_collectionables;
+                this.isCollectionableModalActive = true;
+                confetti({
+                  particleCount: 200,
+                  spread: 100,
+                  origin: { y: 1.0 },
+                });
                 this.$forceUpdate();
               } else {
                 this.$toast(response.data.message, {
@@ -1814,7 +1887,7 @@ export default {
     getCount: function (collectionable) {
       let count = 0;
       let index = this.student.collectionables.findIndex(function (item, i) {
-        if(item.id === collectionable) {
+        if (item.id === collectionable) {
           count = item.pivot.count;
           return item.id === collectionable;
         }
@@ -2323,6 +2396,9 @@ export default {
 };
 </script>
 <style>
+.center-collectionables {
+  justify-content: space-evenly;
+}
 .message-buy {
   line-height: 20px;
 }

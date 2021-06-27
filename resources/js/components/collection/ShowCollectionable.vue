@@ -54,16 +54,20 @@ export default {
 </script>
 <style>
 .collectionable-count {
+  width: 40px;
+  height: 40px;
+  font-size: 2em;
   position: absolute;
-  background-color: royalblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(/img/cardgen/collections/count.png);
   color: white;
   text-align: center;
-  border-radius: 50%;
-  padding: 5px 8px;
   top: -5px;
   left: -10px;
   z-index: 10;
-  border: 1px solid white;
+  text-shadow: 1px 1px 1px black;
 }
 .collectionable-container {
   width: 200px;

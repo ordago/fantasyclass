@@ -60,7 +60,7 @@ class CollectionableController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class]);
 
-        $probabilites = json_decode(settings()->get('collectionable_probabilities', json_encode([55, 30, 10, 5])));
+        $probabilites = json_decode(settings()->get('collectionable_probabilities', json_encode([40, 30, 20, 10])));
         
         if($collection->collectionables->count() == 0)
             abort(403);
