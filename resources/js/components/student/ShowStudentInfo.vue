@@ -878,13 +878,13 @@
                 <span
                   class="button is-info"
                   @click="claimReward(collection)"
-                  v-if="checkReward(collection)"
+                  v-if="!admin && checkReward(collection)"
                   >{{ trans.get('collections.claim_reward') }}</span
                 >
               </h3>
               <div>
                 <button
-                  v-if="settings.buy_collectionable == 1"
+                  v-if="settings.buy_collectionable == 1 && !admin"
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(collection.id)"
                 >
@@ -1464,8 +1464,8 @@
           <div class="py-3 is-flex center-collectionables">
             <div
               class="is-block"
-              v-for="collectionable in getCollectionables"
-              :key="'getModal-' + collectionable.id"
+              v-for="(collectionable, index) in getCollectionables"
+              :key="'getModal-' + index + '-' + collectionable.id"
             >
               <vue-flip
                 v-if="isCollectionableModalActive"
