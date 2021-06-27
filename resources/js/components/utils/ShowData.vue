@@ -285,46 +285,38 @@ export default {
       switch (type) {
         case "behaviour":
           return "<i class='fas fa-heart colored'></i>";
-          break;
         case "teacher":
           return "<i class='fas fa-user-graduate colored' style='color: white'></i>";
-          break;
         case "shop":
           return "<i class='fas fa-store colored' style='color: #A52A2A'></i>";
-          break;
         case "pet":
           return "<i class='fas fa-dog colored' style='color: #A52A2A'></i>";
-          break;
         case "item":
           return "<i class='fas fa-flask-potion colored' style='color: #DC143C'></i>";
-          break;
         case "event":
           return "<i class='fas fa-scroll colored' style='color: #A9A9A9'></i>";
-          break;
         case "send":
           return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-right colored'></i>";
-          break;
         case "received":
           return "<i class='fas fa-coins colored'></i><i class='fas fa-arrow-left colored'></i>";
-          break;
         case "challenge":
           return "<i class='fas fa-pen-fancy colored' style='color: #eee'></i>";
-          break;
         case "card":
           return "<i class='fak fa-deck colored' style='color: black'></i>";
-          break;
+        case "collection":
+          return "<i class='fak fa-collection colored' style='color: #eee'></i>";
+        case "repair":
+          return "<i class='fas fa-hammer colored' style='color: #FFCB9C'></i>";
         case "badge":
           return "<i class='fas fa-award colored' style='color: #ADD8E6'></i>";
-          break;
         case "battle":
           return "<i class='fas fa-swords colored' style='color: #E6E6FA'></i>";
-          break;
         case "wheel":
           return "<i class='fas fa-spinner colored' style='color: #E6E6FA'></i>";
-          break;
+        case "feed":
+          return "<i class='fas fa-apple-alt colored' style='color: red'></i>";
         default:
           return "<i class='fas fa-info-circle colored' style='color: #E6E6FA'></i>";
-          break;
       }
     },
   },

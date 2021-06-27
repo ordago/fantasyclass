@@ -206,6 +206,9 @@ https://github.com/SortableJS/Vue.Draggable
 MIME (info)
 https://github.com/hhsadiq/laravel-mime-type
 
+Vue-flip
+https://github.com/kgrandemange/vue-flip
+
 ## 3rd party Licenses
 
 - All sprites in "public/img/pets" folder are from habitica (https://habitica.com) with no changes:

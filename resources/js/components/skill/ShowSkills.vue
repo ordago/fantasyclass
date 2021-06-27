@@ -11,9 +11,9 @@
     >
       {{ trans.get("skills.import_default") }}
     </button>
-    <button class="button is-dark mb-5" @click="isPrefsModalActive = true">
+    <!-- <button class="button is-dark mb-5" @click="isPrefsModalActive = true">
       <i class="fas fa-cog mr-2"></i> {{ trans.get("menu.config") }}
-    </button>
+    </button> -->
 
     <article class="message is-warning m-2">
       <div class="message-body has-text-justified">

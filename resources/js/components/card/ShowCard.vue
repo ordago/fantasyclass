@@ -90,7 +90,7 @@
             card.radius +
             'px'
           "
-          class="back"
+          class="back-card"
         />
       </div>
       <div class="xp_modify modifiers" v-if="card.xp != 0">

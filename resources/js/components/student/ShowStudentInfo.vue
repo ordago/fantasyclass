@@ -836,6 +836,84 @@
             </div>
           </div>
         </b-tab-item>
+        <b-tab-item
+          class="p-2"
+          v-if="classroom.collections && classroom.collections.length"
+        >
+          <template slot="header">
+            <span class="icon"><i class="fak fa-collection fa-lg"></i></span>
+            {{ trans.get("menu.collections") }}
+          </template>
+
+          <div
+            v-for="collection in classroom.collections"
+            :key="'collection-' + collection.id"
+          >
+            <div
+              v-if="
+                collection.collectionables && collection.collectionables.length
+              "
+            >
+              <h3 class="is-size-3 m-2">
+                <i class="fak fa-collection mr-2"></i>
+                <span
+                  v-if="getCollectionNumber(collection.id) > 0"
+                  class="collectionable-count mr-0"
+                  style="
+                    position: relative;
+                    display: inline-flex;
+                    font-size: 1em;
+                    top: 0;
+                    left: 0;
+                  "
+                  >{{ getCollectionNumber(collection.id) }}</span
+                >
+                {{ collection.name }}
+                <small
+                  >({{ collection.xp }}
+                  <i class="fas fa-fist-raised colored"></i>,
+                  {{ collection.gold }}
+                  <i class="fas fa-coins colored"></i>)</small
+                >
+                <span
+                  class="button is-info"
+                  @click="claimReward(collection)"
+                  v-if="!admin && checkReward(collection)"
+                  >{{ trans.get('collections.claim_reward') }}</span
+                >
+              </h3>
+              <div>
+                <button
+                  v-if="settings.buy_collectionable == 1 && !admin"
+                  class="button is-dark mb-1"
+                  @click="buyCollectionablePack(collection.id)"
+                >
+                  <i class="fas fa-envelope mr-1" aria-hidden="true"></i>
+                  {{ trans.get("collections.buy_pack") }} ({{
+                    settings.buy_collectionable_count
+                  }}
+                  <i class="fak fa-collection mx-1" aria-hidden="true"></i> =
+                  {{ settings.buy_collectionable_gold_pack }}
+                  <i class="fas fa-coins colored"></i>)
+                </button>
+              </div>
+              <div
+                v-for="collectionable in orderedCollectionables(
+                  collection.collectionables
+                )"
+                :key="collectionable.id"
+                class="collectionable-container m-1"
+              >
+                <show-collectionable
+                  :style="getStyle(collectionable.id)"
+                  :collectionable="collectionable"
+                  :count="getCount(collectionable.id)"
+                  :admin="false"
+                ></show-collectionable>
+              </div>
+            </div>
+          </div>
+        </b-tab-item>
         <b-tab-item v-if="admin || cards.length">
           <template slot="header">
             <!-- <b-icon pack="fad" icon="club" /> -->
@@ -912,8 +990,8 @@
           <div v-if="admin" class="is-flex pl-4">
             <div
               class="mx-2"
-              v-for="badge in classroom.badges"
-              :key="'badge-' + badge.id"
+              v-for="(badge, index) in classroom.badges"
+              :key="'badge-' + index + badge.id"
             >
               <ShowBadge
                 :student="student"
@@ -923,8 +1001,8 @@
             </div>
             <div
               class="mx-2"
-              v-for="badge in student.badges"
-              :key="'badge2-' + badge.id"
+              v-for="(badge, index) in student.badges"
+              :key="'badge2-' + index + badge.id"
             >
               <ShowBadge
                 v-if="!badge.classroom_id"
@@ -937,8 +1015,8 @@
           <div class="is-flex pl-4" v-if="!admin">
             <div
               class="mx-2"
-              v-for="badge in student.badges"
-              :key="'badge3-' + badge.id"
+              v-for="(badge, index) in student.badges"
+              :key="'badge3-' + index + badge.id"
             >
               <ShowBadge
                 :student="student"
@@ -1367,6 +1445,62 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal
+      :active.sync="isCollectionableModalActive"
+      has-modal-card
+      trap-focus
+      :full-screen="true"
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("collections.get_collectionables") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <div class="py-3 is-flex center-collectionables">
+            <div
+              class="is-block"
+              v-for="(collectionable, index) in getCollectionables"
+              :key="'getModal-' + index + '-' + collectionable.id"
+            >
+              <vue-flip
+                v-if="isCollectionableModalActive"
+                width="200px"
+                height="280px"
+                active-click
+                :horizontal="true"
+              >
+                <template v-slot:front>
+                  <img
+                    src="/img/cardgen/collections/back_small.png"
+                    @contextmenu.prevent=""
+                  />
+                </template>
+                <template v-slot:back>
+                  <show-collectionable
+                    :collectionable="collectionable"
+                    :admin="false"
+                  ></show-collectionable>
+                </template>
+              </vue-flip>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isCollectionableModalActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
     <random-card
       :card="randomCard"
       :admin="0"
@@ -1384,6 +1518,8 @@ import ShowSkill from "../skill/ShowSkill.vue";
 
 import Blogs from "../blogs/Blogs.vue";
 import Hp from "./Hp.vue";
+
+import VueFlip from "vue-flip";
 
 import confetti from "canvas-confetti";
 
@@ -1410,6 +1546,7 @@ export default {
     ShowBadge,
     ShowSkill,
     RandomCard,
+    "vue-flip": VueFlip,
   },
   created() {
     this.mutableChallenges = this.challenges;
@@ -1477,6 +1614,7 @@ export default {
       forceReload: 0,
       forceReloadEq: 0,
       isSendMoneyActive: false,
+      isCollectionableModalActive: false,
       prevImage: null,
       isCraftingModalActive: false,
       image: null,
@@ -1495,6 +1633,7 @@ export default {
       clearable: false,
       mutableChallenges: [],
       students: [],
+      getCollectionables: [],
       isCardModalActive: false,
       randomCard: null,
       cardsMutable: this.cards,
@@ -1502,6 +1641,45 @@ export default {
     };
   },
   methods: {
+    getCollectionNumber(collection) {
+      let count = 0;
+      if(this.student.collections)
+      this.student.collections.forEach((element) => {
+        if(element.id == collection) {
+          count =  element.pivot.count;
+        }
+      });
+      return count;
+    },
+    claimReward(collection) {
+      let audio = new Audio("/sound/success.mp3");
+      axios
+        .post(
+          "/classroom/" + this.classroom.code + "/student/collection/claim",
+          { collection: collection.id }
+        )
+        .then((response) => {
+          audio.play();
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 1.0 },
+          });
+          this.student.collections = response.data.collections;
+          this.student.xp = response.data.student.xp;
+          this.student.gold = response.data.student.gold;
+          this.student.collectionables = response.data.collectionables;
+          this.$forceUpdate();
+        });
+    },
+    checkReward(collection) {
+      let count = 0;
+      this.student.collectionables.forEach((element) => {
+        if (element.collection_id == collection.id) count++;
+      });
+      if (collection.collectionables.length == count) return true;
+      return false;
+    },
     getLvlMessage() {
       let msg =
         '<div class="content has-text-centered">' +
@@ -1582,6 +1760,51 @@ export default {
     },
     getDescription(desc) {
       return desc ? desc : "";
+    },
+    buyCollectionablePack(id) {
+      let audio = new Audio("/sound/success.mp3");
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("collections.buy_pack"),
+        message:
+          "<span class='message-buy'>" +
+          this.trans.get("collections.buy_collectionable_pack_info") +
+          " (" +
+          this.settings.buy_collectionable_count +
+          "<i class='mx-2 fak fa-collection'></i> / " +
+          this.settings.buy_collectionable_gold_pack +
+          " <i class='fas fa-coins colored'></i>)</span>",
+        confirmText: this.trans.get("shop.buy"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-link",
+        iconPack: "fa",
+        hasIcon: false,
+        onConfirm: () => {
+          axios
+            .post(
+              "/classroom/" + this.classroom.code + "/student/collection/buy",
+              { collection: id }
+            )
+            .then((response) => {
+              if (response.data.type == "success") {
+                audio.play();
+                this.getCollectionables = response.data.get_collectionables;
+                this.isCollectionableModalActive = true;
+                this.student.gold = response.data.gold;
+                this.student.collectionables = response.data.collectionables;
+                confetti({
+                  particleCount: 200,
+                  spread: 100,
+                  origin: { y: 1.0 },
+                });
+                this.$forceUpdate();
+              } else {
+                this.$toast(response.data.message, {
+                  type: response.data.type,
+                });
+              }
+            });
+        },
+      });
     },
     buyCard() {
       this.$buefy.dialog.confirm({
@@ -1724,6 +1947,22 @@ export default {
         .catch((error) => {
           this.$toast(this.trans.get("students.error"), { type: "error" });
         });
+    },
+    getCount: function (collectionable) {
+      let count = 0;
+      let index = this.student.collectionables.findIndex(function (item, i) {
+        if (item.id === collectionable) {
+          count = item.pivot.count;
+          return item.id === collectionable;
+        }
+      });
+      return count;
+    },
+    getStyle: function (collectionable) {
+      var index = this.student.collectionables.findIndex(function (item, i) {
+        return item.id === collectionable;
+      });
+      if (index == -1) return "filter: grayscale(100%);";
     },
     lastBehaviour: function () {
       let behaviour =
@@ -2191,6 +2430,9 @@ export default {
         0.8
       );
     },
+    orderedCollectionables: function (collectionables) {
+      return _.orderBy(collectionables, "type", "asc");
+    },
   },
   computed: {
     filteredDataObj() {
@@ -2218,6 +2460,9 @@ export default {
 };
 </script>
 <style>
+.center-collectionables {
+  justify-content: space-evenly;
+}
 .message-buy {
   line-height: 20px;
 }

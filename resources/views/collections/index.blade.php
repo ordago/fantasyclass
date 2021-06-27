@@ -13,13 +13,13 @@
 <li class="is-active">
     <a href="#">
         <span class="icon is-small">
-            <i class="fad fa-sparkles" aria-hidden="true"></i>
+            <i class="fak fa-collection" aria-hidden="true"></i>
         </span>
-        <span>{{ __('menu.skills') }}</span>
+        <span>{{ __('menu.collections') }}</span>
     </a>
 </li>
 <span class="left-auto is-flex">
-    <a @click="$refs.skills.$data.isPrefsModalActive = true">
+    <a @click="$refs.collections.$data.isPrefsModalActive = true">
         <span class="icon is-small">
             <i class="mx-2 fas fa-cog"></i>
         </span>
@@ -29,6 +29,9 @@
 @include('layouts.breadcrumbend')
 @endsection
 
+@section('help')
+@endsection
+
 @section('content')
-    <show-skills code="{{ $class->code }}" ref="skills" :settings="{{ json_encode($settings) }}" :skills="{{ $skills }}"></show-skills>
+    <show-collections ref="collections" :settings="{{ json_encode($settings) }}" code="{{ $class->code }}" :collections="{{ json_encode($collections) }}"></show-collections>
 @endsection

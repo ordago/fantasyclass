@@ -25,5 +25,6 @@ return [
     'money_sent_total' => ' así que te queda: ',
     'post' => 'Nuevo post en: ',
     'mark_challenge' => 'Ha completado un desafío: ',
+    'new_collectionable' => 'Nuevo coleccionable',
 
 ];

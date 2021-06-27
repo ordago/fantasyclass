@@ -208,6 +208,15 @@
         >
       </div>
       <div v-if="challenge.is_conquer == 1" class="p-4 has-border rounded">
+        <div class="field">
+          <b-switch
+            type="is-info"
+            v-model="challenge.type"
+            true-value="1"
+            false-value="0"
+            >{{ trans.get("challenges.group") }}</b-switch
+          >
+        </div>
         <div class="field w-100 pt-3">
           <label class="label">{{ trans.get("challenges.icon") }}</label>
           <div class="field has-addons">
@@ -326,6 +335,16 @@
             </div>
           </div>
         </div>
+        <div class="field mt-3">
+          <b-switch
+            type="is-info"
+            v-model="challenge.auto_assign"
+            true-value="1"
+            false-value="0"
+            v-if="challenge.cards > 0"
+            >{{ trans.get("challenges.auto_assign") }}</b-switch
+          >
+        </div>
         <label class="label">{{ trans.get("challenges.reward_items") }}</label>
 
         <vue-select-image
@@ -357,9 +376,72 @@
             />
           </p>
         </div>
+        <div v-if="collections && collections.length">
+          <label class="label">{{
+            trans.get("challenges.assign_collectionables")
+          }}</label>
+          <div class="field has-addons">
+            <p class="control">
+              <span class="button is-static">
+                <i class="fak fa-collection colored" style="color: white"></i>
+              </span>
+            </p>
+            <p class="control is-expanded">
+              <input
+                type="number"
+                name="objects"
+                class="input"
+                min="0"
+                v-model="challenge.collectionables"
+                required
+              />
+            </p>
+          </div>
+          <div v-if="challenge.collectionables > 0" class="px-3 py-2">
+            <label class="label">{{
+            trans.get("challenges.collection")
+            }}</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select v-model="challenge.collection_id">
+                  <option :value="collection.id" v-for="collection in collections" :key="'collection-' + collection.id">
+                    {{ collection.name }}
+                  </option>  
+                </select>
+              </div>
+            </div>
+            <label class="label mt-2">{{
+            trans.get("challenges.collection_type")
+            }}</label>
+            <div class="control">
+              <div class="select is-fullwidth">
+                <select v-model="challenge.type_collectionable">
+                  <option value="0" selected>
+                    {{ trans.get("challenges.without_type") }}
+                  </option>
+                  <option value="1">
+                    {{ trans.get("collections.earth") }}
+                  </option>
+                  <option value="2">
+                    {{ trans.get("collections.wind") }}
+                  </option>
+                  <option value="3">
+                    {{ trans.get("collections.water") }}
+                  </option>
+                  <option value="4">
+                    {{ trans.get("collections.fire") }}
+                  </option>
+                  <!-- <option value="2">{{ trans.get('challenges.completion_both') }}</option> -->
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
 
         <div class="mt-3" v-if="challenge.type == 0">
-          <label for="name">{{ trans.get("challenges.completion") }}</label>
+          <label class="label" for="name">{{
+            trans.get("challenges.completion")
+          }}</label>
           <div class="field mt-3">
             <div class="control">
               <div class="select is-fullwidth">
@@ -383,8 +465,12 @@
           </div>
           <article v-if="challenge.completion == 4" class="message is-warning">
             <div class="message-body">
-              <p>{{ trans.get('challenges.completion_url_info_1') }}</p>
-              <p class="mt-2"><strong>{{ trans.get('challenges.completion_url_info_2') }}</strong></p>
+              <p>{{ trans.get("challenges.completion_url_info_1") }}</p>
+              <p class="mt-2">
+                <strong>{{
+                  trans.get("challenges.completion_url_info_2")
+                }}</strong>
+              </p>
             </div>
           </article>
         </div>
@@ -402,25 +488,7 @@
             password-reveal
           ></b-input>
         </b-field>
-        <div class="field mt-3">
-          <b-switch
-            type="is-info"
-            v-model="challenge.auto_assign"
-            true-value="1"
-            false-value="0"
-            v-if="challenge.cards > 0"
-            >{{ trans.get("challenges.auto_assign") }}</b-switch
-          >
-        </div>
-        <div class="field">
-          <b-switch
-            type="is-info"
-            v-model="challenge.type"
-            true-value="1"
-            false-value="0"
-            >{{ trans.get("challenges.group") }}</b-switch
-          >
-        </div>
+
         <!-- <div class="field">
           <b-switch
             type="is-info"
@@ -533,6 +601,7 @@ export default {
       isModalActive: false,
       students: null,
       content: ``,
+      collections: [],
       challenge: {
         icon: null,
         color: null,
@@ -557,6 +626,9 @@ export default {
         _method: "post",
         challenge_required: null,
         objects: 0,
+        collectionables: 0,
+        collection_id: null,
+        type_collectionable: 0,
       },
     };
   },
@@ -576,6 +648,10 @@ export default {
           this.items = response.data.items.map(function (row) {
             return { id: row.id, src: row.icon, alt: row.description };
           });
+
+          this.collections = response.data.collections;
+          if(this.collections.length)
+            this.challenge.collection_id = this.collections[0].id
         });
     },
     disableAll() {

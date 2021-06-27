@@ -1,4 +1,12 @@
 # Changelog
+## v1.63 Beta (27/06/2021)
+### Added
+- Collectibles.
+
+### Changed
+- Added option to reset behaviours in reset assistant.
+- Bug fixes.
+
 ## v1.62 Beta (21/06/2021)
 ### Added
 - More than one evaluations.

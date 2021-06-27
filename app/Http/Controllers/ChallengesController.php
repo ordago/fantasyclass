@@ -138,6 +138,9 @@ class ChallengesController extends Controller
             'requirements' => ['array', 'nullable'],
             'challenge_required' => ['numeric', 'nullable'],
             'objects' => ['numeric', 'required'],
+            'collectionables' => ['numeric', 'required'],
+            'collection_id' => ['numeric', 'nullable'],
+            'type_collectionable' => ['numeric', 'nullable'],
         ]);
     }
 
@@ -147,8 +150,12 @@ class ChallengesController extends Controller
             $query->where('is_conquer', '1');
         }])->firstOrFail();
         $this->authorize('view', $class);
-
-        return ['challenges' => $class->challengeGroups, 'items' => $class->items];
+        $collections = collect();
+        foreach($class->collections as $collection) {
+            if($collection->collectionables->count() != 0)
+                $collections->push($collection);
+        }
+        return ['challenges' => $class->challengeGroups, 'items' => $class->items, 'collections' => $collections];
     }
 
     public function getChallengesInfo($code)

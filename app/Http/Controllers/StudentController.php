@@ -220,7 +220,7 @@ class StudentController extends Controller
         if ($student->classroom->classroom->code != $code)
             abort(404);
         $admin = true;
-        $class = Classroom::where('code', $code)->with('pets', 'badges', 'theme', 'characterTheme.characters')->firstOrFail();
+        $class = Classroom::where('code', $code)->with('pets', 'collections.collectionables', 'badges', 'theme', 'characterTheme.characters')->firstOrFail();
         $this->authorize('view', $class);
 
         $items = DB::table('students')
@@ -241,6 +241,8 @@ class StudentController extends Controller
         $student->append('boost');
         $student->load('blogs');
         $student->append('numcards');
+        $student->load('collections');
+        $student->load('collectionables');
 
         foreach ($student->getAutomaticBadges() as $badge) {
             $student->badges->push($badge);

@@ -97,4 +97,9 @@ return [
     'pin' => 'Pin at start',
     'pinned' => 'Fixed story',
 
+    'assign_collectionables' => 'Assign a number of collectibles',
+    'collection' => 'Collection',
+    'collection_type' => 'Collectible type',
+    'without_type' => 'Random type',
+
 ];

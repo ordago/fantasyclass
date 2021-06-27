@@ -51,6 +51,7 @@ return [
     'documents' => 'Document and task manager',
     'resources' => 'Resources',
     'videochat' => 'Videochat',
+    'collections' => 'Collections',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

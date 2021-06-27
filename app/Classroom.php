@@ -68,6 +68,11 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(Item::class);
     }
 
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
     public function questionBanks()
     {
         return $this->hasMany(QuestionBank::class);
@@ -170,6 +175,14 @@ class Classroom extends Model implements HasMedia
             $classroom->rules()->delete();
             $classroom->badges()->delete();
             $classroom->evaluables()->delete();
+            $classroom->skills()->delete();
+            $classroom->monsters()->delete();
+            $classroom->events()->delete();
+            $classroom->documents()->delete();
+            $classroom->collections()->delete();
+            $classroom->questionBanks()->delete();
+            $classroom->rules()->delete();
+            $classroom->videochats()->delete();
         });
     } 
 }

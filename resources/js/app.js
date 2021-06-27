@@ -66,21 +66,21 @@ Vue.component('show-character', require('./components/student/ShowCharacter.vue'
 Vue.component('show-students-student', () => import('./components/student/ShowStudentsStudent.vue'));
 Vue.component('show-group-view', require('./components/student/ShowGroupView.vue').default);
 Vue.component('show-student-info', () => import('./components/student/ShowStudentInfo.vue'));
-Vue.component('hp', () => import('./components/student/Hp.vue'));
+Vue.component('hp', require('./components/student/Hp.vue').default);
 
 
 Vue.component('show-student-map', () => import('./components/student/ShowStudentMap.vue'));
 Vue.component('show-student', require('./components/student/ShowStudent.vue').default);
 Vue.component('show-student-teacher', require('./components/student/ShowStudentTeacher.vue').default);
 
-Vue.component('show-card', () => import('./components/card/ShowCard.vue'));
+Vue.component('show-card', require('./components/card/ShowCard.vue').default);
 Vue.component('show-cards', () => import('./components/card/ShowCards.vue'));
 Vue.component('create-card', () => import('./components/card/CreateCard.vue'));
 
 Vue.component('create-behaviour', () => import('./components/behaviour/CreateBehaviour.vue'));
 Vue.component('show-behaviours', require('./components/behaviour/ShowBehaviours.vue').default);
 
-Vue.component('show-data', () => import('./components/utils/ShowData.vue'));
+Vue.component('show-data', require('./components/utils/ShowData.vue').default);
 Vue.component('individual-report', () => import('./components/utils/IndividualReport.vue'));
 Vue.component('create-badge', () => import('./components/badge/CreateBadge.vue'));
 Vue.component('show-badges', require('./components/badge/ShowBadges.vue').default);
@@ -94,12 +94,15 @@ Vue.component('show-document-group', () => import('./components/documents/ShowDo
 
 Vue.component('show-challenges-group', () => import('./components/challenges/ShowChallengesGroup.vue'));
 Vue.component('show-challenges', () => import('./components/challenges/ShowChallenges.vue'));
-Vue.component('show-challenge', () => import('./components/challenges/ShowChallenge.vue'));
+Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('import-challenge', () => import('./components/challenges/ImportChallenges.vue'));
 Vue.component('create-challenges-group', () => import('./components/challenges/CreateChallengeGroup.vue'));
 Vue.component('create-challenges', () => require('./components/challenges/CreateChallenges.vue').default);
 
 Vue.component('show-question', () => import('./components/challenges/ShowQuestion.vue'));
+
+Vue.component('show-collections', require('./components/collection/ShowCollections.vue').default);
+Vue.component('show-collectionable', require('./components/collection/ShowCollectionable.vue').default);
 
 Vue.component('create-group', () => import('./components/group/CreateGroups.vue'));
 Vue.component('edit-group', () => import('./components/group/EditGroup.vue'));
@@ -126,7 +129,7 @@ Vue.component('profile', () => import('./components/profile/Profile.vue'));
 
 Vue.component('tag-management', () => import('./components/evaluation/TagManagement.vue'));
 Vue.component('grade', () => import('./components/evaluation/Grade.vue'));
-Vue.component('report', () => import('./components/evaluation/Report.vue'));
+Vue.component('report', require('./components/evaluation/Report.vue').default);
 Vue.component('rubric-management', () => import('./components/evaluation/RubricManagement.vue'));
 Vue.component('show-evaluations-group', () => import('./components/evaluation/ShowEvaluationGroup.vue'));
 Vue.component('rubric-create', () => import('./components/evaluation/RubricCreate.vue'));
@@ -142,7 +145,7 @@ Vue.component('show-questions', () => import('./components/questions/ShowQuestio
 // For use this component the parent component should have a data attibute called "content", where the html will be stored
 // Vue.component('editor', () => import('./components/utils/Editor.vue').default);
 
-Vue.component('image-bank', () => import('./components/utils/ImageBank.vue'));
+Vue.component('image-bank', require('./components/utils/ImageBank.vue').default);
 
 Vue.component('count-down', () => import('./components/utils/CountDown.vue'));
 

@@ -95,6 +95,7 @@ return [
     'log_volume' => 'Volumen excedido',
     'log_feed' => 'Alimento de mascotas',
     'log_repair' => 'Reparación de equipamento',
+    'log_collection' => 'Compra coleccionables',
 
     'student_report' => 'Informe de estudiante',
 

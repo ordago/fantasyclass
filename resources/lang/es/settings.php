@@ -60,4 +60,7 @@ return [
 
     'feed' => "Precio alimentación de mascotas",
     'repair_equipment' => "Precio reparación de equipamento",
+
+    'collectionable_probability' => "Probabilidades de los coleccionables",
+
 ];

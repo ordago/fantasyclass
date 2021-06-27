@@ -105,6 +105,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/useitem', 'ClassroomsStudentController@useItem');
         Route::post('/{code}/student/buyitem', 'ClassroomsStudentController@buyItem');
         Route::post('/{code}/student/card/buy', 'ClassroomsStudentController@buyCard');
+        Route::post('/{code}/student/collection/buy', 'ClassroomsStudentController@buyPackCollectionables');
+        Route::post('/{code}/student/collection/claim', 'ClassroomsStudentController@claimReward');
         Route::post('/{code}/student/skills/buy', 'ClassroomsStudentController@buySkill');
         Route::post('/{code}/student/skills/use', 'ClassroomsStudentController@useSkill');
         Route::post('/{code}/student/skills/delete', 'ClassroomsStudentController@deleteSkill');
@@ -303,10 +305,15 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/skill', 'SkillsController@update');
         Route::delete('/skills/{id}', 'SkillsController@destroy');
         Route::get('/{code}/skills/import', 'SkillsController@importDefault');
-
-        // Route::post('/{code}/monsters', 'MonsterController@store');
-        // Route::patch('/{code}/monsters', 'MonsterController@update');
-        // Route::post('/monsters/fight', 'MonsterController@battle');
+        
+        // Collections
+        Route::get('/{code}/collections', 'CollectionController@index');
+        Route::post('/{code}/collections', 'CollectionController@store');
+        Route::post('/{code}/collectionable', 'CollectionableController@store');
+        Route::delete('/collectionable/{id}', 'CollectionableController@destroy');
+        Route::post('/{code}/collectionable/edit', 'CollectionableController@update');
+        Route::delete('/collections/{id}', 'CollectionController@destroy');
+        Route::post('/{code}/collections/edit', 'CollectionController@update');
         
         // Utils
         Route::post('/{code}/utils/impostor', 'UtilsController@impostor');
