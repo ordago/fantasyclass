@@ -27,4 +27,5 @@ return [
     'buy_collectionable_count' => 'Number of collectibles in each pack',
     'buy_collectionable_gold_pack' => 'Price for pack',
     'claim_reward' => 'Claim the reward!',
+    'get_collectionables' => 'There are your collectibles!',
 ];

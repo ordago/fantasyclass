@@ -27,4 +27,5 @@ return [
     'buy_collectionable_count' => 'Nombre de col·lecionables en cada paquet',
     'buy_collectionable_gold_pack' => 'Preu per cada paquet',
     'claim_reward' => 'Reclama la recompensa!',
+    'get_collectionables' => 'Aquí tens els col·leccionables!',
 ];
