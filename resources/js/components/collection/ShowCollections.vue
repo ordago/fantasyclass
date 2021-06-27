@@ -273,7 +273,11 @@
               >
                 {{ trans.get("general.close") }}
               </button>
-              <button class="button is-primary" v-if="!isEditing">
+              <button
+                class="button is-primary"
+                :class="{ 'is-loading': isLoading }"
+                v-if="!isEditing"
+              >
                 {{ trans.get("general.add") }}
               </button>
               <button class="button is-info" v-else>
@@ -370,6 +374,7 @@ export default {
       isPrefsModalActive: false,
       isModalActive: false,
       isEditing: false,
+      isLoading: false,
       isModalCollectionableActive: false,
       collection: {
         name: "",
@@ -510,6 +515,7 @@ export default {
         });
     },
     addCollectionable() {
+      this.isLoading = true;
       let formData = new FormData();
       formData.append("collection_id", this.selectedCollection.id);
       formData.append("name", this.collectionable.name);
@@ -537,6 +543,7 @@ export default {
                 type: "success",
               });
             this.isEditing = false;
+            this.isLoading = false;
           });
         },
         "image/png",
