@@ -93,6 +93,7 @@ return [
     'log_volume' => 'Volume exceded',
     'log_feed' => 'Pet food',
     'log_repair' => 'Equipment repair',
+    'log_collection' => 'Collectibles',
 
     'student_report' => 'Student report',
 

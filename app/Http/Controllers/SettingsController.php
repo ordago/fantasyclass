@@ -23,6 +23,7 @@ class SettingsController extends Controller
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $settings['probabilities'] = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
+        $settings['collectionable_probabilities'] = json_decode(settings()->get('collectionable_probabilities', json_encode([40, 30, 20, 10])));
         $settings['card_use'] = settings()->get('card_use', 200);
         $settings['card_delete'] = settings()->get('card_delete', 50);
         $settings['night'] = settings()->get('night', false);
@@ -181,7 +182,7 @@ class SettingsController extends Controller
             $value = !settings()->get(request()->prop, $old);
             settings()->set(request()->prop, $value);
         } else if (request()->action == 'update') {
-            if (request()->prop == "card_probabilities") {
+            if (request()->prop == "card_probabilities" || request()->prop == "collectionable_probabilities") {
 
                 $values[0] = request()->value[1];
                 $values[1] = request()->value[2] - request()->value[1];

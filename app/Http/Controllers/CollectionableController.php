@@ -54,7 +54,7 @@ class CollectionableController extends Controller
 
     }
 
-    public static function getRandomCollectionable($collection, $class) {
+    public static function getRandomCollectionable($collection, $class, $type = null) {
         $collection = Collection::where('id', $collection)->where('classroom_id', $class)->firstOrFail();
         $collection->load('collectionables');
 
@@ -64,10 +64,13 @@ class CollectionableController extends Controller
         
         if($collection->collectionables->count() == 0)
             abort(403);
+        $max = 500;
         do {
-            $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
-            $collectionable = Collectionable::where('type', $typeValue)->where('collection_id', $collection->id)->inRandomOrder()->first();
-        } while ($collectionable == null);
+            if(!$type)
+                $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
+            $collectionable = Collectionable::where('type', $type ? $type : $typeValue)->where('collection_id', $collection->id)->inRandomOrder()->first();
+            $max--;
+        } while ($collectionable == null && $max > 0);
         return $collectionable;
     }
 

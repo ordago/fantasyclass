@@ -348,7 +348,40 @@
             <strong>{{ trans.get("settings.legendary") }}</strong>
             : {{ value[4] - value[3] }}
           </div>
-          <button class="button is-primary my-4" @click="saveProbabilities()">
+          <button class="button is-primary my-4" @click="saveProbabilities(0)">
+            <i class="fas fa-save mr-3"></i>
+            {{ trans.get("general.save") }}
+          </button>
+        </div>
+        <div class="pl-4">
+          <h3 class="mb-5">
+            {{ trans.get("settings.collectionable_probability") }}
+          </h3>
+          <vue-slider
+            class="p-5"
+            v-model="collectionable_value"
+            :process="collectionable_process"
+            :tooltip="'always'"
+            :dot-options="dotOptions"
+          >
+            <template v-slot:dot="{ focus }">
+              <div :class="['custom-dot', { focus }]"></div>
+            </template>
+          </vue-slider>
+          <div class="m-0 is-size-6">
+            <strong>{{ trans.get("collections.earth") }}</strong>
+            : {{ collectionable_value[1] }}
+            <i class="fal fa-ellipsis-v mx-3"></i>
+            <strong>{{ trans.get("collections.wind") }}</strong>
+            : {{ collectionable_value[2] - collectionable_value[1] }}
+            <i class="fal fa-ellipsis-v mx-3"></i>
+            <strong>{{ trans.get("collections.water") }}</strong>
+            : {{ collectionable_value[3] - collectionable_value[2] }}
+            <i class="fal fa-ellipsis-v mx-3"></i>
+            <strong>{{ trans.get("collections.fire") }}</strong>
+            : {{ collectionable_value[4] - collectionable_value[3] }}
+          </div>
+          <button class="button is-primary my-4" @click="saveProbabilities(1)">
             <i class="fas fa-save mr-3"></i>
             {{ trans.get("general.save") }}
           </button>
@@ -602,6 +635,11 @@ export default {
     this.value[2] = this.value[1] + this.settings.probabilities[1];
     this.value[3] = this.value[2] + this.settings.probabilities[2];
     this.value[4] = this.value[3] + this.settings.probabilities[3];
+    this.collectionable_value[0] = 0;
+    this.collectionable_value[1] = this.settings.collectionable_probabilities[0];
+    this.collectionable_value[2] = this.collectionable_value[1] + this.settings.collectionable_probabilities[1];
+    this.collectionable_value[3] = this.collectionable_value[2] + this.settings.collectionable_probabilities[2];
+    this.collectionable_value[4] = this.collectionable_value[3] + this.settings.collectionable_probabilities[3];
     this.imagesCustom = this.settings.custom_images;
   },
   components: {
@@ -617,6 +655,13 @@ export default {
       resetAssistant: false,
       state: "0",
       value: [],
+      collectionable_value: [],
+      collectionable_process: (dotsPos) => [
+        [dotsPos[0], dotsPos[1], { backgroundColor: "brown" }],
+        [dotsPos[1], dotsPos[2], { backgroundColor: "gray" }],
+        [dotsPos[2], dotsPos[3], { backgroundColor: "blue" }],
+        [dotsPos[3], dotsPos[4], { backgroundColor: "gold" }],
+      ],
       process: (dotsPos) => [
         [dotsPos[0], dotsPos[1], { backgroundColor: "gray" }],
         [dotsPos[1], dotsPos[2], { backgroundColor: "blue" }],
@@ -836,12 +881,17 @@ export default {
         themes: this.settings.disabled_themes,
       });
     },
-    saveProbabilities() {
+    saveProbabilities(typeAction) {
+      let value = typeAction == 1 ? this.collectionable_value : this.value;
+      let prop = typeAction == 1 ? "collectionable_probabilities" : "card_probabilities";
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
-        prop: "card_probabilities",
+        prop: prop,
         action: "update",
-        value: this.value,
+        value: value,
+      });
+       this.$toast(this.trans.get("success_error.update_success"), {
+        type: "success",
       });
     },
     updateLicenses() {

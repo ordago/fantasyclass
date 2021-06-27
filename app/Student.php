@@ -4,6 +4,7 @@ namespace App;
 
 use App\Http\Classes\Functions;
 use App\Http\Controllers\CardsController;
+use App\Http\Controllers\CollectionableController;
 use App\Notifications\NewInteraction;
 use App\Notifications\NewInteractionStudent;
 use Carbon\Carbon;
@@ -245,7 +246,7 @@ class Student extends Model implements HasMedia
         $valGold = $this->setProperty('gold', $behaviour->gold, true, 'behaviour');
 
         $from['title'] = __('notifications.new_behaviour');
-        $from['name'] = "FantasyClass";
+        $from['name'] = $this->classroom->classroom->name;
         $from['datetime'] = Carbon::now();
 
         $behaviourText = $behaviour->custom_text ? $behaviour->custom_text : __($behaviour->name);
@@ -431,6 +432,44 @@ class Student extends Model implements HasMedia
                     $this->items()->detach($item['id']);
                 } else {
                     $this->items()->sync([$item['id'] => ['count' => $count]], false);
+                }
+            }
+        }
+        if ($challenge->collectionables > 0 && $mult == 1) {
+            $class = Classroom::find($challenge->classroom());
+            for($i = 0; $i < $challenge->collectionables; $i++) {
+                $collectionable = CollectionableController::getRandomCollectionable($challenge->collection_id, $class->id, $challenge->type_collectionable ? $challenge->type_collectionable : null);
+                if($collectionable) {
+                    $studentCollectionable = $this->fresh()->collectionables->where('id', $collectionable->id)->first();
+    
+                    if ($studentCollectionable)
+                        $count = $studentCollectionable->pivot->count + 1;
+                    else $count = 1;
+                    $this->collectionables()->sync([$collectionable->id => ['count' => $count]], false);
+                    $from['title'] = __('notifications.new_collectionable');
+                    $from['name'] = $class->name;
+                    $from['datetime'] = Carbon::now();
+                    
+                    $icon = "";
+                    switch ($collectionable->type) {
+                        case 1:
+                            $icon = "<i class='fas fa-mountains'></i>";        
+                            break;
+                        case 2:
+                            $icon = "<i class='fas fa-tornado'></i>";        
+                            break;
+                        case 3:
+                            $icon = "<i class='fas fa-tint'></i>";        
+                            break;
+                        case 4:
+                            $icon = "<i class='fas fa-fire'></i>";        
+                            break;
+                        
+                    
+                    }
+
+                    Notification::send($this->classroom->user, new NewInteractionStudent(__('notifications.new_collectionable'), $collectionable->name . " (" . $icon . ")", $from, "new_collectionable", $this->classroom->classroom->code));
+
                 }
             }
         }

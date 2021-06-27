@@ -26,5 +26,6 @@ return [
     'money_sent_total' => ' així que et queda: ',
     'post' => 'Nou post en: ',
     'mark_challenge' => 'Ha completat un repte: ',
+    'new_collectionable' => 'Nou col·leccionable',
 
 ];

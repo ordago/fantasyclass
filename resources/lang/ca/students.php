@@ -95,6 +95,7 @@ return [
     'log_volume' => 'Excès de soroll',
     'log_feed' => 'Aliment de mascota',
     'log_repair' => 'Reparació d\'equipament',
+    'log_collection' => 'Compra col·leccionables',
     
     'student_report' => 'Informe d\'estudiant',
 ];

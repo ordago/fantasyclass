@@ -156,6 +156,7 @@
                   'fad fa-feather': notification.data.type == 'post',
                   'fad fa-sparkles': notification.data.type == 'skill',
                   'fad fa-video': notification.data.type == 'videochat',
+                  'fak fa-collection': notification.data.type == 'new_collectionable',
                   'fad fa-user-graduate':
                     notification.data.type == 'invitation',
                 }"

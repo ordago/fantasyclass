@@ -176,6 +176,14 @@
                 ></i>
                 {{ challengeReactive.objects }}
               </small>
+              <small v-if="challengeReactive.collectionables > 0">
+                <i
+                  class="fak fa-collection p-1 colored has-background-dark has-text-light rounded"
+                  v-tippy
+                  :content="trans.get('menu.collections')"
+                ></i>
+                {{ challengeReactive.collectionables }} <span v-html="getIcon(challenge.type_collectionable)"></span>
+              </small>
             </span>
             <span
               v-if="
@@ -754,6 +762,20 @@ export default {
     AddQuestion,
   },
   methods: {
+    getIcon(type){
+      switch (type) {
+        case 1:
+          return '<i class="fas fa-mountains"></i>';
+        case 2:
+          return '<i class="fas fa-tornado"></i>';
+        case 3:
+          return '<i class="fas fa-tint"></i>';
+        case 4:
+          return '<i class="fas fa-fire"></i>';
+        default:
+          return '<i class="fas fa-random"></i>';
+      }
+    },
     togglePinned() {
       axios
         .post("/classroom/" + this.code + "/challenges/toggleProp", {

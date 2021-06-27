@@ -96,4 +96,9 @@ return [
     'pin' => 'Fijalo al inicio',
     'pinned' => 'Historia fijada',
 
+    'assign_collectionables' => 'Asigna un número de coleccionables',
+    'collection' => 'Colección',
+    'collection_type' => 'Tipo de coleccionable',
+    'without_type' => 'Tipo aleatorio',
+
 ];

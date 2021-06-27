@@ -256,6 +256,11 @@
                   </b-select>
                 </b-field>
               </b-field>
+              <article class="message is-warning">
+                <div class="message-body">
+                  {{ trans.get("collections.type_info") }}
+                </div>
+              </article>
             </section>
             <footer class="modal-card-foot">
               <button

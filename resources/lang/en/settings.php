@@ -61,4 +61,6 @@ return [
     'feed' => "Pet food price",
     'repair_equipment' => "Reparing equipment price",
 
+    'collectionable_probability' => "collectible type probabilities",
+
 ];

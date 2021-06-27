@@ -841,7 +841,6 @@
           v-if="classroom.collections && classroom.collections.length"
         >
           <template slot="header">
-            <!-- <b-icon pack="fad" icon="club" /> -->
             <span class="icon"><i class="fak fa-collection fa-lg"></i></span>
             {{ trans.get("menu.collections") }}
           </template>
@@ -856,12 +855,31 @@
               "
             >
               <h3 class="is-size-3 m-2">
-                <i class="fak fa-collection mr-2"></i> {{ collection.name }}
+                <i class="fak fa-collection mr-2"></i>
+                <span
+                  v-if="getCollectionNumber(collection.id) > 0"
+                  class="collectionable-count mr-0"
+                  style="
+                    position: relative;
+                    display: inline-flex;
+                    font-size: 1em;
+                    top: 0;
+                    left: 0;
+                  "
+                  >{{ getCollectionNumber(collection.id) }}</span
+                >
+                {{ collection.name }}
                 <small
                   >({{ collection.xp }}
                   <i class="fas fa-fist-raised colored"></i>,
                   {{ collection.gold }}
                   <i class="fas fa-coins colored"></i>)</small
+                >
+                <span
+                  class="button is-info"
+                  @click="claimReward(collection)"
+                  v-if="checkReward(collection)"
+                  >{{ trans.get('collections.claim_reward') }}</span
                 >
               </h3>
               <div>
@@ -972,8 +990,8 @@
           <div v-if="admin" class="is-flex pl-4">
             <div
               class="mx-2"
-              v-for="badge in classroom.badges"
-              :key="'badge-' + badge.id"
+              v-for="(badge, index) in classroom.badges"
+              :key="'badge-' + index + badge.id"
             >
               <ShowBadge
                 :student="student"
@@ -983,8 +1001,8 @@
             </div>
             <div
               class="mx-2"
-              v-for="badge in student.badges"
-              :key="'badge2-' + badge.id"
+              v-for="(badge, index) in student.badges"
+              :key="'badge2-' + index + badge.id"
             >
               <ShowBadge
                 v-if="!badge.classroom_id"
@@ -997,8 +1015,8 @@
           <div class="is-flex pl-4" v-if="!admin">
             <div
               class="mx-2"
-              v-for="badge in student.badges"
-              :key="'badge3-' + badge.id"
+              v-for="(badge, index) in student.badges"
+              :key="'badge3-' + index + badge.id"
             >
               <ShowBadge
                 :student="student"
@@ -1449,7 +1467,13 @@
               v-for="collectionable in getCollectionables"
               :key="'getModal-' + collectionable.id"
             >
-              <vue-flip v-if="isCollectionableModalActive" width="200px" height="280px" active-click :horizontal="true">
+              <vue-flip
+                v-if="isCollectionableModalActive"
+                width="200px"
+                height="280px"
+                active-click
+                :horizontal="true"
+              >
                 <template v-slot:front>
                   <img
                     src="/img/cardgen/collections/back_small.png"
@@ -1617,6 +1641,45 @@ export default {
     };
   },
   methods: {
+    getCollectionNumber(collection) {
+      let count = 0;
+      if(this.student.collections)
+      this.student.collections.forEach((element) => {
+        if(element.id == collection) {
+          count =  element.pivot.count;
+        }
+      });
+      return count;
+    },
+    claimReward(collection) {
+      let audio = new Audio("/sound/success.mp3");
+      axios
+        .post(
+          "/classroom/" + this.classroom.code + "/student/collection/claim",
+          { collection: collection.id }
+        )
+        .then((response) => {
+          audio.play();
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 1.0 },
+          });
+          this.student.collections = response.data.collections;
+          this.student.xp = response.data.student.xp;
+          this.student.gold = response.data.student.gold;
+          this.student.collectionables = response.data.collectionables;
+          this.$forceUpdate();
+        });
+    },
+    checkReward(collection) {
+      let count = 0;
+      this.student.collectionables.forEach((element) => {
+        if (element.collection_id == collection.id) count++;
+      });
+      if (collection.collectionables.length == count) return true;
+      return false;
+    },
     getLvlMessage() {
       let msg =
         '<div class="content has-text-centered">' +
@@ -1724,9 +1787,10 @@ export default {
             .then((response) => {
               if (response.data.type == "success") {
                 audio.play();
-                this.student.collectionables = response.data.collectionables;
                 this.getCollectionables = response.data.get_collectionables;
                 this.isCollectionableModalActive = true;
+                this.student.gold = response.data.gold;
+                this.student.collectionables = response.data.collectionables;
                 confetti({
                   particleCount: 200,
                   spread: 100,

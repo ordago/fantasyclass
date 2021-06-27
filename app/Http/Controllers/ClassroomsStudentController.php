@@ -451,7 +451,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.pinned, challenges.type, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenges.id, challenges.pinned, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
 
@@ -473,7 +473,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.pinned, challenges.id, challenges.type, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenge_group.group_id, challenges.pinned, challenges.id, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get()->all();
 
         $challenges = $challenges->merge($groupChallenges);
@@ -608,6 +608,7 @@ class ClassroomsStudentController extends Controller
 
         $student->append('numcards');
         $student->load('character');
+        $student->load('collections');
         $student->load('collectionables');
 
         // Shop information
@@ -685,19 +686,19 @@ class ClassroomsStudentController extends Controller
         }
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
         if ($settings['skill_enabled'] != 0)
-        $settings['skill_price'] = settings()->get('skill_price', 600);
-        
+            $settings['skill_price'] = settings()->get('skill_price', 600);
+
         $students_money = json_encode([]);
         if ($settings['allow_send_money']) {
             $students_money = $class->students()->pluck('classroom_user_id', 'name');
         }
-        
+
         $settings['buy_collectionable'] = settings()->get('buy_collectionable', 0);
-        if($settings['buy_collectionable']) {
+        if ($settings['buy_collectionable']) {
             $settings['buy_collectionable_count'] = settings()->get('buy_collectionable_count', 3);
             $settings['buy_collectionable_gold_pack'] = settings()->get('buy_collectionable_gold_pack', 200);
         }
-        
+
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
         $chat['chatbro_id'] = env('CHATBRO_ID');
@@ -983,21 +984,69 @@ class ClassroomsStudentController extends Controller
         ];
     }
 
-    public function buyPackCollectionables($code) {
+    public function claimReward($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        $student = Functions::getCurrentStudent($class, []);
+
+        $data = request()->validate([
+            "collection" => ['numeric', 'required'],
+        ]);
+
+        $collection = Collection::findOrFail($data['collection']);
+        if ($collection->classroom_id != $class->id)
+            abort(403);
+
+        foreach ($collection->collectionables as $collectionable) {
+            $studentCollectionable = $student->fresh()->collectionables->where('id', $collectionable->id)->first();
+
+            if ($studentCollectionable)
+                $count = $studentCollectionable->pivot->count - 1;
+            else abort(403);
+            if ($count == 0)
+                $student->collectionables()->detach($collectionable->id);
+            else
+                $student->collectionables()->sync([$collectionable->id => ['count' => $count]], false);
+        }
+
+        $studentCollection = $student->fresh()->collections->where('id', $collection->id)->first();
+
+        if ($studentCollection)
+            $count = $studentCollection->pivot->count + 1;
+        else $count = 1;
+
+        $student->collections()->sync([$collection->id => ['count' => $count]], false);
+
+        $student->setProperty("xp", $collection->xp, true, 'collection', true);
+        $student->setProperty("gold", $collection->gold, true, 'collection', true);
+        $student = $student->fresh();
+        return [
+            "student" => $student,
+            "collections" => $student->collections,
+            "collectionables" => $student->collectionables,
+        ];
+    }
+
+    public function buyPackCollectionables($code)
+    {
         $class = Classroom::where('code', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
 
         $student = Functions::getCurrentStudent($class, []);
         if ($student->hp == 0)
             abort(403);
-        
+
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $settings['buy_collectionable'] = settings()->get('buy_collectionable', 0);
-        if($settings['buy_collectionable'] == 0)
-            abort(403); 
+        if ($settings['buy_collectionable'] == 0)
+            abort(403);
         $settings['buy_collectionable_count'] = settings()->get('buy_collectionable_count', 3);
         $settings['buy_collectionable_gold_pack'] = settings()->get('buy_collectionable_gold_pack', 200);
-        
+
+
+
         if ($settings['buy_collectionable_gold_pack'] > $student->gold) {
             return [
                 "message" => " " . __('success_error.shop_failed_money'),
@@ -1011,7 +1060,7 @@ class ClassroomsStudentController extends Controller
         ]);
 
         $collectionables = collect();
-        for($i = 0; $i < $settings['buy_collectionable_count']; $i++) {
+        for ($i = 0; $i < $settings['buy_collectionable_count']; $i++) {
             $collectionable = CollectionableController::getRandomCollectionable($data['collection'], $class->id);
             $studentCollectionable = $student->fresh()->collectionables->where('id', $collectionable->id)->first();
 
@@ -1022,14 +1071,18 @@ class ClassroomsStudentController extends Controller
             $student->collectionables()->sync([$collectionable->id => ['count' => $count]], false);
         }
         $student->update(['gold' => ($student->gold - $settings['buy_collectionable_gold_pack'])]);
-        
+        LogEntry::create([
+            'type' => 'gold',
+            'value' => $settings['buy_collectionable_gold_pack'] * -1,
+            'student_id' => $student->id,
+            'message' => 'collection',
+        ]);
         return [
             "type" => "success",
             "get_collectionables" => $collectionables,
             "collectionables" => $student->fresh()->collectionables,
+            'gold' => $student->fresh()->gold,
         ];
-        
-
     }
 
     public function useSkill($code)

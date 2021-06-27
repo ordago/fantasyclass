@@ -95,5 +95,9 @@ return [
     'show_all_summary_empty' => 'És possible que hi haja històries per veure, accedeix a ',
     'pin' => 'Fixar-lo a l\'inici',
     'pinned' => 'Història fixada',
-
+    
+    'assign_collectionables' => 'Assigna un nombre de col·leccionables',
+    'collection' => 'Col·lecció',
+    'collection_type' => 'Tipus de col·leccionable',
+    'without_type' => 'Tipus aleatori',
 ];

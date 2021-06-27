@@ -14,6 +14,8 @@ return [
     'select_type' => 'Selecciona el tipo',
     'empty' => 'No hay coleccionables en esta colección. ¡Creemos algunos!',
 
+    'type_info' => 'El tipo marcará la dificultad de obtener el coleccionable. Por normal general, un elemento de fuego será el más difícil de conseguir y los de tierra los más fáciles. Puedes configurar las probabilidades en preferencias.',
+
     'earth' => 'Tierra',
     'wind' => 'Viento',
     'water' => 'Agua',
@@ -24,5 +26,6 @@ return [
     'buy_collection' => 'Permite la compra de paquetes de coleccionables',
     'buy_collectionable_count' => 'Número de colecionables en cada paquete',
     'buy_collectionable_gold_pack' => 'Precio por paquete',
+    'claim_reward' => '¡Reclama la recompensa!',
     
 ];
