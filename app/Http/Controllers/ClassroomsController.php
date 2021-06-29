@@ -254,6 +254,7 @@ class ClassroomsController extends Controller
         }
 
         // Clone tags
+        if($class->tags)
         foreach ($class->tags as $tag) {
             $newTag = $tag->replicate();
             $newTag->classroom_id = $new->id;
