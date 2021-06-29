@@ -14,6 +14,7 @@ use App\Theme;
 use App\Item;
 use App\Rules;
 use App\Student;
+use App\Tag;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -188,9 +189,9 @@ class ClassroomsController extends Controller
             $newQb->classroom_id = $new->id;
             $newQb->push();
             foreach ($qb->questions as $question) {
-                $newQuestion = $question->replicate();
-                $newQuestion->question_bank_id = $newQb->id;
-                $newQuestion->push();
+                $newEvaluable = $question->replicate();
+                $newEvaluable->question_bank_id = $newQb->id;
+                $newEvaluable->push();
             }
         }
 
@@ -253,12 +254,38 @@ class ClassroomsController extends Controller
             $newEvent->push();
         }
 
-        // Clone tags
-        if($class->tags)
-        foreach ($class->tags as $tag) {
+        // // Clone tags
+        foreach (Tag::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->get() as $tag) {
             $newTag = $tag->replicate();
             $newTag->classroom_id = $new->id;
             $newTag->push();
+
+            // foreach ($tag->evaluables as $evaluable) {
+            //     $newEvaluable = $evaluable->replicate();
+            //     $newEvaluable->tag = $evaluable->replicate();
+
+            //     $newEvaluable->push();
+            // }
+        }
+
+        // Clone evaluable groups and evaluables
+        foreach ($class->evalgroups as $evalgroups) {
+            $newChGr = $evalgroups->replicate();
+            $newChGr->classroom_id = $new->id;
+            $newChGr->push();
+            foreach ($evalgroups->tags as $tag) {
+                $newTag = $tag->replicate();
+                $newTag->evaluables_group_id = $newChGr->id;
+                $newTag->classroom_id = $new->id;
+                $newTag->push();
+
+                // foreach ($tag->evaluables as $evaluable) {
+                //     $newEvaluable = $evaluable->replicate();
+                //     $newEvaluable->evaluables_group_id = $newChGr->id;
+                //     $newEvaluable->push();
+                // }
+
+            }
         }
 
         // Clone pets
