@@ -69,6 +69,9 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $remember = $request->has('remember');
+        unset($_COOKIE['fantasyclass_session']);
+        unset($_COOKIE['laravel_session']);
+
 
         $input = $request->all();
 
