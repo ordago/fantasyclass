@@ -71,6 +71,7 @@ class LoginController extends Controller
         $remember = $request->has('remember');
         unset($_COOKIE['fantasyclass_session']);
         unset($_COOKIE['laravel_session']);
+        unset($_COOKIE['XSRF-TOKEN']);
 
 
         $input = $request->all();
