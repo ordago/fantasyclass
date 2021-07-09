@@ -158,7 +158,7 @@ class BadgeController extends Controller
             'xp' => ['required', 'numeric'],
             'hp' => ['required', 'numeric'],
             'gold' => ['required', 'numeric'],
-            'image' => ['nullable', 'string'],
+            'image' => ['nullable'],
         ]);
     }
 

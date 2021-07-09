@@ -1,4 +1,8 @@
 # Changelog
+## v1.64 Beta (09/07/2021)
+### Changed
+- Fixed upload custom badge.
+
 ## v1.63 Beta (27/06/2021)
 ### Added
 - Collectibles.
