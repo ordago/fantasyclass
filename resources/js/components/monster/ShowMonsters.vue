@@ -187,8 +187,8 @@
             <button class="button is-primary" v-if="!edit">
               {{ trans.get("general.add") }}
             </button>
-            <button @click.prevent="sendEdit" v-else class="button is-link">
-              {{ trans.get("general.edit") }}
+            <button @click.prevent="sendEdit" v-else class="button is-primary">
+              <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
             </button>
           </footer>
         </div>

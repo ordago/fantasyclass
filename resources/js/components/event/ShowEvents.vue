@@ -112,12 +112,12 @@
             {{ trans.get("events.add") }}
           </button>
           <button
-            class="button is-info"
+            class="button is-primary"
             type="button"
             @click="addEvent(1)"
             v-else
           >
-            {{ trans.get("events.edit") }}
+            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
         </section>
         <footer

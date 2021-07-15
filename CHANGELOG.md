@@ -1,4 +1,9 @@
 # Changelog
+## v1.65 Beta (XX/07/2021)
+
+### Changed
+- Change edit for save when editing objects.
+
 ## v1.64 Beta (09/07/2021)
 ### Changed
 - Fixed upload custom badge.

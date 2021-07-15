@@ -581,14 +581,10 @@
               </div>
             </div>
           </div>
-
-          <button
-            class="button is-link"
-            @click="updateCard"
+          <button  @click="updateCard"
             v-if="card"
-            type="button"
-          >
-            {{ trans.get("cards.edit_card") }}
+            type="button" class="button is-primary">
+            <i class="fas fa-save"></i> {{ trans.get('general.save') }}
           </button>
           <button class="button is-success" v-if="!card">
             {{ trans.get("cards.create_card") }}

@@ -23,7 +23,7 @@ return [
     'import_empty' => 'No hay niveles disponibles',
     'import_alert' => 'Los niveles de esta clase serán reemplazados, <strong>esta acción no se puede deshacer</strong>, ¿estás seguro/a?',
     'share' => 'Comparte niveles',
-    'name' => 'Nombre del pack',
+    'name' => 'Nombre del pack (¡envía solo cuando esté finalizado!)',
     'placeholder' => 'Por ejemplo, el nombre de la materia',
 
 ];

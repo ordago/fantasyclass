@@ -206,6 +206,15 @@
       </div>
       <div class="mt-5">
         <h1>
+          <i class="fal fa-pen-fancy"></i>
+          {{ trans.get("settings.adventures") }}
+        </h1>
+        <button class="button is-link">
+
+        </button>
+      </div>
+      <div class="mt-5">
+        <h1>
           <i class="fal fa-bell"></i>
           {{ trans.get("settings.notifications") }}
         </h1>

@@ -182,7 +182,7 @@
               v-if="tag.classroom_id"
               @click.prevent="editTag"
             >
-              {{ trans.get("general.edit") }}
+              <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
             </button>
           </footer>
         </div>

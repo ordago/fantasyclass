@@ -39,8 +39,8 @@
         />
       </div>
       <div>
-        <button class="button is-link" @click="update" v-if="map" type="button">
-          {{ trans.get("general.edit") }}
+        <button class="button is-primary" @click="update" v-if="map" type="button">
+          <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
         </button>
         <button class="button is-success" type="submit" v-if="!map">
           {{ trans.get("maps.create") }}

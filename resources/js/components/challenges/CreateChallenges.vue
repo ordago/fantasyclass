@@ -505,8 +505,8 @@
       >
         {{ trans.get("challenges.create_challenge") }}
       </button>
-      <button type="submit" v-else class="button is-info">
-        {{ trans.get("challenges.edit") }}
+      <button type="submit" v-else class="button is-primary">
+        <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
       </button>
     </form>
     <b-modal :active.sync="isModalActive" width="95%" scroll="keep">

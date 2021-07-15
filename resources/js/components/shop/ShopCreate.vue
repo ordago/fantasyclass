@@ -158,8 +158,8 @@
     <button class="button is-primary" v-if="!item" @click="createItem()">
       <i class="fas fa-plus"></i> {{ trans.get("general.create") }}
     </button>
-    <button class="button is-link" v-if="item" @click="createItem()">
-      <i class="fas fa-edit"></i> {{ trans.get("general.edit") }}
+    <button class="button is-primary" v-if="item" @click="createItem()">
+      <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
     </button>
     <b-modal
       :active.sync="isModalActive"

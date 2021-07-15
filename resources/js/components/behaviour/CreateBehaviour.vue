@@ -147,12 +147,12 @@
       </div>
       <div>
         <button
-          class="button is-link"
+          class="button is-primary"
           @click="update"
           v-if="behaviour"
           type="button"
         >
-          {{ trans.get("behaviours.edit") }}
+          <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
         </button>
         <button class="button is-success" type="submit" v-if="!behaviour">
           {{ trans.get("behaviours.create") }}

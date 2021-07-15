@@ -126,8 +126,8 @@
               <button class="button is-primary" v-if="!isEditing">
                 {{ trans.get("general.add") }}
               </button>
-              <button class="button is-info" v-else>
-                {{ trans.get("general.edit") }}
+              <button class="button is-primary" v-else>
+                <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
               </button>
             </footer>
           </div>
@@ -280,8 +280,8 @@
               >
                 {{ trans.get("general.add") }}
               </button>
-              <button class="button is-info" v-else>
-                {{ trans.get("general.edit") }}
+              <button class="button is-primary" v-else>
+                <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
               </button>
             </footer>
           </div>

@@ -1,18 +1,28 @@
 <template>
   <form @submit.prevent="createRubric" class="p-3">
     <div class="field">
-      <label class="label">{{ trans.get('evaluation.name') }}</label>
+      <label class="label">{{ trans.get("evaluation.name") }}</label>
       <div class="control">
-        <input class="input" required minlength="3" type="text" v-model="rubric.name" />
+        <input
+          class="input"
+          required
+          minlength="3"
+          type="text"
+          v-model="rubric.name"
+        />
       </div>
     </div>
     <div class="field">
-      <label class="label">{{ trans.get('evaluation.rows') }}</label>
+      <label class="label">{{ trans.get("evaluation.rows") }}</label>
       <div class="control">
-        <div v-for="(row, index) in rubric.rows" :key="index" class="rubric-row my-2">
+        <div
+          v-for="(row, index) in rubric.rows"
+          :key="index"
+          class="rubric-row my-2"
+        >
           <div class="description">
             <textarea
-              style="height:100%"
+              style="height: 100%"
               v-model="row.description"
               :placeholder="trans.get('evaluation.general_description')"
               required
@@ -28,7 +38,11 @@
             <i class="fas fa-plus"></i>
           </div>
           <div class="subItems">
-            <div class="subItem" v-for="(column, indexCol) in row.items" :key="indexCol">
+            <div
+              class="subItem"
+              v-for="(column, indexCol) in row.items"
+              :key="indexCol"
+            >
               <div class="message mb-1 is-flex has-all-centered">
                 <textarea
                   required
@@ -39,14 +53,23 @@
                   v-model="column.description"
                 ></textarea>
                 <emoji-picker
-                  @emoji:picked="handleEmojiPicked($event, 'textarea' + index + indexCol)"
+                  @emoji:picked="
+                    handleEmojiPicked($event, 'textarea' + index + indexCol)
+                  "
                   :data="data"
                 />
               </div>
               <div id="container"></div>
               <div class="pointsItem">
-                <input type="number" step="0.01" v-model="column.points" value="0" style="width: 4em;" min="0" />
-                {{ trans.get('evaluation.points') }}
+                <input
+                  type="number"
+                  step="0.01"
+                  v-model="column.points"
+                  value="0"
+                  style="width: 4em"
+                  min="0"
+                />
+                {{ trans.get("evaluation.points") }}
               </div>
               <div
                 class="button is-danger delSubItem"
@@ -60,22 +83,26 @@
         </div>
       </div>
     </div>
-    <button class="button is-primary" @click.prevent="addRow">{{ trans.get('evaluation.add_row') }}</button>
-    <button
-      class="button is-info"
-      @click.prevent="back"
-      type="submit"
-    >{{ trans.get('general.cancel') }}</button>
-    <button
-      class="button is-success"
-      v-if="rubric.rows.length && !this.rubricEdit"
-      type="submit"
-    >{{ trans.get('evaluation.create_rubric') }}</button>
-    <button
-      class="button is-info"
-      v-if="this.rubricEdit"
-      type="submit"
-    >{{ trans.get('evaluation.edit_rubric') }}</button>
+    <div>
+      <button class="button is-primary" @click.prevent="addRow">
+        {{ trans.get("evaluation.add_row") }}
+      </button>
+    </div>
+    <div class="mt-2">
+      <button class="button is-info" @click.prevent="back" type="submit">
+        {{ trans.get("general.cancel") }}
+      </button>
+      <button
+        class="button is-success"
+        v-if="rubric.rows.length && !this.rubricEdit"
+        type="submit"
+      >
+        {{ trans.get("evaluation.create_rubric") }}
+      </button>
+      <button class="button is-primary" v-if="this.rubricEdit" type="submit">
+        <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
+      </button>
+    </div>
   </form>
 </template>
 
@@ -107,8 +134,11 @@ export default {
     addColumn(index) {
       let row = this.rubric.rows[index];
       let points =
-        parseFloat(this.rubric.rows[index].items[this.rubric.rows[index].items.length - 1]
-          .points) + 1;
+        parseFloat(
+          this.rubric.rows[index].items[
+            this.rubric.rows[index].items.length - 1
+          ].points
+        ) + 1;
       row.items.push({ points: points, description: "" });
       this.$forceUpdate();
     },

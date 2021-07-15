@@ -75,10 +75,10 @@
           ></textarea>
         </p>
         <div v-if="edit" class="has-text-right mt-2">
-          <button class="button is-dark" @click="update">
-            <i class="fas fa-edit"></i>
+          <button class="button is-primary" @click="update" v-tippy :content="trans.get('general.save')">
+            <i class="fas fa-save"></i>
           </button>
-          <button class="button is-danger" @click="remove" v-if="last">
+          <button class="button is-danger" v-tippy :content="trans.get('general.delete')" @click="remove" v-if="last">
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>

@@ -249,8 +249,8 @@
             <button class="button is-primary" v-if="!skill.id">
               {{ trans.get("general.add") }}
             </button>
-            <button v-else @click.prevent="sendEdit" class="button is-link">
-              {{ trans.get("general.edit") }}
+            <button v-else @click.prevent="sendEdit" class="button is-primary">
+              <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
             </button>
           </footer>
         </div>

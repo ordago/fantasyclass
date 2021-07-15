@@ -218,12 +218,12 @@
             {{ trans.get("general.add") }}
           </button>
           <button
-            class="button is-link"
+            class="button is-primary"
             @click="edit"
             v-else
             :disabled="checkFields()"
           >
-            {{ trans.get("general.edit") }}
+            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
         </footer>
       </div>
