@@ -1168,7 +1168,7 @@ export default {
           this.updateProp(student_2.id, "hp", parseInt(this.hp_transfer));
           student_2.xp += parseInt(this.xp_transfer);
           this.updateProp(student_2.id, "xp", parseInt(this.xp_transfer));
-          student_2.gold += this.gold_transfer;
+          student_2.gold += parseInt(this.gold_transfer);
           this.updateProp(student_2.id, "gold", parseInt(this.gold_transfer));
         }
 
