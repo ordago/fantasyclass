@@ -25,6 +25,8 @@ return [
     'search' => "Busca",
     'share' => "Comparte",
     'share_teachers' => "Comparte con otros docentes",
+    'accept' => "Acepta",
+    'stats' => "Propiedades",
 
     'name' => "Nombre",
     'optional' => "opcional",

@@ -42,5 +42,6 @@ return [
     'impostor_active' => 'Hi ha un impostor a la classe!',
     
     'get_challenge' => 'Enhorabona! Has superat el repte!',
+    'by_group' => 'Per grup',
 
 ];

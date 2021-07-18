@@ -25,6 +25,8 @@ return [
     'search' => "Cerca",
     'share' => "Comparteix",
     'share_teachers' => "Comparteix amb altres docents",
+    'accept' => "Accepta",
+    'stats' => "Propietats",
     
     'name' => "Nom",
     'optional' => "opcional",

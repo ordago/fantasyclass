@@ -25,6 +25,8 @@ return [
     'search' => "Search",
     'share' => "Share",
     'share_teachers' => "Share with other teachers",
+    'accept' => "Accept",
+    'stats' => "Stats",
 
     'name' => "Name",
     'optional' => "optional",

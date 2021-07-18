@@ -55,15 +55,44 @@ class UtilsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $data = request()->validate([
-            'behaviour' => ['numeric', 'required'],
+            'behaviour' => ['numeric', 'nullable'],
+            'hp' => ['numeric', 'nullable'],
+            'xp' => ['numeric', 'nullable'],
+            'gold' => ['numeric', 'nullable'],
             'students' => ['array', 'required'],
         ]);
-        $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
-        foreach ($data['students'] as $id) {
-            $student = Student::find($id);
-            if ($student->classroom->classroom_id != $class->id)
-                return abort('403');
-            $student->addBehaviour($behaviour->id);
+        if(isset($data['behaviour']) && $data['behaviour']) {
+            $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
+            foreach ($data['students'] as $id) {
+                $student = Student::find($id);
+                if ($student->classroom->classroom_id != $class->id)
+                    return abort('403');
+                $student->addBehaviour($behaviour->id);
+            }
+        }
+        if(isset($data['hp']) && $data['hp']) {
+            foreach ($data['students'] as $id) {
+                $student = Student::find($id);
+                if ($student->classroom->classroom_id != $class->id)
+                    return abort('403');
+                $student->setProperty('hp', $data['hp'], true, 'teacher');
+            }
+        }
+        if(isset($data['xp']) && $data['xp']) {
+            foreach ($data['students'] as $id) {
+                $student = Student::find($id);
+                if ($student->classroom->classroom_id != $class->id)
+                    return abort('403');
+                $student->setProperty('xp', $data['xp'], true, 'teacher');
+            }
+        }
+        if(isset($data['gold']) && $data['gold']) {
+            foreach ($data['students'] as $id) {
+                $student = Student::find($id);
+                if ($student->classroom->classroom_id != $class->id)
+                    return abort('403');
+                $student->setProperty('gold', $data['gold'], true, 'teacher');
+            }
         }
     }
     public function iconPack($category)

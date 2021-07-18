@@ -591,6 +591,7 @@
       <massive-actions
         :students="allStudents"
         :classroom="classroom"
+        :groups="groups"
       ></massive-actions>
     </b-modal>
     <Impostor

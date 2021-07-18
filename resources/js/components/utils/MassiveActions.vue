@@ -8,36 +8,124 @@
       style="align-items: flex-start"
     >
       <div class="has-text-centered w-100">
-        <div class="select">
-          <select v-model="behaviour">
-            <option
-              :class="{
-                'has-background-danger-light':
-                  behaviour.hp + behaviour.xp + behaviour.gold < 0,
-                'has-background-success-light':
-                  behaviour.hp + behaviour.xp + behaviour.gold >= 0,
-              }"
-              v-for="behaviour in classroom.behaviours"
-              :key="behaviour.id"
-              :value="behaviour.id"
-            >
-              {{ trans.get(behaviour.name) }} {{ getText(behaviour) }}
-            </option>
-          </select>
+        <div class="control">
+          <label class="label">{{ trans.get("menu.behaviours") }}</label>
+
+          <div class="select">
+            <select v-model="behaviour">
+              <option
+                :class="{
+                  'has-background-danger-light':
+                    behaviour.hp + behaviour.xp + behaviour.gold < 0,
+                  'has-background-success-light':
+                    behaviour.hp + behaviour.xp + behaviour.gold >= 0,
+                }"
+                v-for="behaviour in classroom.behaviours"
+                :key="behaviour.id"
+                :value="behaviour.id"
+              >
+                {{ trans.get(behaviour.name) }} {{ getText(behaviour) }}
+              </option>
+            </select>
+          </div>
         </div>
-        <div class="buttons mt-3 has-all-centered">
-          <button class="button is-info" @click="changeAll(true)">
+        <label class="label mt-3 mb-0">{{ trans.get("general.stats") }}</label>
+        <div class="columns mt-0" style="width: 60%; margin: 0 20%">
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span
+                  class="button is-static"
+                  v-bind:class="{
+                    'has-background-success': hp > 0,
+                    'has-background-danger': hp < 0,
+                  }"
+                  ><i class="fas fa-heart colored"></i
+                ></span>
+              </p>
+              <p class="control is-expanded">
+                <input
+                  type="number"
+                  name="hp"
+                  class="input"
+                  v-model="hp"
+                  required
+                />
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span
+                  class="button is-static"
+                  v-bind:class="{
+                    'has-background-success': xp > 0,
+                    'has-background-danger': xp < 0,
+                  }"
+                  ><i class="fas fa-fist-raised colored"></i
+                ></span>
+              </p>
+              <p class="control is-expanded">
+                <input
+                  type="number"
+                  name="xp"
+                  class="input"
+                  v-model="xp"
+                  required
+                />
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span
+                  class="button is-static"
+                  v-bind:class="{
+                    'has-background-success': gold > 0,
+                    'has-background-danger': gold < 0,
+                  }"
+                  ><i class="fas fa-coins colored"></i
+                ></span>
+              </p>
+              <p class="control is-expanded">
+                <input
+                  type="number"
+                  name="gold"
+                  class="input"
+                  v-model="gold"
+                  required
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="buttons mt-3 is-flex has-all-centered">
+          <button class="button mb-0 is-info" @click="changeAll(true)">
             <i class="fas fa-ballot-check"></i>
             <i class="far fa-users mr-2"></i>
             {{ trans.get("utils.select_all") }}
           </button>
-          <button class="button is-info" @click="changeAll(false)">
+          <button class="button mb-0 is-info" @click="changeAll(false)">
             <i class="fas fa-eraser mr-2"></i>
             {{ trans.get("utils.remove_selection") }}
           </button>
-          <button class="button is-info" @click="random">
+          <button class="button mb-0 is-info" @click="random">
             <i class="fas fa-random mr-2"></i> {{ trans.get("utils.random") }}
           </button>
+          <div class="control select mt-0" v-if="groups && groups.length">
+            <select v-model="groupSelected" @input="updateGroup()">
+              <option :value="null" disabled>{{ trans.get('utils.by_group') }}</option>
+              <option
+                :value="group"
+                v-for="group in groups"
+                :key="'g-' + group.id"
+              >
+                {{ group.name }}
+              </option>
+            </select>
+          </div>
         </div>
         <div class="columns is-multiline is-variable mt-3">
           <div
@@ -74,26 +162,39 @@
       <button
         class="button is-link"
         :class="{ 'is-loading': isLoading }"
-        v-if="behaviour"
+        v-if="behaviour || hp != 0 || xp != 0 || gold != 0"
         type="button"
         @click="accept"
       >
-        Accept
+        {{ trans.get("general.accept") }}
       </button>
     </footer>
   </div>
 </template>
 <script>
 export default {
-  props: ["classroom", "students"],
+  props: ["classroom", "students", "groups"],
   mounted() {},
   data: function () {
     return {
+      hp: 0,
+      xp: 0,
+      gold: 0,
       behaviour: null,
+      groupSelected: null,
       isLoading: false,
     };
   },
   methods: {
+    updateGroup() {
+      var vm = this;
+      this.changeAll(false);
+      setTimeout(() => {
+        this.groupSelected.students.forEach(function (element) {
+          vm.toggle(element.id);
+        });
+      }, 100);
+    },
     getAvatar(url) {
       if (url) return url;
       return "/img/no_avatar.png";
@@ -109,6 +210,9 @@ export default {
         .post("/classroom/" + this.classroom.code + "/utils/massive", {
           students: ids,
           behaviour: this.behaviour,
+          hp: this.hp,
+          xp: this.xp,
+          gold: this.gold,
         })
         .then((response) => {
           // this.$parent.$parent.isMassiveModalActive = false
@@ -116,6 +220,7 @@ export default {
         });
     },
     random() {
+      this.changeAll(false);
       let elements = document.querySelectorAll(".student-massive");
       elements.forEach(function (element) {
         if (Math.random() >= 0.5) {

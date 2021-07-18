@@ -566,6 +566,7 @@ class ClassroomsController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $groups = $class->grouping->first()->groups;
+        $groups->each->load('students');
 
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');
