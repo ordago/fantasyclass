@@ -83,6 +83,11 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(EvaluablesGroup::class);
     }
 
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class);
+    }
+
     public function theme()
     {
         return $this->hasOne(Theme::class, 'id', 'theme_id');

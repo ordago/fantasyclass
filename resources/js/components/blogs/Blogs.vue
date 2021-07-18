@@ -1,5 +1,24 @@
 <template>
   <div class="p-1 m-1">
+    <div>
+      <span
+        @click="toggleBlog(blogp.id, 2)"
+        v-for="blogp in blogsp"
+        :key="blogp.id"
+      >
+        <div
+          v-if="!blogSelected || blogSelected == blogp.id"
+          class="card rounded p-5 my-2 cursor-pointer"
+        >
+          <span class="p-1"><i class="fad fa-users-class"></i></span>
+          <span class="p-2"
+            ><i class="fad fa-feather-alt" v-if="!blogSelected"></i
+            ><i class="fad fa-arrow-left" v-if="blogSelected"></i
+          ></span>
+          {{ blogp.name }}
+        </div>
+      </span>
+    </div>
     <article class="message is-dark" v-if="!blogs.length">
       <div class="message-body">{{ trans.get("blog.blog_empty") }}</div>
     </article>
@@ -32,19 +51,22 @@
       <button
         class="button is-danger mb-2"
         @click="deleteBlog"
-        v-if="!stories.length && !admin"
+        v-if="!stories.length && !admin && type != 2"
       >
         <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
       </button>
-      <article class="message is-link" v-if="!stories.length">
+      <article class="message is-link mb-2" v-if="type == 2">
         <div class="message-body">
-          {{ trans.get("blog.empty_posts") }}
-          <a href="#" @click.prevent="writePost">{{
-            trans.get("blog.write_post")
-          }}</a>
+          {{ trans.get("blog.class_blog") }}
         </div>
       </article>
-      <button v-else class="button is-link my-2" @click.prevent="writePost">
+      <article class="message is-link mb-2" v-else-if="!stories.length">
+        <div class="message-body">
+          {{ trans.get("blog.empty_posts") }}.
+          {{ trans.get("blog.write_post") }}
+        </div>
+      </article>
+      <button class="button is-link mt-0 mb-2" @click.prevent="writePost">
         {{ trans.get("blog.write_post") }}
       </button>
       <div v-if="stories.length && blogSelected">
@@ -111,7 +133,7 @@ const ShowPost = () => import("./ShowPost.vue");
 const Editor = () => import("../utils/Editor.vue");
 
 export default {
-  props: ["blogs", "code", "admin", "student"],
+  props: ["blogs", "code", "admin", "student", "blogsp"],
   components: {
     ShowPost,
     Editor,
@@ -128,6 +150,7 @@ export default {
       blogSelected: null,
       stories: [],
       modal: false,
+      type: 0,
       title: "",
     };
   },
@@ -180,6 +203,7 @@ export default {
           title: this.title,
           student: student,
           is_teacher: this.admin ? 1 : 0,
+          student_id: this.type == 2 ? this.student.id : null,
         })
         .then((response) => {
           this.modal = false;
@@ -208,7 +232,8 @@ export default {
           this.isLoading = false;
         });
     },
-    toggleBlog(id) {
+    toggleBlog(id, type = 0) {
+      this.type = type;
       if (!this.blogSelected) {
         this.load(id);
       } else this.blogSelected = null;

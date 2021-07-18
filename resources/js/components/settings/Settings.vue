@@ -209,8 +209,20 @@
           <i class="fal fa-pen-fancy"></i>
           {{ trans.get("settings.adventures") }}
         </h1>
-        <button class="button is-link">
-
+        <article class="message is-info">
+          <div class="message-body">
+            {{ trans.get("settings.public_info") }}
+          </div>
+        </article>
+        <div
+          v-for="blogp in classroom.blogs"
+          :key="'blog-' + blogp.id"
+          class="card rounded p-5 my-2"
+        >
+          {{ blogp.name }} <span @click="deleteBlog(blogp.id)" class="tag is-danger cursor-pointer"><i class="fas fa-trash-alt"></i></span @click="deleteB">
+        </div>
+        <button class="button is-link" @click="promptName">
+          {{ trans.get("settings.add_public_adventure") }}
         </button>
       </div>
       <div class="mt-5">
@@ -597,7 +609,8 @@
             @click="reset('behaviours', 'fas fa-heart colored')"
             class="button is-danger w-100 mt-2"
           >
-            Reset {{ trans.get("menu.behaviours") }}<i class="fas fa-heart colored"></i>
+            Reset {{ trans.get("menu.behaviours")
+            }}<i class="fas fa-heart colored"></i>
           </button>
           <button
             @click="reset('logEntries', 'fas fa-file')"
@@ -645,10 +658,17 @@ export default {
     this.value[3] = this.value[2] + this.settings.probabilities[2];
     this.value[4] = this.value[3] + this.settings.probabilities[3];
     this.collectionable_value[0] = 0;
-    this.collectionable_value[1] = this.settings.collectionable_probabilities[0];
-    this.collectionable_value[2] = this.collectionable_value[1] + this.settings.collectionable_probabilities[1];
-    this.collectionable_value[3] = this.collectionable_value[2] + this.settings.collectionable_probabilities[2];
-    this.collectionable_value[4] = this.collectionable_value[3] + this.settings.collectionable_probabilities[3];
+    this.collectionable_value[1] =
+      this.settings.collectionable_probabilities[0];
+    this.collectionable_value[2] =
+      this.collectionable_value[1] +
+      this.settings.collectionable_probabilities[1];
+    this.collectionable_value[3] =
+      this.collectionable_value[2] +
+      this.settings.collectionable_probabilities[2];
+    this.collectionable_value[4] =
+      this.collectionable_value[3] +
+      this.settings.collectionable_probabilities[3];
     this.imagesCustom = this.settings.custom_images;
   },
   components: {
@@ -697,6 +717,30 @@ export default {
     };
   },
   methods: {
+    promptName() {
+      this.$buefy.dialog.prompt({
+        message: this.trans.get('settings.add_public_adventure'),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get('general.cancel'),
+        inputAttrs: {
+          placeholder: this.trans.get('settings.adventure_name'),
+          maxlength: 250,
+        },
+        trapFocus: true,
+        onConfirm: (value) => {
+          axios
+            .post(`/classroom/${this.classroom.code}/blog`, {name: value, public: 2})
+            .then((response) => {
+              // console.log(response.data)
+              this.classroom.blogs.push(response.data);
+              this.$forceUpdate();
+              this.$toast(this.trans.get("success_error.add_success"), {
+                type: "success",
+              });
+            })
+        },
+      });
+    },
     updateNotifications() {
       axios.get(
         "/classroom/" + this.classroom.code + "/toggleClassNotifications"
@@ -706,6 +750,31 @@ export default {
       this.updateClassState("tz", this.settings.tz);
       this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",
+      });
+    },
+    deleteBlog(id) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios
+            .delete("/classroom/" + this.classroom.code + "/blogp/" + id)
+            .then((response) => {
+              this.classroom.blogs = response.data;
+              this.$forceUpdate();
+              this.$toast(this.trans.get("success_error.delete_success"), {
+                type: "success",
+              });
+            });
+        },
       });
     },
     deleteImage(id) {
@@ -892,14 +961,15 @@ export default {
     },
     saveProbabilities(typeAction) {
       let value = typeAction == 1 ? this.collectionable_value : this.value;
-      let prop = typeAction == 1 ? "collectionable_probabilities" : "card_probabilities";
+      let prop =
+        typeAction == 1 ? "collectionable_probabilities" : "card_probabilities";
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
         prop: prop,
         action: "update",
         value: value,
       });
-       this.$toast(this.trans.get("success_error.update_success"), {
+      this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",
       });
     },

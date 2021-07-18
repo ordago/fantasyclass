@@ -23,20 +23,28 @@ class BlogController extends Controller
         $this->authorize('studyOrTeach', $class);
         $data = request()->validate([
             'name' => ['string', 'required'],
+            'public' => ['numeric', 'nullable'],
             ]);
-
-        if(request()->student) {
-            $student = Student::find(request()->student);
-            $this->authorize('update', $class);
-            if($student->classroom->classroom_id != $class->id)
-                abort(403);
+        $studentId = $classId = null;
+        if(!isset($data['public']) || $data['public'] != 2) {
+            if(request()->student) {
+                $student = Student::find(request()->student);
+                $this->authorize('update', $class);
+                if($student->classroom->classroom_id != $class->id)
+                    abort(403);
+            } else {
+                $student = Functions::getCurrentStudent($class, []);
+            }
+            $studentId = $student->id;
         } else {
-            $student = Functions::getCurrentStudent($class, []);
+            $classId = $class->id;
         }
 
         return Blog::create([
             'name' => $data['name'],
-            'student_id' => $student->id,
+            'student_id' => $studentId,
+            'classroom_id' => $classId,
+            'public' => isset($data['public']) ? $data['public'] : 0,
         ]);
     }
 
@@ -54,6 +62,15 @@ class BlogController extends Controller
         $blog->delete();
         return $student->blogs;
     }
+    public function destroyPublic($code, $id)
+    {
+        $blog = Blog::find($id);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        
+        $blog->delete();
+        return $class->fresh()->blogs;
+    }
 
     public function destroyPost($code, $id)
     {
@@ -63,9 +80,15 @@ class BlogController extends Controller
         
         $student = Functions::getCurrentStudent($class, []);
         
-        if($student->id != $post->blog->student_id)
+        if($post->blog->public == 0) {
+            if($student->id != $post->blog->student_id)
             abort(403);
-
+        } else {
+            if(!auth()->user()->classrooms->where('id', $class->id)->where('pivot.role', '>', 0)->first() ? true : false && $post->student_id) {
+                if($post->student_id != $student->id)
+                    abort(403);
+            }
+        }
         $post->delete();
     }
 
@@ -77,7 +100,8 @@ class BlogController extends Controller
             'id' => ['numeric', 'required'],
             'title' => ['string', 'required'],
             'content' => ['string', 'required'],
-        ]);
+            ]);
+        $post = Posts::find($data['id']);
 
         if(request()->student) {
             $student = Student::find(request()->student);
@@ -88,10 +112,13 @@ class BlogController extends Controller
         } else {
             $student = Functions::getCurrentStudent($class, []);
             $name = $student->name;
+            if($post->blog->public == 2) {
+                if($post->student_id != $student->id) {
+                    abort(403);
+                }
+            } else if ($post->blog->student_id != $student->id)
+                abort(403);
         }
-        $post = Posts::find($data['id']);
-        if ($post->blog->student_id != $student->id)
-            abort(403);
 
 
         $post->update([
@@ -111,19 +138,23 @@ class BlogController extends Controller
             'title' => ['string', 'required'],
             'content' => ['string', 'required'],
             'is_teacher' => ['nullable'],
+            'student_id' => ['numeric', 'nullable'],
         ]);
 
+        
         if(request()->student) {
             $student = Student::find(request()->student);
             $this->authorize('update', $class);
             if($student->classroom->classroom_id != $class->id)
-                abort(403);
+            abort(403);
         } else {
             $student = Functions::getCurrentStudent($class, []);
         }
 
         $blog = Blog::find($data['blog']);
-        if ($blog->student_id != $student->id)
+        if($blog->classroom_id && $blog->classroom_id != $class->id)
+            abort(403);
+        else if (!$blog->classroom_id && $blog->student_id != $student->id)
             abort(403);
 
         $from['title'] = __("notifications.post") . $blog->name;
@@ -140,13 +171,13 @@ class BlogController extends Controller
 
         }
 
-
         return Posts::create([
             'title' => $data['title'],
             'content' => $data['content'],
             'blog_id' => $blog->id,
             'date' => Carbon::now(),
             'is_teacher' => $data['is_teacher'],
+            'student_id' => isset($data['student_id']) && (!isset($data['is_teacher']) || $data['is_teacher'] != 1)  ? $data['student_id'] : null,
         ]);
     }
 
@@ -158,6 +189,12 @@ class BlogController extends Controller
         $data = request()->validate([
             'blog' => ['numeric', 'required'],
         ]);
+        $blog = Blog::where('id', '=', $data['blog'])->firstOrFail();
+        if($blog->public == 2) {
+            if($blog->classroom_id != $class->id)
+                abort(403);
+            return $blog->posts()->orderByDesc('id')->get();
+        }
 
         if(request()->student) {
             $student = Student::find(request()->student);
@@ -167,8 +204,8 @@ class BlogController extends Controller
         } else {
             $student = Functions::getCurrentStudent($class, []);
         }
-
-        $blog = Blog::where('id', '=', $data['blog'])->where('student_id', $student->id)->firstOrFail();
+        if($blog->student_id != $student->id)
+            abort(403);
         return $blog->posts()->orderByDesc('id')->get();
     }
 }

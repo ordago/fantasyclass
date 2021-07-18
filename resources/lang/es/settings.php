@@ -62,5 +62,8 @@ return [
     'repair_equipment' => "Precio reparación de equipamento",
 
     'collectionable_probability' => "Probabilidades de los coleccionables",
+    'adventures' => "Aventuras de la clase",
+    'public_info' => "Las aventuras de clase serán visibles por todo el alumnado (en la sección tu aventura) y podrán participar añadiendo posts.",
+    'add_public_adventure' => 'Añadir aventura pública',
 
 ];

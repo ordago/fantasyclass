@@ -658,6 +658,8 @@ class ClassroomsStudentController extends Controller
         $student->load('blogs');
         $student->load('skills');
 
+        $student->append('blogsp');
+
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {
             $grades = collect();

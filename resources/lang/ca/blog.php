@@ -10,5 +10,6 @@ return [
     'title' => 'Títol de l\'aventura',
     'content' => 'Contingut',
     'content_placeholder' => 'Escriu històries mevarelloses <i class="fad fa-smile-wink colored"></i>',
+    'class_blog' => 'Aquesta aventura és compartida amb tota la classe, el que escrigues serà visible per tothom!',
 
 ];

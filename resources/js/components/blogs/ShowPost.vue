@@ -27,14 +27,17 @@
 
           <div v-html="getContent(post.content)"></div>
           <div class="mt-3">
+            <span v-if="post.student" class="is-italic is-flex is-center-vertically"><img width="16px" height="16px" :src="post.student.avatar" class="mr-2"> {{ post.student.name }}</span>
+          </div>
+          <div class="mt-3">
             <small v-if="post.last_edit" class="is-italic">Edit: {{ post.last_edit }} {{ getDateFrom(post.updated_at) }}</small>
           </div>
         </div>
         <div class="has-text-right">
-          <button class="button is-dark is-outlined" v-if="!post.is_teacher || (admin && post.is_teacher)" @click="editPost(post)">
+          <button class="button is-dark is-outlined" v-if="(!post.student_id && (!post.is_teacher || (admin && post.is_teacher))) || (post.student_id && (post.student_id == $parent.student.id || admin))" @click="editPost(post)">
             <i class="fad fa-edit"></i> {{ trans.get("general.edit") }}
           </button>
-          <button class="button is-danger is-outlined" v-if="(!post.is_teacher && !admin) || (admin && post.is_teacher)" @click="deletePost(post.id)">
+          <button class="button is-danger is-outlined" v-if="(!post.student_id && (!post.is_teacher || (admin && post.is_teacher))) || (post.student_id && (post.student_id == $parent.student.id || admin))" @click="deletePost(post.id)">
             <i class="fad fa-trash-alt"></i> {{ trans.get("general.delete") }}
           </button>
         </div>
@@ -99,3 +102,12 @@ export default {
   computed: {},
 };
 </script>
+<style>
+.name-student {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 32px;
+  height: 32px;
+}
+</style>

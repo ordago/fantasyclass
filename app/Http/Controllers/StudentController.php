@@ -243,6 +243,7 @@ class StudentController extends Controller
         $student->append('numcards');
         $student->load('collections');
         $student->load('collectionables');
+        $student->append('blogsp');
 
         foreach ($student->getAutomaticBadges() as $badge) {
             $student->badges->push($badge);

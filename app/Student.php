@@ -44,6 +44,12 @@ class Student extends Model implements HasMedia
 
 
 
+    public function getBlogspAttribute()
+    {
+        $class = Classroom::find($this->classroom->classroom_id);
+        return $class->blogs;
+    }
+
     public function getAvatarAttribute()
     {
         if ($this->avatar_url)

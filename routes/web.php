@@ -281,6 +281,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/post', 'BlogController@editPost');
         Route::post('/{code}/posts', 'BlogController@index');
         Route::delete('/{code}/blog/{id}', 'BlogController@destroy');
+        Route::delete('/{code}/blogp/{id}', 'BlogController@destroyPublic');
         Route::delete('/{code}/post/{id}', 'BlogController@destroyPost');
         
         // Pets

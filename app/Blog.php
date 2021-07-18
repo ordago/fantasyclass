@@ -9,6 +9,7 @@ class Blog extends Model
 
     protected $fillable = [
         'student_id',
+        'classroom_id',
         'name',
         'public',
     ];

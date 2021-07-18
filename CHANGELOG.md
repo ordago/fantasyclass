@@ -1,5 +1,7 @@
 # Changelog
 ## v1.65 Beta (XX/07/2021)
+### Added
+- General class adventures.
 
 ### Changed
 - Change edit for save when editing objects.

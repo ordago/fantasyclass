@@ -10,5 +10,6 @@ return [
     'title' => 'Adventure title',
     'content' => 'Content',
     'content_placeholder' => 'Write there great stuff <i class="fad fa-smile-wink colored"></i>',
+    'class_blog' => 'This adventure is shared with all the classroom, everyone will read your posts!',
 
 ];

@@ -62,4 +62,7 @@ return [
     'repair_equipment' => "Preu reparació d'equipament",
     
     'collectionable_probability' => "Probabilitats dels col·leccionables",
+    'adventures' => "Aventures de la classe",
+    'public_info' => "Les aventures de classe seran visibles per tot l'alumnat (a la secció la teua aventura) i podran participar afegint posts.",
+    'add_public_adventure' => 'Afegir aventura pública',
 ];

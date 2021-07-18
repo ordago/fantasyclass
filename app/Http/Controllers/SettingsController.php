@@ -54,6 +54,7 @@ class SettingsController extends Controller
 
         $teachers = $class->users->where('pivot.role', '>', 0);
 
+        $class->load('blogs');
         $user = auth()->user()->id;
         $isAdmin = auth()->user()->classrooms->where('id', $class->id)->where('pivot.role', '=', 2)->first() ? 1 : 0;
         return view('settings.index', compact('settings', 'class', 'teachers', 'isAdmin', 'user'));

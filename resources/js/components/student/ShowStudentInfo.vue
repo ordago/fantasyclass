@@ -733,6 +733,7 @@
           class="p-2"
         >
           <Blogs
+            :blogsp="student.blogsp"
             :code="classroom.code"
             :student="student"
             :admin="admin"
@@ -879,7 +880,7 @@
                   class="button is-info"
                   @click="claimReward(collection)"
                   v-if="!admin && checkReward(collection)"
-                  >{{ trans.get('collections.claim_reward') }}</span
+                  >{{ trans.get("collections.claim_reward") }}</span
                 >
               </h3>
               <div>
@@ -1643,12 +1644,12 @@ export default {
   methods: {
     getCollectionNumber(collection) {
       let count = 0;
-      if(this.student.collections)
-      this.student.collections.forEach((element) => {
-        if(element.id == collection) {
-          count =  element.pivot.count;
-        }
-      });
+      if (this.student.collections)
+        this.student.collections.forEach((element) => {
+          if (element.id == collection) {
+            count = element.pivot.count;
+          }
+        });
       return count;
     },
     claimReward(collection) {

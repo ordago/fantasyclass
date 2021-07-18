@@ -62,5 +62,9 @@ return [
     'repair_equipment' => "Reparing equipment price",
 
     'collectionable_probability' => "collectible type probabilities",
+    'adventures' => "Classroom adventures",
+    'public_info' => "Classroom adventures will be visible by all students (in your adventure section) and they'll be able to participate adding posts.",
+    'add_public_adventure' => 'Add public adventure',
+
 
 ];

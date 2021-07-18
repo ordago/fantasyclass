@@ -18,9 +18,7 @@
         <span>
           <button class="button" @click="resetDocument()">
             <i class="fas fa-plus"></i>
-            <span class="ml-1">{{
-              trans.get("documents.add")
-            }}</span>
+            <span class="ml-1">{{ trans.get("documents.add") }}</span>
           </button>
         </span>
       </p>
@@ -78,7 +76,7 @@
               :true-value="1"
               :false-value="0"
             >
-              {{ trans.get('documents.is_task') }}
+              {{ trans.get("documents.is_task") }}
             </b-switch>
           </b-field>
           <div class="columns" v-if="document.is_task == 1">
@@ -152,7 +150,7 @@
                 :disabled="checkEdit()"
                 class="p-2"
               >
-                <b-field :label="trans.get('documents.url')+'*'">
+                <b-field :label="trans.get('documents.url') + '*'">
                   <b-input type="url" required v-model="document.url"></b-input>
                 </b-field>
               </b-tab-item>
