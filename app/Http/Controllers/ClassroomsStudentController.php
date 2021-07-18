@@ -201,18 +201,11 @@ class ClassroomsStudentController extends Controller
     public function getStudentPage($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('study', $class);
+        $this->authorize('studyOrTeach', $class);
         $data = request()->validate([
             'page' => ['required', 'integer'],
         ]);
         $students = $this->getPaginatedStudents($class, env('MIX_MAX_STUDENTS'), $data['page']);
-        // $students->each->load('equipment');
-        // $students->each->load('pets');
-        // $students->each->load('character');
-
-        // $students->each->append('numcards');
-        // $students->each->append('boost');
-        // $students->each->load('skills');
         return ['students' => $students];
     }
 

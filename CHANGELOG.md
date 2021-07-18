@@ -7,6 +7,7 @@
 ### Changed
 - Change edit for save when editing objects.
 - Fix gold update in battles.
+- Fix load students when in student's view.
 
 ## v1.64 Beta (09/07/2021)
 ### Changed

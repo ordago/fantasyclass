@@ -284,14 +284,19 @@ class StudentController extends Controller
     public static function getIndividualReport($id, $class)
     {
         $student = Student::findOrFail($id);
+        $student->load('badges', 'behaviours', 'grades', 'items', 'behaviours', 'challenges', 'questions', 'grades',);
         if ($student->classroom->classroom_id != $class->id)
             abort(403);
-        $student->load('badges', 'behaviours', 'items', 'behaviours', 'challenges', 'questions', 'grades',);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $evaluation[0] = EvaluationController::individualReport($class, [$student], null);
+        $i = 1;
+        foreach ($class->evalgroups as $evalg) {
+            $evaluation[$i] = EvaluationController::individualReport($class, [$student], $evalg);
+            $i++;
+        }
         foreach ($student->getAutomaticBadges() as $badge) {
             $student->badges->push($badge);
         }
-        settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $evaluation[0] = EvaluationController::individualReport($class, $student);
         $settings = EvaluationController::getEvalSettings($class->id);
         $student->classSettings = $settings;
         $student->evaluation = $evaluation;
