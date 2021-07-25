@@ -129,7 +129,7 @@
 </template>
 
 <script>
-// import Utils from "../../utils.js";
+import Utils from "../../utils.js";
 import ShowBadge from "../badge/ShowBadge.vue";
 
 export default {
@@ -138,7 +138,11 @@ export default {
   data: function () {
     return {};
   },
-  methods: {},
+  methods: {
+    getEmoji: function (grade) {
+      return Utils.getEmoji(grade, this.settings.eval_max);
+    },
+  },
   components: {
     ShowBadge,
   },
