@@ -6,6 +6,7 @@ use App\Behaviour;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
+use App\Collection;
 use App\Equipment;
 use App\Mail\RegisterStudent;
 use App\Pet;
@@ -288,18 +289,14 @@ class StudentController extends Controller
         if ($student->classroom->classroom_id != $class->id)
             abort(403);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $evaluation[0] = EvaluationController::individualReport($class, [$student], null);
-        $i = 1;
+        $grades = collect();
+        $grades->push(["namegroup" => __('evaluation.first'), "icon" => 'fas fa-chart-line', "evaluation" => EvaluationController::individualReport($class, [$student], null)]);
         foreach ($class->evalgroups as $evalg) {
-            $evaluation[$i] = EvaluationController::individualReport($class, [$student], $evalg);
-            $i++;
-        }
-        foreach ($student->getAutomaticBadges() as $badge) {
-            $student->badges->push($badge);
+            $grades->push(["namegroup" => $evalg->name, "icon" => $evalg->icon, "evaluation" => EvaluationController::individualReport($class, [$student], $evalg)]);
         }
         $settings = EvaluationController::getEvalSettings($class->id);
         $student->classSettings = $settings;
-        $student->evaluation = $evaluation;
+        $student->evaluation = $grades;
         return $student;
     }
 

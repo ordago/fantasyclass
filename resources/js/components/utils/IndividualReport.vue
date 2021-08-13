@@ -133,14 +133,14 @@ import Utils from "../../utils.js";
 import ShowBadge from "../badge/ShowBadge.vue";
 
 export default {
-  props: ["student", "classroom"],
+  props: ["student", "classroom", "settings"],
   created() {},
   data: function () {
     return {};
   },
   methods: {
     getEmoji: function (grade) {
-      return Utils.getEmoji(grade, this.settings.eval_max);
+      return Utils.getEmoji(grade, this.student.classSettings.eval_max);
     },
   },
   components: {

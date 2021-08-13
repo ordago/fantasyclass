@@ -23,7 +23,7 @@
 
 @section('content')
         @foreach ($students as $student)
-        <individual-report :classroom="{{ $class }}" :student="{{ $student }}"></individual-report>
+        <individual-report :classroom="{{ $class }}"  :student="{{ $student }}"></individual-report>
         <div class="page-break"></div>    
        @endforeach
 @endsection
