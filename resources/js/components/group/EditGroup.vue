@@ -22,8 +22,8 @@
     </figure>
     <label>{{ trans.get("groups.group_name") }}</label>
     <input type="text" class="input" v-model="group.name" />
-    <button class="button is-dark m-3" @click="edit">
-      {{ trans.get("general.edit") }}
+    <button class="button is-success m-3" @click="edit">
+      <i class="fas fa-save mr-2"></i> {{ trans.get("general.save") }}
     </button>
     <button class="button is-danger m-3" @click="remove">
       {{ trans.get("general.delete") }}

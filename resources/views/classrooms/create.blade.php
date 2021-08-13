@@ -2,7 +2,7 @@
 
 @section('content')
 
-<form @if(isset($class)) action="/classroom/{{ $class->code }}" @else action="/classroom" @endif method="post">
+<form @keypress.enter.prevent @if(isset($class)) action="/classroom/{{ $class->code }}" @else action="/classroom" @endif method="post">
 @csrf
   @if(isset($class))
     @method('patch')

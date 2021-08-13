@@ -12,5 +12,6 @@ return [
     'content' => 'Contenido',
     'content_placeholder' => 'Escribe historias maravillosas <i class="fad fa-smile-wink colored"></i>',
     'class_blog' => 'Esta aventura es compartida con toda la clase, ¡lo que escribas será visible por todos!',
+    'group_blog' => 'Esta aventura es compartida con tus compañeros de equipo.',
 
 ];

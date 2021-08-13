@@ -61,7 +61,11 @@ class BlogController extends Controller
             abort(403);
 
         $blog->delete();
-        return $student->blogs;
+        $student->fresh();
+        $student->load('blogs');
+        if($student->groups->first())
+            $student->groups->first()->append('blogs');
+        return $student;
     }
     public function destroyPublic($code, $id)
     {

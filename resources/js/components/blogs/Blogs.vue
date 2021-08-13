@@ -31,14 +31,15 @@
         {{ trans.get("blog.new_blog") }}
       </button>
       <button
-        class="button is-secondary"
-        v-if="!blogSelected"
+        class="button"
+        v-if="!blogSelected && student.groups.length"
         @click="createBlog(1)"
       >
-        <i class="fas fa-users"></i> {{ trans.get("blog.new_blog_g") }}
+        <i class="fas fa-users mr-2"></i> {{ trans.get("blog.new_blog_g") }}
       </button>
+      <span v-if="student.groups.length">
       <span
-        @click="toggleBlog(blog.id)"
+        @click="toggleBlog(blog.id, 1)"
         v-for="blog in student.groups[0].blogs"
         :key="'gb-' + blog.id"
       >
@@ -50,8 +51,9 @@
             ><i class="fad fa-feather-alt" v-if="!blogSelected"></i
             ><i class="fad fa-arrow-left" v-if="blogSelected"></i
           ></span>
-          <i class="fas fa-users"></i> {{ blog.name }}
+          <i class="fas fa-users mr-2"></i> {{ blog.name }}
         </div>
+      </span>
       </span>
       <span
         @click="toggleBlog(blog.id)"
@@ -81,6 +83,11 @@
       <article class="message is-link mb-2" v-if="type == 2">
         <div class="message-body">
           {{ trans.get("blog.class_blog") }}
+        </div>
+      </article>
+      <article class="message is-link mb-2" v-else-if="type == 1">
+        <div class="message-body">
+          {{ trans.get("blog.group_blog") }}
         </div>
       </article>
       <article class="message is-link mb-2" v-else-if="!stories.length">
@@ -209,7 +216,10 @@ export default {
           axios
             .delete("/classroom/" + this.code + "/blog/" + this.blogSelected)
             .then((response) => {
-              this.blogs = response.data;
+              if(this.student.groups.length)
+                this.student.groups[0].blogs = response.data.groups[0].blogs;
+              this.student.blogs = response.data.blogs;
+              this.$forceUpdate();
               this.blogSelected = null;
             });
         },
@@ -280,7 +290,10 @@ export default {
               type: typeB,
             })
             .then((response) => {
-              this.orderedBlogs.unshift(response.data);
+              if(typeB == 0)
+                this.orderedBlogs.unshift(response.data);
+              else 
+                this.student.groups[0].blogs.unshift(response.data)
               this.$forceUpdate();
             })
             .catch((error) => {

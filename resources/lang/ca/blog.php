@@ -12,5 +12,6 @@ return [
     'content' => 'Contingut',
     'content_placeholder' => 'Escriu històries mevarelloses <i class="fad fa-smile-wink colored"></i>',
     'class_blog' => 'Aquesta aventura és compartida amb tota la classe, el que escrigues serà visible per tothom!',
+    'group_blog' => 'Aquesta aventura és compartida amb els teus companys de grup.',
 
 ];

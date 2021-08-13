@@ -5,6 +5,9 @@
 
 ### Changed
 - Fixed reports.
+- Prevent trigger delete classroom, when pressing "Enter key".
+- Change edit for save when editing groups.
+- Added breadcrumb in groups.
 
 ## v1.65 Beta (18/07/2021)
 ### Added
