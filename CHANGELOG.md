@@ -1,4 +1,11 @@
 # Changelog
+## v1.66 Beta (XX/08/2021)
+### Added
+- Group stories.
+
+### Changed
+- Fixed reports.
+
 ## v1.65 Beta (18/07/2021)
 ### Added
 - General class adventures.

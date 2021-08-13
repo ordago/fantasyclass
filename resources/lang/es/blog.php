@@ -4,6 +4,7 @@ return [
 
     'blog_empty' => '¡Crea aquí tus aventuras!',
     'new_blog' => 'Nueva aventura',
+    'new_blog_g' => 'Nueva aventura grupal',
     'adventure_name' => 'Nombre de la aventura',
     'empty_posts' => 'Parece que no has escrito nada. ¿Estás de humor?',
     'write_post' => 'Escribe un post',

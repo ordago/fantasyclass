@@ -604,6 +604,7 @@ class ClassroomsStudentController extends Controller
         $student->load('collections');
         $student->load('collectionables');
 
+
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
@@ -652,6 +653,7 @@ class ClassroomsStudentController extends Controller
         $student->load('skills');
 
         $student->append('blogsp');
+        $student->groups->each->append('blogs');
 
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {

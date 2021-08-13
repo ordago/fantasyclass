@@ -26,17 +26,40 @@
       <button
         class="button is-primary"
         v-if="!blogSelected"
-        @click="createBlog"
+        @click="createBlog(0)"
       >
         {{ trans.get("blog.new_blog") }}
       </button>
+      <button
+        class="button is-secondary"
+        v-if="!blogSelected"
+        @click="createBlog(1)"
+      >
+        <i class="fas fa-users"></i> {{ trans.get("blog.new_blog_g") }}
+      </button>
+      <span
+        @click="toggleBlog(blog.id)"
+        v-for="blog in student.groups[0].blogs"
+        :key="'gb-' + blog.id"
+      >
+        <div
+          v-if="(!blogSelected || blogSelected == blog.id)"
+          class="card rounded p-5 my-2 cursor-pointer"
+        >
+          <span class="p-2"
+            ><i class="fad fa-feather-alt" v-if="!blogSelected"></i
+            ><i class="fad fa-arrow-left" v-if="blogSelected"></i
+          ></span>
+          <i class="fas fa-users"></i> {{ blog.name }}
+        </div>
+      </span>
       <span
         @click="toggleBlog(blog.id)"
         v-for="blog in orderedBlogs"
         :key="blog.id"
       >
         <div
-          v-if="!blogSelected || blogSelected == blog.id"
+          v-if="(!blogSelected || blogSelected == blog.id) && blog.public != 1"
           class="card rounded p-5 my-2 cursor-pointer"
         >
           <span class="p-2"
@@ -238,7 +261,7 @@ export default {
         this.load(id);
       } else this.blogSelected = null;
     },
-    createBlog() {
+    createBlog(typeB) {
       let student = null;
       if (this.admin) student = this.student.id;
       this.$buefy.dialog.prompt({
@@ -254,6 +277,7 @@ export default {
             .post(`/classroom/${this.code}/blog`, {
               name: value,
               student: student,
+              type: typeB,
             })
             .then((response) => {
               this.orderedBlogs.unshift(response.data);

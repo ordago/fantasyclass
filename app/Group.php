@@ -26,6 +26,17 @@ class Group extends Model implements HasMedia
         return "";  
     }
 
+    public function getBlogsAttribute()
+    {  
+        $blogs = collect();
+        foreach ($this->students as $student) {
+            foreach ($student->blogs()->where('public', '=', 1)->get() as $blog) {
+                $blogs->push($blog);
+            }
+        } 
+        return $blogs;
+    }
+
     public function registerMediaCollections() : void 
     {
         $this
