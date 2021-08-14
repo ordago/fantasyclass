@@ -23,7 +23,7 @@ class Role extends Model implements HasMedia
         if($media){
             return $media->getUrl();
         }
-        return "/img/level-default.png";  
+        return "/img/no_avatar.png";  
     }
 
     public function registerMediaCollections() : void 

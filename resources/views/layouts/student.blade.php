@@ -1,6 +1,11 @@
 @extends('layouts.app')
 
 @section('notifications')
+@if(session()->get('bypass_student'))
+<a v-tippy content="{{ __('students.bypass') }}" class="mr-1 cursor-pointer button has-text-light has-background-success" href="/classroom/{{ $class->code }}">
+    <i class="fas fa-user-graduate mr-2" style="font-size: 1.25em"></i> {{ __('battles.go_back') }}
+</a>
+@endif
 <notifications code="{{ $class->code }}" :videochats="{{ $videochats ?? '[]' }}" :docs="{{ $docs ?? '[]' }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="student"></notifications>
 @endsection
 

@@ -561,6 +561,8 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
+        session()->forget('bypass_student');
+
         $notifications = auth()->user()->unreadNotifications()->where('data->classroom', $code)->where('data->user', 'teacher')->get();
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);

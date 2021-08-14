@@ -1,4 +1,8 @@
 # Changelog
+## v1.67 Beta (XX/08/2021)
+### Added
+- Back button to return from viewing as a student.
+
 ## v1.66 Beta (14/08/2021)
 ### Added
 - Group stories.

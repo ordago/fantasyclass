@@ -1,8 +1,9 @@
 <template>
   <div
-    v-if="level"
+    v-if="role"
     :class="{
-      'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered': edit,
+      'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered':
+        edit,
       column: !edit,
     }"
     :style="getStyle()"
@@ -12,10 +13,17 @@
       class="columns w-100 is-variable is-0 py-2"
     >
       <div
-        class="column is-narrow py-0 card-shadow-s rounded-left has-background-light"
+        class="
+          column
+          is-narrow
+          py-0
+          card-shadow-s
+          rounded-left
+          has-background-light
+        "
       >
         <figure class="image is-128x128">
-          <label class="cursor-pointer" :for="'file' + level.id">
+          <label class="cursor-pointer" :for="'file' + role.id">
             <croppa
               class="p-2 card-shadow-s is-full-rounded"
               v-model="image"
@@ -43,24 +51,11 @@
         </figure>
       </div>
       <div class="column content card p-4 rounded-right card-shadow-s">
-        <p class="is-size-4">
-          {{ trans.get("levels.level") }} {{ level.number }}
-        </p>
-        <p class="my-2" v-if="edit">
-          <i class="fas fa-fist-raised colored"></i>
-          {{ trans.get("levels.xp") }}
-        </p>
-        <h2 v-if="!edit">{{ level.title }}</h2>
-        <p v-if="!edit">{{ level.description }}</p>
-        <input
-          type="number"
-          v-if="edit"
-          v-model="level.xp"
-          class="input w-100"
-        />
+        <h2 v-if="!edit">{{ role.title }}</h2>
+        <p v-if="!edit">{{ role.description }}</p>
         <p class="my-2" v-if="edit">{{ trans.get("levels.title") }}</p>
         <input
-          v-model="level.title"
+          v-model="role.title"
           v-if="edit"
           type="text"
           class="input w-100"
@@ -71,14 +66,24 @@
             class="input"
             rows="20"
             style="height: 100px"
-            v-model="level.description"
+            v-model="role.description"
           ></textarea>
         </p>
         <div v-if="edit" class="has-text-right mt-2">
-          <button class="button is-primary" @click="update" v-tippy :content="trans.get('general.save')">
+          <button
+            class="button is-primary"
+            @click="update"
+            v-tippy
+            :content="trans.get('general.save')"
+          >
             <i class="fas fa-save"></i>
           </button>
-          <button class="button is-danger" v-tippy :content="trans.get('general.delete')" @click="remove" v-if="last">
+          <button
+            class="button is-danger"
+            v-tippy
+            :content="trans.get('general.delete')"
+            @click="remove"
+          >
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -89,21 +94,19 @@
 
 <script>
 export default {
-  // props: ["level", "last", "code", "edit", "resize"],
   props: {
-    level: Object,
-    last: Boolean,
+    role: Object,
     code: String,
     edit: Boolean,
     resize: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
-    if (this.level) {
-      this.prevImage = this.level.imagelvl;
+    if (this.role) {
+      this.prevImage = this.role.image;
     }
   },
   data: function () {
@@ -120,16 +123,15 @@ export default {
           // form data
           var formData = new FormData();
           if (blob) formData.append("logo", blob, "logo.png");
-          formData.append("id", this.level.id);
-          formData.append("title", this.level.title ? this.level.title : "");
+          formData.append("id", this.role.id);
+          formData.append("title", this.role.title ? this.role.title : "");
           formData.append(
             "description",
-            this.level.description ? this.level.description : ""
+            this.role.description ? this.role.description : ""
           );
-          formData.append("xp", this.level.xp);
           formData.append("_method", "patch");
           axios
-            .post("/classroom/levels/" + this.level.id, formData, {
+            .post("/classroom/role/" + this.role.id, formData, {
               headers: {
                 "content-type": "multipart/form-data",
               },
@@ -143,13 +145,34 @@ export default {
       );
     },
     getStyle() {
-      if(this.resize)
-        return 'zoom: 60%;';
+      if (this.resize) return "zoom: 60%;";
     },
     remove: function () {
-      axios.delete("/classroom/level/" + this.level.id).then((response) => {
-        this.$parent.levels.pop();
-        this.$parent.$forceUpdate();
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.delete"),
+        message: this.trans.get("general.confirm_delete"),
+        confirmText: this.trans.get("general.delete"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-danger",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          axios.delete("/classroom/role/" + this.role.id).then((response) => {
+            // this.$parent.roles.pop();
+            var roleId = this.role.id;
+            var index = this.$parent.roles.findIndex(function (item, i) {
+              return item.id === roleId;
+            });
+            if (response.data === 1) {
+              this.$parent.roles.splice(index, 1);
+            }
+
+            this.$parent.$forceUpdate();
+          });
+        },
       });
     },
   },

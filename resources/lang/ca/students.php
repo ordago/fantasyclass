@@ -98,4 +98,6 @@ return [
     'log_collection' => 'Compra col·leccionables',
     
     'student_report' => 'Informe d\'estudiant',
+    
+    'bypass' => 'Estàs veient com a estudiant, clica ací per tornar a ser profe',
 ];
