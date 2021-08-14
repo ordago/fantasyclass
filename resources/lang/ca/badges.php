@@ -24,4 +24,5 @@ return [
     'challenge_info' => 'Has superat tots els reptes de ":name", continua així!',
     
     'base_theme' => 'Estil per defecte de les insígnies',
+    'theme' => 'Estil',
 ];

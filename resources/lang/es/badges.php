@@ -24,5 +24,6 @@ return [
     'challenge_info' => 'Has superado todos los desafíos de ":name", ¡continúa así!',
 
     'base_theme' => 'Estilo por defecto de las insignias',
+    'theme' => 'Estilo',
 
 ];

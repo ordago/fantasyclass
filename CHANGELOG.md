@@ -1,5 +1,5 @@
 # Changelog
-## v1.66 Beta (XX/08/2021)
+## v1.66 Beta (14/08/2021)
 ### Added
 - Group stories.
 
@@ -8,6 +8,8 @@
 - Prevent trigger delete classroom, when pressing "Enter key".
 - Change edit for save when editing groups.
 - Added breadcrumb in groups.
+- Change the undead character for the newer one.
+- Notifications will remain 1 week.
 
 ## v1.65 Beta (18/07/2021)
 ### Added
