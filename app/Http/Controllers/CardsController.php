@@ -216,9 +216,9 @@ class CardsController extends Controller
             $newCard->update(['classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
         }
         Mail::to(env('EMAIL'))->send(new NewCardNotification());
-        
 
-        
+
+
     }
 
     public function import($code)
@@ -234,7 +234,7 @@ class CardsController extends Controller
             $this->authorize('view', $cardClass);
         $newCard = $card->replicate();
         $class->cards()->save($newCard);
-        $newCard->update(['own' => 0, 'shared' => 0]);    
+        $newCard->update(['own' => 0, 'shared' => 0]);
     }
 
     // Add default cards
@@ -441,10 +441,10 @@ class CardsController extends Controller
             return false;
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $probabilites = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
+        $probabilities = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
 
         do {
-            $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilites[0], 2 => $probabilites[1], 3 => $probabilites[2], 4 => $probabilites[3]));
+            $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilities[0], 2 => $probabilities[1], 3 => $probabilities[2], 4 => $probabilities[3]));
             $card = Card::where('type', $typeValue)->where('classroom_id', $class->id)->inRandomOrder()->first();
         } while ($card == null);
         return $card;
