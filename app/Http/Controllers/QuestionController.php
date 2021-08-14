@@ -30,7 +30,7 @@ class QuestionController extends Controller
 
             $num = 2;
             $ids = collect();
-    
+
             if ($data['question']['incorrectAnswer2'])
                 $num++;
             if ($data['question']['incorrectAnswer3'])
@@ -38,7 +38,7 @@ class QuestionController extends Controller
             for ($i = 1; $i <= $num; $i++) {
                 $ids->add($i);
             }
-    
+
             $options = collect();
             $ids = $ids->shuffle();
             $id = $ids->pop();
@@ -88,7 +88,7 @@ class QuestionController extends Controller
         $class = Classroom::where('code', '=', $code)->firstorFail();
         $this->authorize('update', $class);
 
-        // That is whithout category, just for clarify
+        // That is without category, just for clarify
         if ($bank == "wc") {
             $challenges = [];
             foreach ($class->challengeGroups as $cg) {

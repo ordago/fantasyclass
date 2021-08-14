@@ -40,7 +40,7 @@ class Question extends Model
 
         $class = Classroom::where('id', '=', $this->challenge->classroom())->first();
         $answered = 0;
-        $answeredOK = $answeredKO = $remainning = [];
+        $answeredOK = $answeredKO = $remaining = [];
         $students = $class->students;
         foreach ($students as $student) {
             $info = $this->getStudentInfo($student);
@@ -49,9 +49,9 @@ class Question extends Model
                 if($info['correct'])
                     $answeredOK[] = $student->name;
                 else $answeredKO[]  = $student->name;
-            } else $remainning[] = $student->name;
+            } else $remaining[] = $student->name;
         }
-        return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remainning' => $remainning];
+        return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remainning' => $remaining];
     }
 
     public function getStudentInfo($student = null)
@@ -89,10 +89,10 @@ class Question extends Model
                         $result = strcasecmp($answer->pivot->answer, $option['answer']);
                     }
                     if($result === 0) {
-                        return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => true, 'answerOK' => $answer->pivot->answer]; 
+                        return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => true, 'answerOK' => $answer->pivot->answer];
                     }
                 }
-                return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => false, 'answerKO' => $answer->pivot->answer, 'answerOK' => $answers]; 
+                return ['question' => $this['name'], 'type' => $this->type, 'answered' => true, 'correct' => false, 'answerKO' => $answer->pivot->answer, 'answerOK' => $answers];
 
             }
         } else {
