@@ -36,6 +36,9 @@
             <a href="/classroom/{{ $class->code }}/cards" class="navbar-item">
                 <i class="fak fa-deck mr-2"></i> {{ __('menu.cards') }}
             </a>
+            <a href="/classroom/{{ $class->code }}/roles" class="navbar-item">
+                <i class="fas fa-mask mr-2"></i> {{ __('menu.roles') }}
+            </a>
             <a href="/classroom/{{ $class->code }}/badges" class="navbar-item">
                 <i class="fad fa-award mr-2"></i> {{ __('menu.badges') }}
             </a>

@@ -103,6 +103,11 @@ class Classroom extends Model implements HasMedia
         return $this->hasMany(Grouping::class);
     }
 
+    public function roles()
+    {
+        return $this->hasMany(Role::class);
+    }
+
     public function cards()
     {
         return $this->hasMany(Card::class);

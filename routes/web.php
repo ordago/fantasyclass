@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -149,6 +150,13 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/levels', 'LevelsController@store');
         Route::patch('/levels/{level}', 'LevelsController@update');
         Route::delete('/level/{id}', 'LevelsController@destroy');
+  
+        // Levels
+        Route::post('/{code}/role/add', 'RoleController@createNew');
+        Route::get('/{code}/roles', 'RoleController@index');
+        Route::post('/{code}/roles', 'RoleController@store');
+        Route::patch('/roles/{role}', 'RoleController@update');
+        Route::delete('/role/{id}', 'RoleController@destroy');
 
         // Documents
         Route::get('/{code}/docmgr', 'DocumentManagerController@index');

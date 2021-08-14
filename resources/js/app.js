@@ -90,6 +90,11 @@ Vue.component('show-level', require('./components/level/ShowLevel.vue').default)
 Vue.component('show-levels', () => import('./components/level/ShowLevels.vue'));
 Vue.component('show-level-student', require('./components/level/ShowLevelStudent.vue').default);
 
+Vue.component('create-roles', require('./components/role/CreateRoles.vue').default);
+Vue.component('show-role', require('./components/role/ShowRole.vue').default);
+Vue.component('show-roles', () => import('./components/role/ShowRoles.vue'));
+Vue.component('show-role-student', require('./components/role/ShowRoleStudent.vue').default);
+
 Vue.component('show-document-group', () => import('./components/documents/ShowDocumentGroup.vue'));
 
 Vue.component('show-challenges-group', () => import('./components/challenges/ShowChallengesGroup.vue'));
