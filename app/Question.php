@@ -51,7 +51,7 @@ class Question extends Model
                 else $answeredKO[]  = $student->name;
             } else $remaining[] = $student->name;
         }
-        return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remainning' => $remaining];
+        return ['answered' => $answered, 'answeredOK' => $answeredOK, 'answeredKO' => $answeredKO, 'remaining' => $remaining];
     }
 
     public function getStudentInfo($student = null)

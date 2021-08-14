@@ -8,12 +8,12 @@
           <span
             class="tag is-dark"
             v-tippy
-            :content="reactiveQuestion.stats.remainning"
+            :content="reactiveQuestion.stats.remaining"
           >
             <i class="fas fa-user"></i>
             {{ reactiveQuestion.stats.answered }} /
             <i class="fas fa-user-slash"></i>
-            {{ reactiveQuestion.stats.remainning.length }}
+            {{ reactiveQuestion.stats.remaining.length }}
           </span>
           <span
             class="tag is-success"
