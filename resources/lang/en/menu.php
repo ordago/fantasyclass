@@ -52,6 +52,7 @@ return [
     'resources' => 'Resources',
     'videochat' => 'Videochat',
     'collections' => 'Collections',
+    'roles' => 'Roles',
 
     'view_list' => 'List view',
     'view_group' => 'Group view',

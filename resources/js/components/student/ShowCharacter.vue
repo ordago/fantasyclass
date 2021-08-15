@@ -8,6 +8,25 @@
     >
       <img :src="student.grouplogo" class="is-full-rounded" />
     </span>
+    <span v-if="student.role && student.role.length">
+      <span class="top-right" :style="getStyleRole(student.grouplogo)">
+        <span>
+          <tippy theme="light" maxWidth="100%">
+            <template v-slot:trigger>
+              <img
+                :src="student.role[0].image"
+                class="is-absolute card-shadow-s is-full-rounded"
+                style="top: 8px; left: 7px"
+                width="30px"
+                height="30px"
+              />
+            </template>
+            <show-role :code="classroom.code" :edit="false" :role="student.role[0]"></show-role>
+          </tippy>
+        </span>
+        <img :src="getImgRole(student.grouplogo)" class="" />
+      </span>
+    </span>
 
     <div
       class="card-image card-shadow-s rounded-top char-bg"
@@ -134,25 +153,32 @@ export default {
     return {};
   },
   methods: {
+    getStyleRole(group) {
+      if (group) return "top: 56px;right:9px;z-index:1";
+      else return "top: -3.5px;right:9px;z-index:1";
+    },
+    getImgRole(group) {
+      if (group) return "/img/protected/ribbon.png";
+      else return "/img/protected/ribbon-full.png";
+    },
     feedPet(id) {
-      axios.post('/classroom/student/pet/feed', {id: id})
-        .then(response => {
-          this.$toast(response.data.message, { type: response.data.type });
-          if(response.data.type == 'success') {
-            let audio = new Audio("/sound/eat.mp3");
-            audio.play();
-            this.$refs.pet.classList.add("animated");
-            this.$refs.pet.classList.add("faa-bounce");
-            setTimeout(() => {
-              this.$refs.pet.classList.remove("animated");
-              this.$refs.pet.classList.remove("faa-bounce");
-            }, 2000);
-            this.student.pets = response.data.student.pets;
-            this.$parent.student.gold = response.data.student.gold;
-            this.$parent.$forceUpdate();
-            this.$forceUpdate();
-          }
-        });
+      axios.post("/classroom/student/pet/feed", { id: id }).then((response) => {
+        this.$toast(response.data.message, { type: response.data.type });
+        if (response.data.type == "success") {
+          let audio = new Audio("/sound/eat.mp3");
+          audio.play();
+          this.$refs.pet.classList.add("animated");
+          this.$refs.pet.classList.add("faa-bounce");
+          setTimeout(() => {
+            this.$refs.pet.classList.remove("animated");
+            this.$refs.pet.classList.remove("faa-bounce");
+          }, 2000);
+          this.student.pets = response.data.student.pets;
+          this.$parent.student.gold = response.data.student.gold;
+          this.$parent.$forceUpdate();
+          this.$forceUpdate();
+        }
+      });
     },
     getPetClass(pet) {
       if (pet.pivot.hp <= 0) return "pet-character show-pet-dead";
@@ -184,9 +210,12 @@ export default {
         "' max=100 min=0></progress>";
       name += "</span>";
       if (this.feed && pet.pivot.hp > 0 && pet.pivot.hp < 100)
-        name += `<br><small><span class="tag is-success mx-2 cursor-pointer" onclick="feedPet(${this.student.id})">🍅🍖 ${this.trans.get(
-          "pets.feed"
-        )} `+ this.classroom.settings.feed +` <i class="fas fa-coins colored"></i></span></small>`;
+        name +=
+          `<br><small><span class="tag is-success mx-2 cursor-pointer" onclick="feedPet(${
+            this.student.id
+          })">🍅🍖 ${this.trans.get("pets.feed")} ` +
+          this.classroom.settings.feed +
+          ` <i class="fas fa-coins colored"></i></span></small>`;
 
       return name;
     },

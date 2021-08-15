@@ -236,7 +236,7 @@ class Student extends Model implements HasMedia
    
     public function role()
     {
-        return $this->hasMany(Role::class);
+        return $this->belongsToMany(Role::class);
     }
 
     public function blogs()

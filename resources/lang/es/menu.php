@@ -52,6 +52,7 @@ return [
     'resources' => 'Materiales',
     'videochat' => 'Videollamadas',
     'collections' => 'Colecciones',
+    'roles' => 'Roles',
 
     'view_list' => 'Vista de lista',
     'view_group' => 'Vista de grupos',

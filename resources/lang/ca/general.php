@@ -14,6 +14,7 @@ return [
     'update' => "Actualitza",
     'edit' => "Edita",
     'save' => "Guarda",
+    'save_notify' => "Guarda i notifica",
     'delete' => "Elimina",
     'delete_all' => "Elimina totes",
     'close' => "Tanca",

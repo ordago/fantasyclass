@@ -14,6 +14,7 @@ return [
     'update' => "Update",
     'edit' => "Edit",
     'save' => "Save",
+    'save_notify' => "Save and notify",
     'delete' => "Delete",
     'delete_all' => "Delete all",
     'close' => "Close",

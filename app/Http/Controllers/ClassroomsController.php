@@ -487,7 +487,8 @@ class ClassroomsController extends Controller
         else $orderType = "orderByDesc";
         if($search) {
             return $class->students()->whereRaw("LOWER(name) LIKE ?", '%'.strtolower($search).'%')->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
-        } else return $class->students()->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
+        } 
+        else return $class->students()->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
     
     }
 
@@ -503,6 +504,7 @@ class ClassroomsController extends Controller
         $students->each->load('equipment');
         $students->each->load('pets');
         $students->each->load('character');
+        $students->each->load('role');
 
         $students->each->append('numcards');
         $students->each->append('boost');
@@ -568,7 +570,9 @@ class ClassroomsController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $groups = $class->grouping->first()->groups;
-        $groups->each->load('students');
+        if($class->students()->count() < env('MIX_MAX_STUDENTS')) {
+            $groups->each->load('students');
+        }
 
         $chat['title'] = sha1(env('CHAT_KEY') . $class->id);
         $chat['url'] = env('APP_URL_SHORT');

@@ -190,9 +190,10 @@ class ClassroomsStudentController extends Controller
             $user->load('equipment');
             $user->load('skills');
             $user->load('pets');
+            $user->load('role');
             $user->load('character');
             return collect($user->toArray())
-                ->only(['avatar', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
+                ->only(['avatar', 'role', 'username', 'grouplogopublic', 'name', 'xp', 'hp', 'gold', 'character', 'equipment', 'pets', 'level', 'groups', 'skills'])
                 ->all();
         });
         return $students;
@@ -650,6 +651,7 @@ class ClassroomsStudentController extends Controller
 
         $student->load('pets');
         $student->load('blogs');
+        $student->load('role');
         $student->load('skills');
 
         $student->append('blogsp');

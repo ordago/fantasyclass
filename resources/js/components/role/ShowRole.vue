@@ -6,6 +6,7 @@
         edit,
       column: !edit,
     }"
+    class="role"
     :style="getStyle()"
   >
     <div
@@ -50,18 +51,20 @@
           </label>
         </figure>
       </div>
-      <div class="column content card p-4 rounded-right card-shadow-s">
-        <h2 v-if="!edit">{{ role.title }}</h2>
-        <p v-if="!edit">{{ role.description }}</p>
-        <p class="my-2" v-if="edit">{{ trans.get("levels.title") }}</p>
+      <div v-if="!edit" class="column content card p-4 rounded-right card-shadow-s has-text-left">
+        <h2>{{ role.title }}</h2>
+        <p>{{ role.description }}</p>
+      </div>
+      <div v-else class="column content card p-4 rounded-right card-shadow-s">
+        <p class="my-2">{{ trans.get("levels.title") }}</p>
         <input
           v-model="role.title"
-          v-if="edit"
+        
           type="text"
           class="input w-100"
         />
-        <p class="my-2" v-if="edit">{{ trans.get("levels.description") }}</p>
-        <p v-if="edit">
+        <p class="my-2">{{ trans.get("levels.description") }}</p>
+        <p>
           <textarea
             class="input"
             rows="20"
@@ -69,7 +72,7 @@
             v-model="role.description"
           ></textarea>
         </p>
-        <div v-if="edit" class="has-text-right mt-2">
+        <div class="has-text-right mt-2">
           <button
             class="button is-primary"
             @click="update"
@@ -181,5 +184,11 @@ export default {
 <style>
 .min-width {
   min-width: 400px;
+}
+.role:hover .hidden {
+  display: initial;
+}
+.role {
+  max-width: 500px;
 }
 </style>

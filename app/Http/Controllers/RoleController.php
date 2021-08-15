@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Role;
+use App\Student;
 
 class RoleController extends Controller
 {
@@ -30,6 +31,53 @@ class RoleController extends Controller
         return Role::create([
             'classroom_id' => $class->id,
         ]);
+    }
+
+    public function removeAssign($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        foreach ($class->roles as $role) {
+                $role->students()->sync([]);
+            }
+    }
+
+    public function accept($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'roles' => ['array', 'required'],
+        ]);
+
+        foreach ($data['roles'] as $roleId => $studenId) {
+            if($roleId) {
+                $role = Role::find($roleId);
+                $role->students()->sync([]);
+                $student = Student::find($studenId);
+                if($student->classroom->classroom_id != $class->id || $role->classroom_id != $class->id)
+                    abort(403);
+                $student->role()->sync($roleId);
+            }
+        }
+    }
+    public function getRoleInfo($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $type = settings()->get('role_assign', 'classroom');
+
+        $students = $class->students;
+        // $students->each->load('role');
+        $roles = [];
+        foreach ($class->roles as $role) {
+            if($role->students->first())
+                $roles[$role->id] = $role->students->first()->id;
+        }
+        return ["type" => $type, 'students' => $students, "roles" => $roles];
     }
 
     public function store($code)

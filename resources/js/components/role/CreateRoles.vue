@@ -4,9 +4,9 @@
         <div class="p-4">
             <div>
                 <span>
-                    {{ trans.get('role.number_roles') }}
+                    {{ trans.get('roles.number_roles') }}
                 </span> 
-                <input type="number" class="input" name="roles" value="4">
+                <input type="number" class="input mt-2" name="roles" value="4">
             </div>
             <button class="button is-primary mt-3">{{ trans.get('roles.create') }}</button>
         </div>

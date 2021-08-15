@@ -118,7 +118,7 @@
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-.level-hidden {
+.level-hidden, .role-hidden {
     z-index: 11;
     position: absolute;
     top: -5px;
@@ -127,6 +127,10 @@
 }
 
 .level-top:hover+.level-hidden {
+    display: initial;
+}
+
+.role-top:hover+.role-hidden {
     display: initial;
 }
 

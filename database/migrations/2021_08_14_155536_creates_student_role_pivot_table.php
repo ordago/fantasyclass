@@ -13,7 +13,7 @@ class CreatesStudentRolePivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('student_role', function (Blueprint $table) {
+        Schema::create('role_student', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('student_id');
             $table->unsignedBigInteger('role_id');
@@ -29,6 +29,6 @@ class CreatesStudentRolePivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('student_role');
+        Schema::dropIfExists('role_student');
     }
 }

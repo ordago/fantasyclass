@@ -114,7 +114,7 @@
           <button class="button mb-0 is-info" @click="random">
             <i class="fas fa-random mr-2"></i> {{ trans.get("utils.random") }}
           </button>
-          <div class="control select mt-0" v-if="groups && groups.length">
+          <div class="control select mt-0" v-if="groups && groups.length && orderedStudents.length < max">
             <select v-model="groupSelected" @input="updateGroup()">
               <option :value="null" disabled>{{ trans.get('utils.by_group') }}</option>
               <option
@@ -183,6 +183,7 @@ export default {
       behaviour: null,
       groupSelected: null,
       isLoading: false,
+      max: process.env.MIX_MAX_STUDENTS,  
     };
   },
   methods: {

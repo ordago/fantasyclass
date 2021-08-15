@@ -244,6 +244,7 @@ class StudentController extends Controller
         $student->append('numcards');
         $student->load('collections');
         $student->load('collectionables');
+        $student->load('role');
         $student->append('blogsp');
         $student->groups->each->append('blogs');
 

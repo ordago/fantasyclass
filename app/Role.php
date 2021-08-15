@@ -17,19 +17,24 @@ class Role extends Model implements HasMedia
 
     protected $appends = ['image'];
 
-    public function getImageAttribute() 
-    {  
+    public function getImageAttribute()
+    {
         $media = $this->getMedia('role')->first();
-        if($media){
+        if ($media) {
             return $media->getUrl();
         }
-        return "/img/no_avatar.png";  
+        return "/img/no_avatar.png";
     }
 
-    public function registerMediaCollections() : void 
+    public function registerMediaCollections(): void
     {
         $this
             ->addMediaCollection('role')
             ->singleFile();
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
     }
 }
