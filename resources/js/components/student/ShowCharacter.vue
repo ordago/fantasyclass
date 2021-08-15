@@ -11,14 +11,14 @@
     <span v-if="student.role && student.role.length">
       <span class="top-right" :style="getStyleRole(student.grouplogo)">
         <span>
-          <tippy theme="light" maxWidth="100%">
+          <tippy theme="light" maxWidth="100%" :interactive="true">
             <template v-slot:trigger>
               <img
                 :src="student.role[0].image"
                 class="is-absolute card-shadow-s is-full-rounded"
-                style="top: 8px; left: 7px"
-                width="30px"
-                height="30px"
+                style="top: 10px; left: 10px"
+                width="35px"
+                height="35px"
               />
             </template>
             <show-role :code="classroom.code" :edit="false" :role="student.role[0]"></show-role>
@@ -154,7 +154,7 @@ export default {
   },
   methods: {
     getStyleRole(group) {
-      if (group) return "top: 56px;right:9px;z-index:1";
+      if (group) return "top: 55px;right:5px;z-index:1";
       else return "top: -3.5px;right:9px;z-index:1";
     },
     getImgRole(group) {

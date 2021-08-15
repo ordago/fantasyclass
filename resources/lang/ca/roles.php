@@ -10,6 +10,7 @@ return [
     |
     */
 
+    'title' => 'Títol',
     'create' => 'Crear',
     'number_roles' => 'Quants rols vols crear?',
     'add' => 'Afegir nou rol',

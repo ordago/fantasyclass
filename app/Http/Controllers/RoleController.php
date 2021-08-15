@@ -64,7 +64,7 @@ class RoleController extends Controller
     }
     public function getRoleInfo($code)
     {
-        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
@@ -77,7 +77,9 @@ class RoleController extends Controller
             if($role->students->first())
                 $roles[$role->id] = $role->students->first()->id;
         }
-        return ["type" => $type, 'students' => $students, "roles" => $roles];
+        $groups = $class->grouping->first()->groups;
+        // return response(['rooms' => array_values($rooms->toArray())]);
+        return ["type" => $type, 'students' => $students, "roles" => collect($roles), 'groups' => $groups];
     }
 
     public function store($code)

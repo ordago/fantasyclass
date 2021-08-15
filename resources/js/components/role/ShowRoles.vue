@@ -33,49 +33,70 @@
             <p class="modal-card-title">{{ trans.get("roles.assign") }}</p>
           </header>
           <section class="modal-card-body is-relative">
-            <button class="button is-dark" @click="randomAssign">
-              <i class="fas fa-random mr-2"></i>{{ trans.get("groups.random") }}
-            </button>
-            <div
-              class="columns my-1"
-              v-for="role in roles"
-              :key="'ra-' + role.id"
-            >
-              <div
-                class="
-                  column
-                  is-narrow
-                  py-0
-                  card-shadow-s
-                  rounded-left
-                  has-background-light
-                "
-              >
-                <figure class="image is-128x128">
-                  <img
-                    class="p-2 card-shadow-s is-full-rounded"
-                    :src="role.image"
-                  />
-                </figure>
+            <article class="message is-warning" v-if="groups && groups.length">
+              <div class="message-body">
+                __ Los roles por defecto son roles de clase, si quieres hacer
+                que los roles sean de grupo, lo puedes configurar aquí:
+                <br /><b-switch
+                  v-model="typeMode"
+                  class="mt-2"
+                  passive-type="is-primary"
+                  type="is-info"
+                >
+                  {{ typeMode ? "__Roles de grupo" : "__Roles de classe" }}
+                </b-switch>
               </div>
+            </article>
+            <div v-if="!typeMode">
+              <button class="button is-dark" @click="randomAssign">
+                <i class="fas fa-random mr-2"></i
+                >{{ trans.get("groups.random") }}
+              </button>
               <div
-                class="column card-shadow-s rounded-left has-background-light"
+                class="columns my-1"
+                v-for="role in roles"
+                :key="'ra-' + role.id"
               >
-                <div class="select">
-                  <select v-model="rolesAssign[role.id]">
-                    <option></option>
-                    <option
-                      v-for="(student, index) in students"
-                      :key="index + '-' + student.id"
-                      :value="student.id"
-                    >
-                      {{ student.name }}
-                    </option>
-                  </select>
+                <div
+                  class="
+                    column
+                    is-narrow
+                    py-0
+                    card-shadow-s
+                    rounded-left
+                    has-background-light
+                  "
+                >
+                  <figure class="image is-128x128">
+                    <img
+                      class="p-2 card-shadow-s is-full-rounded"
+                      :src="role.image"
+                    />
+                  </figure>
                 </div>
-                <div>
-                  <h2 class="is-size-4 my-1">{{ role.title }}</h2>
-                  <p class="mt-1">{{ role.description }}</p>
+                <div
+                  class="column card-shadow-s rounded-left has-background-light"
+                >
+                  <div class="select">
+                    <!-- <select v-model="rolesAssign[role.id]"> -->
+                    <select
+                      v-model="rolesAssign[role.id]"
+                      @input="selectValue(role.id, $event.target.value)"
+                    >
+                      <option></option>
+                      <option
+                        v-for="(student, index) in students"
+                        :key="index + '-' + student.id"
+                        :value="student.id"
+                      >
+                        {{ student.name }}
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <h2 class="is-size-4 my-1">{{ role.title }}</h2>
+                    <p class="mt-1">{{ role.description }}</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -120,10 +141,16 @@ export default {
       isAssignModalActive: false,
       students: [],
       typeR: null,
-      rolesAssign: [],
+      rolesAssign: {},
+      typeMode: false,
+      groups: [],
     };
   },
   methods: {
+    selectValue(id, value) {
+      this.rolesAssign[id] = parseInt(value);
+      this.$forceUpdate();
+    },
     removeAssign() {
       axios.delete(`/classroom/${this.code}/roles/remove`).then((response) => {
         this.$toast(this.trans.get("success_error.update_success"), {
@@ -161,7 +188,7 @@ export default {
     },
     randomAssign() {
       var studentsRand = _.shuffle(this.students);
-      this.rolesAssign = [];
+      this.rolesAssign = {};
       this.roles.forEach((element) => {
         this.rolesAssign[element.id] = studentsRand.shift().id;
       });
@@ -171,7 +198,10 @@ export default {
       axios.get(`/classroom/${this.code}/roles/info`).then((response) => {
         this.typeR = response.data.type;
         this.students = response.data.students;
-        this.rolesAssign = response.data.roles;
+        this.groups = response.data.groups;
+        if (Object.keys(response.data.roles).length)
+          this.rolesAssign = response.data.roles;
+        else this.rolesAssign = {};
         this.isAssignModalActive = true;
       });
     },
