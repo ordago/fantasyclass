@@ -22,7 +22,6 @@ class Role extends Model implements HasMedia
     {
         $media = $this->getMedia('role')->first();
         if ($media) {
-            dump($media);
             return $media->getUrl();
         }
         if(isset($this->uri))

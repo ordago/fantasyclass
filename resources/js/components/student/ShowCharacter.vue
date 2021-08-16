@@ -155,7 +155,7 @@ export default {
   methods: {
     getStyleRole(group) {
       if (group) return "top: 53px;right:5px;z-index:1";
-      else return "top: -3.5px;right:9px;z-index:1";
+      else return "top: -4.5px;right:9px;z-index:1";
     },
     getImgRole(group) {
       if (group) return "/img/protected/ribbon.png";
