@@ -25,7 +25,7 @@ return [
 
     'default_1_title' => 'Coordinador/a',
     'default_1_desc' => 'Conoce lo que se debe hacer y las tareas a realizar en todo momento. Anima a la clase o equipo a seguir trabajando.',
-<
+
     'default_2_title' => 'Secretario/a',
     'default_2_desc' => 'Anota los pactos o dudas que se tienen que resolver y vela porque se resuelvan. Ayuda en el control de la asistencia.',
 
