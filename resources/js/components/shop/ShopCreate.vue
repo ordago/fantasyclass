@@ -286,6 +286,8 @@ export default {
                 this.$toast(response.data.message, {
                   type: response.data.type,
                 });
+                window.location.href =
+                  "/classroom/" + this.code + "/shop";
               });
           }
         },
