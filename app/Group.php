@@ -23,7 +23,7 @@ class Group extends Model implements HasMedia
         if($media){
             return $media->getUrl();
         }
-        return "";  
+        return "/img/no_group_avatar.png";  
     }
 
     public function getBlogsAttribute()

@@ -38,8 +38,8 @@ class RoleController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         foreach ($class->roles as $role) {
-                $role->students()->sync([]);
-            }
+            $role->students()->sync([]);
+        }
     }
 
     public function accept($code)
@@ -51,17 +51,41 @@ class RoleController extends Controller
             'roles' => ['array', 'required'],
         ]);
 
-        foreach ($data['roles'] as $roleId => $studenId) {
-            if($roleId) {
-                $role = Role::find($roleId);
-                $role->students()->sync([]);
-                $student = Student::find($studenId);
-                if($student->classroom->classroom_id != $class->id || $role->classroom_id != $class->id)
-                    abort(403);
-                $student->role()->sync($roleId);
+        $this->removeAssign($code);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $type = settings()->get('role_assign', 'classroom');
+
+
+        if ($type == "classroom") {
+            foreach ($data['roles'] as $roleId => $studenId) {
+                if ($roleId) {
+                    $role = Role::find($roleId);
+                    if ($studenId) {
+                        $student = Student::find($studenId);
+                        if ($student->classroom->classroom_id != $class->id || $role->classroom_id != $class->id)
+                            abort(403);
+                        $student->role()->sync($roleId);
+                    } else {
+                        $role->students()->sync([]);
+                    }
+                }
+            }
+        } else {
+            foreach ($data['roles'] as $group) {
+                foreach ($group as $roleId => $studenId) {
+                    if ($roleId) {
+                        $role = Role::find($roleId);
+                        $student = Student::find($studenId);
+                        if ($student->classroom->classroom_id != $class->id || $role->classroom_id != $class->id)
+                            abort(403);
+                        $student->role()->sync($roleId);
+                    }
+                }
             }
         }
     }
+
     public function getRoleInfo($code)
     {
         $class = Classroom::where('code', '=', $code)->with('grouping.groups')->firstOrFail();
@@ -71,13 +95,26 @@ class RoleController extends Controller
         $type = settings()->get('role_assign', 'classroom');
 
         $students = $class->students;
-        // $students->each->load('role');
-        $roles = [];
-        foreach ($class->roles as $role) {
-            if($role->students->first())
-                $roles[$role->id] = $role->students->first()->id;
-        }
         $groups = $class->grouping->first()->groups;
+        $groups->each->load('students');
+
+        $roles = [];
+        if ($type == "classroom")
+            foreach ($class->roles as $role) {
+                if ($role->students->first())
+                    $roles[$role->id] = $role->students->first()->id;
+            }
+        else
+            foreach ($groups as $group) {
+                $roles[$group->id] = [];
+                foreach ($class->roles as $role) {
+                    foreach ($role->students as $student) {
+                        if ($student->groups->first()->id == $group->id)
+                            $roles[$group->id][$role->id] = $student->id;
+                    }
+                }
+            }
+        // dump($roles);
         // return response(['rooms' => array_values($rooms->toArray())]);
         return ["type" => $type, 'students' => $students, "roles" => collect($roles), 'groups' => $groups];
     }

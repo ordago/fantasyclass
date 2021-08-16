@@ -16,7 +16,7 @@
               <img
                 :src="student.role[0].image"
                 class="is-absolute card-shadow-s is-full-rounded"
-                style="top: 10px; left: 10px"
+                style="top: 9px; left: 10px"
                 width="35px"
                 height="35px"
               />
@@ -154,7 +154,7 @@ export default {
   },
   methods: {
     getStyleRole(group) {
-      if (group) return "top: 55px;right:5px;z-index:1";
+      if (group) return "top: 53px;right:5px;z-index:1";
       else return "top: -3.5px;right:9px;z-index:1";
     },
     getImgRole(group) {

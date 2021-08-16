@@ -1,7 +1,11 @@
 # Changelog
-## v1.67 Beta (XX/08/2021)
+## v1.67 Beta (16/08/2021)
 ### Added
 - Back button to return from viewing as a student.
+- Classroom / group roles. Now you can assign roles to students.
+
+### Changed
+- Fixed superhero movement and positions.
 
 ## v1.66 Beta (14/08/2021)
 ### Added
