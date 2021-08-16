@@ -17,6 +17,7 @@ class CreateRolesTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
+            $table->string('uri')->nullable();
             $table->unsignedBigInteger('classroom_id');
             $table->timestamps();
         });

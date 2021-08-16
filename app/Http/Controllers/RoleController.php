@@ -86,6 +86,41 @@ class RoleController extends Controller
         }
     }
 
+    public function insertDefault($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        if($class->roles->count() > 20)
+            abort(403);
+        
+        Role::create([
+            'title' => __('roles.default_1_title'),
+            'description' => __('roles.default_1_desc'),
+            'uri' => "/img/protected/logo_coord.png",
+            'classroom_id' => $class->id,
+        ]);
+        Role::create([
+            'title' => __('roles.default_2_title'),
+            'description' => __('roles.default_2_desc'),
+            'uri' => "/img/protected/logo_secre.png",
+            'classroom_id' => $class->id,
+        ]);
+        Role::create([
+            'title' => __('roles.default_3_title'),
+            'description' => __('roles.default_3_desc'),
+            'uri' => "/img/protected/logo_super.png",
+            'classroom_id' => $class->id,
+        ]);
+        Role::create([
+            'title' => __('roles.default_4_title'),
+            'description' => __('roles.default_4_desc'),
+            'uri' => "/img/protected/logo_portavoz.png",
+            'classroom_id' => $class->id,
+        ]);
+
+    }
+
     public function getRoleInfo($code)
     {
         $class = Classroom::where('code', '=', $code)->with('grouping.groups')->firstOrFail();
@@ -114,8 +149,6 @@ class RoleController extends Controller
                     }
                 }
             }
-        // dump($roles);
-        // return response(['rooms' => array_values($rooms->toArray())]);
         return ["type" => $type, 'students' => $students, "roles" => collect($roles), 'groups' => $groups];
     }
 
@@ -129,7 +162,7 @@ class RoleController extends Controller
             'roles' => ['numeric', 'required'],
         ]);
 
-        for ($i = 0; $i <= $data['roles']; $i++) {
+        for ($i = 0; $i < $data['roles']; $i++) {
             Role::create([
                 'classroom_id' => $class->id,
             ]);

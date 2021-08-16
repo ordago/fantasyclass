@@ -9,6 +9,13 @@
         <button class="button is-danger" @click="removeAssign">
           {{ trans.get("roles.delete") }}
         </button>
+        <button
+          class="button is-info ml-1"
+          v-if="roles.length < 16"
+          @click.prevent="importDefault"
+        >
+          {{ trans.get("roles.import_default") }}
+        </button>
       </div>
       <div class="columns is-multiline is-variable mt-3">
         <show-role
@@ -35,7 +42,7 @@
           <section class="modal-card-body is-relative">
             <article class="message is-warning" v-if="groups && groups.length">
               <div class="message-body">
-                {{ trans.get('roles.type_info') }}
+                {{ trans.get("roles.type_info") }}
                 <br /><b-switch
                   v-model="typeMode"
                   class="mt-2"
@@ -43,7 +50,11 @@
                   passive-type="is-primary"
                   type="is-info"
                 >
-                  {{ typeMode ? trans.get('roles.type_group') : trans.get('roles.type_class') }}
+                  {{
+                    typeMode
+                      ? trans.get("roles.type_group")
+                      : trans.get("roles.type_class")
+                  }}
                 </b-switch>
               </div>
             </article>
@@ -211,7 +222,8 @@
                 {{ trans.get("general.save") }}
               </button>
               <button class="button is-success" @click="accept(true)">
-                <i class="fas fa-save mr-1"></i><i class="fas fa-paper-plane mr-2"></i>
+                <i class="fas fa-save mr-1"></i
+                ><i class="fas fa-paper-plane mr-2"></i>
                 {{ trans.get("general.save_notify") }}
               </button>
             </div>
@@ -243,6 +255,13 @@ export default {
     };
   },
   methods: {
+    importDefault() {
+      axios
+        .get("/classroom/" + this.code + "/roles/default")
+        .then((response) => {
+          location.reload();
+        });
+    },
     toggleMode() {
       axios.patch("/classroom/" + this.code + "/setting", {
         _method: "patch",
@@ -276,8 +295,8 @@ export default {
           roles: this.rolesAssign,
         })
         .then((response) => {
-          if(notify) {
-            if(!this.typeMode) {
+          if (notify) {
+            if (!this.typeMode) {
               Object.keys(this.rolesAssign).forEach((value) => {
                 if (value) {
                   var index = this.roles.findIndex(function (item) {
@@ -297,22 +316,22 @@ export default {
             } else {
               Object.keys(this.rolesAssign).forEach((group) => {
                 Object.keys(this.rolesAssign[group]).forEach((value) => {
-                if (value) {
-                  var index = this.roles.findIndex(function (item) {
-                    return item.id == value;
-                  });
-                  axios
-                    .post("/classroom/" + this.code + "/push", {
-                      message:
-                        this.trans.get("roles.assign_notify") +
-                        " " +
-                        this.roles[index].title,
-                      id: this.rolesAssign[group][value],
-                    })
-                    .then((response) => {});
-                }
+                  if (value) {
+                    var index = this.roles.findIndex(function (item) {
+                      return item.id == value;
+                    });
+                    axios
+                      .post("/classroom/" + this.code + "/push", {
+                        message:
+                          this.trans.get("roles.assign_notify") +
+                          " " +
+                          this.roles[index].title,
+                        id: this.rolesAssign[group][value],
+                      })
+                      .then((response) => {});
+                  }
+                });
               });
-              })
             }
           }
           this.$toast(this.trans.get("success_error.update_success"), {
@@ -323,12 +342,12 @@ export default {
     },
     randomGAssign(group) {
       // this.groups.forEach((group) => {
-        this.rolesAssign[group.id] = {};
-        var studentsRand = _.shuffle(group.students);
-        _.shuffle(this.roles).forEach((role) => {
-          if (studentsRand.length)
-            this.rolesAssign[group.id][role.id] = studentsRand.shift().id;
-        });
+      this.rolesAssign[group.id] = {};
+      var studentsRand = _.shuffle(group.students);
+      _.shuffle(this.roles).forEach((role) => {
+        if (studentsRand.length)
+          this.rolesAssign[group.id][role.id] = studentsRand.shift().id;
+      });
       // });
       this.$forceUpdate();
     },
@@ -348,8 +367,7 @@ export default {
         this.groups = response.data.groups;
         if (Object.keys(response.data.roles).length) {
           this.rolesAssign = response.data.roles;
-        }
-        else {
+        } else {
           this.rolesAssign = {};
           if (this.typeMode) {
             this.groups.forEach((element) => {

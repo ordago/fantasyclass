@@ -156,6 +156,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/roles', 'RoleController@index');
         Route::get('/{code}/roles/info', 'RoleController@getRoleInfo');
         Route::post('/{code}/roles/accept', 'RoleController@accept');
+        Route::get('/{code}/roles/default', 'RoleController@insertDefault');
         Route::delete('/{code}/roles/remove', 'RoleController@removeAssign');
         Route::post('/{code}/roles', 'RoleController@store');
         Route::patch('/role/{role}', 'RoleController@update');

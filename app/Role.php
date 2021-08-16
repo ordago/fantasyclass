@@ -13,6 +13,7 @@ class Role extends Model implements HasMedia
         'classroom_id',
         'title',
         'description',
+        'uri',
     ];
 
     protected $appends = ['image'];
@@ -21,8 +22,11 @@ class Role extends Model implements HasMedia
     {
         $media = $this->getMedia('role')->first();
         if ($media) {
+            dump($media);
             return $media->getUrl();
         }
+        if(isset($this->uri))
+            return $this->uri;
         return "/img/no_avatar.png";
     }
 
