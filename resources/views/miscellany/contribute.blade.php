@@ -159,22 +159,22 @@
               <h3>Menciones</h3>
               <div class="columns fs-2 is-multiline">
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a href="https://aprendecoreano.com">Aprende coreano</a></i>
+                  <a target="_blank" href="https://aprendecoreano.com">Aprende coreano</a></i>
                 </span>
               </div>
               <h3>Colaboradores</h3>
               <div class="columns fs-2 is-multiline">
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a href="https://twitter.com/xavier_climent">Xavier Climent</a> <i class="fas mx-2 fa-hand-rock"></i>
+                  <a target="_blank" href="https://twitter.com/xavier_climent">Xavier Climent</a> <i class="fas mx-2 fa-hand-rock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a href="https://twitter.com/manzanequejesus">Jesús Manzaneque</a> <i class="fas mx-2 fa-hand-spock"></i>
+                  <a target="_blank" href="https://twitter.com/manzanequejesus">Jesús Manzaneque</a> <i class="fas mx-2 fa-hand-spock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   <i class="fas mx-2 fa-infinity"></i> Guillermo Guerrero <i class="fas mx-2 fa-hand-peace"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <i class="fas mx-2 fa-palette"></i> <a href="http://leideedimari.com">Maria Ghirardi</a> <i class="fas mx-2 fa-robot"></i> <i class="fas mx-2 fa-skull-crossbones"></i>
+                  <i class="fas mx-2 fa-palette"></i> <a target="_blank" href="http://leideedimari.com">Maria Ghirardi</a> <i class="fas mx-2 fa-robot"></i> <i class="fas mx-2 fa-skull-crossbones"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   Nacho <i class="fas mx-2 fa-bug"></i> <i class="fas mx-2 fa-laptop-code"></i>
@@ -186,7 +186,7 @@
                   Isabel Hernández <i class="fas mx-2 fa-hand-peace"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a href="https://aprendecoreano.com">Ander García</a> <i class="fas mx-2 fa-hand-spock"></i>
+                  <a target="_blank" href="https://aprendecoreano.com">Ander García</a> <i class="fas mx-2 fa-hand-spock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   Trini Ardid <i class="fas mx-2 fa-hand-spock"></i>
@@ -195,10 +195,13 @@
                   Luis Navarro Rodríguez <i class="fas mx-2 fa-hand-rock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  <a href="https://www.instagram.com/teacher_sarraceno/">Jesús Mínguez Corrales</a> <i class="fas mx-2 fa-hand-peace"></i>
+                  <a target="_blank" href="https://www.instagram.com/teacher_sarraceno/">Jesús Mínguez Corrales</a> <i class="fas mx-2 fa-hand-peace"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
-                  Víctor Corrale <i class="fas mx-2 fa-hand-spock"></i>
+                  Víctor Corrale <i class="fas mx-2 fa-hand-spock"></i> <i class="fab fa-youtube"></i>
+                </span>
+                <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
+                  <a target="_blank" href="https://twitter.com/franmar61">Francisco Martinez</a> <i class="fas mx-2 fa-hand-spock"></i> <i class="fab fa-youtube"></i>
                 </span>
               </div>
             </div>

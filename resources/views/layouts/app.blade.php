@@ -93,7 +93,7 @@
 
                 <div class="navbar-end has-text-right">
                     <div class="navbar-item">
-                        <span class="is-hidden-touch mr-2">
+                        <span class="is-hidden-touch mr-1">
                             <div class="is-flex">
                                 @yield('notifications')
                             </div>

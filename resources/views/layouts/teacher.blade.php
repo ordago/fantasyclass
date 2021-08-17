@@ -16,6 +16,9 @@
 
 @section('notifications')
 <notifications code="{{ $class->code }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '[]' }}"></notifications>
+<a v-tippy content="Tutorial" href="/tutorial" class="cursor-pointer button has-background-warning-light">
+    <i class="fas fa-info-circle" style="font-size: 1.25em"></i>
+</a>
 @endsection
 
 @section('menu')
@@ -61,7 +64,7 @@
                 <i class="fad fa-sparkles mr-2"></i> {{ __('menu.skills') }}
             </a>
             <a href="/classroom/{{ $class->code }}/collections" class="navbar-item">
-            <i class="fak fa-collection mr-2"></i> {{ __('menu.collections') }}
+                <i class="fak fa-collection mr-2"></i> {{ __('menu.collections') }}
             </a>
         </div>
     </div>
