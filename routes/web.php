@@ -393,7 +393,8 @@ Route::group(['middleware' => 'language'], function () {
 
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
-
+    
+    Route::get('/tutorial', function () {return redirect()->away(env('TUTORIAL'));});
 
     // Notifications
     Route::post('/push','NotificationController@store');
