@@ -45,24 +45,36 @@
             ></croppa>
             <img
               v-else
+              @contextmenu.prevent=""
               class="p-2 card-shadow-s is-full-rounded"
               :src="prevImage"
             />
           </label>
         </figure>
       </div>
-      <div v-if="!edit && (role.title || role.description)" class="column content card p-4 rounded-right card-shadow-s has-text-left">
+      <div
+        v-if="!edit && (role.title || role.description)"
+        class="
+          column
+          content
+          card
+          p-4
+          rounded-right
+          card-shadow-s
+          has-text-left
+        "
+      >
         <h2>{{ role.title }}</h2>
         <p>{{ role.description }}</p>
       </div>
-      <div v-if="edit" class="column content card p-4 rounded-right card-shadow-s">
-        <p class="my-2">{{ trans.get("roles.title") }} <span class="has-text-danger">*</span></p>
-        <input
-          v-model="role.title"
-        
-          type="text"
-          class="input w-100"
-        />
+      <div
+        v-if="edit"
+        class="column content card p-4 rounded-right card-shadow-s"
+      >
+        <p class="my-2">
+          {{ trans.get("roles.title") }} <span class="has-text-danger">*</span>
+        </p>
+        <input v-model="role.title" type="text" class="input w-100" />
         <p class="my-2">{{ trans.get("levels.description") }}</p>
         <p>
           <textarea

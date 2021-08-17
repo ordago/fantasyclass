@@ -15,13 +15,18 @@
             <template v-slot:trigger>
               <img
                 :src="student.role[0].image"
+                @contextmenu.prevent=""
                 class="is-absolute card-shadow-s is-full-rounded"
                 style="top: 9px; left: 10px"
                 width="35px"
                 height="35px"
               />
             </template>
-            <show-role :code="classroom.code" :edit="false" :role="student.role[0]"></show-role>
+            <show-role
+              :code="classroom.code"
+              :edit="false"
+              :role="student.role[0]"
+            ></show-role>
           </tippy>
         </span>
         <img :src="getImgRole(student.grouplogo)" class="" />
