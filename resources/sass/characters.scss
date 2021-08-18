@@ -1094,6 +1094,7 @@
     animation-duration: 1s;
     animation-iteration-count: infinite;
     animation-timing-function: linear;
+    z-index: 1;
 }
 
 .character:hover .golem-weapon {
@@ -1116,19 +1117,22 @@
     position: absolute;
     top: -50px;
     left: 2px;
+    z-index: 4;
+
 }
 
 .golem-body {
     position: absolute;
     top: 20px;
     left: -2px;
+    z-index: 2;
 }
 
 .golem-bottom {
     position: absolute;
     top: 85px;
     left: 5px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .knight-shield {
@@ -1289,6 +1293,7 @@
     left: -25px;
     z-index: 2;
 }
+
 .a1-body {
     top: 88px;
     left: -25px;
@@ -1330,6 +1335,7 @@
     left: 19px;
     z-index: 1
 }
+
 .a2-head {
     top: 29px;
     left: -4px;

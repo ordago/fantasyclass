@@ -22,6 +22,7 @@ return [
     'add_teachers' => 'Add teacher',
     'general_preferences' => 'General preferences',
     'allow_upload' => 'Allow students to upload custom images',
+    'disable_student_view' => 'Hide to students the information of the others',
     'show_chat' => 'Enable classroom chat',
     'allow_change_class' => 'Allow students to change subclass',
     'allow_send_money' => 'Allow students to send money',

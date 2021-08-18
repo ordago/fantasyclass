@@ -22,6 +22,7 @@ return [
     'add_teachers' => 'Afegir profe',
     'general_preferences' => 'Preferències generals',
     'allow_upload' => 'Permet als i les estudiants pujar imatges pròpies',
+    'disable_student_view' => 'Oculta als estudiants la informació de la resta',
     'show_chat' => 'Habilita el xat de la classe',
     'allow_change_class' => 'Permet canviar la subclasse',
     'allow_send_money' => 'Permet a l\'alumnat enviar-se diners',

@@ -1,4 +1,8 @@
 # Changelog
+## v1.68 Beta (XX/08/2021)
+### Added
+- Option to hide student's stats to other students.
+
 ## v1.67 Beta (16/08/2021)
 ### Added
 - Classroom / group roles. Now you can assign roles to students.

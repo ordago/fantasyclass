@@ -261,6 +261,16 @@
             class="ml-4"
             true-value="1"
             false-value="0"
+            @input="toggleProp('disable_student_view')"
+            v-model="settings.disable_student_view"
+            >{{ trans.get("settings.disable_student_view") }}</b-switch
+          >
+        </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
             @input="toggleProp('disable_your_adventure')"
             v-model="settings.disable_your_adventure"
             >{{ trans.get("settings.disable_your_adventure") }}</b-switch

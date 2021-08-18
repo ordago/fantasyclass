@@ -35,6 +35,7 @@ class SettingsController extends Controller
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['show_chat'] = settings()->get('show_chat', false);
         $settings['allow_change_class'] = settings()->get('allow_change_class', 1);
+        $settings['disable_student_view'] = settings()->get('disable_student_view', 0);
         $settings['allow_send_money'] = settings()->get('allow_send_money', 0);
         $settings['transfer_fee'] = settings()->get('transfer_fee', 10);
         $settings['themes'] = array_diff(scandir(public_path() . '/img/icon-packs'), array('..', '.', 'LICENSE'));

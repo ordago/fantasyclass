@@ -203,6 +203,11 @@ class ClassroomsStudentController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        if(settings()->get('disable_student_view', 0) == 1)
+            abort(403);
+
         $data = request()->validate([
             'page' => ['required', 'integer'],
         ]);
