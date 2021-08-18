@@ -15,7 +15,7 @@ return [
     'generate' => 'Generar código nuevo',
     'probability' => 'Probabilidades de les cartas',
     'economic' => 'Parametros económicos',
-    'use_card_gold' => 'Oro para utilitzar cartas',
+    'use_card_gold' => 'Oro para utilizar cartas',
     'delete_card_gold' => 'Oro para eliminar cartas',
     'weather_management' => 'Gestión del tiempo',
     'teachers' => 'Profes',
