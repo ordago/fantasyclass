@@ -1,7 +1,8 @@
 # Changelog
-## v1.68 Beta (XX/08/2021)
+## v1.68 Beta (18/08/2021)
 ### Added
 - Option to hide student's stats to other students.
+- New characters in fantasy theme.
 
 ## v1.67 Beta (16/08/2021)
 ### Added
