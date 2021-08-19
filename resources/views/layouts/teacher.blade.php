@@ -16,7 +16,7 @@
 
 @section('notifications')
 <notifications code="{{ $class->code }}" :notifications="{{ $notifications ?? '[]' }}" :user="{{ auth()->user() }}" type="teacher" :pending="{{ $pending ?? '[]' }}"></notifications>
-<a v-tippy content="Tutorial" href="/tutorial" class="cursor-pointer button has-background-warning-light">
+<a v-tippy content="Tutorial" target="_blank" href="/tutorial" class="cursor-pointer button has-background-warning-light">
     <i class="fas fa-info-circle" style="font-size: 1.25em"></i>
 </a>
 @endsection
