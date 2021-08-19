@@ -18,6 +18,14 @@ class MiscellanyController extends Controller
         return view('miscellany.contribute');
     }
 
+    public function externalCheck($type, $code)
+    {
+        if(!Auth::user())
+            return view('maps.marker');
+        else return redirect("/external/".$type."/".$code);
+        // return view('miscellany.contribute');
+    }
+
     public function mobile()
     {
         return view('utils.mobile');

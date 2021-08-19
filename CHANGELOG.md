@@ -1,4 +1,11 @@
 # Changelog
+## v1.69 Beta (19/08/2021)
+### Added
+- Option to add challenges to map.
+
+### Changed
+- Fixes.
+
 ## v1.68 Beta (18/08/2021)
 ### Added
 - Option to hide student's stats to other students.

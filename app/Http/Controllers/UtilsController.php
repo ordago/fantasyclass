@@ -251,7 +251,6 @@ class UtilsController extends Controller
         $text = explode(":", Functions::simple_crypt($code, "d"));
         $id = $text[1];
 
-
         switch ($type) {
             case 'challenges':
                 $object = Challenge::where('id', $id)->with('attachments', 'comments')->first()->append('questioninfo');
@@ -275,6 +274,24 @@ class UtilsController extends Controller
                     $object->rated = 1;
                 } $object->rated = 1;
                 $object->completed = true;
+                break;
+            case "challengecheck":
+                $class = Classroom::where('code', '=', $text[0])->firstOrFail();
+                try {
+                    $challenge = Challenge::where('id', $id)->firstOrFail();
+                    $student = Functions::getCurrentStudent($class, []);
+                } catch (\Throwable $th) {
+                    return view('maps.marker');
+                }
+                if($class->id != $student->classroom->classroom_id)
+                    return view('maps.marker');
+                
+                if($challenge->type == 0)
+                    $check = $student->challenges->contains($text[1]);
+                else 
+                    $check = $student->groups->first()->challenges->contains($text[1]);
+                $permalink = env('APP_URL')."/classroom/show/".$class->code."/challenges/".$challenge->permalink;
+                    return view('maps.marker', compact('check', 'permalink'));
                 break;
 
             default:

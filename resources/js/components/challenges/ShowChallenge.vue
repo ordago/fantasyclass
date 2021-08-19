@@ -1,7 +1,7 @@
 <template>
   <div class="box card-shadow-s mb-0" v-bind:class="getBackground">
     <section class="media">
-      <div class="media-content is-relative" style="overflow-y:hidden">
+      <div class="media-content is-relative" style="overflow-y: hidden">
         <div class="content">
           <div class="columns mb-0">
             <div class="column mb-0">
@@ -49,7 +49,15 @@
                   v-tippy
                   :content="trans.get('challenges.pinned')"
                   v-if="challengeReactive.pinned == 1"
-                  class="py-3 px-4 mr-2 has-background-dark has-text-light rounded fas fa-thumbtack"
+                  class="
+                    py-3
+                    px-4
+                    mr-2
+                    has-background-dark has-text-light
+                    rounded
+                    fas
+                    fa-thumbtack
+                  "
                 ></i>
                 <span
                   class="py-3 px-4 mr-2 rounded"
@@ -106,7 +114,9 @@
                 class="button is-dark custom cursor-pointer"
               >
                 <i class="fad fa-link"></i>
-                <span class="ml-2 is-hidden-mobile">{{ trans.get('challenges.completion_link') }}</span>
+                <span class="ml-2 is-hidden-mobile">{{
+                  trans.get("challenges.completion_link")
+                }}</span>
               </span>
             </div>
           </div>
@@ -125,7 +135,14 @@
                   challengeReactive.cards
                 "
                 ><i
-                  class="fad fa-chevron-up p-1 colored has-background-dark has-text-light rounded"
+                  class="
+                    fad
+                    fa-chevron-up
+                    p-1
+                    colored
+                    has-background-dark has-text-light
+                    rounded
+                  "
                   :content="trans.get('challenges.attributes')"
                   v-tippy
                 ></i
@@ -154,7 +171,14 @@
                 v-if="challengeReactive.items && challengeReactive.items.length"
               >
                 <i
-                  class="fad fa-backpack p-1 colored has-background-dark has-text-light rounded"
+                  class="
+                    fad
+                    fa-backpack
+                    p-1
+                    colored
+                    has-background-dark has-text-light
+                    rounded
+                  "
                   v-tippy
                   :content="trans.get('challenges.items')"
                 ></i>
@@ -170,7 +194,14 @@
               </small>
               <small v-if="challengeReactive.objects > 0">
                 <i
-                  class="fad fa-store p-1 colored has-background-dark has-text-light rounded"
+                  class="
+                    fad
+                    fa-store
+                    p-1
+                    colored
+                    has-background-dark has-text-light
+                    rounded
+                  "
                   v-tippy
                   :content="trans.get('challenges.items')"
                 ></i>
@@ -178,11 +209,19 @@
               </small>
               <small v-if="challengeReactive.collectionables > 0">
                 <i
-                  class="fak fa-collection p-1 colored has-background-dark has-text-light rounded"
+                  class="
+                    fak
+                    fa-collection
+                    p-1
+                    colored
+                    has-background-dark has-text-light
+                    rounded
+                  "
                   v-tippy
                   :content="trans.get('menu.collections')"
                 ></i>
-                {{ challengeReactive.collectionables }} <span v-html="getIcon(challenge.type_collectionable)"></span>
+                {{ challengeReactive.collectionables }}
+                <span v-html="getIcon(challenge.type_collectionable)"></span>
               </small>
             </span>
             <span
@@ -194,7 +233,15 @@
             >
               <small
                 ><i
-                  class="fad fa-tasks ml-2 p-1 colored has-background-dark has-text-light rounded"
+                  class="
+                    fad
+                    fa-tasks
+                    ml-2
+                    p-1
+                    colored
+                    has-background-dark has-text-light
+                    rounded
+                  "
                   v-tippy
                   :content="trans.get('challenges.requirements')"
                 ></i
@@ -555,6 +602,16 @@
               <span>{{ trans.get("challenges.add_question") }}</span>
             </button>
             <button
+              v-if="admin && challengeReactive.completion != 4"
+              class="button is-outlined is-info"
+              @click="addToMap"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-map-marker-alt"></i>
+              </span>
+              <span>{{ trans.get("challenges.add_to_map") }}</span>
+            </button>
+            <button
               v-if="challengeReactive.is_conquer && admin"
               class="button is-success"
               v-tippy
@@ -693,6 +750,46 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isMarkerModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      v-if="admin"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("challenges.add_to_map") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <label class="label">{{ trans.get("challenges.map_code") }}</label>
+          <textarea
+            readonly
+            class="textarea"
+            v-model="embedCode"
+            rows="3"
+          ></textarea>
+          <button class="button is-success my-1" @click="copyText(embedCode)">
+            <i class="fas fa-copy mr-1"></i>{{ trans.get("challenges.map_copy_code") }}
+          </button>
+          <label class="label">{{ trans.get("challenges.map_how_to") }}</label>
+          <img style="margin-left: 12.5%;" src="/img/maps/add2gen.gif" width="75%" />
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isMarkerModalActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
     <AddQuestion
       :challenge="challenge.id"
       :modal="modal"
@@ -736,7 +833,9 @@ export default {
       allowComment: false,
       maxComments: 3,
       isAttachmentModalActive: false,
+      isMarkerModalActive: false,
       modal: false,
+      embedCode: "",
       attachment: {
         mode: "0",
         type: null,
@@ -762,7 +861,18 @@ export default {
     AddQuestion,
   },
   methods: {
-    getIcon(type){
+    addToMap() {
+      axios
+        .post("/classroom/challenge/map", {
+          challenge: this.challengeReactive.id,
+        })
+        .then((response) => {
+          console.log(response.data);
+          this.embedCode = response.data;
+          this.isMarkerModalActive = true;
+        });
+    },
+    getIcon(type) {
       switch (type) {
         case 1:
           return '<i class="fas fa-mountains"></i>';
@@ -802,16 +912,19 @@ export default {
         append
       );
     },
+    copyText(text) {
+      navigator.clipboard.writeText(text).then((response) => {
+        this.$toast(this.trans.get("success_error.copy_success"), {
+          type: "success",
+        });
+      });
+    },
     copyChallengeUrl() {
       axios
         .post("/classroom/challenge/getlink", { challenge: this.challenge.id })
         .then((response) => {
           let url = response.data;
-          navigator.clipboard.writeText(url).then((response) => {
-            this.$toast(this.trans.get("success_error.copy_success"), {
-              type: "success",
-            });
-          });
+          this.copyText(url);
         });
     },
     copyPermalink() {
@@ -821,11 +934,7 @@ export default {
         this.code +
         "/challenges/" +
         this.challengeReactive.permalink;
-      navigator.clipboard.writeText(url).then((response) => {
-        this.$toast(this.trans.get("success_error.copy_success"), {
-          type: "success",
-        });
-      });
+      this.copyText(url);
     },
     editChallenge(challenge) {
       axios

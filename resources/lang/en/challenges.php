@@ -102,4 +102,9 @@ return [
     'collection_type' => 'Collectible type',
     'without_type' => 'Random type',
 
+    'add_to_map' => 'Add to map',
+    'map_code' => 'Code to add the marker:',
+    'map_copy_code' => 'Copy the code',
+    'map_how_to' => 'How to add to Genially:',
+
 ];

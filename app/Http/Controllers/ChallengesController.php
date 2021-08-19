@@ -201,6 +201,19 @@ class ChallengesController extends Controller
         $challenge->update(['pinned' => $challenge->pinned == 0 ? 1 : 0]);
     }
 
+    public function getMapCode()
+    {
+        $data = request()->validate([
+            'challenge' => ['numeric', 'required'],
+        ]);
+
+        $challenge = Challenge::findOrFail($data['challenge']);
+        $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
+        $this->authorize('view', $class);
+        
+        return "<iframe style='border: 0;' width='33px' height='49px' src='".env('APP_URL')."/external/check/challengecheck/".Functions::simple_crypt($class->code.":".$challenge->id)."'></iframe>";
+    }
+
     public function getChallengeLink()
     {
         $data = request()->validate([

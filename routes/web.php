@@ -190,6 +190,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/challenges/toggleProp', 'ChallengesController@toggleProp');
         Route::get('/{code}/challenges/all', 'ChallengesController@getAllChallenges');
         Route::post('/challenge/getlink', 'ChallengesController@getChallengeLink');
+        Route::post('/challenge/map', 'ChallengesController@getMapCode');
         
 
         // Attachment
@@ -351,6 +352,7 @@ Route::group(['middleware' => 'language'], function () {
     
     // External
     Route::get('/external/{type}/{code}', 'UtilsController@externalLink');
+    Route::get('/external/check/{type}/{code}', 'MiscellanyController@externalCheck');
 
 
     // Utils

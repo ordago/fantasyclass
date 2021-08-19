@@ -100,4 +100,10 @@ return [
     'collection' => 'Col·lecció',
     'collection_type' => 'Tipus de col·leccionable',
     'without_type' => 'Tipus aleatori',
+    
+    'add_to_map' => 'Afegir al mapa',
+    'map_code' => 'Codi per afegir el marcador:',
+    'map_copy_code' => 'Copiar el codi',
+    'map_how_to' => 'Com afegir el marcador a Genially:',
+
 ];
