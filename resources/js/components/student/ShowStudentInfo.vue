@@ -568,9 +568,8 @@
                   <div
                     class="price-buy rounded not-hover"
                     v-if="
-                      (eq1Json || eq2Json || eq3Json) &&
-                      gear.id != 41 &&
-                      gear.id != 50
+                      (eq0Json || eq1Json || eq2Json || eq3Json) &&
+                      notInGear(gear.id)
                     "
                   >
                     <i class="fas fa-plus"></i>
@@ -588,10 +587,10 @@
                         v-bind:key="'item4-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          offset0: gear.offset == 0,
-                          'inv-item-armor-bronce': index == 0,
-                          'inv-item-armor-silver': index == 1,
-                          'inv-item-armor-gold': index == 2,
+                          offset0: index == 0,
+                          'inv-item-armor-bronce': index == 1,
+                          'inv-item-armor-silver': index == 2,
+                          'inv-item-armor-gold': index == 3,
                         }"
                       >
                         <img
@@ -1560,7 +1559,7 @@ export default {
 
       this.itemsJson = JSON.parse(this.shop.items);
     }
-    if (this.admin) this.eq0Json = JSON.parse(this.shop.eq0);
+    this.eq0Json = JSON.parse(this.shop.eq0);
     this.eq1Json = JSON.parse(this.shop.eq1);
     this.eq2Json = JSON.parse(this.shop.eq2);
     this.eq3Json = JSON.parse(this.shop.eq3);
@@ -1642,6 +1641,10 @@ export default {
     };
   },
   methods: {
+    notInGear(gearId) {
+      var array = [41, 50, 640, 641, 642, 643, 644, 645, 646];
+      return array.findIndex((id) => id === gearId) === -1;
+    },
     getCollectionNumber(collection) {
       let count = 0;
       if (this.student.collections)
@@ -1902,9 +1905,7 @@ export default {
         });
     },
     getProperties() {
-      if (this.admin)
-        return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];
-      return [this.eq1Json, this.eq2Json, this.eq3Json];
+      return [this.eq0Json, this.eq1Json, this.eq2Json, this.eq3Json];
     },
     getImpostor() {
       if (this.settings.impostor)
@@ -2448,7 +2449,7 @@ export default {
     },
 
     orderedEquipment: function () {
-      return _.orderBy(this.student.equipment, "type");
+      return _.orderBy(this.student.equipment.filter(eq => this.notInGear(eq.id)), "type");
     },
     orderedChallenges: function () {
       return _.orderBy(

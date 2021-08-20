@@ -40,9 +40,9 @@ class ShopController extends Controller
             $eq1 = $eq2 = $eq3 = null;
 
             foreach (Character::where('character_theme_id', $class->character_theme)->get() as $char) {
-                $eq1[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 1)->get();
-                $eq2[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 2)->get();
-                $eq3[$char->id] = Equipment::where('character_id', '=', $char->id)->where('offset', '=', 3)->get();
+                $eq1[$char->id] = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($char->id)])->get();
+                $eq2[$char->id] = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($char->id)])->get();
+                $eq3[$char->id] = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($char->id)])->get();
             }
 
             $shop = [

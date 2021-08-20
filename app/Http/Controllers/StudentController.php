@@ -265,10 +265,10 @@ class StudentController extends Controller
         $settings['disable_your_adventure'] = settings()->get('disable_your_adventure', 0);
         $settings['skill_price'] = settings()->get('skill_price', 600);
 
-        $eq0 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 0)->get();
-        $eq1 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 1)->get();
-        $eq2 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 2)->get();
-        $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
+        $eq0 = Equipment::where('offset', '=', 0)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        $eq2 = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
 
         $shop = [
             'eq0' => json_encode($eq0),
@@ -454,6 +454,9 @@ class StudentController extends Controller
             $this->authorize('update', $class);
         }
         $student->update(['character_id' => request()->character_id]);
+        // if ($student->character->theme->id == 10) {
+
+        // } else
         $student->setBasicEquipment();
     }
 

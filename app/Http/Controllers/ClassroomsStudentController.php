@@ -614,19 +614,20 @@ class ClassroomsStudentController extends Controller
         // Shop information
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
-        $items = $eq1 = $eq2 = $eq3 = $craft = null;
+        $items = $eq0 = $eq1 = $eq2 = $eq3 = $craft = null;
         if (settings()->get('items_visibility', false) ? true : false) {
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
+        if($student->character->theme->id == 10)
+            $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640,641,642,643,644,645,646])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         if (settings()->get('equipment_1_visibility', false) ? true : false) {
-            $eq1 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 1)->get();
+            $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         }
         if (settings()->get('equipment_2_visibility', false) ? true : false) {
-            $eq2 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 2)->get();
+            $eq2 = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         }
         if (settings()->get('equipment_3_visibility', false) ? true : false) {
-            $eq3 = Equipment::where('character_id', '=', $student->character_id)->where('offset', '=', 3)->get();
-        }
+            $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();        }
 
         if (settings()->get('show_recipes', false) ? true : false) {
             $craft = $class->items()->whereNotNull('craft')->where('craft', 'NOT LIKE', '\[\]')->get();
@@ -636,6 +637,7 @@ class ClassroomsStudentController extends Controller
 
         $shop = [
             'items' => json_encode($items),
+            'eq0' => json_encode($eq0),
             'eq1' => json_encode($eq1),
             'eq2' => json_encode($eq2),
             'eq3' => json_encode($eq3),
@@ -1428,13 +1430,14 @@ class ClassroomsStudentController extends Controller
             ->first();
 
         // Avoid user mistakes
-        if ($old->type != $new->type || $old->offset >= $new->offset || $new->character_id != $student->character_id || $student->equipment->contains($new->id)) {
+        if ($old->type != $new->type || ($new->offset > 0 && $old->offset >= $new->offset) || array_search($student->character_id, json_decode($new->character_id)) === false || $student->equipment->contains($new->id)) {
             return [
                 "message" => " " . __('success_error.shop_failed_exists'),
                 "icon" => "sad-tear",
                 "type" => "error"
             ];
         }
+        dump($new->offset);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         switch ($new->offset) {
             case 1:
@@ -1453,6 +1456,9 @@ class ClassroomsStudentController extends Controller
                     abort(403);
                 $key = "shop_multiplier_3";
                 break;
+            case 0:
+                $key = "shop_multiplier_1";
+                break;
         }
         $mult = (float) settings()->get($key, 1);
         $price = round($new->price * $mult);
@@ -1465,6 +1471,7 @@ class ClassroomsStudentController extends Controller
         }
         $gold = $student->gold - $price;
         $student->update(['gold' => $gold]);
+        if($gold)
         LogEntry::create([
             'type' => 'gold',
             'value' => $price * -1,

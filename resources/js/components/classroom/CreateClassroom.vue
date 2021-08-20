@@ -61,6 +61,10 @@
                     <img src="/img/character/themes-preview/fantasy.png" class="themePreview">
                 </label>
                 <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="10">
+                    <img src="/img/character/themes-preview/food.png" class="themePreview">
+                </label>
+                <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="1">
                     <img src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
                 </label>
