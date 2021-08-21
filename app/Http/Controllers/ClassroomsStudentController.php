@@ -1437,7 +1437,6 @@ class ClassroomsStudentController extends Controller
                 "type" => "error"
             ];
         }
-        dump($new->offset);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         switch ($new->offset) {
             case 1:

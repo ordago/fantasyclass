@@ -528,7 +528,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'inv-item-armor': gear.offset == 0,
+                    'offset0': gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -562,7 +562,7 @@
                   </div>
                   <div
                     class="price-buy rounded not-hover"
-                    v-if="eq0Json || eq1Json || eq2Json || eq3Json"
+                    v-if="eq1Json || eq2Json || eq3Json || isInGear(gear.id)"
                   >
                     <i class="fas fa-plus"></i>
                   </div>
@@ -579,7 +579,8 @@
                         v-bind:key="'item4-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          'inv-item-armor': index == 0,
+                          'hidden': !notInOffset0(itemStore.id),
+                          'offset0': index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -1642,6 +1643,18 @@ export default {
           " colored'></i>"
         );
       return '';
+    },
+    notInOffset0(gearId) {
+      return (
+        [680, 690, 700].findIndex(
+          (id) => id === gearId
+        ) === -1
+      );
+    },
+    isInGear(gearId) {
+      if(gearId >= 600 && gearId <= 676)
+        return true;
+      return false;
     },
     notInGear(gearId) {
       return (
