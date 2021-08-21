@@ -454,10 +454,13 @@ class StudentController extends Controller
             $this->authorize('update', $class);
         }
         $student->update(['character_id' => request()->character_id]);
-        // if ($student->character->theme->id == 10) {
-
-        // } else
-        $student->setBasicEquipment();
+        if ($student->character->theme->id == 10) {
+            $equipment = $student->equipment()->whereIn('equipment_id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649])->first();
+            $student->equipment()->detach($equipment->id);
+            $student->equipment()->attach(607+request()->character_id);
+        } else {
+            $student->setBasicEquipment();
+        }
     }
 
     public function getUsername(Request $request)

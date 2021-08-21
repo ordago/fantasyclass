@@ -2119,25 +2119,36 @@ export default {
         n - this.student.items.length ? n - this.student.items.length - 1 : 5;
     },
     confirmChangeClass(subclass) {
-      this.$buefy.dialog.confirm({
-        title: this.trans.get("students.change_class"),
-        message: this.trans.get("students.basic_equipment"),
-        confirmText: this.trans.get("students.change_class"),
-        cancelText: this.trans.get("general.cancel"),
-        type: "is-warning",
-        iconPack: "fa",
-        hasIcon: true,
-        onConfirm: () => {
-          axios
-            .post(
-              "/classroom/" + this.classroom.code + "/student/changecharacter",
-              { id: this.student.id, character_id: subclass, mode: "student" }
-            )
-            .then((response) => {
-              location.reload();
-            });
-        },
-      });
+      if(this.classroom.character_theme.id == 10) {
+        axios
+          .post(
+            "/classroom/" + this.classroom.code + "/student/changecharacter",
+            { id: this.student.id, character_id: subclass, mode: "student" }
+          )
+          .then((response) => {
+            location.reload();
+          });
+      } else {
+        this.$buefy.dialog.confirm({
+          title: this.trans.get("students.change_class"),
+          message: this.trans.get("students.basic_equipment"),
+          confirmText: this.trans.get("students.change_class"),
+          cancelText: this.trans.get("general.cancel"),
+          type: "is-warning",
+          iconPack: "fa",
+          hasIcon: true,
+          onConfirm: () => {
+            axios
+              .post(
+                "/classroom/" + this.classroom.code + "/student/changecharacter",
+                { id: this.student.id, character_id: subclass, mode: "student" }
+              )
+              .then((response) => {
+                location.reload();
+              });
+          },
+        });
+      }
     },
     useItem(item, messageItem) {
       let audio = new Audio("/sound/success.mp3");

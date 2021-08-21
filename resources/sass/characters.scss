@@ -1633,15 +1633,18 @@
 @keyframes facemove {
     0% {
         left: 39px;
+        transform: rotateY(0deg);
     }
-
+    
     33% {
         left: 34px;
-
+        transform: rotateY(20deg);
+        
     }
-
+    
     66% {
         left: 44px;
+        transform: rotateY(-20deg);
 
     }
 }
