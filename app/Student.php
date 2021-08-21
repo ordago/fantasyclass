@@ -732,7 +732,12 @@ class Student extends Model implements HasMedia
             case '35':
             case '36':
             case '37':
-                $ids = [607+$this->character_id, 645, 646, rand(647, 663)];
+            case '38':
+            case '39':
+            case '40':
+            case '41':
+            case '42':
+                $ids = [607+$this->character_id, 658, 659, rand(660, 676), 680, 690, 700];
                 break;
         }
 

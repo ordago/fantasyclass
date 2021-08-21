@@ -100,4 +100,5 @@ return [
     'student_report' => 'Informe d\'estudiant',
     
     'bypass' => 'Estàs veient com a estudiant, clica ací per tornar a ser profe',
+    'boost' => 'Potenciadors:',
 ];

@@ -1555,6 +1555,7 @@
     top: -10px;
     left: 10px;
     z-index: 3;
+    animation: bodymove 1.5s infinite;
 }
 
 .food-face {
@@ -1562,6 +1563,7 @@
     top: 85px;
     left: 39px;
     z-index: 4;
+    animation: facemove 1.5s infinite;
 }
 
 .food-legs {
@@ -1581,6 +1583,109 @@
 .strawberry .food-face,
 .egg .food-face {
     top: 95px;
+}
+
+.strawberry .food-hat,
+.egg .food-hat {
+    top: 20px;
+}
+
+.cherry .food-hat,
+.apple .food-hat {
+    top: 13px;
+}
+
+.food-right {
+    position: absolute;
+    top: 50px;
+    left: 115px;
+    z-index: 5;
+}
+
+.food-left {
+    position: absolute;
+    top: 65px;
+    left: -55px;
+    z-index: 5;
+}
+
+.food-hat {
+    position: absolute;
+    top: 8px;
+    left: 0px;
+    z-index: 5;
+    animation: bodymove 1.5s infinite;
+}
+
+
+.food-legs {
+    animation: foodlegs 1s infinite;
+}
+
+.character:hover .food-legs {
+    animation: foodlegs .7s infinite;
+}
+
+.character:hover * {
+    animation: jump .7s infinite;
+}
+
+@keyframes facemove {
+    0% {
+        left: 39px;
+    }
+
+    33% {
+        left: 34px;
+
+    }
+
+    66% {
+        left: 44px;
+
+    }
+}
+
+@keyframes foodlegs {
+    0% {
+        transform: rotateX(40deg);
+    }
+
+    49% {
+        transform: rotateX(0deg);
+    }
+
+    100% {
+        transform: rotateX(40deg);
+    }
+}
+
+@keyframes jump {
+    0% {
+        transform: translateY(-10px);
+    }
+
+    33% {
+        transform: translateY(10px);
+    }
+
+    66% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes bodymove {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    33% {
+        transform: rotateY(20deg);
+    }
+
+    66% {
+        transform: rotateY(-20deg);
+    }
 }
 
 /*********************/

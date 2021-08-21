@@ -273,12 +273,7 @@
           >
             <img
               v-tippy
-              :content="
-                trans.get('students.highlights') +
-                ' <i class=\'' +
-                charclass.property +
-                ' colored\'></i>'
-              "
+              :content="getTippy(charclass.property)"
               @contextmenu.prevent=""
               @click="confirmChangeClass(charclass.id)"
               v-bind:class="{ selected: charclass.id == student.character_id }"
@@ -533,7 +528,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    offset0: gear.offset == 0,
+                    'inv-item-armor': gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -567,10 +562,7 @@
                   </div>
                   <div
                     class="price-buy rounded not-hover"
-                    v-if="
-                      (eq0Json || eq1Json || eq2Json || eq3Json) &&
-                      notInGear(gear.id)
-                    "
+                    v-if="eq0Json || eq1Json || eq2Json || eq3Json"
                   >
                     <i class="fas fa-plus"></i>
                   </div>
@@ -587,7 +579,7 @@
                         v-bind:key="'item4-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          offset0: index == 0,
+                          'inv-item-armor': index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -1641,9 +1633,22 @@ export default {
     };
   },
   methods: {
+    getTippy(text) {
+      if (text)
+        return (
+          this.trans.get("students.highlights") +
+          " <i class='" +
+          text +
+          " colored'></i>"
+        );
+      return '';
+    },
     notInGear(gearId) {
-      var array = [41, 50, 640, 641, 642, 643, 644, 645, 646];
-      return array.findIndex((id) => id === gearId) === -1;
+      return (
+        [41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659].findIndex(
+          (id) => id === gearId
+        ) === -1
+      );
     },
     getCollectionNumber(collection) {
       let count = 0;
@@ -2190,14 +2195,17 @@ export default {
       return message;
     },
     propertiesMessage(itemStore) {
-      return (
-        itemStore.hp +
-        "% <i class='fas fa-heart colored'></i> " +
-        itemStore.xp +
-        "% <i class='fas fa-fist-raised colored'></i> " +
-        itemStore.gold +
-        "% <i class='fas fa-coins colored'></i>"
-      );
+      let message = "";
+      if(itemStore.hp)
+        message += "<i class='fas fa-heart colored'></i> " + itemStore.hp + "%. "
+      
+      if(itemStore.xp)
+        message += "<i class='fas fa-fist-raised colored'></i> " + itemStore.xp + "%. "
+      
+      if(itemStore.gold)
+        message += "<i class='fas fa-coins colored'></i> " + itemStore.gold + "%. "
+      
+      return message;
     },
 
     getName(name) {
@@ -2334,7 +2342,7 @@ export default {
                     newClass = "inv-item-armor-gold";
                     break;
                   default:
-                    newClass = "";
+                    newClass = "inv-item-armor";
                     break;
                 }
                 if (newClass) this.$refs[reference][0].classList.add(newClass);
@@ -2449,7 +2457,10 @@ export default {
     },
 
     orderedEquipment: function () {
-      return _.orderBy(this.student.equipment.filter(eq => this.notInGear(eq.id)), "type");
+      return _.orderBy(
+        this.student.equipment.filter((eq) => this.notInGear(eq.id)),
+        "type"
+      );
     },
     orderedChallenges: function () {
       return _.orderBy(

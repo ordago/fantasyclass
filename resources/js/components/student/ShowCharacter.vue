@@ -72,7 +72,7 @@
         class="boost-right outer_glow_dark"
         v-tippy
         :content="
-          '<i class=\'fas fa-heart colored\'></i>' +
+          this.trans.get('students.boost') + '<br><i class=\'fas fa-heart colored\'></i>' +
           student.boost.hp +
           '% | <i class=\'fas fa-fist-raised colored\'></i>' +
           student.boost.xp +

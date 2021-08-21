@@ -98,5 +98,6 @@ return [
     'student_report' => 'Student report',
 
     'bypass' => 'You\'re viewing as a student, click there to go back to teacher.',
+    'boost' => 'Boost:',
 
 ];

@@ -1,4 +1,11 @@
 # Changelog
+## v1.70 Beta (21/08/2021)
+### Added
+- New customizable theme: food.
+
+### Changed
+- Some fixes and improvements.
+
 ## v1.69 Beta (19/08/2021)
 ### Added
 - Option to add challenges to map.
