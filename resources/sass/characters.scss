@@ -1626,7 +1626,8 @@
     animation: foodlegs .7s infinite;
 }
 
-.character:hover * {
+.food:hover * 
+{
     animation: jump .7s infinite;
 }
 

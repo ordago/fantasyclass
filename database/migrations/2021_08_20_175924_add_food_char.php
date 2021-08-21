@@ -14,7 +14,7 @@ class AddFoodChar extends Migration
     {
         DB::table('character_themes')->insert(
             [
-                ['id' => '10', 'name' => 'Food', 'classes' => NULL],
+                ['id' => '10', 'name' => 'Food', 'classes' => 'food'],
             ]
         );
         DB::table('characters')->insert(
