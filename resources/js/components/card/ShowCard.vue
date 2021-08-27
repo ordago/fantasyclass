@@ -157,7 +157,6 @@
 import Utils from "../../utils.js";
 const Buttons = () => import("./Buttons.vue");
 
-
 export default {
   props: [
     "card",
@@ -170,7 +169,7 @@ export default {
     "import",
   ],
   components: {
-    Buttons
+    Buttons,
   },
   mounted() {
     this.description = Utils.styleText(this.trans.get(this.card.description));
@@ -199,8 +198,9 @@ export default {
               id: this.card.id,
             })
             .then((response) => {
-              this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
-    
+              this.$toast(this.trans.get("success_error.add_success"), {
+                type: "success",
+              });
             });
         },
       });
@@ -211,7 +211,9 @@ export default {
           id: this.card.id,
         })
         .then((response) => {
-          this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
         });
     },
     assignCard() {
@@ -222,7 +224,9 @@ export default {
           card: this.card.id,
         })
         .then((response) => {
-          this.$toast(this.trans.get("success_error.add_success"), { type: "success" });
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
         });
     },
     markCard(card, type) {
@@ -256,9 +260,16 @@ export default {
                 // remove the element from the DOM
                 this.$el.parentNode.removeChild(this.$el);
                 let gold = response.data.gold;
-                if(gold)
-                  this.$toast(response.data.message, { type: "default", timeout: 0, closeButton:  Buttons });
-                else this.$toast(response.data.message, { type: response.data.type });
+                if (gold)
+                  this.$toast(response.data.message, {
+                    type: "default",
+                    timeout: 0,
+                    closeButton: Buttons,
+                  });
+                else
+                  this.$toast(response.data.message, {
+                    type: response.data.type,
+                  });
               });
           },
         });
@@ -281,8 +292,10 @@ export default {
                 student: this.student.id,
               })
               .then((response) => {
-                this.$toast(response.data.message, { type: response.data.type });
-                card.pivot.marked = type;
+                this.$toast(response.data.message, {
+                  type: response.data.type,
+                });
+                if (response.data.type == "success") card.pivot.marked = type;
                 this.$forceUpdate();
               });
           },

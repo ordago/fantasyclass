@@ -205,7 +205,7 @@ class ClassroomsStudentController extends Controller
         $this->authorize('studyOrTeach', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        if(settings()->get('disable_student_view', 0) == 1)
+        if (settings()->get('disable_student_view', 0) == 1)
             abort(403);
 
         $data = request()->validate([
@@ -618,8 +618,8 @@ class ClassroomsStudentController extends Controller
         if (settings()->get('items_visibility', false) ? true : false) {
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
-        if($student->character->theme->id == 10)
-            $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640,641,642,643,644,645,646])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        if ($student->character->theme->id == 10)
+            $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         if (settings()->get('equipment_1_visibility', false) ? true : false) {
             $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         }
@@ -627,7 +627,8 @@ class ClassroomsStudentController extends Controller
             $eq2 = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
         }
         if (settings()->get('equipment_3_visibility', false) ? true : false) {
-            $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();        }
+            $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        }
 
         if (settings()->get('show_recipes', false) ? true : false) {
             $craft = $class->items()->whereNotNull('craft')->where('craft', 'NOT LIKE', '\[\]')->get();
@@ -926,6 +927,31 @@ class ClassroomsStudentController extends Controller
             $student = Functions::getCurrentStudent($class, []);
 
         $card = Card::where('id', '=', $id)->where('classroom_id', '=', $class->id)->first();
+        if ($card->gold) {
+            if ($card->gold < 0) {
+                if ($student->gold + $card->gold < 0) {
+                    return [
+                        "message" => " " . __('success_error.shop_failed_money'),
+                        "icon" => "times",
+                        "type" => "error",
+                    ];
+                }
+            }
+        }
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        if ($data['type'] == 1)
+            $cost = settings()->get('card_use', 200);
+        else
+            $cost = settings()->get('card_delete', 50);
+            
+        if (!$card->special && $card->gold == 0 && $student->gold < $cost) {
+            return [
+                "message" => " " . __('success_error.shop_failed_money'),
+                "icon" => "times",
+                "type" => "error",
+            ];
+        }
+
         $cardLine = CardStudent::where('card_id', $card->id)
             ->where('student_id', $student->id)
             ->orderBy('marked')
@@ -1470,13 +1496,13 @@ class ClassroomsStudentController extends Controller
         }
         $gold = $student->gold - $price;
         $student->update(['gold' => $gold]);
-        if($gold)
-        LogEntry::create([
-            'type' => 'gold',
-            'value' => $price * -1,
-            'student_id' => $student->id,
-            'message' => 'shop',
-        ]);
+        if ($gold)
+            LogEntry::create([
+                'type' => 'gold',
+                'value' => $price * -1,
+                'student_id' => $student->id,
+                'message' => 'shop',
+            ]);
         $student->equipment()->detach($old->id);
         $student->equipment()->attach($new->id);
         return [

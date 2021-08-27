@@ -385,6 +385,15 @@ class CardsController extends Controller
                     ];
                 }
                 if ($card->gold) {
+                    if($card->gold < 0) {
+                        if($student->gold + $card->gold < 0) {
+                            return [
+                                "message" => " " . __('success_error.shop_failed_money'),
+                                "icon" => "times",
+                                "type" => "error",
+                            ];
+                        }
+                    }
                     $student->setProperty('gold', $card->gold, true, 'card');
                 } else if (!$card->special) {
                     $student->setProperty('gold', $cost * -1, true, 'card');

@@ -1,4 +1,9 @@
 # Changelog
+## v1.70.1 Beta (27/08/2021)
+### Changed
+- Students now can have negative money.
+- Changes in card gold management. Protection against use and delete if not enough money.
+
 ## v1.70 Beta (21/08/2021)
 ### Added
 - New customizable theme: food.

@@ -576,7 +576,7 @@ class Student extends Model implements HasMedia
                     $old = $value + $value * $boost[$prop] / 100;
                 $value = $this->$prop + $old;
             } else {
-                $value = max($this->$prop + $value, 0);
+                $value = $this->$prop + $value;
                 if ($value == 0) {
                     $old = 0 - $this->$prop + $value;
                 }
