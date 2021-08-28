@@ -124,16 +124,7 @@
               <button
                 v-for="behaviour in behaviours"
                 v-tippy
-                :content="
-                  trans.get(behaviour.name) +
-                  ' <small>(<i class=\'fas fa-heart colored\'></i> ' +
-                  behaviour.hp +
-                  ' <i class=\'fas fa-fist-raised colored\'></i> ' +
-                  behaviour.xp +
-                  ' <i class=\'fas fa-coins colored\'></i> ' +
-                  behaviour.gold +
-                  ')</small>'
-                "
+                :content="getMessage(behaviour)"
                 class="button m-1 px-3 is-light"
                 @click="addBehaviour(student.id, behaviour)"
                 v-bind:class="[
@@ -169,16 +160,7 @@
               <button
                 v-for="behaviour in behaviourshidden"
                 v-tippy
-                :content="
-                  trans.get(behaviour.name) +
-                  ' <small>(<i class=\'fas fa-heart colored\'></i> ' +
-                  behaviour.hp +
-                  ' <i class=\'fas fa-fist-raised colored\'></i> ' +
-                  behaviour.xp +
-                  ' <i class=\'fas fa-coins colored\'></i> ' +
-                  behaviour.gold +
-                  ')</small>'
-                "
+                :content="getMessage(behaviour)"
                 class="button m-1 is-light px-4"
                 v-bind:class="[
                   behaviour.xp + behaviour.hp + behaviour.gold >= 0
@@ -190,6 +172,7 @@
               >
                 <i :class="behaviour.icon"></i>
               </button>
+              <a v-tippy :content="trans.get('menu.behaviours')" class="button m-1" :href="'/classroom/' + classroom.code +'/behaviours'"><i class="fas fa-cog"></i></a>
             </div>
           </div>
           <div class="columns p-0 m-0">
@@ -420,6 +403,20 @@ export default {
     //       this.report = true;
     //     });
     // },
+    getMessage(behaviour) {
+      let text = this.trans.get(behaviour.name) + " <small>(";
+      if(behaviour.hp)
+          text += ' <i class=\'fas fa-heart colored\'></i> ' + behaviour.hp ;
+          
+      if(behaviour.xp)
+          text +=  ' <i class=\'fas fa-fist-raised colored\'></i> ' + behaviour.xp;
+                  
+      if(behaviour.gold)
+          text += ' <i class=\'fas fa-coins colored\'></i> ' +  behaviour.gold;
+
+      text += ')</small>';
+      return text;
+    },
     byPassStudent(id) {
       axios
         .post("/classroom/" + this.classroom.code + "/student/show", { id: id })
