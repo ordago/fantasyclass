@@ -1,6 +1,8 @@
 # Changelog
-## v1.70.1 Beta (27/08/2021)
+## v1.70.2 Beta (28/08/2021)
 ### Changed
+- Improvements in behaviours.
+- New images in show.
 - Students now can have negative money.
 - Changes in card gold management. Protection against use and delete if not enough money.
 
