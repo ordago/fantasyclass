@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Collection;
+use App\Collectionable;
+use App\CollectionableShared;
+use App\CollectionGroup;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class CollectionController extends Controller
 {
@@ -76,5 +80,88 @@ class CollectionController extends Controller
         $collection->update($data['collection']);
 
         return $class->fresh()->collections()->with('collectionables')->get();
+    }
+
+    public function importCollection()
+    {
+        $data = request()->validate([
+            'code' => ['string', 'required'],
+            'id' => ['numeric', 'required'],
+        ]);
+        $class = Classroom::where('code', $data['code'])->firstOrFail();
+        $this->authorize('update', $class);
+        $collectiong = CollectionGroup::where('id', $data['id'])->with('collectionables')->firstOrFail();
+        $collection = Collection::create([
+            'name' => $collectiong->name,
+            'xp' => $collectiong->xp,
+            'gold' => $collectiong->gold,
+            'classroom_id' => $class->id,
+        ]);
+        foreach ($collectiong->collectionables as $collectionable) {
+            $newCollectionable = Collectionable::create([
+                'name' => $collectionable->name,
+                'description' => $collectionable->description,
+                'type' => $collectionable->type,
+                'collection_id' => $collection->id,
+            ]);
+            $collectionable->media->each(function (Media $media) use ($newCollectionable) {
+                $props = $media->toArray();
+                unset($props['uuid']);
+                unset($props['id']);
+                $props['collection_name'] = 'collectionable';
+                $newCollectionable->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->withProperties($props)
+                    ->toMediaCollection($media->collection_name);
+            });
+        }
+    }
+
+    public function getSharedCollections()
+    {
+        $collection = CollectionGroup::all();
+        $collection->each->load('collectionables');
+        return $collection;
+    }
+
+    public function share()
+    {
+        $data = request()->validate([
+            'code' => ['required', 'string'],
+            'id' => ['required', 'numeric'],
+        ]);
+
+        $class = Classroom::where('code', '=', $data['code'])->firstOrFail();
+        $this->authorize('update', $class);
+
+        $collection = Collection::where('id', '=', $data['id'])->where('classroom_id', $class->id)->firstOrFail();
+
+        $collecitongroup = CollectionGroup::create([
+            'name' => $collection->name,
+            'xp' => $collection->xp,
+            'gold' => $collection->gold,
+        ]);
+
+        foreach ($collection->collectionables as $collectionable) {
+            $newCollectionable = CollectionableShared::create([
+                'name' => $collectionable->name,
+                'description' => $collectionable->description,
+                'type' => $collectionable->type,
+                'description' => $collectionable->description,
+                'collection_group_id' => $collecitongroup->id,
+            ]);
+
+            $collectionable->media->each(function (Media $media) use ($newCollectionable) {
+                $props = $media->toArray();
+                unset($props['uuid']);
+                unset($props['id']);
+                $newCollectionable->addMedia($media->getPath())
+                    ->preservingOriginal()
+                    ->withProperties($props)
+                    ->toMediaCollection($media->collection_name);
+            });
+        }
+
+        // Mail::to(env('EMAIL'))->send(new NewLevelsNotification());
     }
 }

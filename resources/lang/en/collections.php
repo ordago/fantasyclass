@@ -28,4 +28,9 @@ return [
     'buy_collectionable_gold_pack' => 'Price for pack',
     'claim_reward' => 'Claim the reward!',
     'get_collectionables' => 'There are your collectibles!',
+
+    'bank' => 'Collectible bank',
+    'share_bank' => 'Are you sure you want to share this collection? Please, be sure it\'s finished and check all collectibles.',
+    'import_alert' => 'The collection will be added to your class, edit the rewards if you want.',
+
 ];

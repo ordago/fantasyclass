@@ -28,4 +28,8 @@ return [
     'buy_collectionable_gold_pack' => 'Preu per cada paquet',
     'claim_reward' => 'Reclama la recompensa!',
     'get_collectionables' => 'Aquí tens els col·leccionables!',
+    
+    'bank' => 'Banc de col·leccionables',
+    'share_bank' => 'Estàs segur/a de compartir la col·lecció? Per favor, assegura\'t que està acabada i comprova tots els col·leccionables abans.',
+    'import_alert' => 'La col·lecció s\'afegirà a la classe, modifica les recompenses si ho creus convenient.',
 ];

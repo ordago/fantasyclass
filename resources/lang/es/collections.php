@@ -28,5 +28,9 @@ return [
     'buy_collectionable_gold_pack' => 'Precio por paquete',
     'claim_reward' => '¡Reclama la recompensa!',
     'get_collectionables' => '¡Aquí tienes tus coleccionables!',
-    
+
+    'bank' => 'Banco de coleccionables',
+    'share_bank' => '¿Estás seguro/a de compartir esta colección? Por favor, asegúrate que está finalizada y comprueba todos los coleccionables.',
+    'import_alert' => 'La colección se añadirá a la clase, modifica las recompensas si lo crees conveniente.',
+
 ];

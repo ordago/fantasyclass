@@ -1,8 +1,14 @@
 # Changelog
+## v1.71 Beta (31/08/2021)
+### Added
+- Option to share collections.
+
+### Changed
+- New images in shop.
+
 ## v1.70.2 Beta (28/08/2021)
 ### Changed
 - Improvements in behaviours.
-- New images in show.
 - Students now can have negative money.
 - Changes in card gold management. Protection against use and delete if not enough money.
 

@@ -7,9 +7,13 @@
           collection = {};
           isModalActive = true;
         "
-        class="button is-dark"
+        class="button is-success"
       >
         {{ trans.get("collections.add_collection") }}
+      </button>
+      <button class="button is-dark is-outlined" @click="getCollections">
+        <i class="fak fa-collection mr-2"></i>
+        {{ trans.get("collections.bank") }}
       </button>
       <div class="p-2 has-text-centered">
         <div
@@ -35,6 +39,14 @@
             >
               <i class="fas fa-info"></i>
             </span>
+            <button
+              @click="shareCollection(collection)"
+              class="button is-success"
+              v-tippy
+              :content="trans.get('general.share')"
+            >
+              <i class="fas fa-share-alt"></i>
+            </button>
             <button
               type="submit"
               @click="editCollection(collection)"
@@ -355,6 +367,61 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isModalImportActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("general.import") }}</p>
+        </header>
+        <section class="modal-card-body">
+          <div v-if="!collectionsb.length">
+            {{ trans.get("collections.empty") }}
+          </div>
+          <div class="p-2 justify-content-center w-100" v-else>
+            <div
+              class="mb-2"
+              v-for="collectionp in collectionsb"
+              :key="collectionp.id"
+            >
+              <h4 class="is-size-4 is-flex is-center-vertically">
+                {{ collectionp.name }} {{ collectionp.xp }}
+                <small
+                  ><i class="fas fa-fist-raised colored"></i> |
+                  {{ collectionp.gold }} <i class="fas fa-coins colored"></i
+                ></small>
+                <button
+                  @click="importPack(collectionp)"
+                  class="button is-success ml-2"
+                >
+                  <i class="fas fa-file-import mr-2"></i>
+                  {{ trans.get("general.import") }}
+                </button>
+              </h4>
+              <div class="collectionable-container w-100">
+                <show-collectionable
+                  v-for="collectionable in collectionp.collectionables"
+                  :key="'c-' + collectionable.id"
+                  :collectionable="collectionable"
+                  :admin="false"
+                  :count="0"
+                  class="collectionable-container"
+                  style="zoom: 50%"
+                ></show-collectionable>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="isModalImportActive = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -369,10 +436,12 @@ export default {
   data: function () {
     return {
       image: {},
+      collectionsb: [],
       collectionsReactive: [],
       selectedCollection: null,
       isPrefsModalActive: false,
       isModalActive: false,
+      isModalImportActive: false,
       isEditing: false,
       isLoading: false,
       isModalCollectionableActive: false,
@@ -395,6 +464,49 @@ export default {
     },
   },
   methods: {
+    importPack(collection) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.import") + " \"" + collection.name + "\"",
+        message: this.trans.get("collections.import_alert"),
+        confirmText: this.trans.get("general.import"),
+        type: "is-warning",
+        hasIcon: true,
+        onConfirm: () => {
+          axios
+            .post("/collections/import", { code: this.code, id: collection.id })
+            .then((response) => {
+              location.reload();
+            });
+        },
+      });
+    },
+    getCollections() {
+      axios.get("/collections/share/get").then((response) => {
+        this.collectionsb = response.data;
+        this.isModalImportActive = true;
+      });
+    },
+    shareCollection(collection) {
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("general.share"),
+        message: `${this.trans.get("collections.share_bank")}`,
+        cancelText: this.trans.get("general.cancel"),
+        confirmText: this.trans.get("general.accept"),
+        type: "is-success",
+        onConfirm: () => {
+          axios
+            .post("/collections/share", {
+              code: this.code,
+              id: collection.id,
+            })
+            .then((response) => {
+              this.$toast(this.trans.get("success_error.add_success"), {
+                type: "success",
+              });
+            });
+        },
+      });
+    },
     updatePrefs() {
       axios.patch("/classroom/" + this.code + "/setting", {
         _method: "patch",
