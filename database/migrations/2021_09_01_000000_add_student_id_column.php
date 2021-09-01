@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\Schema;
 
-class AddEvaluableIdColumn extends Migration
+class AddStudentIdColumn extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddEvaluableIdColumn extends Migration
     public function up()
     {
         Schema::table('rubric_row_student', function ($table) {
-            $table->unsignedBigInteger('evaluable_id')->nullable()->after('rubric_row_item_id');
+            $table->unsignedBigInteger('from_student_id')->nullable()->after('evaluable_id');
         });
 
     }
@@ -25,12 +25,9 @@ class AddEvaluableIdColumn extends Migration
      */
     public function down()
     {
-        Schema::table('evaluables', function ($table) {
-            $table->dropColumn('evaluables_group_id');
+        Schema::table('rubric_row_student', function ($table) {
+            $table->dropColumn('from_student_id');
         });
 
-        Schema::table('tags', function ($table) {
-            $table->dropColumn('evaluables_group_id');
-        });
     }
 }

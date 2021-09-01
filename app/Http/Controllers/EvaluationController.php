@@ -246,18 +246,44 @@ class EvaluationController extends Controller
             'weights' => ['required'],
             'description' => ['required', 'string'],
             'type' => ['required', 'numeric'],
-            'rubric' => ['nullable', 'numeric'],
+            'rubric_id' => ['nullable', 'numeric'],
             'evaluables_group_id' => ['nullable', 'numeric']
         ]);
 
         $evaluable = Evaluable::create([
             'description' => $data['description'],
             'type' => $data['type'],
-            'rubric_id' => $data['rubric'],
+            'rubric_id' => $data['rubric_id'],
             'classroom_id' => $class->id,
             'evaluables_group_id' => isset($data['evaluables_group_id']) ? $data['evaluables_group_id'] : null,
         ]);
 
+        foreach ($data['tags'] as $tag) {
+            $evaluable->tags()->attach([
+                $tag['id'] => ['weight' => $data['weights'][$tag['id']]],
+            ]);
+        }
+        $evaluable->load('tags');
+        return $evaluable;
+    }
+    public function update($code)
+    {
+        $class = Classroom::where('code', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+            'tags' => ['array', 'required'],
+            'weights' => ['required'],
+            'description' => ['required', 'string'],
+            'type' => ['required', 'numeric'],
+            'rubric_id' => ['nullable', 'numeric'],
+            'evaluables_group_id' => ['nullable', 'numeric']
+        ]);
+
+        $evaluable = Evaluable::where('id', $data['id'])->where('classroom_id', $class->id)->firstOrFail();
+        $evaluable->update($data);
+        $evaluable->tags()->sync([]);
         foreach ($data['tags'] as $tag) {
             $evaluable->tags()->attach([
                 $tag['id'] => ['weight' => $data['weights'][$tag['id']]],

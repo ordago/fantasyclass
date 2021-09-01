@@ -267,6 +267,7 @@ Route::group(['middleware' => 'language'], function () {
         // Evaluation
         Route::post('/{code}/evaluation/get', 'EvaluationController@index');
         Route::post('/{code}/evaluation', 'EvaluationController@store');
+        Route::post('/{code}/evaluation/edit', 'EvaluationController@update');
         Route::delete('/evaluation/{id}', 'EvaluationController@destroy');
 
         Route::get('/evaluation/{id}/grade', 'EvaluationController@grade');

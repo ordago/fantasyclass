@@ -1,4 +1,8 @@
 # Changelog
+## v1.72 Beta (XX/09/2021)
+### Added
+- Option to edit evaluation lines.
+
 ## v1.71 Beta (31/08/2021)
 ### Added
 - Option to share collections.

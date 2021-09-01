@@ -5,7 +5,9 @@
         <i v-if="evaluablegroup == -1" class="fas fa-chart-line"></i>
         <i v-else :class="evaluablegroup.icon"></i>
         <span class="pl-3">{{
-          evaluablegroup.name ? evaluablegroup.name : trans.get('evaluation.first')
+          evaluablegroup.name
+            ? evaluablegroup.name
+            : trans.get("evaluation.first")
         }}</span>
         <button
           style="font-size: 0.5em"
@@ -30,7 +32,11 @@
         <button
           class="button is-link"
           v-if="tagsReactive !== null && tagsReactive.length"
-          @click="isLineModalActive = true"
+          @click="
+            isEditMode = false;
+            resetLine();
+            isLineModalActive = true;
+          "
         >
           <i class="mr-2 fas fa-comment-edit"></i>
           {{ trans.get("evaluation.evaluation_line") }}
@@ -38,9 +44,12 @@
       </span>
     </p>
     <div class="my-3 px-3">
-      <article class="message is-info" v-if="!tagsReactive || !tagsReactive.length">
+      <article
+        class="message is-info"
+        v-if="!tagsReactive || !tagsReactive.length"
+      >
         <div class="message-body">
-          {{ trans.get('evaluation.info_tags') }}
+          {{ trans.get("evaluation.info_tags") }}
         </div>
       </article>
       <span
@@ -119,6 +128,14 @@
             >
               <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }}
             </a>
+            <b-button
+              v-tippy
+              :content="trans.get('general.edit')"
+              type="is-info is-small mr-1"
+              @click="editLine(props.row)"
+            >
+              <i class="fas fa-edit"></i>
+            </b-button>
             <b-button
               v-tippy
               :content="trans.get('general.delete')"
@@ -264,7 +281,7 @@
               </a>
               <b-select
                 v-if="rubrics !== null && rubrics.length"
-                v-model="line.rubric"
+                v-model="line.rubric_id"
                 expanded
               >
                 <option
@@ -318,8 +335,11 @@
             >
               {{ trans.get("general.close") }}
             </button>
-            <button class="button is-primary">
+            <button v-if="!isEditMode" class="button is-primary">
               {{ trans.get("evaluation.evaluation_line") }}
+            </button>
+            <button v-else class="button is-success">
+              <i class="fas fa-save mr-1"></i>{{ trans.get("general.save") }}
             </button>
           </footer>
         </div>
@@ -408,6 +428,7 @@ export default {
   },
   data: function () {
     return {
+      isEditMode: false,
       isTagModalActive: false,
       isLineModalActive: false,
       isGradeModalActive: false,
@@ -431,12 +452,33 @@ export default {
         description: "",
         weights: {},
         type: 0,
-        rubric: null,
+        rubric_id: null,
         evaluables_group_id: this.$parent.activeGroup.id,
       },
     };
   },
   methods: {
+    resetLine() {
+      this.line = {
+        id: null,
+        tags: [],
+        description: "",
+        weights: {},
+        type: 0,
+        rubric_id: null,
+        evaluables_group_id: this.$parent.activeGroup.id,
+      };
+    },
+    editLine(line) {
+      var weights = {};
+      line.tags.forEach((element) => {
+        weights[element.id] = element.pivot.weight;
+      });
+      this.line = line;
+      this.line.weights = weights;
+      this.isEditMode = true;
+      this.isLineModalActive = true;
+    },
     deleteEvaluationGroup(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -502,20 +544,21 @@ export default {
     },
 
     addLine() {
+      if (this.line.type == 0) this.line.rubric_id = null;
+      let append = "";
+      if (this.isEditMode) append += "/edit";
       if (this.line.tags.length) {
         axios
-          .post("/classroom/" + this.code + "/evaluation", this.line)
+          .post("/classroom/" + this.code + "/evaluation" + append, this.line)
           .then((response) => {
             if (response.data.hasOwnProperty("id") === true) {
               this.isLineModalActive = false;
-              this.linesReactive.push(response.data);
-
-              this.line.id = null;
-              this.line.tags = [];
-              this.line.description = "";
-              this.line.weights = {};
-              this.line.type = 0;
-              this.line.rubric = null;
+              if (this.isEditMode) {
+                location.reload();
+              } else {
+                this.linesReactive.push(response.data);
+                this.resetLine();
+              }
             }
           });
       } else {
