@@ -4,7 +4,7 @@
 - Option to edit evaluation lines.
 
 ### Changed
-- Don't show markers if requirements not met.
+- Hide markers if requirements not met.
 
 ## v1.71 Beta (31/08/2021)
 ### Added
