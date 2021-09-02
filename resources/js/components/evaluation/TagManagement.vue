@@ -293,6 +293,14 @@
                 </option>
               </b-select>
             </b-field>
+            <b-field :label="trans.get('evaluation.subtype')" v-if="type == 0 && groups && groups.length">
+              <b-select v-model="line.subtype" expanded>
+                <option value="0">{{ trans.get("evaluation.teacher") }}</option>
+                <option value="1">
+                  {{ trans.get("evaluation.coeval") }}
+                </option>
+              </b-select>
+            </b-field>
             <p
               v-if="
                 line.type == 1 &&
@@ -440,6 +448,7 @@ export default {
       rubrics: [],
       settings: null,
       tags: [],
+      groups: [],
       tag: {
         short: "",
         description: "",
@@ -452,6 +461,7 @@ export default {
         description: "",
         weights: {},
         type: 0,
+        subtype: 0,
         rubric_id: null,
         evaluables_group_id: this.$parent.activeGroup.id,
       },
@@ -465,6 +475,7 @@ export default {
         description: "",
         weights: {},
         type: 0,
+        subtype: 0,
         rubric_id: null,
         evaluables_group_id: this.$parent.activeGroup.id,
       };
@@ -507,6 +518,7 @@ export default {
           this.rubrics = response.data.rubrics;
           this.settings = response.data.settings;
           this.tags = response.data.tags;
+          this.groups = response.data.groups;
 
           this.tagsReactive = this.tags;
           this.filteredTags = this.tags;
@@ -544,7 +556,10 @@ export default {
     },
 
     addLine() {
-      if (this.line.type == 0) this.line.rubric_id = null;
+      if (this.line.type == 0) {
+        this.line.rubric_id = null;
+        this.line.subtype = 0;
+      }
       let append = "";
       if (this.isEditMode) append += "/edit";
       if (this.line.tags.length) {

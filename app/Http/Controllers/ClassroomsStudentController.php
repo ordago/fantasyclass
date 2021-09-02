@@ -665,6 +665,8 @@ class ClassroomsStudentController extends Controller
         $student->append('blogsp');
         $student->groups->each->append('blogs');
 
+        // TODO SELECT * FROM `evaluables` e LEFT JOIN rubric_rows r ON e.rubric_id = r.rubric_id LEFT JOIN rubric_row_items rri ON r.id = rri.rubric_row_id LEFT JOIN rubric_row_student rrs ON rrs.rubric_row_item_id = rri.id  WHERE e.subtype = 1 AND e.classroom_id = 3 AND rrs.from_student_id = 9
+
         $evaluation = null;
         if (settings()->get('eval_visible', false)) {
             $grades = collect();

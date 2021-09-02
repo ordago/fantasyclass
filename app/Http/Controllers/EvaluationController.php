@@ -102,11 +102,11 @@ class EvaluationController extends Controller
             $evaluationlines = Evaluable::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->with('tags')->get();
             $tags = Tag::where('classroom_id', $class->id)->whereNull('evaluables_group_id')->get();
         }
-
+        $groups = $class->grouping->first()->groups;
         $rubrics = Rubric::where('user_id', auth()->user()->id)->get();
         $settings = EvaluationController::getEvalSettings($class->id);
 
-        return array('evaluables' => $evaluables, 'tags' => $tags, 'evaluationlines' => $evaluationlines, 'rubrics' => $rubrics, 'settings' => $settings);
+        return array('groups' => $groups,'evaluables' => $evaluables, 'tags' => $tags, 'evaluationlines' => $evaluationlines, 'rubrics' => $rubrics, 'settings' => $settings);
     }
 
     public function evaluate($id)
@@ -246,6 +246,7 @@ class EvaluationController extends Controller
             'weights' => ['required'],
             'description' => ['required', 'string'],
             'type' => ['required', 'numeric'],
+            'subtype' => ['required', 'numeric'],
             'rubric_id' => ['nullable', 'numeric'],
             'evaluables_group_id' => ['nullable', 'numeric']
         ]);
@@ -253,6 +254,7 @@ class EvaluationController extends Controller
         $evaluable = Evaluable::create([
             'description' => $data['description'],
             'type' => $data['type'],
+            'subtype' => $data['subtype'],
             'rubric_id' => $data['rubric_id'],
             'classroom_id' => $class->id,
             'evaluables_group_id' => isset($data['evaluables_group_id']) ? $data['evaluables_group_id'] : null,
@@ -277,6 +279,7 @@ class EvaluationController extends Controller
             'weights' => ['required'],
             'description' => ['required', 'string'],
             'type' => ['required', 'numeric'],
+            'subtype' => ['required', 'numeric'],
             'rubric_id' => ['nullable', 'numeric'],
             'evaluables_group_id' => ['nullable', 'numeric']
         ]);

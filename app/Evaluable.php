@@ -10,6 +10,7 @@ class Evaluable extends Model
         'description',
         'classroom_id',
         'type',
+        'subtype',
         'rubric_id',
         'challenge_id',
         'evaluables_group_id'
