@@ -14,15 +14,17 @@
 </style>
 
 <body>
-  @if(isset($check) && $check !== "invisible")
-    <a href="{{ $permalink }}" target="_blank">
-      @if($check)
-      <img width="33px" height="49px" src="/img/maps/marker-ok.png" alt="marker">
-      @else
-      <img width="33px" height="49px" src="/img/maps/marker-ko.png" alt="marker">
+  @if(isset($check))
+    @if($check !== "invisible")
+      <a href="{{ $permalink }}" target="_blank">
+        @if($check)
+          <img width="33px" height="49px" src="/img/maps/marker-ok.png" alt="marker">
+        @else
+          <img width="33px" height="49px" src="/img/maps/marker-ko.png" alt="marker">
+        @endif
+      </a>
       @endif
-    </a>
-  @elseif($check !== "invisible")
+  @else
     <img width="33px" height="49px" src="/img/maps/marker.png" alt="marker">
   @endif
 </body>

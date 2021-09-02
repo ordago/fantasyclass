@@ -1,7 +1,10 @@
 # Changelog
-## v1.72 Beta (XX/09/2021)
+## v1.72 Beta (02/09/2021)
 ### Added
 - Option to edit evaluation lines.
+
+### Changed
+- Hide markers if requirements not met.
 
 ## v1.71 Beta (31/08/2021)
 ### Added
