@@ -61,7 +61,7 @@ class UtilsController extends Controller
             'gold' => ['numeric', 'nullable'],
             'students' => ['array', 'required'],
         ]);
-        if(isset($data['behaviour']) && $data['behaviour']) {
+        if (isset($data['behaviour']) && $data['behaviour']) {
             $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
             foreach ($data['students'] as $id) {
                 $student = Student::find($id);
@@ -70,7 +70,7 @@ class UtilsController extends Controller
                 $student->addBehaviour($behaviour->id);
             }
         }
-        if(isset($data['hp']) && $data['hp']) {
+        if (isset($data['hp']) && $data['hp']) {
             foreach ($data['students'] as $id) {
                 $student = Student::find($id);
                 if ($student->classroom->classroom_id != $class->id)
@@ -78,7 +78,7 @@ class UtilsController extends Controller
                 $student->setProperty('hp', $data['hp'], true, 'teacher');
             }
         }
-        if(isset($data['xp']) && $data['xp']) {
+        if (isset($data['xp']) && $data['xp']) {
             foreach ($data['students'] as $id) {
                 $student = Student::find($id);
                 if ($student->classroom->classroom_id != $class->id)
@@ -86,7 +86,7 @@ class UtilsController extends Controller
                 $student->setProperty('xp', $data['xp'], true, 'teacher');
             }
         }
-        if(isset($data['gold']) && $data['gold']) {
+        if (isset($data['gold']) && $data['gold']) {
             foreach ($data['students'] as $id) {
                 $student = Student::find($id);
                 if ($student->classroom->classroom_id != $class->id)
@@ -272,7 +272,8 @@ class UtilsController extends Controller
                 } else $object->get = false;
                 if (Rating::where('student_id', $student->id)->where('challenge_id', $object->id)->get()->count()) {
                     $object->rated = 1;
-                } $object->rated = 1;
+                }
+                $object->rated = 1;
                 $object->completed = true;
                 break;
             case "challengecheck":
@@ -283,15 +284,28 @@ class UtilsController extends Controller
                 } catch (\Throwable $th) {
                     return view('maps.marker');
                 }
-                if($class->id != $student->classroom->classroom_id)
+                if ($class->id != $student->classroom->classroom_id)
                     return view('maps.marker');
-                
-                if($challenge->type == 0)
+
+                $permalink = env('APP_URL') . "/classroom/show/" . $class->code . "/challenges/" . $challenge->permalink;
+
+                if ($challenge->challenge_required) {
+                    $challengeReq = Challenge::find($challenge->challenge_required);
+                    if ($challengeReq->type == 0)
+                        $checkReq = $student->challenges->contains($challenge->challenge_required);
+                    else
+                        $checkReq = $student->groups->first()->challenges->contains($challenge->challenge_required);
+                    if (!$checkReq) {
+                        $check = "invisible";
+                        return view('maps.marker', compact('check', 'permalink'));
+                    }
+                }
+                if ($challenge->type == 0)
                     $check = $student->challenges->contains($text[1]);
-                else 
+                else
                     $check = $student->groups->first()->challenges->contains($text[1]);
-                $permalink = env('APP_URL')."/classroom/show/".$class->code."/challenges/".$challenge->permalink;
-                    return view('maps.marker', compact('check', 'permalink'));
+
+                return view('maps.marker', compact('check', 'permalink'));
                 break;
 
             default:
