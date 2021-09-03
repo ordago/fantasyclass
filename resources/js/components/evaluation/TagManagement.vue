@@ -293,7 +293,7 @@
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="trans.get('evaluation.subtype')" v-if="type == 0 && groups && groups.length">
+            <b-field :label="trans.get('evaluation.subtype')" v-if="line.type == 1 && groups && groups.length">
               <b-select v-model="line.subtype" expanded>
                 <option value="0">{{ trans.get("evaluation.teacher") }}</option>
                 <option value="1">
