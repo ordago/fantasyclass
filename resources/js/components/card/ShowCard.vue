@@ -1,6 +1,10 @@
 <template>
   <div class="m-2">
-    <div style="text-align: center" v-if="this.use">
+    <div
+      style="text-align: center"
+      :class="{ grayscale: card.disabled == 1 }"
+      v-if="this.use"
+    >
       <button
         type="submit"
         class="button is-success"
@@ -8,7 +12,7 @@
         v-tippy
         :content="getMessage(card.pivot.marked)"
         v-bind:class="{
-          disabled: checkLevel(),
+          disabled: checkLevel() || card.disabled == 1,
           'has-background-dark': card.pivot.marked == 1,
         }"
       >
@@ -28,6 +32,7 @@
       class="cardContainer cardFunction"
       data-id="1"
       group-id
+      :class="{ grayscale: card.disabled == 1 }"
       :style="'background-color:' + card.background + ';'"
     >
       <div class="lvl-top-left" v-if="card.min_lvl">
@@ -39,6 +44,17 @@
         v-if="!card.fullscreen"
         class="typeCard"
       />
+      <span
+        v-tippy
+        :content="trans.get('cards.automatic_info')"
+        class="typeCard"
+        style="top: 203px; z-index: 100"
+      >
+        <i
+          v-if="card.automatic == 1"
+          class="fas fa-bolt has-text-light colored"
+        ></i>
+      </span>
       <div>
         <h3 class="title-cards textShadow">
           <svg viewBox="0 0 500 500">
@@ -120,6 +136,44 @@
       style="text-align: center"
       v-if="this.admin && this.properties && !this.assign"
     >
+      <button
+        type="submit"
+        @click="toggleAutomatic"
+        v-tippy
+        :content="getMessageAutomatic()"
+        class="button is-light"
+        :class="{
+          'is-warning is-light': card.automatic == 0,
+          'is-success is-light': card.automatic == 1,
+        }"
+      >
+        <i
+          class="fas"
+          :class="{
+            'fa-bolt': card.automatic == 0,
+            'fa-hand-sparkles': card.automatic == 1,
+          }"
+        ></i>
+      </button>
+      <button
+        type="submit"
+        @click="toggleDisable"
+        v-tippy
+        :content="getMessageDisable()"
+        class="button is-light"
+        :class="{
+          'is-light': card.disabled == 0,
+          'is-danger is-light': card.disabled == 1,
+        }"
+      >
+        <i
+          class="fas"
+          :class="{
+            'fa-eye-slash': card.disabled == 0,
+            'fa-eye': card.disabled == 1,
+          }"
+        ></i>
+      </button>
       <a
         :href="'/classroom/' + code + '/cards/' + card.id"
         type="submit"
@@ -180,6 +234,34 @@ export default {
     };
   },
   methods: {
+    getMessageAutomatic() {
+      if (this.card.automatic) return this.trans.get("cards.manual");
+      return (
+        this.trans.get("cards.automatic") +
+        ". " +
+        this.trans.get("cards.automatic_info")
+      );
+    },
+    toggleAutomatic() {
+      axios
+        .get("/classroom/card/automatic/" + this.card.id)
+        .then((response) => {
+          this.card.automatic
+            ? (this.card.automatic = 0)
+            : (this.card.automatic = 1);
+        });
+    },
+    getMessageDisable() {
+      if (this.card.disabled) return this.trans.get("general.enable");
+      return this.trans.get("general.disable");
+    },
+    toggleDisable() {
+      axios.get("/classroom/card/disable/" + this.card.id).then((response) => {
+        this.card.disabled
+          ? (this.card.disabled = 0)
+          : (this.card.disabled = 1);
+      });
+    },
     share() {
       this.$buefy.dialog.confirm({
         title: this.trans.get("cards.share"),
@@ -230,6 +312,7 @@ export default {
         });
     },
     markCard(card, type) {
+      if (type == 1 && this.card.disabled == 1) return false;
       let number = 0;
       if (this.$parent.$parent.$parent.student.level != null)
         number = this.$parent.$parent.$parent.student.level.number;
@@ -276,7 +359,7 @@ export default {
       } else {
         this.$buefy.dialog.confirm({
           title: this.trans.get("cards.use_title"),
-          message: this.trans.get("cards.use_text"),
+          message: this.card.automatic ? this.trans.get("cards.use_text_automatic") : this.trans.get("cards.use_text"),
           confirmText: this.trans.get("cards.use_confirm"),
           cancelText: this.trans.get("general.cancel"),
           type: "is-warning",
@@ -292,6 +375,8 @@ export default {
                 student: this.student.id,
               })
               .then((response) => {
+                if(this.card.automatic)
+                  location.reload();
                 this.$toast(response.data.message, {
                   type: response.data.type,
                 });
@@ -338,3 +423,8 @@ export default {
   },
 };
 </script>
+<style>
+.grayscale {
+  filter: grayscale(100%);
+}
+</style>

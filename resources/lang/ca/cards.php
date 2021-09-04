@@ -18,7 +18,10 @@ return [
     'special' => 'Especial (no ocupa espai)',
     'custom_image' => 'Imatge personalitzada',
     'confirm_empty' => 'Títol i contingut estan buits, estàs segur/a que vols crear una carta buida?',
-    
+    'automatic' => 'Fer cart automàtica',
+    'automatic_info' => 'Les cartes automàtiques no han de ser aprovades',
+    'manual' => 'Manual',
+
     /* Help */
     'radius_help' => 'L\'arrodoniment de la imatge, 0 implica cantonades quadrades i a mesura que s\'incrementa el valor es produeix l\'arrodoniment.',
     'min_lvl_help' => 'Nivell mínim per utiltizar la carta.',
@@ -90,6 +93,7 @@ return [
     'use' => 'Utilitzar',
     'delete' => 'Eliminar',
     'use_title' => 'Marcar carta',
+    'use_text_automatic' => 'La carta serà utilitzada / eliminada.',
     'use_text' => 'La carta es marcarà per ser utilitzada o per eliminar-la. El/la profe ha de confirmar l\'acció.',
     'use_text_bypass' => 'La carta serà utilitzada o eliminada. Aquesta acció no es pot desfer.',
     'use_confirm' => 'Accepta',

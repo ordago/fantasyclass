@@ -1,4 +1,8 @@
 # Changelog
+## v1.73 Beta (04/09/2021)
+### Added
+- Disable cards and automatic.
+
 ## v1.72 Beta (02/09/2021)
 ### Added
 - Option to edit evaluation lines.

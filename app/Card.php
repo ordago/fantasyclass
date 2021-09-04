@@ -30,6 +30,8 @@ class Card extends Model implements HasMedia
             'type_bg',
             'shared',
             'own',
+            'disabled',
+            'automatic',
         ];
         public function registerMediaCollections() : void 
         {

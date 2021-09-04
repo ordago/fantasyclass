@@ -209,16 +209,13 @@ class CardsController extends Controller
                 ->toMediaCollection($media->collection_name);
         });
         $cardPath = $newCard->getMedia('card')->first();
-        if($cardPath) {
+        if ($cardPath) {
             $imgPath = $cardPath->collection_name . "/" . $cardPath->uuid . '/' . $cardPath->file_name;
             $newCard->update(['src' => '/storage/' . $imgPath, 'classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
         } else {
             $newCard->update(['classroom_id' => NULL, 'own' => 0, 'shared' => 1]);
         }
         Mail::to(env('EMAIL'))->send(new NewCardNotification());
-
-
-
     }
 
     public function import($code)
@@ -230,7 +227,7 @@ class CardsController extends Controller
         ]);
         $card = Card::find($data['id']);
         $cardClass = Classroom::find($card->classroom_id);
-        if($cardClass != null)
+        if ($cardClass != null)
             $this->authorize('view', $cardClass);
         $newCard = $card->replicate();
         $class->cards()->save($newCard);
@@ -325,7 +322,7 @@ class CardsController extends Controller
         }
 
         $type = 'card_use';
-        if($data['type'] != 1)
+        if ($data['type'] != 1)
             $type = 'card_delete';
         LogEntry::create([
             'type' => $type,
@@ -343,29 +340,23 @@ class CardsController extends Controller
         ];
     }
 
-    public function useDelete($id)
+    public function toggleDisable($id)
     {
-        $card = Card::find($id);
-        $class = Classroom::find($card->classroom_id);
+        $card = Card::findOrFail($id);
+        $class = Classroom::findOrFail($card->classroom_id);
         $this->authorize('update', $class);
+        $card->update(['disabled' => !$card->disabled]);
+    }
+    public function toggleAutomatic($id)
+    {
+        $card = Card::findOrFail($id);
+        $class = Classroom::findOrFail($card->classroom_id);
+        $this->authorize('update', $class);
+        $card->update(['automatic' => !$card->automatic]);
+    }
 
-        $data = request()->validate([
-            'student' => ['numeric', 'required'],
-            'action' => ['boolean'],
-            'type' => ['numeric'],
-        ]);
-
-        $student = Student::find($data['student']);
-        if ($student->classroom->classroom_id != $class->id)
-            return false;
-
-
-        $cardLine = CardStudent::where('card_id', $card->id)
-            ->where('student_id', $student->id)
-            ->where('marked', $data['type'])
-            ->first();
-
-
+    public static function useDeleteCard($student, $card, $cardLine, $class, $data)
+    {
         if ($data['action']) {
             settings()->setExtraColumns(['classroom_id' => $class->id]);
             if ($data['type'] == 1) {
@@ -385,8 +376,8 @@ class CardsController extends Controller
                     ];
                 }
                 if ($card->gold) {
-                    if($card->gold < 0) {
-                        if($student->gold + $card->gold < 0) {
+                    if ($card->gold < 0) {
+                        if ($student->gold + $card->gold < 0) {
                             return [
                                 "message" => " " . __('success_error.shop_failed_money'),
                                 "icon" => "times",
@@ -435,6 +426,32 @@ class CardsController extends Controller
             $cardLine->update(['marked' => 0]);
         }
     }
+    public function useDelete($id)
+    {
+        $card = Card::find($id);
+        $class = Classroom::find($card->classroom_id);
+        $this->authorize('studyOrTeach', $class);
+
+        $data = request()->validate([
+            'student' => ['numeric', 'required'],
+            'action' => ['boolean'],
+            'type' => ['numeric'],
+        ]);
+
+        $student = Student::find($data['student']);
+        if ($student->classroom->classroom_id != $class->id)
+            return false;
+
+
+        $cardLine = CardStudent::where('card_id', $card->id)
+            ->where('student_id', $student->id)
+            ->where('marked', $data['type'])
+            ->first();
+
+        return CardsController::useDeleteCard($student, $card, $cardLine, $class, $data);
+
+       
+    }
 
     public function random($code)
     {
@@ -452,10 +469,12 @@ class CardsController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $probabilities = json_decode(settings()->get('card_probabilities', json_encode([55, 30, 10, 5])));
 
+        $max = 200;
         do {
             $typeValue = Functions::getRandomWeightedElement(array(1 => $probabilities[0], 2 => $probabilities[1], 3 => $probabilities[2], 4 => $probabilities[3]));
-            $card = Card::where('type', $typeValue)->where('classroom_id', $class->id)->inRandomOrder()->first();
-        } while ($card == null);
+            $card = Card::where('type', $typeValue)->where('disabled', 0)->where('classroom_id', $class->id)->inRandomOrder()->first();
+            $max--;
+        } while ($card == null && $max >= 0);
         return $card;
     }
 
