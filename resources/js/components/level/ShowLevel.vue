@@ -2,17 +2,27 @@
   <div
     v-if="level"
     :class="{
-      'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered': edit,
+      'column is-6-tablet is-12-mobile is-3-desktop mb-0 is-flex has-all-centered':
+        edit,
       column: !edit,
     }"
     :style="getStyle()"
   >
     <div
       :class="{ 'min-width': !edit }"
-      class="columns w-100 is-variable is-0 py-2"
+      class="columns w-100 is-variable is-0 py-2 is-relative"
+      
     >
       <div
-        class="column is-narrow py-0 card-shadow-s rounded-left has-background-light"
+        class="
+          column
+          is-narrow
+          py-0
+          card-shadow-s
+          rounded-left
+          has-background-light
+          
+        "
       >
         <figure class="image is-128x128">
           <label class="cursor-pointer" :for="'file' + level.id">
@@ -41,6 +51,15 @@
             />
           </label>
         </figure>
+          <b-progress
+             style="position:absolute; bottom: -10px; color: black!important;"
+             class="w-100"
+             :type="{'is-warning' : getValue() < 50, 'is-info' : getValue() < 100, 'is-success' : getValue() == 100}"
+            v-if="!edit"
+            :value="getValue()"
+            show-value
+            format="percent"
+          ></b-progress>
       </div>
       <div class="column content card p-4 rounded-right card-shadow-s">
         <p class="is-size-4">
@@ -52,6 +71,7 @@
         </p>
         <h2 v-if="!edit">{{ level.title }}</h2>
         <p v-if="!edit">{{ level.description }}</p>
+
         <input
           type="number"
           v-if="edit"
@@ -75,10 +95,21 @@
           ></textarea>
         </p>
         <div v-if="edit" class="has-text-right mt-2">
-          <button class="button is-primary" @click="update" v-tippy :content="trans.get('general.save')">
+          <button
+            class="button is-primary"
+            @click="update"
+            v-tippy
+            :content="trans.get('general.save')"
+          >
             <i class="fas fa-save"></i>
           </button>
-          <button class="button is-danger" v-tippy :content="trans.get('general.delete')" @click="remove" v-if="last">
+          <button
+            class="button is-danger"
+            v-tippy
+            :content="trans.get('general.delete')"
+            @click="remove"
+            v-if="last"
+          >
             <i class="fas fa-trash-alt"></i>
           </button>
         </div>
@@ -91,6 +122,7 @@
 export default {
   // props: ["level", "last", "code", "edit", "resize"],
   props: {
+    userxp: Number,
     level: Object,
     last: Boolean,
     code: String,
@@ -98,7 +130,7 @@ export default {
     resize: {
       type: Boolean,
       default: false,
-    }
+    },
   },
   created() {
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
@@ -114,6 +146,11 @@ export default {
     };
   },
   methods: {
+    getValue: function () {
+      if(!this.level.nextlvl)
+        return 100;
+      return (this.userxp * 100) / this.level.nextlvl
+    },
     update: function () {
       this.image.generateBlob(
         (blob) => {
@@ -143,8 +180,7 @@ export default {
       );
     },
     getStyle() {
-      if(this.resize)
-        return 'zoom: 60%;';
+      if (this.resize) return "zoom: 60%;";
     },
     remove: function () {
       axios.delete("/classroom/level/" + this.level.id).then((response) => {
@@ -158,5 +194,8 @@ export default {
 <style>
 .min-width {
   min-width: 400px;
+}
+.progress-wrapper .progress-value {
+  color: black!important;
 }
 </style>

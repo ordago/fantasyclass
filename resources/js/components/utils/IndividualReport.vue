@@ -160,7 +160,7 @@ body {
 @media print {
   .page-break {
     display: block;
-    page-break-before: always;
+    page-break-after: always;
     margin-bottom: 10px;
   }
   body, .has-background-white-ter {

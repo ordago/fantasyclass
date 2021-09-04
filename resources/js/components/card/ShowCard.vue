@@ -32,6 +32,7 @@
       class="cardContainer cardFunction"
       data-id="1"
       group-id
+      style="-webkit-print-color-adjust: exact;print-color-adjust: exact;"
       :class="{ grayscale: card.disabled == 1 }"
       :style="'background-color:' + card.background + ';'"
     >
@@ -134,6 +135,7 @@
     </div>
     <div
       style="text-align: center"
+      class="noprint"
       v-if="this.admin && this.properties && !this.assign"
     >
       <button
@@ -203,6 +205,7 @@
         <i class="fas fa-share-alt"></i>
       </button>
     </div>
+    <div v-if="pagebreak % 2 == 0" style="page-break-before: always;"></div>
   </div>
 </template>
 
@@ -221,6 +224,7 @@ export default {
     "student",
     "assign",
     "import",
+    "pagebreak",
   ],
   components: {
     Buttons,

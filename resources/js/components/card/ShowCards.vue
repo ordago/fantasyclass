@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-2">
-      <div class="buttons">
+      <div class="buttons noprint">
         <a
           :href="'/classroom/' + code + '/cards/create'"
           class="button is-success"
@@ -16,19 +16,23 @@
           {{ trans.get("cards.import_default") }}
         </a>
         <button class="button is-dark is-outlined" @click="getOwnCards">
-          <i class="fak fa-deck colored mr-2"></i> {{ trans.get("cards.import") }}
+          <i class="fak fa-deck colored mr-2"></i>
+          {{ trans.get("cards.import") }}
         </button>
-        
+        <button class="button is-dark noprint" @click="print">
+          <i class="fas fa-print"></i>
+        </button>
       </div>
     </div>
     <div class="p-2 is-flex flex-wrap justify-content-center">
       <show-card
-        v-for="card in orderedCards"
+        v-for="(card, index) in orderedCards"
         :code="code"
         :properties="true"
         :admin="true"
         :assign="student"
         :card="card"
+        :pagebreak="index"
         v-bind:key="card.id"
       ></show-card>
     </div>
@@ -46,19 +50,17 @@
           <div v-if="!ownCards.length">
             {{ trans.get("cards.import_empty") }}
           </div>
-          <div
-            class="p-2 is-flex flex-wrap justify-content-center"
-            v-else
-          >
+          <div class="p-2 is-flex flex-wrap justify-content-center" v-else>
             <show-card
-              v-for="card in ownCards"
+              v-for="(card, index) in ownCards"
               :code="code"
               :properties="false"
               :admin="true"
               :import="true"
               :card="card"
               v-bind:key="card.id"
-            ></show-card>
+            >
+            </show-card>
           </div>
         </section>
         <footer class="modal-card-foot">
@@ -101,7 +103,7 @@ export default {
           });
           ownCards.forEach((card) => {
             this.ownCards.unshift(card);
-          })
+          });
           this.isModalActive = true;
         });
       });
