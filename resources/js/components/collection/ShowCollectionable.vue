@@ -1,5 +1,5 @@
 <template>
-  <div class="collectionable">
+  <div class="collectionable" style="-webkit-print-color-adjust: exact;print-color-adjust: exact;">
     <span class="collectionable-count" v-if="!admin && count > 0">
       {{ count }}
     </span>

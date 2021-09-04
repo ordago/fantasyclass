@@ -17,8 +17,15 @@ class Level extends Model implements HasMedia
         'classroom_id', 
         ];
 
-    protected $appends = ['imagelvl'];
+    protected $appends = ['imagelvl', 'nextlvl'];
 
+    public function getNextlvlAttribute() 
+    {  
+        $next = Level::where('classroom_id', $this->classroom_id)->where('xp', ">", $this->xp)->first();
+        if($next)
+            return $next->xp;
+        return 0;
+    }
     public function getImagelvlAttribute() 
     {  
         $media = $this->getMedia('level')->first();

@@ -24,6 +24,7 @@ use Arcanedev\LaravelSettings\Utilities\Arr;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -961,6 +962,7 @@ class ClassroomsStudentController extends Controller
                 }
             }
         }
+
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         if ($data['type'] == 1)
             $cost = settings()->get('card_use', 200);
@@ -975,25 +977,37 @@ class ClassroomsStudentController extends Controller
             ];
         }
 
-        $cardLine = CardStudent::where('card_id', $card->id)
-            ->where('student_id', $student->id)
-            ->orderBy('marked')
-            ->first();
+       
+            $cardLine = CardStudent::where('card_id', $card->id)
+                ->where('student_id', $student->id)
+                ->orderBy('marked')
+                ->first();
+    
+            $cardLine->update(['marked' => $data['type']]);
+    
+            $from['title'] = __("notifications.mark_card");
+            $from['name'] = $student->name;
+            $from['username'] = $student->username;
+            $from['datetime'] = Carbon::now();
+    
+            
+            if($card->automatic) {
+                $data['action'] = true;
+                return CardsController::useDeleteCard($student, $card, $cardLine, $class, $data);
+                NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.used_card", __("notifications.used_card_content") . ": " . $card->title, $from, "mark_card", '');                
+                // dump(env('APP_URL').'/classroom/card/usedelete/' . $card->id);
+                // $response = Http::post(env('APP_URL').'/classroom/card/usedelete/' . $card->id, ['student' => $student->id, 'type' => $data['type'], 'action' => true]);
+                // dump($response);
+            } else {
+                NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
+            }
 
-        $cardLine->update(['marked' => $data['type']]);
-
-        $from['title'] = __("notifications.mark_card");
-        $from['name'] = $student->name;
-        $from['username'] = $student->username;
-        $from['datetime'] = Carbon::now();
-
-        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
-
-        return [
-            "message" => " " . __('success_error.update_success'),
-            "icon" => "check",
-            "type" => "success",
-        ];
+            return [
+                "message" => " " . __('success_error.update_success'),
+                "icon" => "check",
+                "type" => "success",
+            ];
+        
     }
     public function buyPet($code)
     {

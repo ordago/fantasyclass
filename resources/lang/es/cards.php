@@ -18,7 +18,10 @@ return [
     'special' => 'Especial (no ocupa espacio)',
     'custom_image' => 'Imagen personalizada',
     'confirm_empty' => 'Título y contenido están vacíos, estás seguro/en que quieres crear una carta vacía?',
-    
+    'automatic' => 'Hacer carta automática',
+    'automatic_info' => 'Las cartas automáticas no tienen que ser aprobadas',
+    'manual' => 'Manual',
+
     /* Help */
     'radius_help' => 'El redondeo de la imagen, 0 implica esquinas cuadradas y a medida que se incrementa el valor se produce el redondeo.',
     'min_lvl_help' => 'Nivel mínimo para utiltizar la carta.',
@@ -91,6 +94,7 @@ return [
     'delete' => 'Eliminar',
     'use_title' => 'Marcar carta',
     'use_text' => 'La carta se marcará para ser utilizada o para eliminarla. El/la profe tiene que confirmar la acción.',
+    'use_text_automatic' => 'La carta será utilizada / eliminada.',
     'use_text_bypass' => 'La carta será utilizada o eliminada. Esta acción no se puede deshacer.',
     'use_confirm' => 'Acepta',
     'pay' => 'Pagar',

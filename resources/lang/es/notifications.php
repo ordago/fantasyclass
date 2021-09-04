@@ -14,6 +14,8 @@ return [
     'comment' => 'Nuevo comentario',
     'mark_card' => 'Carta pendiente',
     'mark_card_content' => 'quiere usar o eliminar una carta',
+    'used_card' => 'Carta utilizada',
+    'used_card_content' => 'ha utilizado una carta automática.',
     'use_skill' => 'Habilidad usada',
     'use_skill_content' => 'ha usado la habilidad',
     'new_behaviour' => 'Nuevo comportamiento',

@@ -18,6 +18,9 @@ return [
     'special' => 'Special (doesn\'t use slot)',
     'custom_image' => 'Custom image',
     'confirm_empty' => 'Title and content are empty, are you sure you want to create an empty card?',
+    'automatic' => 'Make card automatic',
+    'automatic_info' => 'Automatic cards don\'t need to be aproved',
+    'manual' => 'Manual',
     
     /* Help */
     'radius_help' => 'The rounding of the edges of the image is defined, 0 implies square edges and as the value is increased the rounding occurs.',
@@ -91,6 +94,7 @@ return [
     'delete' => 'Delete',
     'use_title' => 'Mark card',
     'use_text' => 'The card will be marked for use or delete. The teacher needs to confirm the action.',
+    'use_text_automatic' => 'The card will be used / deleted.',
     'use_text_bypass' => 'The card will be used or deleted. This action can\'t be undone.',
     'use_confirm' => 'Accept',
     'pay' => 'Pay',

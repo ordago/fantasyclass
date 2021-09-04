@@ -14,6 +14,8 @@ return [
     'comment' => 'New comment',    
     'mark_card' => 'Card waiting',
     'mark_card_content' => 'wants to use or delete one card',
+    'used_card' => 'Card used',
+    'used_card_content' => 'has used an automatic card.',
     'use_skill' => 'Skill used',
     'use_skill_content' => 'has used skill',
     'new_behaviour' => 'New behaviour',

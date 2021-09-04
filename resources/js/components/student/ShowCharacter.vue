@@ -47,6 +47,7 @@
       <show-level
         class="level-hidden"
         style
+        :userxp="student.xp"
         :level="student.level"
         :edit="false"
       ></show-level>

@@ -147,12 +147,15 @@
       </b-modal>
     </div>
     <div class="p-2" v-else>
-      <button @click="selectedCollection = null" class="button is-info">
+      <button @click="selectedCollection = null" class="button is-info noprint">
         <i class="fas fa-arrow-left"></i>
       </button>
-      <button @click="showAddCollectionable()" class="button is-dark">
+      <button @click="showAddCollectionable()" class="button is-dark noprint">
         {{ trans.get("collections.add_collectionable") }}
       </button>
+        <button class="button is-dark noprint" @click="print">
+          <i class="fas fa-print"></i>
+        </button>
       <h1 class="is-size-1 has-text-centered mb-3">
         <i class="fak fa-collection mr-2"></i> {{ selectedCollection.name }}
       </h1>
@@ -172,7 +175,7 @@
             :admin="true"
             :collectionable="collectionable"
           ></show-collectionable>
-          <div style="text-align: center">
+          <div class="noprint" style="text-align: center">
             <button
               type="submit"
               @click="edit(collectionable)"
