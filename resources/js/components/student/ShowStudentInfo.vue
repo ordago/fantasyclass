@@ -528,7 +528,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'offset0': gear.offset == 0,
+                    offset0: gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -579,8 +579,8 @@
                         v-bind:key="'item4-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          'hidden': !notInOffset0(itemStore.id),
-                          'offset0': index == 0,
+                          hidden: !notInOffset0(itemStore.id),
+                          offset0: index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -1042,6 +1042,18 @@
           icon="analytics"
           icon-pack="fad"
         >
+          <div v-if="evaluation[1] && evaluation[1].length">
+            <h3 class="is-size-3">{{ trans.get("evaluation.pending") }}</h3>
+            <span
+              @click="evalRubric(pending)"
+              v-for="(pending, index) in evaluation[1]"
+              :key="'pending-' + index"
+            >
+              <b-tag class="m-2 cursor-pointer">
+                {{ pending.name }} - {{ pending.student_name }}
+              </b-tag>
+            </span>
+          </div>
           <report
             :individual="false"
             :classroom="classroom"
@@ -1183,7 +1195,10 @@
     >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ student.name }}</p>
+          <p class="modal-card-title" v-if="!rubric_info">{{ student.name }}</p>
+          <p class="modal-card-title" v-else>
+            {{ rubric_info.student_name }} ({{ rubric_info.name }})
+          </p>
         </header>
         <section class="modal-card-body">
           <div
@@ -1199,6 +1214,7 @@
                 :key="'rubrici-' + item.id"
                 :row="'row' + rubricRow.id"
                 :item="'item' + item.id"
+                @click="selectItem($event.target, rubricRow.id, item)"
               >
                 <div class="rubricDetails">{{ item.description }}</div>
                 <div class="rubricScore">{{ item.points }}</div>
@@ -1207,8 +1223,24 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="showRubric = false">
+          <button
+            class="button"
+            type="button"
+            @click="
+              resetRubric();
+              showRubric = false;
+            "
+          >
             {{ trans.get("general.close") }}
+          </button>
+          <button
+            class="button is-success"
+            :disabled="checkAllGrade()"
+            type="button"
+            v-if="rubric_info"
+            @click="gradeRubric()"
+          >
+            {{ trans.get("evaluation.grade") }}
           </button>
         </footer>
       </div>
@@ -1597,6 +1629,7 @@ export default {
       dateStart: null,
       dateEnd: null,
       update: 0,
+      grade: null,
       inventoryRemaining: 0,
       itemsJson: null,
       eq0Json: null,
@@ -1615,6 +1648,9 @@ export default {
       isAssignModalActive: false,
       showRubric: false,
       rubric: null,
+      eval_rubric: null,
+      rubric_info: null,
+      rowsSelected: [],
       send_money: 50,
       send_money_student: null,
       moneySended: false,
@@ -1642,25 +1678,20 @@ export default {
           text +
           " colored'></i>"
         );
-      return '';
+      return "";
     },
     notInOffset0(gearId) {
-      return (
-        [680, 690, 700].findIndex(
-          (id) => id === gearId
-        ) === -1
-      );
+      return [680, 690, 700].findIndex((id) => id === gearId) === -1;
     },
     isInGear(gearId) {
-      if(gearId >= 600 && gearId <= 676)
-        return true;
+      if (gearId >= 600 && gearId <= 676) return true;
       return false;
     },
     notInGear(gearId) {
       return (
-        [41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659].findIndex(
-          (id) => id === gearId
-        ) === -1
+        [
+          41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,
+        ].findIndex((id) => id === gearId) === -1
       );
     },
     getCollectionNumber(collection) {
@@ -2008,10 +2039,127 @@ export default {
     getEmoji: function (grade) {
       return Utils.getEmoji(grade, this.settings.eval_max);
     },
-    loadRubric: function (grade) {
+    gradeRubric: function () {
+      var elem = this;
+      document.querySelectorAll(".selectedSubItem").forEach(function (item) {
+        elem.rowsSelected.push([
+          item.getAttribute("row").replace("row", ""),
+          item.getAttribute("item").replace("item", ""),
+        ]);
+      });
+      axios
+        .post(
+          "/classroom/evaluation/" + this.rubric_info.id + "/evaluate/rubric",
+          {
+            student: this.rubric_info.student_id,
+            rows: this.rowsSelected,
+            evaluable: this.rubric_info.id,
+            from_student: this.student.id,
+            grade: this.grade,
+          }
+        )
+        .then((response) => {
+          let rubric_info = this.rubric_info;
+          var index = this.evaluation[1].findIndex(function (item, i) {
+            return (
+              item.id === rubric_info.id &&
+              item.student_id === rubric_info.student_id
+            );
+          });
+          this.evaluation[1].splice(index, 1);
+          this.showRubric = false;
+          this.rowsSelected = [];
+          this.resetRubric();
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+        });
+    },
+    resetRubric: function () {
+      let images = document.querySelectorAll(".rubricSubitem img");
+      images.forEach(element => {
+        element.remove();
+      });
       var lights = document.getElementsByClassName("selectedSubItem");
       while (lights.length) lights[0].classList.remove("selectedSubItem");
-      // console.log(grade);
+      this.rubric_info = null;
+      this.grade = null;
+      this.$forceUpdate();
+    },
+    checkAllGrade: function () {
+      var lights = document.getElementsByClassName("selectedSubItem");
+      return lights.length !== this.rubric.rows.length;
+    },
+    selectItem: function (target, row, item) {
+      if (this.rubric_info) {
+        let element = document.querySelector("[item=item" + item.id + "]");
+        document
+          .querySelectorAll("[row=row" + row + "]")
+          .forEach(function (rowItem) {
+            rowItem.classList.remove("selectedSubItem");
+          });
+
+        element.classList.add("selectedSubItem");
+        this.recalculate();
+      }
+    },
+    recalculate: function () {
+      let total = 0;
+      let totalSelected = 0;
+      let totalOptional = 0;
+
+      document
+        .querySelectorAll(
+          ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
+        )
+        .forEach(function (rowItem) {
+          totalSelected += parseFloat(
+            rowItem.querySelector(".rubricScore").innerHTML
+          );
+        });
+
+      document
+        .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
+        .forEach(function (row) {
+          var max = 0;
+          row.querySelectorAll(".rubricSubitem").forEach((item) => {
+            let score = parseFloat(
+              item.querySelector(".rubricScore").innerHTML
+            );
+            if (score > max) max = score;
+          });
+          total += max;
+        });
+
+      // TODO optional rows
+      // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
+      //     totalOptional += parseFloat($(this).find('.rubricScore').html());
+      // });
+
+      this.grade = Math.min(
+        this.settings.eval_max,
+        Math.round(
+          ((totalSelected / total) * this.settings.eval_max + totalOptional) *
+            100
+        ) / 100
+      );
+      this.$forceUpdate();
+    },
+    evalRubric: function (pending) {
+      this.resetRubric();
+      axios
+        .post("/classroom/evaluation/rubric", {
+          rubric: pending.rubric_id,
+        })
+        .then((response) => {
+          this.rubric = response.data;
+          this.eval_rubric = true;
+          this.rubric_info = pending;
+          this.showRubric = true;
+        });
+    },
+    loadRubric: function (grade) {
+      this.resetRubric();
       axios
         .post("/classroom/evaluation/rubric", {
           rubric: grade.rubric_id,
@@ -2027,12 +2175,23 @@ export default {
               evaluable: grade.id,
             })
             .then((response) => {
-              response.data.forEach((row) => {
+              response.data[0].forEach((row) => {
                 document
                   .querySelector(
                     "[row=row" + row[0] + "][item=item" + row[1] + "]"
                   )
                   .classList.add("selectedSubItem");
+              });
+              response.data[1].forEach((row) => {
+                let img = document.createElement("img");
+                img.src = row[2].avatar;
+                img.title = row[2].name;
+                img.classList = "rubric-student is-full-rounded";
+                document
+                  .querySelector(
+                    "[row=row" + row[0] + "][item=item" + row[1] + "]"
+                  )
+                  .appendChild(img);
               });
             });
         });
@@ -2119,7 +2278,7 @@ export default {
         n - this.student.items.length ? n - this.student.items.length - 1 : 5;
     },
     confirmChangeClass(subclass) {
-      if(this.classroom.character_theme.id == 10) {
+      if (this.classroom.character_theme.id == 10) {
         axios
           .post(
             "/classroom/" + this.classroom.code + "/student/changecharacter",
@@ -2140,7 +2299,9 @@ export default {
           onConfirm: () => {
             axios
               .post(
-                "/classroom/" + this.classroom.code + "/student/changecharacter",
+                "/classroom/" +
+                  this.classroom.code +
+                  "/student/changecharacter",
                 { id: this.student.id, character_id: subclass, mode: "student" }
               )
               .then((response) => {
@@ -2220,15 +2381,18 @@ export default {
     },
     propertiesMessage(itemStore) {
       let message = "";
-      if(itemStore.hp)
-        message += "<i class='fas fa-heart colored'></i> " + itemStore.hp + "%. "
-      
-      if(itemStore.xp)
-        message += "<i class='fas fa-fist-raised colored'></i> " + itemStore.xp + "%. "
-      
-      if(itemStore.gold)
-        message += "<i class='fas fa-coins colored'></i> " + itemStore.gold + "%. "
-      
+      if (itemStore.hp)
+        message +=
+          "<i class='fas fa-heart colored'></i> " + itemStore.hp + "%. ";
+
+      if (itemStore.xp)
+        message +=
+          "<i class='fas fa-fist-raised colored'></i> " + itemStore.xp + "%. ";
+
+      if (itemStore.gold)
+        message +=
+          "<i class='fas fa-coins colored'></i> " + itemStore.gold + "%. ";
+
       return message;
     },
 

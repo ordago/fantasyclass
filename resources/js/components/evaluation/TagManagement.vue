@@ -126,7 +126,7 @@
               :href="'/classroom/evaluation/' + props.row.id + '/grade'"
               class="button is-dark is-small mr-3"
             >
-              <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }}
+              <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }} <i class="fas fa-users ml-1" v-if="props.row.subtype == 1"></i>
             </a>
             <b-button
               v-tippy

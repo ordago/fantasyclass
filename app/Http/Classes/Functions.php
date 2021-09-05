@@ -62,7 +62,7 @@ class Functions
   /***
    * Returns the current class student
    */
-  public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])
+  public static function getCurrentStudent($classroom, $with = ['equipment', 'classroom', 'behaviours', 'logEntries', 'items'])
   {
     if (session()->get('bypass_student')) {
       $student = Student::where('id', '=', session()->get('bypass_student'))->with($with)->first();

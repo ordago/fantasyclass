@@ -216,7 +216,7 @@ class StudentController extends Controller
 
     public function show($code, $id)
     {
-        $student = Student::where('id', $id)->with(['equipment', 'pets', 'character', 'skills', 'badges', 'classroom', 'behaviours', 'logEntries', 'items', 'grades.tags'])->first();
+        $student = Student::where('id', $id)->with(['equipment', 'pets', 'character', 'skills', 'badges', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
 
         if ($student->classroom->classroom->code != $code)
             abort(404);
@@ -280,6 +280,8 @@ class StudentController extends Controller
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
         ];
 
+        $student->unsetRelation('grades');
+        $student->grades = $student->grades()->whereNull('from_student_id')->get();
 
         return view('students.show', compact('student', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
@@ -287,7 +289,7 @@ class StudentController extends Controller
     public static function getIndividualReport($id, $class)
     {
         $student = Student::findOrFail($id);
-        $student->load('badges', 'behaviours', 'grades', 'items', 'behaviours', 'challenges', 'questions', 'grades',);
+        $student->load('badges', 'behaviours', 'grades', 'items', 'behaviours', 'challenges', 'questions', 'grades');
         if ($student->classroom->classroom_id != $class->id)
             abort(403);
         settings()->setExtraColumns(['classroom_id' => $class->id]);

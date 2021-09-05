@@ -213,12 +213,12 @@ class Student extends Model implements HasMedia
 
     public function grades()
     {
-        return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback');
+        return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback','from_student_id');
     }
 
     public function rows()
     {
-        return $this->belongsToMany(RubricRow::class, 'rubric_row_student', 'student_id', 'rubric_row_id')->withPivot('rubric_row_item_id');
+        return $this->belongsToMany(RubricRow::class, 'rubric_row_student', 'student_id', 'rubric_row_id')->withPivot('rubric_row_item_id', 'from_student_id');
     }
     public function skills()
     {

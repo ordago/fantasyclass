@@ -1,4 +1,8 @@
 # Changelog
+## v1.74 Beta (05/09/2021)
+### Added
+- Coevaluation in groups.
+
 ## v1.73 Beta (04/09/2021)
 ### Added
 - Disable cards and automatic.

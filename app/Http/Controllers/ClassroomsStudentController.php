@@ -650,7 +650,7 @@ class ClassroomsStudentController extends Controller
         ];
 
         $challenges = $this::getChallenges($student, $class);
-
+        
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');
@@ -669,7 +669,7 @@ class ClassroomsStudentController extends Controller
         $evaluationsPending = DB::table('evaluables')
         ->where('evaluables.classroom_id', '=', $class->id)
         ->where('evaluables.type', '=', 1)
-        ->selectRaw('evaluables.id, evaluables.description')
+        ->selectRaw('evaluables.id, evaluables.description, evaluables.rubric_id')
         ->get();
 
         $pending = [];
@@ -684,12 +684,12 @@ class ClassroomsStudentController extends Controller
                 ->where('evaluable_student.student_id', '=', $stdgroup['id'])
                 ->get();
                 if(!count($evaluationStdPending))
-                    array_push($pending, ['id' => $eval->id, 'name' => $eval->description, 'student_id' => $stdgroup->id, 'student_name' => $stdgroup->name]);
+                    array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id,'name' => $eval->description, 'student_id' => $stdgroup->id, 'student_name' => $stdgroup->name]);
             }
         }
-        dump($pending);
 
         $evaluation = null;
+        $evaluation[1] = $pending;
         if (settings()->get('eval_visible', false)) {
             $grades = collect();
             $grades->push(["namegroup" => __('evaluation.first'), "icon" => 'fas fa-chart-line', "evaluation" => EvaluationController::individualReport($class, [$student], null)]);
@@ -749,6 +749,9 @@ class ClassroomsStudentController extends Controller
 
         if ($section)
             $tab = $section;
+        
+        $student->unsetRelation('grades');
+        $student->grades = $student->grades()->whereNull('from_student_id')->get();
 
         return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
@@ -995,9 +998,6 @@ class ClassroomsStudentController extends Controller
                 $data['action'] = true;
                 return CardsController::useDeleteCard($student, $card, $cardLine, $class, $data);
                 NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.used_card", __("notifications.used_card_content") . ": " . $card->title, $from, "mark_card", '');                
-                // dump(env('APP_URL').'/classroom/card/usedelete/' . $card->id);
-                // $response = Http::post(env('APP_URL').'/classroom/card/usedelete/' . $card->id, ['student' => $student->id, 'type' => $data['type'], 'action' => true]);
-                // dump($response);
             } else {
                 NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
             }

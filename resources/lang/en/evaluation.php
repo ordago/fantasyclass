@@ -50,4 +50,10 @@ return [
     'parent' => 'Parent group (optional)',
     'info_tags' => 'Create new tags to add new assessment lines. Tags can be learning outcomes, standards, groupings such as theory/practice, etc. They have a weight in the calculation of the final grade.',
     'first' => 'First',
+
+    'average' => 'Partner grades average',
+    'teacher' => 'Teachers only evaluation',
+    'coeval' => 'Coevaluation between group members',
+    'pending' => 'Pending evaluations',
+
 ];

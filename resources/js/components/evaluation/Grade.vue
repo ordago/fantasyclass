@@ -27,6 +27,9 @@
               </div>
             </div>
           </div>
+          <div class="column is-narrow has-all-centered is-flex" v-if="evaluable.subtype == 1">
+            <span v-tippy :content="trans.get('evaluation.average')"><b-tag type="is-dark"><i class="fas fa-users mr-1"></i>{{ student.average.average }}</b-tag></span>
+          </div>
           <div class="column">
             <textarea
               v-model="student.feedback"
@@ -93,7 +96,7 @@
               showRubric = false;
             "
           >
-            Close
+            {{ trans.get('general.close') }}
           </button>
           <input
             type="number"
@@ -101,7 +104,7 @@
             class="input mr-3"
             style="width: 100px"
           />
-          <button class="button is-primary" @click="gradeRubric">Grade</button>
+          <button class="button is-primary" @click="gradeRubric">{{ trans.get('evaluation.grade') }}</button>
         </footer>
       </div>
     </b-modal>
@@ -187,11 +190,20 @@
         })
         .then((response) => {
           this.isLoading = false;
-          response.data.forEach((row) => {
+          response.data[0].forEach((row) => {
             document
               .querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]")
               .classList.add("selectedSubItem");
             this.recalculate();
+          });
+          response.data[1].forEach((row) => {
+            let img = document.createElement("img");
+            img.src = row[2].avatar;
+            img.title = row[2].name;
+            img.classList = "rubric-student";
+            document
+              .querySelector("[row=row" + row[0] + "][item=item" + row[1] + "]")
+              .appendChild(img);
           });
         });
     },

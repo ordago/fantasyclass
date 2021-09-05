@@ -49,4 +49,9 @@ return [
     'parent' => 'Grupo padre (opcional)',
     'info_tags' => 'Crea nuevas etiquetas para añadir nuevas líneas de evaluación. Las etiquetas pueden ser resultados de aprendizaje, estándares, agrupaciones como teoria / práctica, etc. Tienen un peso en el cálculo de la nota final.',
     'first' => 'Primera',
+
+    'average' => 'Media de las notas de los compañeros/as',
+    'teacher' => 'Solo evalúan docentes',
+    'coeval' => 'Coevaluación entre miembros del grupo',
+    'pending' => 'Evaluaciones pendientes',
 ];
