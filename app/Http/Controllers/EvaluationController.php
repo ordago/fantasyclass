@@ -163,7 +163,7 @@ class EvaluationController extends Controller
             ->get();
 
             $evalinfo = [];
-            if($evaluable->subtype == 1) {
+            if($evaluable->subtype > 0) {
                 foreach ($students as $student) {
                     $average = DB::table('evaluable_student')
                     ->where('evaluable_id', $evaluable->id)
@@ -171,7 +171,7 @@ class EvaluationController extends Controller
                     ->where('student_id', $student->id)
                     ->selectRaw('AVG(grade) as average')
                     ->get();
-                    $student->average = $average[0];
+                    $student->average = round($average[0]->average, 2);
                 }
             }
             
@@ -278,7 +278,7 @@ class EvaluationController extends Controller
                 $rows[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id];
             }
 
-            if($evaluable->subtype == 1) {
+            if($evaluable->subtype > 0) {
                 $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->where('evaluable_id', $data['evaluable'])->whereNotNull('from_student_id')->get();
                 if (!$rowQuery)
                     $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->whereNotNull('from_student_id')->get();

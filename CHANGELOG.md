@@ -1,6 +1,7 @@
 # Changelog
 ## v1.74 Beta (05/09/2021)
 ### Added
+- Autoevaluation.
 - Coevaluation in groups.
 
 ## v1.73 Beta (04/09/2021)

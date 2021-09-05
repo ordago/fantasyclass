@@ -50,8 +50,13 @@ return [
     'info_tags' => 'Crea nuevas etiquetas para añadir nuevas líneas de evaluación. Las etiquetas pueden ser resultados de aprendizaje, estándares, agrupaciones como teoria / práctica, etc. Tienen un peso en el cálculo de la nota final.',
     'first' => 'Primera',
 
+    'subtype' => 'Opciones de evaluación',
     'average' => 'Media de las notas de los compañeros/as',
     'teacher' => 'Solo evalúan docentes',
     'coeval' => 'Coevaluación entre miembros del grupo',
     'pending' => 'Evaluaciones pendientes',
+    'autoeval' => 'Autoevaluación',
+    'autocoeval' => 'Coevaluación entre miembros del grupo y autoevaluación',
+    'confirm_grade' => '¿Estás seguro/a de continuar? Una vez enviado no se puede cambiar, asegúrate que has rellenado correctamente la rúbrica.',
+
 ];

@@ -50,9 +50,13 @@ return [
     'info_tags' => 'Crea noves etiquetes per afefir linies d\'avaluació. Les etiquetes poden ser resultats d\'aprenentatge, estàndards, agrupacions com teoria / pràctiques, etc. I tenen un pes en el càlcul de la nota final',
     'first' => 'Primera',
 
+    'subtype' => 'Opcions d\'avaluació',
     'average' => 'Mitjana de les notes dels companys/es',
     'teacher' => 'Sols avaluen docents',
     'coeval' => 'Coavaluació entre membres del grup',
     'pending' => 'Avaluacions pendents',
+    'autoeval' => 'Autoavaluació',
+    'autocoeval' => 'Coavaluació entre membres del grup i autoavaluació',
+    'confirm_grade' => 'Estàs segur/a de continuar? Una vegada enviat no es pot canviar, assegura\'t que has emplenat correctament la rúbrica.',
 
 ];

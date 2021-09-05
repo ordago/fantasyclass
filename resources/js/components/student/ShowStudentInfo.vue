@@ -1050,7 +1050,28 @@
               :key="'pending-' + index"
             >
               <b-tag class="m-2 cursor-pointer">
-                {{ pending.name }} - {{ pending.student_name }}
+                <i
+                  class="fas mr-1"
+                  :class="{
+                    'fa-users': pending.subtype == 1,
+                    'fa-user': pending.subtype == 2,
+                  }"
+                ></i>
+                {{ pending.name }} -
+                <span
+                  v-if="
+                    pending.subtype == 1 ||
+                    (pending.subtype == 3 && pending.student_id != student.id)
+                  "
+                  >{{ pending.student_name }}</span
+                >
+                <span
+                  v-else-if="
+                    pending.subtype == 2 ||
+                    (pending.subtype == 3 && pending.student_id == student.id)
+                  "
+                  >{{ trans.get("evaluation.autoeval") }}</span
+                >
               </b-tag>
             </span>
           </div>
@@ -2040,44 +2061,62 @@ export default {
       return Utils.getEmoji(grade, this.settings.eval_max);
     },
     gradeRubric: function () {
-      var elem = this;
-      document.querySelectorAll(".selectedSubItem").forEach(function (item) {
-        elem.rowsSelected.push([
-          item.getAttribute("row").replace("row", ""),
-          item.getAttribute("item").replace("item", ""),
-        ]);
+      this.$buefy.dialog.confirm({
+        title: this.trans.get("evaluation.grade"),
+        message: this.trans.get("evaluation.confirm_grade"),
+        confirmText: this.trans.get("general.accept"),
+        cancelText: this.trans.get("general.cancel"),
+        type: "is-warning",
+        hasIcon: true,
+        icon: "times-circle",
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        onConfirm: () => {
+          var elem = this;
+          document
+            .querySelectorAll(".selectedSubItem")
+            .forEach(function (item) {
+              elem.rowsSelected.push([
+                item.getAttribute("row").replace("row", ""),
+                item.getAttribute("item").replace("item", ""),
+              ]);
+            });
+          axios
+            .post(
+              "/classroom/evaluation/" +
+                this.rubric_info.id +
+                "/evaluate/rubric",
+              {
+                student: this.rubric_info.student_id,
+                rows: this.rowsSelected,
+                evaluable: this.rubric_info.id,
+                from_student: this.student.id,
+                grade: this.grade,
+              }
+            )
+            .then((response) => {
+              let rubric_info = this.rubric_info;
+              var index = this.evaluation[1].findIndex(function (item, i) {
+                return (
+                  item.id === rubric_info.id &&
+                  item.student_id === rubric_info.student_id
+                );
+              });
+              this.evaluation[1].splice(index, 1);
+              this.showRubric = false;
+              this.rowsSelected = [];
+              this.resetRubric();
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+            });
+        },
       });
-      axios
-        .post(
-          "/classroom/evaluation/" + this.rubric_info.id + "/evaluate/rubric",
-          {
-            student: this.rubric_info.student_id,
-            rows: this.rowsSelected,
-            evaluable: this.rubric_info.id,
-            from_student: this.student.id,
-            grade: this.grade,
-          }
-        )
-        .then((response) => {
-          let rubric_info = this.rubric_info;
-          var index = this.evaluation[1].findIndex(function (item, i) {
-            return (
-              item.id === rubric_info.id &&
-              item.student_id === rubric_info.student_id
-            );
-          });
-          this.evaluation[1].splice(index, 1);
-          this.showRubric = false;
-          this.rowsSelected = [];
-          this.resetRubric();
-          this.$toast(this.trans.get("success_error.update_success"), {
-            type: "success",
-          });
-        });
     },
     resetRubric: function () {
       let images = document.querySelectorAll(".rubricSubitem img");
-      images.forEach(element => {
+      images.forEach((element) => {
         element.remove();
       });
       var lights = document.getElementsByClassName("selectedSubItem");
@@ -2146,6 +2185,7 @@ export default {
       this.$forceUpdate();
     },
     evalRubric: function (pending) {
+      console.log(pending);
       this.resetRubric();
       axios
         .post("/classroom/evaluation/rubric", {

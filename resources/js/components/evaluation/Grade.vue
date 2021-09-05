@@ -9,7 +9,7 @@
         <div class="columns">
           <div v-if="evaluable.type == 1" class="column is-narrow">
             <button class="button is-info" @click.prevent="loadRubric(student)">
-              Rubric
+              {{ trans.get('evaluation.rubric') }}
             </button>
           </div>
           <div class="column is-narrow">
@@ -27,8 +27,21 @@
               </div>
             </div>
           </div>
-          <div class="column is-narrow has-all-centered is-flex" v-if="evaluable.subtype == 1">
-            <span v-tippy :content="trans.get('evaluation.average')"><b-tag type="is-dark"><i class="fas fa-users mr-1"></i>{{ student.average.average }}</b-tag></span>
+          <div
+            class="column is-narrow has-all-centered is-flex"
+            v-if="evaluable.subtype > 0"
+          >
+            <span v-tippy :content="getMessageEval(evaluable.subtype)"
+              ><b-tag type="is-dark"
+                ><i class="fas fa-user mr-1" v-if="evaluable.subtype >= 2"></i
+                ><i
+                  class="fas fa-users mr-1"
+                  v-if="evaluable.subtype == 1 || evaluable.subtype == 3"
+                ></i
+                >{{ student.average
+                }}<span class="ml-2 cursor-pointer" @click="copyGrade(student)"
+                  ><i class="fas fa-copy"></i></span></b-tag
+            ></span>
           </div>
           <div class="column">
             <textarea
@@ -96,7 +109,7 @@
               showRubric = false;
             "
           >
-            {{ trans.get('general.close') }}
+            {{ trans.get("general.close") }}
           </button>
           <input
             type="number"
@@ -104,69 +117,71 @@
             class="input mr-3"
             style="width: 100px"
           />
-          <button class="button is-primary" @click="gradeRubric">{{ trans.get('evaluation.grade') }}</button>
+          <button class="button is-primary" @click="gradeRubric">
+            {{ trans.get("evaluation.grade") }}
+          </button>
         </footer>
       </div>
     </b-modal>
   </div>
 </template>
 <script>
-    export default {
-        props: ["classroom", "evaluable", "students", "rubric", "settings"],
-        created: function () { },
-        data: function () {
-            return {
-                showRubric: false,
-                studentActive: null,
-                grade: null,
-                rowsSelected: [],
-                isLoading: false
-            };
-        },
-        methods: {
-            selectItem: function (target, row, item) {
-                let element = document.querySelector("[item=item" + item.id + "]");
-                document
-                    .querySelectorAll("[row=row" + row + "]")
-                    .forEach(function (rowItem) {
-                        rowItem.classList.remove("selectedSubItem");
-                    });
+export default {
+  props: ["classroom", "evaluable", "students", "rubric", "settings"],
+  created: function () {},
+  data: function () {
+    return {
+      showRubric: false,
+      studentActive: null,
+      grade: null,
+      rowsSelected: [],
+      isLoading: false,
+    };
+  },
+  methods: {
+    selectItem: function (target, row, item) {
+      let element = document.querySelector("[item=item" + item.id + "]");
+      document
+        .querySelectorAll("[row=row" + row + "]")
+        .forEach(function (rowItem) {
+          rowItem.classList.remove("selectedSubItem");
+        });
 
-                element.classList.add("selectedSubItem");
-                this.recalculate();
-            },
-            recalculate: function () {
-                let total = 0;
-                let totalSelected = 0;
-                let totalOptional = 0;
+      element.classList.add("selectedSubItem");
+      this.recalculate();
+    },
+    recalculate: function () {
+      let total = 0;
+      let totalSelected = 0;
+      let totalOptional = 0;
 
-                document
-                    .querySelectorAll(
-                        ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
-                    )
-                    .forEach(function (rowItem) {
-                        totalSelected += parseFloat(
-                            rowItem.querySelector(".rubricScore").innerHTML
-                        );
-                    });
+      document
+        .querySelectorAll(
+          ".rubricSubitems:not([data-info=data-optional]) .rubricSubitem.selectedSubItem"
+        )
+        .forEach(function (rowItem) {
+          totalSelected += parseFloat(
+            rowItem.querySelector(".rubricScore").innerHTML
+          );
+        });
 
-                document
-                    .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
-                    .forEach(function (row) {
-                        var max = 0;
-                        row.querySelectorAll(".rubricSubitem").forEach((item) => {
-                            let score = parseFloat(
-                                item.querySelector(".rubricScore").innerHTML
-                            );
-                            if (score > max) max = score;
-                        });
-                        total += max;
-                    });
+      document
+        .querySelectorAll(".rubricSubitems:not([data-info=data-optional])")
+        .forEach(function (row) {
+          var max = 0;
+          row.querySelectorAll(".rubricSubitem").forEach((item) => {
+            let score = parseFloat(
+              item.querySelector(".rubricScore").innerHTML
+            );
+            if (score > max) max = score;
+          });
+          total += max;
+        });
 
-                // TODO optional rows
-                // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
-                //     totalOptional += parseFloat($(this).find('.rubricScore').html());
-                // });
+      // TODO optional rows
+      // $('.rubricSubitems[data-info=data-optional]').find('.rubricSubitem.selectedSubItem').each(function(index){
+      //     totalOptional += parseFloat($(this).find('.rubricScore').html());
+      // });
 
       this.grade = Math.min(
         this.settings.eval_max,
@@ -175,6 +190,18 @@
             100
         ) / 100
       );
+    },
+    getMessageEval: function (subtype) {
+      if (subtype == 1 || subtype == 3)
+        return this.trans.get("evaluation.average");
+      if (subtype == 2) return this.trans.get("evaluation.autoeval");
+    },
+    copyGrade: function (student) {
+      var index = this.students.findIndex(function (item) {
+        return item.id === student.id;
+      });
+      this.students[index].grade = student.average;
+      this.$forceUpdate();
     },
     loadRubric: function (student) {
       this.isLoading = true;

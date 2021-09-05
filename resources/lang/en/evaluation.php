@@ -51,9 +51,12 @@ return [
     'info_tags' => 'Create new tags to add new assessment lines. Tags can be learning outcomes, standards, groupings such as theory/practice, etc. They have a weight in the calculation of the final grade.',
     'first' => 'First',
 
+    'subtype' => 'Evaluation options',
     'average' => 'Partner grades average',
     'teacher' => 'Teachers only evaluation',
     'coeval' => 'Coevaluation between group members',
     'pending' => 'Pending evaluations',
-
+    'autoeval' => 'Autoevaluation',
+    'autocoeval' => 'Coevaluation between group members and autoevaluation',
+    'confirm_grade' => 'Are you sure you want to continue? Once submitted it cannot be changed, please make sure you have filled in the rubric correctly.',
 ];

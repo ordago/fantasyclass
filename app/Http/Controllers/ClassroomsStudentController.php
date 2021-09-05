@@ -650,7 +650,7 @@ class ClassroomsStudentController extends Controller
         ];
 
         $challenges = $this::getChallenges($student, $class);
-        
+
         $cards = $student->cards;
         $student->append('boost');
         $student->load('badges');
@@ -667,27 +667,40 @@ class ClassroomsStudentController extends Controller
         $student->groups->each->append('blogs');
 
         $evaluationsPending = DB::table('evaluables')
-        ->where('evaluables.classroom_id', '=', $class->id)
-        ->where('evaluables.type', '=', 1)
-        ->selectRaw('evaluables.id, evaluables.description, evaluables.rubric_id')
-        ->get();
+            ->where('evaluables.classroom_id', '=', $class->id)
+            ->where('evaluables.type', '=', 1)
+            ->selectRaw('evaluables.id, evaluables.description, evaluables.rubric_id, evaluables.subtype')
+            ->get();
+        dump($evaluationsPending);
 
         $pending = [];
         foreach ($evaluationsPending as $eval) {
-            if($student->groups->first())
-            foreach ($student->groups->first()->students as $stdgroup) {
-                if($student->id == $stdgroup['id'])
-                    continue;
+            if ($eval->subtype == 1 || $eval->subtype == 3) {
+                if ($student->groups->first())
+                    foreach ($student->groups->first()->students as $stdgroup) {
+                        if ($student->id == $stdgroup['id'])
+                            continue;
+                        $evaluationStdPending = DB::table('evaluable_student')
+                            ->where('evaluable_student.evaluable_id', '=', $eval->id)
+                            ->where('evaluable_student.from_student_id', '=', $student->id)
+                            ->where('evaluable_student.student_id', '=', $stdgroup['id'])
+                            ->get();
+                        if (!count($evaluationStdPending))
+                            array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id, 'name' => $eval->description, 'student_id' => $stdgroup->id, 'student_name' => $stdgroup->name, 'subtype' => $eval->subtype]);
+                    }
+            } 
+            
+            if ($eval->subtype == 2 || $eval->subtype == 3) {
                 $evaluationStdPending = DB::table('evaluable_student')
-                ->where('evaluable_student.evaluable_id', '=', $eval->id)
-                ->where('evaluable_student.from_student_id', '=', $student->id)
-                ->where('evaluable_student.student_id', '=', $stdgroup['id'])
-                ->get();
-                if(!count($evaluationStdPending))
-                    array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id,'name' => $eval->description, 'student_id' => $stdgroup->id, 'student_name' => $stdgroup->name]);
+                    ->where('evaluable_student.evaluable_id', '=', $eval->id)
+                    ->where('evaluable_student.from_student_id', '=', $student->id)
+                    ->where('evaluable_student.student_id', '=', $student->id)
+                    ->get();
+                if (!count($evaluationStdPending))
+                    array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id, 'name' => $eval->description, 'student_id' => $student->id, 'student_name' => $student->name, 'subtype' => $eval->subtype]);
             }
         }
-
+        dump($pending);
         $evaluation = null;
         $evaluation[1] = $pending;
         if (settings()->get('eval_visible', false)) {
@@ -749,7 +762,7 @@ class ClassroomsStudentController extends Controller
 
         if ($section)
             $tab = $section;
-        
+
         $student->unsetRelation('grades');
         $student->grades = $student->grades()->whereNull('from_student_id')->get();
 
@@ -971,7 +984,7 @@ class ClassroomsStudentController extends Controller
             $cost = settings()->get('card_use', 200);
         else
             $cost = settings()->get('card_delete', 50);
-            
+
         if (!$card->special && $card->gold == 0 && $student->gold < $cost) {
             return [
                 "message" => " " . __('success_error.shop_failed_money'),
@@ -980,34 +993,33 @@ class ClassroomsStudentController extends Controller
             ];
         }
 
-       
-            $cardLine = CardStudent::where('card_id', $card->id)
-                ->where('student_id', $student->id)
-                ->orderBy('marked')
-                ->first();
-    
-            $cardLine->update(['marked' => $data['type']]);
-    
-            $from['title'] = __("notifications.mark_card");
-            $from['name'] = $student->name;
-            $from['username'] = $student->username;
-            $from['datetime'] = Carbon::now();
-    
-            
-            if($card->automatic) {
-                $data['action'] = true;
-                return CardsController::useDeleteCard($student, $card, $cardLine, $class, $data);
-                NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.used_card", __("notifications.used_card_content") . ": " . $card->title, $from, "mark_card", '');                
-            } else {
-                NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
-            }
 
-            return [
-                "message" => " " . __('success_error.update_success'),
-                "icon" => "check",
-                "type" => "success",
-            ];
-        
+        $cardLine = CardStudent::where('card_id', $card->id)
+            ->where('student_id', $student->id)
+            ->orderBy('marked')
+            ->first();
+
+        $cardLine->update(['marked' => $data['type']]);
+
+        $from['title'] = __("notifications.mark_card");
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        $from['datetime'] = Carbon::now();
+
+
+        if ($card->automatic) {
+            $data['action'] = true;
+            return CardsController::useDeleteCard($student, $card, $cardLine, $class, $data);
+            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.used_card", __("notifications.used_card_content") . ": " . $card->title, $from, "mark_card", '');
+        } else {
+            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.mark_card", __("notifications.mark_card_content"), $from, "mark_card", '');
+        }
+
+        return [
+            "message" => " " . __('success_error.update_success'),
+            "icon" => "check",
+            "type" => "success",
+        ];
     }
     public function buyPet($code)
     {

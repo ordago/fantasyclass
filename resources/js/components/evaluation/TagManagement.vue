@@ -299,6 +299,12 @@
                 <option value="1">
                   {{ trans.get("evaluation.coeval") }}
                 </option>
+                <option value="2">
+                  {{ trans.get("evaluation.autoeval") }}
+                </option>
+                <option value="3">
+                  {{ trans.get("evaluation.autocoeval") }}
+                </option>
               </b-select>
             </b-field>
             <p
