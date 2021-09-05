@@ -293,16 +293,16 @@
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="trans.get('evaluation.subtype')" v-if="line.type == 1 && groups && groups.length">
+            <b-field :label="trans.get('evaluation.subtype')" v-if="line.type == 1">
               <b-select v-model="line.subtype" expanded>
                 <option value="0">{{ trans.get("evaluation.teacher") }}</option>
-                <option value="1">
+                <option value="1" v-if="groups && groups.length">
                   {{ trans.get("evaluation.coeval") }}
                 </option>
                 <option value="2">
                   {{ trans.get("evaluation.autoeval") }}
                 </option>
-                <option value="3">
+                <option value="3"  v-if="groups && groups.length">
                   {{ trans.get("evaluation.autocoeval") }}
                 </option>
               </b-select>

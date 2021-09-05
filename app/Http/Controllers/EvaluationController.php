@@ -46,7 +46,7 @@ class EvaluationController extends Controller
                 $tags = $tags->push(['id' => $tag->id, 'name' => $tag->short, 'percent' => $tag->percent, 'evaluables' => collect()]);
             }
             foreach ($student->grades->whereNull('from_student_id') as $grade) {
-                if($grade->pivot->from_student_id)
+                if ($grade->pivot->from_student_id)
                     continue;
                 if ($grade->pivot->grade !== null) {
                     $evaluable = Evaluable::where('id', $grade->pivot->evaluable_id)->first();
@@ -121,7 +121,7 @@ class EvaluationController extends Controller
             $student = Student::find($grades['id']);
             if ($student->classroom->classroom_id != $class->id)
                 return false;
-            
+
             $find = DB::table('evaluable_student')
                 ->where('evaluable_id', $evaluable->id)
                 ->where('student_id', $student->id)
@@ -130,8 +130,8 @@ class EvaluationController extends Controller
                 ->first();
             if ($find) {
                 DB::table('evaluable_student')
-                ->where('id', $find->id)
-                ->delete();
+                    ->where('id', $find->id)
+                    ->delete();
             }
             $student->grades()->attach(array($evaluable->id => array('grade' => $grades['grade'], 'feedback' => $grades['feedback'])));
         }
@@ -146,7 +146,7 @@ class EvaluationController extends Controller
         if ($evaluable->type == 1)
             $rubric = Rubric::where('id', $evaluable->rubric_id)->with('rows', 'rows.items')->first();
 
-       
+
         $students = DB::table('students')
             ->join('classroom_user', 'students.classroom_user_id', 'classroom_user.id')
             ->leftJoin('evaluable_student', function ($join) use ($id) {
@@ -162,20 +162,18 @@ class EvaluationController extends Controller
             ->selectRaw('students.id, students.name, evaluable_student.grade, evaluable_student.feedback')
             ->get();
 
-            $evalinfo = [];
-            if($evaluable->subtype > 0) {
-                foreach ($students as $student) {
-                    $average = DB::table('evaluable_student')
+        $evalinfo = [];
+        if ($evaluable->subtype > 0) {
+            foreach ($students as $student) {
+                $average = DB::table('evaluable_student')
                     ->where('evaluable_id', $evaluable->id)
                     ->whereNotNull('from_student_id')
                     ->where('student_id', $student->id)
                     ->selectRaw('AVG(grade) as average')
                     ->get();
-                    $student->average = round($average[0]->average, 2);
-                }
+                $student->average = round($average[0]->average, 2);
             }
-            
-            // dump($students);
+        }
         $settings = EvaluationController::getEvalSettings($class->id);
 
         return view('evaluation.grade', compact('class', 'evaluable', 'students', 'rubric', 'settings'));
@@ -197,23 +195,22 @@ class EvaluationController extends Controller
             $this->authorize('studyOrTeach', $class);
             $from = $data['from_student'];
             $fromStudent = Student::findOrFail($from);
-            if ($student->classroom->classroom_id != $fromStudent->classroom->classroom_id || $student->groups->first()->id != $fromStudent->groups->first()->id)
+            if ($student->classroom->classroom_id != $fromStudent->classroom->classroom_id || ($student->groups->first() && $student->groups->first()->id != $fromStudent->groups->first()->id))
                 abort(403);
-                foreach ($data['rows'] as $row) {
-                    $find = DB::table('rubric_row_student')
-                        ->where('rubric_row_id', $row['0'])
-                        ->where('evaluable_id', $data['evaluable'])
-                        ->where('student_id', $student->id)
-                        ->where('from_student_id', $fromStudent->id)
-                        ->selectRaw('rubric_row_student.id')
-                        ->first();
-                    if ($find) {
-                        abort(403);
-                    } 
-                    $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'], 'from_student_id' => $fromStudent->id)));
-                    
+            foreach ($data['rows'] as $row) {
+                $find = DB::table('rubric_row_student')
+                    ->where('rubric_row_id', $row['0'])
+                    ->where('evaluable_id', $data['evaluable'])
+                    ->where('student_id', $student->id)
+                    ->where('from_student_id', $fromStudent->id)
+                    ->selectRaw('rubric_row_student.id')
+                    ->first();
+                if ($find) {
+                    abort(403);
                 }
-                $student->grades()->attach(array($data['evaluable'] => array('grade' => $data['grade'], 'from_student_id' => $fromStudent->id)));
+                $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'], 'from_student_id' => $fromStudent->id)));
+            }
+            $student->grades()->attach(array($data['evaluable'] => array('grade' => $data['grade'], 'from_student_id' => $fromStudent->id)));
         } else {
             $this->authorize('update', $class);
             foreach ($data['rows'] as $row) {
@@ -227,7 +224,7 @@ class EvaluationController extends Controller
                     DB::table('rubric_row_student')
                         ->where('id', $find->id)
                         ->delete();
-                } 
+                }
                 $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'])));
             }
         }
@@ -278,7 +275,7 @@ class EvaluationController extends Controller
                 $rows[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id];
             }
 
-            if($evaluable->subtype > 0) {
+            if ($evaluable->subtype > 0) {
                 $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->where('evaluable_id', $data['evaluable'])->whereNotNull('from_student_id')->get();
                 if (!$rowQuery)
                     $rowQuery = $student->rows()->where('rubric_row_id', '=', $row->id)->whereNotNull('from_student_id')->get();
@@ -286,9 +283,9 @@ class EvaluationController extends Controller
                     foreach ($rowQuery as $individual) {
                         $pivot = $individual->pivot;
                         $stdtmp = Student::find($pivot->from_student_id);
-                        if($admin)
+                        if ($admin)
                             $rowsStd[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id, ['avatar' => $stdtmp->avatar, 'name' => $stdtmp->name]];
-                        else 
+                        else
                             $rowsStd[] = [$pivot->rubric_row_id, $pivot->rubric_row_item_id, ['avatar' => "/img/no_avatar.png", 'name' => '']];
                     }
                 }

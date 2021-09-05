@@ -2185,7 +2185,6 @@ export default {
       this.$forceUpdate();
     },
     evalRubric: function (pending) {
-      console.log(pending);
       this.resetRubric();
       axios
         .post("/classroom/evaluation/rubric", {

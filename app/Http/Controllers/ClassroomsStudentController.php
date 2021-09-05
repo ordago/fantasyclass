@@ -671,7 +671,6 @@ class ClassroomsStudentController extends Controller
             ->where('evaluables.type', '=', 1)
             ->selectRaw('evaluables.id, evaluables.description, evaluables.rubric_id, evaluables.subtype')
             ->get();
-        dump($evaluationsPending);
 
         $pending = [];
         foreach ($evaluationsPending as $eval) {
@@ -700,7 +699,6 @@ class ClassroomsStudentController extends Controller
                     array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id, 'name' => $eval->description, 'student_id' => $student->id, 'student_name' => $student->name, 'subtype' => $eval->subtype]);
             }
         }
-        dump($pending);
         $evaluation = null;
         $evaluation[1] = $pending;
         if (settings()->get('eval_visible', false)) {
