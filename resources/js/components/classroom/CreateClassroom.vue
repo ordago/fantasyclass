@@ -65,6 +65,10 @@
                     <img src="/img/character/themes-preview/food.png" class="themePreview">
                 </label>
                 <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="11">
+                    <img src="/img/character/themes-preview/hp.png" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/Framiq'><i class='fab fa-twitter'></i> @Framiq</a>">
+                </label>
+                <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" value="1">
                     <img src="/img/character/themes-preview/medieval-fantasy.png" class="themePreview">
                 </label>

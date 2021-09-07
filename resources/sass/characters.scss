@@ -1626,8 +1626,7 @@
     animation: foodlegs .7s infinite;
 }
 
-.food:hover * 
-{
+.food:hover * {
     animation: jump .7s infinite;
 }
 
@@ -1636,13 +1635,13 @@
         left: 39px;
         transform: rotateY(0deg);
     }
-    
+
     33% {
         left: 34px;
         transform: rotateY(20deg);
-        
+
     }
-    
+
     66% {
         left: 44px;
         transform: rotateY(-20deg);
@@ -1693,3 +1692,88 @@
 }
 
 /*********************/
+/******** HP *********/
+
+@keyframes hpfacemove {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    33% {
+        transform: rotateY(20deg);
+
+    }
+
+    66% {
+        transform: rotateY(-20deg);
+    }
+}
+
+.hp {
+    transform: scale(0.65);
+}
+
+.hp-feet {
+    position: absolute;
+    top: 181px;
+    left: 32px;
+    z-index: 4;
+
+}
+
+.hp-base-shirt {
+    position: absolute;
+    top: 92px;
+    left: 19px;
+    z-index: 3;
+}
+
+.hp-head {
+    position: absolute;
+    top: -30px;
+    left: -29px;
+    z-index: 1;
+    max-width: initial !important;
+    animation: hpfacemove 1.5s infinite;
+}
+
+.hp-legs {
+    position: absolute;
+    top: 146px;
+    left: 35px;
+    z-index: 2;
+}
+
+.hp-shirt {
+    position: absolute;
+    top: 92px;
+    left: 19px;
+    z-index: 4;
+}
+
+.hp-wand {
+    position: absolute;
+    top: 153px;
+    left: 24px;
+    z-index: 5;
+}
+
+.hp-hands {
+    position: absolute;
+    top: 164px;
+    left: 27px;
+    z-index: 6;
+}
+
+.dumbledore .hp-head {
+    z-index: 7;
+}
+
+.character:hover .hp-head {
+    animation: none;
+}
+
+.character:hover .hp-wand {
+    transform: rotateX(10deg) rotate(30deg) translateX(-5px) translateY(5px);
+    animation: glowweapon 1.5s infinite;
+}

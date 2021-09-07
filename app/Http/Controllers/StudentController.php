@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Behaviour;
+use App\CharacterTheme;
 use Illuminate\Http\Request;
 use App\Classroom;
 use App\ClassroomUser;
@@ -455,11 +456,17 @@ class StudentController extends Controller
         } else {
             $this->authorize('update', $class);
         }
+        $prevTheme = $student->character_id;
         $student->update(['character_id' => request()->character_id]);
         if ($student->character->theme->id == 10) {
-            $equipment = $student->equipment()->whereIn('equipment_id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649])->first();
-            $student->equipment()->detach($equipment->id);
-            $student->equipment()->attach(607+request()->character_id);
+            $theme = CharacterTheme::find($student->character->theme->id);
+            if(!in_array($prevTheme, $theme->characters->pluck('id')->toArray())) {
+                $student->setBasicEquipment();
+            } else {
+                $equipment = $student->equipment()->whereIn('equipment_id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649])->first();
+                $student->equipment()->detach($equipment->id);
+                $student->equipment()->attach(607+request()->character_id);
+            }
         } else {
             $student->setBasicEquipment();
         }

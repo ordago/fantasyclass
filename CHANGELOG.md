@@ -1,4 +1,8 @@
 # Changelog
+## v1.75 Beta (07/09/2021)
+### Added
+- Added new character theme.
+
 ## v1.74 Beta (05/09/2021)
 ### Added
 - Autoevaluation.

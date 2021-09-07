@@ -1705,13 +1705,13 @@ export default {
       return [680, 690, 700].findIndex((id) => id === gearId) === -1;
     },
     isInGear(gearId) {
-      if (gearId >= 600 && gearId <= 676) return true;
+      if (gearId >= 660 && gearId <= 676 || gearId >= 720 && gearId <= 751) return true;
       return false;
     },
     notInGear(gearId) {
       return (
         [
-          41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,
+          41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,710,711,712,713,714,715,716,717,718
         ].findIndex((id) => id === gearId) === -1
       );
     },

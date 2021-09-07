@@ -739,6 +739,18 @@ class Student extends Model implements HasMedia
             case '42':
                 $ids = [607+$this->character_id, 658, 659, rand(660, 676), 680, 690, 700];
                 break;
+            case '43':
+            case '45':
+            case '46':
+            case '47':
+            case '49':
+            case '50':
+                $ids = [667+$this->character_id, 718, rand(720, 725), rand(740, 745), 760, 770, 780];
+                break;
+            case '44':
+            case '48':
+                $ids = [667+$this->character_id, 718, rand(726, 731), rand(746, 751), 760, 770, 780];
+                break;
         }
 
         $this->equipment()->attach($ids);
