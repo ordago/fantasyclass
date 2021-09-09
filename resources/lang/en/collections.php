@@ -32,5 +32,7 @@ return [
     'bank' => 'Collectible bank',
     'share_bank' => 'Are you sure you want to share this collection? Please, be sure it\'s finished and check all collectibles.',
     'import_alert' => 'The collection will be added to your class, edit the rewards if you want.',
+    'max_collect' => 'Max number of times can be completed (0 for infinite).',
+
 
 ];

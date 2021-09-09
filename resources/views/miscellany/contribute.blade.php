@@ -203,6 +203,9 @@
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   <a target="_blank" href="https://twitter.com/franmar61">Francisco Martinez</a> <i class="fas mx-2 fa-hand-spock"></i> <i class="fab fa-youtube"></i>
                 </span>
+                <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
+                  <a target="_blank" href="https://www.facebook.com/oscarflofer">Wity</a> <i class="fas mx-2 fa-hand-rock"></i>
+                </span>
               </div>
             </div>
           </div>

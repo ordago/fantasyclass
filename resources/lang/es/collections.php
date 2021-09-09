@@ -32,5 +32,6 @@ return [
     'bank' => 'Banco de coleccionables',
     'share_bank' => '¿Estás seguro/a de compartir esta colección? Por favor, asegúrate que está finalizada y comprueba todos los coleccionables.',
     'import_alert' => 'La colección se añadirá a la clase, modifica las recompensas si lo crees conveniente.',
+    'max_collect' => 'Máximo de veces que se puede completar (0 para infinito).',
 
 ];

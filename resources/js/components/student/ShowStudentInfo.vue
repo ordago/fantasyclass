@@ -871,13 +871,13 @@
                 <span
                   class="button is-info"
                   @click="claimReward(collection)"
-                  v-if="!admin && checkReward(collection)"
+                  v-if="!admin && checkReward(collection) && collection.max != getCollectionNumber(collection.id)"
                   >{{ trans.get("collections.claim_reward") }}</span
                 >
               </h3>
               <div>
                 <button
-                  v-if="settings.buy_collectionable == 1 && !admin"
+                  v-if="settings.buy_collectionable == 1 && !admin && collection.max != getCollectionNumber(collection.id)"
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(collection.id)"
                 >
@@ -898,7 +898,7 @@
                 class="collectionable-container m-1"
               >
                 <show-collectionable
-                  :style="getStyle(collectionable.id)"
+                  :style="getStyle(collectionable.id, collection)"
                   :collectionable="collectionable"
                   :count="getCount(collectionable.id)"
                   :admin="false"
@@ -2030,7 +2030,9 @@ export default {
       });
       return count;
     },
-    getStyle: function (collectionable) {
+    getStyle: function (collectionable, collection) {
+      if(collection.max == this.getCollectionNumber(collection.id))
+      return "";
       var index = this.student.collectionables.findIndex(function (item, i) {
         return item.id === collectionable;
       });

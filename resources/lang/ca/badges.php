@@ -17,7 +17,7 @@ return [
     'experience' => 'Experiència',
     'gold' => 'Or',
     
-    'badge_exemplar' => 'Comportament excemplar',
+    'badge_exemplar' => 'Comportament exemplar',
     'badge_exemplar_info' => 'Sense interaccions negatives! Aquesta costa de mantenir ... Ànims!',
     'academic' => 'Reconeixement',
     'academic_info' => 'Totes les notes per sobre de ',

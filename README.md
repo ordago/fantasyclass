@@ -29,6 +29,8 @@ Help and sponsors
 - Luis Navarro Rodríguez
 - Víctor Corrale
 - [Jesús Mínguez Corrales](https://www.instagram.com/teacher_sarraceno/) 
+- Francisco Martínez
+- [Wity](https://www.facebook.com/oscarflofer) 
 
 ## Contribute to the project
 ### To import the project

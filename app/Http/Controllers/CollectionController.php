@@ -73,6 +73,7 @@ class CollectionController extends Controller
             'collection.xp' => ['numeric', 'required'],
             'collection.gold' => ['numeric', 'required'],
             'collection.id' => ['numeric', 'required'],
+            'collection.max' => ['numeric', 'required'],
         ]);
         $collection = collection::findOrFail($data['collection']['id']);
         if ($collection->classroom_id != $class->id)

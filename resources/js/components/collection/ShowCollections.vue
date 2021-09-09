@@ -4,7 +4,6 @@
       <button
         @click="
           isEditing = false;
-          collection = {};
           isModalActive = true;
         "
         class="button is-success"
@@ -126,6 +125,19 @@
                   </b-field>
                 </div>
               </div>
+              <div>
+                  <b-field>
+                    <template slot="label">
+                      {{ trans.get("collections.max_collect") }}
+                    </template>
+                    <b-input
+                      v-model="collection.max"
+                      required
+                      type="number"
+                      step="1"
+                    ></b-input>
+                  </b-field>
+                </div>
             </section>
             <footer class="modal-card-foot">
               <button
@@ -453,6 +465,7 @@ export default {
         xp: 100,
         gold: 1000,
         type: 1,
+        max: 0,
       },
       collectionable: {
         name: "",
@@ -532,12 +545,15 @@ export default {
       this.isPrefsModalActive = false;
     },
     getContent(collection) {
-      return (
+      let text = "";
+      text += 
         collection.xp +
         "<i class='fas fa-fist-raised colored'></i>, " +
         collection.gold +
-        "<i class='fas fa-coins colored'></i>"
-      );
+        "<i class='fas fa-coins colored'></i> ";
+       
+       collection.max < 1 ? text += "<i class='fas fa-infinity'></i>" : text += collection.max + " max ";
+      return text;
     },
     showAddCollectionable() {
       if (this.image && Object.keys(this.image).length) {
