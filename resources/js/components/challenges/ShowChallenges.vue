@@ -89,6 +89,9 @@
           {{ currentChallenge.title }}
         </h1>
         <div v-if="currentChallenge.type == 0">
+          <button class="button is-info" @click="selectAll()">
+            {{ trans.get('utils.select_all') }}
+          </button>
           <div v-for="student in students" class="p-3" :key="student.id">
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
@@ -229,11 +232,26 @@ export default {
       }
       return false;
     },
-    toggleChallenge($id) {
-      axios.post("/classroom/" + this.code + "/challenges/toggle", {
-        id: $id,
-        challenge: this.currentChallenge.id,
+    selectAll() {
+      this.students.forEach((student) => {
+        this.toggleChallenge(student.id, true);
       });
+      this.$forceUpdate();
+    },
+    toggleChallenge(id, force = false) {
+      axios
+        .post("/classroom/" + this.code + "/challenges/toggle", {
+          id: id,
+          challenge: this.currentChallenge.id,
+          force: force,
+        })
+        .then((response) => {
+          this.students.forEach((student) => {
+            if(student.id == id) {
+              student.challenges = response.data;
+            }
+          });
+        });
     },
     buttonAddChallege(type) {
       let append =

@@ -233,24 +233,38 @@ class ChallengesController extends Controller
 
         $data = request()->validate([
             'id' => ['numeric'],
+            'force' => ['boolean'],
         ]);
         $cards = [];
         if ($challenge->type == 0) {
             $student = Student::where('id', '=', $data['id'])->first();
             $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
             $this->authorize('update', $class);
-            $result = $student->challenges()->toggle($challenge->id);
-            $mult = 1;
-            if ($result['detached']) {
-                $mult = -1;
-            } else {
-                if ($challenge->auto_assign == 1) {
-                    for ($i = 0; $i < $challenge->cards; $i++) {
-                        array_push($cards, CardsController::getRandomCard($class->code));
+            if(!$data['force']) {
+                $result = $student->challenges()->toggle($challenge->id);
+                $mult = 1;
+                if ($result['detached']) {
+                    $mult = -1;
+                } else {
+                    if ($challenge->auto_assign == 1) {
+                        for ($i = 0; $i < $challenge->cards; $i++) {
+                            array_push($cards, CardsController::getRandomCard($class->code));
+                        }
                     }
                 }
+                $student->assignChallenge($challenge, $mult, $cards);
+            } else {
+                $mult = 1;
+                $attach = $student->challenges()->syncWithoutDetaching($challenge->id);
+                if($attach['attached']) {
+                    if ($challenge->auto_assign == 1) {
+                        for ($i = 0; $i < $challenge->cards; $i++) {
+                            array_push($cards, CardsController::getRandomCard($class->code));
+                        }
+                    }
+                    $student->assignChallenge($challenge, $mult, $cards);
+                }
             }
-            $student->assignChallenge($challenge, $mult, $cards);
         } else {
             $group = Group::where('id', $data['id'])->firstOrFail();
             $class = Classroom::where('id', '=', $group->grouping->classroom_id)->firstOrFail();
@@ -270,6 +284,9 @@ class ChallengesController extends Controller
                 $student->assignChallenge($challenge, $mult, $cards);
             }
         }
+        if($mult)
+            return [$challenge];
+        else return [];
     }
 
     public function store($code)

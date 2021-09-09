@@ -1,4 +1,9 @@
 # Changelog
+## v1.76 Beta (XX/09/2021)
+### Added
+- Select all in challenges.
+
+
 ## v1.75 Beta (07/09/2021)
 ### Added
 - Added new character theme.
