@@ -102,6 +102,9 @@
                       :key="img.id"
                     />
                   </div>
+                  <div v-tippy :content="trans.get('shop.undead')" class="my-2" v-if="item.undead">
+                    <i class="fas fa-skull"></i>
+                  </div>
                   <div>
                     <a
                       :href="'/classroom/' + code + '/shop/' + item.id"

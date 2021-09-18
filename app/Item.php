@@ -20,7 +20,9 @@ class Item extends Model implements HasMedia
         'min_lvl', 
         'craft', 
         'for_sale', 
-        'classroom_id' ];
+        'classroom_id',
+        'undead',
+    ];
 
         protected $casts = [
             'craft' => 'array',

@@ -17,10 +17,12 @@
         :initial-image="prevImage"
         :aspectRatio="1 / 1"
         :initialAspectRatio="1 / 1"
-        @file-choose="imageChanged=true"
+        @file-choose="imageChanged = true"
       ></croppa>
     </div>
-    <button class="button is-info" @click="isModalActive = true"><i class="fad fa-images mr-1"></i> {{ trans.get('shop.load_gallery') }}</button>
+    <button class="button is-info" @click="isModalActive = true">
+      <i class="fad fa-images mr-1"></i> {{ trans.get("shop.load_gallery") }}
+    </button>
     <div class="columns mt-2">
       <div class="column">
         <div class="field is-horizontal">
@@ -89,6 +91,11 @@
         </div>
       </div>
     </div>
+    <b-field v-if="hp > 0">
+      <b-switch v-model="undead" true-value="1" false-value="0">
+        {{ trans.get("shop.undead") }}
+      </b-switch>
+    </b-field>
     <div class="columns">
       <div class="column">
         <div class="field is-horizontal">
@@ -142,10 +149,12 @@
       </div>
     </div>
     <div class="m-2">
-      <p class="my-2 is-size-5"><i class="fad fa-hammer"></i> 
-{{ trans.get('shop.crafting') }} <small class="is-italic">{{ trans.get('shop.crafting_shop') }}</small></p>
+      <p class="my-2 is-size-5">
+        <i class="fad fa-hammer"></i> {{ trans.get("shop.crafting") }}
+        <small class="is-italic">{{ trans.get("shop.crafting_shop") }}</small>
+      </p>
       <div class="is-flex">
-         <vue-select-image
+        <vue-select-image
           :dataImages="craftItems"
           @onselectmultipleimage="onSelectMultipleImage"
           :is-multiple="true"
@@ -201,7 +210,6 @@
 </template>
 
 <script>
-
 import VueSelectImage from "vue-select-image";
 require("vue-select-image/dist/vue-select-image.css");
 
@@ -209,7 +217,7 @@ export default {
   props: ["code", "item", "items"],
   mounted() {
     this.craftItems = this.items.map(function (row) {
-            return { id: row.id, src: row.icon, alt: row.description };
+      return { id: row.id, src: row.icon, alt: row.description };
     });
     axios.get("/classroom/utils/get-shop").then((response) => {
       this.images = response.data;
@@ -220,6 +228,7 @@ export default {
       this.id = this.item.id;
       this.hp = this.item.hp ? this.item.hp : 0;
       this.xp = this.item.xp ? this.item.xp : 0;
+      this.undead = this.item.undead ? 1 : 0;
       this.slot = this.item.slot ? this.item.slot : 0;
       this.min_lvl = this.item.min_lvl ? this.item.min_lvl : 0;
       this.price = this.item.price ? this.item.price : 0;
@@ -235,6 +244,7 @@ export default {
       images: [],
       image: {},
       hp: 0,
+      undead: 0,
       xp: 0,
       slot: 0,
       min_lvl: 0,
@@ -262,10 +272,10 @@ export default {
         (blob) => {
           if (blob != null) {
             let formData = new FormData();
-            if(this.imageChanged)
-              formData.append("icon", blob, "item.png");
+            if (this.imageChanged) formData.append("icon", blob, "item.png");
             formData.append("hp", this.hp);
             formData.append("xp", this.xp);
+            formData.append("undead", this.undead ? 1 : 0);
             formData.append("slot", this.slot);
             formData.append("min_lvl", this.min_lvl);
             formData.append("price", this.price);
@@ -286,8 +296,7 @@ export default {
                 this.$toast(response.data.message, {
                   type: response.data.type,
                 });
-                window.location.href =
-                  "/classroom/" + this.code + "/shop";
+                window.location.href = "/classroom/" + this.code + "/shop";
               });
           }
         },

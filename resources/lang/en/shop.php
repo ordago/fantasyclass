@@ -57,4 +57,6 @@ return [
     'adopt_text' => 'Do you want to adopt this pet?',
     'adopt_success' => 'Pet adopted! Take care of it :)',
 
+    'undead' => 'Allow to be used by undead',
+
 ];

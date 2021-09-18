@@ -1680,10 +1680,10 @@ class ClassroomsStudentController extends Controller
 
         $student = Functions::getCurrentStudent($class, []);
 
-        if ($student->hp <= 0)
+        $item = $student->items->where('id', '=', $data['itemId'])->first();
+        if ($student->hp <= 0 && $item->undead == 0)
             return false;
 
-        $item = $student->items->where('id', '=', $data['itemId'])->first();
 
         if (!$item->pivot->count > 0)
             return false;

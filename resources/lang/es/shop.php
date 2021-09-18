@@ -56,5 +56,7 @@ return [
     'adopt' => 'Adopta',
     'adopt_text' => '¿Quieres adoptar esta mascota?',
     'adopt_success' => '¡Mascota adoptada! Cuídala :)',
+    
+    'undead' => 'Permite revivir a los muertos',
 
 ];

@@ -2615,6 +2615,8 @@ export default {
             .then((response) => {
               if (!response.data) {
               } else {
+                if(this.student.hp == 0)
+                  location.reload();
                 item.pivot.count--;
                 if (item.pivot.count == 0) this.inventoryRemaining++;
                 this.student.hp = Math.min(
@@ -2654,11 +2656,15 @@ export default {
           " +" +
           item.slot +
           " <i class='fak fa-deck colored mx-1'></i>. ";
-      if (item.hp > 0)
+      if (item.hp > 0) {
         message +=
           this.trans.get("shop.recovers_hp") +
           item.hp +
           " <i class='fas fa-heart colored'></i>. ";
+          if(item.undead)
+            message += this.trans.get('shop.undead') + ". "
+      }
+    
       if (item.xp > 0)
         message +=
           this.trans.get("shop.gives_xp") +
