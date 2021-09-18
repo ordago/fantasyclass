@@ -28,5 +28,6 @@ return [
     'post' => 'Nuevo post en: ',
     'mark_challenge' => 'Ha completado un desafío: ',
     'new_collectionable' => 'Nuevo coleccionable',
+    'challenge_password' => 'Ha superado el reto con contraseña. ',
 
 ];

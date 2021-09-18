@@ -34,4 +34,11 @@ return [
     'import_alert' => 'La colección se añadirá a la clase, modifica las recompensas si lo crees conveniente.',
     'max_collect' => 'Máximo de veces que se puede completar (0 para infinito).',
 
+    'exchange' => 'Intercambia coleccionables',
+    'request' => 'Inicia un intercambio',
+    'exchange_info' => 'Solo puedes cambiar coleccionables que tengas repetidos.',
+    'exchange_info_tippy' => 'Necesitas tener 2 o más coleccionables del tipo que pide.',
+    'exchange_start' => 'Selecciona que coleccionable quieres cambiar',
+    'exchange_end' => 'Selecciona que coleccionable quieres obtener',
+
 ];

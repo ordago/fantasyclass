@@ -896,6 +896,116 @@ class ClassroomsStudentController extends Controller
             'challenges' => $this::getChallenges($student->fresh(), $class),
         ];
     }
+    public function removeExchange($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $line = DB::table('exchange_collectibles')
+            ->where('id', $data['id'])
+            ->first();
+        $student = Functions::getCurrentStudent($class, []);
+        if($student->id != $line->student_id)
+            abort(403);
+        
+        DB::table('exchange_collectibles')->where('id', $data['id'])->delete();
+
+    }
+
+    public function doExchange($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+        $line = DB::table('exchange_collectibles')
+            ->where('id', $data['id'])
+            ->first();
+        $studentOrigin = Student::find($line->student_id);
+        $student = Functions::getCurrentStudent($class, []);
+        if($student->classroom->classroom_id != $studentOrigin->classroom->classroom_id)
+            return false;
+        
+        $studentOriginCollectionable = $studentOrigin->fresh()->collectionables->where('id', $line->collectionable_id)->first();
+        if($studentOriginCollectionable->pivot->count <= 1)
+            return false;
+
+        $studentCollectionable = $student->fresh()->collectionables->where('id', $line->wanted_collectionable_id)->first();
+        if($studentCollectionable->pivot->count <= 1)
+            return false;
+        
+        $countOrigin =  $studentOriginCollectionable->pivot->count -1;   
+        $count =  $studentCollectionable->pivot->count -1;
+        dump("Origin ".$countOrigin);
+        dump("New ".$count);
+
+        $newOrigin = $studentOrigin->fresh()->collectionables->where('id', $line->wanted_collectionable_id)->first();
+        if($newOrigin)
+            $newCountOrigin = $newOrigin->pivot->count + 1;
+        else
+            $newCountOrigin = 1;
+        $new = $student->fresh()->collectionables->where('id', $line->collectionable_id)->first();
+        if($new)
+            $newCount = $new->pivot->count + 1;
+        else
+            $newCount = 1;
+
+        $studentOrigin->collectionables()->sync([$line->collectionable_id => ['count' => $countOrigin]], false);
+        $studentOrigin->collectionables()->sync([$line->wanted_collectionable_id => ['count' => $newCountOrigin]], false);
+        
+        $student->collectionables()->sync([$line->wanted_collectionable_id => ['count' => $count]], false);
+        $student->collectionables()->sync([$line->collectionable_id => ['count' => $newCount]], false);
+
+        DB::table('exchange_collectibles')->where('id', $data['id'])->delete();
+
+        return $student->fresh()->collectionables;
+    }
+
+    public function getExchange($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $exchanges = DB::table('exchange_collectibles')
+            ->where('classroom_id', $class->id)
+            ->get();
+
+        $lines = [];
+        foreach ($exchanges as $exchange) {
+            $from = Collectionable::find($exchange->collectionable_id);
+            $to = Collectionable::find($exchange->wanted_collectionable_id);
+            $student = Student::find($exchange->student_id);
+            $lines[] = ['id' => $exchange->id,'from' => $from, 'to' => $to, 'student' => ['id' => $student->id, 'name' => $student->name, 'avatar' => $student->avatar]];
+        }
+
+        return $lines;
+    }
+
+    public function exchangeCollectible($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
+        $data = request()->validate([
+            'from' => ['numeric', 'required'],
+            'to' => ['numeric', 'required'],
+        ]);
+
+        $studentCollectionable = $student->collectionables->where('id', $data['from'])->first();
+
+        if(!$studentCollectionable || $studentCollectionable->pivot->count <= 1)
+            abort(403);
+        
+        DB::table('exchange_collectibles')->insert([
+            'classroom_id' => $class->id,
+            'student_id' => $student->id,
+            'collectionable_id' => $data['from'],
+            'wanted_collectionable_id' => $data['to'],
+        ]);        
+
+    }
     public function markChallenge($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();

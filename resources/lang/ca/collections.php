@@ -33,4 +33,11 @@ return [
     'share_bank' => 'Estàs segur/a de compartir la col·lecció? Per favor, assegura\'t que està acabada i comprova tots els col·leccionables abans.',
     'import_alert' => 'La col·lecció s\'afegirà a la classe, modifica les recompenses si ho creus convenient.',
     'max_collect' => 'Màxim de cops que es pot completar (0 per infinit).',
+    
+    'exchange' => 'Intercanvia col·leccionables',
+    'request' => 'Inicia un intercanvi',
+    'exchange_info' => 'Solament pots canviar col·leccionables que tinguis repetits.',
+    'exchange_info_tippy' => 'Necessites tenir 2 o més col·leccionables dels tipus que demanen.',
+    'exchange_start' => 'Selecciona quin col·leccionable vols canviar',
+    'exchange_end' => 'Selecciona quin col·leccionable vols obtenir',
 ];

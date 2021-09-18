@@ -838,6 +838,10 @@
             {{ trans.get("menu.collections") }}
           </template>
 
+          <button class="button is-primary" @click="prepareExchange()">
+            <i class="fas fa-exchange mr-1"></i>
+            {{ trans.get("collections.exchange") }}
+          </button>
           <div
             v-for="collection in classroom.collections"
             :key="'collection-' + collection.id"
@@ -871,13 +875,23 @@
                 <span
                   class="button is-info"
                   @click="claimReward(collection)"
-                  v-if="!admin && checkReward(collection) && collection.max != getCollectionNumber(collection.id)"
+                  v-if="
+                    !admin &&
+                    checkReward(collection) &&
+                    (getCollectionNumber(collection.id) === 0 ||
+                      collection.max != getCollectionNumber(collection.id))
+                  "
                   >{{ trans.get("collections.claim_reward") }}</span
                 >
               </h3>
               <div>
                 <button
-                  v-if="settings.buy_collectionable == 1 && !admin && collection.max != getCollectionNumber(collection.id)"
+                  v-if="
+                    settings.buy_collectionable == 1 &&
+                    !admin &&
+                    (getCollectionNumber(collection.id) === 0 ||
+                      collection.max != getCollectionNumber(collection.id))
+                  "
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(collection.id)"
                 >
@@ -1547,6 +1561,161 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal
+      :active.sync="isExchangeModalActive"
+      has-modal-card
+      trap-focus
+      :full-screen="true"
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("collections.get_collectionables") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <div class="py-3">
+            <div>
+              <span v-if="exchanging == 0">
+                <button class="button" @click="exchanging = 1">
+                  {{ trans.get("collections.request") }}
+                </button>
+                <article class="message is-warning mt-1">
+                  <div class="message-body">
+                    {{ trans.get("collections.exchange_info") }}
+                  </div>
+                </article>
+              </span>
+              <div>
+                <div v-if="exchanging == 0">
+                  <div
+                    v-for="(collectionable, index) in exchange"
+                    :key="'ex-' + index"
+                    class="columns m-1 is-flex"
+                  >
+                    <div class="column is-narrow is-flex has-all-centered p-2">
+                      <img width="64px" :src="collectionable.student.avatar" />
+                      <span class="ml-2">{{
+                        collectionable.student.name
+                      }}</span>
+                    </div>
+                    <div class="column is-narrow">
+                      <show-collectionable
+                        style="zoom: 50%"
+                        :collectionable="collectionable.from"
+                        :admin="false"
+                      ></show-collectionable>
+                    </div>
+                    <div class="column is-narrow is-flex has-all-centered">
+                      <i class="fas fa-arrows-h"></i>
+                    </div>
+                    <div class="column is-narrow">
+                      <show-collectionable
+                        style="zoom: 50%"
+                        :collectionable="collectionable.to"
+                        :admin="false"
+                      ></show-collectionable>
+                    </div>
+                    <div class="column is-narrow is-flex has-all-centered p-2">
+                      <span
+                        v-if="collectionable.student.id != student.id"
+                        v-tippy
+                        :content="getMessageExchange(collectionable.to.id)"
+                      >
+                        <button
+                          class="button is-success"
+                          @click="doExchange(collectionable.id)"
+                          :disabled="!canShare(collectionable.to.id)"
+                        >
+                          <i class="fas fa-exchange mr-1"></i>
+                          {{ trans.get("collections.exchange") }}
+                        </button>
+                      </span>
+                      <button
+                        class="button is-danger"
+                        @click="removeExchange(collectionable.id)"
+                        v-else
+                      >
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="" v-if="exchanging != 0">
+              <div class="" v-if="exchanging == 1">
+                <h3 class="is-size-3 mb-2">
+                  {{ trans.get("collections.exchange_start") }}
+                </h3>
+                <div
+                  v-for="collectionable in filterCollectibles()"
+                  :key="collectionable.id"
+                  class="collectionable-container m-1"
+                >
+                  <span
+                    @click="
+                      give = collectionable;
+                      exchanging = 2;
+                      $forceUpdate();
+                    "
+                  >
+                    <show-collectionable
+                      style="zoom: 75%"
+                      :collectionable="collectionable"
+                      :count="getCount(collectionable.id)"
+                      :admin="false"
+                    ></show-collectionable>
+                  </span>
+                </div>
+              </div>
+              <div class="" v-else-if="exchanging == 2">
+                <h3 class="is-size-3 mb-2">
+                  {{ trans.get("collections.exchange_end") }}
+                </h3>
+
+                <div
+                  v-for="collection in classroom.collections"
+                  :key="'ec-' + collection.id"
+                >
+                  <div
+                    v-for="collectionable in orderedCollectionables(
+                      collection.collectionables
+                    )"
+                    :key="collectionable.id"
+                    class="collectionable-container m-1"
+                    @click="
+                      want = collectionable;
+                      sendExchange();
+                    "
+                  >
+                    <show-collectionable
+                      style="zoom: 75%"
+                      :style="getStyle(collectionable.id, collection)"
+                      :collectionable="collectionable"
+                      :count="getCount(collectionable.id)"
+                      :admin="false"
+                    ></show-collectionable>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="isExchangeModalActive = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
     <random-card
       :card="randomCard"
       :admin="0"
@@ -1646,6 +1815,8 @@ export default {
   },
   data: function () {
     return {
+      give: null,
+      want: null,
       activeTab: 0,
       dateStart: null,
       dateEnd: null,
@@ -1662,6 +1833,7 @@ export default {
       forceReloadEq: 0,
       isSendMoneyActive: false,
       isCollectionableModalActive: false,
+      isExchangeModalActive: false,
       prevImage: null,
       isCraftingModalActive: false,
       image: null,
@@ -1688,9 +1860,68 @@ export default {
       randomCard: null,
       cardsMutable: this.cards,
       craft: [],
+      exchanging: 0,
+      exchange: null,
     };
   },
   methods: {
+    removeExchange(id) {
+      axios
+        .post("/classroom/" + this.classroom.code + "/exchange/delete", {
+          id: id,
+        })
+        .then((response) => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+          this.prepareExchange();
+        });
+    },
+    doExchange(id) {
+      axios
+        .post("/classroom/" + this.classroom.code + "/exchange", { id: id })
+        .then((response) => {
+          if (response.data) {
+            this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+            this.student.collectionables = response.data;
+            this.isExchangeModalActive = false;
+          } else {
+            this.$toast(this.trans.get("success_error.collectible_error"), {
+              type: "error",
+            });
+          }
+        });
+    },
+    prepareExchange() {
+      this.exchanging = 0;
+      axios
+        .get("/classroom/" + this.classroom.code + "/exchange/get")
+        .then((response) => {
+          this.exchange = response.data;
+          this.isExchangeModalActive = true;
+        });
+    },
+    sendExchange() {
+      this.exchanging = 0;
+      if (this.give && this.want) {
+        this.isExchangeModalActive = false;
+        axios
+          .post(
+            "/classroom/" +
+              this.classroom.code +
+              "/student/exchangeCollectible",
+            { from: this.give.id, to: this.want.id }
+          )
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+          });
+        // axios.post('/classroom/')
+      }
+    },
     getTippy(text) {
       if (text)
         return (
@@ -1705,13 +1936,15 @@ export default {
       return [680, 690, 700].findIndex((id) => id === gearId) === -1;
     },
     isInGear(gearId) {
-      if (gearId >= 660 && gearId <= 676 || gearId >= 720 && gearId <= 751) return true;
+      if ((gearId >= 660 && gearId <= 676) || (gearId >= 720 && gearId <= 751))
+        return true;
       return false;
     },
     notInGear(gearId) {
       return (
         [
-          41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,710,711,712,713,714,715,716,717,718
+          41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,
+          710, 711, 712, 713, 714, 715, 716, 717, 718,
         ].findIndex((id) => id === gearId) === -1
       );
     },
@@ -2030,9 +2263,25 @@ export default {
       });
       return count;
     },
+    getMessageExchange: function (collectionable) {
+      if (!this.canShare(collectionable))
+        return this.trans.get("collections.exchange_info_tippy");
+      return this.trans.get("collections.exchange");
+    },
+    canShare: function (collectionable) {
+      var index = this.student.collectionables.findIndex(function (item, i) {
+        return item.id === collectionable;
+      });
+      if (index == -1) return false;
+      if (this.student.collectionables[index].pivot.count <= 1) return false;
+      return true;
+    },
     getStyle: function (collectionable, collection) {
-      if(collection.max == this.getCollectionNumber(collection.id))
-      return "";
+      if (
+        this.getCollectionNumber(collection.id) != 0 &&
+        collection.max == this.getCollectionNumber(collection.id)
+      )
+        return "";
       var index = this.student.collectionables.findIndex(function (item, i) {
         return item.id === collectionable;
       });
@@ -2671,6 +2920,11 @@ export default {
     },
     orderedCollectionables: function (collectionables) {
       return _.orderBy(collectionables, "type", "asc");
+    },
+    filterCollectibles: function () {
+      return this.student.collectionables.filter((collectionable) => {
+        return collectionable.pivot.count > 1;
+      });
     },
   },
   computed: {

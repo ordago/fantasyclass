@@ -1,7 +1,9 @@
 # Changelog
-## v1.76 Beta (XX/09/2021)
+## v1.76 Beta (18/09/2021)
 ### Added
 - Select all in challenges.
+- Limit the number of times a collection can be reclaimed.
+- Collectible exchange.
 
 
 ## v1.75 Beta (07/09/2021)

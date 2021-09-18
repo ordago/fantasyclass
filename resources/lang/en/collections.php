@@ -34,5 +34,12 @@ return [
     'import_alert' => 'The collection will be added to your class, edit the rewards if you want.',
     'max_collect' => 'Max number of times can be completed (0 for infinite).',
 
+    'exchange' => 'Exchange collectibles',
+    'request' => 'Start and exchange',
+    'exchange_info' => 'You can only exchange collectibles that you have at least twice.',
+    'exchange_info_tippy' => 'You need to have 2 or more collectibles of the type required.',
+    'exchange_start' => 'Select which collectible do you want to trade',
+    'exchange_end' => 'Select which collectible do you want to get',
+
 
 ];
