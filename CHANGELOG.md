@@ -4,7 +4,7 @@
 - Select all in challenges.
 - Limit the number of times a collection can be reclaimed.
 - Collectible exchange.
-
+- Disable collections.
 
 ## v1.75 Beta (07/09/2021)
 ### Added

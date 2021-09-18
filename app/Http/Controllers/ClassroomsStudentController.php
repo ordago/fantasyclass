@@ -939,8 +939,6 @@ class ClassroomsStudentController extends Controller
         
         $countOrigin =  $studentOriginCollectionable->pivot->count -1;   
         $count =  $studentCollectionable->pivot->count -1;
-        dump("Origin ".$countOrigin);
-        dump("New ".$count);
 
         $newOrigin = $studentOrigin->fresh()->collectionables->where('id', $line->wanted_collectionable_id)->first();
         if($newOrigin)

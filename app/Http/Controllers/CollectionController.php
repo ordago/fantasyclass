@@ -63,6 +63,14 @@ class CollectionController extends Controller
         return 1;
     }
 
+    public function toggleDisable($id)
+    {
+        $collection = Collection::findOrFail($id);
+        $class = Classroom::findOrFail($collection->classroom_id);
+        $this->authorize('update', $class);
+        $collection->update(['disabled' => !$collection->disabled]);
+    }
+
     public function update($code)
     {
         $class = Classroom::where('code', $code)->firstOrFail();

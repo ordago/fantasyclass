@@ -19,8 +19,11 @@
           class="collection-container mx-2"
           v-for="collection in collectionsReactive"
           :key="collection.id"
+
         >
           <div
+                    :class="{ grayscale: collection.disabled == 1 }"
+
             class="collection mx-1 cursor-pointer"
             @click="selectedCollection = collection"
           >
@@ -38,6 +41,7 @@
             >
               <i class="fas fa-info"></i>
             </span>
+           
             <button
               @click="shareCollection(collection)"
               class="button is-success"
@@ -63,6 +67,25 @@
               class="button is-danger"
             >
               <i class="fas fa-trash-alt"></i>
+            </button>
+             <button
+              type="submit"
+              @click="toggleDisable(collection)"
+              v-tippy
+              :content="getMessageDisable(collection)"
+              class="button is-light"
+              :class="{
+                'is-light': collection.disabled == 0,
+                'is-danger is-light': collection.disabled == 1,
+              }"
+            >
+              <i
+                class="fas"
+                :class="{
+                  'fa-eye-slash': collection.disabled == 0,
+                  'fa-eye': collection.disabled == 1,
+                }"
+              ></i>
             </button>
           </div>
         </div>
@@ -480,6 +503,19 @@ export default {
     },
   },
   methods: {
+     getMessageDisable(collection) {
+      if (collection.disabled) return this.trans.get("general.enable");
+      return this.trans.get("general.disable");
+    },
+    toggleDisable(collection) {
+      axios.get("/classroom/collection/disable/" + collection.id).then((response) => {
+        collection.disabled
+          ? (collection.disabled = 0)
+          : (collection.disabled = 1);
+        this.$forceUpdate();
+      });
+
+    },
     importPack(collection) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.import") + " \"" + collection.name + "\"",

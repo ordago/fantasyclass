@@ -335,6 +335,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/collectionable/edit', 'CollectionableController@update');
         Route::delete('/collections/{id}', 'CollectionController@destroy');
         Route::post('/{code}/collections/edit', 'CollectionController@update');
+        Route::get('/collection/disable/{id}', 'CollectionController@toggleDisable');
+
         
         // Utils
         Route::post('/{code}/utils/impostor', 'UtilsController@impostor');

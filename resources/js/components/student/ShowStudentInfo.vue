@@ -848,7 +848,7 @@
           >
             <div
               v-if="
-                collection.collectionables && collection.collectionables.length
+                collection.collectionables && collection.collectionables.length && collection.disabled != 1
               "
             >
               <h3 class="is-size-3 m-2">

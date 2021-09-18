@@ -12,7 +12,7 @@ class Collection extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'xp', 'gold', 'shared', 'classroom_id', 'max',
+        'name', 'xp', 'gold', 'shared', 'classroom_id', 'max', 'disabled', 
     ];
 
     public function collectionables() {
