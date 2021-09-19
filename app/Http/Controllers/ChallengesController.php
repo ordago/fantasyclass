@@ -289,6 +289,14 @@ class ChallengesController extends Controller
         else return [];
     }
 
+    public function toggleDisable($id)
+    {
+        $challenge = Challenge::findOrFail($id);
+        $class = Classroom::findOrFail($challenge->group->classroom_id);
+        $this->authorize('update', $class);
+        $challenge->update(['disabled' => !$challenge->disabled]);
+    }
+
     public function store($code)
     {
         $data = $this->validateInput();

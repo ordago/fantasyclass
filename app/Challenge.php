@@ -36,6 +36,7 @@ class Challenge extends Model
         'collectionables',
         'collection_id',
         'type_collectionable',
+        'disabled',
     ];
 
     protected $casts = [

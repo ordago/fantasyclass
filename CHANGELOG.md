@@ -1,4 +1,12 @@
 # Changelog
+## v1.77 Beta (19/09/2021)
+### Added
+- Filter challenges in student's view.
+- Disable challenges.
+
+### Changed
+- Fixed teachers in class can't upload files.
+
 ## v1.76.1 Beta (18/09/2021)
 ### Added
 - Select all in challenges.

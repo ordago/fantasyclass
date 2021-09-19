@@ -90,6 +90,24 @@
               <button
                 class="button"
                 v-tippy
+                :content="getMessageDisable()"
+                @click="toggleDisabled()"
+                :class="{
+                  'is-light': challengeReactive.disabled == 0,
+                  'is-danger is-light': challengeReactive.disabled == 1,
+                }"
+              >
+                <i
+                  class="fas"
+                  :class="{
+                    'fa-eye-slash': challengeReactive.disabled == 0,
+                    'fa-eye': challengeReactive.disabled == 1,
+                  }"
+                ></i>
+              </button>
+              <button
+                class="button"
+                v-tippy
                 :content="trans.get('challenges.pin')"
                 @click="togglePinned"
                 :class="{ 'is-dark': challengeReactive.pinned == 1 }"
@@ -774,10 +792,15 @@
             rows="3"
           ></textarea>
           <button class="button is-success my-1" @click="copyText(embedCode)">
-            <i class="fas fa-copy mr-1"></i>{{ trans.get("challenges.map_copy_code") }}
+            <i class="fas fa-copy mr-1"></i
+            >{{ trans.get("challenges.map_copy_code") }}
           </button>
           <label class="label">{{ trans.get("challenges.map_how_to") }}</label>
-          <img style="margin-left: 12.5%;" src="/img/maps/add2gen.gif" width="75%" />
+          <img
+            style="margin-left: 12.5%"
+            src="/img/maps/add2gen.gif"
+            width="75%"
+          />
         </section>
         <footer class="modal-card-foot">
           <button
@@ -861,6 +884,20 @@ export default {
     AddQuestion,
   },
   methods: {
+    getMessageDisable() {
+      if (this.challengeReactive.disabled) return this.trans.get("general.enable");
+      return this.trans.get("general.disable");
+    },
+    toggleDisabled() {
+      axios
+        .get("/classroom/challenge/disable/" + this.challengeReactive.id)
+        .then((response) => {
+          this.challengeReactive.disabled
+            ? (this.challengeReactive.disabled = 0)
+            : (this.challengeReactive.disabled = 1);
+          this.$forceUpdate();
+        });
+    },
     addToMap() {
       axios
         .post("/classroom/challenge/map", {
@@ -1169,7 +1206,7 @@ export default {
           return "has-background-story";
         }
       } else if (this.edit) {
-        if (this.isHidden) return "has-background-light";
+        if (this.isHidden || this.challengeReactive.disabled) return "has-background-light";
         return "";
       } else {
         switch (this.challengeReactive.completion) {

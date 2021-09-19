@@ -333,7 +333,7 @@ class ClassroomsStudentController extends Controller
         foreach ($class->challengeGroups as $group) {
             array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'rating', 'pinned', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'disabled', 'pinned', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -343,7 +343,7 @@ class ClassroomsStudentController extends Controller
 
             foreach ($section as $key => $value) {
                 $current = Challenge::find($value['id']);
-                if ($current->completion == 4 && !$student->challenges->contains($current->id)) {
+                if ($current->disabled || ($current->completion == 4 && !$student->challenges->contains($current->id))) {
                     unset($challenges[$key]);
                     continue;
                 }
@@ -437,6 +437,7 @@ class ClassroomsStudentController extends Controller
 
         $challenges = DB::table('students')
             ->crossJoin('challenges')
+            ->where('challenges.disabled', '=', 0)
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 0)
             ->whereRaw('not JSON_CONTAINS(challenges.students, ?)', [json_encode($student->id)])
@@ -461,6 +462,7 @@ class ClassroomsStudentController extends Controller
 
         $groupChallenges = DB::table('groups')
             ->crossJoin('challenges')
+            ->where('challenges.disabled', '=', 0)
             ->where('challenges.is_conquer', '=', 1)
             ->where('challenges.type', '=', 1)
             ->where('challenges.datetime', '<=', Carbon::now($tz)->toDateTimeString())

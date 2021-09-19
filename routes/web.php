@@ -197,6 +197,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/challenges/all', 'ChallengesController@getAllChallenges');
         Route::post('/challenge/getlink', 'ChallengesController@getChallengeLink');
         Route::post('/challenge/map', 'ChallengesController@getMapCode');
+        Route::get('/challenge/disable/{id}', 'ChallengesController@toggleDisable');
         
 
         // Attachment
