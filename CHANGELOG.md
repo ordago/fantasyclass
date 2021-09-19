@@ -3,6 +3,7 @@
 ### Added
 - Filter challenges in student's view.
 - Disable challenges.
+- Option to make admin to teachers.
 
 ### Changed
 - Fixed teachers in class can't upload files.

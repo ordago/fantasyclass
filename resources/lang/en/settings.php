@@ -67,5 +67,6 @@ return [
     'public_info' => "Classroom adventures will be visible by all students (in your adventure section) and they'll be able to participate adding posts.",
     'add_public_adventure' => 'Add public adventure',
 
+    'confirm_admin' => 'Are you sure of this action? The new user will have full rights in this class.',
 
 ];

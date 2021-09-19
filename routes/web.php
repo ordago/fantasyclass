@@ -246,6 +246,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');
+        Route::post('/{code}/teacher/admin', 'SettingsController@makeAdmin');
         Route::post('/{code}/settings/reset', 'SettingsController@reset');
         Route::post('/{code}/settings/themes', 'SettingsController@themes');
         Route::get('/{code}/toggleClassNotifications', 'SettingsController@toggleClassNotifications');

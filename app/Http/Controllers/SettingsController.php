@@ -99,7 +99,7 @@ class SettingsController extends Controller
             return 2;
         } else {
             $this->authorize('admin', $class);
-            $cus = ClassroomUser::where('user_id', '=', $id)->where('classroom_id', '=', $class->id)->where('role', '=', 1)->firstOrFail();
+            $cus = ClassroomUser::where('user_id', '=', $id)->where('classroom_id', '=', $class->id)->where('role', '>=', 1)->firstOrFail();
             return $cus->delete();
         }
     }
@@ -131,6 +131,27 @@ class SettingsController extends Controller
                 $student->setBasicEquipment();
             }
         }
+    }
+
+    public function makeAdmin($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('admin', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+        ]);
+
+
+        $user = ClassroomUser::where('user_id', $data['id'])->where('classroom_id', $class->id)->where('role', 1)->first();
+        if(!$user)
+            abort(403);
+
+        $user->role = 2;
+        $user->save();
+
+        return $class->fresh()->users->where('pivot.role', '>', 0);
+
+        
     }
 
     public function invite($code)

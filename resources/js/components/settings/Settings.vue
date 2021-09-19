@@ -333,6 +333,16 @@
             </div>
             <div class="column is-narrow is-flex align-items-center">
               <button
+                class="button ml-4 is-info"
+                @click="makeAdmin(teacher.id)"
+                v-if="
+                  teacher.pivot.role != 2 &&
+                  ((isAdmin && teacher.id != user.id))
+                "
+              >
+                <i class="fas fa-user-crown"></i> Make admin
+              </button>
+              <button
                 class="button ml-4 is-danger"
                 @click="confirmDeleteTeacher(teacher.id, index)"
                 v-if="
@@ -729,17 +739,20 @@ export default {
   methods: {
     promptName() {
       this.$buefy.dialog.prompt({
-        message: this.trans.get('settings.add_public_adventure'),
+        message: this.trans.get("settings.add_public_adventure"),
         confirmText: this.trans.get("general.add"),
-        cancelText: this.trans.get('general.cancel'),
+        cancelText: this.trans.get("general.cancel"),
         inputAttrs: {
-          placeholder: this.trans.get('settings.adventure_name'),
+          placeholder: this.trans.get("settings.adventure_name"),
           maxlength: 250,
         },
         trapFocus: true,
         onConfirm: (value) => {
           axios
-            .post(`/classroom/${this.classroom.code}/blog`, {name: value, public: 2})
+            .post(`/classroom/${this.classroom.code}/blog`, {
+              name: value,
+              public: 2,
+            })
             .then((response) => {
               // console.log(response.data)
               this.classroom.blogs.push(response.data);
@@ -747,7 +760,7 @@ export default {
               this.$toast(this.trans.get("success_error.add_success"), {
                 type: "success",
               });
-            })
+            });
         },
       });
     },
@@ -898,6 +911,24 @@ export default {
             location.href = response.data;
           });
         },
+      });
+    },
+    makeAdmin(id) {
+      this.$buefy.dialog.confirm({
+        type: "is-warning",
+        hasIcon: true,
+        iconPack: "fa",
+        ariaRole: "alertdialog",
+        ariaModal: true,
+        message: this.trans.get('settings.confirm_admin'),
+        onConfirm: () =>
+          axios
+            .post("/classroom/" + this.classroom.code + "/teacher/admin", {
+              id: id,
+            })
+            .then((response) => {
+              this.teachers = response.data;
+            }),
       });
     },
     confirmDeleteTeacher(id, index) {

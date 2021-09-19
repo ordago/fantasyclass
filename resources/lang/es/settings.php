@@ -67,4 +67,6 @@ return [
     'public_info' => "Las aventuras de clase serán visibles por todo el alumnado (en la sección tu aventura) y podrán participar añadiendo posts.",
     'add_public_adventure' => 'Añadir aventura pública',
 
+    'confirm_admin' => '¿Estás seguro/a de esta acción? El nuevo usario tendrá plenos poderes sobre la clase.',
+
 ];

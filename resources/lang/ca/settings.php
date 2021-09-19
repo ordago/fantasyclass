@@ -66,4 +66,6 @@ return [
     'adventures' => "Aventures de la classe",
     'public_info' => "Les aventures de classe seran visibles per tot l'alumnat (a la secció la teua aventura) i podran participar afegint posts.",
     'add_public_adventure' => 'Afegir aventura pública',
+
+    'confirm_admin' => 'Estàs segur/a d\'aquesta acció? El nou usari tindrà plens poders sobre la classe.',
 ];
