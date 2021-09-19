@@ -103,7 +103,7 @@ class ClassroomsController extends Controller
     public function removeMedia($code, $id)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('admin', $class);
+        $this->authorize('update', $class);
         $media = Media::where('id',  $id)->where('model_type', 'App\Classroom')->where('model_id', $class->id)->firstOrFail();
         $collection = $media->collection_name;
         $media->forceDelete();
@@ -112,7 +112,7 @@ class ClassroomsController extends Controller
     public function add2collection($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('admin', $class);
+        $this->authorize('update', $class);
 
         if (request()->file('image')) {
 

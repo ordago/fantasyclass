@@ -107,4 +107,9 @@ return [
     'map_copy_code' => 'Copy the code',
     'map_how_to' => 'How to add to Genially:',
 
+    'filter_all' => 'All',
+    'filter_ok' => 'Passed',
+    'filter_ko' => 'Not passed',
+    'filter_cats_all' => 'All categories',
+
 ];

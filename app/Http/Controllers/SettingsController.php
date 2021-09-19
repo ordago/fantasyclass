@@ -107,7 +107,7 @@ class SettingsController extends Controller
     public function reset($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
-        $this->authorize('admin', $class);
+        $this->authorize('teach', $class);
         $type = request()->type;
         switch ($type) {
             case 'hp':

@@ -106,4 +106,8 @@ return [
     'map_copy_code' => 'Copiar el codi',
     'map_how_to' => 'Com afegir el marcador a Genially:',
 
+    'filter_all' => 'Tots',
+    'filter_ok' => 'Superats',
+    'filter_ko' => 'No superats',
+    'filter_cats_all' => 'Totes les categories',
 ];

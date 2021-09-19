@@ -99,6 +99,7 @@ Vue.component('show-document-group', () => import('./components/documents/ShowDo
 
 Vue.component('show-challenges-group', () => import('./components/challenges/ShowChallengesGroup.vue'));
 Vue.component('show-challenges', () => import('./components/challenges/ShowChallenges.vue'));
+Vue.component('show-challenges-student', () => import('./components/challenges/ShowChallengesStudent.vue'));
 Vue.component('show-challenge', require('./components/challenges/ShowChallenge.vue').default);
 Vue.component('import-challenge', () => import('./components/challenges/ImportChallenges.vue'));
 Vue.component('create-challenges-group', () => import('./components/challenges/CreateChallengeGroup.vue'));

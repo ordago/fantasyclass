@@ -106,4 +106,9 @@ return [
     'map_copy_code' => 'Copiar el código',
     'map_how_to' => 'Como añadir el marcador a Genially:',
 
+    'filter_all' => 'Todos',
+    'filter_ok' => 'Superados',
+    'filter_ko' => 'No superados',
+    'filter_cats_all' => 'Todas las categorias',
+
 ];

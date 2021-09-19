@@ -387,10 +387,12 @@ class ClassroomsStudentController extends Controller
             return $story['datetime'];
         });
 
+        $cats = $class->challengeGroups;
+
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
 
-        return view('studentsview.challenges', compact('class', 'docs', 'videochats', 'student', 'challenges'));
+        return view('studentsview.challenges', compact('class', 'docs', 'videochats', 'student', 'challenges', 'cats'));
     }
 
     public function getChallenge($code, $permalink)
