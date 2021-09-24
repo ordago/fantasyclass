@@ -23,6 +23,6 @@
 
 @section('content')
 <div>
-  <show-levels code="{{ $class->code }}" :levels="{{ $levels }}"></show-levels>
+  <show-levels :hplvl="{{ $hpLevelUp }}" code="{{ $class->code }}" :levels="{{ $levels }}"></show-levels>
 </div>
 @endsection

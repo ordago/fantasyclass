@@ -1,9 +1,10 @@
 # Changelog
-## v1.77 Beta (19/09/2021)
+## v1.77.1 Beta (24/09/2021)
 ### Added
 - Filter challenges in student's view.
 - Disable challenges.
 - Option to make admin to teachers.
+- Recover HP when level up.
 
 ### Changed
 - Fixed teachers in class can't upload files.

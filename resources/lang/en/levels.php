@@ -25,5 +25,7 @@ return [
     'share' => 'Share levels',
     'name' => 'Pack name (send only when is finished!)',
     'placeholder' => 'For example, the subject name',
+    'reward' => 'Rewards when level up',
+    'reward_info_health' => 'Percent that recovers when level up',
 
 ];

@@ -442,6 +442,7 @@ export default {
           student = this.$parent.$parent.currentStudent;
         } else student = this.$parent.students.find((el) => el.id === id);
         if (prop == "xp") {
+          student.hp = response.data.hp;
           student.xp = response.data.xp;
           student.level = response.data.level;
         } else if (prop == "gold") {

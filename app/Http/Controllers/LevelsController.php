@@ -23,8 +23,8 @@ class LevelsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $levels = $class->levels;
-
-        return view('levels.index', compact('levels', 'class'));
+        $hpLevelUp = settings()->get('level_up_health', 0);
+        return view('levels.index', compact('levels', 'class', 'hpLevelUp'));
     }
 
     public function createNew($code)

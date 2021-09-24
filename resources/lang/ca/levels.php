@@ -25,5 +25,7 @@ return [
     'share' => 'Comparteix nivells',
     'name' => 'Nom del pack (envia solament quan estigui finalitzat!)',
     'placeholder' => 'Per exemple, el nom de la matèria',
+    'reward' => 'Millores al pujar de nivell',
+    'reward_info_health' => 'Percentatge que recuperen al pujar de nivell',
 
 ];

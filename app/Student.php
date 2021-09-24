@@ -535,7 +535,7 @@ class Student extends Model implements HasMedia
     {
         $boost = $this->getBoost();
         $isAlive = $this->hp == 0 ? false : true;
-
+        $oldLevel = $this->getLevelAttribute();
         $old = $value;
         if ($prop == "hp") {
             if ($value < 0 && $this->checkSkill('protection')) {
@@ -555,7 +555,7 @@ class Student extends Model implements HasMedia
                     if ($eq->offset != 0) {
                         $durability =  $eq->pivot->durability + $damage;
                         if ($durability <= 0) {
-                            $newEq = Equipment::where('character_id', $eq->character_id)
+                            $newEq = Equipment::whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($this->character_id)])
                                 ->where('type', $eq->type)
                                 ->where('offset', 0)
                                 ->first();
@@ -566,6 +566,7 @@ class Student extends Model implements HasMedia
                         }
                     }
                 }
+
                 if (!$byPassBoost)
                     $old = $value - $value * $boost["hp"] / 100;
                 $value = max($this->$prop + $old, 0);
@@ -616,9 +617,25 @@ class Student extends Model implements HasMedia
             ]);
         }
         if ($prop == "xp") {
+            $hp = $this->hp;
+            if($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
+                settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
+                if(settings()->get('level_up_health', 0)) {
+                    $hp = min($this->hp + settings()->get('level_up_health', 0), 100);
+                    $this->hp = $hp;
+                    $this->save();
+                    LogEntry::create([
+                        'type' => 'hp',
+                        'value' => $hp,
+                        'student_id' => $this->id,
+                        'message' => 'level_up',
+                    ]);
+                }
+            }
             return [
+                'hp' => $hp,
                 'xp' => $value,
-                'level' => $this->getLevelAttribute(),
+                'level' => $this->fresh()->getLevelAttribute(),
             ];
         }
         return $value;

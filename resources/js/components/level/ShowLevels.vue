@@ -10,6 +10,35 @@
     >
       <i class="fas fa-share-alt mr-2"></i> {{ trans.get("levels.share") }}
     </button>
+    <tippy
+      interactive
+      :animate-fill="false"
+      theme="light"
+      placement="bottom"
+      animation="fade"
+      trigger="click"
+      style="display: inline-block"
+      arrow
+    >
+      <template v-slot:trigger>
+        <button class="button is-primary is-outlined">
+          <i class="fas fa-heart mr-2"></i> {{ trans.get("levels.reward") }}
+        </button>
+      </template>
+      <span>
+        <div>{{ trans.get('levels.reward_info_health') }}</div>
+        <div class="is-flex is-center-vertically">
+          <input type="number" min="0" max="100" v-model="lvlHp" class="input mr-1" /> <span>%</span>
+          <button
+            @click="updateProp('hp', lvlHp)"
+            class="button is-primary is-inline ml-1"
+          >
+            {{ trans.get("users_groups.apply") }}
+          </button>
+        </div>
+      </span>
+    </tippy>
+
     <create-levels v-if="!levels.length"></create-levels>
     <div class="columns is-multiline is-variable mt-3" v-else>
       <show-level
@@ -76,16 +105,33 @@
 
 <script>
 export default {
-  props: ["levels", "code"],
-  created() {},
+  props: ["levels", "code", "hplvl"],
+  created() {
+    this.lvlHp = this.hplvl;
+  },
   data: function () {
     return {
       newXp: 0,
       levelsb: [],
       isModalActive: false,
+      lvlHp: 0,
     };
   },
   methods: {
+    updateProp(type) {
+      if(type == 'hp')
+        axios
+        .patch("/classroom/" + this.code + "/setting", {
+            _method: "patch",
+            prop: 'level_up_health',
+            value: this.lvlHp,
+            action: "update"
+        }).then(response => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+        })
+    },
     promptName() {
       this.$buefy.dialog.prompt({
         message: this.trans.get("levels.name"),
@@ -116,17 +162,18 @@ export default {
     },
     importPack(id) {
       this.$buefy.dialog.confirm({
-        title: this.trans.get('general.import'),
-        message: this.trans.get('levels.import_alert'),
-        confirmText: this.trans.get('general.import'),
+        title: this.trans.get("general.import"),
+        message: this.trans.get("levels.import_alert"),
+        confirmText: this.trans.get("general.import"),
         type: "is-warning",
         hasIcon: true,
         onConfirm: () => {
-          axios.post('/levels/import', {code: this.code, id: id})
-          .then(response => {
-            location.reload();
-          })
-        }
+          axios
+            .post("/levels/import", { code: this.code, id: id })
+            .then((response) => {
+              location.reload();
+            });
+        },
       });
     },
     addLevel() {
