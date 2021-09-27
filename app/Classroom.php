@@ -26,7 +26,7 @@ class Classroom extends Model implements HasMedia
      */
     protected $fillable = [
         'name', 'adventure_name', 'goal_type', 'theme_id', 'code',
-        'enrollment_code', 'user_id', 'character_theme'
+        'enrollment_code', 'user_id', 'character_theme', 'share_code'
     ];
 
     protected $appends = ['state', 'background'];

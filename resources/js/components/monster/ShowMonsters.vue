@@ -4,6 +4,7 @@
       <i class="fas fa-dragon mr-2"></i>
       {{ trans.get("monsters.new") }}
     </button>
+    <import-from-class :code="code" import-type="monsters"></import-from-class>
 
     <div
       v-for="monster in monsters"
@@ -195,7 +196,8 @@
       </form>
     </b-modal>
 
-    <SelectPet :code="code" v-model="monster.image" v-if="isImageModalActive"> </SelectPet>
+    <SelectPet :code="code" v-model="monster.image" v-if="isImageModalActive">
+    </SelectPet>
   </div>
 </template>
 
@@ -203,6 +205,7 @@
 import Utils from "../../utils.js";
 
 import SelectPet from "../utils/SelectPet.vue";
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
 
 export default {
   props: ["code", "monsters"],
@@ -225,6 +228,7 @@ export default {
   },
   components: {
     SelectPet,
+    ImportFromClass,
   },
   methods: {
     resetMonster: function () {

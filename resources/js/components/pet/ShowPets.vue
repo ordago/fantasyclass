@@ -7,6 +7,7 @@
     <button class="button is-dark is-outlined" @click="getPets()">
       <i class="fas fa-dog mr-2"></i> {{ trans.get("pets.bank") }}
     </button>
+    <import-from-class :code="code" import-type="pets"></import-from-class>
 
     <div
       v-for="pet in pets"
@@ -325,12 +326,15 @@
 import Utils from "../../utils.js";
 
 import SelectPet from "../utils/SelectPet.vue";
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
 
 export default {
   props: ["code", "pets"],
 
   components: {
     SelectPet,
+    ImportFromClass,
   },
   created() {},
   data: function () {
@@ -374,9 +378,11 @@ export default {
       });
     },
     importPet: function (id) {
-      axios.post("/pets/import", { id: id, code: this.code }).then((response) => {
-        location.reload();
-      });
+      axios
+        .post("/pets/import", { id: id, code: this.code })
+        .then((response) => {
+          location.reload();
+        });
     },
     sharePet: function (pet) {
       axios.post("/pets/share", { id: pet.id }).then((response) => {

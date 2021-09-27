@@ -11,6 +11,8 @@
     >
       {{ trans.get("skills.import_default") }}
     </button>
+    <import-from-class :code="code" import-type="skills"></import-from-class>
+
     <!-- <button class="button is-dark mb-5" @click="isPrefsModalActive = true">
       <i class="fas fa-cog mr-2"></i> {{ trans.get("menu.config") }}
     </button> -->
@@ -163,7 +165,7 @@
                 {{ trans.get("skills.image") + " *" }}
               </button>
               <img
-              @contextmenu.prevent=""
+                @contextmenu.prevent=""
                 width="60px"
                 :src="skill.icon"
                 v-if="skill.icon"
@@ -318,6 +320,7 @@
 import Utils from "../../utils.js";
 
 import SelectSkill from "../utils/SelectSkill.vue";
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
 
 export default {
   props: ["code", "skills", "settings"],
@@ -364,6 +367,7 @@ export default {
   },
   components: {
     SelectSkill,
+    ImportFromClass,
   },
   methods: {
     editSkill(skill) {

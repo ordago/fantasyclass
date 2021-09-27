@@ -77,7 +77,28 @@
             ></b-input>
           </p>
           <p class="control">
-            <button class="button is-info" @click="regenerate">
+            <button class="button is-info" @click="regenerate('enrollment_code')">
+              <i class="fas fa-sync-alt"></i>
+              {{ trans.get("settings.generate") }}
+            </button>
+          </p>
+        </div>
+      </b-field>
+      <b-field
+        :label="trans.get('settings.share_code')"
+        style="width: 400px"
+      >
+        <div class="field has-addons my-3 pl-4">
+          <p class="control">
+            <b-input
+              type="password"
+              :value="classroom.share_code"
+              password-reveal
+              readonly
+            ></b-input>
+          </p>
+          <p class="control">
+            <button class="button is-info" @click="regenerate('share_code')">
               <i class="fas fa-sync-alt"></i>
               {{ trans.get("settings.generate") }}
             </button>
@@ -886,13 +907,16 @@ export default {
         this.$forceUpdate();
       });
     },
-    regenerate() {
-      axios
-        .get("/classroom/" + this.classroom.code + "/regenerate")
-        .then((response) => {
-          this.classroom.enrollment_code = response.data;
-          this.$forceUpdate();
-        });
+    regenerate(codeType) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/regenerate", {type: codeType})
+          .then((response) => {
+            if(codeType == "enrollment_code")
+              this.classroom.enrollment_code = response.data;
+            else
+              this.classroom.share_code = response.data;
+            this.$forceUpdate();
+          });
     },
     confirmDelete() {
       this.$buefy.dialog.confirm({

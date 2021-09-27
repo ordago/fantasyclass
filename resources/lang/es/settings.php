@@ -68,5 +68,11 @@ return [
     'add_public_adventure' => 'Añadir aventura pública',
 
     'confirm_admin' => '¿Estás seguro/a de esta acción? El nuevo usario tendrá plenos poderes sobre la clase.',
+    'share_code' => 'Código de compartición para importar a otras clases',
+    'import_from_class' => 'Importa de otra clase',
+    'import_code' => 'Pon el código de compartición de la clase',
+
+    'import_alert' => 'Los elementos de esta clase serán reemplazados, <strong>esta acción no se puede deshacer</strong>, ¿estás seguro/a?',
+
 
 ];

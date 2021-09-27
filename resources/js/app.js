@@ -161,6 +161,8 @@ Vue.component('input-emoji', () => import('./components/utils/InputEmoji.vue').d
 
 Vue.component('import-excel', () => import('./components/utils/ImportExcel.vue').default);
 
+Vue.component('import-from-class', () => import('./components/utils/ImportFromClass.vue').default);
+
 Vue.component('wheel', require('./components/utils/Wheel.vue').default);
 
 Vue.component('volume-meter', () => import('./components/utils/VolumeMeter.vue'));

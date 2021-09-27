@@ -28,6 +28,8 @@
           >{{ trans.get("shop.new_item") }}</a
         >
 
+        <import-from-class :code="code" import-type="items"></import-from-class>
+
         <div
           class="columns is-multiline is-variable is-1 has-all-centered mt-3"
           style="box-sizing: border-box"
@@ -102,7 +104,12 @@
                       :key="img.id"
                     />
                   </div>
-                  <div v-tippy :content="trans.get('shop.undead')" class="my-2" v-if="item.undead">
+                  <div
+                    v-tippy
+                    :content="trans.get('shop.undead')"
+                    class="my-2"
+                    v-if="item.undead"
+                  >
                     <i class="fas fa-skull"></i>
                   </div>
                   <div>
@@ -306,9 +313,15 @@
 </template>
 
 <script>
+
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
 export default {
   props: ["items", "config", "code", "character", "shop"],
   mounted() {},
+  components: {
+    ImportFromClass,
+  },
   data: function () {
     return {
       activeTab: 0,

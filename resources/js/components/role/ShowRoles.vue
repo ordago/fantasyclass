@@ -16,6 +16,7 @@
         >
           {{ trans.get("roles.import_default") }}
         </button>
+        <import-from-class :code="code" import-type="roles"></import-from-class>
       </div>
       <div class="columns is-multiline is-variable mt-3">
         <show-role
@@ -243,6 +244,8 @@
 </template>
 
 <script>
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
 export default {
   props: ["roles", "code"],
   created() {},
@@ -363,21 +366,21 @@ export default {
     },
     showAssign() {
       axios.get(`/classroom/${this.code}/roles/info`).then((response) => {
-          this.typeMode = response.data.type == "classroom" ? false : true;
-          this.students = response.data.students;
-          this.groups = response.data.groups;
-          if (Object.keys(response.data.roles).length) {
-            this.rolesAssign = response.data.roles;
-          } else {
-            this.rolesAssign = {};
-            if (this.typeMode) {
-              this.groups.forEach((element) => {
-                this.rolesAssign[element.id] = {};
-              });
-            }
+        this.typeMode = response.data.type == "classroom" ? false : true;
+        this.students = response.data.students;
+        this.groups = response.data.groups;
+        if (Object.keys(response.data.roles).length) {
+          this.rolesAssign = response.data.roles;
+        } else {
+          this.rolesAssign = {};
+          if (this.typeMode) {
+            this.groups.forEach((element) => {
+              this.rolesAssign[element.id] = {};
+            });
           }
+        }
 
-          this.isAssignModalActive = true;
+        this.isAssignModalActive = true;
       });
     },
     addRole() {
@@ -386,6 +389,9 @@ export default {
         this.$forceUpdate();
       });
     },
+  },
+  components: {
+    ImportFromClass,
   },
 };
 </script>

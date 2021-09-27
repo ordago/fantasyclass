@@ -1,4 +1,8 @@
 # Changelog
+## v1.78 Beta (27/09/2021)
+### Added
+- Import most rewards from other classroom by code.
+
 ## v1.77.1 Beta (24/09/2021)
 ### Added
 - Filter challenges in student's view.

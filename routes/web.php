@@ -42,7 +42,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/join/{code}', 'ClassroomsController@join');
         Route::get('{code}', 'ClassroomsController@show');
         Route::get('{code}/clone', 'ClassroomsController@clone');
-        Route::get('/{code}/regenerate', 'ClassroomsController@regenerate');
+        Route::post('/{code}/regenerate', 'ClassroomsController@regenerate');
         Route::delete('{code}', 'ClassroomsController@destroy');
         Route::post('/{code}/reward', 'ClassroomsController@reward');
         Route::post('/{code}/add2collection', 'ClassroomsController@add2collection');
@@ -250,6 +250,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/settings/reset', 'SettingsController@reset');
         Route::post('/{code}/settings/themes', 'SettingsController@themes');
         Route::get('/{code}/toggleClassNotifications', 'SettingsController@toggleClassNotifications');
+        Route::post('/{code}/settings/import', 'SettingsController@import');
 
         // Events
         Route::get('/{code}/events', 'EventController@index');

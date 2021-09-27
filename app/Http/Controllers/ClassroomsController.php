@@ -30,13 +30,13 @@ class ClassroomsController extends Controller
         $this->middleware('verified');
     }
 
-    public function reference($num)
+    public function reference($num, $type)
     {
 
         $unique = strtolower(Str::random($num));
-        $check = Classroom::where('code', $unique)->first();
+        $check = Classroom::where($type, $unique)->first();
         if ($check) {
-            return $this->reference($num);
+            return $this->reference($num, $type);
         }
         return $unique;
     }
@@ -45,9 +45,15 @@ class ClassroomsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        $code = $this->reference(5);
+        $data = request()->validate([
+            'type' => ['string'],
+        ]);
+        if($data['type'] == 'enrollment_code')
+            $code = $this->reference(5, 'enrollment_code');
+        else
+            $code = $this->reference(8, 'share_code');
         $class->update([
-            'enrollment_code' => $code,
+            $data['type'] => $code,
         ]);
 
         return $code;
@@ -127,8 +133,10 @@ class ClassroomsController extends Controller
         $this->authorize('admin', $class);
 
         $new = $class->replicate();
-        $new->code = $this->reference(8);
-        $new->enrollment_code = $this->reference(5);
+        $new->code = $this->reference(8, 'code');
+        dump($new->code);
+        $new->enrollment_code = $this->reference(5, 'enrollment_code');
+        $new->share_code = $this->reference(8, 'share_code');
         $new->name = $new->name . " (copy)";
 
         $new->push();
@@ -292,6 +300,7 @@ class ClassroomsController extends Controller
         foreach ($class->pets as $pet) {
             $newPet = $pet->replicate();
             $newPet->classroom_id = $new->id;
+            $newPet->shared = 0;
             $newPet->push();
         }
         
@@ -345,8 +354,8 @@ class ClassroomsController extends Controller
         $classroom = Classroom::create([
             'name' => $data['name'],
             'adventure_name' => $data['adventureName'],
-            'code' => $this->reference(8),
-            'enrollment_code' => $this->reference(5),
+            'code' => $this->reference(8, 'code'),
+            'enrollment_code' => $this->reference(5, 'enrollment_code'),
             'character_theme' => $data['charTheme'],
             'theme_id' => isset($data['bgtheme']) ? $data['bgtheme'] : null,
             'goal_type' => $data['goalType'],

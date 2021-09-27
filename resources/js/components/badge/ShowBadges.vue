@@ -7,6 +7,8 @@
           class="button is-link"
           >{{ trans.get("badges.add") }}</a
         >
+            <import-from-class :code="code" import-type="badges"></import-from-class>
+
       </div>
     </div>
 
@@ -97,6 +99,8 @@
 <script>
 
 import ShowBadge from "./ShowBadge.vue";
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
 
 export default {
   props: ["badges", "code", "background"],
@@ -120,6 +124,7 @@ export default {
   },
   components: {
     ShowBadge,
+    ImportFromClass,
   },
   methods: {
     changeDefault(index) {

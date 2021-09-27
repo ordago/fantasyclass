@@ -13,6 +13,10 @@
           class="button is-info"
           >{{ trans.get("behaviours.import_default") }}</a
         >
+        <import-from-class
+          :code="code"
+          import-type="behaviours"
+        ></import-from-class>
       </div>
 
       <div class="column is-hidden-mobile"></div>
@@ -122,6 +126,8 @@
 </template>
 
 <script>
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
 import JsonExcel from "vue-json-excel";
 Vue.component("download-excel", JsonExcel);
 
@@ -129,6 +135,9 @@ export default {
   props: ["behaviours", "code"],
   created() {
     this.data = JSON.parse(this.behaviours);
+  },
+  components: {
+    ImportFromClass,
   },
   data: function () {
     return {

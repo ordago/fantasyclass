@@ -68,5 +68,11 @@ return [
     'add_public_adventure' => 'Add public adventure',
 
     'confirm_admin' => 'Are you sure of this action? The new user will have full rights in this class.',
+    'share_code' => 'Share code to import to other classrooms',
+    'import_from_class' => 'Import from other classroom',
+    'import_code' => 'Put the share code from the other class',
+
+    'import_alert' => 'Current classroom elements will be replaced, <strong>this actions can\'t be undone</strong>, are you sure?',
+
 
 ];

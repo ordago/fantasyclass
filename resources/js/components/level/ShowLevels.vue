@@ -26,9 +26,16 @@
         </button>
       </template>
       <span>
-        <div>{{ trans.get('levels.reward_info_health') }}</div>
+        <div>{{ trans.get("levels.reward_info_health") }}</div>
         <div class="is-flex is-center-vertically">
-          <input type="number" min="0" max="100" v-model="lvlHp" class="input mr-1" /> <span>%</span>
+          <input
+            type="number"
+            min="0"
+            max="100"
+            v-model="lvlHp"
+            class="input mr-1"
+          />
+          <span>%</span>
           <button
             @click="updateProp('hp', lvlHp)"
             class="button is-primary is-inline ml-1"
@@ -38,7 +45,7 @@
         </div>
       </span>
     </tippy>
-
+    <import-from-class :code="code" import-type="levels"></import-from-class>
     <create-levels v-if="!levels.length"></create-levels>
     <div class="columns is-multiline is-variable mt-3" v-else>
       <show-level
@@ -104,6 +111,10 @@
 </template>
 
 <script>
+
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
+
+
 export default {
   props: ["levels", "code", "hplvl"],
   created() {
@@ -117,20 +128,24 @@ export default {
       lvlHp: 0,
     };
   },
+  components: {
+    ImportFromClass,
+  },
   methods: {
     updateProp(type) {
-      if(type == 'hp')
+      if (type == "hp")
         axios
-        .patch("/classroom/" + this.code + "/setting", {
+          .patch("/classroom/" + this.code + "/setting", {
             _method: "patch",
-            prop: 'level_up_health',
+            prop: "level_up_health",
             value: this.lvlHp,
-            action: "update"
-        }).then(response => {
-          this.$toast(this.trans.get("success_error.update_success"), {
-                type: "success",
-              });
-        })
+            action: "update",
+          })
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+          });
     },
     promptName() {
       this.$buefy.dialog.prompt({

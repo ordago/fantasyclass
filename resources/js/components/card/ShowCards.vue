@@ -22,6 +22,8 @@
         <button class="button is-dark noprint" @click="print">
           <i class="fas fa-print"></i>
         </button>
+          <import-from-class :code="code" import-type="cards"></import-from-class>
+
       </div>
     </div>
     <div class="p-2 is-flex flex-wrap justify-content-center">
@@ -74,7 +76,7 @@
 </template>
 
 <script>
-import Utils from "../../utils.js";
+const ImportFromClass = () => import("../utils/ImportFromClass.vue");
 
 export default {
   props: ["cards", "code", "student"],
@@ -113,6 +115,9 @@ export default {
     orderedCards: function () {
       return _.orderBy(this.cardsJson, this.sortKey, "asc");
     },
+  },
+  components: {
+    ImportFromClass,
   },
 };
 </script>
