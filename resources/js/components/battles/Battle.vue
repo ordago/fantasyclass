@@ -648,7 +648,7 @@
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
-              <div v-if="type == 1 && !group1">
+              <div v-if="type == 1 && !started && groups.length">
                 <button @click="selectGroup(1)" class="button is-primary my-2">
                   {{ trans.get("battles.select_group") }}
                   <i class="fas fa-random ml-1"></i>
@@ -813,7 +813,7 @@
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
-              <div v-if="type == 1 && !group2">
+              <div v-if="type == 1 && !started && groups.length">
                 <button @click="selectGroup(2)" class="button is-primary my-2">
                   {{ trans.get("battles.select_group") }}
                   <i class="fas fa-random ml-1"></i>
