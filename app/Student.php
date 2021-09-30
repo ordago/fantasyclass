@@ -147,15 +147,13 @@ class Student extends Model implements HasMedia
     public function getUserId()
     {
         if ($this->classroom)
-            if($this->classroom->user)
-                return $this->classroom->user->id;
+            return $this->classroom->user->id;
     }
 
     public function getUsernameAttribute()
     {
         if ($this->classroom)
-            if($this->classroom->user)
-                return $this->classroom->user->username;
+            return $this->classroom->user->username;
     }
 
     public function pet()
@@ -215,7 +213,7 @@ class Student extends Model implements HasMedia
 
     public function grades()
     {
-        return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback','from_student_id');
+        return $this->belongsToMany(Evaluable::class)->withPivot('grade', 'feedback', 'from_student_id');
     }
 
     public function rows()
@@ -235,7 +233,7 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Collectionable::class)->withPivot('count');
     }
-   
+
     public function role()
     {
         return $this->belongsToMany(Role::class);
@@ -451,11 +449,11 @@ class Student extends Model implements HasMedia
         }
         if ($challenge->collectionables > 0 && $mult == 1) {
             $class = Classroom::find($challenge->classroom());
-            for($i = 0; $i < $challenge->collectionables; $i++) {
+            for ($i = 0; $i < $challenge->collectionables; $i++) {
                 $collectionable = CollectionableController::getRandomCollectionable($challenge->collection_id, $class->id, $challenge->type_collectionable ? $challenge->type_collectionable : null);
-                if($collectionable) {
+                if ($collectionable) {
                     $studentCollectionable = $this->fresh()->collectionables->where('id', $collectionable->id)->first();
-    
+
                     if ($studentCollectionable)
                         $count = $studentCollectionable->pivot->count + 1;
                     else $count = 1;
@@ -463,27 +461,24 @@ class Student extends Model implements HasMedia
                     $from['title'] = __('notifications.new_collectionable');
                     $from['name'] = $class->name;
                     $from['datetime'] = Carbon::now();
-                    
+
                     $icon = "";
                     switch ($collectionable->type) {
                         case 1:
-                            $icon = "<i class='fas fa-mountains'></i>";        
+                            $icon = "<i class='fas fa-mountains'></i>";
                             break;
                         case 2:
-                            $icon = "<i class='fas fa-tornado'></i>";        
+                            $icon = "<i class='fas fa-tornado'></i>";
                             break;
                         case 3:
-                            $icon = "<i class='fas fa-tint'></i>";        
+                            $icon = "<i class='fas fa-tint'></i>";
                             break;
                         case 4:
-                            $icon = "<i class='fas fa-fire'></i>";        
+                            $icon = "<i class='fas fa-fire'></i>";
                             break;
-                        
-                    
                     }
 
                     Notification::send($this->classroom->user, new NewInteractionStudent(__('notifications.new_collectionable'), $collectionable->name . " (" . $icon . ")", $from, "new_collectionable", $this->classroom->classroom->code));
-
                 }
             }
         }
@@ -620,9 +615,9 @@ class Student extends Model implements HasMedia
         }
         if ($prop == "xp") {
             $hp = $this->hp;
-            if($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
+            if ($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
                 settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
-                if(settings()->get('level_up_health', 0)) {
+                if (settings()->get('level_up_health', 0)) {
                     $hp = min($this->hp + settings()->get('level_up_health', 0), 100);
                     $this->hp = $hp;
                     $this->save();
@@ -756,7 +751,7 @@ class Student extends Model implements HasMedia
             case '40':
             case '41':
             case '42':
-                $ids = [607+$this->character_id, 658, 659, rand(660, 676), 680, 690, 700];
+                $ids = [607 + $this->character_id, 658, 659, rand(660, 676), 680, 690, 700];
                 break;
             case '43':
             case '45':
@@ -764,11 +759,11 @@ class Student extends Model implements HasMedia
             case '47':
             case '49':
             case '50':
-                $ids = [667+$this->character_id, 718, rand(720, 725), rand(740, 745), 760, 770, 780];
+                $ids = [667 + $this->character_id, 718, rand(720, 725), rand(740, 745), 760, 770, 780];
                 break;
             case '44':
             case '48':
-                $ids = [667+$this->character_id, 718, rand(726, 731), rand(746, 751), 760, 770, 780];
+                $ids = [667 + $this->character_id, 718, rand(726, 731), rand(746, 751), 760, 770, 780];
                 break;
         }
 
