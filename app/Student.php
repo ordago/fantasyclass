@@ -153,7 +153,8 @@ class Student extends Model implements HasMedia
     public function getUsernameAttribute()
     {
         if ($this->classroom)
-            return $this->classroom->user->username;
+            if($this->classroom->user)
+                return $this->classroom->user->username;
     }
 
     public function pet()
