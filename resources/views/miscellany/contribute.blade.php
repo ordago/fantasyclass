@@ -165,6 +165,9 @@
               <h3>Colaboradores</h3>
               <div class="columns fs-2 is-multiline">
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
+                  <a target="_blank" href="https://instagram.com/laulualalu">@laulualalu</a> <i class="fas mx-2 fa-heart"></i>
+                </span>
+                <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">
                   <a target="_blank" href="https://twitter.com/xavier_climent">Xavier Climent</a> <i class="fas mx-2 fa-hand-rock"></i>
                 </span>
                 <span class="p-2 m-2 is-flex has-all-centered column rounded has-background-info-light">

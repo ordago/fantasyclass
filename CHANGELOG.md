@@ -1,4 +1,12 @@
 # Changelog
+## v1.79 Beta (03/10/2021)
+### Added
+
+### Changed
+- New logo!
+- Flip card improved.
+
+
 ## v1.78.1 Beta (29/09/2021)
 ### Added
 - Import most rewards from other classroom by code.

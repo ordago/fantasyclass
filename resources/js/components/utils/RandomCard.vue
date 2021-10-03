@@ -9,8 +9,24 @@
       <header class="modal-card-head">
         <p class="modal-card-title">Random card</p>
       </header>
-      <section class="modal-card-body is-relative" id="confetti-bg">
-        <img
+      <section class="modal-card-body is-relative is-flex has-all-centered" id="confetti-bg">
+        <vue-flip width="268px" height="406px" v-model="showCard" :horizontal="true">
+          <template v-slot:front>
+            <img
+              id="deck"
+              src="/img/deck.png"
+              @click="revealCard"
+            />
+          </template>
+          <template v-slot:back>
+            <show-card
+              :card="card"
+              :admin="false"
+              :code="code"
+            ></show-card>
+          </template>
+        </vue-flip>
+        <!-- <img
           id="deck"
           src="/img/deck.png"
           class="deck"
@@ -23,7 +39,7 @@
           :admin="false"
           v-if="showCard"
           :code="code"
-        ></show-card>
+        ></show-card> -->
       </section>
       <footer
         class="modal-card-foot columns is-multiline"
@@ -113,6 +129,7 @@
 <script>
 // import Utils from "../../utils.js";
 import confetti from "canvas-confetti";
+import VueFlip from "vue-flip";
 
 export default {
   props: ["code", "admin", "code", "card"],
@@ -122,13 +139,16 @@ export default {
       showCard: false,
       studentSelected: 0,
       groupSelected: 0,
+      flipped: false,
     };
+  },
+  components: {
+    "vue-flip": VueFlip,
   },
   methods: {
     revealCard() {
       var audio = new Audio("/sound/victory.mp3");
       audio.play();
-      setTimeout(() => {
         var end = Date.now() + 15 * 125;
 
         var colors = ["#bb0000", "#00bb00", "#0000bb", "#bbbb00"];
@@ -154,7 +174,6 @@ export default {
           }
         })();
         this.showCard = true;
-      }, 300);
     },
     assignCard(to) {
       let card = this.card.id;

@@ -84,7 +84,7 @@
                   margin_left +
                   'px;'
                 "
-                class="image back"
+                class="imageback"
               />
             </div>
             <div class="xp_modify modifiers" v-if="xp != 0">

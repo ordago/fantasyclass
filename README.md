@@ -16,6 +16,7 @@ Coders
 - Xavi Franch (profile).
 
 Help and sponsors
+- [@laulualalu (logo).](https://instagram.com/laulualalu) 
 - [Xavier Climent.](https://twitter.com/xavier_climent) 
 - [Jesús Manzaneque.](https://twitter.com/manzanequejesus) 
 - Guillermo Guerrero. 
