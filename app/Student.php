@@ -615,6 +615,7 @@ class Student extends Model implements HasMedia
         }
         if ($prop == "xp") {
             $hp = $this->hp;
+            if($this->fresh()->getLevelAttribute())
             if ($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
                 settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
                 if (settings()->get('level_up_health', 0)) {
