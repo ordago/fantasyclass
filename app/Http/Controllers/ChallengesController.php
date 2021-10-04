@@ -122,6 +122,7 @@ class ChallengesController extends Controller
             'description' => ['string', 'nullable'],
             'completion' => ['numeric'],
             'content' => ['string', 'nullable'],
+            'feedback' => ['string', 'nullable'],
             'is_conquer' => ['boolean'],
             'xp' => ['numeric'],
             'hp' => ['numeric'],

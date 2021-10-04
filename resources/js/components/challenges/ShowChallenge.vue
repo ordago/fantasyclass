@@ -885,7 +885,8 @@ export default {
   },
   methods: {
     getMessageDisable() {
-      if (this.challengeReactive.disabled) return this.trans.get("general.enable");
+      if (this.challengeReactive.disabled)
+        return this.trans.get("general.enable");
       return this.trans.get("general.disable");
     },
     toggleDisabled() {
@@ -1157,6 +1158,15 @@ export default {
               this.$parent.$parent.$parent.mutableChallenges =
                 response.data.challenges;
               if (response.data.success == true) {
+                if (response.data.feedback) {
+                  this.$buefy.dialog.alert({
+                    title: "Feedback! 👏👏",
+                    message: Utils.replaceSpecial(response.data.feedback),
+                    type: "is-success",
+                    ariaRole: "alertdialog",
+                    ariaModal: true,
+                  });
+                }
                 confetti({
                   particleCount: 200,
                   spread: 100,
@@ -1206,7 +1216,8 @@ export default {
           return "has-background-story";
         }
       } else if (this.edit) {
-        if (this.isHidden || this.challengeReactive.disabled) return "has-background-light";
+        if (this.isHidden || this.challengeReactive.disabled)
+          return "has-background-light";
         return "";
       } else {
         switch (this.challengeReactive.completion) {

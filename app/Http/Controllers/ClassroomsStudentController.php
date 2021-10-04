@@ -1022,6 +1022,10 @@ class ClassroomsStudentController extends Controller
         $challenge = Challenge::findOrFail($data['challenge']);
         $challengeStudent = $student->challenges->where('id', $challenge->id)->first();
         $update = false;
+        $feedback = null;
+        if ($challenge->completion == 1 || $challenge->completion == 3) {
+            $feedback = $challenge->feedback;
+        }
         if ($challenge->completion == 1) {
             if (!$challengeStudent) {
                 $student->challenges()->attach($challenge->id);
@@ -1055,6 +1059,7 @@ class ClassroomsStudentController extends Controller
             'xp' => $student->xp,
             'gold' => $student->gold,
             'challenges' => $this::getChallenges($student->fresh(), $class),
+            'feedback' => $feedback,
             'items' => $student->fresh()->items,
         ];
     }

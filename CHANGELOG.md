@@ -1,6 +1,7 @@
 # Changelog
-## v1.79 Beta (03/10/2021)
+## v1.80 Beta (04/10/2021)
 ### Added
+- Feedback in challenges (password and student)
 
 ### Changed
 - New logo!

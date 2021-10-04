@@ -399,19 +399,23 @@
           </div>
           <div v-if="challenge.collectionables > 0" class="px-3 py-2">
             <label class="label">{{
-            trans.get("challenges.collection")
+              trans.get("challenges.collection")
             }}</label>
             <div class="control">
               <div class="select is-fullwidth">
                 <select v-model="challenge.collection_id">
-                  <option :value="collection.id" v-for="collection in collections" :key="'collection-' + collection.id">
+                  <option
+                    :value="collection.id"
+                    v-for="collection in collections"
+                    :key="'collection-' + collection.id"
+                  >
                     {{ collection.name }}
-                  </option>  
+                  </option>
                 </select>
               </div>
             </div>
             <label class="label mt-2">{{
-            trans.get("challenges.collection_type")
+              trans.get("challenges.collection_type")
             }}</label>
             <div class="control">
               <div class="select is-fullwidth">
@@ -462,6 +466,14 @@
                 </select>
               </div>
             </div>
+          </div>
+          <div
+            class="control content"
+            data-app
+            v-if="challenge.completion == 1 || challenge.completion == 3"
+          >
+          <label class="label" for="name">Feedback</label>
+            <Editor v-if="editor" v-model="feedback" height="20vh" :code="code"></Editor>
           </div>
           <article v-if="challenge.completion == 4" class="message is-warning">
             <div class="message-body">
@@ -582,6 +594,7 @@ export default {
       this.content = this.edit.content;
       this.icon = this.challenge.icon;
       this.datepicker = new Date(this.edit.datetime);
+      this.feedback = this.edit.feedback;
     } else {
       this.icon = this.iconPrev.icon;
       this.challenge.color = this.iconPrev.color;
@@ -601,6 +614,7 @@ export default {
       isModalActive: false,
       students: null,
       content: ``,
+      feedback: ``,
       collections: [],
       challenge: {
         icon: null,
@@ -650,8 +664,8 @@ export default {
           });
 
           this.collections = response.data.collections;
-          if(this.collections.length)
-            this.challenge.collection_id = this.collections[0].id
+          if (this.collections.length)
+            this.challenge.collection_id = this.collections[0].id;
         });
     },
     disableAll() {
@@ -684,6 +698,7 @@ export default {
     createChallenge() {
       this.challenge.content = this.content;
       this.challenge.icon = this.icon;
+      this.challenge.feedback = this.feedback;
       if (!this.challenge.challenges_group_id)
         this.challenge.challenges_group_id = this.challengegroup;
       let date = this.datepicker;
