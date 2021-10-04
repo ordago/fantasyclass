@@ -27,7 +27,7 @@
       :challenge="challenge"
       :edit="false"
       :admin="false"
-      code="code"
+      :code="code"
     ></show-challenge>
   </div>
 </template>
