@@ -112,4 +112,6 @@ return [
     'filter_ko' => 'Not passed',
     'filter_cats_all' => 'All categories',
 
+    'completed' => 'Completed',
+
 ];

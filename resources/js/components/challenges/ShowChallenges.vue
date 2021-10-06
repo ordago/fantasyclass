@@ -88,15 +88,34 @@
         <h1 class="is-size-1 mb-3">
           {{ currentChallenge.title }}
         </h1>
-        <div v-if="currentChallenge.type == 0">
+        <div v-if="currentChallenge.type == 0 && isModalActive">
           <button class="button is-info" @click="selectAll()">
-            {{ trans.get('utils.select_all') }}
+            {{ trans.get("utils.select_all") }}
           </button>
-          <div v-for="student in students" class="p-3" :key="student.id">
-            <div class="columns">
-              <div class="column is-narrow is-flex has-all-centered">
-                <div class="field">
-                  <b-switch
+          <button class="button is-success" @click="sendStudentsChallenge">
+            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
+          </button>
+          <div class="columns is-1 is-multiline p-3 mt-2">
+            <div
+              v-for="student in students"
+              class="column is-half"
+              :key="student.id"
+            >
+              <div class="p-3 border rounded">
+                <div class="columns">
+                  <div class="column is-narrow is-flex has-all-centered is-hidden-tablet">
+                    <img
+                      :src="student.avatar"
+                      width="32px"
+                      alt="student image"
+                    />
+                    <span class="ml-1"
+                      ><strong>{{ student.name }}</strong></span
+                    >
+                  </div>
+                  <div class="column is-narrow is-flex has-all-centered">
+                    <div class="field mb-0">
+                      <!-- <b-switch
                     v-if="student.challenges"
                     :value="student.challenges.length ? 1 : 0"
                     true-value="1"
@@ -105,7 +124,49 @@
                     type="is-info"
                     :disabled="checkDisabled(student)"
                     >{{ student.name }}</b-switch
-                  >
+                  > -->
+
+                      <b-field>
+                        <b-radio-button
+                          v-model="student.challenges[0].pivot.count"
+                          :native-value="0"
+                          :disabled="checkDisabled(student)"
+                          type="is-danger is-light"
+                        >
+                          <b-icon icon="times" icon-pack="fas"></b-icon>
+                        </b-radio-button>
+
+                        <b-radio-button
+                          :disabled="checkDisabled(student)"
+                          v-model="student.challenges[0].pivot.count"
+                          :native-value="null"
+                          type="is-dark is-light"
+                        >
+                          <span>-</span>
+                        </b-radio-button>
+
+                        <b-radio-button
+                          :disabled="checkDisabled(student)"
+                          v-model="student.challenges[0].pivot.count"
+                          :native-value="1"
+                          type="is-success is-light"
+                        >
+                          <b-icon icon="check" icon-pack="fas"></b-icon>
+                          {{ trans.get('challenges.completed') }}
+                        </b-radio-button>
+                      </b-field>
+                    </div>
+                  </div>
+                  <div class="column is-narrow is-flex has-all-centered is-hidden-mobile">
+                    <img
+                      :src="student.avatar"
+                      width="32px"
+                      alt="student image"
+                    />
+                    <span class="ml-1"
+                      ><strong>{{ student.name }}</strong></span
+                    >
+                  </div>
                 </div>
               </div>
             </div>
@@ -162,6 +223,9 @@ export default {
     };
   },
   methods: {
+    getCheck(student) {
+      return student.challenges.length ? 1 : 0;
+    },
     deleteChallengeGroup(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -221,7 +285,7 @@ export default {
       if (
         this.currentChallenge.requirements &&
         this.currentChallenge.requirements.length &&
-        !student.challenges.length
+        !student.challenges[0].pivot.count
       ) {
         this.currentChallenge.requirements.forEach((element) => {
           let found = student.items.find((object) => object.id == element.id);
@@ -234,9 +298,21 @@ export default {
     },
     selectAll() {
       this.students.forEach((student) => {
-        this.toggleChallenge(student.id, true);
+        // this.toggleChallenge(student.id, true);
+        student.challenges[0].pivot.count = 1;
+        student.challenges[0].pivot.evaluated = 1;
       });
       this.$forceUpdate();
+    },
+    sendStudentsChallenge() {
+      axios
+        .post("/classroom/" + this.code + "/challenges/update", {
+          challenge: this.currentChallenge.id,
+          students: this.students,
+        })
+        .then((response) => {
+          console.log(response.data);
+        });
     },
     toggleChallenge(id, force = false) {
       axios
@@ -247,7 +323,7 @@ export default {
         })
         .then((response) => {
           this.students.forEach((student) => {
-            if(student.id == id) {
+            if (student.id == id) {
               student.challenges = response.data;
             }
           });

@@ -193,6 +193,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update');
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
+        Route::post('/{code}/challenges/update', 'ChallengesController@updateStudents');
         Route::post('/{code}/challenges/toggleProp', 'ChallengesController@toggleProp');
         Route::get('/{code}/challenges/all', 'ChallengesController@getAllChallenges');
         Route::post('/challenge/getlink', 'ChallengesController@getChallengeLink');

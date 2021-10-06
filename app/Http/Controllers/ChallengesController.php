@@ -152,8 +152,8 @@ class ChallengesController extends Controller
         }])->firstOrFail();
         $this->authorize('view', $class);
         $collections = collect();
-        foreach($class->collections as $collection) {
-            if($collection->collectionables->count() != 0)
+        foreach ($class->collections as $collection) {
+            if ($collection->collectionables->count() != 0)
                 $collections->push($collection);
         }
         return ['challenges' => $class->challengeGroups, 'items' => $class->items, 'collections' => $collections];
@@ -176,6 +176,12 @@ class ChallengesController extends Controller
                 $query
                     ->where('challenges.id', '=', $data['challenge']);
             }])->get();
+
+            $students->each(function ($student) {
+                if (!count($student->challenges)) {
+                    $student->challenges->push(['pivot' => ['count' => null, 'evaluated' => 0, 'student_id' => $student->id]]);
+                }
+            });
 
             return $students;
         } else if ($data['type'] == 1) {
@@ -211,8 +217,8 @@ class ChallengesController extends Controller
         $challenge = Challenge::findOrFail($data['challenge']);
         $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
         $this->authorize('view', $class);
-        
-        return "<iframe style='border: 0;' width='33px' height='49px' src='".env('APP_URL')."/external/check/challengecheck/".Functions::simple_crypt($class->code.":".$challenge->id)."'></iframe>";
+
+        return "<iframe style='border: 0;' width='33px' height='49px' src='" . env('APP_URL') . "/external/check/challengecheck/" . Functions::simple_crypt($class->code . ":" . $challenge->id) . "'></iframe>";
     }
 
     public function getChallengeLink()
@@ -224,8 +230,69 @@ class ChallengesController extends Controller
         $challenge = Challenge::findOrFail($data['challenge']);
         $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
         $this->authorize('view', $class);
-        
-        return env('APP_URL')."/external/challenges/".Functions::simple_crypt($class->code.":".$challenge->id);
+
+        return env('APP_URL') . "/external/challenges/" . Functions::simple_crypt($class->code . ":" . $challenge->id);
+    }
+
+    public function updateStudents()
+    {
+        $data = request()->validate([
+            'challenge' => ['numeric', 'required'],
+            'students' => ['array', 'required'],
+        ]);
+        $challenge = Challenge::where('id', '=', $data['challenge'])->firstOrFail();
+
+        foreach ($data['students'] as $std) {
+            // dump($std['challenges'][0]['pivot']);
+            $newInfo = $std['challenges'][0]['pivot'];
+            $student = Student::findOrFail($std['challenges'][0]['pivot']['student_id']);
+            $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
+            $this->authorize('update', $class);
+            $cards = [];
+            $challenge_student = $student->challenges()->where('challenge_id', $challenge->id)->first();
+            $mult = $newInfo['count'];
+            if ($challenge_student) {
+                // dump("See if changes");
+                if ($challenge_student->pivot->count === $newInfo['count'])
+                    continue;
+                else if ($challenge_student->pivot->count > $newInfo['count'])
+                    $mult = -1;
+                else
+                    $mult = 0;
+                // dump($challenge_student->pivot->count);
+            }
+            // Update challenges in student
+            if ($newInfo['count'] !== null) {
+                $student->challenges()->sync([$challenge->id => ['count' => $newInfo['count']]], false);
+            } else {
+                $student->challenges()->detach($challenge->id);
+            }
+            // if($challenge_student)
+            // dump($mult);
+            if ($mult != 0) {
+                dump("updating " . $mult);
+                if ($mult == 1) {
+                    if ($challenge->auto_assign == 1) {
+                        for ($i = 0; $i < $challenge->cards; $i++) {
+                            array_push($cards, CardsController::getRandomCard($class->code));
+                        }
+                    }
+                }
+                $student->assignChallenge($challenge, $mult, $cards);
+            }
+        }
+    }
+    public function updateGroups()
+    {
+        // $data = request()->validate([
+        //     'challenge' => ['numeric', 'required'],
+        //     'students' => ['array', 'required'],
+        // ]);
+        // $challenge = Challenge::where('id', '=', $data['challenge'])->firstOrFail();
+
+        // foreach ($data['students'] as $std) {
+        //     dump($std['challenges'][0]['pivot']);
+        // }
     }
 
     public function toggle()
@@ -241,7 +308,7 @@ class ChallengesController extends Controller
             $student = Student::where('id', '=', $data['id'])->first();
             $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
             $this->authorize('update', $class);
-            if(!$data['force']) {
+            if (!$data['force']) {
                 $result = $student->challenges()->toggle($challenge->id);
                 $mult = 1;
                 if ($result['detached']) {
@@ -257,7 +324,7 @@ class ChallengesController extends Controller
             } else {
                 $mult = 1;
                 $attach = $student->challenges()->syncWithoutDetaching($challenge->id);
-                if($attach['attached']) {
+                if ($attach['attached']) {
                     if ($challenge->auto_assign == 1) {
                         for ($i = 0; $i < $challenge->cards; $i++) {
                             array_push($cards, CardsController::getRandomCard($class->code));
@@ -285,7 +352,7 @@ class ChallengesController extends Controller
                 $student->assignChallenge($challenge, $mult, $cards);
             }
         }
-        if($mult)
+        if ($mult)
             return [$challenge];
         else return [];
     }

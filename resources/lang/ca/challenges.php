@@ -110,4 +110,7 @@ return [
     'filter_ok' => 'Superats',
     'filter_ko' => 'No superats',
     'filter_cats_all' => 'Totes les categories',
+    
+    'completed' => 'Superat',
+
 ];

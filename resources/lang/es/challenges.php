@@ -111,4 +111,6 @@ return [
     'filter_ko' => 'No superados',
     'filter_cats_all' => 'Todas las categorias',
 
+    'completed' => 'Superado',
+
 ];

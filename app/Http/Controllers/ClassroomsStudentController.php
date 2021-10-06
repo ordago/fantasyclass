@@ -454,7 +454,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.pinned, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenges.id, challenge_student.evaluated, challenges.pinned, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
 
