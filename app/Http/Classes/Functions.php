@@ -77,6 +77,7 @@ class Functions
       ->first();
 
     if($class) {
+      if($class->pivot->student)
       return Student::where(
         'id',
         '=',
