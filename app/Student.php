@@ -10,6 +10,7 @@ use App\Notifications\NewInteractionStudent;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -400,6 +401,16 @@ class Student extends Model implements HasMedia
                     'message' => 'card_assign',
                     'info' => $card->title,
                 ]);
+            }
+        } else if($mult == -1) {
+            for($i = 0; $i < $challenge->cards; $i++) {
+                $cards = $this->cards()->orderBy('id', 'desc')->take(2)->get();
+                foreach ($cards as $card) {
+                    dump($card->id);
+                    $card = DB::table('card_student')->where('card_id', $card->id)->where('student_id', $this->id)->orderBy('id', 'desc')->take(2)->get()->delete();
+                    // $this->cards()->detach($card->id)
+                }
+                // dump($cards);
             }
         }
 
