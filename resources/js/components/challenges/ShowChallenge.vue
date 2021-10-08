@@ -497,7 +497,7 @@
                     <i class="far fa-trash-alt"></i>
                   </button>
                 </div>
-                <div class="flexVertical p-2">{{ comment.text }}</div>
+                <div class="flexVertical p-2">{{ clean(comment.text) }}</div>
               </div>
             </div>
             <div class="my-3">
@@ -884,6 +884,11 @@ export default {
     AddQuestion,
   },
   methods: {
+    clean(text) {
+       text = text.replace("&nbsp;", "");
+       text = text.replace("<br>", "");
+       return text;
+    },
     getMessageDisable() {
       if (this.challengeReactive.disabled)
         return this.trans.get("general.enable");
