@@ -727,6 +727,7 @@ class ClassroomsStudentController extends Controller
         $settings['feed'] = settings()->get('feed', 100);
         $settings['repair_equipment'] = settings()->get('repair_equipment', 100);
         $settings['impostor'] = settings()->get('impostor', -1);
+        $settings['announcement'] = settings()->get('announcement', "");
         if ($settings['impostor'] != -1) {
             if ($settings['impostor'] == $student->id)
                 $settings['impostor'] = true;

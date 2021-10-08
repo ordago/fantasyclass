@@ -347,8 +347,20 @@ class SettingsController extends Controller
             "teacher" => $teacher,
         ];
     }
+    public function forgetSetting($code)
+    {
+        $data = request()->validate([
+            "prop" => ['string', 'required'],
+        ]);
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        settings()->forget($data['prop']);
+    }
+
     public function updateSetting($code)
     {
+       
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);

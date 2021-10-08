@@ -74,6 +74,10 @@ class StudentController extends Controller
                     $verified = now();
                     $mail = null;
                 } else $mail = $student['email'];
+
+                if(isset($student['byPassValidation']) && $student['byPassValidation'] == 1)
+                    $verified = now();
+
                 $pass = strtolower(Str::random(5));
                 $user = User::create([
                     'name' => $student['name'],
@@ -81,13 +85,14 @@ class StudentController extends Controller
                     'email' => $mail,
                     'email_verified_at' => $verified,
                     'password' => Hash::make($pass),
-                    'is_student' => 1,
+                    'is_student' => isset($student['isStudent']) && $student['isStudent'] == 0 ? 0 : 1,
                     'locale' => auth()->user()->locale,
                 ]);
                 $id = $user->id;
                 if (isset($student['email'])) {
                     Mail::to($student['email'])->send(new RegisterStudent($user, $pass));
-                    $user->sendEmailVerificationNotification();
+                    if(!$verified)
+                        $user->sendEmailVerificationNotification();
                 }
             }
             try {

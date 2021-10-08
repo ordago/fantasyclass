@@ -45,4 +45,7 @@ return [
     'get_challenge' => 'Congratulations! You\'ve passed the challenge!',
     'by_group' => 'By group',
 
+    'announcement' => 'Class announcement',
+    'announcement_info' => 'Message that students will view when log in',
+
 ];

@@ -600,6 +600,7 @@ class ClassroomsController extends Controller
         $showChat = settings()->get('show_chat', false);
         
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
+        $settings['announcement'] = settings()->get('announcement', "");
 
         $impostor = settings()->get('impostor', -1);
         if($impostor != -1) {

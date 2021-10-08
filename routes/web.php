@@ -243,6 +243,7 @@ Route::group(['middleware' => 'language'], function () {
         // Settings
         Route::get('/{code}/settings', 'SettingsController@index');
         Route::patch('/{code}/setting', 'SettingsController@updateSetting');
+        Route::post('/{code}/setting/forget', 'SettingsController@forgetSetting');
         Route::post('/{code}/setting/updateavatar', 'ClassroomsStudentController@updateavatar');
         Route::post('/{code}/invite', 'SettingsController@invite');
         Route::delete('/{code}/teacher/{id}', 'SettingsController@destroy');

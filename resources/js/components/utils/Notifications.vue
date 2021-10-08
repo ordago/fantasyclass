@@ -147,7 +147,7 @@
                 :class="{
                   'fad fa-comment': notification.data.type == 'comment',
                   'fad fa-paper-plane': notification.data.type == 'message',
-                  'fad fa-bullhorn': notification.data.type == 'notification',
+                  'fad fa-comment-alt-lines': notification.data.type == 'notification',
                   'fad fa-comments-alt': notification.data.type == 'chat',
                   'fak fa-deck': notification.data.type == 'mark_card',
                   'fad fa-pen-fancy': notification.data.type == 'challenge',
