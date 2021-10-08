@@ -1069,7 +1069,7 @@
         </b-tab-item>
         <b-tab-item
           :label="trans.get('students.evaluation')"
-          v-if="evaluation"
+          v-if="evaluation && settings.eval_visible == 1"
           class="p-2"
           icon="analytics"
           icon-pack="fad"
