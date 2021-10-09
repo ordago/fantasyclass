@@ -305,12 +305,28 @@
 
         <b-tab-item
           :label="trans.get('students.inventory')"
-          class="p-2"
+          class=""
           icon="backpack"
           icon-pack="fad"
         >
           <article
-            class="message is-dark mt-2 mb-5"
+            class="message mt-2 mb-5 ml-0 pl-0 is-dark"
+            v-if="
+              !admin && settings.announcement && settings.announcement != ''
+            "
+          >
+            <div class="message-header">
+              <p>
+                <i class="fad fa-bullhorn mr-1"></i>
+                {{ trans.get("utils.announcement") }}
+              </p>
+            </div>
+            <div class="message-body">
+              {{ settings.announcement }}
+            </div>
+          </article>
+          <article
+            class="message is-dark my-2 mb-5"
             v-tippy
             :content="trans.get('students.last')"
             v-if="!admin && student.behaviours.length"
@@ -443,7 +459,7 @@
             </div>
           </div>
           <div
-            class="is-flex is-flex-direction-column mt-4"
+            class="is-flex is-flex-direction-column mt-4 p-2"
             id="inventory"
             v-if="!admin"
           >
@@ -848,7 +864,9 @@
           >
             <div
               v-if="
-                collection.collectionables && collection.collectionables.length && collection.disabled != 1
+                collection.collectionables &&
+                collection.collectionables.length &&
+                collection.disabled != 1
               "
             >
               <h3 class="is-size-3 m-2">
@@ -1051,7 +1069,7 @@
         </b-tab-item>
         <b-tab-item
           :label="trans.get('students.evaluation')"
-          v-if="evaluation"
+          v-if="evaluation && settings.eval_visible == 1"
           class="p-2"
           icon="analytics"
           icon-pack="fad"
@@ -2615,8 +2633,7 @@ export default {
             .then((response) => {
               if (!response.data) {
               } else {
-                if(this.student.hp == 0)
-                  location.reload();
+                if (this.student.hp == 0) location.reload();
                 item.pivot.count--;
                 if (item.pivot.count == 0) this.inventoryRemaining++;
                 this.student.hp = Math.min(
@@ -2661,10 +2678,9 @@ export default {
           this.trans.get("shop.recovers_hp") +
           item.hp +
           " <i class='fas fa-heart colored'></i>. ";
-          if(item.undead)
-            message += this.trans.get('shop.undead') + ". "
+        if (item.undead) message += this.trans.get("shop.undead") + ". ";
       }
-    
+
       if (item.xp > 0)
         message +=
           this.trans.get("shop.gives_xp") +

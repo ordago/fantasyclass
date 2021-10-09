@@ -1,4 +1,11 @@
 # Changelog
+## v1.81 Beta (08/10/2021)
+### Added
+- Class announcement.
+
+### Changed
+- Changed icon to send notifications to all students.
+
 ## v1.80 Beta (04/10/2021)
 ### Added
 - Feedback in challenges (password and student)

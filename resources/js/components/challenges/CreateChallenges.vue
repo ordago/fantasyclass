@@ -473,7 +473,7 @@
             v-if="challenge.completion == 1 || challenge.completion == 3"
           >
           <label class="label" for="name">Feedback</label>
-            <Editor v-if="editor" v-model="feedback" height="20vh" :code="code"></Editor>
+            <Editor v-if="editor" v-model="feedback" height="200px" :code="code"></Editor>
           </div>
           <article v-if="challenge.completion == 4" class="message is-warning">
             <div class="message-body">

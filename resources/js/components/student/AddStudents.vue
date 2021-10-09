@@ -219,7 +219,7 @@ export default {
     },
     addFromExcel(students) {
       students.forEach((student) => {
-        this.addStudent(student["Name"], student["E-mail"]);
+        this.addStudent(student["Name"], student["E-mail"], null, null, student["isStudent"], student["byPass"]);
         this.stdName = "";
         this.stdEmail = "";
       });
@@ -229,7 +229,7 @@ export default {
       this.stdEmail = "";
       this.stdNameP = "";
     },
-    addStudent(name, email, gcourse = null, guid = null) {
+    addStudent(name, email, gcourse = null, guid = null, isStudent = 1, byPassValidation = false) {
       if (email && !Utils.validEmail(email)) {
         Utils.toast(this, this.trans.get("validation.email"), TYPE.ERROR);
         return false;
@@ -251,6 +251,8 @@ export default {
               username: this.stdUsername,
               google_course: gcourse,
               google_uid: guid,
+              isStudent: isStudent,
+              byPassValidation: byPassValidation,
             });
             name = email = this.stdEmail = this.stdName = this.stdUsername = "";
             

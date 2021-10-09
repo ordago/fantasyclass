@@ -661,6 +661,8 @@ class Student extends Model implements HasMedia
     }
     public function setBasicEquipment()
     {
+        if(!$this->character_id)
+            return false;
         $this->equipment()->detach($this->equipment);
         switch ($this->character_id) {
             case '1':

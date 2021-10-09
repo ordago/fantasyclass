@@ -1,7 +1,15 @@
 <template>
   <div class="p-2">
     <div
-      class="utilities columns is-multiline is-flex rounded card-shadow-s m-0 mt-1"
+      class="
+        utilities
+        columns
+        is-multiline is-flex
+        rounded
+        card-shadow-s
+        m-0
+        mt-1
+      "
     >
       <div class="tools rounded-left">
         <i class="fal fa-tools"></i>
@@ -187,8 +195,47 @@
           @click="sendMessage(1)"
           class="link outer_glow px-1 cursor-pointer has-text-dark"
         >
-          <i class="fad fa-bullhorn" style="font-size: 2em"></i>
+          <i class="fad fa-comment-alt-lines" style="font-size: 2em"></i>
         </a>
+        <tippy
+          interactive
+          :animate-fill="false"
+          theme="light"
+          placement="bottom"
+          animation="fade"
+          trigger="click"
+          style="display: inline-block"
+          arrow
+        >
+          <template v-slot:trigger>
+            <a
+              v-tippy
+              :content="trans.get('utils.announcement')"
+              class="link outer_glow px-1 cursor-pointer has-text-dark"
+            >
+              <i class="fad fa-bullhorn" style="font-size: 2em"></i>
+            </a>
+          </template>
+          <span>
+            <div>{{ trans.get("utils.announcement_info") }}</div>
+            <div class="is-flex is-center-vertically">
+              <input type="text" v-model="announcement" class="input mr-1" />
+              <button
+                @click="updateProp()"
+                class="button is-primary is-inline ml-1"
+              >
+                {{ trans.get("users_groups.apply") }}
+              </button>
+              <button
+                @click="updateProp('forget')"
+                class="button is-danger is-inline ml-1"
+              >
+                {{ trans.get("general.delete") }}
+              </button>
+            </div>
+          </span>
+        </tippy>
+
         <a
           v-tippy
           v-if="allStudents && allStudents.length"
@@ -430,10 +477,20 @@
         <div slot="no-more"></div>
         <div slot="no-results">
           <div
-            class="column py-2 is-6-tablet is-12-mobile is-4-desktop is-3-fullhd"
+            class="
+              column
+              py-2
+              is-6-tablet is-12-mobile is-4-desktop is-3-fullhd
+            "
           >
             <div
-              class="box card-shadow-s is-flex has-background-link has-all-centered h-100"
+              class="
+                box
+                card-shadow-s
+                is-flex
+                has-background-link has-all-centered
+                h-100
+              "
             >
               <a
                 :href="'/classroom/' + classroom.code + '/students/add'"
@@ -537,8 +594,6 @@
         <iframe :src="diceUrl" width="100%" style="height: 100vh"></iframe>
       </div>
     </b-modal>
-    
-
 
     <b-modal
       :active.sync="isCountDownModalActive"
@@ -603,7 +658,11 @@
     </Impostor>
     <Videochat v-if="isVideoChatActive" :groups="groups" :code="classroom.code">
     </Videochat>
-    <random-card :card="randomCard" :admin="1" :code="classroom.code"></random-card>
+    <random-card
+      :card="randomCard"
+      :admin="1"
+      :code="classroom.code"
+    ></random-card>
   </div>
 </template>
 
@@ -623,6 +682,8 @@ export default {
     // }
   },
   mounted() {
+    this.announcement = this.settings.announcement;
+
     axios
       .get("/classroom/" + this.classroom.code + "/students/all")
       .then((response) => {
@@ -666,10 +727,38 @@ export default {
       page: 0,
       loading: false,
       firstLoad: true,
+      announcement: "",
       max: process.env.MIX_MAX_STUDENTS,
     };
   },
   methods: {
+    updateProp(action = "send") {
+      if (action == "send")
+        axios
+          .patch("/classroom/" + this.classroom.code + "/setting", {
+            _method: "patch",
+            prop: "announcement",
+            value: this.announcement,
+            action: "update",
+          })
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+          });
+      else {
+        axios
+          .post("/classroom/" + this.classroom.code + "/setting/forget", {
+            prop: "announcement",
+          })
+          .then((response) => {
+            this.announcement = "";
+            this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+          });
+      }
+    },
     infiniteHandler($state) {
       axios
         .post("/classroom/" + this.classroom.code + "/students/get", {

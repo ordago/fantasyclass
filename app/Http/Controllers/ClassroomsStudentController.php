@@ -623,16 +623,18 @@ class ClassroomsStudentController extends Controller
         if (settings()->get('items_visibility', false) ? true : false) {
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
-        if ($student->character->theme->id == 10 || $student->character->theme->id == 11)
-            $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 710, 711, 712, 713, 714, 715, 716, 717, 718, 760, 770, 780])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
-        if (settings()->get('equipment_1_visibility', false) ? true : false) {
-            $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
-        }
-        if (settings()->get('equipment_2_visibility', false) ? true : false) {
-            $eq2 = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
-        }
-        if (settings()->get('equipment_3_visibility', false) ? true : false) {
-            $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+        if($student->character) {
+            if ($student->character->theme->id == 10 || $student->character->theme->id == 11)
+                $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 710, 711, 712, 713, 714, 715, 716, 717, 718, 760, 770, 780])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+            if (settings()->get('equipment_1_visibility', false) ? true : false) {
+                $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+            }
+            if (settings()->get('equipment_2_visibility', false) ? true : false) {
+                $eq2 = Equipment::where('offset', '=', 2)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+            }
+            if (settings()->get('equipment_3_visibility', false) ? true : false) {
+                $eq3 = Equipment::where('offset', '=', 3)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+            }
         }
 
         if (settings()->get('show_recipes', false) ? true : false) {
@@ -725,6 +727,7 @@ class ClassroomsStudentController extends Controller
         $settings['feed'] = settings()->get('feed', 100);
         $settings['repair_equipment'] = settings()->get('repair_equipment', 100);
         $settings['impostor'] = settings()->get('impostor', -1);
+        $settings['announcement'] = settings()->get('announcement', "");
         if ($settings['impostor'] != -1) {
             if ($settings['impostor'] == $student->id)
                 $settings['impostor'] = true;

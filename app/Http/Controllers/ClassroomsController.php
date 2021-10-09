@@ -443,11 +443,16 @@ class ClassroomsController extends Controller
             ->get()
             ->first();
 
+        $char = 0;
+        $class = Classroom::findOrFail($classId);
+        if($class->characterTheme)
+            $char = $class->characterTheme->characters->random(1)->first()->id;
+
         // Create the student properties
         $student = Student::create([
             'classroom_user_id' => $cuid->id,
             'name' => auth()->user()->name,
-            'character_id' => Classroom::findOrFail($classId)->characterTheme->characters->random(1)->first()->id,
+            'character_id' => $char,
         ]);
 
         // Assign basic equipment
@@ -595,6 +600,7 @@ class ClassroomsController extends Controller
         $showChat = settings()->get('show_chat', false);
         
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
+        $settings['announcement'] = settings()->get('announcement', "");
 
         $impostor = settings()->get('impostor', -1);
         if($impostor != -1) {

@@ -45,4 +45,7 @@ return [
     'get_challenge' => '¡Enhorabuena, has superado el reto!',
     'by_group' => 'Por grupo',
 
+    'announcement' => 'Anuncio de clase',
+    'announcement_info' => 'Mensaje que verá el alumnado cuando entre',
+
 ];
