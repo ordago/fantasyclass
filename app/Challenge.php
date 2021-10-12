@@ -91,7 +91,7 @@ class Challenge extends Model
 
     public function students()
     {
-        return $this->belongsToMany(Student::class)->withPivot('count');
+        return $this->belongsToMany(Student::class)->withPivot('count', 'evaluated');
     }
 
     public function ratings()
@@ -101,7 +101,7 @@ class Challenge extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class)->withPivot('count');
+        return $this->belongsToMany(Group::class)->withPivot('count', 'evaluated');
     }
     public function group()
     {

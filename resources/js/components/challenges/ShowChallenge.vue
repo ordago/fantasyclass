@@ -86,7 +86,7 @@
                 </div>
               </div>
             </div>
-            <div class="column is-narrow pr-0" v-else>
+            <div class="column is-narrow pr-0" v-else-if="admin && edit">
               <button
                 class="button"
                 v-tippy
@@ -1230,7 +1230,7 @@ export default {
           case 1:
           case 3:
           case 4:
-            return !this.challengeReactive.evaluated ? 'has-background-light' : this.challengeReactive.count == 1
+            return this.challengeReactive.count === null ? 'has-background-light' : this.challengeReactive.count == 1
               ? "has-background-success-light"
               : "has-background-danger-light";
             break;

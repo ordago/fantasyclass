@@ -176,9 +176,9 @@
           </div>
         </div>
         <div v-if="currentChallenge.type == 1">
-          <!-- <button class="button is-info" @click="selectAll()">
+          <button class="button is-info" @click="selectAllGroup()">
             {{ trans.get("utils.select_all") }}
-          </button> -->
+          </button>
           <button class="button is-success" @click="sendGroupChallenge">
             <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
@@ -382,6 +382,14 @@ export default {
       });
       this.$forceUpdate();
     },
+    selectAllGroup() {
+      this.groups.forEach((group) => {
+        // this.toggleChallenge(group.id, true);
+        group.challenges[0].pivot.count = 1;
+        group.challenges[0].pivot.evaluated = 1;
+      });
+      this.$forceUpdate();
+    },
     sendStudentsChallenge() {
       axios
         .post("/classroom/" + this.code + "/challenges/update", {
@@ -405,7 +413,7 @@ export default {
           this.$toast(this.trans.get("success_error.update_success"), {
             type: "success",
           });
-          // this.isModalActive = false;
+          this.isModalActive = false;
         });
     },
     toggleChallenge(id, force = false) {
