@@ -1777,3 +1777,427 @@
     transform: rotateX(10deg) rotate(30deg) translateX(-5px) translateY(5px);
     animation: glowweapon 1.5s infinite;
 }
+
+    /***** KOI *****/
+
+    .ionare-body {
+        position: absolute;
+        top: -10px;
+        left: 45px;
+        z-index: 3;
+    }
+
+    .ionare-tail {
+        position: absolute;
+        top: -4px;
+        left: 103px;
+        z-index: 3;
+        transform-origin: top left;
+        animation: hello 3s linear infinite;
+    }
+
+    .ionare-weapons {
+        position: absolute;
+        top: -15px;
+        left: -17px;
+        z-index: 4;
+    }
+
+    .character:hover .ionare-whip {
+        opacity: 1.0;
+        top: -17px;
+        left: -16px;
+        width: 202px;
+    }
+
+    .ionare-whip {
+        position: absolute;
+        top: 25px;
+        left: 25px;
+        z-index: 4;
+        opacity: 0;
+        width: 150px;
+        transition: all .1s;
+    }
+
+    .ionare-tatoo {
+        position: absolute;
+        top: 50px;
+        left: 60px;
+        z-index: 4;
+    }
+
+    .mundaraka-body {
+        position: absolute;
+        top: 29px;
+        left: 12px;
+        z-index: 3;
+    }
+
+    .mundaraka-cap {
+        position: absolute;
+        top: -5px;
+        left: -16px;
+        z-index: 4;
+        transform-origin: center bottom;
+        animation: headmovesurf 3s ease infinite;
+
+    }
+
+    .mundaraka-head {
+        position: absolute;
+        top: -7px;
+        left: -16px;
+        z-index: 2;
+        transform-origin: center bottom;
+        animation: headmovesurf 3s ease infinite;
+
+    }
+
+    .mundaraka-surf {
+        position: absolute;
+        top: -17px;
+        left: 58px;
+        z-index: 4;
+        animation: surfmove 5s ease infinite;
+    }
+    .laiona-body {
+        position: absolute;
+        top: -19px;
+        left: -10px;
+        z-index: 1;
+    }
+
+    .laiona-mono {
+        position: absolute;
+        top: 116px;
+        left: 52px;
+        z-index: 4;
+        animation: mono 5s ease infinite;
+        transform-origin: 65% 15% 2cm;
+
+    }
+
+    .laiona-eye {
+        position: absolute;
+        top: 6px;
+        left: 33px;
+        z-index: 5;
+        height: 12px;
+        transform-origin: center 65%;
+        transition: all .3s;
+        animation: wink 3s linear infinite;
+    }
+
+    @keyframes wink {
+        0% {
+            transform: none;
+        }
+        49% {
+            transform: none;
+        }
+        50% {
+            filter: grayscale(100%);
+            transform: rotateX(87deg);
+        }
+        60% {
+            transform: none;
+        }
+    }
+
+    .character:hover .laiona-eye {}
+
+    .character:hover .laiona-mono {
+        animation: monofull .5s infinite linear;
+    }
+
+    .character:hover .laiona-belt {
+        animation: glowweapon 1.5s infinite;
+    }
+
+    .laiona-belt {
+        position: absolute;
+        top: 91px;
+        left: 20px;
+        z-index: 2;
+    }
+
+    .laiona-body {
+        position: absolute;
+        top: -19px;
+        left: -10px;
+        z-index: 1;
+    }
+
+    .ganabia-body {
+        position: absolute;
+        top: -30px;
+        left: -17px;
+        z-index: 3;
+    }
+
+    .ganabia-hand {
+        position: absolute;
+        top: -17px;
+        left: 8px;
+        z-index: 2;
+        animation: hello 5s linear infinite;
+        transform-origin: bottom right;
+    }
+
+    .character:hover .ganabia-hand {
+        animation-duration: 1s;
+    }
+
+    .ganabia-trident {
+        position: absolute;
+        top: -19px;
+        left: 39px;
+        z-index: 1;
+        transition: all .2s;
+        transform-origin: center center;
+    }
+
+    .character:hover .ganabia-trident {
+        animation: monofull .2s infinite linear, glow 1s infinite;
+    }
+
+    .ganabia-hair {
+        position: absolute;
+        top: -25px;
+        left: 34px;
+        z-index: 3;
+    }
+
+    .delumion-body {
+        position: absolute;
+        top: -9px;
+        left: 19px;
+        z-index: 2;
+    }
+
+    .delumion-staff {
+        position: absolute;
+        top: -60px;
+        left: 69px;
+        z-index: 3;
+        animation: delumionstaff 1s linear infinite;
+    }
+
+    .character:hover .delumion-staff {
+        animation: glowweapon 1.5s infinite;
+        transform: translateY(-10px), translateX(-3px);
+    }
+
+    .delumion-cape {
+        position: absolute;
+        top: 34px;
+        left: 2px;
+        z-index: 1;
+        transform-origin: top center;
+        animation: cape 5s linear infinite;
+    }
+
+    .gespair-body {
+        position: absolute;
+        top: -24px;
+        left: -11px;
+        z-index: 2;
+    }
+
+    .gespair-arms {
+        position: absolute;
+        top: 68px;
+        left: 51px;
+        z-index: 3;
+    }
+
+    .character:hover .gespair-tail {
+        animation: glowweapon 1.5s infinite, gespairtail 3s infinite linear;
+    }
+
+    .gespair-tail {
+        position: absolute;
+        top: 58px;
+        left: 88px;
+        z-index: 1;
+        transform-origin: bottom left;
+        animation: gespairtail 8s infinite linear;
+    }
+
+    .gespair-tail-left {
+        position: absolute;
+        top: 93px;
+        left: -5px;
+        z-index: 1;
+        transform-origin: bottom left;
+        animation: gespairtail 8s infinite linear;
+    }
+
+    @keyframes laionaeye {
+        0% {}
+
+
+        50% {
+            height: 1px;
+
+        }
+
+        55% {
+            height: initial;
+        }
+
+        90% {}
+    }
+
+    @keyframes gespairtail {
+        0% {}
+
+
+        33% {
+            transform: rotate(10deg);
+
+        }
+
+        66% {
+            transform: rotate(-10deg);
+        }
+
+        90% {}
+    }
+
+    @keyframes delumionstaff {
+        0% {}
+
+
+        50% {
+            transform: translateY(4px);
+
+        }
+
+
+        100% {
+            transform: translateY(-4px);
+        }
+    }
+
+    @keyframes surfmove {
+        0% {}
+
+        25% {
+            transform: translateX(4px);
+
+        }
+
+        50% {
+            transform: translateX(-4px);
+
+        }
+
+        75% {
+            transform: translateX(4px);
+        }
+
+        90% {
+            transform: translateX(-4px);
+        }
+    }
+
+    @keyframes headmovesurf {
+        0% {}
+
+        25% {
+            transform: rotateX(20deg);
+
+        }
+
+        50% {
+            transform: rotateX(-20deg);
+
+
+        }
+
+        75% {
+            transform: rotateX(20deg);
+        }
+
+        90% {
+            transform: rotateX(-20deg);
+        }
+    }
+
+    @keyframes mono {
+        0% {}
+
+        25% {
+            transform: rotate(10deg);
+
+        }
+
+        50% {
+            /* transform: rotate(-10deg); */
+
+
+        }
+
+        75% {
+            transform: rotate(-20deg);
+        }
+
+        90% {
+            /* transform: rotate(-10deg); */
+        }
+    }
+
+    @keyframes cape {
+
+        25% {
+            transform: rotate(3deg);
+
+        }
+
+        75% {
+            transform: rotate(-3deg);
+        }
+
+
+    }
+
+    @keyframes hello {
+
+        25% {
+            transform: rotate(7deg);
+
+        }
+
+        75% {
+            transform: rotate(-7deg);
+        }
+
+
+    }
+
+    @keyframes monofull {
+        0% {}
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+
+
+    .character:hover .mundaraka-surf {
+        animation: none;
+        left: 8px;
+    }
+
+    .character:hover .mundaraka-body:not(.not-surf),
+    .character:hover .mundaraka-cap,
+    .character:hover .mundaraka-head:not(.not-surf) {
+        width: 1px;
+    }
+
+    .character:hover .mundaraka-head {
+        animation-duration: 1.5s;
+    }
