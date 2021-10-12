@@ -311,7 +311,10 @@ export default {
           students: this.students,
         })
         .then((response) => {
-          console.log(response.data);
+           this.$toast(this.trans.get("success_error.update_success"), {
+              type: "success",
+            });
+            this.isModalActive = false;
         });
     },
     toggleChallenge(id, force = false) {

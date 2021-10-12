@@ -232,7 +232,7 @@ class Student extends Model implements HasMedia
 
     public function collectionables()
     {
-        return $this->belongsToMany(Collectionable::class)->withPivot('count');
+        return $this->belongsToMany(Collectionable::class)->withPivot('count')->withTimestamps();
     }
 
     public function role()
@@ -388,9 +388,11 @@ class Student extends Model implements HasMedia
 
     public function assignChallenge($challenge, $mult = 1, $cards = [])
     {
-        $this->setProperty('hp', $mult * $challenge->hp, true, 'challenge');
-        $this->setProperty('xp', $mult * $challenge->xp, true, 'challenge');
-        $this->setProperty('gold', $mult * $challenge->gold, true, 'challenge');
+        $boost = $this->getBoost();
+
+        $this->setProperty('hp', $mult * ($challenge->hp +  $challenge->hp * $boost['hp']/100), true, 'challenge', true);
+        $this->setProperty('xp', $mult * ($challenge->xp +  $challenge->xp * $boost['xp']/100), true, 'challenge', true);
+        $this->setProperty('gold', $mult * ($challenge->gold +  $challenge->gold * $boost['gold']/100), true, 'challenge', true);
         if (count($cards) && $mult == 1) {
             foreach ($cards as $card) {
                 $this->cards()->attach($card);
