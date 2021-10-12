@@ -1,4 +1,8 @@
 # Changelog
+## v1.84 Beta (17/10/2021)
+### Added
+- Challenges will have 3 states: not passed (red), not defined (gray), passed (green).
+
 ## v1.81 Beta (08/10/2021)
 ### Added
 - Class announcement.
