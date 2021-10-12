@@ -73,6 +73,7 @@ return [
     'import_code' => 'Put the share code from the other class',
 
     'import_alert' => 'Current classroom elements will be replaced, <strong>this actions can\'t be undone</strong>, are you sure?',
+    'delete_current' => 'Delete current elements?',
 
 
 ];

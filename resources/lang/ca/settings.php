@@ -73,5 +73,6 @@ return [
     'import_code' => 'Posa el codi de compartició de la classe',
 
     'import_alert' => 'Els elements d\'aquesta classe seran reemplaçats, <strong>aquest acció no es pot desfer</strong>, estàs segur/a?',
+    'delete_current' => 'Eliminar els elements actuals?',
 
 ];

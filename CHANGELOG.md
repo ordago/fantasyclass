@@ -2,6 +2,10 @@
 ## v1.84 Beta (17/10/2021)
 ### Added
 - Challenges will have 3 states: not passed (red), not defined (gray), passed (green).
+- Import without deleting current elements.
+
+### Changed
+- Better mnagement in challenges when changing from passed to not passed.
 
 ## v1.81 Beta (08/10/2021)
 ### Added

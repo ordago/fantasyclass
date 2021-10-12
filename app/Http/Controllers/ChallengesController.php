@@ -303,7 +303,6 @@ class ChallengesController extends Controller
             $cards = [];
             $challenge_group = $group->challenges()->where('challenge_id', $challenge->id)->first();
             $mult = $newInfo['count'];
-            dump($newInfo['count']);
             if ($challenge_group) {
                  if ($challenge_group->pivot->count === $newInfo['count'])
                     continue;
@@ -318,7 +317,6 @@ class ChallengesController extends Controller
 
             // Update challenges in student
             if ($newInfo['count'] !== null) {
-                dump('hit');
                 $group->challenges()->sync([$challenge->id => ['count' => $newInfo['count']]], false);
             } else {
                 $group->challenges()->detach($challenge->id);

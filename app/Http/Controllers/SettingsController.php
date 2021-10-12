@@ -113,6 +113,7 @@ class SettingsController extends Controller
         $data = request()->validate([
             'shareCode' => ['string', 'required'],
             'type' => ['string', 'required'],
+            'delete' => ['boolean', 'required'],
         ]);
 
         $classFrom = Classroom::where('share_code', '=', $data['shareCode'])->firstOrFail();
@@ -127,20 +128,21 @@ class SettingsController extends Controller
                     $newLevel->classroom_id = $class->id;
                     $newLevel->push();
 
-                    if($level->media)
-                    $level->media->each(function (Media $media) use ($newLevel) {
-                        $props = $media->toArray();
-                        unset($props['uuid']);
-                        unset($props['id']);
-                        $newLevel->addMedia($media->getPath())
-                            ->preservingOriginal()
-                            ->withProperties($props)
-                            ->toMediaCollection($media->collection_name);
-                    });
+                    if ($level->media)
+                        $level->media->each(function (Media $media) use ($newLevel) {
+                            $props = $media->toArray();
+                            unset($props['uuid']);
+                            unset($props['id']);
+                            $newLevel->addMedia($media->getPath())
+                                ->preservingOriginal()
+                                ->withProperties($props)
+                                ->toMediaCollection($media->collection_name);
+                        });
                 }
                 break;
             case "cards":
-                $class->cards()->delete();
+                if ($data['delete'])
+                    $class->cards()->delete();
                 // Clone cards
                 foreach ($classFrom->cards as $card) {
                     $newCard = $card->replicate();
@@ -149,27 +151,29 @@ class SettingsController extends Controller
                 }
                 break;
             case "roles":
-                $class->roles()->delete();
+                if ($data['delete'])
+                    $class->roles()->delete();
 
                 // Clone roles
                 foreach ($classFrom->roles as $role) {
                     $newRole = $role->replicate(['media']);
                     $newRole->classroom_id = $class->id;
                     $newRole->push();
-                    if($role->media)
-                    $role->media->each(function (Media $media) use ($newRole) {
-                        $props = $media->toArray();
-                        unset($props['uuid']);
-                        unset($props['id']);
-                        $newRole->addMedia($media->getPath())
-                            ->preservingOriginal()
-                            ->withProperties($props)
-                            ->toMediaCollection($media->collection_name);
-                    });
+                    if ($role->media)
+                        $role->media->each(function (Media $media) use ($newRole) {
+                            $props = $media->toArray();
+                            unset($props['uuid']);
+                            unset($props['id']);
+                            $newRole->addMedia($media->getPath())
+                                ->preservingOriginal()
+                                ->withProperties($props)
+                                ->toMediaCollection($media->collection_name);
+                        });
                 }
                 break;
             case "badges":
-                $class->badges()->delete();
+                if ($data['delete'])
+                    $class->badges()->delete();
                 // Clone cards
                 foreach ($classFrom->badges as $badge) {
                     $newBadge = $badge->replicate();
@@ -178,7 +182,8 @@ class SettingsController extends Controller
                 }
                 break;
             case "behaviours":
-                $class->behaviours()->delete();
+                if ($data['delete'])
+                    $class->behaviours()->delete();
                 // Clone behaviours
                 foreach ($classFrom->behaviours as $behaviour) {
                     $newBehaviour = $behaviour->replicate();
@@ -187,7 +192,8 @@ class SettingsController extends Controller
                 }
                 break;
             case "skills":
-                $class->skills()->delete();
+                if ($data['delete'])
+                    $class->skills()->delete();
                 // Clone behaviours
                 foreach ($classFrom->skills as $skill) {
                     $newSkill = $skill->replicate();
@@ -196,7 +202,8 @@ class SettingsController extends Controller
                 }
                 break;
             case "items":
-                $class->items()->delete();
+                if ($data['delete'])
+                    $class->items()->delete();
 
                 // Clone roles
                 foreach ($classFrom->items as $item) {
@@ -205,60 +212,61 @@ class SettingsController extends Controller
                     $newItem->craft = null;
                     $newItem->push();
 
-                    if($item->media)
-                    $item->media->each(function (Media $media) use ($newItem) {
-                        $props = $media->toArray();
-                        unset($props['uuid']);
-                        unset($props['id']);
-                        $newItem->addMedia($media->getPath())
-                            ->preservingOriginal()
-                            ->withProperties($props)
-                            ->toMediaCollection($media->collection_name);
-                    });
+                    if ($item->media)
+                        $item->media->each(function (Media $media) use ($newItem) {
+                            $props = $media->toArray();
+                            unset($props['uuid']);
+                            unset($props['id']);
+                            $newItem->addMedia($media->getPath())
+                                ->preservingOriginal()
+                                ->withProperties($props)
+                                ->toMediaCollection($media->collection_name);
+                        });
                 }
                 break;
-                case "pets":
+            case "pets":
+                if ($data['delete'])
                     $class->pets()->delete();
-    
-                    // Clone pets
-                    foreach ($classFrom->pets as $pet) {
-                        $newPet = $pet->replicate(['media']);
-                        $newPet->classroom_id = $class->id;
-                        $newPet->push();
-                        if($pet->media)
-                        $pet->media->each(function (Media $media) use ($newPet) {
-                            $props = $media->toArray();
-                            unset($props['uuid']);
-                            unset($props['id']);
-                            $newPet->addMedia($media->getPath())
-                                ->preservingOriginal()
-                                ->withProperties($props)
-                                ->toMediaCollection($media->collection_name);
-                        });
-                    }
-                    break;
-                case "monsters":
-                    $class->monsters()->delete();
-    
-                    // Clone monsters
-                    foreach ($classFrom->monsters as $pet) {
-                        $newPet = $pet->replicate(['media']);
-                        $newPet->classroom_id = $class->id;
-                        $newPet->push();
-                        if($pet->media)
-                        $pet->media->each(function (Media $media) use ($newPet) {
-                            $props = $media->toArray();
-                            unset($props['uuid']);
-                            unset($props['id']);
-                            $newPet->addMedia($media->getPath())
-                                ->preservingOriginal()
-                                ->withProperties($props)
-                                ->toMediaCollection($media->collection_name);
-                        });
-                    }
-                    break;
-        }
 
+                // Clone pets
+                foreach ($classFrom->pets as $pet) {
+                    $newPet = $pet->replicate(['media']);
+                    $newPet->classroom_id = $class->id;
+                    $newPet->push();
+                    if ($pet->media)
+                        $pet->media->each(function (Media $media) use ($newPet) {
+                            $props = $media->toArray();
+                            unset($props['uuid']);
+                            unset($props['id']);
+                            $newPet->addMedia($media->getPath())
+                                ->preservingOriginal()
+                                ->withProperties($props)
+                                ->toMediaCollection($media->collection_name);
+                        });
+                }
+                break;
+            case "monsters":
+                if ($data['delete'])
+                    $class->monsters()->delete();
+
+                // Clone monsters
+                foreach ($classFrom->monsters as $pet) {
+                    $newPet = $pet->replicate(['media']);
+                    $newPet->classroom_id = $class->id;
+                    $newPet->push();
+                    if ($pet->media)
+                        $pet->media->each(function (Media $media) use ($newPet) {
+                            $props = $media->toArray();
+                            unset($props['uuid']);
+                            unset($props['id']);
+                            $newPet->addMedia($media->getPath())
+                                ->preservingOriginal()
+                                ->withProperties($props)
+                                ->toMediaCollection($media->collection_name);
+                        });
+                }
+                break;
+        }
     }
 
     public function reset($code)
@@ -360,7 +368,7 @@ class SettingsController extends Controller
 
     public function updateSetting($code)
     {
-       
+
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
