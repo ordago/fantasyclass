@@ -182,12 +182,17 @@ class ChallengesController extends Controller
                     $student->challenges->push(['pivot' => ['count' => null, 'evaluated' => 0, 'student_id' => $student->id]]);
                 }
             });
-
+            
             return $students;
         } else if ($data['type'] == 1) {
             $groups = $class->grouping()->first()->groups()->with(['challenges' => function ($query) use ($data) {
                 $query->where('challenges.id', '=', $data['challenge']);
             }])->get();
+            $groups->each(function ($group) {
+                if (!count($group->challenges)) {
+                    $group->challenges->push(['pivot' => ['count' => null, 'evaluated' => 0, 'group_id' => $group->id]]);
+                }
+            });
             return $groups;
         } else {
             return $class->students()->get();
@@ -283,15 +288,57 @@ class ChallengesController extends Controller
     }
     public function updateGroups()
     {
-        // $data = request()->validate([
-        //     'challenge' => ['numeric', 'required'],
-        //     'students' => ['array', 'required'],
-        // ]);
-        // $challenge = Challenge::where('id', '=', $data['challenge'])->firstOrFail();
+        $data = request()->validate([
+            'challenge' => ['numeric', 'required'],
+            'groups' => ['array', 'required'],
+        ]);
+        $challenge = Challenge::where('id', '=', $data['challenge'])->firstOrFail();
 
-        // foreach ($data['students'] as $std) {
-        //     dump($std['challenges'][0]['pivot']);
-        // }
+        foreach ($data['groups'] as $group) {
+            $newInfo = $group['challenges'][0]['pivot'];
+            $group = Group::where('id', $group['id'])->firstOrFail();
+            $class = Classroom::where('id', '=', $group->grouping->classroom_id)->firstOrFail();
+            $this->authorize('update', $class);
+
+            $cards = [];
+            $challenge_group = $group->challenges()->where('challenge_id', $challenge->id)->first();
+            $mult = $newInfo['count'];
+            if ($challenge_group) {
+                 if ($challenge_group->pivot->count === $newInfo['count'])
+                    continue;
+                else if($challenge_group->pivot->count == $newInfo['count'])
+                    $mult = 0;
+                else if ($challenge_group->pivot->count > $newInfo['count'])
+                    $mult = -1;
+                else
+                    $mult = 1;
+            }
+
+
+            dump($newInfo['count']);
+            // Update challenges in student
+            if ($newInfo['count'] !== null) {
+                dump('hit');
+                $group->challenges()->sync([$challenge->id => ['count' => $newInfo['count']]], false);
+            } else {
+                $group->challenges()->detach($challenge->id);
+            }
+        
+            if ($mult != 0) {
+                if ($mult == 1) {
+                    if ($challenge->auto_assign == 1) {
+                        for ($i = 0; $i < $challenge->cards; $i++) {
+                            array_push($cards, CardsController::getRandomCard($class->code));
+                        }
+                    }
+                }
+                // $student->assignChallenge($challenge, $mult, $cards);
+                foreach ($group->students as $student) {
+                    $student->assignChallenge($challenge, $mult, $cards);
+                }
+            }
+
+        }
     }
 
     public function toggle()

@@ -426,7 +426,6 @@ class Student extends Model implements HasMedia
                 }
             }
         }
-        dump($challenge->objects);
         if ($challenge->objects > 0 && $mult == 1) {
             $class = Classroom::find($challenge->classroom());
 

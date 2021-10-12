@@ -15,6 +15,9 @@ class AddChallengesInfo extends Migration
         Schema::table('challenge_student', function ($table) {
             $table->tinyInteger('evaluated')->default(1)->after('count');
         });
+        Schema::table('challenge_group', function ($table) {
+            $table->tinyInteger('evaluated')->default(1)->after('count');
+        });
 
     }
 
@@ -26,6 +29,9 @@ class AddChallengesInfo extends Migration
     public function down()
     {
         Schema::table('challenge_student', function ($table) {
+            $table->dropColumn('evaluated');
+        });
+        Schema::table('challenge_group', function ($table) {
             $table->dropColumn('evaluated');
         });
 

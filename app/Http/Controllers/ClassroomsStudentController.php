@@ -478,7 +478,7 @@ class ClassroomsStudentController extends Controller
                     ->whereIn('challenge_group.group_id', $groups);
             })
             ->selectRaw('challenge_group.group_id, challenges.pinned, challenges.id, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
-            ->get()->all();
+            ->get();
 
         $challenges = $challenges->merge($groupChallenges);
         foreach ($challenges as $key => $challenge) {

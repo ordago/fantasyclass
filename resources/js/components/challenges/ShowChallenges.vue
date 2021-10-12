@@ -103,7 +103,14 @@
             >
               <div class="p-3 border rounded">
                 <div class="columns">
-                  <div class="column is-narrow is-flex has-all-centered is-hidden-tablet">
+                  <div
+                    class="
+                      column
+                      is-narrow is-flex
+                      has-all-centered
+                      is-hidden-tablet
+                    "
+                  >
                     <img
                       :src="student.avatar"
                       width="32px"
@@ -115,17 +122,6 @@
                   </div>
                   <div class="column is-narrow is-flex has-all-centered">
                     <div class="field mb-0">
-                      <!-- <b-switch
-                    v-if="student.challenges"
-                    :value="student.challenges.length ? 1 : 0"
-                    true-value="1"
-                    false-value="0"
-                    @input="toggleChallenge(student.id)"
-                    type="is-info"
-                    :disabled="checkDisabled(student)"
-                    >{{ student.name }}</b-switch
-                  > -->
-
                       <b-field>
                         <b-radio-button
                           v-model="student.challenges[0].pivot.count"
@@ -152,12 +148,19 @@
                           type="is-success is-light"
                         >
                           <b-icon icon="check" icon-pack="fas"></b-icon>
-                          {{ trans.get('challenges.completed') }}
+                          {{ trans.get("challenges.completed") }}
                         </b-radio-button>
                       </b-field>
                     </div>
                   </div>
-                  <div class="column is-narrow is-flex has-all-centered is-hidden-mobile">
+                  <div
+                    class="
+                      column
+                      is-narrow is-flex
+                      has-all-centered
+                      is-hidden-mobile
+                    "
+                  >
                     <img
                       :src="student.avatar"
                       width="32px"
@@ -173,7 +176,85 @@
           </div>
         </div>
         <div v-if="currentChallenge.type == 1">
-          <div v-for="group in groups" class="p-3" :key="group.id">
+          <!-- <button class="button is-info" @click="selectAll()">
+            {{ trans.get("utils.select_all") }}
+          </button> -->
+          <button class="button is-success" @click="sendGroupChallenge">
+            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
+          </button>
+          <div class="columns is-1 is-multiline p-3 mt-2">
+           <div v-for="group in groups" class="p-3" :key="group.id">
+              <div class="p-3 border rounded">
+                <div class="columns">
+                  <div
+                    class="
+                      column
+                      is-narrow is-flex
+                      has-all-centered
+                      is-hidden-tablet
+                    "
+                  >
+                    <img
+                      :src="group.logo"
+                      width="32px"
+                      alt="student image"
+                    />
+                    <span class="ml-1"
+                      ><strong>{{ group.name }}</strong></span
+                    >
+                  </div>
+                  <div class="column is-narrow is-flex has-all-centered">
+                    <div class="field mb-0">
+                      <b-field>
+                        <b-radio-button
+                          v-model="group.challenges[0].pivot.count"
+                          :native-value="0"
+                          type="is-danger is-light"
+                        >
+                          <b-icon icon="times" icon-pack="fas"></b-icon>
+                        </b-radio-button>
+
+                        <b-radio-button
+                          v-model="group.challenges[0].pivot.count"
+                          :native-value="null"
+                          type="is-dark is-light"
+                        >
+                          <span>-</span>
+                        </b-radio-button>
+
+                        <b-radio-button
+                          v-model="group.challenges[0].pivot.count"
+                          :native-value="1"
+                          type="is-success is-light"
+                        >
+                          <b-icon icon="check" icon-pack="fas"></b-icon>
+                          {{ trans.get("challenges.completed") }}
+                        </b-radio-button>
+                      </b-field>
+                    </div>
+                  </div>
+                  <div
+                    class="
+                      column
+                      is-narrow is-flex
+                      has-all-centered
+                      is-hidden-mobile
+                    "
+                  >
+                    <img
+                      :src="group.logo"
+                      width="32px"
+                      alt="student image"
+                    />
+                    <span class="ml-1"
+                      ><strong>{{ group.name }}</strong></span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div v-for="group in groups" class="p-3" :key="group.id">
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
                 <div class="field">
@@ -188,7 +269,7 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </b-modal>
@@ -223,9 +304,6 @@ export default {
     };
   },
   methods: {
-    getCheck(student) {
-      return student.challenges.length ? 1 : 0;
-    },
     deleteChallengeGroup(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -311,10 +389,23 @@ export default {
           students: this.students,
         })
         .then((response) => {
-           this.$toast(this.trans.get("success_error.update_success"), {
-              type: "success",
-            });
-            this.isModalActive = false;
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+          this.isModalActive = false;
+        });
+    },
+    sendGroupChallenge() {
+      axios
+        .post("/classroom/" + this.code + "/challenges/groups/update", {
+          challenge: this.currentChallenge.id,
+          groups: this.groups,
+        })
+        .then((response) => {
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+          // this.isModalActive = false;
         });
     },
     toggleChallenge(id, force = false) {
