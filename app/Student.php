@@ -169,7 +169,7 @@ class Student extends Model implements HasMedia
 
     public function items()
     {
-        return $this->belongsToMany(Item::class)->withPivot('count');
+        return $this->belongsToMany(Item::class)->withPivot('count')->withTimestamps();
     }
 
     public function equipment()
@@ -402,16 +402,13 @@ class Student extends Model implements HasMedia
                     'info' => $card->title,
                 ]);
             }
-        } else if($mult == -1) {
-            for($i = 0; $i < $challenge->cards; $i++) {
-                $cards = $this->cards()->orderBy('id', 'desc')->take(2)->get();
-                foreach ($cards as $card) {
-                    dump($card->id);
-                    $card = DB::table('card_student')->where('card_id', $card->id)->where('student_id', $this->id)->orderBy('id', 'desc')->take(2)->get()->delete();
-                    // $this->cards()->detach($card->id)
-                }
-                // dump($cards);
-            }
+        } else if ($mult == -1) {
+            if ($challenge->cards)
+                $item = DB::table("card_student")
+                    ->where('student_id', '=', $this->id)
+                    ->orderBy('id', 'desc')
+                    ->take($challenge->cards)
+                    ->delete();
         }
 
         if ($challenge->items) {
@@ -427,6 +424,7 @@ class Student extends Model implements HasMedia
                 }
             }
         }
+        dump($challenge->objects);
         if ($challenge->objects > 0 && $mult == 1) {
             $class = Classroom::find($challenge->classroom());
 
@@ -626,21 +624,21 @@ class Student extends Model implements HasMedia
         }
         if ($prop == "xp") {
             $hp = $this->hp;
-            if($this->fresh()->getLevelAttribute())
-            if ($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
-                settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
-                if (settings()->get('level_up_health', 0)) {
-                    $hp = min($this->hp + settings()->get('level_up_health', 0), 100);
-                    $this->hp = $hp;
-                    $this->save();
-                    LogEntry::create([
-                        'type' => 'hp',
-                        'value' => $hp,
-                        'student_id' => $this->id,
-                        'message' => 'level_up',
-                    ]);
+            if ($this->fresh()->getLevelAttribute())
+                if ($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
+                    settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
+                    if (settings()->get('level_up_health', 0)) {
+                        $hp = min($this->hp + settings()->get('level_up_health', 0), 100);
+                        $this->hp = $hp;
+                        $this->save();
+                        LogEntry::create([
+                            'type' => 'hp',
+                            'value' => $hp,
+                            'student_id' => $this->id,
+                            'message' => 'level_up',
+                        ]);
+                    }
                 }
-            }
             return [
                 'hp' => $hp,
                 'xp' => $value,
@@ -661,7 +659,7 @@ class Student extends Model implements HasMedia
     }
     public function setBasicEquipment()
     {
-        if(!$this->character_id)
+        if (!$this->character_id)
             return false;
         $this->equipment()->detach($this->equipment);
         switch ($this->character_id) {

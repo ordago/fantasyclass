@@ -134,7 +134,6 @@ class ClassroomsController extends Controller
 
         $new = $class->replicate();
         $new->code = $this->reference(8, 'code');
-        dump($new->code);
         $new->enrollment_code = $this->reference(5, 'enrollment_code');
         $new->share_code = $this->reference(8, 'share_code');
         $new->name = $new->name . " (copy)";

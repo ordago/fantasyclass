@@ -252,13 +252,14 @@ class ChallengesController extends Controller
             $challenge_student = $student->challenges()->where('challenge_id', $challenge->id)->first();
             $mult = $newInfo['count'];
             if ($challenge_student) {
-                // dump("See if changes");
-                if ($challenge_student->pivot->count === $newInfo['count'])
+                 if ($challenge_student->pivot->count === $newInfo['count'])
                     continue;
+                else if($challenge_student->pivot->count == $newInfo['count'])
+                    $mult = 0;
                 else if ($challenge_student->pivot->count > $newInfo['count'])
                     $mult = -1;
                 else
-                    $mult = 0;
+                    $mult = 1;
                 // dump($challenge_student->pivot->count);
             }
             // Update challenges in student
@@ -267,10 +268,8 @@ class ChallengesController extends Controller
             } else {
                 $student->challenges()->detach($challenge->id);
             }
-            // if($challenge_student)
-            // dump($mult);
+        
             if ($mult != 0) {
-                dump("updating " . $mult);
                 if ($mult == 1) {
                     if ($challenge->auto_assign == 1) {
                         for ($i = 0; $i < $challenge->cards; $i++) {
