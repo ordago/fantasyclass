@@ -840,12 +840,13 @@ export default {
       this.isRandomGroupActive = true;
     },
     getRandomCard() {
+      this.isCardModalActive = false;
       axios
         .get("/classroom/" + this.classroom.code + "/card/random")
         .then((response) => {
           this.randomCard = response.data;
-          this.isCardModalActive = true;
           this.$forceUpdate();
+          this.isCardModalActive = true;
         });
     },
     showClassCode() {

@@ -61,6 +61,7 @@
             v-if="admin"
             @click="
               $parent.getRandomCard();
+              $forceUpdate();
               showCard = false;
             "
           >
@@ -219,6 +220,7 @@ export default {
         })
         .then((response) => {
           this.$parent.getRandomCard();
+          this.$forceUpdate();
           this.showCard = false;
         });
     },
