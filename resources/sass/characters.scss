@@ -26,6 +26,15 @@
     top: -33px !important;
 
 }
+.koi-small {
+    transform: scale(0.8) !important;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -webkit-transform-origin: center center;
+    transform-origin: center center;
+    position: relative;
+    top: 11px;
+}
 
 
 .character-container {
@@ -1782,14 +1791,14 @@
 
     .ionare-body {
         position: absolute;
-        top: -10px;
+        top: -5px;
         left: 45px;
         z-index: 3;
     }
 
     .ionare-tail {
         position: absolute;
-        top: -4px;
+        top: 1px;
         left: 103px;
         z-index: 3;
         transform-origin: top left;
@@ -1798,21 +1807,21 @@
 
     .ionare-weapons {
         position: absolute;
-        top: -15px;
-        left: -17px;
+        top: -2px;
+        left: -4px;
         z-index: 4;
     }
 
     .character:hover .ionare-whip {
         opacity: 1.0;
-        top: -17px;
-        left: -16px;
+        top: 21px;
+        left: 28px;
         width: 202px;
     }
 
     .ionare-whip {
         position: absolute;
-        top: 25px;
+        top: 30px;
         left: 25px;
         z-index: 4;
         opacity: 0;
@@ -1822,21 +1831,22 @@
 
     .ionare-tatoo {
         position: absolute;
-        top: 50px;
+        top: 55px;
         left: 60px;
         z-index: 4;
     }
 
     .mundaraka-body {
         position: absolute;
-        top: 29px;
+        height: 212px;
+        top: 34px;
         left: 12px;
         z-index: 3;
     }
 
     .mundaraka-cap {
         position: absolute;
-        top: -5px;
+        top: 0px;
         left: -16px;
         z-index: 4;
         transform-origin: center bottom;
@@ -1846,7 +1856,7 @@
 
     .mundaraka-head {
         position: absolute;
-        top: -7px;
+        top: -2px;
         left: -16px;
         z-index: 2;
         transform-origin: center bottom;
@@ -1856,7 +1866,7 @@
 
     .mundaraka-surf {
         position: absolute;
-        top: -17px;
+        top: -12px;
         left: 58px;
         z-index: 4;
         animation: surfmove 5s ease infinite;
@@ -1880,7 +1890,7 @@
 
     .laiona-eye {
         position: absolute;
-        top: 6px;
+        top: 16px;
         left: 33px;
         z-index: 5;
         height: 12px;
@@ -1917,28 +1927,28 @@
 
     .laiona-belt {
         position: absolute;
-        top: 91px;
+        top: 101px;
         left: 20px;
         z-index: 2;
     }
 
     .laiona-body {
         position: absolute;
-        top: -19px;
+        top: -9px;
         left: -10px;
         z-index: 1;
     }
 
     .ganabia-body {
         position: absolute;
-        top: -30px;
+        top: -20px;
         left: -17px;
         z-index: 3;
     }
 
     .ganabia-hand {
         position: absolute;
-        top: -17px;
+        top: -7px;
         left: 8px;
         z-index: 2;
         animation: hello 5s linear infinite;
@@ -1951,7 +1961,7 @@
 
     .ganabia-trident {
         position: absolute;
-        top: -19px;
+        top: -9px;
         left: 39px;
         z-index: 1;
         transition: all .2s;
@@ -1964,21 +1974,21 @@
 
     .ganabia-hair {
         position: absolute;
-        top: -25px;
+        top: -15px;
         left: 34px;
         z-index: 3;
     }
 
     .delumion-body {
         position: absolute;
-        top: -9px;
+        top: 1px;
         left: 19px;
         z-index: 2;
     }
 
     .delumion-staff {
         position: absolute;
-        top: -60px;
+        top: -50px;
         left: 69px;
         z-index: 3;
         animation: delumionstaff 1s linear infinite;
@@ -1991,7 +2001,7 @@
 
     .delumion-cape {
         position: absolute;
-        top: 34px;
+        top: 44px;
         left: 2px;
         z-index: 1;
         transform-origin: top center;
@@ -2000,15 +2010,15 @@
 
     .gespair-body {
         position: absolute;
-        top: -24px;
+        top: 14px;
         left: -11px;
         z-index: 2;
     }
 
     .gespair-arms {
         position: absolute;
-        top: 68px;
-        left: 51px;
+        top: 90px;
+        left: 31px;
         z-index: 3;
     }
 
@@ -2018,8 +2028,8 @@
 
     .gespair-tail {
         position: absolute;
-        top: 58px;
-        left: 88px;
+        top: 63px;
+        left: 55px;
         z-index: 1;
         transform-origin: bottom left;
         animation: gespairtail 8s infinite linear;
@@ -2027,8 +2037,8 @@
 
     .gespair-tail-left {
         position: absolute;
-        top: 93px;
-        left: -5px;
+        top: 68px;
+        left: -4px;
         z-index: 1;
         transform-origin: bottom left;
         animation: gespairtail 8s infinite linear;
@@ -2185,7 +2195,38 @@
         }
     }
 
-
+    .koi-pet-ground {
+        position: absolute;
+        top: 90px;
+        left: 78px;
+        animation-name: hmovement;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+    }
+    .koi-pet-ground-ionare {
+        position: absolute;
+        top: 90px;
+        left: -17px;
+        animation-name: hmovement;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+    }
+    .koi-pet-fly {
+        position: absolute;
+        top: 3px;
+        left: 88px;
+        animation-name: hmovement;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+    }
+    .koi-pet-fly-ionare {
+        position: absolute;
+        top: 3px;
+        left: -17px;
+        animation-name: hmovement;
+        animation-duration: 10s;
+        animation-iteration-count: infinite;
+    }
 
     .character:hover .mundaraka-surf {
         animation: none;
@@ -2195,7 +2236,7 @@
     .character:hover .mundaraka-body:not(.not-surf),
     .character:hover .mundaraka-cap,
     .character:hover .mundaraka-head:not(.not-surf) {
-        width: 1px;
+        height: 1px;
     }
 
     .character:hover .mundaraka-head {

@@ -1,8 +1,9 @@
 # Changelog
-## v1.84 Beta (17/10/2021)
+## v1.84 Beta (18/10/2021)
 ### Added
 - Challenges will have 3 states: not passed (red), not defined (gray), passed (green).
 - Import without deleting current elements.
+- New Koi Theme added (Thanks to Jujo)
 
 ### Changed
 - Better mnagement in challenges when changing from passed to not passed.
