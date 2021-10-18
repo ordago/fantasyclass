@@ -75,8 +75,8 @@ class StudentController extends Controller
                     $mail = null;
                 } else $mail = $student['email'];
 
-                if(isset($student['byPassValidation']) && $student['byPassValidation'] == 1)
-                    $verified = now();
+                // if(isset($student['byPassValidation']) && $student['byPassValidation'] == 1)
+                //     $verified = now();
 
                 $pass = strtolower(Str::random(5));
                 $user = User::create([
