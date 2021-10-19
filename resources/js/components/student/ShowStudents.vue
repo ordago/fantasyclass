@@ -659,6 +659,7 @@
     <Videochat v-if="isVideoChatActive" :groups="groups" :code="classroom.code">
     </Videochat>
     <random-card
+      ref="showCard"
       :card="randomCard"
       :admin="1"
       :code="classroom.code"
@@ -840,12 +841,11 @@ export default {
       this.isRandomGroupActive = true;
     },
     getRandomCard() {
-      this.isCardModalActive = false;
       axios
         .get("/classroom/" + this.classroom.code + "/card/random")
         .then((response) => {
           this.randomCard = response.data;
-          this.$forceUpdate();
+          this.$refs.showCard.count++;
           this.isCardModalActive = true;
         });
     },

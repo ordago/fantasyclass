@@ -20,6 +20,7 @@
           </template>
           <template v-slot:back>
             <show-card
+              :key="count"
               :card="card"
               :admin="false"
               :code="code"
@@ -141,6 +142,7 @@ export default {
       studentSelected: 0,
       groupSelected: 0,
       flipped: false,
+      count: 0,
     };
   },
   components: {
@@ -219,6 +221,7 @@ export default {
           card: card,
         })
         .then((response) => {
+          this.cardLoaded = false;
           this.$parent.getRandomCard();
           this.$forceUpdate();
           this.showCard = false;
