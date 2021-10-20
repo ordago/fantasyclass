@@ -1,4 +1,8 @@
 # Changelog
+## v1.85 Beta (XX/10/2021)
+### Added
+- Sounds in timer. Improved size.
+
 ## v1.84 Beta (18/10/2021)
 ### Added
 - Challenges will have 3 states: not passed (red), not defined (gray), passed (green).

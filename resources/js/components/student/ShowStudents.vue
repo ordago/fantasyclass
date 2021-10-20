@@ -604,12 +604,21 @@
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">Countdown</p>
+          <p class="modal-card-title is-flex is-center-vertically">
+            {{ trans.get("menu.battles") }}
+            <audio :src="'/music/' + track" loop controls></audio>
+            <select class="select" v-model="track">
+              <option v-for="(trackS, index) in music" :key="index">
+                {{ trackS }}
+              </option>
+            </select>
+          </p>
         </header>
         <section
           class="modal-card-body is-flex has-all-centered"
           style="align-items: flex-start"
         >
-          <count-down></count-down>
+          <count-down :width="500"></count-down>
         </section>
         <footer class="modal-card-foot">
           <button
@@ -730,6 +739,42 @@ export default {
       firstLoad: true,
       announcement: "",
       max: process.env.MIX_MAX_STUDENTS,
+      track: "Battle theme.mp3",
+      music: [
+        "A legend will rise.mp3",
+        "Happy adveture.mp3",
+        "Action game.mp3",
+        "Kings feast.mp3",
+        "Action track.mp3",
+        "Lonelyhood.ogg",
+        "Adventuring song.mp3",
+        "Mega wall.mp3",
+        "Battle theme.mp3",
+        "Minstrel dance.mp3",
+        "Battle.mp3",
+        "Mythica.mp3",
+        "Boss battle.mp3",
+        "Out there.ogg",
+        "Carnival rides.ogg",
+        "Prepare your swords.mp3",
+        "Dark rainy night.ogg",
+        "Tavern.ogg",
+        "Desert.ogg",
+        "The Bards tale.mp3",
+        "Enchanted tiki.mp3",
+        "The field of dreams.mp3",
+        "Epic Boss battle.mp3",
+        "The Old Tower Inn.mp3",
+        "Eye of the storm.mp3",
+        "Tower defense.mp3",
+        "Fantasy Choir 1.mp3",
+        "Town TPG.mp3",
+        "Fantasy Choir 2.mp3",
+        "Wow chapter 1.ogg",
+        "Fantasy Choir 3.mp3",
+        "Zombies are coming.ogg",
+        "Fantasy orchestral theme.mp3",
+      ],
     };
   },
   methods: {
