@@ -126,14 +126,12 @@
                         <b-radio-button
                           v-model="student.challenges[0].pivot.count"
                           :native-value="0"
-                          :disabled="checkDisabled(student)"
                           type="is-danger is-light"
                         >
                           <b-icon icon="times" icon-pack="fas"></b-icon>
                         </b-radio-button>
 
                         <b-radio-button
-                          :disabled="checkDisabled(student)"
                           v-model="student.challenges[0].pivot.count"
                           :native-value="null"
                           type="is-dark is-light"
