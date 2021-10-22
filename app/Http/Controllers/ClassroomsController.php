@@ -15,6 +15,7 @@ use App\Item;
 use App\Rules;
 use App\Student;
 use App\Tag;
+use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -575,6 +576,17 @@ class ClassroomsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
+
+        // ClassroomUser::where()
+        ClassroomUser::where('user_id', Auth()->user()->id)
+        ->where('classroom_id', $class->id)
+        ->where('role', '>', 0)->first()->touch();
+
+        // DB::table('classroom_user')
+        // ->where('user_id', Auth()->user()->id)
+        // ->where('classroom_id', $class->id)
+        // ->where('role', '>', 0)
+        // ->first()->touch();
 
         session()->forget('bypass_student');
 

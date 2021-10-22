@@ -1599,6 +1599,15 @@ class ClassroomsStudentController extends Controller
             'message' => 'shop',
         ]);
 
+        $from['title'] = __("notifications.item");
+        
+        
+            $from['datetime'] = Carbon::now();
+            $from['name'] = $student->name;
+            $from['username'] = $student->username;
+    
+            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.item", $item->icon , $from, "item", $student->id);
+
         return [
             "message" => " " . __('success_error.equipment_success'),
             "icon" => "check",

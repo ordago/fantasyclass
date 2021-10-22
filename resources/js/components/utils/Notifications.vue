@@ -145,6 +145,7 @@
               <i
                 class="mr-2"
                 :class="{
+                  'fad fa-store': notification.data.type == 'item',
                   'fad fa-comment': notification.data.type == 'comment',
                   'fad fa-paper-plane': notification.data.type == 'message',
                   'fad fa-comment-alt-lines': notification.data.type == 'notification',
@@ -193,13 +194,35 @@
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
               ></strong
-              ><span v-if="notification.data.from.name != ''">:</span>
-              <span v-html="trans.get(notification.data.content)"></span>
+              >
+              <span v-if="notification.data.from.name != ''">:</span>
+              <img
+                :src="notification.data.content"
+                v-if="notification.data.type == 'item'"
+                width="20px"
+                alt="avatar"
+              />
+              <span v-else v-html="trans.get(notification.data.content)"></span>
             </div>
           </div>
           <footer class="card-footer">
             <a
               v-if="
+                notification.data.type == 'item'
+              "
+              :href="
+                '/classroom/' +
+                notification.data.classroom +
+                '/student/' +
+                notification.data.section + 
+                '/section/1'
+              "
+              class="card-footer-item has-background-link-light has-text-dark"
+              >{{ trans.get("notifications.go_to") }}
+              <i class="fad fa-user ml-1"></i>
+            </a>
+            <a
+              v-else-if="
                 notification.data.user == 'student' &&
                 notification.data.type == 'chat'
               "

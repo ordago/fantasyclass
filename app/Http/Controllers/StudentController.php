@@ -220,7 +220,7 @@ class StudentController extends Controller
         ];
     }
 
-    public function show($code, $id)
+    public function show($code, $id, $section = false)
     {
         $student = Student::where('id', $id)->with(['equipment', 'pets', 'character', 'skills', 'badges', 'classroom', 'behaviours', 'logEntries', 'items'])->first();
 
@@ -289,7 +289,7 @@ class StudentController extends Controller
         $student->unsetRelation('grades');
         $student->grades = $student->grades()->whereNull('from_student_id')->get();
 
-        return view('students.show', compact('student', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
+        return view('students.show', compact('student', 'section', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
 
     public static function getIndividualReport($id, $class)

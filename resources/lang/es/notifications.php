@@ -29,5 +29,6 @@ return [
     'mark_challenge' => 'Ha completado un desafío: ',
     'new_collectionable' => 'Nuevo coleccionable',
     'challenge_password' => 'Ha superado el reto con contraseña. ',
+    'item' => 'Ha comprado un objeto',
 
 ];

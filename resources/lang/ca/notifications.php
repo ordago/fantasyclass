@@ -30,5 +30,6 @@ return [
     'mark_challenge' => 'Ha completat un repte: ',
     'new_collectionable' => 'Nou col·leccionable',
     'challenge_password' => 'Ha superat el repte amb contrasenya. ',
+    'item' => 'Ha comprat un objecte',
 
 ];

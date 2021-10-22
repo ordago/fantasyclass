@@ -80,6 +80,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/students/update', 'StudentController@update');
         Route::post('/students/toggle', 'StudentController@toggle');
         Route::get('/{code}/student/{id}', 'StudentController@show');
+        Route::get('/{code}/student/{id}/section/{section}', 'StudentController@show');
         Route::post('/{code}/student/name', 'StudentController@updateName');
         Route::post('/{code}/student/changecharacter', 'StudentController@changeCharacter');
         Route::delete('/student/behaviour', 'StudentController@deleteBehaviour');
