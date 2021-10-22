@@ -1639,7 +1639,7 @@
                     </div>
                     <div class="column is-narrow is-flex has-all-centered p-2">
                       <span
-                        v-if="collectionable.student.id && student.id && collectionable.student.id != student.id"
+                        v-if="collectionable.id && collectionable.to.id && collectionable.student.id && student.id && collectionable.student.id != student.id"
                         v-tippy
                         :content="getMessageExchange(collectionable.to.id)"
                       >
