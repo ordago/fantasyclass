@@ -1655,7 +1655,7 @@
                       <button
                         class="button is-danger"
                         @click="removeExchange(collectionable.id)"
-                        v-else
+                        v-else-if="collectionable.student.id == student.id"
                       >
                         <i class="fas fa-trash-alt"></i>
                       </button>
