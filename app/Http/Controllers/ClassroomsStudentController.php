@@ -361,7 +361,7 @@ class ClassroomsStudentController extends Controller
                 } else {
                     if ($current->is_conquer == 1) {
                         if ($current->type == 0) {
-                            if ($student->challenges->contains($current->id)) {
+                            if ($student->challenges->contains($current->id) && $student->challenges()->where('challenge_id', $current->id)->first()->pivot->count == 1) {
                                 $value['completed'] = true;
                             } else $value['completed'] = false;
                         } else {

@@ -73,7 +73,7 @@
                   >
                     <i class="far fa-check"></i>
                   </span>
-                  <span class="has-text-danger" v-else>
+                  <span v-else class="has-text-danger">
                     <i class="far fa-times"></i>
                   </span>
                 </span>
