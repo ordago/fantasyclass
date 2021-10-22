@@ -30,5 +30,7 @@ return [
     'new_collectionable' => 'Nuevo coleccionable',
     'challenge_password' => 'Ha superado el reto con contraseña. ',
     'item' => 'Ha comprado un objeto',
+    'use_item' => 'Ha usado un objeto',
+    'all' => 'Todas',
 
 ];

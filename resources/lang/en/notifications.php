@@ -30,6 +30,8 @@ return [
     'new_collectionable' => 'New collectible',
     'challenge_password' => 'Has passed a password challenge. ',
     'item' => 'Has bought an object',
+    'use_item' => 'Has used an object',
+    'all' => 'All',
 
 
 ];

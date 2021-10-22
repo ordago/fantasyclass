@@ -1734,6 +1734,15 @@ class ClassroomsStudentController extends Controller
             $xp = $xp['xp'];
         }
 
+        $from['title'] = __("notifications.use_item");
+        
+        
+        $from['datetime'] = Carbon::now();
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.use_item", $item->icon , $from, "item", $student->id);
+
+
         return ['xp' => $xp, 'hp' => $item->hp + $extra];
     }
 

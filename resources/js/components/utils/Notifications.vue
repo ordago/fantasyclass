@@ -15,7 +15,9 @@
       <template v-slot:trigger>
         <div class="cursor-pointer button has-background-danger-light">
           <i class="fad fa-video" style="font-size: 1.25em"></i>
-          <span class="tag is-danger tag-notif ml-1">{{ videochats.length }}</span>
+          <span class="tag is-danger tag-notif ml-1">{{
+            videochats.length
+          }}</span>
         </div>
       </template>
       <span>
@@ -134,10 +136,147 @@
         </button>
         <button class="button"><i class="fal fa-times"></i></button>
       </div>
-      <div class="pt-6" v-if="show == 0">
+      <div class="pt-6 pl-1">
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'all';
+            $forceUpdate();
+          "
+        >
+          {{trans.get('notifications.all')}}
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'item';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-store"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'comment';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-comment"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'message';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-paper-plane"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'notification';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-comment-alt-lines"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'chat';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-comments-alt"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'mark_card';
+            $forceUpdate();
+          "
+        >
+          <i class="fak fa-deck"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'challenge';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-pen-fancy"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'new_behaviour';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-heart"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'money_sent';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-coins"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'post';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-feather"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'skill';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-sparkles"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'videochat';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-video"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'new_collectionable';
+            $forceUpdate();
+          "
+        >
+          <i class="fak fa-collection"></i>
+        </button>
+        <button
+          class="button is-rounded fs-85"
+          @click="
+            typeNotif = 'invitation';
+            $forceUpdate();
+          "
+        >
+          <i class="fad fa-user-graduate"></i>
+        </button>
+      </div>
+      <div class="pt-1" v-if="show == 0">
         <div
           class="card my-1"
-          v-for="(notification, index) in notifications"
+          v-for="(notification, index) in filteredNotifications"
           :key="notification.id"
         >
           <header class="card-header">
@@ -145,10 +284,13 @@
               <i
                 class="mr-2"
                 :class="{
-                  'fad fa-store': notification.data.type == 'item',
+                  'fad fa-store':
+                    notification.data.type == 'item' ||
+                    notification.data.type == 'use_item',
                   'fad fa-comment': notification.data.type == 'comment',
                   'fad fa-paper-plane': notification.data.type == 'message',
-                  'fad fa-comment-alt-lines': notification.data.type == 'notification',
+                  'fad fa-comment-alt-lines':
+                    notification.data.type == 'notification',
                   'fad fa-comments-alt': notification.data.type == 'chat',
                   'fak fa-deck': notification.data.type == 'mark_card',
                   'fad fa-pen-fancy': notification.data.type == 'challenge',
@@ -157,7 +299,8 @@
                   'fad fa-feather': notification.data.type == 'post',
                   'fad fa-sparkles': notification.data.type == 'skill',
                   'fad fa-video': notification.data.type == 'videochat',
-                  'fak fa-collection': notification.data.type == 'new_collectionable',
+                  'fak fa-collection':
+                    notification.data.type == 'new_collectionable',
                   'fad fa-user-graduate':
                     notification.data.type == 'invitation',
                 }"
@@ -193,12 +336,14 @@
                 v-tippy
                 v-html="notification.data.from.name"
                 :content="notification.data.from.name"
-              ></strong
-              >
+              ></strong>
               <span v-if="notification.data.from.name != ''">:</span>
               <img
                 :src="notification.data.content"
-                v-if="notification.data.type == 'item'"
+                v-if="
+                  notification.data.type == 'item' ||
+                  notification.data.type == 'use_item'
+                "
                 width="20px"
                 alt="avatar"
               />
@@ -208,13 +353,14 @@
           <footer class="card-footer">
             <a
               v-if="
-                notification.data.type == 'item'
+                notification.data.type == 'item' ||
+                notification.data.type == 'use_item'
               "
               :href="
                 '/classroom/' +
                 notification.data.classroom +
                 '/student/' +
-                notification.data.section + 
+                notification.data.section +
                 '/section/1'
               "
               class="card-footer-item has-background-link-light has-text-dark"
@@ -390,6 +536,7 @@ export default {
       fullheight: true,
       fullwidth: false,
       cards: [],
+      typeNotif: "all",
     };
   },
   methods: {
@@ -469,6 +616,14 @@ export default {
   components: {
     ShowDocument,
   },
+  computed: {
+    filteredNotifications: function () {
+      if (this.typeNotif == "all") return this.notifications;
+      return this.notifications.filter((notification) => {
+        return notification.data.type == this.typeNotif;
+      });
+    },
+  },
 };
 </script>
 <style lang="scss">
@@ -478,5 +633,8 @@ export default {
   top: 5px;
   left: -1px;
   padding: 0 6px 0 6px;
+}
+.fs-85 {
+  font-size: 0.85em;
 }
 </style>
