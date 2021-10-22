@@ -282,11 +282,12 @@ class ClassroomsStudentController extends Controller
         if ($challenge->challenge_required) {
             $challenge_required = Challenge::find($challenge->challenge_required);
             if ($challenge_required->type == 0) {
-                if (!$student->challenges->contains($challenge->challenge_required)) {
+                if (!$student->challenges->contains($challenge->challenge_required) || $student->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0) {
                     return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
                 }
             } else {
-                if ($student->groups->first() && !$student->groups->first()->challenges->contains($challenge->challenge_required)) {
+                $group = $student->groups->first();
+                if ($group && (!$group->challenges->contains($challenge->challenge_required) || $group->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0 )) {
                     return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
                 }
             }
@@ -360,7 +361,7 @@ class ClassroomsStudentController extends Controller
                 } else {
                     if ($current->is_conquer == 1) {
                         if ($current->type == 0) {
-                            if ($student->challenges->contains($current->id)) {
+                            if ($student->challenges->contains($current->id) && $student->challenges()->where('challenge_id', $current->id)->first()->pivot->count == 1) {
                                 $value['completed'] = true;
                             } else $value['completed'] = false;
                         } else {
@@ -1032,6 +1033,9 @@ class ClassroomsStudentController extends Controller
         if ($challenge->completion == 1) {
             if (!$challengeStudent) {
                 $student->challenges()->attach($challenge->id);
+                $update = true;
+            } else if($challengeStudent->pivot->count == 0) {
+                $student->challenges()->sync([$challenge->id => ['count' => 1]], false);
                 $update = true;
             }
         } else if ($challenge->completion == 2) {

@@ -1639,7 +1639,7 @@
                     </div>
                     <div class="column is-narrow is-flex has-all-centered p-2">
                       <span
-                        v-if="collectionable.student.id != student.id"
+                        v-if="collectionable && collectionable.to && collectionable.student && student && collectionable.student.id != student.id"
                         v-tippy
                         :content="getMessageExchange(collectionable.to.id)"
                       >
@@ -1655,7 +1655,7 @@
                       <button
                         class="button is-danger"
                         @click="removeExchange(collectionable.id)"
-                        v-else
+                        v-else-if="collectionable.student.id == student.id"
                       >
                         <i class="fas fa-trash-alt"></i>
                       </button>

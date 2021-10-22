@@ -1,6 +1,7 @@
 # Changelog
-## v1.85 Beta (XX/10/2021)
-### Added
+## v1.85 Beta (22/10/2021)
+### Changed
+- Fixes in collectibles and challenges
 - Sounds in timer. Improved size.
 
 ## v1.84 Beta (18/10/2021)
