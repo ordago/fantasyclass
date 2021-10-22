@@ -25,7 +25,7 @@
     </div>
   </div>
 
-  @foreach ($user->classrooms->sortByDesc('id')->sortBy('state') as $classroom)
+  @foreach ($user->classrooms->sortBy('state')->sortByDesc('id') as $classroom)
 
   @if($classroom->state == 1)
   @php
