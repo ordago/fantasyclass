@@ -25,7 +25,8 @@
     </div>
   </div>
 
-  @foreach ($user->classrooms->sortBy('state')->sortByDesc('id') as $classroom)
+  <!-- sortBy([ ['col1', 'asc'], ['col2', 'desc'] ]) -->
+  @foreach ($user->classrooms->sortByDesc('id') as $classroom)
 
   @if($classroom->state == 1)
   @php
