@@ -26,9 +26,7 @@
   </div>
 
   @foreach ($user->classrooms->sortByDesc('updated_at') as $classroom)
-@php
-  dump($classroom->updated_at->toDateString());
-@endphp
+
   @if($classroom->state == 1)
   @php
   $icon = "<i class='far fa-hourglass-end' v-tippy :content='trans.get(\"classroom.finished\")'></i>";
