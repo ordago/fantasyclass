@@ -153,7 +153,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-store"></i>
+          <i class="fad fa-store mr-1"></i> {{ getNotiCount("item") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -162,7 +162,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-comment"></i>
+          <i class="fad fa-comment mr-1"></i> {{ getNotiCount("comment") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -171,7 +171,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-paper-plane"></i>
+          <i class="fad fa-paper-plane mr-1"></i> {{ getNotiCount("message") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -180,7 +180,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-comment-alt-lines"></i>
+          <i class="fad fa-comment-alt-lines mr-1"></i> {{ getNotiCount("notification") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -189,7 +189,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-comments-alt"></i>
+          <i class="fad fa-comments-alt mr-1"></i> {{ getNotiCount("chat") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -198,7 +198,7 @@
             $forceUpdate();
           "
         >
-          <i class="fak fa-deck"></i>
+          <i class="fak fa-deck mr-1"></i> {{ getNotiCount("mark_card") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -207,7 +207,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-pen-fancy"></i>
+          <i class="fad fa-pen-fancy mr-1"></i> {{ getNotiCount("challenge") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -216,7 +216,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-heart"></i>
+          <i class="fad fa-heart mr-1"></i> {{ getNotiCount("new_behaviour") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -225,7 +225,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-coins"></i>
+          <i class="fad fa-coins mr-1"></i> {{ getNotiCount("money_sent") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -234,7 +234,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-feather"></i>
+          <i class="fad fa-feather mr-1"></i> {{ getNotiCount("post") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -243,7 +243,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-sparkles"></i>
+          <i class="fad fa-sparkles mr-1"></i> {{ getNotiCount("skill") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -252,7 +252,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-video"></i>
+          <i class="fad fa-video mr-1"></i> {{ getNotiCount("videochat") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -261,7 +261,7 @@
             $forceUpdate();
           "
         >
-          <i class="fak fa-collection"></i>
+          <i class="fak fa-collection mr-1"></i> {{ getNotiCount("new_collectionable") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -270,7 +270,7 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-user-graduate"></i>
+          <i class="fad fa-user-graduate mr-1"></i> {{ getNotiCount("invitation") }}
         </button>
       </div>
       <div class="pt-1" v-if="show == 0">
@@ -540,6 +540,14 @@ export default {
     };
   },
   methods: {
+    getNotiCount(typeNotif) {
+      let count = 0;
+      this.notifications.forEach(notification => {
+        if(notification.data.type == typeNotif)
+          count++;
+      });
+      return count;
+    },
     getDate(date) {
       return Utils.getDate(date);
     },
