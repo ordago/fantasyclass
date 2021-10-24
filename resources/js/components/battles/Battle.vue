@@ -590,7 +590,13 @@
         <section class="modal-card-body is-relative" id="confetti-bg">
           <div class="columns">
             <div
-              class="column rounded is-flex is-flex-direction-column has-text-centered is-narrow"
+              class="
+                column
+                rounded
+                is-flex is-flex-direction-column
+                has-text-centered
+                is-narrow
+              "
             >
               <div v-if="type == 1 && group1">
                 <h3 class="is-size-3 animate__animated animate__bounceIn">
@@ -708,7 +714,11 @@
                 </div>
                 <div
                   v-else-if="!finished"
-                  class="w-100 has-all-centered is-flex is-flex-direction-column"
+                  class="
+                    w-100
+                    has-all-centered
+                    is-flex is-flex-direction-column
+                  "
                 >
                   <show-question :question="currentQuestion"></show-question>
                   <button
@@ -726,7 +736,10 @@
                 </div>
                 <div v-if="finished" class="has-text-centered">
                   <h1
-                    class="is-size-1 animate__animated animate__rubberBand animate__infinite"
+                    class="
+                      is-size-1
+                      animate__animated animate__rubberBand animate__infinite
+                    "
                     v-if="type != 3 || (type == 3 && monsterSelected.hp == 0)"
                   >
                     {{ trans.get("battles.well_done") }}
@@ -739,6 +752,7 @@
                     class="button is-success mt-2"
                     v-if="winnerElem"
                     @click="sendReward"
+                    :class="{ 'is-loading': isLoading }"
                   >
                     {{ trans.get("battles.give_reward") }} {{ winnerElem.name }}
                   </button>
@@ -746,6 +760,7 @@
                     class="button is-success mt-2"
                     v-if="type == 3 && monsterSelected.hp == 0"
                     @click="sendReward"
+                    :class="{ 'is-loading': isLoading }"
                   >
                     {{ trans.get("battles.give_reward") }}
                   </button>
@@ -758,7 +773,13 @@
               </div>
             </div>
             <div
-              class="column rounded is-flex is-flex-direction-column has-text-centered is-narrow"
+              class="
+                column
+                rounded
+                is-flex is-flex-direction-column
+                has-text-centered
+                is-narrow
+              "
             >
               <div v-if="type == 1 && group2">
                 <h3 class="is-size-3 animate__animated animate__bounceIn">
@@ -887,6 +908,7 @@ export default {
   },
   data: function () {
     return {
+      isLoading: false,
       audioOK: new Audio("/sound/clap.mp3"),
       audioKO: new Audio("/sound/wheel-bad.mp3"),
       groups: [],
@@ -969,6 +991,7 @@ export default {
   },
   methods: {
     sendReward() {
+      this.isLoading = true;
       if (this.type == 1 && this.winner) {
         axios
           .post("/classroom/" + this.classroom.code + "/group/reward", {

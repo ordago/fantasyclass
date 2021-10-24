@@ -139,7 +139,7 @@
                   type="number"
                   :max="100"
                   :min="0"
-                  step="1"
+                  :step="1"
                 ></b-input>
               </b-field>
             </div>
