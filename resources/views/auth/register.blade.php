@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="top-right custom lang rounded p-2" style="width: auto; font-size: 1em">
-    <i class="fal fa-globe"></i> <a class="has-text-light" href="/register/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/register/en">en</a>
-</div>
+<div class="top-right custom lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
+        <i class="fal fa-globe" aria-hidden="true"></i> <a href="/register/es">es</a> <i class="fal fa-ellipsis-v" aria-hidden="true"></i> <a href="/register/ca">ca</a> <i class="fal fa-ellipsis-v" aria-hidden="true"></i> <a href="/register/en">en</a>
+    </div>
 <div class="box form mt-3">
     <div class="has-text-centered">
         <img src="{{ env('LOGO') }}" width="100px" />

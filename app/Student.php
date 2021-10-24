@@ -30,6 +30,7 @@ class Student extends Model implements HasMedia
         'avatar_url',
         'google_uid',
         'google_course',
+        'max_level',
     ];
 
     protected $appends = ['username', 'level', 'avatar', 'grouplogo', 'online'];

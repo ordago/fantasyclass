@@ -153,6 +153,7 @@ Route::group(['middleware' => 'language'], function () {
 
         // Levels
         Route::post('/{code}/level/add', 'LevelsController@createNew');
+        Route::post('/{code}/levels/getRewards', 'LevelsController@getRewards');
         Route::get('/{code}/levels', 'LevelsController@index');
         Route::post('/{code}/levels', 'LevelsController@store');
         Route::patch('/levels/{level}', 'LevelsController@update');

@@ -14,7 +14,13 @@ class Level extends Model implements HasMedia
         'xp', 
         'title', 
         'description', 
-        'classroom_id', 
+        'classroom_id',
+        'gold',
+        'card',
+        'badge',
+        'item',
+        'pet',
+        'collectible',
         ];
 
     protected $appends = ['imagelvl', 'nextlvl'];
@@ -40,5 +46,21 @@ class Level extends Model implements HasMedia
         $this
             ->addMediaCollection('level')
             ->singleFile();
+    }
+
+    public function pet() {
+        return $this->hasOne(Pet::class);
+    }
+    public function card() {
+        return $this->hasOne(Card::class);
+    }
+    public function badge() {
+        return $this->hasOne(Badge::class);
+    }
+    public function item() {
+        return $this->hasOne(Item::class);
+    }
+    public function collectible() {
+        return $this->hasOne(Collectionable::class);
     }
 }

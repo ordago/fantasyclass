@@ -27,6 +27,12 @@ class LevelsController extends Controller
         return view('levels.index', compact('levels', 'class', 'hpLevelUp'));
     }
 
+    public function getRewards($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        return ['pets' => $class->pets];
+    }
     public function createNew($code)
     {
 

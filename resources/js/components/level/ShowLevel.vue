@@ -11,7 +11,6 @@
     <div
       :class="{ 'min-width': !edit }"
       class="columns w-100 is-variable is-0 py-2 is-relative"
-      
     >
       <div
         class="
@@ -21,7 +20,6 @@
           card-shadow-s
           rounded-left
           has-background-light
-          
         "
       >
         <figure class="image is-128x128">
@@ -51,15 +49,19 @@
             />
           </label>
         </figure>
-          <b-progress
-             style="position:absolute; bottom: -10px; color: black!important;"
-             class="w-100"
-             :type="{'is-warning' : getValue() < 50, 'is-info' : getValue() < 100, 'is-success' : getValue() == 100}"
-            v-if="!edit"
-            :value="getValue()"
-            show-value
-            format="percent"
-          ></b-progress>
+        <b-progress
+          style="position: absolute; bottom: -10px; color: black !important"
+          class="w-100"
+          :type="{
+            'is-warning': getValue() < 50,
+            'is-info': getValue() < 100,
+            'is-success': getValue() == 100,
+          }"
+          v-if="!edit"
+          :value="getValue()"
+          show-value
+          format="percent"
+        ></b-progress>
       </div>
       <div class="column content card p-4 rounded-right card-shadow-s">
         <p class="is-size-4">
@@ -96,6 +98,15 @@
         </p>
         <div v-if="edit" class="has-text-right mt-2">
           <button
+            class="button is-dark"
+            @click="showRewards"
+            v-if="level.xp > 0"
+            v-tippy
+            :content="trans.get('menu.rewards')"
+          >
+            <i class="fas fa-treasure-chest"></i>
+          </button>
+          <button
             class="button is-primary"
             @click="update"
             v-tippy
@@ -115,6 +126,54 @@
         </div>
       </div>
     </div>
+    <b-modal
+      :active.sync="isModalActive"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">{{ trans.get("menu.rewards") }}</p>
+        </header>
+        <section class="modal-card-body">
+          <label class="label">{{ trans.get('menu.pets') }}</label>
+          <div class="control">
+            <label class="radio">
+              <input type="radio" v-model="level.pet" :value="null" name="answer">
+              -
+            </label>
+            <label class="radio" v-for="pet in pets" :key="'pet-'+pet.id">
+              <input type="radio" :value="pet.id" name="answer">
+              <img :src="pet.image" width="45px" v-tippy :content="pet.name">
+            </label>
+          </div>
+          <!-- <div class="field is-horizontal">
+            <div class="field-label is-normal">
+              <label class="label">Pets</label>
+            </div>
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select v-model="level.pet">
+                      <option :value="null"></option>
+                      <option v-for="pet in pets" :key="'pet-' + pet.id">{{ pet.name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+       
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="isModalActive = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -142,14 +201,21 @@ export default {
     return {
       csrfToken: null,
       prevImage: null,
+      isModalActive: false,
       image: null,
+      pets: null,
     };
   },
   methods: {
+    showRewards: function () {
+      axios.post("/classroom/" + this.code + "/levels/getRewards").then(response => {
+        this.pets = response.data.pets;
+        this.isModalActive = true;
+      })
+    },
     getValue: function () {
-      if(!this.level.nextlvl)
-        return 100;
-      return (this.userxp * 100) / this.level.nextlvl
+      if (!this.level.nextlvl) return 100;
+      return (this.userxp * 100) / this.level.nextlvl;
     },
     update: function () {
       this.image.generateBlob(
@@ -196,6 +262,6 @@ export default {
   min-width: 400px;
 }
 .progress-wrapper .progress-value {
-  color: black!important;
+  color: black !important;
 }
 </style>

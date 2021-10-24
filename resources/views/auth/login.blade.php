@@ -3,9 +3,12 @@
 @section('bg', $bg ?? '')
 
 @section('content')
-<div class="top-right custom lang rounded p-2" style="width: auto; font-size: 1em">
+<!-- <div class="top-right custom lang rounded p-2" style="width: auto; font-size: 1em">
     <i class="fal fa-globe"></i> <a class="has-text-light" href="/login/es">es</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/ca">ca</a> <i class="fal fa-ellipsis-v"></i> <a class="has-text-light" href="/login/en">en</a>
-</div>
+</div> -->
+<div class="top-right custom lang is-rounded has-background-light has-text-dark" style="width: auto; font-size: 1em">
+        <i class="fal fa-globe" aria-hidden="true"></i> <a href="/login/es">es</a> <i class="fal fa-ellipsis-v" aria-hidden="true"></i> <a href="/login/ca">ca</a> <i class="fal fa-ellipsis-v" aria-hidden="true"></i> <a href="/login/en">en</a>
+    </div>
 <h1 class="fantasyTitle mt-4 mb-3">{{ env('APP_NAME')  }}</h1>
 <div class="box form p-5">
     <div class="thumbnail p-3"><img src="{{ env('LOGO') }}" width="200px" /></div>

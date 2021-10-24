@@ -92,7 +92,7 @@
           <button class="button is-info" @click="selectAll()">
             {{ trans.get("utils.select_all") }}
           </button>
-          <button class="button is-success" @click="sendStudentsChallenge">
+          <button class="button is-success" :class="{ 'is-loading': isLoading }" @click="sendStudentsChallenge">
             <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
           <div class="columns is-1 is-multiline p-3 mt-2">
@@ -389,6 +389,7 @@ export default {
       this.$forceUpdate();
     },
     sendStudentsChallenge() {
+      this.isLoading = true;
       axios
         .post("/classroom/" + this.code + "/challenges/update", {
           challenge: this.currentChallenge.id,
@@ -398,6 +399,7 @@ export default {
           this.$toast(this.trans.get("success_error.update_success"), {
             type: "success",
           });
+          this.isLoading = false;
           this.isModalActive = false;
         });
     },
