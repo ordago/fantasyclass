@@ -1,4 +1,8 @@
 # Changelog
+## v1.87 Beta (XX/10/2021)
+### Added
+- Countdown added in volume meter.
+
 ## v1.86 Beta (22/10/2021)
 ### Changed
 - Fixes in collectibles and challenges

@@ -124,6 +124,7 @@
       :open.sync="open"
       icon-pack="fa"
       mobile="fullwidth"
+      :key="version"
     >
       <div class="close-button" @click="open = false">
         <button
@@ -144,7 +145,7 @@
             $forceUpdate();
           "
         >
-          {{trans.get('notifications.all')}}
+          {{ trans.get("notifications.all") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -180,7 +181,8 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-comment-alt-lines mr-1"></i> {{ getNotiCount("notification") }}
+          <i class="fad fa-comment-alt-lines mr-1"></i>
+          {{ getNotiCount("notification") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -261,7 +263,8 @@
             $forceUpdate();
           "
         >
-          <i class="fak fa-collection mr-1"></i> {{ getNotiCount("new_collectionable") }}
+          <i class="fak fa-collection mr-1"></i>
+          {{ getNotiCount("new_collectionable") }}
         </button>
         <button
           class="button is-rounded fs-85"
@@ -270,7 +273,8 @@
             $forceUpdate();
           "
         >
-          <i class="fad fa-user-graduate mr-1"></i> {{ getNotiCount("invitation") }}
+          <i class="fad fa-user-graduate mr-1"></i>
+          {{ getNotiCount("invitation") }}
         </button>
       </div>
       <div class="pt-1" v-if="show == 0">
@@ -537,14 +541,14 @@ export default {
       fullwidth: false,
       cards: [],
       typeNotif: "all",
+      version: 0,
     };
   },
   methods: {
     getNotiCount(typeNotif) {
       let count = 0;
-      this.notifications.forEach(notification => {
-        if(notification.data.type == typeNotif)
-          count++;
+      this.notifications.forEach((notification) => {
+        if (notification.data.type == typeNotif) count++;
       });
       return count;
     },
@@ -584,6 +588,8 @@ export default {
                 this.notifications.splice(0, this.notifications.length);
               }
               if (this.notifications.length == 0) this.open = false;
+              this.version++
+              this.typeNotif = "all"
               this.$forceUpdate();
             });
         },

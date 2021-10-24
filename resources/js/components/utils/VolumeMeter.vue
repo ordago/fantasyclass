@@ -1,12 +1,11 @@
 <template>
-  <div class="p-2">
+  <div class="p-2 has-background-light">
     <div>
       <div>
         <div class="rounded has-background-warning p-4 mb-3">
-          <strong>
-            <i class="fas fa-flask"></i> Función experimental
-          </strong>
-          <i class="fas fa-info-square"></i> Haz start y prueba los valores de tolerancia antes de activar las penalizaciones.
+          <strong> <i class="fas fa-flask"></i> Función experimental </strong>
+          <i class="fas fa-info-square"></i> Haz start y prueba los valores de
+          tolerancia antes de activar las penalizaciones.
         </div>
         <div class="columns">
           <div class="column">
@@ -49,38 +48,72 @@
               </span>
               <span
                 class="button is-size-6 acceptDestiny ml-2"
-                style="margin-top:0!important"
+                style="margin-top: 0 !important"
                 @click="accept"
                 :class="{ 'is-loading': isLoading }"
               >
-                <i class="fas fa-feather-alt"></i> {{ trans.get('events.accept') }}
+                <i class="fas fa-feather-alt"></i>
+                {{ trans.get("events.accept") }}
               </span>
             </div>
           </div>
         </div>
-        <br />
-        <div class="sensitivity">
-          <i class="fal fa-tachometer-slowest fa-2x left"></i>
-          <i class="fal fa-tachometer-average fa-2x center"></i>
-          <i class="fal fa-tachometer-fastest fa-2x right"></i>
-        </div>
-        <input type="range" min="0" id="tolerance" v-model="tolerance" max="10" style="width:100%" />
-        <br />
-        <!-- The canvas that will be used to render the input level -->
-        <canvas ref="meter" id="meter" style="width:100%;" height="30" class="mt-3"></canvas>
-        <button @click="start" class="button is-primary start">
-          <i class="fas fa-play mr-2"></i> Start
-        </button>
-        <button class="button is-dark" @click="stopped = true">
-          <i class="fas fa-stop mr-2"></i> Stop
-        </button>
-      </div>
+        <button class="button" @click="showTimer = true" v-if="!showTimer">
+              <i class="fad fa-stopwatch mr-1"></i>
+              {{ trans.get("battles.show_timer") }}
+            </button>
+        <div class="columns">
+          <div class="column is-narrow">
+            <div v-if="showTimer" class="p-3 px-5 mb-4 is-flex has-all-centered">
+              <count-down :show-music="false"></count-down>
+            </div>
+          </div>
 
-      <div id="log">
-        <div class="p-4 m-3 itemLog" v-for="index in alarmCount" :key="index">
-          <span class="tag is-dark">{{ index }}</span> Ruido detectado
-          <div class="has-background-danger p-4 delLog" @click="deleteLog" style>
-            <i class="fas fa-trash"></i>
+          <div class="column">
+            <div class="sensitivity">
+              <i class="fal fa-tachometer-slowest fa-2x left"></i>
+              <i class="fal fa-tachometer-average fa-2x center"></i>
+              <i class="fal fa-tachometer-fastest fa-2x right"></i>
+            </div>
+            <input
+              type="range"
+              min="0"
+              id="tolerance"
+              v-model="tolerance"
+              max="10"
+              style="width: 100%"
+            />
+            <br />
+            <!-- The canvas that will be used to render the input level -->
+            <canvas
+              ref="meter"
+              id="meter"
+              style="width: 100%"
+              height="30"
+              class="mt-3"
+            ></canvas>
+            <button @click="start" v-if="stopped" class="button is-primary start">
+              <i class="fas fa-play mr-2"></i> Start
+            </button>
+            <button class="button is-dark" v-else @click="stopped = true">
+              <i class="fas fa-stop mr-2"></i> Stop
+            </button>
+            <div id="log" class="mt-5">
+              <div
+                class="p-4 m-3 itemLog"
+                v-for="index in alarmCount"
+                :key="index"
+              >
+                <span class="tag is-dark">{{ index }}</span> Ruido detectado
+                <div
+                  class="has-background-danger p-4 delLog"
+                  @click="deleteLog"
+                  style
+                >
+                  <i class="fas fa-trash"></i>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -104,7 +137,7 @@ export default {
       width: 400,
       height: 50,
       rafID: null,
-      sttoped: true,
+      stopped: true,
       tolerance: 5,
       prevTime: 0,
       audio: null,
@@ -116,6 +149,7 @@ export default {
       xp: 5,
       gold: 10,
       isLoading: false,
+      showTimer: false,
     };
   },
   computed: {},
@@ -127,10 +161,10 @@ export default {
         .post("/classroom/" + this.code + "/utils/meter", {
           gold: this.gold * this.alarmCount * this.countGold * -1,
           hp: this.hp * this.alarmCount * this.countHp * -1,
-          xp: this.xp * this.alarmCount * this.countXp * -1
+          xp: this.xp * this.alarmCount * this.countXp * -1,
         })
-        .then(reponse => {
-          location.href = '/classroom/' + this.code
+        .then((reponse) => {
+          location.href = "/classroom/" + this.code;
         });
     },
     deleteLog() {
@@ -140,31 +174,33 @@ export default {
       alert("It's mandatory to grant microphone access");
     },
     onLevelChange(time) {
-      // clear the background
-      this.canvasContext.clearRect(0, 0, this.width, this.height);
-
-      // check if we're currently clipping
-      if (this.meter.checkClipping()) this.canvasContext.fillStyle = "red";
-      else this.canvasContext.fillStyle = "green";
-
-      if (time - this.prevTime > 1500 && !this.stopped) {
-        if (this.meter.volume > this.tolerance / 20) {
-          this.audio.play();
-          this.alarmCount++;
+      if(!this.stopped) {
+        // clear the background
+        this.canvasContext.clearRect(0, 0, this.width, this.height);
+  
+        // check if we're currently clipping
+        if (this.meter.checkClipping()) this.canvasContext.fillStyle = "red";
+        else this.canvasContext.fillStyle = "green";
+  
+        if (time - this.prevTime > 1500 && !this.stopped) {
+          if (this.meter.volume > this.tolerance / 20) {
+            this.audio.play();
+            this.alarmCount++;
+          }
+          this.prevTime = time;
         }
-        this.prevTime = time;
+  
+        // draw a bar based on the current volume
+        this.canvasContext.fillRect(
+          0,
+          0,
+          this.meter.volume * this.width * 1.4,
+          this.height
+        );
+  
+        // set up the next visual callback
+        this.rafID = window.requestAnimationFrame(this.onLevelChange);
       }
-
-      // draw a bar based on the current volume
-      this.canvasContext.fillRect(
-        0,
-        0,
-        this.meter.volume * this.width * 1.4,
-        this.height
-      );
-
-      // set up the next visual callback
-      this.rafID = window.requestAnimationFrame(this.onLevelChange);
     },
 
     onMicrophoneGranted(stream) {
@@ -198,7 +234,7 @@ export default {
       if (typeof navigator.mediaDevices.getUserMedia === "undefined") {
         navigator.getUserMedia(
           {
-            audio: true
+            audio: true,
           },
           this.onMicrophoneGranted,
           this.onMicrophoneDenied
@@ -206,12 +242,12 @@ export default {
       } else {
         navigator.mediaDevices
           .getUserMedia({
-            audio: true
+            audio: true,
           })
           .then(this.onMicrophoneGranted);
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -236,7 +272,7 @@ export default {
   width: 60%;
 }
 .sensitivity {
-  margin-top: 35px;
+  margin-top: 100px;
   position: relative;
   padding-bottom: 15px;
 }

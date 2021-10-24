@@ -28,6 +28,7 @@ return [
     'allow_send_money' => 'Allow students to send money',
     'transfer_fee' => 'Comission when students send money',
     'disable_your_adventure' => 'Disable "your adventure" section',
+    'comission_collectibles' => 'Comission when exchange collectibles"',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

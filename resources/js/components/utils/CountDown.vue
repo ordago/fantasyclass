@@ -58,8 +58,9 @@
         </div>
       </div>
       <div
-        class="columns is-narrow is-flex pt-4 pl-2"
+        class="columns is-narrow is-flex pt-4 pl-2 is-hidden-mobile"
         style="flex-direction: column"
+        v-if="showMusic"
       >
         <button class="button is-dark" @click="sound('whip')">
           <i class="fal fa-lasso"></i>
@@ -124,6 +125,10 @@ export default {
     width: {
       type: Number,
       default: 300,
+    },
+    showMusic: {
+      type: Boolean,
+      default: true,
     },
   },
   created() {

@@ -28,6 +28,7 @@ return [
     'allow_send_money' => 'Permet a l\'alumnat enviar-se diners',
     'transfer_fee' => 'Comissió al enviar diners entre estudiants',
     'disable_your_adventure' => 'Deshabilita la secció de "la teua aventura"',
+    'comission_collectibles' => 'Comissió al intercanviar coleccionables"',
     
     'cards' => 'Màxim de cartes per estudiant',
     'rare' => 'Rara',

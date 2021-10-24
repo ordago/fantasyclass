@@ -530,8 +530,22 @@
               {{ trans.get("settings.feed") }}
             </div>
           </div>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.comission_collectibles"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              <i class="fas fa-coins colored mr-1"></i>
+              <i class="fak fa-collection mr-2"></i>
+              {{ trans.get("settings.comission_collectibles") }}
+            </div>
+          </div>
         </div>
-        <button class="button is-primary m-4" @click="saveCards()">
+        <button class="button is-primary m-4" @click="saveEconomic()">
           <i class="fas fa-save mr-3"></i>
           {{ trans.get("general.save") }}
         </button>
@@ -1046,7 +1060,7 @@ export default {
         value: this.settings.licenses,
       });
     },
-    saveCards() {
+    saveEconomic() {
       axios.patch("/classroom/" + this.classroom.code + "/setting", {
         _method: "patch",
         prop: "card_use",
@@ -1082,6 +1096,12 @@ export default {
         prop: "repair_equipment",
         action: "update",
         value: this.settings.repair_equipment,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "comission_collectibles",
+        action: "update",
+        value: this.settings.comission_collectibles,
       });
       this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",

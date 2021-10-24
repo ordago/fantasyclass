@@ -45,6 +45,7 @@ class SettingsController extends Controller
         $settings['licenses'] = settings()->get('licenses', '');
         $settings['feed'] = settings()->get('feed', 100);
         $settings['repair_equipment'] = settings()->get('repair_equipment', 100);
+        $settings['comission_collectibles'] = settings()->get('comission_collectibles', 0);
         $users_disabled = json_decode(settings()->get('disable_notifications', json_encode([])));
         $index = array_search(auth()->user()->id, (array) $users_disabled);
         if ($index !== false) {
