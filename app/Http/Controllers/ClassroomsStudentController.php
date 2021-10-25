@@ -729,6 +729,7 @@ class ClassroomsStudentController extends Controller
         $settings['repair_equipment'] = settings()->get('repair_equipment', 100);
         $settings['impostor'] = settings()->get('impostor', -1);
         $settings['announcement'] = settings()->get('announcement', "");
+        $settings['comission_collectibles'] = settings()->get('comission_collectibles', 0);
         if ($settings['impostor'] != -1) {
             if ($settings['impostor'] == $student->id)
                 $settings['impostor'] = true;
@@ -934,6 +935,13 @@ class ClassroomsStudentController extends Controller
             ->first();
         $studentOrigin = Student::find($line->student_id);
         $student = Functions::getCurrentStudent($class, []);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $comission = settings()->get('comission_collectibles', 0);
+        if($comission)
+            if($student->gold < $comission || $studentOrigin->gold < $comission)
+                return false;
+
         if($student->classroom->classroom_id != $studentOrigin->classroom->classroom_id)
             return false;
         
@@ -965,9 +973,14 @@ class ClassroomsStudentController extends Controller
         $student->collectionables()->sync([$line->wanted_collectionable_id => ['count' => $count]], false);
         $student->collectionables()->sync([$line->collectionable_id => ['count' => $newCount]], false);
 
+        if($comission) {
+            $student->setProperty("gold", $comission * -1, true, "exchange_collectible", false);
+            $studentOrigin->setProperty("gold", $comission * -1, true, "exchange_collectible", false);
+        }
+
         DB::table('exchange_collectibles')->where('id', $data['id'])->delete();
 
-        return $student->fresh()->collectionables;
+        return ['collectionables' => $student->fresh()->collectionables, 'gold' => $student->gold];
     }
 
     public function getExchange($code)

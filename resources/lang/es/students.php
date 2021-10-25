@@ -73,6 +73,7 @@ return [
     'details' => 'Detalles',
     'rating' => 'Valoración de profes (desafíos)',
     'vote' => 'Sin valoración, vota los desafíos propuestos',
+    'collectible_fee' => 'Intercambiar coleccionables tiene una comisión de ',
 
     'log_behaviour' => 'Comportamiento',
     'log_teacher' => 'Modificación manual',
@@ -97,6 +98,7 @@ return [
     'log_repair' => 'Reparación de equipamento',
     'log_collection' => 'Compra coleccionables',
     'log_level_up' => 'Por subir nivel',
+    'log_exchange_collectible' => 'Intercambio de coleccionables',
 
     'student_report' => 'Informe de estudiante',
 

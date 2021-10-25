@@ -73,6 +73,7 @@ return [
     'details' => 'Detalls',
     'rating' => 'Valoració dels profes (reptes)',
     'vote' => 'Sense valoració, vota els reptes proposats',
+    'collectible_fee' => 'Intercanviar coleccionables té una comissió de ',
 
     'log_behaviour' => 'Comportament',
     'log_teacher' => 'Modificació manual',
@@ -97,6 +98,7 @@ return [
     'log_repair' => 'Reparació d\'equipament',
     'log_collection' => 'Compra col·leccionables',
     'log_level_up' => 'Per pujar nivell',
+    'log_exchange_collectible' => 'Intercanvi de col·leccionables',
     
     'student_report' => 'Informe d\'estudiant',
     

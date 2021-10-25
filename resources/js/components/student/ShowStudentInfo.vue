@@ -1603,7 +1603,15 @@
                 </button>
                 <article class="message is-warning mt-1">
                   <div class="message-body">
-                    {{ trans.get("collections.exchange_info") }}
+                    <div class="mb-1" v-if="settings.comission_collectibles != 0">
+                      <i class="fas fa-exclamation-triangle mr-1"></i>
+                      {{ trans.get("students.collectible_fee") }}
+                      {{ settings.comission_collectibles }}
+                      <i class="fas fa-coins colored"></i>
+                    </div>
+                    <div>
+                      {{ trans.get("collections.exchange_info") }}
+                    </div>
                   </div>
                 </article>
               </span>
@@ -1639,7 +1647,13 @@
                     </div>
                     <div class="column is-narrow is-flex has-all-centered p-2">
                       <span
-                        v-if="collectionable && collectionable.to && collectionable.student && student && collectionable.student.id != student.id"
+                        v-if="
+                          collectionable &&
+                          collectionable.to &&
+                          collectionable.student &&
+                          student &&
+                          collectionable.student.id != student.id
+                        "
                         v-tippy
                         :content="getMessageExchange(collectionable.to.id)"
                       >
@@ -1903,7 +1917,8 @@ export default {
             this.$toast(this.trans.get("success_error.update_success"), {
               type: "success",
             });
-            this.student.collectionables = response.data;
+            this.student.collectionables = response.data.collectionables;
+            this.student.gold = response.data.gold;
             this.isExchangeModalActive = false;
           } else {
             this.$toast(this.trans.get("success_error.collectible_error"), {
@@ -1962,7 +1977,8 @@ export default {
       return (
         [
           41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,
-          710, 711, 712, 713, 714, 715, 716, 717, 718, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810, 811
+          710, 711, 712, 713, 714, 715, 716, 717, 718, 800, 801, 802, 803, 804,
+          805, 806, 807, 808, 809, 810, 811,
         ].findIndex((id) => id === gearId) === -1
       );
     },
@@ -2023,6 +2039,34 @@ export default {
           "<h5 class='is-size-5 mt-0'>" +
           this.student.level.description +
           "</h5>";
+
+      msg += "</div>";
+      msg += "<div>";
+      if (this.student.level.gold) {
+        msg += "<span class='mx-1'>";
+        msg += this.student.level.gold + "<i class='fas fa-coins colored'></i>";
+        msg += "</span>";
+      }
+      if (this.student.level.collectible) {
+        msg += "<span class='mx-1'>";
+        msg += "1 <i class='fak fa-collection'></i>";
+        msg += "</span>";
+      }
+      if (this.student.level.card) {
+        msg += "<span class='mx-1'>";
+        msg += "1 <i class='fak fa-deck'></i>";
+        msg += "</span>";
+      }
+      if (this.student.level.badge) {
+        msg += "<span class='mx-1'>";
+        msg += "1 <i class='fas fa-award'></i>";
+        msg += "</span>";
+      }
+      if (this.student.level.item) {
+        msg += "<span class='mx-1'>";
+        msg += "1 <i class='fas fa-store'></i>";
+        msg += "</span>";
+      }
 
       msg += "</div>";
       return msg;

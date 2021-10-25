@@ -71,6 +71,7 @@ return [
     'details' => 'Details',
     'rating' => 'Teacher rating (challenges)',
     'vote' => 'Without rating, vote the proposed challenges',
+    'collectible_fee' => 'Exchange collectibles has a comission of ',
 
     'log_behaviour' => 'Behaviour',
     'log_teacher' => 'Manual modification',
@@ -95,6 +96,7 @@ return [
     'log_repair' => 'Equipment repair',
     'log_collection' => 'Collectibles',
     'log_level_up' => 'For level up',
+    'log_exchange_collectible' => 'Collectible exchange',
 
     'student_report' => 'Student report',
 
