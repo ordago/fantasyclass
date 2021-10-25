@@ -70,7 +70,7 @@ class Classroom extends Model implements HasMedia
 
     public function collections()
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(Collection::class)->with('collectionables');
     }
 
     public function questionBanks()

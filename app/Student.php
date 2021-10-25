@@ -391,9 +391,9 @@ class Student extends Model implements HasMedia
     {
         $boost = $this->getBoost();
 
-        $this->setProperty('hp', $mult * ($challenge->hp +  $challenge->hp * $boost['hp']/100), true, 'challenge', true);
-        $this->setProperty('xp', $mult * ($challenge->xp +  $challenge->xp * $boost['xp']/100), true, 'challenge', true);
-        $this->setProperty('gold', $mult * ($challenge->gold +  $challenge->gold * $boost['gold']/100), true, 'challenge', true);
+        $this->setProperty('hp', $mult * ($challenge->hp +  $challenge->hp * $boost['hp'] / 100), true, 'challenge', true);
+        $this->setProperty('xp', $mult * ($challenge->xp +  $challenge->xp * $boost['xp'] / 100), true, 'challenge', true);
+        $this->setProperty('gold', $mult * ($challenge->gold +  $challenge->gold * $boost['gold'] / 100), true, 'challenge', true);
         if (count($cards) && $mult == 1) {
             foreach ($cards as $card) {
                 $this->cards()->attach($card);
@@ -626,25 +626,80 @@ class Student extends Model implements HasMedia
         }
         if ($prop == "xp") {
             $hp = $this->hp;
-            if ($this->fresh()->getLevelAttribute())
-                if ($this->fresh()->getLevelAttribute()->number > $oldLevel->number) {
+            if ($this->fresh()->getLevelAttribute()) {
+                $newLevel = $this->fresh()->getLevelAttribute();
+                if ($newLevel->number > $oldLevel->number && $newLevel->number > $this->max_level) {
+                    $this->max_level = $newLevel->number;
                     settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
                     if (settings()->get('level_up_health', 0)) {
-                        $hp = min($this->hp + settings()->get('level_up_health', 0), 100);
+                        $lvluphp = settings()->get('level_up_health', 0);
+                        if($lvluphp + $this->hp <= 100)
+                            $counthp = $lvluphp;
+                        else
+                            $counthp = 100 - $this->hp;
+                        $hp = min($this->hp + $lvluphp, 100);
                         $this->hp = $hp;
                         $this->save();
                         LogEntry::create([
                             'type' => 'hp',
-                            'value' => $hp,
+                            'value' => $counthp,
                             'student_id' => $this->id,
                             'message' => 'level_up',
                         ]);
                     }
+                    if ($newLevel->gold) {
+                        $this->setProperty("gold", $newLevel->gold, true, "level_up", false);
+                    }
+                    if ($newLevel->pet) {
+                        $pet = Pet::where('id', $newLevel->pet)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+                        $this->pets()->sync([]);
+                        $this->pets()->sync([$pet->id]);
+                    }
+                    if ($newLevel->card) {
+                        $card = Card::where('id', $newLevel->card)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+                        $this->cards()->attach($card->id);
+                    }
+                    if ($newLevel->item) {
+                        $item = Item::where('id', $newLevel->item)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+                        $studentItem = $this->items->where('id', $item->id)->first();
+
+                        if ($studentItem)
+                            $count = $studentItem->pivot->count + 1;
+                        else $count = 1;
+                        
+                        $this->items()->sync([$item->id => ['count' => $count]], false);
+                    }
+                    if ($newLevel->collectible) {
+                        $collectible = Collectionable::where('id', $newLevel->collectible)->firstOrFail();
+                        if($collectible->collection->classroom_id != $this->classroom->classroom_id)
+                            abort(403);
+                        $studentCollectible = $this->collectionables->where('id', $collectible->id)->first();
+
+                        if ($studentCollectible)
+                            $count = $studentCollectible->pivot->count + 1;
+                        else $count = 1;
+
+                        $this->collectionables()->sync([$collectible->id => ['count' => $count]], false);
+                    }
+                    if ($newLevel->badge) {
+                        $badge = Badge::where('id', $newLevel->badge)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+                        
+                        $studentBadge = $this->badges->where('id', $badge->id)->first();
+
+                        if (!$studentBadge)
+                            $this->badges()->attach($badge->id);
+                    }
+
                 }
+            }
+            $std = $this->fresh();
             return [
                 'hp' => $hp,
                 'xp' => $value,
-                'level' => $this->fresh()->getLevelAttribute(),
+                'level' => $std->getLevelAttribute(),
+                'gold' => $std->gold,
+                'pet' => $std->pets,
+                'cards' => $std->cards,
             ];
         }
         return $value;

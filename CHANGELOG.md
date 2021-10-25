@@ -2,6 +2,11 @@
 ## v1.87 Beta (XX/10/2021)
 ### Added
 - Countdown added in volume meter.
+- Add rewards when level up.
+~ comision in exchange configurable in preferences.
+
+### Changed
+- Protect rewards multiple click.
 
 ## v1.86 Beta (22/10/2021)
 ### Changed

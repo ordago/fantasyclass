@@ -27,5 +27,4 @@ return [
     'placeholder' => 'Per exemple, el nom de la matèria',
     'reward' => 'Millores al pujar de nivell',
     'reward_info_health' => 'Percentatge que recuperen al pujar de nivell',
-
 ];

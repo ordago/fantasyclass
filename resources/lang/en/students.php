@@ -94,6 +94,7 @@ return [
     'log_feed' => 'Pet food',
     'log_repair' => 'Equipment repair',
     'log_collection' => 'Collectibles',
+    'log_level_up' => 'For level up',
 
     'student_report' => 'Student report',
 

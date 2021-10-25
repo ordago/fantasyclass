@@ -31,7 +31,7 @@ class LevelsController extends Controller
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
-        return ['pets' => $class->pets];
+        return ['pets' => $class->pets, 'items' => $class->items, 'cards' => $class->cards, 'badges' => $class->badges, 'collections' => $class->collections];
     }
     public function createNew($code)
     {
@@ -72,6 +72,23 @@ class LevelsController extends Controller
             $exp += $data['increment'];
         }
         return back();
+    }
+
+    public function updateRewards($level)
+    {
+        $lvl = Level::findOrFail($level);
+        $class = Classroom::where('id', '=', $lvl->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'pet' => ['numeric', 'nullable'],
+            'badge' => ['numeric', 'nullable'],
+            'item' => ['numeric', 'nullable'],
+            'card' => ['numeric', 'nullable'],
+            'collectible' => ['numeric', 'nullable'],
+            'gold' => ['numeric', 'nullable'],
+        ]);
+        $lvl->update($data);
     }
 
     public function update($level)

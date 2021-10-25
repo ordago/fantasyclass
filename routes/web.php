@@ -157,6 +157,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/levels', 'LevelsController@index');
         Route::post('/{code}/levels', 'LevelsController@store');
         Route::patch('/levels/{level}', 'LevelsController@update');
+        Route::patch('/levels/reward/{level}', 'LevelsController@updateRewards');
         Route::delete('/level/{id}', 'LevelsController@destroy');
   
         // Roles

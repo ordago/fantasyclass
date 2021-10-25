@@ -96,6 +96,7 @@ return [
     'log_feed' => 'Alimento de mascotas',
     'log_repair' => 'Reparación de equipamento',
     'log_collection' => 'Compra coleccionables',
+    'log_level_up' => 'Por subir nivel',
 
     'student_report' => 'Informe de estudiante',
 

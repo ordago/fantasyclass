@@ -50,7 +50,7 @@
           </label>
         </figure>
         <b-progress
-          style="position: absolute; bottom: -10px; color: black !important"
+          style="position: absolute; bottom: -10px; color: black !important; z-index: 1000!important"
           class="w-100"
           :type="{
             'is-warning': getValue() < 50,
@@ -96,6 +96,26 @@
             v-model="level.description"
           ></textarea>
         </p>
+        <div>
+          <span class="mx-1" v-if="level.gold">
+          {{ level.gold }} <i class="fas fa-coins colored"></i>
+          </span>
+          <span class="mx-1" v-if="level.pet">
+            1 <i class="fas fa-dog"></i>
+          </span>
+          <span class="mx-1" v-if="level.collectible">
+            1 <i class="fak fa-collection"></i>
+          </span>
+          <span class="mx-1" v-if="level.card">
+            1 <i class="fak fa-deck"></i>
+          </span>
+          <span class="mx-1" v-if="level.badge">
+            1 <i class="fas fa-award"></i>
+          </span>
+          <span class="mx-1" v-if="level.item">
+            1 <i class="fas fa-store"></i>
+          </span>
+        </div>
         <div v-if="edit" class="has-text-right mt-2">
           <button
             class="button is-dark"
@@ -134,42 +154,154 @@
     >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">{{ trans.get("menu.rewards") }}</p>
+          <p class="modal-card-title">{{ trans.get("menu.rewards") }} ({{ trans.get('levels.level') }} {{ level.number }})</p>
         </header>
         <section class="modal-card-body">
-          <label class="label">{{ trans.get('menu.pets') }}</label>
+          <label class="label">{{ trans.get("students.gold") }} <i class="fas fa-coins colored"></i></label>
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                    <input
+                      type="number"
+                      v-model="level.gold"
+                      value="0"
+                      class="input"
+                    />
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="label mt-3">{{ trans.get("menu.pets") }}</label>
           <div class="control">
             <label class="radio">
-              <input type="radio" v-model="level.pet" :value="null" name="answer">
-              -
+              <input
+                type="radio"
+                v-model="level.pet"
+                :value="null"
+                name="pet"
+              />
+              <i class="fas fa-empty-set fs-2"></i>
             </label>
-            <label class="radio" v-for="pet in pets" :key="'pet-'+pet.id">
-              <input type="radio" :value="pet.id" name="answer">
-              <img :src="pet.image" width="45px" v-tippy :content="pet.name">
+            <label class="radio" v-for="pet in pets" :key="'pet-' + pet.id">
+              <input
+                type="radio"
+                :value="pet.id"
+                v-model="level.pet"
+                name="pet"
+              />
+              <img
+                class="rounded"
+                :src="pet.image"
+                width="45px"
+                v-tippy
+                :content="pet.name"
+              />
             </label>
           </div>
-          <!-- <div class="field is-horizontal">
-            <div class="field-label is-normal">
-              <label class="label">Pets</label>
-            </div>
+          <label class="label mt-3">{{ trans.get("menu.shop") }}</label>
+          <div class="control">
+            <label class="radio">
+              <input
+                type="radio"
+                name="item"
+                v-model="level.item"
+                :value="null"
+              />
+              <i class="fas fa-empty-set fs-2"></i>
+            </label>
+            <label class="radio" v-for="item in items" :key="'item-' + item.id">
+              <input
+                type="radio"
+                name="item"
+                :value="item.id"
+                v-model="level.item"
+              />
+              <img class="rounded" :src="item.icon" width="45px" />
+            </label>
+          </div>
+
+          <label class="label mt-3">{{ trans.get("menu.badges") }}</label>
+          <div class="field is-horizontal">
             <div class="field-body">
               <div class="field is-narrow">
                 <div class="control">
                   <div class="select is-fullwidth">
-                    <select v-model="level.pet">
-                      <option :value="null"></option>
-                      <option v-for="pet in pets" :key="'pet-' + pet.id">{{ pet.name }}</option>
+                    <select v-model="level.badge">
+                      <option :value="null">∅</option>
+                      <option
+                        v-for="badge in badges"
+                        :key="'badge-' + badge.id"
+                        :value="badge.id"
+                      >
+                        {{ badge.title }}
+                      </option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
-          </div> -->
-       
+          </div>
+          <label class="label mt-3">{{ trans.get("menu.cards") }}</label>
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select v-model="level.card">
+                      <option :value="null">∅</option>
+                      <option
+                        v-for="card in cards"
+                        :key="'card-' + card.id"
+                        :value="card.id"
+                      >
+                        {{ trans.get(card.title) }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <label class="label mt-3">{{ trans.get("menu.collections") }}</label>
+          <div class="field is-horizontal">
+            <div class="field-body">
+              <div class="field is-narrow">
+                <div class="control">
+                  <div class="select is-fullwidth">
+                    <select v-model="level.collectible">
+                      <option :value="null">∅</option>
+                      <optgroup
+                        v-for="collection in collections"
+                        :key="'collection-' + collection.id"
+                        :label="collection.name"
+                      >
+                        <option
+                          v-for="collectible in collection.collectionables"
+                          :key="'collectible-' + collectible.id"
+                          :value="collectible.id"
+                        >
+                          {{ trans.get(collectible.name) }}
+                        </option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
         <footer class="modal-card-foot">
           <button class="button" type="button" @click="isModalActive = false">
             {{ trans.get("general.close") }}
+          </button>
+          <button
+            class="button is-success"
+            :class="{ 'is-loading': isLoading }"
+            type="button"
+            @click="sendRewards"
+          >
+            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
         </footer>
       </div>
@@ -201,17 +333,47 @@ export default {
     return {
       csrfToken: null,
       prevImage: null,
-      isModalActive: false,
       image: null,
+      isModalActive: false,
+      isLoading: false,
       pets: null,
+      items: null,
+      cards: null,
+      badges: null,
+      collections: null,
     };
   },
   methods: {
+    sendRewards: function () {
+      this.isLoading = true;
+      axios
+        .patch("/classroom/levels/reward/" + this.level.id, {
+          pet: this.level.pet,
+          badge: this.level.badge,
+          item: this.level.item,
+          card: this.level.card,
+          collectible: this.level.collectible,
+          gold: this.level.gold,
+        })
+        .then((response) => {
+          this.isModalActive = false;
+          this.isLoading = false;
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
+        });
+    },
     showRewards: function () {
-      axios.post("/classroom/" + this.code + "/levels/getRewards").then(response => {
-        this.pets = response.data.pets;
-        this.isModalActive = true;
-      })
+      axios
+        .post("/classroom/" + this.code + "/levels/getRewards")
+        .then((response) => {
+          this.pets = response.data.pets;
+          this.items = response.data.items;
+          this.cards = response.data.cards;
+          this.badges = response.data.badges;
+          this.collections = response.data.collections;
+          this.isModalActive = true;
+        });
     },
     getValue: function () {
       if (!this.level.nextlvl) return 100;

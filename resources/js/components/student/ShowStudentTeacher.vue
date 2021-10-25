@@ -445,6 +445,9 @@ export default {
           student.hp = response.data.hp;
           student.xp = response.data.xp;
           student.level = response.data.level;
+          student.gold = response.data.gold;
+          student.pet = response.data.pet;
+          student.cards = response.data.cards;
         } else if (prop == "gold") {
           student.gold = response.data;
         }
