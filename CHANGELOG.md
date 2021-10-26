@@ -1,4 +1,8 @@
 # Changelog
+## v1.88 Beta (XX/10/2021)
+### Added
+- Create multiple type events.
+
 ## v1.87 Beta (25/10/2021)
 ### Added
 - Countdown added in volume meter.

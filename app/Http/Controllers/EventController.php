@@ -22,10 +22,10 @@ class EventController extends Controller
 
         $events = Event::where('type', "!=", 13)->whereNull('classroom_id')->orWhere('classroom_id', '=', $class->id)->get();
         $disabled = settings()->get('disabled_events', json_encode([]));
-        
+
         return view('events.index',  compact('class', 'events', 'disabled'));
     }
-    
+
     public function update()
     {
         $data = request()->validate([
@@ -34,13 +34,20 @@ class EventController extends Controller
             'event.content' => ['string', 'required'],
             'event.type' => ['numeric', 'required'],
             'event.classroom_id' => ['numeric', 'required'],
+            'event.options' => ['nullable', 'array'],
         ]);
-    
+
         $event = Event::findOrFail($data['event']['id']);
         $class = Classroom::findOrFail($event->classroom_id);
         $this->authorize('update', $class);
-    
-        return $event->update($data['event']);
+
+        return $event->update([
+            'title' => $data['event']['title'],
+            'content' => $data['event']['content'],
+            'type' => $data['event']['type'],
+            'classroom_id' => $data['event']['classroom_id'],
+            'options' => json_encode($data['event']['options']),
+        ]);
     }
 
     public function add()
@@ -50,12 +57,19 @@ class EventController extends Controller
             'event.content' => ['string', 'required'],
             'event.type' => ['numeric', 'required'],
             'event.classroom_id' => ['numeric', 'required'],
+            'event.options' => ['nullable', 'array'],
         ]);
 
         $class = Classroom::findOrFail($data['event']['classroom_id']);
         $this->authorize('update', $class);
-
-        return Event::create($data['event']);
+        dump($data['event']['type']);
+        return Event::create([
+            'title' => $data['event']['title'],
+            'content' => $data['event']['content'],
+            'type' => $data['event']['type'],
+            'classroom_id' => $data['event']['classroom_id'],
+            'options' => json_encode($data['event']['options']),
+        ]);
     }
 
     public function disable($code)
@@ -70,16 +84,15 @@ class EventController extends Controller
 
         $disabled = json_decode(settings()->get('disabled_events', json_encode([])));
 
-        $exists = array_search($data['id'], $disabled); 
+        $exists = array_search($data['id'], $disabled);
 
-        if($exists !== false) {
+        if ($exists !== false) {
             array_splice($disabled, $exists, 1);
         } else {
             array_push($disabled, $data['id']);
         }
 
         settings()->set('disabled_events', json_encode($disabled));
-
     }
 
     public function destroy($id)
@@ -94,7 +107,7 @@ class EventController extends Controller
         }
         return 1;
     }
-    
+
     public function show($code)
     {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
@@ -106,12 +119,12 @@ class EventController extends Controller
         do {
             $again = false;
             $event = Event::whereNotIn('id', $disabled)
-                            ->where(function($query) use ($class){
-                                $query->whereNull('classroom_id');
-                                $query->orWhere('classroom_id', '=', $class->id);
-                            })
-                            ->inRandomOrder()
-                            ->first();
+                ->where(function ($query) use ($class) {
+                    $query->whereNull('classroom_id');
+                    $query->orWhere('classroom_id', '=', $class->id);
+                })
+                ->inRandomOrder()
+                ->first();
             if (($event->type == 1 || $event->type == 3 || $event->type == 2 || $event->type == 4 || $event->type == 8 || $event->type == 9 || $event->type == 10 || $event->type == 11 || $event->type == 12 || $event->type == 13) && !count($class->students)) {
                 $again = true;
             } else if ($event->type == 5 && (!$class->students || !count($class->grouping->first()->groups))) {
@@ -128,20 +141,20 @@ class EventController extends Controller
         } while ($again && $max < 1000);
 
         $return = null;
-        if($max == 1000)
-            return redirect('/classroom/'.$class->code.'/');
+        if ($max == 1000)
+            return redirect('/classroom/' . $class->code . '/');
         switch ($event->type) {
             case 0:
                 $return = [
                     'event' => $event,
                 ];
-            break;
+                break;
             case 14:
                 $return = [
                     'students' => $class->students,
                     'event' => $event,
                 ];
-            break;
+                break;
             case 1:
                 $options = json_decode($event->options);
                 $return = [

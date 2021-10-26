@@ -82,8 +82,8 @@
         <header class="modal-card-head">
           <p class="modal-card-title">{{ trans.get("events.add") }}</p>
         </header>
-        <section class="modal-card-body is-relative" id="confetti-bg">
-          <b-field :label="trans.get('events.title')">
+        <section class="modal-card-body">
+          <b-field :label="trans.get('events.title')" class="mt-4">
             <b-input
               type="text"
               minlength="5"
@@ -93,7 +93,7 @@
             >
             </b-input>
           </b-field>
-          <b-field :label="trans.get('events.content')">
+          <b-field :label="trans.get('events.content')" class="mt-4">
             <b-input
               type="textarea"
               minlength="5"
@@ -103,22 +103,52 @@
             >
             </b-input>
           </b-field>
-          <button
-            class="button is-primary"
-            type="button"
-            @click="addEvent(0)"
-            v-if="!edit"
-          >
-            {{ trans.get("events.add") }}
-          </button>
-          <button
-            class="button is-primary"
-            type="button"
-            @click="addEvent(1)"
-            v-else
-          >
-            <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
-          </button>
+
+          <b-field :label="trans.get('skills.type')">
+            <b-select
+              @input="updateProps"
+              v-model="event.options.type"
+              expanded
+            >
+              <option
+                v-for="(eType, index) in types"
+                :key="index"
+                :value="eType"
+              >
+                {{ trans.get("events.type_" + eType) }}
+              </option>
+            </b-select>
+          </b-field>
+          <div v-for="(value, key, index) in event.options" :key="index">
+            <b-field class="mb-2" v-if="key != 'type'">
+              <template slot="label">
+                <span class="mt-2" v-html="trans.get('events.' + key)"></span>
+              </template>
+              <b-switch
+                v-if="key == 'mult'"
+                v-model="event.options[key]"
+                :true-value="1"
+                :false-value="-1"
+              >
+                {{ event.options[key] == 1 ? trans.get('events.type_win') : trans.get('events.type_lose') }}
+              </b-switch>
+              <b-input
+                v-else-if="key == 'textOK' || key == 'textKO'"
+                type="text"
+                minlength="5"
+                maxlength="200"
+                required
+                v-model="event.options[key]"
+              >
+              </b-input>
+              <b-numberinput
+                v-else
+                v-model="event.options[key]"
+                controls-position="compact"
+                controls-rounded
+              ></b-numberinput>
+            </b-field>
+          </div>
         </section>
         <footer
           class="modal-card-foot columns is-multiline"
@@ -127,6 +157,22 @@
           <div class="column is-narrow">
             <button class="button" type="button" @click="isModalActive = false">
               {{ trans.get("general.close") }}
+            </button>
+            <button
+              class="button is-primary"
+              type="button"
+              @click="addEvent(0)"
+              v-if="!edit"
+            >
+              {{ trans.get("events.add") }}
+            </button>
+            <button
+              class="button is-primary"
+              type="button"
+              @click="addEvent(1)"
+              v-else
+            >
+              <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
             </button>
           </div>
         </footer>
@@ -147,22 +193,140 @@ export default {
         content: "",
         id: null,
         type: 0,
-        options: null,
+        options: { type: "common" },
         classroom_id: this.classroom.id,
       },
+      types: [
+        "common",
+        "lose_life_one",
+        "lose_life_all",
+        "win_life_one",
+        "win_life_all",
+        "random_student",
+        "random_type_character",
+        "action_one_hp_gold",
+        "action_one_xp",
+        "win_lose_gold_one",
+        "interactive",
+      ],
       edit: false,
     };
   },
   methods: {
+    updateProps() {
+      switch (this.event.options.type) {
+        case "lose_life_one":
+          this.event.type = 1;
+          this.event.options = {
+            hpMin: 5,
+            hpMax: 15,
+            type: "lose_life_one",
+          };
+          break;
+        case "lose_life_all":
+          this.event.type = 2;
+          this.event.options = {
+            hpMin: 2,
+            hpMax: 8,
+            type: "lose_life_all",
+          };
+          break;
+        case "win_life_one":
+          this.event.type = 1;
+          this.event.options = {
+            hpMin: 5,
+            hpMax: 15,
+            type: "win_life_one",
+          };
+          break;
+
+        case "win_life_all":
+          this.event.type = 2;
+          this.event.options = {
+            hpMin: 5,
+            hpMax: 15,
+            type: "win_life_all",
+          };
+          break;
+        case "random_student":
+          this.event.type = 3;
+          this.event.options = { type: "win_life_all" };
+          break;
+        case "random_type_character":
+          this.event.type = 7;
+          this.event.options = { type: "random_type_character" };
+          break;
+
+        case "action_one_hp_gold":
+          this.event.type = 8;
+          this.event.options = {
+            hpMin: 5,
+            hpMax: 15,
+            goldMin: 50,
+            goldMax: 200,
+            type: "action_one_hp_gold",
+          };
+          break;
+        case "action_one_xp":
+          this.event.type = 9;
+          this.event.options = {
+            xpMin: 10,
+            xpMax: 20,
+            type: "action_one_xp",
+          };
+          break;
+        case "win_lose_gold_one":
+          this.event.type = 10;
+          this.event.options = {
+            goldMin: 50,
+            goldMax: 200,
+            mult: 1,
+            type: "win_lose_gold_one",
+          };
+          break;
+        case "interactive":
+          this.event.type = 12;
+          this.event.options = {
+            type: "interactive",
+            textOK: "",
+            goldMin: 50,
+            goldMax: 200,
+            textKO: "",
+            hpMin: 1,
+            hpMax: 15,
+          };
+          break;
+        default:
+          this.event.options = { type: "common" };
+          break;
+      }
+    },
     addEvent(type) {
       if (type == 0) {
-        if(this.event.title != '' && this.event.content != '')
-        axios
-          .post("/classroom/events/add", { event: this.event })
-          .then((response) => {
-            location.reload();
-          });
+        if (this.event.title != "" && this.event.content != "") {
+          if (
+            (this.event.options.type == "win_life_one" ||
+              this.event.options.type == "win_life_all") &&
+            this.event.options.hpMin > 0
+          ) {
+            this.event.options.hpMin *= -1;
+            this.event.options.hpMax *= -1;
+          }
+          axios
+            .post("/classroom/events/add", { event: this.event })
+            .then((response) => {
+              location.reload();
+            });
+        }
       } else {
+        if (
+          (this.event.options.type == "win_life_one" ||
+            this.event.options.type == "win_life_all") &&
+          this.event.options.hpMin > 0
+        ) {
+          this.event.options.hpMin *= -1;
+          this.event.options.hpMax *= -1;
+        }
         axios
           .post("/classroom/events/edit", { event: this.event })
           .then((response) => {
@@ -174,12 +338,23 @@ export default {
       this.edit = false;
       this.event.title = "";
       this.event.content = "";
+      this.event.options = { type: "common" };
       this.isModalActive = true;
     },
-    editModal(event) {
-      this.event.id = event.id;
-      this.event.title = event.title;
-      this.event.content = event.content;
+    editModal(editEvent) {
+      this.event.id = editEvent.id;
+      this.event.title = editEvent.title;
+      this.event.content = editEvent.content;
+      this.event.type = editEvent.type;
+      this.event.options = JSON.parse(editEvent.options);
+      if (
+        (this.event.options.type == "win_life_one" ||
+          this.event.options.type == "win_life_all") &&
+        this.event.options.hpMin < 0
+      ) {
+        this.event.options.hpMin *= -1;
+        this.event.options.hpMax *= -1;
+      }
       this.edit = true;
       this.isModalActive = true;
     },
