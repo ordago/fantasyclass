@@ -82,7 +82,7 @@ GOOGLE_ANALYTICS=
 Other settings:
 
 ```
-# Max students in pagination
+# Max students in pagination (IMPORTANT)
 MIX_MAX_STUDENTS=40
 
 # To encrypt / decrypt some URL

@@ -12,6 +12,7 @@ var config = {
     storageBucket: process.env.MIX_FIREBASE_BUCKET,
     messagingSenderId: process.env.MIX_FIREBASE_SENDER,
     appId: process.env.MIX_FIREBASE_APPID,
+    measurementId: process.env.MIX_FIREBASE_MEASUREMENT,
   };
 
 firebaseApp.initializeApp(config)
