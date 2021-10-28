@@ -36,7 +36,7 @@ return [
     'description_info' => 'Això és informació del món real. P.e. Prova de trigonometria',
     'click_select' => 'Clic per seleccionar...',
     'content' => 'Contingut',
-    'conquer' => 'És una prova de conquesta?',
+    'conquer' => 'Té recompenses?',
     'rewards' => 'Recompenses',
     'reward_items' => 'Assigna objectes al superar el repte',
     'auto_assign' => 'Auto-assignació de cartes?',

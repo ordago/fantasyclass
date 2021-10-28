@@ -37,7 +37,7 @@ return [
     'description_info' => 'That\'s real world information. E.g. Trigonometry test',
     'click_select' => 'Click to select...',
     'content' => 'Content',
-    'conquer' => 'Is this a conquer story?',
+    'conquer' => 'Has rewards?',
     'rewards' => 'Rewards',
     'reward_items' => 'Assign objects when succeed',
     'auto_assign' => 'Autoassign cards?',

@@ -36,7 +36,7 @@ return [
     'description_info' => 'Esto es información del mundo real. P.e. Prueba de trigonometría',
     'click_select' => 'Clic para seleccionar...',
     'content' => 'Contenido',
-    'conquer' => 'Es una prueba de conquista?',
+    'conquer' => '¿Tiene recompensas?',
     'rewards' => 'Recompensas',
     'reward_items' => 'Asigna objetos al superar el desafío',
     'auto_assign' => 'Auto-asinación de cartas?',
