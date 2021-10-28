@@ -297,15 +297,17 @@ class UtilsController extends Controller
                         $checkReq = $student->groups->first()->challenges->contains($challenge->challenge_required);
                     if (!$checkReq) {
                         $check = "invisible";
-                        return view('maps.marker', compact('check', 'permalink'));
+                        $title = "";
+                        return view('maps.marker', compact('check', 'permalink', 'title'));
                     }
                 }
                 if ($challenge->type == 0)
-                    $check = $student->challenges->contains($text[1]);
+                $check = $student->challenges->contains($text[1]);
                 else
-                    $check = $student->groups->first()->challenges->contains($text[1]);
-
-                return view('maps.marker', compact('check', 'permalink'));
+                $check = $student->groups->first()->challenges->contains($text[1]);
+                
+                $title = $challenge->title;
+                return view('maps.marker', compact('check', 'permalink', 'title'));
                 break;
 
             default:

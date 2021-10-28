@@ -57,6 +57,7 @@
         <span v-tippy :content="trans.get('challenges.tz')">
           <b-datetimepicker
             v-model="datepicker"
+            locale="es-ES"
             :placeholder="trans.get('challenges.click_select')"
             icon-pack="fa"
             class="button is-rounded"
@@ -65,16 +66,10 @@
             <template slot="left">
               <button
                 class="button is-primary"
-                @click.prevent="datetime = new Date()"
+                @click.prevent="datepicker = new Date()"
               >
                 <b-icon icon="clock"></b-icon>
                 <span>Now</span>
-              </button>
-            </template>
-            <template slot="right">
-              <button class="button is-danger" @click.prevent="datetime = null">
-                <b-icon icon="close"></b-icon>
-                <span>Clear</span>
               </button>
             </template>
           </b-datetimepicker>

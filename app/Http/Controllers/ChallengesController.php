@@ -223,7 +223,7 @@ class ChallengesController extends Controller
         $class = Classroom::where('id', '=', $challenge->classroom())->firstOrFail();
         $this->authorize('view', $class);
 
-        return "<iframe style='border: 0;' width='33px' height='49px' src='" . env('APP_URL') . "/external/check/challengecheck/" . Functions::simple_crypt($class->code . ":" . $challenge->id) . "'></iframe>";
+        return "<iframe style='border: 0;' width='100%' src='" . env('APP_URL') . "/external/check/challengecheck/" . Functions::simple_crypt($class->code . ":" . $challenge->id) . "'></iframe>";
     }
 
     public function getChallengeLink()

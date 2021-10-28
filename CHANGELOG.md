@@ -1,7 +1,10 @@
 # Changelog
-## v1.88 Beta (XX/10/2021)
+## v1.88 Beta (28/10/2021)
 ### Added
 - Create multiple type events.
+
+### Changed
+- Map marker resize in genially / web page and shows title.
 
 ## v1.87 Beta (25/10/2021)
 ### Added
