@@ -358,6 +358,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/utils/get-shop', 'UtilsController@getShop');
         Route::get('/{code}/utils/exportConfidentialDataStudent', 'UtilsController@exportConfidentialDataStudent');
         Route::post('/{code}/get/objects', 'UtilsController@getObjects');
+        Route::get('/{code}/random/student', 'UtilsController@getRandomStudent');
         
         Route::get('/{code}/videochats/get', 'VideochatController@index');
         Route::post('/{code}/videochat', 'VideochatController@store');

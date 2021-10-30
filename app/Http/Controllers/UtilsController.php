@@ -245,6 +245,13 @@ class UtilsController extends Controller
         }
     }
 
+    public function getRandomStudent($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('view', $class);
+        return StudentController::getRandomStudent($class);
+    }
+
     public function externalLink($type, $code)
     {
 

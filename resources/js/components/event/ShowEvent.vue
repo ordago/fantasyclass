@@ -1,30 +1,53 @@
 <template>
   <div class="m-0 content">
     <transition name="fade">
-      <h1 class="first-appear is-size-1" v-if="show" v-html="trans.get(info.event.title)"></h1>
+      <h1
+        class="first-appear is-size-1"
+        v-if="show"
+        v-html="trans.get(info.event.title)"
+      ></h1>
     </transition>
     <transition name="fadesecond">
       <div class="second-appear" v-if="show">
         <h2 class="py-3 is-size-3 has-text-centered">
-          <span v-if="!(info.event.type && showInfo)" v-html="trans.get(info.event.content)"></span>
-          <span v-if="info.event.type == 1 || info.event.type == 2 || info.event.type == 5">
-            ({{info.hp}}
-            <i class="fas fa-heart colored"></i>)
+          <span
+            v-if="!(info.event.type && showInfo)"
+            v-html="trans.get(info.event.content)"
+          ></span>
+          <span
+            v-if="
+              info.event.type == 1 ||
+              info.event.type == 2 ||
+              info.event.type == 5
+            "
+          >
+            ({{ info.hp }} <i class="fas fa-heart colored"></i>)
           </span>
           <span v-if="info.event.type == 10">
-            ({{info.gold}}
-            <i class="fas fa-coins colored"></i>)
+            ({{ info.gold }} <i class="fas fa-coins colored"></i>)
           </span>
           <img :src="info.class" v-if="info.event.type == 7" />
         </h2>
         <h2
           class="py-3 is-size-3 has-text-centered"
-          v-if="info.event.type == 1 || info.event.type == 3 || info.event.type == 4 || info.event.type == 6 || info.event.type == 8 || info.event.type == 9 || info.event.type == 10 || info.event.type == 11"
+          v-if="
+            info.event.type == 1 ||
+            info.event.type == 3 ||
+            info.event.type == 4 ||
+            info.event.type == 6 ||
+            info.event.type == 8 ||
+            info.event.type == 9 ||
+            info.event.type == 10 ||
+            info.event.type == 11
+          "
         >
           <div class="hiddenName">
             <div class="hideObj"></div>
             <span>{{ info.student.name }}</span>
           </div>
+          <button class="button" @click="reloadStudent">
+            <i class="far fa-sync-alt"></i>
+          </button>
         </h2>
         <h4
           class="py-3 mt-2 is-flex is-size-4 has-all-centered"
@@ -38,7 +61,10 @@
                 <span v-if="info.event.type == 9">{{ info.xp }}</span>
                 <i
                   class="fas colored"
-                  :class="{ 'fa-coins': info.event.type == 8, 'fa-fist-raised': info.event.type == 9 }"
+                  :class="{
+                    'fa-coins': info.event.type == 8,
+                    'fa-fist-raised': info.event.type == 9,
+                  }"
                 ></i>
               </button>
             </div>
@@ -49,13 +75,19 @@
                 <span v-if="info.event.type == 9">{{ info.xp * -1 }}</span>
                 <i
                   class="fas colored"
-                  :class="{ 'fa-heart': info.event.type == 8, 'fa-fist-raised': info.event.type == 9 }"
+                  :class="{
+                    'fa-heart': info.event.type == 8,
+                    'fa-fist-raised': info.event.type == 9,
+                  }"
                 ></i>
               </button>
             </div>
           </div>
         </h4>
-        <h4 class="py-3 is-flex is-size-4 has-all-centered" v-if="info.event.type == 5">
+        <h4
+          class="py-3 is-flex is-size-4 has-all-centered"
+          v-if="info.event.type == 5"
+        >
           <b-modal
             :active.sync="isCountDownModalActive"
             has-modal-card
@@ -68,12 +100,20 @@
               </header>
               <section
                 class="modal-card-body is-flex has-all-centered"
-                style="align-items: flex-start;"
+                style="align-items: flex-start"
               >
-                <count-down :starttime="new Date(1,1,1, 0, 0, 10)"></count-down>
+                <count-down
+                  :starttime="new Date(1, 1, 1, 0, 0, 10)"
+                ></count-down>
               </section>
               <footer class="modal-card-foot">
-                <button class="button" type="button" @click="isCountDownModalActive=false">Close</button>
+                <button
+                  class="button"
+                  type="button"
+                  @click="isCountDownModalActive = false"
+                >
+                  Close
+                </button>
               </footer>
             </div>
           </b-modal>
@@ -87,25 +127,38 @@
                 <div class="control">
                   <div class="select is-danger">
                     <select v-model="selectedStudent">
-                      <option :value="info.student.id">{{ info.student.name }}</option>
+                      <option :value="info.student.id">
+                        {{ info.student.name }}
+                      </option>
                       <option
                         :value="student.id"
                         v-for="student in info.groupMembers"
                         :key="student.id"
-                      >{{ student.name }}</option>
+                      >
+                        {{ student.name }}
+                      </option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
             <div class="column is-narrow is-flex has-all-centered">
-              <button class="button is-link" @click="isCountDownModalActive = true">
+              <button
+                class="button is-link"
+                @click="isCountDownModalActive = true"
+              >
                 <i class="fad fa-stopwatch"></i>
               </button>
             </div>
           </div>
         </h4>
-        <button @click="isWheelModalActive = true" v-if="info.event.type == 14" class="button is-primary">{{ trans.get('events.wheel_btn') }}</button>
+        <button
+          @click="isWheelModalActive = true"
+          v-if="info.event.type == 14"
+          class="button is-primary"
+        >
+          {{ trans.get("events.wheel_btn") }}
+        </button>
         <show-card
           v-if="info.event.type == 11 && showInfo"
           :card="info.card"
@@ -116,10 +169,14 @@
           class="button mt-3"
           v-if="info.event.type == 11"
           @click="showInfo = !showInfo"
-        >Show / hide card</button>
-        <div class="columns" v-if="info.event.type==12">
+        >
+          Show / hide card
+        </button>
+        <div class="columns" v-if="info.event.type == 12">
           <div class="column" v-if="!showInfo">
-            <button class="button is-success" @click="showInfo = true">{{ trans.get('events.go_ahead') }}</button>
+            <button class="button is-success" @click="showInfo = true">
+              {{ trans.get("events.go_ahead") }}
+            </button>
           </div>
           <div class="column" v-if="!showInfo">
             <button class="button is-danger" @click="close()">Nope ...</button>
@@ -129,21 +186,29 @@
               {{ trans.get(info.text) }} ({{ info.value }}
               <i
                 class="fas colored"
-                :class="{ 'fa-coins' : info.value > 0, 'fa-heart' : info.value < 0 }"
-              ></i>)
+                :class="{
+                  'fa-coins': info.value > 0,
+                  'fa-heart': info.value < 0,
+                }"
+              ></i
+              >)
             </span>
           </div>
         </div>
         <button
           class="button is-dark mt-5"
           @click="accept()"
-          v-if="info.event.type != 8 && info.event.type != 9 && (info.event.type != 12 || showInfo)"
+          v-if="
+            info.event.type != 8 &&
+            info.event.type != 9 &&
+            (info.event.type != 12 || showInfo)
+          "
         >
-          <i class="fas fa-feather-alt"></i> {{ trans.get('events.accept') }}
+          <i class="fas fa-feather-alt"></i> {{ trans.get("events.accept") }}
         </button>
       </div>
     </transition>
-     <b-modal
+    <b-modal
       :active.sync="isWheelModalActive"
       has-modal-card
       full-screen
@@ -157,7 +222,11 @@
           <wheel :code="code" :students="info.students"></wheel>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="isWheelModalActive = false">
+          <button
+            class="button"
+            type="button"
+            @click="isWheelModalActive = false"
+          >
             {{ trans.get("general.close") }}
           </button>
         </footer>
@@ -172,16 +241,24 @@ export default {
   mounted() {
     this.show = true;
   },
-  data: function() {
+  data: function () {
     return {
       isWheelModalActive: false,
       show: false,
       selectedStudent: 0,
       isCountDownModalActive: false,
-      showInfo: false
+      showInfo: false,
     };
   },
   methods: {
+    reloadStudent() {
+      axios
+        .get("/classroom/" + this.code + "/random/student")
+        .then((response) => {
+          this.info.student = response.data;
+          this.$forceUpdate();
+        });
+    },
     close() {
       window.location = "/classroom/" + this.code;
     },
@@ -193,7 +270,7 @@ export default {
             id: this.info.student.id,
             prop: "hp",
             value: this.info.hp,
-            type: 'event',
+            type: "event",
           });
           break;
         case 5:
@@ -201,7 +278,7 @@ export default {
             id: this.selectedStudent,
             prop: "hp",
             value: this.info.hp,
-            type: 'event',
+            type: "event",
           });
           break;
         case 2:
@@ -209,7 +286,7 @@ export default {
             code: this.code,
             prop: "hp",
             value: this.info.hp,
-            type: 'event',
+            type: "event",
           });
           break;
         case 8:
@@ -218,14 +295,14 @@ export default {
               id: this.info.student.id,
               prop: "gold",
               value: this.info.gold,
-              type: 'event',
+              type: "event",
             });
           } else {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "hp",
               value: this.info.hp,
-              type: 'event',
+              type: "event",
             });
           }
           break;
@@ -235,14 +312,14 @@ export default {
               id: this.info.student.id,
               prop: "xp",
               value: this.info.xp,
-              type: 'event',
+              type: "event",
             });
           } else {
             axios.post("/classroom/students/update", {
               id: this.info.student.id,
               prop: "xp",
               value: this.info.xp * -1,
-              type: 'event',
+              type: "event",
             });
           }
           break;
@@ -251,32 +328,31 @@ export default {
             id: this.info.student.id,
             prop: "gold",
             value: this.info.gold,
-            type: 'event',
+            type: "event",
           });
           break;
         case 11:
           axios.post("/classroom/students/update", {
             id: this.info.student.id,
             card_id: this.info.card.id,
-            type: 'event',
+            type: "event",
           });
           break;
         case 12:
-          let prop = "gold"
-          if(this.info.value < 0)
-            prop = "hp"
+          let prop = "gold";
+          if (this.info.value < 0) prop = "hp";
 
           axios.post("/classroom/students/update", {
             code: this.code,
             prop: prop,
             value: this.info.value,
-            type: 'event',
+            type: "event",
           });
           break;
       }
       this.close();
-    }
-  }
+    },
+  },
 };
 </script>
 

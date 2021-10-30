@@ -4,6 +4,7 @@
 ### Changed
 - Better progress interface.
 - Changes in student's color palette.
+- Get Random student update in events.
 
 ## v1.88 Beta (28/10/2021)
 ### Added
