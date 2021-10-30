@@ -1,4 +1,10 @@
 # Changelog
+## v1.89 Beta (XX/10/2021)
+
+### Changed
+- Better progress interface.
+- Changes in student's color palette.
+
 ## v1.88 Beta (28/10/2021)
 ### Added
 - Create multiple type events.

@@ -708,28 +708,41 @@
             </div>
           </div>
           <div v-else>
-            <a
-              :href="'/classroom/show/' + classroom.code + '/challenges'"
-              class="button is-link mt-2 mb-3"
-            >
-              {{ trans.get("challenges.show_all_summary") }}
-            </a>
-            <div
-              class="has-text-centered"
-              v-for="(challenge, index) in orderedChallenges"
-              :key="'challenge-' + challenge.id"
-            >
-              <show-challenge
-                class="has-text-left"
-                :challenge="challenge"
-                :code="classroom.code"
-                :admin="admin"
-                :edit="false"
-              ></show-challenge>
-              <span v-if="index != orderedChallenges.length - 1"
-                ><i class="far fa-arrow-up"></i
-              ></span>
-            </div>
+            <timeline timeline-theme="#555555">
+              <timeline-item icon-size="large" bg-color="#000">
+                <a
+                  v-if="!admin"
+                  :href="'/classroom/show/' + classroom.code + '/challenges'"
+                  class="button is-link mt-2 mb-3"
+                >
+                  {{ trans.get("challenges.show_all_summary") }}
+                </a>
+              </timeline-item>
+              <timeline-item
+                icon-size="medium"
+                :bg-color="getBackgroundTimeline(challenge)"
+                v-for="challenge in orderedChallenges"
+                :key="'challenge-' + challenge.id"
+              >
+                <i class="pt-1" :class="getIcon(challenge)" slot="others"></i>
+                <span class="tag is-dark p-2 mb-2">{{
+                  datetime(challenge.datetime)
+                }}</span>
+                <show-challenge
+                  class="has-text-left"
+                  :challenge="challenge"
+                  :code="classroom.code"
+                  :admin="admin"
+                  :edit="false"
+                ></show-challenge>
+              </timeline-item>
+              <timeline-item icon-size="large" bg-color="#000">
+                <h2 class="is-size-2 has-text-centered">
+                  <i class="fas fa-flag-checkered mr-1"></i>
+                  {{ trans.get("home.start") }}
+                </h2>
+              </timeline-item>
+            </timeline>
           </div>
         </b-tab-item>
 
@@ -1603,7 +1616,10 @@
                 </button>
                 <article class="message is-warning mt-1">
                   <div class="message-body">
-                    <div class="mb-1" v-if="settings.comission_collectibles != 0">
+                    <div
+                      class="mb-1"
+                      v-if="settings.comission_collectibles != 0"
+                    >
                       <i class="fas fa-exclamation-triangle mr-1"></i>
                       {{ trans.get("students.collectible_fee") }}
                       {{ settings.comission_collectibles }}
@@ -1770,6 +1786,8 @@ import VueFlip from "vue-flip";
 
 import confetti from "canvas-confetti";
 
+import { Timeline, TimelineItem, TimelineTitle } from "vue-cute-timeline";
+
 export default {
   props: [
     "student",
@@ -1793,6 +1811,9 @@ export default {
     ShowBadge,
     ShowSkill,
     RandomCard,
+    Timeline,
+    TimelineTitle,
+    TimelineItem,
     "vue-flip": VueFlip,
   },
   created() {
@@ -1800,6 +1821,23 @@ export default {
     this.classroom.settings = this.settings;
   },
   mounted() {
+    this.$on("updateStudent", function (student) {
+      this.student.hp = student.hp;
+      this.student.xp = student.xp;
+      this.student.gold = student.gold;
+      this.student.items = student.items;
+      // this.$forceUpdate();
+    });
+    this.$on("updateChallenges", function (challenges) {
+      if (Object.keys(this.mutableChallenges).length < challenges.length) {
+        this.$toast(this.trans.get("challenges.new_challenges"), {
+          type: "info",
+        });
+      }
+      this.mutableChallenges = challenges;
+      // this.$forceUpdate();
+    });
+
     this.behaviours = this.student.behaviours;
     if (!this.admin) {
       this.updateEmpty();
@@ -1897,6 +1935,9 @@ export default {
     };
   },
   methods: {
+    datetime(date) {
+      return Utils.getDate(date, false);
+    },
     removeExchange(id) {
       axios
         .post("/classroom/" + this.classroom.code + "/exchange/delete", {
@@ -2020,6 +2061,43 @@ export default {
       });
       if (collection.collectionables.length == count) return true;
       return false;
+    },
+    getIcon(challenge) {
+      switch (challenge.completion) {
+        case 0:
+        case 1:
+        case 3:
+        case 4:
+          return challenge.count === null
+            ? "fal fa-minus timeline-rounded has-text-dark has-background-light"
+            : challenge.count == 1
+            ? "fas fa-check timeline-rounded-success has-text-light has-background-success "
+            : "fas fa-times timeline-rounded has-text-light has-background-danger";
+          break;
+        case 2:
+          return challenge.count == 2
+            ? "fas fa-check timeline-rounded-success has-text-light has-background-success"
+            : "fas fa-times timeline-rounded has-text-light has-background-danger";
+          break;
+      }
+    },
+    getBackgroundTimeline(challenge) {
+      return "#f7e8cf";
+      switch (challenge.completion) {
+        case 0:
+        case 1:
+        case 3:
+        case 4:
+          return challenge.count === null
+            ? "#fff"
+            : challenge.count == 1
+            ? "#66bb6a"
+            : "#f44336";
+          break;
+        case 2:
+          return challenge.count == 2 ? "#66bb6a" : "#f44336";
+          break;
+      }
     },
     getLvlMessage() {
       let msg =
@@ -3047,4 +3125,17 @@ export default {
 .has-bg-student .tabs a {
   border-radius: 2px;
 }
+.timeline-rounded {
+  padding: 3px 5px !important;
+  border-radius: 10px;
+  margin-left: 2px;
+}
+.timeline-rounded-success {
+  padding: 3px !important;
+  border-radius: 10px;
+  margin-left: 2px;
+}
+/* .timeline-circle {
+  left: -37.5px!important;
+}  */
 </style>

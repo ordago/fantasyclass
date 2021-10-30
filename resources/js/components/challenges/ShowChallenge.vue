@@ -24,7 +24,7 @@
 
                 <span
                   class="tag is-dark ml-1"
-                  v-if="!challengeReactive.incomplete"
+                  v-if="!challengeReactive.incomplete && (full || edit)"
                 >
                   <span
                     v-if="admin && isHidden"
@@ -55,7 +55,7 @@
                     mr-2
                     has-background-dark has-text-light
                     rounded
-                    fas
+                    fasa
                     fa-thumbtack
                   "
                 ></i>
@@ -885,9 +885,9 @@ export default {
   },
   methods: {
     clean(text) {
-       text = text.replace("&nbsp;", "");
-       text = text.replace("<br>", "");
-       return text;
+      text = text.replace("&nbsp;", "");
+      text = text.replace("<br>", "");
+      return text;
     },
     getMessageDisable() {
       if (this.challengeReactive.disabled)
@@ -1107,16 +1107,7 @@ export default {
             password: this.password,
           })
           .then((response) => {
-            if (
-              this.$parent.$parent.$parent.mutableChallenges.length <
-              response.data.challenges.length
-            ) {
-              this.$toast(this.trans.get("challenges.new_challenges"), {
-                type: "info",
-              });
-            }
-            this.$parent.$parent.$parent.mutableChallenges =
-              response.data.challenges;
+            this.emitGrandfather("updateChallenges", response.data.challenges);
 
             if (response.data.success == true) {
               confetti({
@@ -1125,17 +1116,21 @@ export default {
                 origin: { y: 1.0 },
               });
               this.challengeReactive.count++;
-              this.$parent.$parent.$parent.student.hp = response.data.hp;
-              this.$parent.$parent.$parent.student.xp = response.data.xp;
-              this.$parent.$parent.$parent.student.gold = response.data.gold;
-              this.$parent.$parent.$parent.student.items = response.data.items;
-              this.$parent.$parent.$parent.forceReload++;
+              this.emitGrandfather("updateStudent", response.data);
             } else {
               this.$toast(this.trans.get("challenges.password_error"), {
                 type: "error",
               });
             }
           });
+    },
+    emitGrandfather(typeEmit, object) {
+      let vm = this.$parent;
+
+      while (vm) {
+        vm.$emit(typeEmit, object);
+        vm = vm.$parent;
+      }
     },
     markCompleted() {
       this.$buefy.dialog.confirm({
@@ -1152,16 +1147,9 @@ export default {
               challenge: this.challengeReactive.id,
             })
             .then((response) => {
-              if (
-                this.$parent.$parent.$parent.mutableChallenges.length <
-                response.data.challenges.length
-              ) {
-                this.$toast(this.trans.get("challenges.new_challenges"), {
-                  type: "info",
-                });
-              }
-              this.$parent.$parent.$parent.mutableChallenges =
-                response.data.challenges;
+              console.log(response.data.challenges)
+              this.emitGrandfather("updateChallenges", response.data.challenges);
+
               if (response.data.success == true) {
                 if (response.data.feedback) {
                   this.$buefy.dialog.alert({
@@ -1178,14 +1166,7 @@ export default {
                   origin: { y: 1.0 },
                 });
                 this.challengeReactive.count++;
-                this.$parent.$parent.$parent.student.hp = response.data.hp;
-                this.$parent.$parent.$parent.student.xp = response.data.xp;
-                this.$parent.$parent.$parent.student.gold = response.data.gold;
-                if (response.data.items)
-                  this.$parent.$parent.$parent.student.items =
-                    response.data.items;
-                this.$forceUpdate();
-                this.$parent.$parent.$parent.forceReload++;
+                this.emitGrandfather("updateStudent", response.data);
               }
             });
         },
@@ -1230,7 +1211,9 @@ export default {
           case 1:
           case 3:
           case 4:
-            return this.challengeReactive.count === null ? 'has-background-light' : this.challengeReactive.count == 1
+            return this.challengeReactive.count === null
+              ? "has-background-light"
+              : this.challengeReactive.count == 1
               ? "has-background-success-light"
               : "has-background-danger-light";
             break;

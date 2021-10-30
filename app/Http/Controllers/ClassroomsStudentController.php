@@ -871,12 +871,14 @@ class ClassroomsStudentController extends Controller
                 $update = true;
             }
         } else {
+            $student = $student->fresh();
             return [
                 'success' => false,
                 'hp' => $student->hp,
                 'xp' => $student->xp,
                 'gold' => $student->gold,
-                'challenges' => $this::getChallenges($student->fresh(), $class),
+                'items' => $student->items,
+                'challenges' => $this::getChallenges($student, $class),
             ];
         }
 
@@ -897,12 +899,15 @@ class ClassroomsStudentController extends Controller
 
         NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.challenge_password", __("notifications.challenge_password") . $from['title'], $from, "challenge", "challenges");
 
+        $student = $student->fresh();
+
         return [
             'success' => true,
             'hp' => $student->hp,
             'xp' => $student->xp,
             'gold' => $student->gold,
-            'challenges' => $this::getChallenges($student->fresh(), $class),
+            'items' => $student->items,
+            'challenges' => $this::getChallenges($student, $class),
         ];
     }
     public function removeExchange($code)

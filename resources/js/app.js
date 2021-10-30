@@ -56,6 +56,13 @@ import 'vue-croppa/dist/vue-croppa.css'
 
 Vue.use(Croppa);
 
+import { Timeline, TimelineItem, TimelineTitle } from 'vue-cute-timeline'
+
+import 'vue-cute-timeline/dist/index.css'
+Vue.use(Timeline);
+Vue.use(TimelineTitle);
+Vue.use(TimelineItem);
+
 Vue.component('create-classroom', () => import('./components/classroom/CreateClassroom.vue'));
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
 Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.vue').default);
