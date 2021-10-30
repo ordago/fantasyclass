@@ -244,7 +244,7 @@
     <div class="footer">
         <p>
             FantasyClass 2021
-            <a target="_blank" href="https://twitter.com/GamificaOnline"><i class="fab fa-twitter"></i></a>
+            <a target="_blank" href="https://twitter.com/FantasyClassApp"><i class="fab fa-twitter"></i></a>
             <i class="fal fa-ellipsis-v"></i>
             <a target="_blank" href="https://github.com/climentjoan/fantasyclass"><i class="fab fa-github"></i></a>
             <i class="fal fa-ellipsis-v"></i>

@@ -1,5 +1,5 @@
 # Changelog
-## v1.89 Beta (XX/10/2021)
+## v1.89 Beta (30/10/2021)
 ### Added
 - Battles: group vs monster.
 
@@ -7,6 +7,7 @@
 - Better progress interface.
 - Changes in student's color palette.
 - Get Random student update in events.
+- Order by name in massive actions.
 
 ## v1.88 Beta (28/10/2021)
 ### Added

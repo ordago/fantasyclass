@@ -252,22 +252,24 @@ export default {
       return text;
     },
   },
+
   computed: {
     orderedStudents: function () {
-      return this.students.sort((a, b) => {
-        let a1, b1;
-        if (a.name.includes(" ")) {
-          a1 = a.name.split(" ")[1];
-        } else {
-          a1 = a.name;
-        }
-        if (b.name.includes(" ")) b1 = b.name.split(" ")[1];
-        else b1 = b.name;
-        if (a1 === b1) {
-          return 0;
-        }
-        return a1 > b1 ? 1 : -1;
-      });
+      return _.orderBy(this.students, "name", "asc");
+      // return this.students.sort((a, b) => {
+      //   let a1, b1;
+      //   if (a.name.includes(" ")) {
+      //     a1 = a.name.split(" ")[1];
+      //   } else {
+      //     a1 = a.name;
+      //   }
+      //   if (b.name.includes(" ")) b1 = b.name.split(" ")[1];
+      //   else b1 = b.name;
+      //   if (a1 === b1) {
+      //     return 0;
+      //   }
+      //   return a1 > b1 ? 1 : -1;
+      // });
     },
   },
 };
