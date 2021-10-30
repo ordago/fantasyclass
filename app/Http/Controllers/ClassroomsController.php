@@ -9,6 +9,7 @@ use App\Classroom;
 use App\ClassroomUser;
 use App\EvaluablesGroup;
 use App\GoalThemes;
+use App\Group;
 use App\Grouping;
 use App\Theme;
 use App\Item;
@@ -49,7 +50,7 @@ class ClassroomsController extends Controller
         $data = request()->validate([
             'type' => ['string'],
         ]);
-        if($data['type'] == 'enrollment_code')
+        if ($data['type'] == 'enrollment_code')
             $code = $this->reference(5, 'enrollment_code');
         else
             $code = $this->reference(8, 'share_code');
@@ -82,9 +83,9 @@ class ClassroomsController extends Controller
             'theme_id' => isset($data['bgtheme']) ? $data['bgtheme'] : null,
             'goal_type' => $data['goalType'],
         ]);
-        
+
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        if(isset($data['bgtheme'])) {
+        if (isset($data['bgtheme'])) {
             settings()->forget('background');
         } else {
             settings()->set('background', $data['background']);
@@ -105,6 +106,23 @@ class ClassroomsController extends Controller
                     $student->setProperty('gold', request()->gold, true, 'battle');
             }
         }
+    }
+    public function rewardGroup($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $group = Group::findorFail(request()->group);
+        foreach ($group->students as $student) {
+            if ($student->hp > 0) {
+                if (request()->xp)
+                    $student->setProperty('xp', request()->xp, true, 'battle');
+                if (request()->gold)
+                    $student->setProperty('gold', request()->gold, true, 'battle');
+            }
+        }
+        // foreach ($class->students as $student) {
+        // }
     }
 
     public function removeMedia($code, $id)
@@ -190,7 +208,7 @@ class ClassroomsController extends Controller
             $newMap->classroom_id = $new->id;
             $newMap->push();
         }
-        
+
         // Clone question banks
         foreach ($class->questionBanks as $qb) {
             $newQb = $qb->replicate();
@@ -303,7 +321,7 @@ class ClassroomsController extends Controller
             $newPet->shared = 0;
             $newPet->push();
         }
-        
+
         // Clone Monsters
         foreach ($class->monsters as $monster) {
             $newMonster = $monster->replicate();
@@ -362,7 +380,7 @@ class ClassroomsController extends Controller
         ]);
 
         settings()->setExtraColumns(['classroom_id' => $classroom->id]);
-        if(!isset($data['bgtheme'])) {
+        if (!isset($data['bgtheme'])) {
             settings()->set('background', $data['background']);
         }
 
@@ -430,8 +448,7 @@ class ClassroomsController extends Controller
                 'classroom_id' => $classId,
                 'role' => 0,
             ]);
-        }
-        catch (\Throwable $th) {
+        } catch (\Throwable $th) {
             return false;
         }
 
@@ -445,7 +462,7 @@ class ClassroomsController extends Controller
 
         $char = 0;
         $class = Classroom::findOrFail($classId);
-        if($class->characterTheme)
+        if ($class->characterTheme)
             $char = $class->characterTheme->characters->random(1)->first()->id;
 
         // Create the student properties
@@ -495,18 +512,18 @@ class ClassroomsController extends Controller
         return "/classroom";
     }
 
-    public function getPaginatedStudents($class, $perPage, $offset, $order, $search = "") {
-        if($order == "name")
+    public function getPaginatedStudents($class, $perPage, $offset, $order, $search = "")
+    {
+        if ($order == "name")
             $orderType = "orderBy";
         else $orderType = "orderByDesc";
-        if($search) {
-            return $class->students()->whereRaw("LOWER(name) LIKE ?", '%'.strtolower($search).'%')->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
-        } 
-        else return $class->students()->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
-    
+        if ($search) {
+            return $class->students()->whereRaw("LOWER(name) LIKE ?", '%' . strtolower($search) . '%')->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
+        } else return $class->students()->$orderType($order)->offset($offset * $perPage)->take($perPage)->get();
     }
 
-    public function getStudentPage($code) {
+    public function getStudentPage($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $data = request()->validate([
@@ -526,49 +543,51 @@ class ClassroomsController extends Controller
         return ['students' => $students];
     }
 
-    public function pendingCards($code) {
+    public function pendingCards($code)
+    {
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
         $pending = collect();
 
         $allStudents = DB::table('students')
-        ->join('classroom_user', function ($join) use ($class) {
-            $join->on('students.classroom_user_id', '=', 'classroom_user.id')
-                ->where('classroom_user.classroom_id', '=', $class->id);
-        })
-        ->pluck('students.id');
+            ->join('classroom_user', function ($join) use ($class) {
+                $join->on('students.classroom_user_id', '=', 'classroom_user.id')
+                    ->where('classroom_user.classroom_id', '=', $class->id);
+            })
+            ->pluck('students.id');
 
 
         $pendingCards = DB::table('card_student')
-        ->join('cards', function ($join) {
-            $join->on('card_student.card_id', '=', 'cards.id')
-            ->where('card_student.marked', '>', 0);
-        })
-        ->join('students', function ($join) use($allStudents) {
-            $join->on('students.id', '=', 'card_student.student_id')
-            ->whereIn('students.id', $allStudents);
-        })
-        ->selectRaw('cards.*, card_student.*, students.name, students.id')
-        ->get();
+            ->join('cards', function ($join) {
+                $join->on('card_student.card_id', '=', 'cards.id')
+                    ->where('card_student.marked', '>', 0);
+            })
+            ->join('students', function ($join) use ($allStudents) {
+                $join->on('students.id', '=', 'card_student.student_id')
+                    ->whereIn('students.id', $allStudents);
+            })
+            ->selectRaw('cards.*, card_student.*, students.name, students.id')
+            ->get();
         return $pendingCards;
     }
 
-    public function searchStudents($code) {
+    public function searchStudents($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
-
     }
-    
-    public function getAllStudents($code) {
+
+    public function getAllStudents($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $allStudents = DB::table('students')
-        ->join('classroom_user', function ($join) use ($class) {
-            $join->on('students.classroom_user_id', '=', 'classroom_user.id')
-                ->where('classroom_user.classroom_id', '=', $class->id);
-        })
-        ->selectRaw('students.name, students.id, students.avatar_url')
-        ->get();
+            ->join('classroom_user', function ($join) use ($class) {
+                $join->on('students.classroom_user_id', '=', 'classroom_user.id')
+                    ->where('classroom_user.classroom_id', '=', $class->id);
+            })
+            ->selectRaw('students.name, students.id, students.avatar_url')
+            ->get();
         return $allStudents;
     }
 
@@ -579,8 +598,8 @@ class ClassroomsController extends Controller
 
         // ClassroomUser::where()
         ClassroomUser::where('user_id', Auth()->user()->id)
-        ->where('classroom_id', $class->id)
-        ->where('role', '>', 0)->first()->touch();
+            ->where('classroom_id', $class->id)
+            ->where('role', '>', 0)->first()->touch();
 
         // DB::table('classroom_user')
         // ->where('user_id', Auth()->user()->id)
@@ -595,7 +614,7 @@ class ClassroomsController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class->id]);
 
         $groups = $class->grouping->first()->groups;
-        if($class->students()->count() < env('MIX_MAX_STUDENTS')) {
+        if ($class->students()->count() < env('MIX_MAX_STUDENTS')) {
             $groups->each->load('students');
         }
 
@@ -605,16 +624,16 @@ class ClassroomsController extends Controller
         $chat['id'] = '999999-' . auth()->user()->id;
         $chat['name'] = 'Teacher';
         $chat['avatar'] = env('APP_URL') . '/img/icons/teacher.svg';
-        
+
         $chat['signature'] = md5(env('APP_URL_SHORT') . $chat['id'] . $chat['name'] . $chat['avatar'] . 'delete' . env('CHATBRO_KEY'));
-        
+
         $showChat = settings()->get('show_chat', false);
-        
+
         $settings['skill_enabled'] = settings()->get('skill_enabled', 0);
         $settings['announcement'] = settings()->get('announcement', "");
 
         $impostor = settings()->get('impostor', -1);
-        if($impostor != -1) {
+        if ($impostor != -1) {
             $impostor = Student::find($impostor);
         }
 

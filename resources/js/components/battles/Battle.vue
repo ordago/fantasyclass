@@ -40,11 +40,8 @@
             :native-value="2"
             expanded
             type="is-info"
-            v-tippy
-            :content="trans.get('battles.not_available')"
-            disabled
           >
-            <i class="fas fa-user mr-1"></i> vs
+            <i class="fas fa-users mr-1"></i> vs
             <i class="fas fa-dragon ml-1"></i>
           </b-radio-button>
           <b-radio-button
@@ -65,7 +62,7 @@
         </article>
         <article
           class="message is-warning"
-          v-if="classroom.monsters.length == 0 && type == 3"
+          v-if="classroom.monsters.length == 0 && (type == 3 || type == 2)"
         >
           <div class="message-body">
             {{ trans.get("battles.monster_empty") }}:
@@ -155,10 +152,10 @@
             </div>
           </div>
         </div>
-        <h3 class="m-2" v-if="type == 3">
+        <h3 class="m-2" v-if="type == 3 || type == 2">
           <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
         </h3>
-        <div class="columns m-2" v-if="type == 3">
+        <div class="columns m-2" v-if="type == 3 || type == 2">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -206,11 +203,11 @@
             </div>
           </div>
         </div>
-        <h3 class="m-2" v-if="type == 3">
+        <h3 class="m-2" v-if="type == 3 || type == 2">
           <i class="fas fa-dragon"></i>
           {{ trans.get("battles.monster_hp_loss") }}
         </h3>
-        <div class="column is-narrow" v-if="type == 3">
+        <div class="column is-narrow" v-if="type == 3 || type == 2">
           <div class="field is-horizontal">
             <div class="field-body">
               <div class="field is-expanded">
@@ -420,7 +417,7 @@
 
       <b-step-item
         step="3"
-        :visible="type == 3"
+        :visible="type == 3 || type == 2"
         :label="trans.get('battles.monster')"
         :clickable="true"
       >
@@ -466,7 +463,7 @@
       </b-step-item>
 
       <b-step-item
-        :step="type == 3 ? '4' : '3'"
+        :step="type == 3 || type == 2 ? '4' : '3'"
         :label="trans.get('battles.questions')"
         :clickable="true"
       >
@@ -511,7 +508,7 @@
       </b-step-item>
 
       <b-step-item
-        :step="type == 3 ? '5' : '4'"
+        :step="type == 3 || type == 2 ? '5' : '4'"
         :label="trans.get('battles.start')"
         :clickable="true"
         disabled
@@ -524,7 +521,7 @@
                 class="fas"
                 :class="{
                   'fa-user': type == 0 || type == 3,
-                  'fa-users': type == 1,
+                  'fa-users': type == 1 || type == 2,
                 }"
               ></i>
               vs
@@ -533,7 +530,7 @@
                 :class="{
                   'fa-user': type == 0,
                   'fa-users': type == 1,
-                  'fa-dragon': type == 3,
+                  'fa-dragon': type == 3 || type == 2,
                 }"
               ></i>
             </li>
@@ -544,13 +541,13 @@
                 {{ selectedBank.title }}</span
               >
             </li>
-            <li v-if="type == 3">
+            <li v-if="type == 3 || type == 2">
               <span
                 class="has-text-danger"
-                v-if="type == 3 && !monsterSelected"
+                v-if="(type == 3 || type == 2) && !monsterSelected"
                 >{{ trans.get("battles.wm") }}</span
               >
-              <span v-else-if="type == 3"
+              <span v-else-if="type == 3 || type == 2"
                 >{{ trans.get("battles.monster") }}:
                 {{ monsterSelected.name }}</span
               >
@@ -560,7 +557,7 @@
         <div class="has-text-centered">
           <h1
             class="button is-size-2 py-3 px-6 is-info m-3"
-            :disabled="type == 3 && !monsterSelected"
+            :disabled="(type == 3 || type == 2) && !monsterSelected"
             @click="start"
           >
             {{ trans.get("battles.start") }}!
@@ -598,7 +595,7 @@
                 is-narrow
               "
             >
-              <div v-if="type == 1 && group1">
+              <div v-if="(type == 1 && group1) || (type == 2 && group1)">
                 <h3 class="is-size-3 animate__animated animate__bounceIn">
                   {{ group1.name }}
                 </h3>
@@ -654,7 +651,7 @@
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
-              <div v-if="type == 1 && !started && groups.length">
+              <div v-if="(type == 1 || type == 2) && !started && groups.length">
                 <button @click="selectGroup(1)" class="button is-primary my-2">
                   {{ trans.get("battles.select_group") }}
                   <i class="fas fa-random ml-1"></i>
@@ -740,7 +737,10 @@
                       is-size-1
                       animate__animated animate__rubberBand animate__infinite
                     "
-                    v-if="type != 3 || (type == 3 && monsterSelected.hp == 0)"
+                    v-if="
+                      (type != 3 && type != 2) ||
+                      ((type == 3 || type == 2) && monsterSelected.hp == 0)
+                    "
                   >
                     {{ trans.get("battles.well_done") }}
                     <span v-if="winnerElem">{{ winnerElem.name }}</span>
@@ -758,7 +758,7 @@
                   </button>
                   <button
                     class="button is-success mt-2"
-                    v-if="type == 3 && monsterSelected.hp == 0"
+                    v-if="(type == 3 || type == 2) && monsterSelected.hp == 0"
                     @click="sendReward"
                     :class="{ 'is-loading': isLoading }"
                   >
@@ -840,7 +840,10 @@
                   <i class="fas fa-random ml-1"></i>
                 </button>
               </div>
-              <div ref="monsterdiv" v-if="type == 3 && monsterSelected">
+              <div
+                ref="monsterdiv"
+                v-if="(type == 3 || type == 2) && monsterSelected"
+              >
                 <img
                   @contextmenu.prevent=""
                   ref="monster"
@@ -893,7 +896,7 @@ export default {
         );
       } else if (this.type == 3) {
         return !this.student1;
-      }
+      } else if (this.type == 2) return !this.group1;
       this.$forceUpdate();
     },
   },
@@ -1021,6 +1024,21 @@ export default {
               location.href = "/classroom/" + this.classroom.code;
             }, 1000);
           });
+      } else if(this.type == 2) {
+        axios
+          .post("/classroom/" + this.classroom.code + "/group/reward", {
+            xp: this.monsterSelected.reward_xp,
+            gold: this.monsterSelected.reward_gold,
+            group: this.group1.id,
+          })
+          .then((response) => {
+            this.$toast(this.trans.get("success_error.add_success"), {
+              type: "success",
+            });
+            setTimeout(() => {
+              location.href = "/classroom/" + this.classroom.code;
+            }, 1000);
+          });
       }
     },
     getAnswers(slot) {
@@ -1029,7 +1047,7 @@ export default {
           return this.student1.answers;
         } else if (this.type == 3) {
           return this.classroom_answers;
-        } else if (this.type == 1) {
+        } else if (this.type == 1 || this.type == 2) {
           return this.group1.answers;
         }
       } else {
@@ -1042,7 +1060,7 @@ export default {
       if (slot == 1) {
         if (this.type == 0) {
           return parseInt(this.student1.max_fails);
-        } else if (this.type == 1) {
+        } else if (this.type == 1 || this.type == 2) {
           return parseInt(this.group1.max_fails);
         } else if (this.type == 3) {
           return parseInt(this.classroom_max_fails);
@@ -1072,7 +1090,7 @@ export default {
         this.winner(null);
       }
     },
-    winnerClass() {
+    winnerClass(all = true) {
       this.finished = true;
       if (this.monsterSelected.hp == 0) {
         this.$refs.monster.classList.remove("pet-battle");
@@ -1082,7 +1100,7 @@ export default {
           spread: 100,
           origin: { y: 1.0 },
         });
-      } else if (this.classroom_max_fails == 0) {
+      } else if (this.classroom_max_fails == 0 || this.max_fails == 0) {
         this.$refs.monster.classList.add("animate__fast");
         this.$refs.monster.classList.add("animate__bounce");
         this.$refs.monster.classList.add("animate__infinite");
@@ -1134,9 +1152,53 @@ export default {
       this.classroom_answers.push(correct);
       return false;
     },
+    answerGroupMonster(correct, next = true) {
+      if (!correct) {
+        this.student1.hp += parseInt(this.hp_loss);
+        this.updateProp(this.student1.id, "hp", parseInt(this.hp_loss));
+        if (this.max_fails != 0) this.group1.max_fails -= 1;
+        if (this.group1.max_fails == 0 && this.max_fails != 0) {
+          this.$refs.student1.$el.classList.add("animate__rotateOut");
+          this.group1.answers.push(correct);
+          this.winnerClass();
+          return true;
+        }
+      } else {
+        this.monsterSelected.hp = Math.max(
+          this.monsterSelected.hp + parseInt(this.monster_hp_loss),
+          0
+        );
+        let options = {
+          id: this.monsterSelected.id,
+          value: parseInt(this.monster_hp_loss),
+        };
+        axios.post("/classroom/monsters/fight", options);
+
+        this.$refs.monster.classList.add("shake-slow");
+        this.$refs.monster.classList.add("shake-constant");
+        this.$refs.monster.classList.add("shake-constant--hover");
+        setTimeout(() => {
+          this.$refs.monster.classList.remove("shake-constant");
+        }, 1000);
+
+        if (this.monsterSelected.hp == 0) {
+          confetti({
+            particleCount: 200,
+            spread: 100,
+            origin: { y: 1.0 },
+          });
+          this.winnerClass();
+          return true;
+        }
+      }
+      this.group1.answers.push(correct);
+      this.$forceUpdate();
+      return false;
+    },
     answerGroup(correct, next = true) {
       let group_1;
       let group_2;
+
       if (this.turn == 0) {
         group_1 = this.group1;
         group_2 = this.group2;
@@ -1144,6 +1206,7 @@ export default {
         group_1 = this.group2;
         group_2 = this.group1;
       }
+
       if (!correct) {
         if (this.max_fails != 0) group_1.max_fails -= 1;
         if (group_1.max_fails == 0 && this.max_fails != 0) {
@@ -1226,6 +1289,8 @@ export default {
         gameOver = this.answerGroup(correct, next);
       } else if (this.type == 3) {
         gameOver = this.answerClass(correct, next);
+      } else if(this.type == 2) {
+        gameOver = this.answerGroupMonster(correct, next);
       }
       if (correct) {
         if (this.turn == 0) {
@@ -1277,12 +1342,13 @@ export default {
           }
         });
       }
-      if (this.type == 3 && !this.monsterSelected) return false;
+      if ((this.type == 3 || this.type == 2) && !this.monsterSelected)
+        return false;
       if (this.type == 3) this.classroom_max_fails = this.max_fails;
       this.isBattleActive = true;
     },
     startBattle() {
-      if (this.type != 3) {
+      if (this.type != 3 && this.type != 2) {
         Math.random() < 0.5 ? (this.turn = 0) : (this.turn = 1);
       }
       this.started = true;
@@ -1303,6 +1369,10 @@ export default {
 
       setTimeout(this.reset, 1000);
       if (this.selectedBank) this.currentQuestion = this.questions.pop();
+      if (this.type == 2) {
+        this.group_count1++;
+        this.selectStudent(1);
+      }
       if (this.type == 1) {
         if (this.turn == 0) {
           this.group_count1++;
@@ -1312,7 +1382,7 @@ export default {
           this.selectStudent(2);
         }
       }
-      if (this.type != 3) {
+      if (this.type != 3 && this.type != 2) {
         this.turn = (this.turn + 1) % 2;
       } else {
         this.selectStudent(1);
@@ -1331,11 +1401,13 @@ export default {
         this.group1 = this.groups.pop();
         this.group1.max_fails = this.max_fails;
         this.group1.answers = [];
+        this.group1.students = _.shuffle(this.group1.students)
         this.selectStudent(1);
       } else {
         this.group2 = this.groups.pop();
         this.group2.max_fails = this.max_fails;
         this.group2.answers = [];
+        this.group2.students = _.shuffle(this.group2.students)
         this.selectStudent(2);
       }
     },
@@ -1356,7 +1428,7 @@ export default {
         ) {
           this.selectStudent(slot);
         }
-      } else if (this.type == 1) {
+      } else if (this.type == 1 || this.type == 2) {
         if (slot == 1) {
           let index = this.group_count1 % this.group1.students.length;
           this.student1 = this.group1.students[index];
@@ -1384,7 +1456,7 @@ export default {
           return this.trans.get("battles.groupVSgroup");
           break;
         case 2:
-          return "";
+          return this.trans.get("battles.groupVSmonsters");
           break;
         case 3:
           return this.trans.get("battles.allVSmonsters");

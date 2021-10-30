@@ -225,7 +225,7 @@ Route::group(['middleware' => 'language'], function () {
         
         // Battles
         Route::get('/{code}/battles', 'BattleController@index');
-
+        Route::post('/{code}/group/reward', 'ClassroomsController@rewardGroup');
         
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');

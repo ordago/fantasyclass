@@ -12,6 +12,7 @@ return [
     '1vs1' => 'Students battle individually to keep their attributes and maintain honor!',
     'groupVSgroup' => 'Group battle, they\'ll try to win the reward',
     'allVSmonsters' => 'The class will fight monsters and they\'ll win rewards by defeating them',
+    'groupVSmonsters' => 'A team will fight monsters and they\'ll win rewards by defeating them',
     'not_available' => 'Coming ... We\'re working on it :D',
     'loss_fail' => 'Loss of points by fail',
     'gain' => 'Rival points gain if they\'ve answered correctly the last question',

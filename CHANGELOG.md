@@ -1,5 +1,7 @@
 # Changelog
 ## v1.89 Beta (XX/10/2021)
+### Added
+- Battles: group vs monster.
 
 ### Changed
 - Better progress interface.

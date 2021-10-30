@@ -150,7 +150,7 @@ export default {
     },
     answerQuestion(answer, type = 1) {
       var correct = false;
-      if (type == 1) {
+      if (type == 1 || type == 2) {
         this.question.options.forEach((element) => {
           if (element.correctAnswer && element.correctAnswer == answer) {
             correct = true;
