@@ -92,6 +92,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/student/assignpet', 'StudentController@assignPet');
         Route::get('/{code}/student/{id}/report', 'StudentController@getStudentReport');
         Route::get('/{code}/students/report', 'StudentController@getStudentsReport');
+        Route::get('/log/{id}', 'StudentController@getStudentLog');
+        
         
         Route::post('/{code}/students/get', 'ClassroomsController@getStudentPage');
         // Route::post('/{code}/students/pending', 'ClassroomsController@pendingCards');

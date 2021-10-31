@@ -100,6 +100,8 @@ return [
     'log_level_up' => 'Por subir nivel',
     'log_exchange_collectible' => 'Intercambio de coleccionables',
 
+    'load_all_log' => 'Carga todas las entradas',
+
     'student_report' => 'Informe de estudiante',
 
     'bypass' => 'Estás visuallizando como estudiante, clica aquí para volver a ser profe',

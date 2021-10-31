@@ -772,7 +772,9 @@ class ClassroomsStudentController extends Controller
 
         $student->unsetRelation('grades');
         $student->grades = $student->grades()->whereNull('from_student_id')->get();
-
+        $student->load(['logEntries' => function($query) {
+            $query->orderByDesc('id')->take(100);
+        }]);
         return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 
@@ -1400,7 +1402,9 @@ class ClassroomsStudentController extends Controller
         $this->deleteSkill($code, request()->skill);
         $student = $student->fresh();
         $student->load('skills');
-        $student->load('logEntries');
+        $student->load(['log_entries' => function($query) {
+            $query->orderByDesc('id')->take(50);
+        }]);
         return $student;
     }
 

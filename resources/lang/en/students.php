@@ -98,6 +98,8 @@ return [
     'log_level_up' => 'For level up',
     'log_exchange_collectible' => 'Collectible exchange',
 
+    'load_all_log' => 'Load all entries',
+
     'student_report' => 'Student report',
 
     'bypass' => 'You\'re viewing as a student, click there to go back to teacher.',

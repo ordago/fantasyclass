@@ -13,7 +13,7 @@
       ></apexchart>
     </div>
 
-    <div class="columns">
+    <div class="columns" v-if="type == 'behaviours'">
       <div class="column">
         <input type="date" class="input is-rounded" v-model="dateStart" />
       </div>
@@ -203,6 +203,9 @@
         </b-table-column>
       </template>
     </b-table>
+    <button class="button mt-2" @click="loadAllLog" v-if="type == 'log' && info && info.length == 100">
+      {{ trans.get('students.load_all_log') }}
+    </button>
   </div>
 </template>
 
@@ -226,6 +229,12 @@ export default {
     };
   },
   methods: {
+    loadAllLog() {
+      axios.get('/classroom/log/' + this.id).then(response => {
+        this.info = response.data;
+        this.$forceUpdate();
+      })
+    },
     confirmDelete(type, row, date) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),

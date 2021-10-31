@@ -99,6 +99,8 @@ return [
     'log_collection' => 'Compra col·leccionables',
     'log_level_up' => 'Per pujar nivell',
     'log_exchange_collectible' => 'Intercanvi de col·leccionables',
+ 
+    'load_all_log' => 'Carrega totes les entrades',
     
     'student_report' => 'Informe d\'estudiant',
     

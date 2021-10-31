@@ -1,4 +1,9 @@
 # Changelog
+## v1.90 Beta (XX/11/2021)
+
+### Changed
+- Load only last 100 log entries by default.
+
 ## v1.89 Beta (30/10/2021)
 ### Added
 - Battles: group vs monster.
