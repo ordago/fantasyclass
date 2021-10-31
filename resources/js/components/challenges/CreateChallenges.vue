@@ -399,6 +399,7 @@
             <div class="control">
               <div class="select is-fullwidth">
                 <select v-model="challenge.collection_id">
+                  <option value="0">{{ trans.get("challenges.random_collection") }}</option>
                   <option
                     :value="collection.id"
                     v-for="collection in collections"
@@ -660,7 +661,7 @@ export default {
 
           this.collections = response.data.collections;
           if (this.collections.length)
-            this.challenge.collection_id = this.collections[0].id;
+            this.challenge.collection_id = 0;
         });
     },
     disableAll() {

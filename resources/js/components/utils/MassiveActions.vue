@@ -100,6 +100,94 @@
               </p>
             </div>
           </div>
+          <div class="column is-narrow">
+            <button
+              class="button"
+              v-if="showRewards == false"
+              @click="showRewards = true"
+            >
+              + {{ trans.get('utils.more_rewards') }}
+            </button>
+          </div>
+        </div>
+        <div class="columns" v-if="showRewards">
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span class="button is-static"
+                  ><i class="fak fa-deck colored"></i
+                ></span>
+              </p>
+              <p class="control select is-expanded">
+                <select class="input select" v-model="card">
+                  <option :value="null">∅</option>
+                  <option
+                    :value="card.id"
+                    v-for="card in cards"
+                    :key="'card-' + card.id"
+                  >
+                    {{ trans.get(card.title) }}
+                  </option>
+                </select>
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span class="button is-static"
+                  ><i class="fak fa-collection"></i
+                ></span>
+              </p>
+              <p class="control select is-expanded">
+                <select class="input select" v-model="collectible">
+                  <option :value="null">∅</option>
+                  <optgroup
+                    v-for="collection in collections"
+                    :key="'collection-' + collection.id"
+                    :label="collection.name"
+                  >
+                    <option
+                      v-for="collectible in collection.collectionables"
+                      :key="'collectible-' + collectible.id"
+                      :value="collectible.id"
+                    >
+                      {{ trans.get(collectible.name) }}
+                    </option>
+                  </optgroup>
+                </select>
+              </p>
+            </div>
+          </div>
+          <div class="column">
+            <div class="field has-addons">
+              <p class="control">
+                <span class="button is-static"
+                  ><i class="fas fa-award"></i
+                ></span>
+              </p>
+              <p class="control select is-expanded">
+                <select class="input select" v-model="badge">
+                  <option :value="null">∅</option>
+                  <option
+                    :value="badge.id"
+                    v-for="badge in badges"
+                    :key="'badge-' + badge.id"
+                  >
+                    {{ badge.title }}
+                  </option>
+                </select>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="is-flex" v-if="showRewards">
+          <vue-select-image
+            :dataImages="items"
+            :is-multiple="false"
+            @onselectimage="onSelectImage"
+            w="30px" >
+          </vue-select-image>
         </div>
         <div class="buttons mt-3 is-flex has-all-centered">
           <button class="button mb-0 is-info" @click="changeAll(true)">
@@ -114,9 +202,14 @@
           <button class="button mb-0 is-info" @click="random">
             <i class="fas fa-random mr-2"></i> {{ trans.get("utils.random") }}
           </button>
-          <div class="control select mt-0" v-if="groups && groups.length && orderedStudents.length < max">
+          <div
+            class="control select mt-0"
+            v-if="groups && groups.length && orderedStudents.length < max"
+          >
             <select v-model="groupSelected" @input="updateGroup()">
-              <option :value="null" disabled>{{ trans.get('utils.by_group') }}</option>
+              <option :value="null" disabled>
+                {{ trans.get("utils.by_group") }}
+              </option>
               <option
                 :value="group"
                 v-for="group in groups"
@@ -162,7 +255,16 @@
       <button
         class="button is-link"
         :class="{ 'is-loading': isLoading }"
-        v-if="behaviour || hp != 0 || xp != 0 || gold != 0"
+        v-if="
+          behaviour ||
+          hp != 0 ||
+          xp != 0 ||
+          gold != 0 ||
+          card ||
+          badge ||
+          collectible ||
+          item
+        "
         type="button"
         @click="accept"
       >
@@ -172,21 +274,49 @@
   </div>
 </template>
 <script>
+import VueSelectImage from "vue-select-image";
+require("vue-select-image/dist/vue-select-image.css");
+
 export default {
   props: ["classroom", "students", "groups"],
-  mounted() {},
+  mounted() {
+    axios
+      .post("/classroom/" + this.classroom.code + "/levels/getRewards")
+      .then((response) => {
+        // this.pets = response.data.pets;
+        this.items = response.data.items.map(function (row) {
+          return { id: row.id, src: row.icon, alt: row.description };
+        });
+        // this.items = response.data.items;
+        this.cards = response.data.cards;
+        this.badges = response.data.badges;
+        this.collections = response.data.collections;
+      });
+  },
   data: function () {
     return {
       hp: 0,
       xp: 0,
       gold: 0,
       behaviour: null,
+      showRewards: false,
       groupSelected: null,
       isLoading: false,
-      max: process.env.MIX_MAX_STUDENTS,  
+      item: null,
+      card: null,
+      badge: null,
+      collectible: null,
+      cards: [],
+      badges: [],
+      collections: [],
+      items: [],
+      max: process.env.MIX_MAX_STUDENTS,
     };
   },
   methods: {
+    onSelectImage(image) {
+      this.item = image.id;
+    },
     updateGroup() {
       var vm = this;
       this.changeAll(false);
@@ -214,6 +344,10 @@ export default {
           hp: this.hp,
           xp: this.xp,
           gold: this.gold,
+          card: this.card,
+          item: this.item,
+          badge: this.badge,
+          collectible: this.collectible,
         })
         .then((response) => {
           // this.$parent.$parent.isMassiveModalActive = false
@@ -252,7 +386,9 @@ export default {
       return text;
     },
   },
-
+  components: {
+    VueSelectImage,
+  },
   computed: {
     orderedStudents: function () {
       return _.orderBy(this.students, "name", "asc");

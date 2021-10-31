@@ -101,6 +101,7 @@ return [
     'collection' => 'Collection',
     'collection_type' => 'Collectible type',
     'without_type' => 'Random type',
+    'random_collection' => 'Random collection',
 
     'add_to_map' => 'Add to map',
     'map_code' => 'Code to add the marker:',

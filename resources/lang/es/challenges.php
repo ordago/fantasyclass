@@ -100,6 +100,7 @@ return [
     'collection' => 'Colección',
     'collection_type' => 'Tipo de coleccionable',
     'without_type' => 'Tipo aleatorio',
+    'random_collection' => 'Colección aleatoria',
 
     'add_to_map' => 'Añadir al mapa',
     'map_code' => 'Código para añadir el marcador:',

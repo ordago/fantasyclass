@@ -47,5 +47,6 @@ return [
 
     'announcement' => 'Class announcement',
     'announcement_info' => 'Message that students will view when log in',
+    'more_rewards' => 'More rewards',
 
 ];

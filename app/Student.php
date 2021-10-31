@@ -437,12 +437,7 @@ class Student extends Model implements HasMedia
                         ->orWhere('craft', 'LIKE', '\[\]');
                 })->inRandomOrder()
                     ->first();
-                $studentItem = $this->items->where('id', $itemA->id)->first();
-                if ($studentItem)
-                    $count = $studentItem->pivot->count + 1;
-                else $count = 1;
-
-                $this->items()->sync([$itemA->id => ['count' => $count]], false);
+                $this->setItem($itemA->id);
             }
         }
         if ($challenge->requirements) {
@@ -461,7 +456,10 @@ class Student extends Model implements HasMedia
         if ($challenge->collectionables > 0 && $mult == 1) {
             $class = Classroom::find($challenge->classroom());
             for ($i = 0; $i < $challenge->collectionables; $i++) {
-                $collectionable = CollectionableController::getRandomCollectionable($challenge->collection_id, $class->id, $challenge->type_collectionable ? $challenge->type_collectionable : null);
+                $collectionId = $challenge->collection_id;
+                if (!$collectionId)
+                    $collectionId = DB::table('collections')->where('classroom_id', $this->classroom->classroom_id)->where('disabled', 0)->inRandomOrder()->first()->id;
+                $collectionable = CollectionableController::getRandomCollectionable($collectionId, $class->id, $challenge->type_collectionable ? $challenge->type_collectionable : null);
                 if ($collectionable) {
                     $studentCollectionable = $this->fresh()->collectionables->where('id', $collectionable->id)->first();
 
@@ -537,6 +535,42 @@ class Student extends Model implements HasMedia
     {
         $skill = $this->skills()->where('properties->type', $type)->first();
         return $value * $skill->properties['hp_increment'] / 100;
+    }
+
+    public function setBadge($badgeId)
+    {
+        $badge = Badge::where('id', $badgeId)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+
+        $studentBadge = $this->badges->where('id', $badge->id)->first();
+
+        if (!$studentBadge)
+            $this->badges()->attach($badge->id);
+    }
+
+    public function setItem($itemId)
+    {
+        $item = Item::where('id', $itemId)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
+        $studentItem = $this->items->where('id', $item->id)->first();
+
+        if ($studentItem)
+            $count = $studentItem->pivot->count + 1;
+        else $count = 1;
+
+        $this->items()->sync([$item->id => ['count' => $count]], false);
+    }
+
+    public function setCollectible($collectibleId)
+    {
+        $collectible = Collectionable::where('id', $collectibleId)->firstOrFail();
+        if ($collectible->collection->classroom_id != $this->classroom->classroom_id)
+            abort(403);
+        $studentCollectible = $this->collectionables->where('id', $collectible->id)->first();
+
+        if ($studentCollectible)
+            $count = $studentCollectible->pivot->count + 1;
+        else $count = 1;
+
+        $this->collectionables()->sync([$collectible->id => ['count' => $count]], false);
     }
 
     public function setProperty($prop, $value, $log = true, $type = null, $byPassBoost = false)
@@ -633,7 +667,7 @@ class Student extends Model implements HasMedia
                     settings()->setExtraColumns(['classroom_id' => $this->classroom->classroom_id]);
                     if (settings()->get('level_up_health', 0)) {
                         $lvluphp = settings()->get('level_up_health', 0);
-                        if($lvluphp + $this->hp <= 100)
+                        if ($lvluphp + $this->hp <= 100)
                             $counthp = $lvluphp;
                         else
                             $counthp = 100 - $this->hp;
@@ -660,36 +694,14 @@ class Student extends Model implements HasMedia
                         $this->cards()->attach($card->id);
                     }
                     if ($newLevel->item) {
-                        $item = Item::where('id', $newLevel->item)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
-                        $studentItem = $this->items->where('id', $item->id)->first();
-
-                        if ($studentItem)
-                            $count = $studentItem->pivot->count + 1;
-                        else $count = 1;
-                        
-                        $this->items()->sync([$item->id => ['count' => $count]], false);
+                        $this->setItem($newLevel->item);
                     }
                     if ($newLevel->collectible) {
-                        $collectible = Collectionable::where('id', $newLevel->collectible)->firstOrFail();
-                        if($collectible->collection->classroom_id != $this->classroom->classroom_id)
-                            abort(403);
-                        $studentCollectible = $this->collectionables->where('id', $collectible->id)->first();
-
-                        if ($studentCollectible)
-                            $count = $studentCollectible->pivot->count + 1;
-                        else $count = 1;
-
-                        $this->collectionables()->sync([$collectible->id => ['count' => $count]], false);
+                        $this->setCollectible($newLevel->collectible);
                     }
                     if ($newLevel->badge) {
-                        $badge = Badge::where('id', $newLevel->badge)->where('classroom_id', $this->classroom->classroom_id)->firstOrFail();
-                        
-                        $studentBadge = $this->badges->where('id', $badge->id)->first();
-
-                        if (!$studentBadge)
-                            $this->badges()->attach($badge->id);
+                        $this->setBadge($newLevel->badge);
                     }
-
                 }
             }
             $std = $this->fresh();

@@ -2,6 +2,8 @@
 ## v1.89 Beta (30/10/2021)
 ### Added
 - Battles: group vs monster.
+- Option to assign collectionable from random collection as a reward.
+- In massive actions we can give students cards, badges, collectibles and shop items.
 
 ### Changed
 - Better progress interface.

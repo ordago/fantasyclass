@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Behaviour;
+use App\Card;
 use App\Challenge;
 use App\Classroom;
 use App\Student;
@@ -59,40 +60,44 @@ class UtilsController extends Controller
             'hp' => ['numeric', 'nullable'],
             'xp' => ['numeric', 'nullable'],
             'gold' => ['numeric', 'nullable'],
+            'card' => ['numeric', 'nullable'],
+            'item' => ['numeric', 'nullable'],
+            'badge' => ['numeric', 'nullable'],
+            'collectible' => ['numeric', 'nullable'],
             'students' => ['array', 'required'],
         ]);
-        if (isset($data['behaviour']) && $data['behaviour']) {
-            $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
-            foreach ($data['students'] as $id) {
-                $student = Student::find($id);
-                if ($student->classroom->classroom_id != $class->id)
-                    return abort('403');
+
+        foreach ($data['students'] as $id) {
+            $student = Student::find($id);
+            if ($student->classroom->classroom_id != $class->id)
+                return abort('403');
+            if (isset($data['behaviour']) && $data['behaviour']) {
+                $behaviour = Behaviour::where('id', $data['behaviour'])->where('classroom_id', $class->id)->first();
                 $student->addBehaviour($behaviour->id);
             }
-        }
-        if (isset($data['hp']) && $data['hp']) {
-            foreach ($data['students'] as $id) {
-                $student = Student::find($id);
-                if ($student->classroom->classroom_id != $class->id)
-                    return abort('403');
+            if (isset($data['hp']) && $data['hp']) {
                 $student->setProperty('hp', $data['hp'], true, 'teacher');
             }
-        }
-        if (isset($data['xp']) && $data['xp']) {
-            foreach ($data['students'] as $id) {
-                $student = Student::find($id);
-                if ($student->classroom->classroom_id != $class->id)
-                    return abort('403');
+            if (isset($data['xp']) && $data['xp']) {
                 $student->setProperty('xp', $data['xp'], true, 'teacher');
             }
-        }
-        if (isset($data['gold']) && $data['gold']) {
-            foreach ($data['students'] as $id) {
-                $student = Student::find($id);
-                if ($student->classroom->classroom_id != $class->id)
-                    return abort('403');
+            if (isset($data['gold']) && $data['gold']) {
                 $student->setProperty('gold', $data['gold'], true, 'teacher');
             }
+            if (isset($data['card']) && $data['card']) {
+                $card = Card::where('id', $data['card'])->where('classroom_id', $class->id)->first();
+                $student->cards()->attach($card->id);
+            }
+            if (isset($data['collectible']) && $data['collectible']) {
+                $student->setCollectible($data['collectible']);
+            }
+            if (isset($data['badge']) && $data['badge']) {
+                $student->setBadge($data['badge']);
+            }
+            if (isset($data['item']) && $data['item']) {
+                $student->setItem($data['item']);
+            }
+            
         }
     }
     public function iconPack($category)
@@ -309,10 +314,10 @@ class UtilsController extends Controller
                     }
                 }
                 if ($challenge->type == 0)
-                $check = $student->challenges->contains($text[1]);
+                    $check = $student->challenges->contains($text[1]);
                 else
-                $check = $student->groups->first()->challenges->contains($text[1]);
-                
+                    $check = $student->groups->first()->challenges->contains($text[1]);
+
                 $title = $challenge->title;
                 return view('maps.marker', compact('check', 'permalink', 'title'));
                 break;

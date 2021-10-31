@@ -46,5 +46,6 @@ return [
 
     'announcement' => 'Anunci de classe',
     'announcement_info' => 'Missatge que veurà l\'alumnat quan entre',
-
+    
+    'more_rewards' => 'Més recompenses',
 ];

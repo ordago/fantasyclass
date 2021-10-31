@@ -2367,13 +2367,13 @@ export default {
       let index;
       if (next) {
         index =
-          (this.students.findIndex(currentStudent) + 1) % this.students.length;
+          (this.orderedStudents.findIndex(currentStudent) + 1) % this.orderedStudents.length;
       } else {
         index =
-          (this.students.findIndex(currentStudent) - 1) % this.students.length;
+          (this.orderedStudents.findIndex(currentStudent) - 1) % this.orderedStudents.length;
         if (index == -1) index = this.students.length - 1;
       }
-      nextId = this.students[index].id;
+      nextId = this.orderedStudents[index].id;
 
       this.goTo(nextId);
     },
@@ -3072,6 +3072,9 @@ export default {
     },
   },
   computed: {
+    orderedStudents() {
+      return _.orderBy(this.students, "name", "desc");
+    },
     filteredDataObj() {
       return this.students.filter((option) => {
         return (
