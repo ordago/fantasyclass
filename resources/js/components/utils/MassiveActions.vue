@@ -13,6 +13,8 @@
 
           <div class="select">
             <select v-model="behaviour">
+              <option :value="null">∅</option>
+
               <option
                 :class="{
                   'has-background-danger-light':
@@ -106,7 +108,7 @@
               v-if="showRewards == false"
               @click="showRewards = true"
             >
-              + {{ trans.get('utils.more_rewards') }}
+              + {{ trans.get("utils.more_rewards") }}
             </button>
           </div>
         </div>
@@ -186,7 +188,8 @@
             :dataImages="items"
             :is-multiple="false"
             @onselectimage="onSelectImage"
-            w="30px" >
+            w="30px"
+          >
           </vue-select-image>
         </div>
         <div class="buttons mt-3 is-flex has-all-centered">

@@ -10,6 +10,7 @@
 - Changes in student's color palette.
 - Get Random student update in events.
 - Order by name in massive actions.
+- Better order in show student next and previous.
 
 ## v1.88 Beta (28/10/2021)
 ### Added

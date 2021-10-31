@@ -24,7 +24,14 @@
           <small
             v-tippy
             :content="trans.get('questions.case_sensitive')"
-            class="border px-1 rounded has-background-dark has-text-light mr-1 is-dark"
+            class="
+              border
+              px-1
+              rounded
+              has-background-dark has-text-light
+              mr-1
+              is-dark
+            "
             v-if="answer.caseSensitive"
             ><i class="fal fa-font-case"></i>
           </small>
@@ -124,12 +131,11 @@ export default {
       this.$parent.$parent.$refs.student1.$el.classList.remove(
         "animate__bounce"
       );
-      if(this.$parent.$parent.type != 3) {
+      if (this.$parent.$parent.type != 3 && this.$parent.$parent.type != 2) {
         this.$parent.$parent.$refs.student2.$el.classList.remove(
           "animate__bounce"
         );
       }
-
       this.reactiveQuestion = this.$parent.$parent.nextQuestion();
       if (this.reactiveQuestion) this.initQuestion();
     },
