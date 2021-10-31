@@ -596,6 +596,7 @@ class ClassroomsController extends Controller
         $class = Classroom::where('code', '=', $code)->with('theme', 'characterTheme', 'behaviours', 'grouping.groups')->firstOrFail();
         $this->authorize('view', $class);
 
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         // ClassroomUser::where()
         ClassroomUser::where('user_id', Auth()->user()->id)
             ->where('classroom_id', $class->id)

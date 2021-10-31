@@ -59,12 +59,13 @@ class SocialController extends Controller
             auth()->user()->update(['refresh_token' => $auth_user->refreshToken, 'token' => $auth_user->token, 'expires_in' => $auth_user->expiresIn]);
             return redirect()->to('/classroom/' . session()->pull('code') . '/students/add/true');
         } else if ($type == "drive") {
-            $class = Classroom::where('code', '=', session()->get('code'))->firstOrFail();
-            settings()->setExtraColumns(['classroom_id' => $class->id]);
-            settings()->set('gdrive_refresh_token', $auth_user->refreshToken);
-            settings()->set('gdrive_token', $auth_user->token);
-            settings()->set('expires_in', $auth_user->token);
-            return redirect()->to('/classroom/' . session()->pull('code'));
+            $user = Auth::user();
+            $user->g_refresh_token = $auth_user->refreshToken;
+            $user->g_token = $auth_user->token;
+            $user->g_expires_in = $auth_user->expiresIn;
+            $user->save();
+            // ->update(['g_refresh_token' => $auth_user->refreshToken, 'g_token' => $auth_user->token, 'g_expires_in' => $auth_user->expiresIn]);
+            return redirect()->to('/google/drive');
         } else {
             $user = User::where('email', $auth_user->email)->first();
 
