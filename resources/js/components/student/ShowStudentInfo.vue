@@ -2362,6 +2362,7 @@ export default {
       location.href = "/classroom/" + this.classroom.code + "/student/" + id;
     },
     nextStudent(next = true) {
+      // console.log(this.orderedStudents)
       const currentStudent = (element) => element.id == this.student.id;
       let nextId;
       let index;
@@ -3073,7 +3074,7 @@ export default {
   },
   computed: {
     orderedStudents() {
-      return _.orderBy(this.students, "name", "desc");
+      return _.orderBy(this.students, "name", "asc");
     },
     filteredDataObj() {
       return this.students.filter((option) => {
