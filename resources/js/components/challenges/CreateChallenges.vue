@@ -69,14 +69,14 @@
                 @click.prevent="datepicker = new Date()"
               >
                 <b-icon icon="clock"></b-icon>
-                <span>Now</span>
+                <span>{{ trans.get("general.now") }}</span>
               </button>
             </template>
           </b-datetimepicker>
         </span>
         <button
           @click.prevent="selectStudents"
-          class="button is-rounded"
+          class="button is-rounded ml-1"
           v-if="challenge.type == 0"
         >
           <span
@@ -203,6 +203,42 @@
         >
       </div>
       <div v-if="challenge.is_conquer == 1" class="p-4 has-border rounded">
+        <div
+            class="control content"
+            data-app
+          >
+            <label class="label" for="name">{{ trans.get('challenges.max_date') }}</label>
+            <span>
+              <b-datetimepicker
+                v-model="datepickerEnd"
+                locale="es-ES"
+                :placeholder="trans.get('challenges.click_select')"
+                icon-pack="fa"
+                position="is-top-right"
+                class="button is-rounded mr-2"
+                style="height: 40px !important"
+              >
+                <template slot="left">
+                  <button
+                    class="button is-primary"
+                    @click.prevent="datepickerEnd = new Date()"
+                  >
+                    <b-icon icon="clock"></b-icon>
+                    <span>{{ trans.get("general.now") }}</span>
+                  </button>
+                </template>
+                <template slot="right">
+                  <button
+                    class="button is-danger"
+                    @click.prevent="datepickerEnd = null"
+                  >
+                    <b-icon icon="times"></b-icon>
+                    <span>{{ trans.get("general.delete") }}</span>
+                  </button>
+                </template>
+              </b-datetimepicker>
+            </span>
+          </div>
         <div class="field">
           <b-switch
             type="is-info"
@@ -399,7 +435,9 @@
             <div class="control">
               <div class="select is-fullwidth">
                 <select v-model="challenge.collection_id">
-                  <option value="0">{{ trans.get("challenges.random_collection") }}</option>
+                  <option value="0">
+                    {{ trans.get("challenges.random_collection") }}
+                  </option>
                   <option
                     :value="collection.id"
                     v-for="collection in collections"
@@ -463,14 +501,39 @@
               </div>
             </div>
           </div>
+          
           <div
             class="control content"
             data-app
-            v-if="challenge.completion == 1 || challenge.completion == 3"
+            v-if="
+              challenge.completion == 1 ||
+              challenge.completion == 3 ||
+              challenge.completion == 2
+            "
           >
-          <label class="label" for="name">Feedback</label>
-            <Editor v-if="editor" v-model="feedback" height="200px" :code="code"></Editor>
+            <label class="label" for="name">Feedback</label>
+            <Editor
+              v-if="editor"
+              v-model="feedback"
+              height="200px"
+              :code="code"
+            ></Editor>
           </div>
+          <b-field
+            :label="trans.get('challenges.password')"
+            class="pl-3 mt-2"
+            v-if="challenge.completion == 3"
+          >
+            <b-input
+              type="password"
+              icon-pack="fas"
+              placeholder=""
+              required
+              v-model="challenge.password"
+              password-reveal
+            ></b-input>
+          </b-field>
+
           <article v-if="challenge.completion == 4" class="message is-warning">
             <div class="message-body">
               <p>{{ trans.get("challenges.completion_url_info_1") }}</p>
@@ -482,20 +545,6 @@
             </div>
           </article>
         </div>
-        <b-field
-          :label="trans.get('challenges.password')"
-          class="pl-3 mt-2"
-          v-if="challenge.completion == 3"
-        >
-          <b-input
-            type="password"
-            icon-pack="fas"
-            placeholder=""
-            required
-            v-model="challenge.password"
-            password-reveal
-          ></b-input>
-        </b-field>
 
         <!-- <div class="field">
           <b-switch
@@ -590,6 +639,7 @@ export default {
       this.content = this.edit.content;
       this.icon = this.challenge.icon;
       this.datepicker = new Date(this.edit.datetime);
+      if (this.edit.dateend) this.datepickerEnd = new Date(this.edit.dateend);
       this.feedback = this.edit.feedback;
     } else {
       this.icon = this.iconPrev.icon;
@@ -605,6 +655,7 @@ export default {
       items: [],
       editor: false,
       datepicker: null,
+      datepickerEnd: null,
       reload: false,
       icon: null,
       isModalActive: false,
@@ -616,6 +667,7 @@ export default {
         icon: null,
         color: null,
         datetime: null,
+        datetend: null,
         description: null,
         title: null,
         content: ``,
@@ -660,8 +712,7 @@ export default {
           });
 
           this.collections = response.data.collections;
-          if (this.collections.length)
-            this.challenge.collection_id = 0;
+          if (this.collections.length) this.challenge.collection_id = 0;
         });
     },
     disableAll() {
@@ -708,6 +759,19 @@ export default {
         date.getHours() +
         ":" +
         date.getMinutes();
+      date = this.datepickerEnd;
+      if (date)
+        this.challenge.dateend =
+          date.getFullYear() +
+          "-" +
+          (date.getMonth() + 1) +
+          "-" +
+          date.getDate() +
+          " " +
+          date.getHours() +
+          ":" +
+          date.getMinutes();
+      else this.challenge.dateend = null;
       let route;
       if (this.edit && !this.importFlag) {
         this.challenge._method = "patch";
@@ -715,6 +779,8 @@ export default {
       } else {
         route = "/classroom/" + this.code + "/challenges";
       }
+
+      if(this.challenge.type == 1) this.challenge.completion = 0;
 
       axios.post(route, this.challenge).then((response) => {
         this.$toast(response.data.message, { type: response.data.type });

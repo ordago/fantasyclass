@@ -113,5 +113,8 @@ return [
     'filter_cats_all' => 'Totes les categories',
     
     'completed' => 'Superat',
+    'max_date' => 'Data màxima (opcional)',
+    
+    'isOverdue' => 'S\'ha superat la data límit 😢',
 
 ];

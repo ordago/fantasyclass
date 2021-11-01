@@ -13,6 +13,7 @@ class Challenge extends Model
         'icon',
         'color',
         'datetime',
+        'dateend',
         'description',
         'title',
         'content',

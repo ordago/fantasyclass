@@ -725,9 +725,15 @@
                 :key="'challenge-' + challenge.id"
               >
                 <i class="pt-1" :class="getIcon(challenge)" slot="others"></i>
-                <span class="tag is-dark p-2 mb-2">{{
+                <span class="tag is-dark p-2 mb-2 cursor-default"><i class="fas fa-hourglass-start m-1"></i>{{
                   datetime(challenge.datetime)
                 }}</span>
+                <span v-if="challenge.dateend">
+                  <i class="fas fa-arrow-right mx-1"></i>
+                  <span :class="{'is-danger' : isOverdue(challenge.dateend)}" v-tippy :content="timeLeft(challenge.dateend)" class="tag p-2 mb-2 cursor-default"><i class="fas fa-hourglass-end m-1"></i>{{
+                    datetime(challenge.dateend)
+                  }}</span>
+                </span>
                 <show-challenge
                   class="has-text-left"
                   :challenge="challenge"
@@ -1996,6 +2002,9 @@ export default {
         // axios.post('/classroom/')
       }
     },
+    isOverdue(datetime) {
+        return moment(datetime).isBefore();
+    },
     getTippy(text) {
       if (text)
         return (
@@ -2053,6 +2062,9 @@ export default {
           this.student.collectionables = response.data.collectionables;
           this.$forceUpdate();
         });
+    },
+    timeLeft(date) {
+      return Utils.getDateFrom(date, this.trans.locale, false);
     },
     checkReward(collection) {
       let count = 0;
@@ -2368,10 +2380,12 @@ export default {
       let index;
       if (next) {
         index =
-          (this.orderedStudents.findIndex(currentStudent) + 1) % this.orderedStudents.length;
+          (this.orderedStudents.findIndex(currentStudent) + 1) %
+          this.orderedStudents.length;
       } else {
         index =
-          (this.orderedStudents.findIndex(currentStudent) - 1) % this.orderedStudents.length;
+          (this.orderedStudents.findIndex(currentStudent) - 1) %
+          this.orderedStudents.length;
         if (index == -1) index = this.students.length - 1;
       }
       nextId = this.orderedStudents[index].id;

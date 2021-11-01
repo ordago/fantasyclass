@@ -134,6 +134,7 @@ class ChallengesController extends Controller
             'password' => ['string', 'nullable'],
             'challenges_group_id' => ['numeric'],
             'datetime' => ['string'],
+            'dateend' => ['string', 'nullable'],
             'students' => ['array'],
             'items' => ['array', 'nullable'],
             'requirements' => ['array', 'nullable'],

@@ -114,5 +114,8 @@ return [
     'filter_cats_all' => 'All categories',
 
     'completed' => 'Completed',
+    'max_date' => 'Max date (optional)',
+
+    'isOverdue' => 'Date limit reached 😢',
 
 ];

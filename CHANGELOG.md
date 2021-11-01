@@ -1,5 +1,7 @@
 # Changelog
 ## v1.90 Beta (XX/11/2021)
+### Added
+- Max date in challenges.
 
 ### Changed
 - Load only last 100 log entries by default.

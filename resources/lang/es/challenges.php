@@ -113,5 +113,8 @@ return [
     'filter_cats_all' => 'Todas las categorias',
 
     'completed' => 'Superado',
+    'max_date' => 'Fecha máxima (opcional)',
+
+    'isOverdue' => 'Se ha superado la fecha límite 😢',
 
 ];
