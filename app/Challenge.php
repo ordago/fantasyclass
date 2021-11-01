@@ -112,6 +112,10 @@ class Challenge extends Model
     {
         return $this->hasMany(Attachment::class);
     }
+    public function task()
+    {
+        return $this->hasOne(Task::class);
+    }
     public function classroom()
     {
         return $this->group->classroom_id;

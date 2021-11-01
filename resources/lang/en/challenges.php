@@ -118,4 +118,9 @@ return [
 
     'isOverdue' => 'Date limit reached 😢',
 
+    'add_task' => 'Add task',
+    'name_folder' => 'Create a folder with the task name',
+    'name_task' => 'Task name',
+    'go_to_drive' => 'Go to folder',
+
 ];

@@ -116,5 +116,10 @@ return [
     'max_date' => 'Data màxima (opcional)',
     
     'isOverdue' => 'S\'ha superat la data límit 😢',
+    
+    'add_task' => 'Afegeix entrega',
+    'name_folder' => 'Crea una carpeta amb el nom de la tasca',
+    'name_task' => 'Nom de l\'entrega',
+    'go_to_drive' => 'Anar a la carpeta',
 
 ];

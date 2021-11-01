@@ -241,6 +241,11 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class)->withPivot('file', 'filename');
+    }
+
     public function blogs()
     {
         return $this->hasMany(Blog::class);

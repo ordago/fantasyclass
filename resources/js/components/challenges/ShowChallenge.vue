@@ -22,9 +22,6 @@
                 ></i>
                 {{ challengeReactive.title }}
               </h1>
-              <!-- <div class="mt-1">
-                
-              </div> -->
             </div>
             <div class="column is-narrow pb-0" v-if="!admin">
               <div class="is-flex">
@@ -124,7 +121,7 @@
           <p v-if="challengeReactive.description">
             <small>{{ challengeReactive.description }}</small>
           </p>
-          <p>
+          <p class="mb-2">
             <span v-if="!challengeReactive.incomplete && (full || edit)">
               <span class="tag is-dark ml-1 cursor-default" v-if="!flip">
                 <span
@@ -147,7 +144,7 @@
                 class="tag ml-1 cursor-default"
                 v-else
                 v-tippy
-                :class="{'is-danger' : isOverdue}"
+                :class="{ 'is-danger': isOverdue }"
                 :content="timeLeft(challengeReactive.dateend)"
               >
                 <i class="fas fa-hourglass-end mr-1"></i
@@ -295,7 +292,7 @@
           </p>
 
           <a
-            class="button"
+            class="button mt-0 mb-2"
             :href="
               '/classroom/show/' +
               this.code +
@@ -310,20 +307,31 @@
             v-html="getContent(challengeReactive.content)"
           ></div>
           <div
-            class
             v-for="(question, index) in challenge.questioninfo"
             :key="index"
           >
             <show-question :admin="admin" :question="question"></show-question>
           </div>
-          <div class v-for="(question, index) in challenge.stats" :key="index">
+          <div v-for="(question, index) in challenge.stats" :key="index">
             <show-question
               :admin="admin"
               :index="index"
               :question="question"
             ></show-question>
           </div>
-          <div class="mt-5" v-if="!challengeReactive.incomplete">
+          <article
+            v-if="
+              challenge.completion != 0 &&
+              !challenge.completed &&
+              !admin &&
+              full &&
+              !challengeReactive.incomplete
+            "
+            class="message is-warning"
+          >
+            <div v-html="getMessage(challenge)" class="message-body"></div>
+          </article>
+          <div class="mt-5" v-if="!challengeReactive.incomplete && (full || edit)">
             <div
               class="p-4 m-3 card rounded card-shadow-s"
               :class="{ columns: !attachment.mode == 1 }"
@@ -460,18 +468,6 @@
               </div>
             </div>
           </div>
-          <article
-            v-if="
-              challenge.completion != 0 &&
-              !challenge.completed &&
-              !admin &&
-              full &&
-              !challengeReactive.incomplete
-            "
-            class="message is-warning"
-          >
-            <div v-html="getMessage(challenge)" class="message-body"></div>
-          </article>
           <button
             class="button"
             v-if="!allowComment && (full || edit)"
@@ -481,7 +477,7 @@
             {{ trans.get("challenges.comment") }}
           </button>
           <InputEmoji v-if="(edit || full) && allowComment"></InputEmoji>
-          <div class="mt-3 comments">
+          <div class="mt-3 comments" v-if="full || edit">
             <div
               class="comment m-0"
               v-for="(comment, index) in orderedComments"
@@ -558,7 +554,7 @@
           </div>
           <div
             class="mt-2 is-flex is-center-vertically"
-            v-if="challengeReactive.rating"
+            v-if="challengeReactive.rating && (full || edit)"
           >
             <vue-reaction-emoji
               :reaction="returnEmoji(challengeReactive.rating)"
@@ -566,6 +562,48 @@
               :is-disabled="false"
             />
             Feedback: {{ challengeReactive.rating.toFixed(2) }} / 5
+          </div>
+          <div class="mb-2" v-if="!admin && challengeReactive.hasTask">
+            <span v-if="challengeReactive.fileSent">
+              <small><i class="fas fa-file-check mr-1"></i> {{ challengeReactive.fileSent }}</small>
+            </span>
+            <form
+              method="post"
+              @submit="onSubmit"
+              ref="form"
+              :action="'/storage/upload/' + challengeReactive.id"
+              enctype="multipart/form-data"
+            >
+              <input :value="csrfToken" type="hidden" name="_token" />
+              <label
+                for="file-upload"
+                style="display: block"
+                v-if="!fileChoose && !challengeReactive.fileSent"
+                class="button is-link mb-2 mt-0"
+              >
+                <i class="fa fa-cloud-upload"></i>
+                {{ trans.get("challenges.add_task") }}
+              </label>
+              <input
+                type="file"
+                ref="file"
+                id="file-upload"
+                name="upload"
+                @input="updateFile"
+                style="display: none"
+                class="my-2 p-3 border border-secondary rounded"
+              />
+              <label
+                v-if="fileChoose"
+                style="display: block"
+                @click="onSubmit"
+                :class="{'is-loading' : isSending}"
+                class="button is-success mb-2 mt-0"
+              >
+                <i class="fa fa-cloud-upload"></i>
+                {{ trans.get("general.send") }}
+              </label>
+            </form>
           </div>
           <div class="buttons" v-if="(edit && admin) || !admin">
             <button
@@ -579,6 +617,7 @@
                 !challengeReactive.incomplete &&
                 !isOverdue
               "
+              :disabled="challenge.hasTask && !challenge.fileSent"
               class="button is-info"
               @click="markCompleted"
               :class="{ 'is-loading': $parent.isLoading }"
@@ -619,9 +658,13 @@
                 </div>
               </div>
             </div>
-            <article class="message is-warning" v-if="!admin && isOverdue && !checkCompletion">
+            <article
+              class="message is-warning"
+              v-if="!admin && isOverdue && !checkCompletion"
+            >
               <div class="message-body">
-                <i class="fas fa-exclamation-triangle mr-1"></i> {{ trans.get('challenges.isOverdue') }}
+                <i class="fas fa-exclamation-triangle mr-1"></i>
+                {{ trans.get("challenges.isOverdue") }}
               </div>
             </article>
             <button
@@ -633,6 +676,39 @@
                 <i class="fas fa-paperclip"></i>
               </span>
               <span>{{ trans.get("challenges.add_attachment") }}</span>
+            </button>
+            <a
+              :href="'https://drive.google.com/drive/folders/' + challenge.task.g_folder"
+              target="_blank"
+              v-if="admin && challenge.task && glink"
+              class="button is-success"
+              v-tippy=" {interactive: true}"
+              content="Eliminar"
+            >
+              <span class="icon is-small">
+                <i class="fab fa-google-drive"></i>
+              </span>
+              <span>{{ trans.get("challenges.go_to_drive") }}</span>
+            </a>
+            <a
+              v-if="admin && !glink && challenge.is_conquer"
+              class="button is-outlined is-success"
+              :href="'/google/drive/link/' + code"
+            >
+              <span class="icon is-small">
+                <i class="fab fa-google-drive"></i>
+              </span>
+              <span>{{ trans.get("challenges.add_task") }}</span>
+            </a>
+            <button
+              v-if="admin && glink && !challenge.task && challenge.is_conquer"
+              class="button is-outlined is-success"
+              @click="addUpload"
+            >
+              <span class="icon is-small">
+                <i class="fas fa-file-upload"></i>
+              </span>
+              <span>{{ trans.get("challenges.add_task") }}</span>
             </button>
             <button
               v-if="admin"
@@ -869,6 +945,11 @@ export default {
     "students",
   ],
   mounted: function () {
+    if(this.admin) {
+      axios.get('/google/drive/status').then(response => {
+        this.glink = response.data;
+      })
+    }
     if (this.challenge.dateend)
       setInterval(
         function () {
@@ -879,6 +960,7 @@ export default {
       );
   },
   created: function () {
+    this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     this.challengeReactive = this.challenge;
     if (this.challenge.requirements) {
       if (typeof this.challenge.requirements == "string")
@@ -887,6 +969,9 @@ export default {
   },
   data: function () {
     return {
+      glink: false,
+      csrfToken: "",
+      fileChoose: false,
       flip: false,
       rating: "",
       password: "",
@@ -897,6 +982,7 @@ export default {
       isMarkerModalActive: false,
       modal: false,
       embedCode: "",
+      isSending: false,
       attachment: {
         mode: "0",
         type: null,
@@ -923,6 +1009,66 @@ export default {
     VueFlip,
   },
   methods: {
+    updateFile() {
+      this.fileChoose = true;
+      this.$forceUpdate();
+    },
+    onSubmit(e) {
+      this.isSending = true;
+      const file = this.$refs.file.files[0];
+
+      if (!file) {
+        e.preventDefault();
+        this.$toast("File is required", { type: "error" });
+        this.fileChoose = false;
+        this.isSending = false;
+        return false;
+      }
+
+      if (file.size > 1024 * 1024 * 10) {
+        e.preventDefault();
+        this.fileChoose = false;
+        this.isSending = false;
+        this.$toast(this.trans.get('success_error.max_size') + ": 10MB", { type: "error" });
+        return false;
+      }
+      this.$refs.form.submit();
+    },
+    addUpload() {
+      this.$buefy.dialog.prompt({
+        message: this.trans.get("challenges.name_folder"),
+        confirmText: this.trans.get("general.add"),
+        cancelText: this.trans.get("general.cancel"),
+        inputAttrs: {
+          placeholder: this.trans.get("challenges.name_task"),
+          maxlength: 20,
+        },
+        trapFocus: true,
+        onConfirm: (value) => {
+          axios
+            .post("/google/drive/createFolder", {
+              name: value,
+              challenge: this.challenge.id,
+            })
+            .then((response) => {
+              this.challenge.g_folder = response.data;
+              this.$forceUpdate();
+              Utils.toast(
+                this,
+                this.trans.get("success_error.add_success"),
+                "success"
+              );
+            })
+            .catch((error) => {
+              Utils.toast(
+                this,
+                this.trans.get("classroom.code_invalid"),
+                "error"
+              );
+            });
+        },
+      });
+    },
     clean(text) {
       text = text.replace("&nbsp;", "");
       text = text.replace("<br>", "");
@@ -1216,6 +1362,14 @@ export default {
     },
   },
   computed: {
+    checkFile() {
+      if (this.$refs.file) {
+        const file = this.$refs.file.files[0];
+        if (!file) {
+          return true;
+        }
+      }
+    },
     orderedComments: function () {
       return _.orderBy(this.challenge.comments, "created_at", "desc").splice(
         0,
@@ -1223,11 +1377,10 @@ export default {
       );
     },
     checkCompletion() {
-      if(this.challengeReactive.completed)
-        return true;
+      if (this.challengeReactive.completed) return true;
       if (
         this.challengeReactive.completion == 1 ||
-        this.challengeReactive.completion == 3 || 
+        this.challengeReactive.completion == 3 ||
         this.challengeReactive.completion == 0
       )
         return this.challengeReactive.count == 1;

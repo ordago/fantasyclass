@@ -420,6 +420,9 @@ Route::group(['middleware' => 'language'], function () {
     
     // Google Drive
     Route::get('/google/drive', 'StorageController@gDrive');
+    Route::post('/google/drive/createFolder', 'StorageController@createFolder');
+    Route::post('/storage/upload/{challenge}', 'StorageController@uploadFile');
+    Route::get('/google/drive/status', function () {return Auth()->user()->g_folder ? true: false; });
 
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});

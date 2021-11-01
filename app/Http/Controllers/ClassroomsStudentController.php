@@ -332,9 +332,9 @@ class ClassroomsStudentController extends Controller
         $tz = settings()->get('tz', 'Europe/Madrid');
 
         foreach ($class->challengeGroups as $group) {
-            array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+            array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group', 'task')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
                 return collect($challenge->toArray())
-                    ->only(['id', 'rating', 'disabled', 'dateend', 'pinned', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'questioninfo', 'challenge_required', 'requirements'])
+                    ->only(['id', 'rating', 'disabled', 'dateend', 'pinned', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'task', 'questioninfo', 'challenge_required', 'requirements'])
                     ->all();
             }));
         }
@@ -486,6 +486,15 @@ class ClassroomsStudentController extends Controller
             $challenge->items = json_decode($challenge->items);
             if (!$admin) {
                 $current = Challenge::find($challenge->id);
+                if($current->task) {
+                    if($student->tasks->contains($current->task)) {
+                        $challenge->hasTask = true;
+                        $challenge->fileSent = $student->tasks()->where('task_id', $current->task->id)->first()->pivot->filename;
+                    } else {
+                        $challenge->hasTask = true;
+                        $challenge->fileSent = false;
+                    }
+                }
                 if ($current->completion == 4 && !$student->challenges->contains($current->id)) {
                     unset($challenges[$key]);
                     continue;
