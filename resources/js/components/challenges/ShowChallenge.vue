@@ -1223,6 +1223,8 @@ export default {
       );
     },
     checkCompletion() {
+      if(this.challengeReactive.completed)
+        return true;
       if (
         this.challengeReactive.completion == 1 ||
         this.challengeReactive.completion == 3 || 
