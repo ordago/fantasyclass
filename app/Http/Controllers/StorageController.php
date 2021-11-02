@@ -29,9 +29,8 @@ class StorageController extends Controller
             // }
             // settings()->setExtraColumns(['classroom_id' => $class->id]);
             // settings()->set('gdrive_refresh_token', $auth_user->refreshToken);
-            if (auth()->user()->refresh_token) {
+            if (auth()->user()->g_refresh_token) {
                 $client->refreshToken(Auth()->user()->g_refresh_token);
-                $client->setAccessType('offline');
                 $client->setScopes(array('https://www.googleapis.com/auth/drive.file'));
 
                 $this->folder = new Google_Service_Drive($client);
