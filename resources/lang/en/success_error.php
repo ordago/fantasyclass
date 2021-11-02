@@ -47,6 +47,7 @@ return [
     'craft_fail' => 'These objects can\'t be crafted',
     'collectible_error' => 'Exchange requirements are not met: have at least 2 collectibles. Check if your mate has the 2 collectibles available.',
 
+    'date_max' => 'Max date reached',
 
 
 ];

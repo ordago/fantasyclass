@@ -1031,7 +1031,7 @@
               >{{ student.badges.length }}</span
             >
           </template>
-          <div v-if="admin" class="is-flex pl-4">
+          <div v-if="admin" class="is-flex pl-4" style="flex-flow: wrap">
             <div
               class="mx-2"
               v-for="(badge, index) in classroom.badges"
@@ -1056,7 +1056,7 @@
               ></ShowBadge>
             </div>
           </div>
-          <div class="is-flex pl-4" v-if="!admin">
+          <div class="is-flex pl-4" style="flex-flow: wrap" v-if="!admin">
             <div
               class="mx-2"
               v-for="(badge, index) in student.badges"

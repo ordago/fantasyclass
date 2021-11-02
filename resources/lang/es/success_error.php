@@ -49,4 +49,6 @@ return [
     'craft_fail' => 'Estos objetos no se pueden combinar',
     'collectible_error' => 'No se cumplen los requisito de intercambio: tener mínimo 2 coleccionables. Comprueba que tu compañero o compañera tiene los 2 coleccionables de ese tipo.',
 
+    'date_max' => 'Fecha máxima superada',
+
 ];

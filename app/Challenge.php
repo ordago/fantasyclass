@@ -138,6 +138,7 @@ class Challenge extends Model
             $challenge->attachments()->delete();
             $challenge->comments()->delete();
             $challenge->questions()->delete();
+            $challenge->task()->delete();
         });
     }
 }

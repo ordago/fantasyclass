@@ -287,7 +287,7 @@ class ClassroomsStudentController extends Controller
                 }
             } else {
                 $group = $student->groups->first();
-                if ($group && (!$group->challenges->contains($challenge->challenge_required) || $group->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0 )) {
+                if ($group && (!$group->challenges->contains($challenge->challenge_required) || $group->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0)) {
                     return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
                 }
             }
@@ -486,8 +486,8 @@ class ClassroomsStudentController extends Controller
             $challenge->items = json_decode($challenge->items);
             if (!$admin) {
                 $current = Challenge::find($challenge->id);
-                if($current->task) {
-                    if($student->tasks->contains($current->task)) {
+                if ($current->task) {
+                    if ($student->tasks->contains($current->task)) {
                         $challenge->hasTask = true;
                         $challenge->fileSent = $student->tasks()->where('task_id', $current->task->id)->first()->pivot->filename;
                     } else {
@@ -633,7 +633,7 @@ class ClassroomsStudentController extends Controller
         if (settings()->get('items_visibility', false) ? true : false) {
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
-        if($student->character) {
+        if ($student->character) {
             if ($student->character->theme->id == 10 || $student->character->theme->id == 11)
                 $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 710, 711, 712, 713, 714, 715, 716, 717, 718, 760, 770, 780])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
             if (settings()->get('equipment_1_visibility', false) ? true : false) {
@@ -703,8 +703,8 @@ class ClassroomsStudentController extends Controller
                         if (!count($evaluationStdPending))
                             array_push($pending, ['id' => $eval->id, 'rubric_id' => $eval->rubric_id, 'name' => $eval->description, 'student_id' => $stdgroup->id, 'student_name' => $stdgroup->name, 'subtype' => $eval->subtype]);
                     }
-            } 
-            
+            }
+
             if ($eval->subtype == 2 || $eval->subtype == 3) {
                 $evaluationStdPending = DB::table('evaluable_student')
                     ->where('evaluable_student.evaluable_id', '=', $eval->id)
@@ -781,7 +781,7 @@ class ClassroomsStudentController extends Controller
 
         $student->unsetRelation('grades');
         $student->grades = $student->grades()->whereNull('from_student_id')->get();
-        $student->load(['logEntries' => function($query) {
+        $student->load(['logEntries' => function ($query) {
             $query->orderByDesc('id')->take(100);
         }]);
         return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
@@ -932,11 +932,10 @@ class ClassroomsStudentController extends Controller
             ->where('id', $data['id'])
             ->first();
         $student = Functions::getCurrentStudent($class, []);
-        if($student->id != $line->student_id)
+        if ($student->id != $line->student_id)
             abort(403);
-        
-        DB::table('exchange_collectibles')->where('id', $data['id'])->delete();
 
+        DB::table('exchange_collectibles')->where('id', $data['id'])->delete();
     }
 
     public function doExchange($code)
@@ -954,42 +953,42 @@ class ClassroomsStudentController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $comission = settings()->get('comission_collectibles', 0);
-        if($comission)
-            if($student->gold < $comission || $studentOrigin->gold < $comission)
+        if ($comission)
+            if ($student->gold < $comission || $studentOrigin->gold < $comission)
                 return false;
 
-        if($student->classroom->classroom_id != $studentOrigin->classroom->classroom_id)
+        if ($student->classroom->classroom_id != $studentOrigin->classroom->classroom_id)
             return false;
-        
+
         $studentOriginCollectionable = $studentOrigin->fresh()->collectionables->where('id', $line->collectionable_id)->first();
-        if($studentOriginCollectionable->pivot->count <= 1)
+        if ($studentOriginCollectionable->pivot->count <= 1)
             return false;
 
         $studentCollectionable = $student->fresh()->collectionables->where('id', $line->wanted_collectionable_id)->first();
-        if($studentCollectionable->pivot->count <= 1)
+        if ($studentCollectionable->pivot->count <= 1)
             return false;
-        
-        $countOrigin =  $studentOriginCollectionable->pivot->count -1;   
-        $count =  $studentCollectionable->pivot->count -1;
+
+        $countOrigin =  $studentOriginCollectionable->pivot->count - 1;
+        $count =  $studentCollectionable->pivot->count - 1;
 
         $newOrigin = $studentOrigin->fresh()->collectionables->where('id', $line->wanted_collectionable_id)->first();
-        if($newOrigin)
+        if ($newOrigin)
             $newCountOrigin = $newOrigin->pivot->count + 1;
         else
             $newCountOrigin = 1;
         $new = $student->fresh()->collectionables->where('id', $line->collectionable_id)->first();
-        if($new)
+        if ($new)
             $newCount = $new->pivot->count + 1;
         else
             $newCount = 1;
 
         $studentOrigin->collectionables()->sync([$line->collectionable_id => ['count' => $countOrigin]], false);
         $studentOrigin->collectionables()->sync([$line->wanted_collectionable_id => ['count' => $newCountOrigin]], false);
-        
+
         $student->collectionables()->sync([$line->wanted_collectionable_id => ['count' => $count]], false);
         $student->collectionables()->sync([$line->collectionable_id => ['count' => $newCount]], false);
 
-        if($comission) {
+        if ($comission) {
             $student->setProperty("gold", $comission * -1, true, "exchange_collectible", false);
             $studentOrigin->setProperty("gold", $comission * -1, true, "exchange_collectible", false);
         }
@@ -1012,7 +1011,7 @@ class ClassroomsStudentController extends Controller
             $from = Collectionable::find($exchange->collectionable_id);
             $to = Collectionable::find($exchange->wanted_collectionable_id);
             $student = Student::find($exchange->student_id);
-            $lines[] = ['id' => $exchange->id,'from' => $from, 'to' => $to, 'student' => ['id' => $student->id, 'name' => $student->name, 'avatar' => $student->avatar]];
+            $lines[] = ['id' => $exchange->id, 'from' => $from, 'to' => $to, 'student' => ['id' => $student->id, 'name' => $student->name, 'avatar' => $student->avatar]];
         }
 
         return $lines;
@@ -1030,16 +1029,15 @@ class ClassroomsStudentController extends Controller
 
         $studentCollectionable = $student->collectionables->where('id', $data['from'])->first();
 
-        if(!$studentCollectionable || $studentCollectionable->pivot->count <= 1)
+        if (!$studentCollectionable || $studentCollectionable->pivot->count <= 1)
             abort(403);
-        
+
         DB::table('exchange_collectibles')->insert([
             'classroom_id' => $class->id,
             'student_id' => $student->id,
             'collectionable_id' => $data['from'],
             'wanted_collectionable_id' => $data['to'],
-        ]);        
-
+        ]);
     }
     public function markChallenge($code)
     {
@@ -1053,6 +1051,22 @@ class ClassroomsStudentController extends Controller
         $update = false;
 
         $challenge = Challenge::findOrFail($data['challenge']);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $tz = settings()->get('tz', 'Europe/Madrid');
+
+        // foreach ($class->challengeGroups as $group) {
+        //     array_push($challenges, $group->challenges()->with('attachments', 'comments', 'group', 'task')->where('datetime', '<=', Carbon::now($tz)->toDateTimeString())->get()->append('questioninfo')->map(function ($challenge) {
+        //         return collect($challenge->toArray())
+        //             ->only(['id', 'rating', 'disabled', 'dateend', 'pinned', 'completion', 'type', 'title', 'xp', 'hp', 'gold', 'datetime', 'content', 'icon', 'color', 'is_conquer', 'cards', 'students', 'items', 'attachments', 'comments', 'group', 'task', 'questioninfo', 'challenge_required', 'requirements'])
+        //             ->all();
+        //     }));
+        // }
+
+        if ($challenge->dateend && $challenge->dateend < Carbon::now($tz)->toDateTimeString()) {
+            abort(403);
+        }
+
         $challengeStudent = $student->challenges->where('id', $challenge->id)->first();
         $update = false;
         $feedback = null;
@@ -1063,7 +1077,7 @@ class ClassroomsStudentController extends Controller
             if (!$challengeStudent) {
                 $student->challenges()->attach($challenge->id);
                 $update = true;
-            } else if($challengeStudent->pivot->count == 0) {
+            } else if ($challengeStudent->pivot->count == 0) {
                 $student->challenges()->sync([$challenge->id => ['count' => 1]], false);
                 $update = true;
             }
@@ -1411,7 +1425,7 @@ class ClassroomsStudentController extends Controller
         $this->deleteSkill($code, request()->skill);
         $student = $student->fresh();
         $student->load('skills');
-        $student->load(['log_entries' => function($query) {
+        $student->load(['log_entries' => function ($query) {
             $query->orderByDesc('id')->take(50);
         }]);
         return $student;
@@ -1631,13 +1645,13 @@ class ClassroomsStudentController extends Controller
         ]);
 
         $from['title'] = __("notifications.item");
-        
-        
-            $from['datetime'] = Carbon::now();
-            $from['name'] = $student->name;
-            $from['username'] = $student->username;
-    
-            NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.item", $item->icon , $from, "item", $student->id);
+
+
+        $from['datetime'] = Carbon::now();
+        $from['name'] = $student->name;
+        $from['username'] = $student->username;
+
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.item", $item->icon, $from, "item", $student->id);
 
         return [
             "message" => " " . __('success_error.equipment_success'),
@@ -1766,12 +1780,12 @@ class ClassroomsStudentController extends Controller
         }
 
         $from['title'] = __("notifications.use_item");
-        
-        
+
+
         $from['datetime'] = Carbon::now();
         $from['name'] = $student->name;
         $from['username'] = $student->username;
-        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.use_item", $item->icon , $from, "item", $student->id);
+        NotificationController::sendToTeachers(auth()->user()->id, $class->code, "notifications.use_item", $item->icon, $from, "item", $student->id);
 
 
         return ['xp' => $xp, 'hp' => $item->hp + $extra];

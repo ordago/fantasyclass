@@ -306,10 +306,7 @@
             v-if="edit || full"
             v-html="getContent(challengeReactive.content)"
           ></div>
-          <div
-            v-for="(question, index) in challenge.questioninfo"
-            :key="index"
-          >
+          <div v-for="(question, index) in challenge.questioninfo" :key="index">
             <show-question :admin="admin" :question="question"></show-question>
           </div>
           <div v-for="(question, index) in challenge.stats" :key="index">
@@ -331,7 +328,10 @@
           >
             <div v-html="getMessage(challenge)" class="message-body"></div>
           </article>
-          <div class="mt-5" v-if="!challengeReactive.incomplete && (full || edit)">
+          <div
+            class="mt-5"
+            v-if="!challengeReactive.incomplete && (full || edit)"
+          >
             <div
               class="p-4 m-3 card rounded card-shadow-s"
               :class="{ columns: !attachment.mode == 1 }"
@@ -563,9 +563,15 @@
             />
             Feedback: {{ challengeReactive.rating.toFixed(2) }} / 5
           </div>
-          <div class="mb-2" v-if="!admin && challengeReactive.hasTask">
+          <div
+            class="mb-2"
+            v-if="!admin && challengeReactive.hasTask && !isOverdue"
+          >
             <span v-if="challengeReactive.fileSent">
-              <small><i class="fas fa-file-check mr-1"></i> {{ challengeReactive.fileSent }}</small>
+              <small
+                ><i class="fas fa-file-check mr-1"></i>
+                {{ challengeReactive.fileSent }}</small
+              >
             </span>
             <form
               method="post"
@@ -597,7 +603,7 @@
                 v-if="fileChoose"
                 style="display: block"
                 @click="onSubmit"
-                :class="{'is-loading' : isSending}"
+                :class="{ 'is-loading': isSending }"
                 class="button is-success mb-2 mt-0"
               >
                 <i class="fa fa-cloud-upload"></i>
@@ -678,12 +684,19 @@
               <span>{{ trans.get("challenges.add_attachment") }}</span>
             </button>
             <a
-              :href="'https://drive.google.com/drive/folders/' + challenge.task.g_folder"
+              :href="
+                'https://drive.google.com/drive/folders/' +
+                challengeReactive.task.g_folder
+              "
               target="_blank"
-              v-if="admin && challenge.task && glink"
+              :content="getDeleteMessage()"
+              v-if="admin && challengeReactive.task && glink"
               class="button is-success"
-              v-tippy=" {interactive: true}"
-              content="Eliminar"
+              v-tippy="{
+                interactive: true,
+                theme: 'light',
+                arrow: true,
+              }"
             >
               <span class="icon is-small">
                 <i class="fab fa-google-drive"></i>
@@ -701,7 +714,7 @@
               <span>{{ trans.get("challenges.add_task") }}</span>
             </a>
             <button
-              v-if="admin && glink && !challenge.task && challenge.is_conquer"
+              v-if="admin && glink && !challengeReactive.task && challenge.is_conquer"
               class="button is-outlined is-success"
               @click="addUpload"
             >
@@ -945,10 +958,10 @@ export default {
     "students",
   ],
   mounted: function () {
-    if(this.admin) {
-      axios.get('/google/drive/status').then(response => {
+    if (this.admin) {
+      axios.get("/google/drive/status").then((response) => {
         this.glink = response.data;
-      })
+      });
     }
     if (this.challenge.dateend)
       setInterval(
@@ -960,6 +973,7 @@ export default {
       );
   },
   created: function () {
+    window.removeTask = this.removeTask;
     this.csrfToken = document.querySelector('meta[name="csrf-token"]').content;
     this.challengeReactive = this.challenge;
     if (this.challenge.requirements) {
@@ -1009,6 +1023,18 @@ export default {
     VueFlip,
   },
   methods: {
+    removeTask(task) {
+      axios.delete('/tasks/delete/' + task).then(response => {
+        location.reload();
+      });
+    },
+    getDeleteMessage() {
+      let message = "";
+        message += `<div><small><span class="tag is-danger cursor-pointer" onclick="removeTask(${
+          this.challengeReactive.task.id
+        })">${this.trans.get("cards.delete")}</span></small></div>`;
+      return message;
+    },
     updateFile() {
       this.fileChoose = true;
       this.$forceUpdate();
@@ -1029,7 +1055,9 @@ export default {
         e.preventDefault();
         this.fileChoose = false;
         this.isSending = false;
-        this.$toast(this.trans.get('success_error.max_size') + ": 10MB", { type: "error" });
+        this.$toast(this.trans.get("success_error.max_size") + ": 10MB", {
+          type: "error",
+        });
         return false;
       }
       this.$refs.form.submit();
@@ -1051,7 +1079,7 @@ export default {
               challenge: this.challenge.id,
             })
             .then((response) => {
-              this.challenge.g_folder = response.data;
+              this.challengeReactive.task = response.data;
               this.$forceUpdate();
               Utils.toast(
                 this,
@@ -1356,6 +1384,9 @@ export default {
                 this.challengeReactive.count++;
                 this.emitGrandfather("updateStudent", response.data);
               }
+            })
+            .catch((response) => {
+              this.$toast(this.trans.get('challenges.isOverdue'), {type: 'error'})
             });
         },
       });

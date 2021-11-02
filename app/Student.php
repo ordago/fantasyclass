@@ -548,8 +548,15 @@ class Student extends Model implements HasMedia
 
         $studentBadge = $this->badges->where('id', $badge->id)->first();
 
-        if (!$studentBadge)
+        if (!$studentBadge) {
+            if ($badge->hp)
+                $this->setProperty('hp', $badge->hp, true, 'badge');
+            if ($badge->xp)
+                $this->setProperty('xp', $badge->xp, true, 'badge');
+            if ($badge->gold)
+                $this->setProperty('gold', $badge->gold, true, 'badge');
             $this->badges()->attach($badge->id);
+        }
     }
 
     public function setItem($itemId)

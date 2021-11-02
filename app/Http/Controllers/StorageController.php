@@ -109,20 +109,13 @@ class StorageController extends Controller
             array('fields' => 'id'),
         );*/
 
-        $task = Task::create([
+        return Task::create([
             'name' => $data['name'],
             'g_folder' => $folderId->id,
             'g_user' => Auth()->user()->id,
             'g_upload' => true,
             'challenge_id' => $challenge->id,
         ]);
-
-        // $challenge->task->attach($task->id);
-        // $challenge->g_folder = $folderId->id;
-        // $challenge->g_user = Auth()->user()->id;
-        // $challenge->g_upload = true;
-        // $challenge->save();
-        return $folderId->id;
     }
 
     public function gDrive()

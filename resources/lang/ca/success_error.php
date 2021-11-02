@@ -47,5 +47,6 @@ return [
     
     'craft_fail' => 'Aquests objectes no es poden combinar',
     'collectible_error' => 'No es compleixen els requeriments d\'intercanvi: tenir mínim 2 coleccionables. Comprova que el company o companya té els 2 col·leccionables disponibles.',
+    'date_max' => 'Data màxima superada',
 
 ];

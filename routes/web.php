@@ -413,7 +413,7 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/google/classroom/link/{code}', 'SocialController@googleClassroom');
     Route::get('/google/classroom/unlink', 'SocialController@unlinkGoogleClassroom');
     Route::get('/google/drive/link/{code}', 'SocialController@addGoogleDrive');
-
+    
     // Google Classroom
     Route::get('/google/classroom/list/courses', 'ServicesController@classroomList');
     Route::get('/google/classroom/list/{courseId}/students', 'ServicesController@usersList');
@@ -423,7 +423,10 @@ Route::group(['middleware' => 'language'], function () {
     Route::post('/google/drive/createFolder', 'StorageController@createFolder');
     Route::post('/storage/upload/{challenge}', 'StorageController@uploadFile');
     Route::get('/google/drive/status', function () {return Auth()->user()->g_folder ? true: false; });
-
+    
+    // Tasks
+    Route::delete('/tasks/delete/{task}', 'TasksController@destroy');
+    
     // Google Classroom
     Route::get('/offline', function () {return view('vendor.laravelpwa.offline');});
     
