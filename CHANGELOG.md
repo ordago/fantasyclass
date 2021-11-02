@@ -8,6 +8,7 @@
 - Load only last 100 log entries by default.
 - Fix in showing badges.
 - Apply rewards if assign badge in massive actions.
+- Allow to toggle progress.
 
 ## v1.89 Beta (30/10/2021)
 ### Added

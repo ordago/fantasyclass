@@ -709,7 +709,7 @@
           </div>
           <div v-else>
             <timeline timeline-theme="#555555">
-              <timeline-item icon-size="large" bg-color="#000">
+              <timeline-item icon-size="large" bg-color="#000" class="is-relative">
                 <a
                   v-if="!admin"
                   :href="'/classroom/show/' + classroom.code + '/challenges'"
@@ -717,6 +717,7 @@
                 >
                   {{ trans.get("challenges.show_all_summary") }}
                 </a>
+                <i @click="compact = !compact" :class="{'fa-layer-minus' : !compact, 'fa-layer-plus' : compact}" class="fad  fs-2" style="position: absolute; bottom: 3px; right: 2px"></i>
               </timeline-item>
               <timeline-item
                 icon-size="medium"
@@ -734,7 +735,9 @@
                     datetime(challenge.dateend)
                   }}</span>
                 </span>
+                  <span v-if="compact">{{ challenge.title }} <span class="is-italic" v-if="challenge.description"><small>({{ challenge.description }})</small></span></span>
                 <show-challenge
+                  v-if="!compact"
                   class="has-text-left"
                   :challenge="challenge"
                   :code="classroom.code"
@@ -1938,6 +1941,7 @@ export default {
       craft: [],
       exchanging: 0,
       exchange: null,
+      compact: false,
     };
   },
   methods: {
