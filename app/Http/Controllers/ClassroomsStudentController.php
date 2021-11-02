@@ -487,12 +487,20 @@ class ClassroomsStudentController extends Controller
             if (!$admin) {
                 $current = Challenge::find($challenge->id);
                 if ($current->task) {
-                    if ($student->tasks->contains($current->task)) {
-                        $challenge->hasTask = true;
-                        $challenge->fileSent = $student->tasks()->where('task_id', $current->task->id)->first()->pivot->filename;
+                    $challenge->hasTask = true;
+                    $challenge->fileSent = false;
+                    if ($current->type == 0) {
+                        if ($student->tasks->contains($current->task)) {
+                            $challenge->fileSent = $student->tasks()->where('task_id', $current->task->id)->first()->pivot->filename;
+                        }
                     } else {
-                        $challenge->hasTask = true;
-                        $challenge->fileSent = false;
+                        $group = $student->groups->first();
+                        if ($group)
+                            foreach ($group->students as $student) {
+                                if ($student->tasks->contains($current->task)) {
+                                    $challenge->fileSent = $student->tasks()->where('task_id', $current->task->id)->first()->pivot->filename;
+                                }
+                            }
                     }
                 }
                 if ($current->completion == 4 && !$student->challenges->contains($current->id)) {

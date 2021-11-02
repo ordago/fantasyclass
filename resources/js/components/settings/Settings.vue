@@ -116,9 +116,12 @@
           {{ trans.get("general.save") }}
         </button>
       </b-field>
-      <b-field label="Google Classroom" class="is-block" v-if="user.token">
+      <b-field label="Google" class="is-block" v-if="user.token || user.g_token">
         <br />
-        <button class="button is-link mb-3" @click="unlink">
+        <button class="button is-link mb-3" v-if="user.g_token" @click="unlinkDrive">
+          {{ trans.get("settings.drive_unlink") }}
+        </button>
+        <button class="button is-link mb-3" v-if="user.token" @click="unlink">
           {{ trans.get("settings.classroom_unlink") }}
         </button>
         <div class="mt-0 mb-2">
@@ -909,6 +912,16 @@ export default {
               });
             });
         },
+      });
+    },
+    unlinkDrive() {
+      axios.get("/google/drive/unlink").then((response) => {
+        this.$toast(this.trans.get("success_error.update_success"), {
+          type: "success",
+        });
+
+        this.user.g_token = null;
+        this.$forceUpdate();
       });
     },
     unlink() {

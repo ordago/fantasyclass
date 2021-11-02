@@ -47,6 +47,7 @@ class StorageController extends Controller
         $this->authorize('studyOrTeach', $class);
 
         $task = Task::find($challenge->task->id);
+        $challenge = Challenge::find($task->challenge_id);
 
         $originalFile = request()->file('upload');
         $image = $originalFile->getContent();
@@ -63,7 +64,11 @@ class StorageController extends Controller
 
         $file = new Google_Service_Drive_DriveFile();
         $file->setMimeType($file->mimeType);
-        $file->setName($student->name . "-" . Carbon::now() . "-" . $originalFile->getClientOriginalName());
+        $name = "";
+        if($challenge->type == 0)
+            $name = $student->name . "-" . Carbon::now() . "-" . $originalFile->getClientOriginalName();
+        else $name = $student->groups->first()->name . "-" . Carbon::now() . "-" . $originalFile->getClientOriginalName();
+        $file->setName($name);
         $file->setParents(array($task->g_folder));
 
         $createdFile = $this->folder->files->create($file, array(

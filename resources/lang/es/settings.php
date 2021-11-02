@@ -44,7 +44,9 @@ return [
     'disabled' => "Deshabilitada",
     'classroom_unlink' => "Desenlaza Google Classroom",
     'classroom_unlink_info' => "Elimina antes los permisos des de tu <a target='_blank' href='https://myaccount.google.com/permissions'>cuenta de Google</a>",
-    
+    'drive_unlink' => "Desenlaza Google Drive",
+
+
     'reset_assistant' => "Asistente de reinicio",
     'reset_assistant_help' => "Aquí podrás elegir reiniciar las principales propiedades de los estudiantes",
 

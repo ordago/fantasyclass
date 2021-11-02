@@ -46,6 +46,15 @@ class SocialController extends Controller
     {
         auth()->user()->update(['token' => null, 'refresh_token' => null, 'expires_in' => null]);
     }
+    public function unlinkGoogleDrive()
+    {
+       $user = Auth::user();
+       $user->g_token = null;
+       $user->g_refresh_token = null;
+       $user->g_expires_in = null;
+       $user->g_folder = null;
+       $user->save();
+    }
 
     public function callback($provider)
     {
