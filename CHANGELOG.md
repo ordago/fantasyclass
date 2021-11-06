@@ -1,4 +1,11 @@
 # Changelog
+## v1.91 Beta (XX/11/2021)
+### Added
+~ Sell objects in shop.
+
+### Changed
+- Fixes in battles.
+
 ## v1.90 Beta (02/11/2021)
 ### Added
 - Max date in challenges.

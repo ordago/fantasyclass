@@ -57,4 +57,12 @@ return [
     'adopt_success' => 'Mascota adoptada! Cuida-la :)',
 
     'undead' => 'Permet reviure als morts',
+    
+    'sell' => 'Vendre',
+    'sell_objects' => 'Vendre objectes',
+    'merchant_message' => 'Què puc fer hui per tu?',
+    'quantity' => 'Quantitat',
+    'price_u' => 'Preu unitat',
+    'allow_sell' => 'Permetre venda d\'objectes (el percentatge de compra es configura a preferències)',
+
 ];

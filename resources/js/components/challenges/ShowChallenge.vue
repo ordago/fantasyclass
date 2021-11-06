@@ -1123,7 +1123,6 @@ export default {
           challenge: this.challengeReactive.id,
         })
         .then((response) => {
-          console.log(response.data);
           this.embedCode = response.data;
           this.isMarkerModalActive = true;
         });
@@ -1360,7 +1359,6 @@ export default {
               challenge: this.challengeReactive.id,
             })
             .then((response) => {
-              console.log(response.data.challenges);
               this.emitGrandfather(
                 "updateChallenges",
                 response.data.challenges

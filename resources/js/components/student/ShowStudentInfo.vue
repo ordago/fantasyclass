@@ -510,7 +510,26 @@
                     "
                     class="item rounded"
                   />
-                  <div class="number-items">{{ item.pivot.count }}</div>
+                  <div class="number-items">
+                    <span>{{ item.pivot.count }}</span>
+                  </div>
+                  <div style="left: 5px" class="number-items">
+                    <span
+                      v-if="
+                        shop.allow_sell &&
+                        item.price &&
+                        shop.items &&
+                        shop.items != 'null'
+                      "
+                      @click="
+                        object = item;
+                        sellDialog = true;
+                      "
+                      v-tippy
+                      :content="trans.get('shop.sell')"
+                      ><i class="fas fa-sack"></i
+                    ></span>
+                  </div>
                 </div>
               </div>
               <div
@@ -709,7 +728,11 @@
           </div>
           <div v-else>
             <timeline timeline-theme="#555555">
-              <timeline-item icon-size="large" bg-color="#000" class="is-relative">
+              <timeline-item
+                icon-size="large"
+                bg-color="#000"
+                class="is-relative"
+              >
                 <a
                   v-if="!admin"
                   :href="'/classroom/show/' + classroom.code + '/challenges'"
@@ -717,7 +740,15 @@
                 >
                   {{ trans.get("challenges.show_all_summary") }}
                 </a>
-                <i @click="compact = !compact" :class="{'fa-layer-minus' : !compact, 'fa-layer-plus' : compact}" class="fad  fs-2" style="position: absolute; bottom: 3px; right: 2px"></i>
+                <i
+                  @click="compact = !compact"
+                  :class="{
+                    'fa-layer-minus': !compact,
+                    'fa-layer-plus': compact,
+                  }"
+                  class="fad fs-2"
+                  style="position: absolute; bottom: 3px; right: 2px"
+                ></i>
               </timeline-item>
               <timeline-item
                 icon-size="medium"
@@ -726,16 +757,27 @@
                 :key="'challenge-' + challenge.id"
               >
                 <i class="pt-1" :class="getIcon(challenge)" slot="others"></i>
-                <span class="tag is-dark p-2 mb-2 cursor-default"><i class="fas fa-hourglass-start m-1"></i>{{
-                  datetime(challenge.datetime)
-                }}</span>
+                <span class="tag is-dark p-2 mb-2 cursor-default"
+                  ><i class="fas fa-hourglass-start m-1"></i
+                  >{{ datetime(challenge.datetime) }}</span
+                >
                 <span v-if="challenge.dateend">
                   <i class="fas fa-arrow-right mx-1"></i>
-                  <span :class="{'is-danger' : isOverdue(challenge.dateend)}" v-tippy :content="timeLeft(challenge.dateend)" class="tag p-2 mb-2 cursor-default"><i class="fas fa-hourglass-end m-1"></i>{{
-                    datetime(challenge.dateend)
-                  }}</span>
+                  <span
+                    :class="{ 'is-danger': isOverdue(challenge.dateend) }"
+                    v-tippy
+                    :content="timeLeft(challenge.dateend)"
+                    class="tag p-2 mb-2 cursor-default"
+                    ><i class="fas fa-hourglass-end m-1"></i
+                    >{{ datetime(challenge.dateend) }}</span
+                  >
                 </span>
-                  <span v-if="compact">{{ challenge.title }} <span class="is-italic" v-if="challenge.description"><small>({{ challenge.description }})</small></span></span>
+                <span v-if="compact"
+                  >{{ challenge.title }}
+                  <span class="is-italic" v-if="challenge.description"
+                    ><small>({{ challenge.description }})</small></span
+                  ></span
+                >
                 <show-challenge
                   v-if="!compact"
                   class="has-text-left"
@@ -1778,6 +1820,68 @@
       :admin="0"
       :code="classroom.code"
     ></random-card>
+    <b-modal
+      :active.sync="sellDialog"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+      v-if="object"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <i class="fas fa-store mr-2"></i
+            >{{ trans.get("shop.sell_objects") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <img
+            width="128px"
+            src="/img/protected/merchant.png"
+            @contextmenu.prevent=""
+          />
+          <div>
+            <article class="message">
+              <div class="message-body">{{ trans.get('shop.merchant_message') }}</div>
+            </article>
+          </div>
+          <b-field :label="trans.get('shop.quantity')" class="mt-2">
+            <b-slider
+              class="mb-4"
+              v-model="quantity"
+              tooltip-always
+              :step="1"
+              :min="1"
+              :max="object.pivot.count"
+            >
+              <template v-for="index in object.pivot.count">
+                <b-slider-tick class="mt-2" :value="index" :key="'i' + index">{{
+                  index
+                }}</b-slider-tick>
+              </template>
+            </b-slider>
+          </b-field>
+          <div class="mt-5">
+            {{ trans.get('shop.price_u') }}: {{ (object.price * shop.sell_price) / 100 }}
+            <i class="fas fa-coins colored"></i>
+          </div>
+          <div class="mt-2">
+            Total: +{{ quantity * ((object.price * shop.sell_price) / 100) }}
+            <i class="fas fa-coins colored"></i>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="sellDialog = false">
+            {{ trans.get("general.close") }}
+          </button>
+          <button @click.prevent="sellObjects" class="button is-primary">
+            <i class="fas fa-sack"></i> {{ trans.get("shop.sell") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -1942,9 +2046,31 @@ export default {
       exchanging: 0,
       exchange: null,
       compact: false,
+      sellDialog: false,
+      object: null,
+      quantity: 1,
     };
   },
   methods: {
+    sellObjects() {
+      axios
+        .post("/classroom/" + this.classroom.code + "/shop/sell", {
+          item: this.object.id,
+          quantity: this.quantity,
+        })
+        .then((response) => {
+          if(response.data.type == 'success') {
+            this.student.gold = response.data.student.gold;
+            this.student.items = response.data.items;
+            this.sellDialog = false;
+            this.$forceUpdate();
+          }
+          this.$toast(response.data.message, {
+            type: response.data.type,
+          });
+
+        });
+    },
     datetime(date) {
       return Utils.getDate(date, false);
     },
@@ -2007,7 +2133,7 @@ export default {
       }
     },
     isOverdue(datetime) {
-        return moment(datetime).isBefore();
+      return moment(datetime).isBefore();
     },
     getTippy(text) {
       if (text)

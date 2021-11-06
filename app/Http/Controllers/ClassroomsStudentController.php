@@ -530,6 +530,55 @@ class ClassroomsStudentController extends Controller
         return $challenges;
     }
 
+    public function sellObjects($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class);
+        $data = request()->validate([
+            'item' => ['numeric', 'required'],
+            'quantity' => ['numeric', 'required'],
+        ]);
+        
+        $item = Item::where('id', $data['item'])->where('classroom_id', $class->id)->firstOrFail();
+        $studentItem = $student->items->where('id', $item->id)->first();
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        if(!settings()->get('allow_sell', false))
+            abort(403);
+
+        if ($studentItem) {
+
+            if ($data['quantity'] > $studentItem->pivot->count) {
+                return [
+                    "message" => " " . __('students.error'),
+                    "icon" => "sad-tear",
+                    "type" => "error"
+                ];
+            }
+            $newCount = $studentItem->pivot->count - $data['quantity'];
+            
+            if ($newCount <= 0) {
+                $student->items()->detach($item->id);
+            } else
+            $student->items()->updateExistingPivot($item->id, ['count' => $newCount]);
+
+            // $student->gold = $student->gold + ($item.price * settings()->get('sell_price', 75) * quantity);
+
+            $student->setProperty("gold", $item->price * settings()->get('sell_price', 75) / 100 * $data['quantity'], true, "shop", true);
+            
+            return [
+                "message" => " " . __('success_error.update_success'),
+                "icon" => "check",
+                "type" => "success",
+                "student" => $student->fresh(),
+                "items" => $student->fresh()->items,
+            ];
+            
+        }
+
+    }
     public function craft($code)
     {
 
@@ -671,6 +720,8 @@ class ClassroomsStudentController extends Controller
             'multiplier1' => (float) settings()->get('shop_multiplier_1', 1),
             'multiplier2' => (float) settings()->get('shop_multiplier_2', 1),
             'multiplier3' => (float) settings()->get('shop_multiplier_3', 1),
+            'allow_sell' => settings()->get('allow_sell', false) ? true : false,
+            'sell_price' => settings()->get('sell_price', 75),
         ];
 
         $challenges = $this::getChallenges($student, $class);

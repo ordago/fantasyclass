@@ -40,6 +40,7 @@
             :native-value="2"
             expanded
             type="is-info"
+            :disabled="groups.length < 1"
           >
             <i class="fas fa-users mr-1"></i> vs
             <i class="fas fa-dragon ml-1"></i>
@@ -1024,7 +1025,7 @@ export default {
               location.href = "/classroom/" + this.classroom.code;
             }, 1000);
           });
-      } else if(this.type == 2) {
+      } else if (this.type == 2) {
         axios
           .post("/classroom/" + this.classroom.code + "/group/reward", {
             xp: this.monsterSelected.reward_xp,
@@ -1113,7 +1114,9 @@ export default {
     answerClass(correct, next = true) {
       if (!correct) {
         this.student1.hp += parseInt(this.hp_loss);
+        this.student1.xp += parseInt(this.xp_loss);
         this.updateProp(this.student1.id, "hp", parseInt(this.hp_loss));
+        this.updateProp(this.student1.id, "xp", parseInt(this.xp_loss));
         if (this.max_fails != 0) this.classroom_max_fails -= 1;
         if (this.classroom_max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
@@ -1155,7 +1158,9 @@ export default {
     answerGroupMonster(correct, next = true) {
       if (!correct) {
         this.student1.hp += parseInt(this.hp_loss);
+        this.student1.xp += parseInt(this.xp_loss);
         this.updateProp(this.student1.id, "hp", parseInt(this.hp_loss));
+        this.updateProp(this.student1.id, "xp", parseInt(this.xp_loss));
         if (this.max_fails != 0) this.group1.max_fails -= 1;
         if (this.group1.max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
@@ -1289,7 +1294,7 @@ export default {
         gameOver = this.answerGroup(correct, next);
       } else if (this.type == 3) {
         gameOver = this.answerClass(correct, next);
-      } else if(this.type == 2) {
+      } else if (this.type == 2) {
         gameOver = this.answerGroupMonster(correct, next);
       }
       if (correct) {
@@ -1401,13 +1406,13 @@ export default {
         this.group1 = this.groups.pop();
         this.group1.max_fails = this.max_fails;
         this.group1.answers = [];
-        this.group1.students = _.shuffle(this.group1.students)
+        this.group1.students = _.shuffle(this.group1.students);
         this.selectStudent(1);
       } else {
         this.group2 = this.groups.pop();
         this.group2.max_fails = this.max_fails;
         this.group2.answers = [];
-        this.group2.students = _.shuffle(this.group2.students)
+        this.group2.students = _.shuffle(this.group2.students);
         this.selectStudent(2);
       }
     },

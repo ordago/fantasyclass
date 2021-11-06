@@ -59,4 +59,11 @@ return [
     
     'undead' => 'Permite revivir a los muertos',
 
+    'sell' => 'Vender',
+    'sell_objects' => 'Vender objetos',
+    'merchant_message' => '¿Qué puedo hacer hoy por ti?',
+    'quantity' => 'Cantidad',
+    'price_u' => 'Precio unidad',
+    'allow_sell' => 'Permite la venta de objetos (el porcentage de compra se configura en preferencias)',
+    
 ];

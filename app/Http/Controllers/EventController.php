@@ -62,7 +62,6 @@ class EventController extends Controller
 
         $class = Classroom::findOrFail($data['event']['classroom_id']);
         $this->authorize('update', $class);
-        dump($data['event']['type']);
         return Event::create([
             'title' => $data['event']['title'],
             'content' => $data['event']['content'],

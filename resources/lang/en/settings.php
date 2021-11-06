@@ -29,6 +29,7 @@ return [
     'transfer_fee' => 'Comission when students send money',
     'disable_your_adventure' => 'Disable "your adventure" section',
     'comission_collectibles' => 'Comission when exchange collectibles"',
+    'sell_price' => 'Percentage of purchase in base to the original value',
     
     'cards' => 'Max number of cards for students',
     'rare' => 'Rare',

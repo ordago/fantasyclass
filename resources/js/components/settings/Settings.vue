@@ -547,6 +547,19 @@
               {{ trans.get("settings.comission_collectibles") }}
             </div>
           </div>
+          <div class="columns">
+            <div class="column is-narrow">
+              <input
+                class="input is-narrow"
+                type="number"
+                v-model="settings.sell_price"
+              />
+            </div>
+            <div class="column is-flex align-items-center">
+              %
+              {{ trans.get("settings.sell_price") }}
+            </div>
+          </div>
         </div>
         <button class="button is-primary m-4" @click="saveEconomic()">
           <i class="fas fa-save mr-3"></i>
@@ -792,7 +805,6 @@ export default {
               public: 2,
             })
             .then((response) => {
-              // console.log(response.data)
               this.classroom.blogs.push(response.data);
               this.$forceUpdate();
               this.$toast(this.trans.get("success_error.add_success"), {
@@ -1115,6 +1127,12 @@ export default {
         prop: "comission_collectibles",
         action: "update",
         value: this.settings.comission_collectibles,
+      });
+      axios.patch("/classroom/" + this.classroom.code + "/setting", {
+        _method: "patch",
+        prop: "sell_price",
+        action: "update",
+        value: this.settings.sell_price,
       });
       this.$toast(this.trans.get("success_error.update_success"), {
         type: "success",

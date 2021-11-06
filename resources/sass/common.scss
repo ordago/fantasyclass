@@ -4,12 +4,12 @@
   }
 
   .rubric-student {
-    position: relative;
-    width: 20px;  
-    height: 20px;
-    top: 15px;
-    left: -5px;  
-    margin-right: 2px;
+      position: relative;
+      width: 20px;
+      height: 20px;
+      top: 15px;
+      left: -5px;
+      margin-right: 2px;
   }
 
   /* Events */
@@ -202,8 +202,9 @@
   }
 
   .cursor-pointer {
-      cursor: pointer!important;
+      cursor: pointer !important;
   }
+
   .cursor-move {
       cursor: grabbing;
   }
@@ -264,9 +265,10 @@
       display: -ms-flex;
       display: flex;
       cursor: url('/img/cursor.png'), auto;
-     
-    }
-    .inventory-item-dark {
+
+  }
+
+  .inventory-item-dark {
       background-image: url('/img/inv_item_dark.png');
   }
 
@@ -338,7 +340,23 @@
       background-image: url('/img/inv_item_hover.png');
   }
 
-  .number-items,
+  .number-items {
+      position: absolute;
+      bottom: 14px;
+      right: 4px;
+  }
+
+  .number-items span {
+      text-align: center;
+      font-size: 1em;
+      padding: 10px;
+      background-color: rgb(145, 113, 77);
+      background-color: rgba(145, 113, 77, 0.5);
+      border-bottom: none;
+      color: white;
+      font-weight: bold;
+  }
+
   .price-buy {
       position: absolute;
       padding: 10px;
@@ -346,13 +364,13 @@
       right: 4px;
       font-size: 1em;
       text-align: center;
-      border-topl-radius: 10px;
       background-color: rgb(145, 113, 77);
       background-color: rgba(145, 113, 77, 0.5);
       border-bottom: none;
       color: white;
       font-weight: bold;
   }
+
 
   .over {
       border-radius: 10px;
@@ -874,7 +892,7 @@
   }
 
   .personalBadge i {
-    text-shadow: 1px 0 0 #555, -1px 0 0 #555, 0 1px 0 #555, 0 -1px 0 #555, 1px 1px #555, -1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555;
+      text-shadow: 1px 0 0 #555, -1px 0 0 #555, 0 1px 0 #555, 0 -1px 0 #555, 1px 1px #555, -1px -1px 0 #555, 1px -1px 0 #555, -1px 1px 0 #555;
   }
 
   .rules {
@@ -1082,7 +1100,7 @@
   .progress {
       position: relative;
       clear: both;
-    //   border: 0.5px solid #aaa;
+      //   border: 0.5px solid #aaa;
   }
 
   .progress-bar[aria-valuenow="0.0"] {
@@ -1564,13 +1582,13 @@
       right: 19px;
   }
 
-//   .lang {
-//     padding: 1px;
-//     font-size: 2em;
-//     padding-bottom: 0;
-//   }
+  //   .lang {
+  //     padding: 1px;
+  //     font-size: 2em;
+  //     padding-bottom: 0;
+  //   }
 
-//   .lang,
+  //   .lang,
   .group-logo {
       position: absolute;
       width: 60px;

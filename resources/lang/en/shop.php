@@ -59,4 +59,11 @@ return [
 
     'undead' => 'Allow to be used by undead',
 
+    'sell' => 'Sell',
+    'sell_objects' => 'Sell objects',
+    'merchant_message' => 'What can I do for you today?',
+    'quantity' => 'Quantity',
+    'price_u' => 'Unity price',
+    'allow_sell' => 'Allow sell objects in shop (the percentage of purchase can be configured in preferences)',
+
 ];

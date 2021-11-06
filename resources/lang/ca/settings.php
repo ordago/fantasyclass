@@ -29,6 +29,7 @@ return [
     'transfer_fee' => 'Comissió al enviar diners entre estudiants',
     'disable_your_adventure' => 'Deshabilita la secció de "la teua aventura"',
     'comission_collectibles' => 'Comissió al intercanviar coleccionables"',
+    'sell_price' => 'Percentatge de compra respecte al valor original"',
     
     'cards' => 'Màxim de cartes per estudiant',
     'rare' => 'Rara',

@@ -20,6 +20,16 @@
             @input="toggleVisibility('show_recipes')"
             >{{ trans.get("shop.show_recipes") }}</b-switch
           >
+          <br />
+          <b-switch
+            :value="true"
+            type="is-info"
+            v-model="allow_sell"
+            passive-type="is-danger"
+            class="mt-2"
+            @input="toggleVisibility('allow_sell')"
+            >{{ trans.get("shop.allow_sell") }}</b-switch
+          >
         </div>
 
         <a
@@ -330,6 +340,7 @@ export default {
       equipment_2_visibility: this.config.equipment_2_visibility ? true : false,
       equipment_3_visibility: this.config.equipment_3_visibility ? true : false,
       show_recipes: this.config.show_recipes ? true : false,
+      allow_sell: this.config.allow_sell ? true : false,
       allow_buy_cards: this.config.allow_buy_cards ? true : false,
       forceUpdate: 0,
       nom: "",

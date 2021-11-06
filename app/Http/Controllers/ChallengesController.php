@@ -249,7 +249,6 @@ class ChallengesController extends Controller
         $challenge = Challenge::where('id', '=', $data['challenge'])->firstOrFail();
 
         foreach ($data['students'] as $std) {
-            // dump($std['challenges'][0]['pivot']);
             $newInfo = $std['challenges'][0]['pivot'];
             $student = Student::findOrFail($std['challenges'][0]['pivot']['student_id']);
             $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
@@ -266,7 +265,6 @@ class ChallengesController extends Controller
                     $mult = -1;
                 else
                     $mult = 1;
-                // dump($challenge_student->pivot->count);
             }
             // Update challenges in student
             if ($newInfo['count'] !== null) {
