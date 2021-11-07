@@ -34,7 +34,7 @@ return [
     'shop' => "Tienda",
     'settings' => 'Preferencias',
     'profile' => 'Perfil',
-    'behaviours' => 'Comportamentos',
+    'behaviours' => 'Comportamientos',
     'rewards' => 'Recompensas',
     'licenses' => 'Licencias',
     'noise' => 'Medidor de ruido',

@@ -64,6 +64,6 @@ return [
     'merchant_message' => '¿Qué puedo hacer hoy por ti?',
     'quantity' => 'Cantidad',
     'price_u' => 'Precio unidad',
-    'allow_sell' => 'Permite la venta de objetos (el porcentage de compra se configura en preferencias)',
+    'allow_sell' => 'Permite la venta de objetos (el porcentaje de compra se configura en preferencias)',
     
 ];
