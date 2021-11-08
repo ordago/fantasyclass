@@ -579,6 +579,8 @@ class ClassroomsController extends Controller
 
     public function getAllStudents($code)
     {
+
+        // $media->collection_name . "/" . $media->getAttribute('uuid') . "/"
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $allStudents = DB::table('students')
@@ -586,8 +588,13 @@ class ClassroomsController extends Controller
                 $join->on('students.classroom_user_id', '=', 'classroom_user.id')
                     ->where('classroom_user.classroom_id', '=', $class->id);
             })
-            ->selectRaw('students.name, students.id, students.avatar_url')
+            ->leftJoin('media', function ($join) use ($class) {
+                $join->on('students.id', '=', 'media.model_id')
+                    ->where('media.collection_name', '=', "avatar");
+            })
+            ->selectRaw('students.name, students.id, students.avatar_url, CONCAT("/storage/avatar/", media.uuid, "/avatar.png") as avatar')
             ->get();
+        
         return $allStudents;
     }
 

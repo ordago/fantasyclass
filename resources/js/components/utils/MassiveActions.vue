@@ -237,7 +237,7 @@
               class="student-massive p-3 is-flex has-all-centered rounded"
             >
               <img
-                :src="getAvatar(student.avatar_url)"
+                :src="getAvatar(student)"
                 width="64px"
                 class="mr-3 rounded"
               />
@@ -329,8 +329,11 @@ export default {
         });
       }, 100);
     },
-    getAvatar(url) {
-      if (url) return url;
+    getAvatar(student) {
+      if(student.avatar)
+        return student.avatar;
+      if(student.avatar_url)
+        return student.avatar_url;
       return "/img/no_avatar.png";
     },
     accept() {
