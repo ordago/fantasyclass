@@ -5,9 +5,13 @@ namespace App;
 use App\Http\Classes\Functions;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Arr;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Question extends Model
+class Question extends Model implements HasMedia
 {
+    use InteractsWithMedia;
+
     protected $fillable = [
         'name',
         'challenge_id',
@@ -16,6 +20,23 @@ class Question extends Model
         'options',
     ];
 
+    protected $appends = ['image'];
+
+    public function getImageAttribute() 
+    {  
+        $media = $this->getMedia('questions')->first();
+        if($media){
+            return $media->getUrl();
+        }
+        return null;  
+    }
+
+    public function registerMediaCollections() : void 
+    {
+        $this
+            ->addMediaCollection('questions')
+            ->singleFile();
+    }
 
     protected $casts = [
         'options' => 'array',
