@@ -5,6 +5,8 @@
         <i class="fas fa-question-circle"></i>
         {{ reactiveQuestion.name }}
       </h2>
+      <button class="button" @click="imgView = !imgView" v-if="reactiveQuestion.image">{{ trans.get('battles.show_hide_img') }}</button>
+      <img v-if="reactiveQuestion.image && imgView" width="100%" style="max-width: 800px;" :src="reactiveQuestion.image">
       <div v-if="$parent.$parent.answered && reactiveQuestion.type == 2">
         <div
           class="p-2 m-2 is-size-3 rounded border"
@@ -107,6 +109,7 @@ export default {
   },
   data: function () {
     return {
+      imgView: true,
       answer: "",
       correctAnswer: null,
       reactiveQuestion: null,

@@ -1,7 +1,15 @@
 # Changelog
-## v1.91 Beta (XX/11/2021)
+## v1.92 Beta (XX/11/2021)
 ### Added
-~ Sell objects in shop.
+- Upload images in questions.
+
+### Changed
+- Smaller countdown in battles.
+- Fixed image shown in massive actions.
+
+## v1.91 Beta (06/11/2021)
+### Added
+- Sell objects in shop.
 
 ### Changed
 - Fixes in battles.

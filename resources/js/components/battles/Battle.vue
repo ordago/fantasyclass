@@ -583,6 +583,13 @@
                 {{ trackS }}
               </option>
             </select>
+            <countdown v-if="!finished" @finish="finishCd" class="ml-2" ref="cd" :autoStart="false" :left-time="timer">
+              <!-- 101 seconds -->
+              <span class="button" :class="{ 'is-warning' : timeObj.ceil.s <= 15, 'is-danger' : timeObj.ceil.s <= 5 }" slot="process" slot-scope="{ timeObj }">
+                {{ timeObj.ceil.s }}
+              </span>
+              <span slot="finish" class="button is-danger"><i class="far fa-alarm-clock faa-wrench animated"></i></span>
+            </countdown>
           </p>
         </header>
         <section class="modal-card-body is-relative" id="confetti-bg">
@@ -691,18 +698,14 @@
                         {{ trans.get("battles.answer_ko") }}
                       </button>
                     </div>
-                    <button
+                    <!-- <button
                       class="button"
                       @click="showTimer = true"
                       v-if="!showTimer && !answered"
                     >
                       <i class="fad fa-stopwatch mr-1"></i>
                       {{ trans.get("battles.show_timer") }}
-                    </button>
-                    <count-down
-                      v-if="!answered && showTimer"
-                      :starttime="new Date(1, 1, 1, 0, 0, timer_default)"
-                    ></count-down>
+                    </button> -->
                   </div>
                   <div v-else-if="!finished">
                     <button class="button is-size-2" @click="nextQuestion">
@@ -719,18 +722,18 @@
                   "
                 >
                   <show-question :question="currentQuestion"></show-question>
-                  <button
+                  <!-- <button
                     class="button"
                     @click="showTimer = true"
                     v-if="!showTimer && !answered"
                   >
                     <i class="fad fa-stopwatch mr-1"></i>
                     {{ trans.get("battles.show_timer") }}
-                  </button>
-                  <count-down
+                  </button> -->
+                  <!-- <count-down
                     v-if="!answered && showTimer"
                     :starttime="new Date(1, 1, 1, 0, 0, timer_default)"
-                  ></count-down>
+                  ></count-down> -->
                 </div>
                 <div v-if="finished" class="has-text-centered">
                   <h1
@@ -883,9 +886,10 @@
 import confetti from "canvas-confetti";
 import ShowQuestion from "./ShowQuestion.vue";
 import CountDown from "../utils/CountDown.vue";
+import VueAwesomeCountdown from "vue-awesome-countdown";
 
 export default {
-  components: { ShowQuestion, CountDown },
+  components: { ShowQuestion, CountDown, VueAwesomeCountdown },
   props: ["classroom"],
   computed: {
     cantStart() {
@@ -915,6 +919,7 @@ export default {
       isLoading: false,
       audioOK: new Audio("/sound/clap.mp3"),
       audioKO: new Audio("/sound/wheel-bad.mp3"),
+      audioTimer: new Audio("/sound/beep.mp3"),
       groups: [],
       activeStep: 0,
       type: 0,
@@ -952,6 +957,7 @@ export default {
       winnerElem: null,
       showTimer: false,
       timer_default: 30,
+      timer: 30000,
       monsterSelected: null,
       classroom_max_fails: 0,
       classroom_answers: [],
@@ -1286,6 +1292,7 @@ export default {
       return false;
     },
     answer(correct, next = true) {
+      this.$refs.cd.pauseCountdown();
       this.answered = true;
       let gameOver;
       if (this.type == 0) {
@@ -1340,6 +1347,7 @@ export default {
       axios.post("/classroom/students/update", options);
     },
     start() {
+      this.timer = this.timer_default * 1000;
       if (this.selectedBank) {
         this.classroom.question_banks.forEach((element) => {
           if (element.id == this.selectedBank.id) {
@@ -1352,21 +1360,35 @@ export default {
       if (this.type == 3) this.classroom_max_fails = this.max_fails;
       this.isBattleActive = true;
     },
+    finishCd() {
+      this.audioTimer.play();
+    },
+    resetCd() {
+      if(this.started && !this.finished) {
+        this.timer = this.timer_default * 1000;
+        this.$refs.cd.startCountdown(true);
+      }
+    },
     startBattle() {
       if (this.type != 3 && this.type != 2) {
         Math.random() < 0.5 ? (this.turn = 0) : (this.turn = 1);
       }
       this.started = true;
+      this.resetCd();
       if (this.selectedBank) this.currentQuestion = this.questions.pop();
     },
     skipQuestion() {
+      this.resetCd();
+
       if (this.selectedBank && !this.questions.length) this.finished = true;
       this.currentQuestion = this.questions.pop();
       this.$forceUpdate();
       return this.currentQuestion;
     },
     nextQuestion() {
-      this.showTimer = false;
+      this.timer = this.timer_default * 1000;
+      this.$refs.cd.startCountdown(true);
+
       if (this.selectedBank && !this.questions.length) {
         this.finished = true;
         this.checkWinner();
@@ -1402,6 +1424,8 @@ export default {
       this.move2 = false;
     },
     selectGroup(slot) {
+      this.resetCd();
+
       if (slot == 1) {
         this.group1 = this.groups.pop();
         this.group1.max_fails = this.max_fails;
@@ -1417,6 +1441,8 @@ export default {
       }
     },
     selectStudent(slot) {
+      this.resetCd();
+
       setTimeout(this.reset, 1000);
       if (this.type == 0 || this.type == 3) {
         if (slot == 1) {

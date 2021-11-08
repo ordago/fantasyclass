@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use App\Exports\Export;
+use App\Question;
 use App\QuestionBank;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -35,6 +36,25 @@ class QuestionBankController extends Controller
             'classroom_id' => $class->id,
         ]);
         return $class->questionBanks;
+    }
+
+    public function addImage()
+    {
+        $data = request()->validate([
+            'question_id' => ['numeric', 'required'],
+        ]);
+
+        $question = Question::findOrFail($data['question_id']);
+        $class = Classroom::find($question->questionBank->classroom_id);
+        $this->authorize('update', $class);
+
+        if (request()->image) {
+            $question->addMedia(request()->file('image'))
+                ->toMediaCollection('questions');
+        } else {
+            $question->clearMediaCollection('questions');
+        }
+        return $question->fresh();
     }
 
     public function destroy($id)

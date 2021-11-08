@@ -41,5 +41,6 @@ return [
     'monster_empty' => 'No tienes monstruos, crea uno para jugar en esta sección',
     'monster_hp_loss' => 'Pérdida de puntos de vida del monstruo',
     'defeat' => 'os ha vencido!',
-    '' => '',
+    'show_hide_img' => 'Muestra / esconde imagen',
+
 ];
