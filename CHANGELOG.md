@@ -1,5 +1,5 @@
 # Changelog
-## v1.92 Beta (XX/11/2021)
+## v1.92 Beta (09/11/2021)
 ### Added
 - Upload images in questions.
 
