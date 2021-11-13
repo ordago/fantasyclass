@@ -42,4 +42,5 @@ return [
     'monster_hp_loss' => 'Pèrdua de punts de vida del monstre',
     'defeat' => 'us ha vençut!',
     'show_hide_img' => 'Mostra / amaga imatge',
+    'auto_start' => 'Comença cronòmetre automàticament',
 ];

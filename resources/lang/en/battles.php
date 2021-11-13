@@ -42,5 +42,6 @@ return [
     'monster_hp_loss' => 'Monster HP loss',
     'defeat' => 'has defeated you!',
     'show_hide_img' => 'Show / hide image',
+    'auto_start' => 'Start countdown automatically',
 
 ];

@@ -215,6 +215,9 @@ https://github.com/kgrandemange/vue-flip
 Timeline
 https://github.com/luyilin/vue-cute-timeline
 
+Countdown
+https://vac.js.org/
+
 ## 3rd party Licenses
 
 - All sprites in "public/img/pets" folder are from habitica (https://habitica.com) with no changes:

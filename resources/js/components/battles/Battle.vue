@@ -414,6 +414,11 @@
             </div>
           </div>
         </div>
+        <b-field>
+          <b-switch v-model="autoStart" :true-value="true" :false-value="false">
+            {{ trans.get("battles.auto_start") }}
+          </b-switch>
+        </b-field>
       </b-step-item>
 
       <b-step-item
@@ -583,13 +588,6 @@
                 {{ trackS }}
               </option>
             </select>
-            <countdown v-if="!finished" @finish="finishCd" class="ml-2" ref="cd" :autoStart="false" :left-time="timer">
-              <!-- 101 seconds -->
-              <span class="button" :class="{ 'is-warning' : timeObj.ceil.s <= 15, 'is-danger' : timeObj.ceil.s <= 5 }" slot="process" slot-scope="{ timeObj }">
-                {{ timeObj.ceil.s }}
-              </span>
-              <span slot="finish" class="button is-danger"><i class="far fa-alarm-clock faa-wrench animated"></i></span>
-            </countdown>
           </p>
         </header>
         <section class="modal-card-body is-relative" id="confetti-bg">
@@ -666,39 +664,85 @@
                 </button>
               </div>
             </div>
-            <div class="column is-flex has-all-centered">
-              <button
-                class="button is-primary is-size-2"
-                v-if="!started"
-                :disabled="cantStart"
-                @click="startBattle"
-              >
-                <i class="fas fa-swords colored mr-2 faa-pulse animated"></i
-                >{{ trans.get("battles.lets_start") }}
-              </button>
-              <div v-else class="w-100">
-                <div
-                  v-if="!selectedBank"
-                  class="is-flex is-flex-direction-column has-all-centered"
-                >
-                  <div
-                    v-if="!answered && !finished"
-                    class="is-flex is-flex-direction-column has-all-centered"
+            <div class="column is-flex has-text-centered">
+              <div class="columns w-100" style="flex-direction: column">
+                <div class="column is-narrow">
+                  <countdown
+                    v-if="!finished"
+                    @finish="finishCd"
+                    class="ml-2"
+                    ref="cd"
+                    :autoStart="false"
+                    :left-time="timer"
                   >
-                    <h1 class="is-size-2">
-                      {{ trans.get("battles.tell_next") }}
-                    </h1>
-                    <div class="buttons my-2 has-text-centered">
-                      <button class="button is-success" @click="answer(true)">
-                        <i class="fad fa-thumbs-up"></i>
-                        {{ trans.get("battles.answer_ok") }}
+                    <span slot="process" slot-scope="{ timeObj }">
+                      <span
+                        class="button fs-2"
+                        :class="{
+                          'is-warning': timeObj.ceil.s <= 15,
+                          'is-danger': timeObj.ceil.s <= 5,
+                        }"
+                      >
+                        {{ timeObj.ceil.s }}
+                      </span>
+                      <button class="button is-info fs-2" @click="toggleCd">
+                        <i
+                          class="fas"
+                          :class="{
+                            'fa-play': isCountDownPaused,
+                            'fa-pause': !isCountDownPaused,
+                          }"
+                        ></i>
                       </button>
-                      <button class="button is-danger" @click="answer(false)">
-                        <i class="fad fa-thumbs-down"></i>
-                        {{ trans.get("battles.answer_ko") }}
-                      </button>
-                    </div>
-                    <!-- <button
+                    </span>
+
+                    <span slot="finish" class="button fs-2 is-danger"
+                      ><i class="far fa-alarm-clock faa-wrench animated"></i
+                    ></span>
+                  </countdown>
+                </div>
+                <div class="column has-all-centered">
+                  <button
+                    class="button is-primary is-size-2"
+                    v-if="!started"
+                    :disabled="cantStart"
+                    @click="startBattle"
+                  >
+                    <i class="fas fa-swords colored mr-2 faa-pulse animated"></i
+                    >{{ trans.get("battles.lets_start") }}
+                  </button>
+                  <div v-else class="w-100">
+                    <div
+                      v-if="!selectedBank"
+                      class="is-flex is-flex-direction-column has-all-centered"
+                    >
+                      <div
+                        v-if="!answered && !finished"
+                        class="
+                          is-flex is-flex-direction-column
+                          has-all-centered
+                        "
+                      >
+                        <h1 class="is-size-2">
+                          {{ trans.get("battles.tell_next") }}
+                        </h1>
+                        <div class="buttons my-2 has-text-centered">
+                          <button
+                            class="button is-success"
+                            @click="answer(true)"
+                          >
+                            <i class="fad fa-thumbs-up"></i>
+                            {{ trans.get("battles.answer_ok") }}
+                          </button>
+                          <button
+                            class="button is-danger"
+                            @click="answer(false)"
+                          >
+                            <i class="fad fa-thumbs-down"></i>
+                            {{ trans.get("battles.answer_ko") }}
+                          </button>
+                        </div>
+                        <!-- <button
                       class="button"
                       @click="showTimer = true"
                       v-if="!showTimer && !answered"
@@ -706,23 +750,25 @@
                       <i class="fad fa-stopwatch mr-1"></i>
                       {{ trans.get("battles.show_timer") }}
                     </button> -->
-                  </div>
-                  <div v-else-if="!finished">
-                    <button class="button is-size-2" @click="nextQuestion">
-                      {{ trans.get("battles.next") }}
-                    </button>
-                  </div>
-                </div>
-                <div
-                  v-else-if="!finished"
-                  class="
-                    w-100
-                    has-all-centered
-                    is-flex is-flex-direction-column
-                  "
-                >
-                  <show-question :question="currentQuestion"></show-question>
-                  <!-- <button
+                      </div>
+                      <div v-else-if="!finished">
+                        <button class="button is-size-2" @click="nextQuestion">
+                          {{ trans.get("battles.next") }}
+                        </button>
+                      </div>
+                    </div>
+                    <div
+                      v-else-if="!finished"
+                      class="
+                        w-100
+                        has-all-centered
+                        is-flex is-flex-direction-column
+                      "
+                    >
+                      <show-question
+                        :question="currentQuestion"
+                      ></show-question>
+                      <!-- <button
                     class="button"
                     @click="showTimer = true"
                     v-if="!showTimer && !answered"
@@ -730,49 +776,57 @@
                     <i class="fad fa-stopwatch mr-1"></i>
                     {{ trans.get("battles.show_timer") }}
                   </button> -->
-                  <!-- <count-down
+                      <!-- <count-down
                     v-if="!answered && showTimer"
                     :starttime="new Date(1, 1, 1, 0, 0, timer_default)"
                   ></count-down> -->
-                </div>
-                <div v-if="finished" class="has-text-centered">
-                  <h1
-                    class="
-                      is-size-1
-                      animate__animated animate__rubberBand animate__infinite
-                    "
-                    v-if="
-                      (type != 3 && type != 2) ||
-                      ((type == 3 || type == 2) && monsterSelected.hp == 0)
-                    "
-                  >
-                    {{ trans.get("battles.well_done") }}
-                    <span v-if="winnerElem">{{ winnerElem.name }}</span>
-                  </h1>
-                  <div class="is-size-3" v-else>
-                    {{ monsterSelected.name }} {{ trans.get("battles.defeat") }}
+                    </div>
+                    <div v-if="finished" class="has-text-centered">
+                      <h1
+                        class="
+                          is-size-1
+                          animate__animated
+                          animate__rubberBand
+                          animate__infinite
+                        "
+                        v-if="
+                          (type != 3 && type != 2) ||
+                          ((type == 3 || type == 2) && monsterSelected.hp == 0)
+                        "
+                      >
+                        {{ trans.get("battles.well_done") }}
+                        <span v-if="winnerElem">{{ winnerElem.name }}</span>
+                      </h1>
+                      <div class="is-size-3" v-else>
+                        {{ monsterSelected.name }}
+                        {{ trans.get("battles.defeat") }}
+                      </div>
+                      <button
+                        class="button is-success mt-2"
+                        v-if="winnerElem"
+                        @click="sendReward"
+                        :class="{ 'is-loading': isLoading }"
+                      >
+                        {{ trans.get("battles.give_reward") }}
+                        {{ winnerElem.name }}
+                      </button>
+                      <button
+                        class="button is-success mt-2"
+                        v-if="
+                          (type == 3 || type == 2) && monsterSelected.hp == 0
+                        "
+                        @click="sendReward"
+                        :class="{ 'is-loading': isLoading }"
+                      >
+                        {{ trans.get("battles.give_reward") }}
+                      </button>
+                      <a
+                        class="button mt-2"
+                        :href="'/classroom/' + classroom.code"
+                        >{{ trans.get("battles.go_back") }}</a
+                      >
+                    </div>
                   </div>
-                  <button
-                    class="button is-success mt-2"
-                    v-if="winnerElem"
-                    @click="sendReward"
-                    :class="{ 'is-loading': isLoading }"
-                  >
-                    {{ trans.get("battles.give_reward") }} {{ winnerElem.name }}
-                  </button>
-                  <button
-                    class="button is-success mt-2"
-                    v-if="(type == 3 || type == 2) && monsterSelected.hp == 0"
-                    @click="sendReward"
-                    :class="{ 'is-loading': isLoading }"
-                  >
-                    {{ trans.get("battles.give_reward") }}
-                  </button>
-                  <a
-                    class="button mt-2"
-                    :href="'/classroom/' + classroom.code"
-                    >{{ trans.get("battles.go_back") }}</a
-                  >
                 </div>
               </div>
             </div>
@@ -947,6 +1001,7 @@ export default {
       move2: false,
       turn: 0,
       started: false,
+      isCountDownPaused: true,
       finished: false,
       lastAnswer1: false,
       lastAnswer2: false,
@@ -955,7 +1010,7 @@ export default {
       answered: false,
       max_fails: 3,
       winnerElem: null,
-      showTimer: false,
+      autoStart: false,
       timer_default: 30,
       timer: 30000,
       monsterSelected: null,
@@ -1292,7 +1347,7 @@ export default {
       return false;
     },
     answer(correct, next = true) {
-      this.$refs.cd.pauseCountdown();
+      this.pauseCd();
       this.answered = true;
       let gameOver;
       if (this.type == 0) {
@@ -1340,7 +1395,6 @@ export default {
         }
         this.audioKO.play();
       }
-      this.showTimer = false;
     },
     updateProp: function (id, prop, value) {
       let options = { id: id, prop: prop, value: value, type: "battle" };
@@ -1360,14 +1414,33 @@ export default {
       if (this.type == 3) this.classroom_max_fails = this.max_fails;
       this.isBattleActive = true;
     },
+
     finishCd() {
       this.audioTimer.play();
     },
     resetCd() {
-      if(this.started && !this.finished) {
+      if (this.started && !this.finished) {
         this.timer = this.timer_default * 1000;
-        this.$refs.cd.startCountdown(true);
       }
+      this.$refs.cd.startCountdown(true);
+      if (!this.autoStart || !this.started) {
+        this.pauseCd();
+        this.isCountDownPaused = true;
+      } else this.isCountDownPaused = false;
+    },
+    toggleCd() {
+      if (this.isCountDownPaused) this.playCd();
+      else this.pauseCd();
+    },
+    playCd() {
+      this.$refs.cd.startCountdown();
+      this.isCountDownPaused = false;
+      this.$forceUpdate();
+    },
+    pauseCd() {
+      this.$refs.cd.pauseCountdown();
+      this.isCountDownPaused = true;
+      this.$forceUpdate();
     },
     startBattle() {
       if (this.type != 3 && this.type != 2) {
@@ -1386,9 +1459,7 @@ export default {
       return this.currentQuestion;
     },
     nextQuestion() {
-      this.timer = this.timer_default * 1000;
-      this.$refs.cd.startCountdown(true);
-
+      this.resetCd();
       if (this.selectedBank && !this.questions.length) {
         this.finished = true;
         this.checkWinner();
