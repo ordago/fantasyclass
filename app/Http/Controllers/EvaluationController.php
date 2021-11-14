@@ -205,17 +205,18 @@ class EvaluationController extends Controller
                     ->where('from_student_id', $fromStudent->id)
                     ->selectRaw('rubric_row_student.id')
                     ->first();
-                if ($find) {
-                    abort(403);
+                    if ($find) {
+                        abort(403);
+                    }
+                    $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'], 'from_student_id' => $fromStudent->id)));
                 }
-                $student->rows()->attach(array($row['0'] => array('rubric_row_item_id' => $row['1'], 'evaluable_id' => $data['evaluable'], 'from_student_id' => $fromStudent->id)));
-            }
-            $student->grades()->attach(array($data['evaluable'] => array('grade' => $data['grade'], 'from_student_id' => $fromStudent->id)));
-        } else {
-            $this->authorize('update', $class);
-            foreach ($data['rows'] as $row) {
-                $find = DB::table('rubric_row_student')
+                $student->grades()->attach(array($data['evaluable'] => array('grade' => $data['grade'], 'from_student_id' => $fromStudent->id)));
+            } else {
+                $this->authorize('update', $class);
+                foreach ($data['rows'] as $row) {
+                    $find = DB::table('rubric_row_student')
                     ->where('rubric_row_id', $row['0'])
+                    ->where('student_id', $student->id)
                     ->where('evaluable_id', $data['evaluable'])
                     ->whereNull('from_student_id')
                     ->selectRaw('rubric_row_student.id')
