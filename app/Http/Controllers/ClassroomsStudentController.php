@@ -1318,9 +1318,15 @@ class ClassroomsStudentController extends Controller
 
         $studentCollection = $student->fresh()->collections->where('id', $collection->id)->first();
 
+        if ($studentCollection) {
+            if($collection->max != 0 && $studentCollection->pivot->count >= $collection->max)
+            abort(403);
+        }
+
         if ($studentCollection)
             $count = $studentCollection->pivot->count + 1;
         else $count = 1;
+    
 
         $student->collections()->sync([$collection->id => ['count' => $count]], false);
 

@@ -2,6 +2,7 @@
 ## v1.93 Beta (14/11/2021)
 ### Changed
 - Better countdown in battles and toggle for automatic / manual.
+- Some fixes.
 
 ## v1.92 Beta (09/11/2021)
 ### Added

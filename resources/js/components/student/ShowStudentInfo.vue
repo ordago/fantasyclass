@@ -960,8 +960,8 @@
                   v-if="
                     !admin &&
                     checkReward(collection) &&
-                    (getCollectionNumber(collection.id) === 0 ||
-                      collection.max != getCollectionNumber(collection.id))
+                    (collection.max == 0 ||
+                      collection.max > getCollectionNumber(collection.id))
                   "
                   >{{ trans.get("collections.claim_reward") }}</span
                 >
@@ -971,8 +971,8 @@
                   v-if="
                     settings.buy_collectionable == 1 &&
                     !admin &&
-                    (getCollectionNumber(collection.id) === 0 ||
-                      collection.max != getCollectionNumber(collection.id))
+                    (collection.max == 0 ||
+                      collection.max > getCollectionNumber(collection.id))
                   "
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(collection.id)"
@@ -2563,8 +2563,8 @@ export default {
     },
     getStyle: function (collectionable, collection) {
       if (
-        this.getCollectionNumber(collection.id) != 0 &&
-        collection.max == this.getCollectionNumber(collection.id)
+        collection.max != 0 &&
+        collection.max <= this.getCollectionNumber(collection.id)
       )
         return "";
       var index = this.student.collectionables.findIndex(function (item, i) {
