@@ -2170,6 +2170,7 @@ export default {
             count = element.pivot.count;
           }
         });
+      console.log(count)
       return count;
     },
     claimReward(collection) {
@@ -2199,10 +2200,11 @@ export default {
     checkReward(collection) {
       let count = 0;
       this.student.collectionables.forEach((element) => {
+        console.log(element)
         if (element.collection_id == collection.id) count++;
       });
       console.log(collection.name + " total: " + collection.collectionables.length + ", have: " + count)
-      if (collection.collectionables.length == count) return true;
+      if (collection.collectionables.length <= count) return true;
       return false;
     },
     getIcon(challenge) {
