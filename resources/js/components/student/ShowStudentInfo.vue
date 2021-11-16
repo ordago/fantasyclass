@@ -598,8 +598,9 @@
                   <div
                     class="price-buy rounded not-hover"
                     v-if="eq1Json || eq2Json || eq3Json || isInGear(gear.id)"
+                    @click="showEquipment(gear)"
                   >
-                    <i class="fas fa-plus"></i>
+                    <i class="fas fa-plus"></i> __Comprar
                   </div>
                   <div
                     class="w-100 shop-sub-item p-1"
@@ -1815,6 +1816,66 @@
         </footer>
       </div>
     </b-modal>
+    <b-modal
+      :active.sync="showShopEquipment"
+      has-modal-card
+      v-if="gearShop"
+      trap-focus
+      :full-screen="true"
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            {{ trans.get("menu.shop") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <div v-for="(i, index) in getProperties()" :key="index">
+            <div
+              v-for="itemStore in filterEquipment(i, gearShop.type)"
+              v-bind:key="'store-' + itemStore.id"
+              style="min-width: 200px"
+              class="inventory-item inv-item-armor m-1 p-3"
+              v-bind:class="{
+                offset0: index == 0,
+                'inv-item-armor-bronce': index == 1,
+                'inv-item-armor-silver': index == 2,
+                'inv-item-armor-gold': index == 3,
+              }"
+            >
+              <img
+                v-tippy
+                :content="propertiesMessage(itemStore)"
+                :src="'/img/character/' + itemStore.src"
+                :alt="itemStore.id"
+                class="item"
+                @contextmenu.prevent=""
+              />
+              <div
+                class="price-buy rounded"
+                v-if="!admin"
+                @click="buyEquipment(gearShop, itemStore)"
+              >
+                {{ calculate(itemStore) }}
+                <i class="fas fa-coins colored"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button
+            class="button"
+            type="button"
+            @click="showShopEquipment = false"
+          >
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
+    </b-modal>
     <random-card
       :card="randomCard"
       :admin="0"
@@ -1844,7 +1905,9 @@
           />
           <div>
             <article class="message">
-              <div class="message-body">{{ trans.get('shop.merchant_message') }}</div>
+              <div class="message-body">
+                {{ trans.get("shop.merchant_message") }}
+              </div>
             </article>
           </div>
           <b-field :label="trans.get('shop.quantity')" class="mt-2">
@@ -1864,7 +1927,8 @@
             </b-slider>
           </b-field>
           <div class="mt-5">
-            {{ trans.get('shop.price_u') }}: {{ (object.price * shop.sell_price) / 100 }}
+            {{ trans.get("shop.price_u") }}:
+            {{ (object.price * shop.sell_price) / 100 }}
             <i class="fas fa-coins colored"></i>
           </div>
           <div class="mt-2">
@@ -2049,9 +2113,15 @@ export default {
       sellDialog: false,
       object: null,
       quantity: 1,
+      showShopEquipment: false,
+      gearShop: null,
     };
   },
   methods: {
+    showEquipment(gear) {
+      this.gearShop = gear;
+      this.showShopEquipment = true;
+    },
     sellObjects() {
       axios
         .post("/classroom/" + this.classroom.code + "/shop/sell", {
@@ -2059,7 +2129,7 @@ export default {
           quantity: this.quantity,
         })
         .then((response) => {
-          if(response.data.type == 'success') {
+          if (response.data.type == "success") {
             this.student.gold = response.data.student.gold;
             this.student.items = response.data.items;
             this.sellDialog = false;
@@ -2068,7 +2138,6 @@ export default {
           this.$toast(response.data.message, {
             type: response.data.type,
           });
-
         });
     },
     datetime(date) {
@@ -3150,6 +3219,7 @@ export default {
               this.$toast(response.data.message, { type: response.data.type });
 
               if (response.data.type == "success") {
+                this.showShopEquipment = false;
                 this.student.equipment = response.data.equipment;
                 this.student.gold = this.student.gold - this.calculate(newItem);
                 oldItem.src = newItem.src;

@@ -1,4 +1,8 @@
 # Changelog
+## v1.94 Beta (XX/11/2021)
+### Changed
+- Shop management.
+
 ## v1.93 Beta (14/11/2021)
 ### Changed
 - Better countdown in battles and toggle for automatic / manual.
