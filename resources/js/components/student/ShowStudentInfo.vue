@@ -2201,6 +2201,7 @@ export default {
       this.student.collectionables.forEach((element) => {
         if (element.collection_id == collection.id) count++;
       });
+      console.log(collection.name + " total: " + collection.collectionables.length + ", have: " + count)
       if (collection.collectionables.length == count) return true;
       return false;
     },
