@@ -452,7 +452,8 @@ Route::group(['middleware' => 'language'], function () {
     Route::get('/mobile', 'MiscellanyController@mobile');
     
     // Demo
-    Route::get('/demo', 'MiscellanyController@demo');
+    Route::get('/demo', function () { return redirect('/'); });
+    // Route::get('/demo', 'MiscellanyController@demo');
 
     // Tutorial
     Route::get('/tutorial', function () {return redirect()->away(env('TUTORIAL'));});
