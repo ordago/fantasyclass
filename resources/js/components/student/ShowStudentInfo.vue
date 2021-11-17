@@ -371,7 +371,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    offset0: gear.offset == 0,
+                    'offset0': gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -396,7 +396,7 @@
                         v-bind:key="'store-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          offset0: index == 0,
+                          'offset0': index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -563,7 +563,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    offset0: gear.offset == 0,
+                    'offset0': gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -596,13 +596,13 @@
                     {{ gear.pivot.durability }} %
                   </div>
                   <div
-                    class="price-buy rounded not-hover"
+                    class="price-buy rounded"
                     v-if="eq1Json || eq2Json || eq3Json || isInGear(gear.id)"
                     @click="showEquipment(gear)"
                   >
-                    <i class="fas fa-plus"></i> __Comprar
+                    <i class="fas fa-plus"></i> {{ trans.get("shop.upgrade") }}
                   </div>
-                  <div
+                  <!-- <div
                     class="w-100 shop-sub-item p-1"
                     style="position: absolute; top: 100px; left: 0"
                   >
@@ -639,7 +639,7 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -1833,34 +1833,75 @@
           </p>
         </header>
         <section class="modal-card-body">
-          <div v-for="(i, index) in getProperties()" :key="index">
-            <div
-              v-for="itemStore in filterEquipment(i, gearShop.type)"
-              v-bind:key="'store-' + itemStore.id"
+          <div class="columns">
+            <div class="column is-narrow">
+              <img
+                width="128px"
+                src="/img/protected/merchant.png"
+                @contextmenu.prevent=""
+              />
+            </div>
+            <div class="column is-narrow">
+              <article class="message">
+                <div class="message-body">
+                  {{ trans.get("shop.merchant_message") }}
+                </div>
+              </article>
+            </div>
+          </div>
+          <div
+            style="background-color: whitesmoke; flex-wrap: wrap"
+            class="p-2 is-flex"
+          >
+            <!-- <div
               style="min-width: 200px"
               class="inventory-item inv-item-armor m-1 p-3"
               v-bind:class="{
-                offset0: index == 0,
                 'inv-item-armor-bronce': index == 1,
                 'inv-item-armor-silver': index == 2,
                 'inv-item-armor-gold': index == 3,
               }"
             >
-              <img
+              <!-- <img
                 v-tippy
                 :content="propertiesMessage(itemStore)"
                 :src="'/img/character/' + itemStore.src"
                 :alt="itemStore.id"
                 class="item"
                 @contextmenu.prevent=""
-              />
+              /> -->
+            <!-- </div> -->
+
+            <div v-for="(i, index) in getProperties()" :key="'index3-' + index">
               <div
-                class="price-buy rounded"
-                v-if="!admin"
-                @click="buyEquipment(gearShop, itemStore)"
+                v-for="itemStore in filterEquipment(i, gearShop.type)"
+                v-bind:key="'store-' + itemStore.id"
+                style="min-width: 200px"
+                class="inventory-item inv-item-armor m-1 p-3"
+                v-bind:class="{
+                  'hidden': !notInOffset0(itemStore.id),
+                  'offset0': index == 0,
+                  'inv-item-armor-bronce': index == 1,
+                  'inv-item-armor-silver': index == 2,
+                  'inv-item-armor-gold': index == 3,
+                }"
               >
-                {{ calculate(itemStore) }}
-                <i class="fas fa-coins colored"></i>
+                <img
+                  v-tippy
+                  :content="propertiesMessage(itemStore)"
+                  :src="'/img/character/' + itemStore.src"
+                  :alt="itemStore.id"
+                  class="item"
+                  @contextmenu.prevent=""
+                />
+                <div
+                  class="price-buy rounded"
+                  v-if="!admin"
+                  @click="buyEquipment(gearShop, itemStore)"
+                >
+                  {{ calculate(itemStore) }}
+                  <i class="fas fa-coins colored"></i>
+                </div>
               </div>
             </div>
           </div>
@@ -2239,7 +2280,6 @@ export default {
             count = element.pivot.count;
           }
         });
-      console.log(count)
       return count;
     },
     claimReward(collection) {
@@ -2574,7 +2614,6 @@ export default {
       location.href = "/classroom/" + this.classroom.code + "/student/" + id;
     },
     nextStudent(next = true) {
-      // console.log(this.orderedStudents)
       const currentStudent = (element) => element.id == this.student.id;
       let nextId;
       let index;

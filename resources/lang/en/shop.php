@@ -65,5 +65,6 @@ return [
     'quantity' => 'Quantity',
     'price_u' => 'Unity price',
     'allow_sell' => 'Allow sell objects in shop (the percentage of purchase can be configured in preferences)',
+    'upgrade' => 'Upgrade',
 
 ];

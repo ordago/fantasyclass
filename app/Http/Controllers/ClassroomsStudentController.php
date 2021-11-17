@@ -1746,7 +1746,7 @@ class ClassroomsStudentController extends Controller
             ->first();
 
         // Avoid user mistakes
-        if ($old->type != $new->type || ($new->offset > 0 && $old->offset >= $new->offset) || array_search($student->character_id, json_decode($new->character_id)) === false || $student->equipment->contains($new->id)) {
+        if ($old->id == $new->id || $old->type != $new->type || $old->offset > $new->offset || array_search($student->character_id, json_decode($new->character_id)) === false || $student->equipment->contains($new->id)) {
             return [
                 "message" => " " . __('success_error.shop_failed_exists'),
                 "icon" => "sad-tear",

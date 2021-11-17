@@ -65,5 +65,6 @@ return [
     'quantity' => 'Cantidad',
     'price_u' => 'Precio unidad',
     'allow_sell' => 'Permite la venta de objetos (el porcentaje de compra se configura en preferencias)',
-    
+    'upgrade' => 'Mejorar',
+
 ];
