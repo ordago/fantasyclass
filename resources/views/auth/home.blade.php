@@ -63,7 +63,7 @@
                         <a class="button is-link is-light" href="/register">
                             <i class="fad fa-user-plus mr-2"></i> {{ __('auth.register') }}
                         </a>
-                        <a class="button is-success is-light" href="/demo">
+                        <a class="button is-success is-light" disabled>
                             <i class="fad fa-wand-magic mr-2"></i> {{ __('demo') }}
                         </a>
                     </h1>
