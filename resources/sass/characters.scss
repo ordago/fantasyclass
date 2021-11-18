@@ -2242,3 +2242,67 @@
     .character:hover .mundaraka-head {
         animation-duration: 1.5s;
     }
+
+      /*** Gladiators ***/
+
+      .gladiator-helmet {
+        position: absolute;
+        top: -54px;
+        left: 29px;
+        z-index: 3;
+    }
+
+    .gladiator-body {
+        position: absolute;
+        top: 27px;
+        left: -16px;
+        z-index: 2;
+    }
+    .gladiator-bracelet {
+        position: absolute;
+        top: 40px;
+        left: 119px;
+        z-index: 3;
+    }
+    .gladiator-boots {
+        position: absolute;
+        top: 168px;
+        left: 20px;
+        z-index: 1;
+    }
+
+    .gladiator-shield {
+        position: absolute;
+        top: 83px;
+        left: -41px;
+        z-index: 3;
+        animation-name: movement;
+        animation-duration: 1.5s;
+        animation-iteration-count: infinite;
+        transition: .3s ease-in-out
+    }
+
+    .gladiator-sword {
+        position: absolute;
+        top: -85px;
+        left: 122px;
+        z-index: 4;
+    }
+    .gladiator-bow {
+        position: absolute;
+        top: 5px;
+        left: 92px;
+        z-index: 4;
+    }
+    .gladiator-hammer {
+        position: absolute;
+        top: -78px;
+        left: 108px;
+        z-index: 4;
+    }
+    .gladiator-spear {
+        position: absolute;
+        top: -86px;
+        left: 116px;
+        z-index: 4;
+    }
