@@ -2170,7 +2170,6 @@ export default {
             count = element.pivot.count;
           }
         });
-      console.log(count)
       return count;
     },
     claimReward(collection) {
