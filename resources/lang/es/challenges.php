@@ -121,5 +121,8 @@ return [
     'name_folder' => 'Crea una carpeta con el nombre de la tarea',
     'name_task' => 'Nombre de la entrega',
     'go_to_drive' => 'Ir a la carpeta',
+    'updated' => 'Se han actualizado',
+    'updated_2' => 'estudiantes',
+    'select_wg' => 'Selecciona estudiantes con una nota',
 
 ];

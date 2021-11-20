@@ -1,7 +1,10 @@
 # Changelog
 ## v1.94 Beta (XX/11/2021)
+### Added
+- Select students with a grade >= in challenges.
+
 ### Changed
-- Shop management.
+~ Shop management.
 
 ## v1.93 Beta (14/11/2021)
 ### Changed

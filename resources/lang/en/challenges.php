@@ -122,5 +122,8 @@ return [
     'name_folder' => 'Create a folder with the task name',
     'name_task' => 'Task name',
     'go_to_drive' => 'Go to folder',
+    'updated' => 'Has been updated',
+    'updated_2' => 'students',
+    'select_wg' => 'Select students with a grade',
 
 ];

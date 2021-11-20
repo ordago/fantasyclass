@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Challenge;
 use App\ChallengesGroup;
 use App\Classroom;
+use App\Evaluable;
 use App\Group;
 use App\Http\Classes\Functions;
 use App\Student;
@@ -160,6 +161,21 @@ class ChallengesController extends Controller
         return ['challenges' => $class->challengeGroups, 'items' => $class->items, 'collections' => $collections];
     }
 
+    public function getEvaluableInfo($code)
+    {
+        $class = Classroom::where('code', '=', $code)->first();
+        $this->authorize('view', $class);
+        $data = request()->validate([
+            'evaluable' => ['numeric', 'required'],
+            'grade' => ['numeric', 'required'],
+        ]);
+
+        $evaluable = Evaluable::findOrFail($data['evaluable']);
+        $students = $evaluable->students()->where('grade', ">=", $data['grade'])->whereNull('from_student_id')->get()->pluck('id');
+        return $students;
+
+    }
+
     public function getChallengesInfo($code)
     {
         $class = Classroom::where('code', '=', $code)->first();
@@ -169,6 +185,8 @@ class ChallengesController extends Controller
             'challenge' => ['numeric'],
             'type' => ['numeric'],
         ]);
+
+        $evaluables = $class->evaluables;
 
         if ($data['type'] == 0) {
             $challenge = Challenge::find($data['challenge']);
@@ -184,7 +202,7 @@ class ChallengesController extends Controller
                 }
             });
             
-            return $students;
+            return ["students" => $students, "evaluables" => $evaluables];
         } else if ($data['type'] == 1) {
             $groups = $class->grouping()->first()->groups()->with(['challenges' => function ($query) use ($data) {
                 $query->where('challenges.id', '=', $data['challenge']);
@@ -194,9 +212,9 @@ class ChallengesController extends Controller
                     $group->challenges->push(['pivot' => ['count' => null, 'evaluated' => 0, 'group_id' => $group->id]]);
                 }
             });
-            return $groups;
+            return ["groups" => $groups];
         } else {
-            return $class->students()->get();
+            return ["students" => $class->students()->get(), "evaluables" => $evaluables];
         }
     }
 

@@ -121,5 +121,8 @@ return [
     'name_folder' => 'Crea una carpeta amb el nom de la tasca',
     'name_task' => 'Nom de l\'entrega',
     'go_to_drive' => 'Anar a la carpeta',
+    'updated' => 'S\'han actualitzat',
+    'updated_2' => 'estudiants',
+    'select_wg' => 'Selecciona estudiants amb una nota',
 
 ];

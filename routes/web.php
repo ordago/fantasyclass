@@ -198,6 +198,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/challenges/{id}', 'ChallengesController@destroy');
         Route::patch('/{code}/challenges/{id}', 'ChallengesController@update');
         Route::post('/{code}/challenges/info', 'ChallengesController@getChallengesInfo');
+        Route::post('/{code}/evaluable/getInfo', 'ChallengesController@getEvaluableInfo');
         Route::post('/{code}/challenges/toggle', 'ChallengesController@toggle');
         Route::post('/{code}/challenges/update', 'ChallengesController@updateStudents');
         Route::post('/{code}/challenges/groups/update', 'ChallengesController@updateGroups');

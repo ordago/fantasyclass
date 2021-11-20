@@ -92,9 +92,53 @@
           <button class="button is-info" @click="selectAll()">
             {{ trans.get("utils.select_all") }}
           </button>
-          <button class="button is-success" :class="{ 'is-loading': isLoading }" @click="sendStudentsChallenge">
+          <button
+            class="button is-success"
+            :class="{ 'is-loading': isLoading }"
+            @click="sendStudentsChallenge"
+          >
             <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
+          <div>
+            <div
+              v-if="evaluables && evaluables.length"
+              class="field has-addons mt-2"
+            >
+              <p class="control">
+                <span class="button is-static">
+                  <i class="fas fa-analytics"></i>
+                  {{ trans.get("menu.evaluation") }}
+                </span>
+              </p>
+              <p class="control select">
+                <select class="input select" v-model="evaluable">
+                  <option :value="null">∅</option>
+                  <option
+                    v-for="evaluable in evaluables"
+                    :key="'evaluable-' + evaluable.id"
+                    :value="evaluable.id"
+                  >
+                    {{ trans.get(evaluable.description) }}
+                  </option>
+                </select>
+              </p>
+            </div>
+          </div>
+          <div>
+            <div v-if="evaluable" class="mt-2 columns">
+              <div class="column is-narrow is-center-vertically is-flex">
+                {{ trans.get('challenges.select_wg') }} >=
+              </div>
+              <div class="column is-narrow">
+                <input type="number" class="input" v-model="grade" min="0" />
+              </div>
+              <div class="column is-narrow">
+                <button class="button is-info" @click="updateEvaluables()">
+                  {{ trans.get('general.update') }}
+                </button>
+              </div>
+            </div>
+          </div>
           <div class="columns is-1 is-multiline p-3 mt-2">
             <div
               v-for="student in students"
@@ -181,7 +225,7 @@
             <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
           </button>
           <div class="columns is-1 is-multiline p-3 mt-2">
-           <div v-for="group in groups" class="p-3" :key="group.id">
+            <div v-for="group in groups" class="p-3" :key="group.id">
               <div class="p-3 border rounded">
                 <div class="columns">
                   <div
@@ -192,11 +236,7 @@
                       is-hidden-tablet
                     "
                   >
-                    <img
-                      :src="group.logo"
-                      width="32px"
-                      alt="student image"
-                    />
+                    <img :src="group.logo" width="32px" alt="student image" />
                     <span class="ml-1"
                       ><strong>{{ group.name }}</strong></span
                     >
@@ -239,11 +279,7 @@
                       is-hidden-mobile
                     "
                   >
-                    <img
-                      :src="group.logo"
-                      width="32px"
-                      alt="student image"
-                    />
+                    <img :src="group.logo" width="32px" alt="student image" />
                     <span class="ml-1"
                       ><strong>{{ group.name }}</strong></span
                     >
@@ -288,6 +324,9 @@ export default {
   created: function () {},
   data: function () {
     return {
+      grade: 5,
+      evaluable: null,
+      evaluables: null,
       addChallenge: false,
       isLoading: false,
       search: "",
@@ -302,6 +341,28 @@ export default {
     };
   },
   methods: {
+    updateEvaluables() {
+      axios
+        .post("/classroom/" + this.code + "/evaluable/getInfo", {
+          evaluable: this.evaluable,
+          grade: this.grade,
+        })
+        .then((response) => {
+          let total = 0;
+          this.students.forEach((student) => {
+            if(response.data.includes(student.id)) {
+              total++;
+              student.challenges[0].pivot.count = 1;
+              student.challenges[0].pivot.evaluated = 1;
+            }
+          });
+          let type = "success";
+          if(total == 0)
+            type = "error";
+          this.$toast(this.trans.get('challenges.updated') + " " + total + " " + this.trans.get('challenges.updated_2'), {type: type});
+          this.$forceUpdate();
+        });
+    },
     deleteChallengeGroup(id) {
       this.$buefy.dialog.confirm({
         title: this.trans.get("general.delete"),
@@ -350,8 +411,10 @@ export default {
           challenge: challenge.id,
         })
         .then((response) => {
-          if (challenge.type == 0) this.students = response.data;
-          else this.groups = response.data;
+          if (challenge.type == 0) {
+            this.students = response.data.students;
+            this.evaluables = response.data.evaluables;
+          } else this.groups = response.data.groups;
           this.isModalActive = true;
           this.isLoading = false;
         });
