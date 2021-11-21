@@ -1,10 +1,11 @@
 # Changelog
-## v1.94 Beta (XX/11/2021)
+## v1.94 Beta (21/11/2021)
 ### Added
 - Select students with a grade >= in challenges.
+- New theme: gladiators.
 
 ### Changed
-~ Shop management.
+- Shop management.
 
 ## v1.93 Beta (14/11/2021)
 ### Changed
