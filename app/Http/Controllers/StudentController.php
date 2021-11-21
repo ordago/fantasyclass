@@ -482,7 +482,16 @@ class StudentController extends Controller
                 $student->equipment()->detach($equipment->id);
                 $student->equipment()->attach(607+request()->character_id);
             }
-        } else {
+        } else if($student->character->theme->id == 13) {
+            $theme = CharacterTheme::find($student->character->theme->id);
+            if(!in_array($prevTheme, $theme->characters->pluck('id')->toArray())) {
+                $student->setBasicEquipment();
+            } else {
+                $equipment = $student->equipment()->whereIn('equipment_id', [1000, 1001, 1002, 1003, 1004, 1005])->first();
+                $student->equipment()->detach($equipment->id);
+                $student->equipment()->attach(943+request()->character_id);
+            }
+        }  else {
             $student->setBasicEquipment();
         }
     }

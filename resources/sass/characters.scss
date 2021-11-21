@@ -26,6 +26,7 @@
     top: -33px !important;
 
 }
+
 .koi-small {
     transform: scale(0.8) !important;
     -moz-transform-origin: center center;
@@ -1787,522 +1788,553 @@
     animation: glowweapon 1.5s infinite;
 }
 
-    /***** KOI *****/
+/***** KOI *****/
 
-    .ionare-body {
-        position: absolute;
-        top: -5px;
-        left: 45px;
-        z-index: 3;
+.ionare-body {
+    position: absolute;
+    top: -5px;
+    left: 45px;
+    z-index: 3;
+}
+
+.ionare-tail {
+    position: absolute;
+    top: 1px;
+    left: 103px;
+    z-index: 3;
+    transform-origin: top left;
+    animation: hello 3s linear infinite;
+}
+
+.ionare-weapons {
+    position: absolute;
+    top: -2px;
+    left: -4px;
+    z-index: 4;
+}
+
+.character:hover .ionare-whip {
+    opacity: 1.0;
+    top: 21px;
+    left: 28px;
+    width: 202px;
+}
+
+.ionare-whip {
+    position: absolute;
+    top: 30px;
+    left: 25px;
+    z-index: 4;
+    opacity: 0;
+    width: 150px;
+    transition: all .1s;
+}
+
+.ionare-tatoo {
+    position: absolute;
+    top: 55px;
+    left: 60px;
+    z-index: 4;
+}
+
+.mundaraka-body {
+    position: absolute;
+    height: 212px;
+    top: 34px;
+    left: 12px;
+    z-index: 3;
+}
+
+.mundaraka-cap {
+    position: absolute;
+    top: 0px;
+    left: -16px;
+    z-index: 4;
+    transform-origin: center bottom;
+    animation: headmovesurf 3s ease infinite;
+
+}
+
+.mundaraka-head {
+    position: absolute;
+    top: -2px;
+    left: -16px;
+    z-index: 2;
+    transform-origin: center bottom;
+    animation: headmovesurf 3s ease infinite;
+
+}
+
+.mundaraka-surf {
+    position: absolute;
+    top: -12px;
+    left: 58px;
+    z-index: 4;
+    animation: surfmove 5s ease infinite;
+}
+
+.laiona-body {
+    position: absolute;
+    top: -19px;
+    left: -10px;
+    z-index: 1;
+}
+
+.laiona-mono {
+    position: absolute;
+    top: 116px;
+    left: 52px;
+    z-index: 4;
+    animation: mono 5s ease infinite;
+    transform-origin: 65% 15% 2cm;
+
+}
+
+.laiona-eye {
+    position: absolute;
+    top: 16px;
+    left: 33px;
+    z-index: 5;
+    height: 12px;
+    transform-origin: center 65%;
+    transition: all .3s;
+    animation: wink 3s linear infinite;
+}
+
+@keyframes wink {
+    0% {
+        transform: none;
     }
 
-    .ionare-tail {
-        position: absolute;
-        top: 1px;
-        left: 103px;
-        z-index: 3;
-        transform-origin: top left;
-        animation: hello 3s linear infinite;
+    49% {
+        transform: none;
     }
 
-    .ionare-weapons {
-        position: absolute;
-        top: -2px;
-        left: -4px;
-        z-index: 4;
+    50% {
+        filter: grayscale(100%);
+        transform: rotateX(87deg);
     }
 
-    .character:hover .ionare-whip {
-        opacity: 1.0;
-        top: 21px;
-        left: 28px;
-        width: 202px;
+    60% {
+        transform: none;
     }
-
-    .ionare-whip {
-        position: absolute;
-        top: 30px;
-        left: 25px;
-        z-index: 4;
-        opacity: 0;
-        width: 150px;
-        transition: all .1s;
-    }
-
-    .ionare-tatoo {
-        position: absolute;
-        top: 55px;
-        left: 60px;
-        z-index: 4;
-    }
-
-    .mundaraka-body {
-        position: absolute;
-        height: 212px;
-        top: 34px;
-        left: 12px;
-        z-index: 3;
-    }
-
-    .mundaraka-cap {
-        position: absolute;
-        top: 0px;
-        left: -16px;
-        z-index: 4;
-        transform-origin: center bottom;
-        animation: headmovesurf 3s ease infinite;
-
-    }
-
-    .mundaraka-head {
-        position: absolute;
-        top: -2px;
-        left: -16px;
-        z-index: 2;
-        transform-origin: center bottom;
-        animation: headmovesurf 3s ease infinite;
-
-    }
-
-    .mundaraka-surf {
-        position: absolute;
-        top: -12px;
-        left: 58px;
-        z-index: 4;
-        animation: surfmove 5s ease infinite;
-    }
-    .laiona-body {
-        position: absolute;
-        top: -19px;
-        left: -10px;
-        z-index: 1;
-    }
-
-    .laiona-mono {
-        position: absolute;
-        top: 116px;
-        left: 52px;
-        z-index: 4;
-        animation: mono 5s ease infinite;
-        transform-origin: 65% 15% 2cm;
-
-    }
-
-    .laiona-eye {
-        position: absolute;
-        top: 16px;
-        left: 33px;
-        z-index: 5;
-        height: 12px;
-        transform-origin: center 65%;
-        transition: all .3s;
-        animation: wink 3s linear infinite;
-    }
-
-    @keyframes wink {
-        0% {
-            transform: none;
-        }
-        49% {
-            transform: none;
-        }
-        50% {
-            filter: grayscale(100%);
-            transform: rotateX(87deg);
-        }
-        60% {
-            transform: none;
-        }
-    }
-
-    .character:hover .laiona-eye {}
-
-    .character:hover .laiona-mono {
-        animation: monofull .5s infinite linear;
-    }
-
-    .character:hover .laiona-belt {
-        animation: glowweapon 1.5s infinite;
-    }
-
-    .laiona-belt {
-        position: absolute;
-        top: 101px;
-        left: 20px;
-        z-index: 2;
-    }
-
-    .laiona-body {
-        position: absolute;
-        top: -9px;
-        left: -10px;
-        z-index: 1;
-    }
-
-    .ganabia-body {
-        position: absolute;
-        top: -20px;
-        left: -17px;
-        z-index: 3;
-    }
-
-    .ganabia-hand {
-        position: absolute;
-        top: -7px;
-        left: 8px;
-        z-index: 2;
-        animation: hello 5s linear infinite;
-        transform-origin: bottom right;
-    }
-
-    .character:hover .ganabia-hand {
-        animation-duration: 1s;
-    }
-
-    .ganabia-trident {
-        position: absolute;
-        top: -9px;
-        left: 39px;
-        z-index: 1;
-        transition: all .2s;
-        transform-origin: center center;
-    }
-
-    .character:hover .ganabia-trident {
-        animation: monofull .2s infinite linear, glow 1s infinite;
-    }
-
-    .ganabia-hair {
-        position: absolute;
-        top: -15px;
-        left: 34px;
-        z-index: 3;
-    }
-
-    .delumion-body {
-        position: absolute;
-        top: 1px;
-        left: 19px;
-        z-index: 2;
-    }
-
-    .delumion-staff {
-        position: absolute;
-        top: -50px;
-        left: 69px;
-        z-index: 3;
-        animation: delumionstaff 1s linear infinite;
-    }
-
-    .character:hover .delumion-staff {
-        animation: glowweapon 1.5s infinite;
-        transform: translateY(-10px), translateX(-3px);
-    }
-
-    .delumion-cape {
-        position: absolute;
-        top: 44px;
-        left: 2px;
-        z-index: 1;
-        transform-origin: top center;
-        animation: cape 5s linear infinite;
-    }
-
-    .gespair-body {
-        position: absolute;
-        top: 14px;
-        left: -11px;
-        z-index: 2;
-    }
-
-    .gespair-arms {
-        position: absolute;
-        top: 80px;
-        left: 31px;
-        z-index: 3;
-    }
-
-    .character:hover .gespair-tail {
-        animation: glowweapon 1.5s infinite, gespairtail 3s infinite linear;
-    }
-
-    .gespair-tail {
-        position: absolute;
-        top: 63px;
-        left: 55px;
-        z-index: 1;
-        transform-origin: bottom left;
-        animation: gespairtail 8s infinite linear;
-    }
-
-    .gespair-tail-left {
-        position: absolute;
-        top: 68px;
-        left: -4px;
-        z-index: 1;
-        transform-origin: bottom left;
-        animation: gespairtail 8s infinite linear;
-    }
-
-    @keyframes laionaeye {
-        0% {}
-
-
-        50% {
-            height: 1px;
-
-        }
-
-        55% {
-            height: initial;
-        }
-
-        90% {}
-    }
-
-    @keyframes gespairtail {
-        0% {}
-
-
-        33% {
-            transform: rotate(10deg);
-
-        }
-
-        66% {
-            transform: rotate(-10deg);
-        }
-
-        90% {}
-    }
-
-    @keyframes delumionstaff {
-        0% {}
-
-
-        50% {
-            transform: translateY(4px);
-
-        }
-
-
-        100% {
-            transform: translateY(-4px);
-        }
-    }
-
-    @keyframes surfmove {
-        0% {}
-
-        25% {
-            transform: translateX(4px);
-
-        }
-
-        50% {
-            transform: translateX(-4px);
-
-        }
-
-        75% {
-            transform: translateX(4px);
-        }
-
-        90% {
-            transform: translateX(-4px);
-        }
-    }
-
-    @keyframes headmovesurf {
-        0% {}
-
-        25% {
-            transform: rotateX(20deg);
-
-        }
-
-        50% {
-            transform: rotateX(-20deg);
-
-
-        }
-
-        75% {
-            transform: rotateX(20deg);
-        }
-
-        90% {
-            transform: rotateX(-20deg);
-        }
-    }
-
-    @keyframes mono {
-        0% {}
-
-        25% {
-            transform: rotate(10deg);
-
-        }
-
-        50% {
-            /* transform: rotate(-10deg); */
-
-
-        }
-
-        75% {
-            transform: rotate(-20deg);
-        }
-
-        90% {
-            /* transform: rotate(-10deg); */
-        }
-    }
-
-    @keyframes cape {
-
-        25% {
-            transform: rotate(3deg);
-
-        }
-
-        75% {
-            transform: rotate(-3deg);
-        }
-
-
-    }
-
-    @keyframes hello {
-
-        25% {
-            transform: rotate(7deg);
-
-        }
-
-        75% {
-            transform: rotate(-7deg);
-        }
-
-
-    }
-
-    @keyframes monofull {
-        0% {}
-
-        100% {
-            transform: rotate(360deg);
-        }
-    }
-
-    .koi-pet-ground {
-        position: absolute;
-        top: 90px;
-        left: 78px;
-        animation-name: hmovement;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-    }
-    .koi-pet-ground-ionare {
-        position: absolute;
-        top: 90px;
-        left: -17px;
-        animation-name: hmovement;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-    }
-    .koi-pet-fly {
-        position: absolute;
-        top: 3px;
-        left: 88px;
-        animation-name: hmovement;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-    }
-    .koi-pet-fly-ionare {
-        position: absolute;
-        top: 3px;
-        left: -17px;
-        animation-name: hmovement;
-        animation-duration: 10s;
-        animation-iteration-count: infinite;
-    }
-
-    .character:hover .mundaraka-surf {
-        animation: none;
-        left: 8px;
-    }
-
-    .character:hover .mundaraka-body:not(.not-surf),
-    .character:hover .mundaraka-cap,
-    .character:hover .mundaraka-head:not(.not-surf) {
+}
+
+.character:hover .laiona-eye {}
+
+.character:hover .laiona-mono {
+    animation: monofull .5s infinite linear;
+}
+
+.character:hover .laiona-belt {
+    animation: glowweapon 1.5s infinite;
+}
+
+.laiona-belt {
+    position: absolute;
+    top: 101px;
+    left: 20px;
+    z-index: 2;
+}
+
+.laiona-body {
+    position: absolute;
+    top: -9px;
+    left: -10px;
+    z-index: 1;
+}
+
+.ganabia-body {
+    position: absolute;
+    top: -20px;
+    left: -17px;
+    z-index: 3;
+}
+
+.ganabia-hand {
+    position: absolute;
+    top: -7px;
+    left: 8px;
+    z-index: 2;
+    animation: hello 5s linear infinite;
+    transform-origin: bottom right;
+}
+
+.character:hover .ganabia-hand {
+    animation-duration: 1s;
+}
+
+.ganabia-trident {
+    position: absolute;
+    top: -9px;
+    left: 39px;
+    z-index: 1;
+    transition: all .2s;
+    transform-origin: center center;
+}
+
+.character:hover .ganabia-trident {
+    animation: monofull .2s infinite linear, glow 1s infinite;
+}
+
+.ganabia-hair {
+    position: absolute;
+    top: -15px;
+    left: 34px;
+    z-index: 3;
+}
+
+.delumion-body {
+    position: absolute;
+    top: 1px;
+    left: 19px;
+    z-index: 2;
+}
+
+.delumion-staff {
+    position: absolute;
+    top: -50px;
+    left: 69px;
+    z-index: 3;
+    animation: delumionstaff 1s linear infinite;
+}
+
+.character:hover .delumion-staff {
+    animation: glowweapon 1.5s infinite;
+    transform: translateY(-10px), translateX(-3px);
+}
+
+.delumion-cape {
+    position: absolute;
+    top: 44px;
+    left: 2px;
+    z-index: 1;
+    transform-origin: top center;
+    animation: cape 5s linear infinite;
+}
+
+.gespair-body {
+    position: absolute;
+    top: 14px;
+    left: -11px;
+    z-index: 2;
+}
+
+.gespair-arms {
+    position: absolute;
+    top: 80px;
+    left: 31px;
+    z-index: 3;
+}
+
+.character:hover .gespair-tail {
+    animation: glowweapon 1.5s infinite, gespairtail 3s infinite linear;
+}
+
+.gespair-tail {
+    position: absolute;
+    top: 63px;
+    left: 55px;
+    z-index: 1;
+    transform-origin: bottom left;
+    animation: gespairtail 8s infinite linear;
+}
+
+.gespair-tail-left {
+    position: absolute;
+    top: 68px;
+    left: -4px;
+    z-index: 1;
+    transform-origin: bottom left;
+    animation: gespairtail 8s infinite linear;
+}
+
+@keyframes laionaeye {
+    0% {}
+
+
+    50% {
         height: 1px;
+
     }
 
-    .character:hover .mundaraka-head {
-        animation-duration: 1.5s;
+    55% {
+        height: initial;
     }
 
-      /*** Gladiators ***/
+    90% {}
+}
 
-      .gladiator-helmet {
-        position: absolute;
-        top: -54px;
-        left: 29px;
-        z-index: 3;
-    }
+@keyframes gespairtail {
+    0% {}
 
-    .gladiator-body {
-        position: absolute;
-        top: 27px;
-        left: -16px;
-        z-index: 2;
-    }
-    .gladiator-bracelet {
-        position: absolute;
-        top: 40px;
-        left: 119px;
-        z-index: 3;
-    }
-    .gladiator-boots {
-        position: absolute;
-        top: 168px;
-        left: 20px;
-        z-index: 1;
+
+    33% {
+        transform: rotate(10deg);
+
     }
 
-    .gladiator-shield {
-        position: absolute;
-        top: 83px;
-        left: -41px;
-        z-index: 3;
-        animation-name: movement;
-        animation-duration: 1.5s;
-        animation-iteration-count: infinite;
-        transition: .3s ease-in-out
+    66% {
+        transform: rotate(-10deg);
     }
 
-    .gladiator-sword {
-        position: absolute;
-        top: -85px;
-        left: 122px;
-        z-index: 4;
+    90% {}
+}
+
+@keyframes delumionstaff {
+    0% {}
+
+
+    50% {
+        transform: translateY(4px);
+
     }
-    .gladiator-bow {
-        position: absolute;
-        top: 5px;
-        left: 92px;
-        z-index: 4;
+
+
+    100% {
+        transform: translateY(-4px);
     }
-    .gladiator-hammer {
-        position: absolute;
-        top: -78px;
-        left: 108px;
-        z-index: 4;
+}
+
+@keyframes surfmove {
+    0% {}
+
+    25% {
+        transform: translateX(4px);
+
     }
-    .gladiator-spear {
-        position: absolute;
-        top: -86px;
-        left: 116px;
-        z-index: 4;
+
+    50% {
+        transform: translateX(-4px);
+
     }
+
+    75% {
+        transform: translateX(4px);
+    }
+
+    90% {
+        transform: translateX(-4px);
+    }
+}
+
+@keyframes headmovesurf {
+    0% {}
+
+    25% {
+        transform: rotateX(20deg);
+
+    }
+
+    50% {
+        transform: rotateX(-20deg);
+
+
+    }
+
+    75% {
+        transform: rotateX(20deg);
+    }
+
+    90% {
+        transform: rotateX(-20deg);
+    }
+}
+
+@keyframes mono {
+    0% {}
+
+    25% {
+        transform: rotate(10deg);
+
+    }
+
+    50% {
+        /* transform: rotate(-10deg); */
+
+
+    }
+
+    75% {
+        transform: rotate(-20deg);
+    }
+
+    90% {
+        /* transform: rotate(-10deg); */
+    }
+}
+
+@keyframes cape {
+
+    25% {
+        transform: rotate(3deg);
+
+    }
+
+    75% {
+        transform: rotate(-3deg);
+    }
+
+
+}
+
+@keyframes hello {
+
+    25% {
+        transform: rotate(7deg);
+
+    }
+
+    75% {
+        transform: rotate(-7deg);
+    }
+
+
+}
+
+@keyframes monofull {
+    0% {}
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.koi-pet-ground {
+    position: absolute;
+    top: 90px;
+    left: 78px;
+    animation-name: hmovement;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.koi-pet-ground-ionare {
+    position: absolute;
+    top: 90px;
+    left: -17px;
+    animation-name: hmovement;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.koi-pet-fly {
+    position: absolute;
+    top: 3px;
+    left: 88px;
+    animation-name: hmovement;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.koi-pet-fly-ionare {
+    position: absolute;
+    top: 3px;
+    left: -17px;
+    animation-name: hmovement;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+}
+
+.character:hover .mundaraka-surf {
+    animation: none;
+    left: 8px;
+}
+
+.character:hover .mundaraka-body:not(.not-surf),
+.character:hover .mundaraka-cap,
+.character:hover .mundaraka-head:not(.not-surf) {
+    height: 1px;
+}
+
+.character:hover .mundaraka-head {
+    animation-duration: 1.5s;
+}
+
+/*** Gladiators ***/
+
+.gladiator-helmet {
+    position: absolute;
+    top: -26px;
+    left: 28px;
+    z-index: 3;
+}
+
+.gladiator-helmet-big {
+    position: absolute;
+    top: -12px;
+    left: 28px;
+    z-index: 3;
+}
+
+.gladiator-body {
+    position: absolute;
+    top: 65px;
+    left: 9px;
+    z-index: 2;
+}
+
+.gladiator-bracelet {
+    position: absolute;
+    top: 55px;
+    left: 119px;
+    z-index: 3;
+}
+
+.gladiator-boots {
+    position: absolute;
+    top: 159px;
+    left: 18px;
+    z-index: 1;
+}
+
+.gladiator-shield {
+    position: absolute;
+    top: 89px;
+    left: -23px;
+    z-index: 3;
+    animation-name: movement;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    transition: .3s ease-in-out
+}
+
+.gladiator-sword {
+    position: absolute;
+    top: -56px;
+    left: 96px;
+    z-index: 4;
+}
+
+.gladiator-bow {
+    position: absolute;
+    top: 31px;
+    left: 65px;
+    z-index: 4;
+}
+
+.gladiator-hammer {
+    position: absolute;
+    top: -23px;
+    left: 80px;
+    z-index: 4;
+}
+
+.gladiator-spear {
+    position: absolute;
+    top: -66px;
+    left: 91px;
+    z-index: 4;
+}
+
+.character:hover .gladiator-spear,
+.character:hover .gladiator-sword,
+.character:hover .gladiator-hammer,
+.character:hover .gladiator-bow {
+    animation: glowweapon 1.5s infinite;
+}
+
+.character:hover .gladiator-shield {
+    animation: none;
+    transform: scale(1.1) translateX(20px);
+}

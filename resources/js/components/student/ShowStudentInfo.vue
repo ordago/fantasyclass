@@ -2962,7 +2962,7 @@ export default {
         n - this.student.items.length ? n - this.student.items.length - 1 : 5;
     },
     confirmChangeClass(subclass) {
-      if (this.classroom.character_theme.id == 10) {
+      if (this.classroom.character_theme.id == 10 || this.classroom.character_theme.id == 13) {
         axios
           .post(
             "/classroom/" + this.classroom.code + "/student/changecharacter",

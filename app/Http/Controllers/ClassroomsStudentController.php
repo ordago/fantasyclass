@@ -691,8 +691,9 @@ class ClassroomsStudentController extends Controller
             $items = Item::where('classroom_id', '=', $class->id)->where('for_sale', '=', '1')->get();
         }
         if ($student->character) {
-            if ($student->character->theme->id == 10 || $student->character->theme->id == 11)
-                $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 710, 711, 712, 713, 714, 715, 716, 717, 718, 760, 770, 780])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
+            $charTheme = $student->character->theme->id;
+            if ($charTheme == 10 || $charTheme == 11 || $charTheme == 13)
+                $eq0 = Equipment::where('offset', '=', 0)->whereNotIn('id', [640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 710, 711, 712, 713, 714, 715, 716, 717, 718, 760, 770, 780, 1000, 1001, 1002, 1003, 1004, 1005])->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
             if (settings()->get('equipment_1_visibility', false) ? true : false) {
                 $eq1 = Equipment::where('offset', '=', 1)->whereRaw('JSON_CONTAINS(character_id, ?)', [json_encode($student->character_id)])->get();
             }

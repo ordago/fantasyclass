@@ -876,6 +876,16 @@ class Student extends Model implements HasMedia
             case '56':
                 $ids = [805, 811, 920, 924, 928];
                 break;
+            case '57':
+            case '58':
+            case '59':
+            case '60':
+            case '61':
+            case '62':
+                $weapons = [1070, 1090, 1110, 1130];
+                $randId = rand(0, 3);
+                $ids = [943 + $this->character_id, rand(1010, 1013), rand(1030, 1033), rand(1050, 1053), rand($weapons[$randId], $weapons[$randId]+3)];
+                break;
         }
 
         $this->equipment()->attach($ids);

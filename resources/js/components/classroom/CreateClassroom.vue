@@ -65,6 +65,10 @@
                     <img src="/img/character/themes-preview/koi.png" alt="koi" class="themePreview" v-tippy="{interactive: true}" content="<a class='text-light' href='https://twitter.com/soyjujo_juanjo'><i class='fab fa-twitter'></i> @soyjujo_juanjo</a>">
                 </label>
                 <label>
+                    <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="13">
+                    <img src="/img/character/themes-preview/gladiators.png" alt="gladiators" class="themePreview">
+                </label>
+                <label>
                     <input v-model="classForm.character_theme" type="radio" name="charTheme" class="hide-radios" checked value="10">
                     <img src="/img/character/themes-preview/food.png" class="themePreview">
                 </label>
