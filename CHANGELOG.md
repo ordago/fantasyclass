@@ -1,4 +1,11 @@
 # Changelog
+## v1.95 Beta (25/11/2021)
+### Added
+- Option to remove pet.
+
+### Changed
+- 
+
 ## v1.94 Beta (21/11/2021)
 ### Added
 - Select students with a grade >= in challenges.

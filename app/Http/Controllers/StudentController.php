@@ -196,7 +196,7 @@ class StudentController extends Controller
         $this->authorize('update', $class);
 
         $data = request()->validate([
-            'pet' => ['numeric', 'required'],
+            'pet' => ['numeric', 'nullable'],
             'student' => ['numeric', 'required'],
         ]);
 
@@ -206,10 +206,13 @@ class StudentController extends Controller
 
         if ($student->hp == 0)
             return false;
-
-        $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->firstOrFail();
-        $student->pets()->sync([]);
-        $student->pets()->sync([$pet->id]);
+        if(!$data['pet'])
+            $student->pets()->sync([]);
+        else {
+            $pet = Pet::where('id', $data['pet'])->where('classroom_id', $class->id)->firstOrFail();
+            $student->pets()->sync([]);
+            $student->pets()->sync([$pet->id]);
+        }
 
         return [
             "message" => " " . __('success_error.equipment_success'),

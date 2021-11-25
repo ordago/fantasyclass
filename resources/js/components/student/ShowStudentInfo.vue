@@ -868,6 +868,7 @@
             </div>
           </div>
           <div v-else>
+            <button class="button is-danger mb-5" @click="assign(null)">{{ trans.get('shop.remove_pet') }}</button>
             <div
               v-for="pet in classroom.pets"
               :key="'pet2-' + pet.id"
@@ -3090,9 +3091,9 @@ export default {
     },
     assign(pet) {
       this.$buefy.dialog.confirm({
-        title: this.trans.get("general.assign"),
-        message: this.trans.get("shop.assign_text"),
-        confirmText: this.trans.get("general.assign"),
+        title: pet ? this.trans.get("general.assign") : this.trans.get("general.delete"),
+        message: pet ? this.trans.get("shop.assign_text") : this.trans.get("shop.remove_text"),
+        confirmText: pet ? this.trans.get("general.assign"): this.trans.get("general.delete"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
@@ -3100,7 +3101,7 @@ export default {
         onConfirm: () => {
           axios
             .post("/classroom/" + this.classroom.code + "/student/assignpet", {
-              pet: pet.id,
+              pet: pet ? pet.id : null,
               student: this.student.id,
             })
             .then((response) => {

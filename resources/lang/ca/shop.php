@@ -33,6 +33,8 @@ return [
     'buy_item' => 'Compra objecte',
     'buy_text' => 'Vols comprar l\'objecte ',
     'assign_text' => 'Vols assignar la mascota? No es cobrarà res',
+    'remove_text' => 'Vols eliminar la mascota?',
+    'remove_pet' => 'Eliminar mascota',
     'assign_eq_text' => 'Vols assignar l\'equipament? No es cobrarà res',
     'load_gallery' => 'Carrega des de la galeria',
 

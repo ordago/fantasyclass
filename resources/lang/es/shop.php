@@ -34,6 +34,8 @@ return [
     'buy_text' => 'Quieres comprar el objeto ',
     'assign_text' => '¿Quieres asignar la mascota? No se cobrará nada',
     'assign_eq_text' => '?Quieres asignar el equipo? No se cobrará nada',
+    'remove_text' => '¿Quieres eliminar la mascota?',
+    'remove_pet' => 'Eliminar mascota',
     'load_gallery' => 'Carga desde la galería',
 
     'pet_warning' => 'Solo puedes tener una mascota, si eliges una perderás la que tenías.',
