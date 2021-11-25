@@ -383,6 +383,7 @@
                     "
                   >
                     <iframe
+                      :id="'iframe-' + attachment.id"
                       v-if="attachment.type == 1"
                       :src="attachment.url"
                       width="1090"
@@ -1460,3 +1461,9 @@ export default {
   },
 };
 </script>
+<style>
+.fullScreen {
+      width: 100vw;
+      height: 100vh;
+   }
+</style>

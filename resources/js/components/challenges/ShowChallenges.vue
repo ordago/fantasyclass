@@ -56,7 +56,7 @@
           :challengegroups="$parent.challengesgroup"
           :code="code"
           :challengegroup="challengegroup.id"
-          :students-loaded="students.students"
+          :students-loaded="students ? students.students : students"
         ></CreateChallenges>
       </div>
 
