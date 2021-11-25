@@ -4,7 +4,7 @@
 - Option to remove pet.
 
 ### Changed
-- 
+- Fix select challenges to students.
 
 ## v1.94 Beta (21/11/2021)
 ### Added

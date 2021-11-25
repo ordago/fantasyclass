@@ -91,7 +91,7 @@
           <span v-else-if="students && challenge.students">
             <i class="fas fa-user m-2"></i>
             {{ trans.get("challenges.available_some") }}
-            {{ students.length - challenge.students.length }}
+            {{ students.students.length - challenge.students.length }}
             {{ trans.get("challenges.available_students") }}
           </span>
         </button>
@@ -572,7 +572,7 @@
           <i class="fas fa-eraser mr-2"></i>
           {{ trans.get("utils.remove_selection") }}
         </button>
-        <div v-for="student in students" class="p-3" :key="student.id">
+        <div v-for="student in students.students" class="p-3" :key="student.id">
           <div class="columns">
             <div class="column is-narrow is-flex has-all-centered">
               <div class="field">
