@@ -1,5 +1,5 @@
 # Changelog
-## v1.95 Beta (25/11/2021)
+## v1.96 Beta (25/11/2021)
 ### Added
 - Option to remove pet.
 
