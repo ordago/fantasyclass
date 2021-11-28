@@ -63,6 +63,7 @@ Vue.use(Timeline);
 Vue.use(TimelineTitle);
 Vue.use(TimelineItem);
 
+Vue.component('show-classrooms', () => import('./components/classroom/Index.vue'));
 Vue.component('create-classroom', () => import('./components/classroom/CreateClassroom.vue'));
 Vue.component('join-classroom', require('./components/classroom/JoinClassroom.vue').default);
 Vue.component('clone-classroom', require('./components/classroom/CloneClassroom.vue').default);

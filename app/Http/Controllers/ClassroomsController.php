@@ -497,11 +497,12 @@ class ClassroomsController extends Controller
     public function index()
     {
         $user = auth()->user();
+        settings()->setExtraColumns(['classroom_id' => null]);
 
-        $notifications = auth()->user()->unreadNotifications()->get();
-
+        $notifications = $user->unreadNotifications()->get();
+        $classrooms = $user->classrooms;
         session()->forget('bypass_student');
-        return view('classrooms.index', compact('user', 'notifications'));
+        return view('classrooms.index', compact('classrooms', 'user', 'notifications'));
     }
 
     public function destroy($code)

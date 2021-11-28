@@ -1,7 +1,10 @@
 # Changelog
-## v1.97 Beta (XX/11/2021)
+## v1.97 Beta (28/11/2021)
 ### Added
 - Option to toggle fullscreen in webpages embed attachments.
+
+### Changed
+- Faster classrooms load.
 
 ## v1.96 Beta (25/11/2021)
 ### Added

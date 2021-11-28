@@ -47,7 +47,6 @@ class Classroom extends Model implements HasMedia
         return settings()->get('background', $default);
     }
 
-
     public function users()
     {
         return $this->belongsToMany(User::class)->using(ClassroomUser::class)->withPivot('role', 'id');
