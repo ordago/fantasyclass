@@ -158,7 +158,7 @@ class ClassroomsStudentController extends Controller
         settings()->setExtraColumns(['classroom_id' => $class]);
         settings()->get('state', 0);
         if (settings()->get('state', 0) == 2)
-            abort(403);
+            abort(403, "The classroom is currently disabled :(");
     }
 
     public function getDocuments($class)
