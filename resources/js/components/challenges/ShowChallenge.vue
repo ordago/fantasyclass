@@ -1,5 +1,8 @@
 <template>
   <div class="box card-shadow-s mb-0" v-bind:class="getBackground">
+    <button class="button is-danger closeFs hidden" @click="hideFs()">
+      <i class="fas fa-times"></i>
+    </button>
     <section class="media">
       <div class="media-content is-relative" style="overflow-y: hidden">
         <div class="content">
@@ -357,9 +360,21 @@
                   class="fad ml-3"
                   v-bind:class="{
                     'fa-link': attachment.mode == 0,
-                    'fa-expand': attachment.mode == 1,
+                    'fa-code': attachment.mode == 1,
                   }"
                 ></i>
+                <span
+                  class="ml-3 cursor-pointer"
+                  v-tippy
+                  content="FullScreen"
+                  v-if="
+                    attachment.mode == 1 &&
+                    (attachment.type == 1 || attachment.type == 8)
+                  "
+                  @click="showFs(attachment)"
+                >
+                  <i class="fas fa-expand"></i>
+                </span>
                 <span
                   class="ml-2"
                   v-if="attachment.name && attachment.mode == 1"
@@ -400,6 +415,7 @@
                       allow="geolocation *; microphone *; camera *; midi *; encrypted-media *"
                     ></iframe>
                     <iframe
+                      :id="'iframe-' + attachment.id"
                       v-if="attachment.type == 8"
                       :src="getHp5(attachment.url)"
                       width="1090"
@@ -715,7 +731,12 @@
               <span>{{ trans.get("challenges.add_task") }}</span>
             </a>
             <button
-              v-if="admin && glink && !challengeReactive.task && challenge.is_conquer"
+              v-if="
+                admin &&
+                glink &&
+                !challengeReactive.task &&
+                challenge.is_conquer
+              "
               class="button is-outlined is-success"
               @click="addUpload"
             >
@@ -844,7 +865,7 @@
                 native-value="1"
                 type="is-link"
               >
-                <b-icon icon="expand"></b-icon>
+                <b-icon icon="code"></b-icon>
                 <span>Embedded</span>
               </b-radio-button>
             </div>
@@ -1024,16 +1045,27 @@ export default {
     VueFlip,
   },
   methods: {
+    showFs(attachment) {
+      this.$el.querySelector(".closeFs").classList.remove("hidden");
+      this.$el
+        .querySelector("#iframe-" + attachment.id)
+        .classList.add("fullScreen");
+    },
+    hideFs() {
+      this.$el.querySelector("button.closeFs").classList.add("hidden");
+      this.$el.querySelector("iframe").classList.remove("fullScreen");
+    },
+
     removeTask(task) {
-      axios.delete('/tasks/delete/' + task).then(response => {
+      axios.delete("/tasks/delete/" + task).then((response) => {
         location.reload();
       });
     },
     getDeleteMessage() {
       let message = "";
-        message += `<div><small><span class="tag is-danger cursor-pointer" onclick="removeTask(${
-          this.challengeReactive.task.id
-        })">${this.trans.get("cards.delete")}</span></small></div>`;
+      message += `<div><small><span class="tag is-danger cursor-pointer" onclick="removeTask(${
+        this.challengeReactive.task.id
+      })">${this.trans.get("cards.delete")}</span></small></div>`;
       return message;
     },
     updateFile() {
@@ -1385,7 +1417,9 @@ export default {
               }
             })
             .catch((response) => {
-              this.$toast(this.trans.get('challenges.isOverdue'), {type: 'error'})
+              this.$toast(this.trans.get("challenges.isOverdue"), {
+                type: "error",
+              });
             });
         },
       });
@@ -1462,8 +1496,16 @@ export default {
 };
 </script>
 <style>
+.closeFs {
+  position: fixed !important;
+  right: 20px;
+  top: 5px;
+  z-index: 101;
+}
 .fullScreen {
-      width: 100vw;
-      height: 100vh;
-   }
+  z-index: 100;
+  width: 100vw !important;
+  height: 100vh !important;
+  position: fixed !important;
+}
 </style>

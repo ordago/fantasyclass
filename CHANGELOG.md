@@ -1,4 +1,8 @@
 # Changelog
+## v1.97 Beta (XX/11/2021)
+### Added
+- Option to toggle fullscreen in webpages embed attachments.
+
 ## v1.96 Beta (25/11/2021)
 ### Added
 - Option to remove pet.
