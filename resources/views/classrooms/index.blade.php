@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+ @section('notifications')
+  <notifications :notifications="{{ $notifications ?? '[]' }}" :user="{{ $user }}" type="both"></notifications>
+  @endsection
+
 @section('content')
 <button class="js-push-btn float has-all-centered" style="display: none!important" v-tippy content="Enable notifications"><i class="fa fa-bell my-float fs-2"></i></button>
 @if($user->username == "demo")
