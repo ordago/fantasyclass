@@ -372,6 +372,9 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/videochat/toggle', 'VideochatController@toggle');
         Route::post('/videochat/notify', 'VideochatController@notify');
         Route::post('/videochat/groups', 'VideochatController@updateGroups');
+        
+        Route::get('/{code}/attendance', 'AttendanceController@index');
+
     });
     
     // External

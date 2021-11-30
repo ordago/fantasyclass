@@ -185,6 +185,8 @@ Vue.component('battles', () => import('./components/battles/Battle.vue'));
 
 Vue.component('external', () => import('./components/utils/External.vue'));
 
+Vue.component('attendance', () => import('./components/utils/Attendance.vue'));
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -1,4 +1,11 @@
 # Changelog
+## v1.98 Beta (XX/XX/2021)
+### Added
+~ Attendance
+
+### Required
+- npm i vue-cal
+
 ## v1.97 Beta (28/11/2021)
 ### Added
 - Option to toggle fullscreen in webpages embed attachments.
