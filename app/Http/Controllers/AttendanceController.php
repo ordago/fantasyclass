@@ -16,7 +16,10 @@ class AttendanceController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
 
-        return view('attendance.index', compact('class'));
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $settings = json_encode(["attendance_start" => settings()->get('attendance_start'), "attendance_end" => settings()->get('attendance_end')]);
+
+        return view('attendance.index', compact('class', 'settings'));
 
     }
 }

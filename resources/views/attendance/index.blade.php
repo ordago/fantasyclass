@@ -22,5 +22,5 @@
 @endsection
 
 @section('content')
-<attendance code="{{ $class->code }}"></attendance>
+<attendance code="{{ $class->code }}" :settings="{{ $settings }}"></attendance>
 @endsection
