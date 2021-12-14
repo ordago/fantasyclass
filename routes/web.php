@@ -374,6 +374,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/videochat/groups', 'VideochatController@updateGroups');
         
         Route::get('/{code}/attendance', 'AttendanceController@index');
+        Route::get('/{code}/attendance/get', 'AttendanceController@getEvents');
+        Route::post('/{code}/attendance/createEvent', 'AttendanceController@store');
 
     });
     
