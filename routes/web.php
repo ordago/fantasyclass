@@ -376,7 +376,10 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/attendance', 'AttendanceController@index');
         Route::get('/{code}/attendance/get', 'AttendanceController@getEvents');
         Route::post('/{code}/attendance/createEvent', 'AttendanceController@store');
-
+        
+        Route::get('/{code}/subjects', 'SubjectController@index');
+        Route::post('/{code}/subjects', 'SubjectController@store');
+        
     });
     
     // External

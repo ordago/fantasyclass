@@ -4,13 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Calevent extends Model
+class Subject extends Model
 {
     protected $fillable = [
-        'info',
-        'group',
+        'name',
         'classroom_id',
-        'subject_id',
-        'attendance',
+        'class',
     ];
 }

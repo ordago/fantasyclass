@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Calevent;
 use App\Classroom;
+use App\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -34,28 +35,28 @@ class AttendanceController extends Controller
         
         $group = Calevent::max('group') + 1;
         $times = 1;
-        if($data['event']['repeat'] == 1 && $data['event']['end_date']) {
-            
+        if($data['event']['repeat'] == 1 && $data['event']['end_date']) {            
             $start_date = Carbon::parse($data['event']['date']);
             $end_date = Carbon::parse($data['event']['end_date']);
             $times = $start_date->diffInWeeks($end_date) + 1;
-            // return null;
         }
-        
-        dump($times);
+
+        $subject = Subject::where('classroom_id', $class->id)->where('id', $data['event']['subject'])->firstOrFail();
+        dump(Carbon::parse($data['event']['date']));
         for($i = 0; $i < $times; $i++) {
 
-            $string_start = Carbon::parse($data['event']['date'])->addWeeks($i)->format('Y-m-d') . " " . $start->format('H:i');
-            $string_end = Carbon::parse($data['event']['date'])->addWeeks($i)->format('Y-m-d') . " " . $end->format('H:i');
+            $string_start = Carbon::parse($data['event']['date'])->setTimezone($tz)->addWeeks($i)->format('Y-m-d') . " " . $start->format('H:i');
+            $string_end = Carbon::parse($data['event']['date'])->setTimezone($tz)->addWeeks($i)->format('Y-m-d') . " " . $end->format('H:i');
     
             Calevent::create([
                 'info' => json_encode([
                     'start' => $string_start,
                     'end' => $string_end,
                     'title' => $data['event']['title'],
-                    'class' => 'sport',
+                    'class' => $subject->class,
                 ]),
                 'group' => $group,
+                'subject_id' => $subject->id,
                 'classroom_id' => $class->id,
                 'attendance' => false,
             ]);
@@ -67,7 +68,7 @@ class AttendanceController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
 
-        return $class->calevents;
+        return ['events' => $class->calevents, 'subjects' => $class->subjects];
 
     }
 

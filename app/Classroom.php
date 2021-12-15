@@ -177,10 +177,15 @@ class Classroom extends Model implements HasMedia
     {
         return $this->hasMany(Videochat::class);
     }
-    
+
     public function calevents()
     {
         return $this->hasMany(Calevent::class);
+    }
+    
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
     }
 
     public static function boot()

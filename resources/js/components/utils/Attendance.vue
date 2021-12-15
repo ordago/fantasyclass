@@ -71,10 +71,26 @@
       </div>
     </div>
     <div v-else>
-      <div class="buttons">
-        <button class="button is-success" @click="isModalActive = true">
+      <div class="buttons mb-0">
+        <button
+          v-if="subjects && subjects.length"
+          class="button is-success"
+          @click="isModalActive = true"
+        >
           __ Add event
         </button>
+        <button class="button is-primary" @click="isModalSubjectActive = true">
+          __ Add subject
+        </button>
+      </div>
+      <div class="my-1" v-if="subjects && subjects.length">
+        <span
+          :class="`tag mx-1 ${sub.class}`"
+          v-for="sub in subjects"
+          :key="`subject-${sub.id}`"
+        >
+          {{ sub.name }}
+        </span>
       </div>
       <vue-cal
         ref="vuecal"
@@ -115,9 +131,29 @@
             </b-field>
             <div class="columns mt-3">
               <div class="column is-narrow">
+                <b-field label="__ Subject">
+                  <b-select
+                    v-model="cal_event.subject"
+                    placeholder="__Select a subject"
+                  >
+                    <option
+                      v-for="sub in subjects"
+                      :value="sub.id"
+                      :key="`subjectEvent-${sub.id}`"
+                    >
+                      {{ sub.name }}
+                    </option>
+                  </b-select>
+                </b-field>
+              </div>
+            </div>
+            <div class="columns mt-3">
+              <div class="column is-narrow">
                 <b-field label="__Select a date">
                   <b-datepicker
                     rounded
+                    locale="es-ES"
+                    :first-day-of-week="1"
                     placeholder="Type or select a date..."
                     icon="calendar"
                     v-model="cal_event.date"
@@ -161,6 +197,8 @@
               <div class="column is-narrow">
                 <b-field label="__Max date">
                   <b-datepicker
+                    :first-day-of-week="1"
+                    locale="es-ES"
                     placeholder="__Click to select..."
                     :max-date="maxDate"
                     v-model="cal_event.end_date"
@@ -181,7 +219,7 @@
           <button
             class="button is-primary"
             @click="createEvent"
-            :disabled="cal_event.title == ''"
+            :disabled="cal_event.title == '' || !cal_event.subject"
           >
             {{ trans.get("general.add") }}
           </button>
@@ -190,6 +228,117 @@
             </button> -->
         </footer>
       </div>
+    </b-modal>
+    <b-modal
+      :active.sync="isModalSubjectActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+      <form @submit.prevent="addSubject">
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              {{ trans.get("subject.add_subject") }}
+            </p>
+          </header>
+          <section class="modal-card-body">
+            <b-field :label="trans.get('subject.name')" class="mt-4">
+              <b-input
+                required
+                v-model="subject.name"
+                maxlength="100"
+              ></b-input>
+            </b-field>
+            <b-field>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject1"
+                type="subject1 is-light is-outlined"
+              >
+                <span class="p-1 subject1"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject2"
+                type="subject2 is-light is-outlined"
+              >
+                <span class="p-1 subject2"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject3"
+                type="subject3 is-light is-outlined"
+              >
+                <span class="p-1 subject3"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject4"
+                type="subject4 is-light is-outlined"
+              >
+                <span class="p-1 subject4"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject5"
+                type="subject5 is-light is-outlined"
+              >
+                <span class="p-1 subject5"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject6"
+                type="subject6 is-light is-outlined"
+              >
+                <span class="p-1 subject6"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject7"
+                type="subject7 is-light is-outlined"
+              >
+                <span class="p-1 subject7"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject8"
+                type="subject8 is-light is-outlined"
+              >
+                <span class="p-1 subject8"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject9"
+                type="subject9 is-light is-outlined"
+              >
+                <span class="p-1 subject9"></span>
+              </b-radio-button>
+              <b-radio-button
+                v-model="subject.class"
+                native-value="subject10"
+                type="subject10 is-light is-outlined"
+              >
+                <span class="p-1 subject10"></span>
+              </b-radio-button>
+            </b-field>
+          </section>
+          <footer class="modal-card-foot">
+            <button
+              class="button"
+              type="button"
+              @click="isModalSubjectActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button :disabled="subject.name == ''" class="button is-success">
+              {{ trans.get("general.add") }}
+            </button>
+          </footer>
+        </div>
+      </form>
     </b-modal>
   </div>
 </template>
@@ -214,6 +363,7 @@ export default {
   },
   data: function () {
     return {
+      subjects: null,
       maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       start_h: 8,
       start_m: 0,
@@ -221,10 +371,16 @@ export default {
       end_m: 0,
       isModalActive: false,
       isAttendanceModalActive: false,
+      isModalSubjectActive: false,
       events: [],
       selectedEvent: null,
+      subject: {
+        name: "",
+        class: "subject1",
+      },
       cal_event: {
         title: "",
+        subject: null,
         date: new Date(),
         end_date: this.getNextMonth(),
         event_start_hour: new Date(),
@@ -234,6 +390,21 @@ export default {
     };
   },
   methods: {
+    addSubject() {
+      axios
+        .post(`/classroom/${this.code}/subjects`, {
+          name: this.subject.name,
+          class: this.subject.class,
+        })
+        .then((response) => {
+          this.subjects = response.data;
+          this.isModalSubjectActive = false;
+          this.subject = {
+            name: "",
+            class: "subject1",
+          };
+        });
+    },
     getNextMonth() {
       var now = new Date();
       if (now.getMonth() == 11) {
@@ -250,10 +421,12 @@ export default {
       e.stopPropagation();
     },
     reloadEvents() {
+      this.events = [];
       axios
         .get("/classroom/" + this.code + "/attendance/get")
         .then((response) => {
-          response.data.forEach((element) => {
+          this.subjects = response.data.subjects;
+          response.data.events.forEach((element) => {
             let info = JSON.parse(element.info);
             info.id = element.id;
             info.attendance = element.attendance;
@@ -261,13 +434,17 @@ export default {
             this.events.push(info);
           });
         });
+      this.$forceUpdate();
     },
     createEvent() {
       axios
         .post("/classroom/" + this.code + "/attendance/createEvent", {
           event: this.cal_event,
         })
-        .then((respose) => {});
+        .then((respose) => {
+          this.isModalActive = false;
+          this.reloadEvents();
+        });
     },
     sendSettings() {
       axios.patch("/classroom/" + this.code + "/setting", {
@@ -309,11 +486,60 @@ export default {
 .vuecal__event-content {
   font-style: italic;
 }
-.sport {
-  background-color: salmon;
-  color: white;
+.subject1 {
+  background-color: salmon !important;
+  color: white !important;
+}
+.subject2 {
+  background-color: seagreen !important;
+  color: white !important;
+}
+.subject3 {
+  background-color: royalblue !important;
+  color: white !important;
+}
+.subject4 {
+  background-color: purple !important;
+  color: white !important;
+}
+.subject5 {
+  background-color: peachpuff !important;
+  color: black !important;
+}
+.subject6 {
+  background-color: palegoldenrod !important;
+  color: black !important;
+}
+.subject7 {
+  background-color: orchid !important;
+  color: white !important;
+}
+.subject8 {
+  background-color: maroon !important;
+  color: white !important;
+}
+.subject9 {
+  background-color: lightslategray !important;
+  color: white !important;
+}
+.subject10 {
+  background-color: gold !important;
+  color: white !important;
 }
 .notAttendance {
   opacity: 0.5;
+}
+
+.subject1 is-focused,
+.subject2 is-focused,
+.subject3 is-focused,
+.subject4 is-focused,
+.subject5 is-focused,
+.subject6 is-focused,
+.subject7 is-focused,
+.subject8 is-focused,
+.subject9 is-focused,
+.subject10 is-focused {
+  border: 1px solid black;
 }
 </style>
