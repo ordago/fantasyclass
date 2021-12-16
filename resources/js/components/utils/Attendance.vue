@@ -340,6 +340,119 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isAttendanceModalActive"
+      has-modal-card
+      full-screen
+      v-if="students && selectedEvent"
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            __ Attendance {{ selectedEvent.title }}
+          </p>
+        </header>
+        <section class="modal-card-body is-relative">
+          <div class="mb-3">
+            <b-field label="__Class info">
+              <b-input v-model="cal_event.task"></b-input>
+            </b-field>
+          </div>
+          <div class="columns is-multiline is-flex">
+            <div
+              class="column is-narrow"
+              v-for="student in orderedStudents"
+              :key="`students-${student.id}`"
+            >
+              <div class="border rounded p-2" :class="getBg(student)">
+                <div class="columns">
+                  <div class="column is-narrow">
+                    <img class="rounded" :src="student.avatar" width="48px" />
+                  </div>
+                  <div class="column">
+                    <span class="is-size-3">{{ student.name }}</span>
+                  </div>
+                </div>
+                <div>
+                  <b-field>
+                    <b-radio-button
+                      v-model="student.calevents[0].pivot.type"
+                      :native-value="2"
+                      type="is-danger is-light is-outlined"
+                    >
+                      <b-icon icon="times"></b-icon>
+                      <span>Absence</span>
+                    </b-radio-button>
+
+                    <b-radio-button
+                      v-model="student.calevents[0].pivot.type"
+                      :native-value="1"
+                      type="is-warning is-light is-outlined"
+                    >
+                      <b-icon icon="clock"></b-icon>
+                      <span>Late</span>
+                    </b-radio-button>
+
+                    <b-radio-button
+                      v-model="student.calevents[0].pivot.type"
+                      :native-value="0"
+                      type="is-success is-light is-outlined"
+                    >
+                      <b-icon icon="check"></b-icon>
+
+                      <span>Present</span>
+                    </b-radio-button>
+                  </b-field>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer class="modal-card-foot columns is-multiline">
+          <div class="buttons">
+            <button
+              class="button"
+              type="button"
+              @click="isAttendanceModalActive = false"
+            >
+              {{ trans.get("general.close") }}
+            </button>
+            <button class="button is-success" @click="sendAttendance">
+              <i class="fas fa-save mr-1"></i> {{ trans.get("general.save") }}
+            </button>
+            <button
+              @click="disableAttendance"
+              class="button is-dark"
+              v-tippy="{ placement: 'right', arrow: true }"
+              :content="'__To reenable just save again'"
+              v-if="selectedEvent.attendance == 1"
+            >
+              <i class="fas fa-calendar-times mr-1"></i>__ Disable attendance
+            </button>
+            <b-dropdown
+              position="is-top-right"
+              triggers="hover"
+              aria-role="list"
+            >
+              <template #trigger>
+                <button class="button is-danger">
+                  <i class="fas fa-trash-alt mr-1"></i>
+                  {{ trans.get("general.delete") }}
+                </button>
+              </template>
+
+              <b-dropdown-item @click="deleteEvent(false)" aria-role="listitem"
+                >__Delete only this event</b-dropdown-item
+              >
+              <b-dropdown-item @click="deleteEvent(true)" aria-role="listitem"
+                >__ Delete all series of this event</b-dropdown-item
+              >
+            </b-dropdown>
+          </div>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -363,6 +476,8 @@ export default {
   },
   data: function () {
     return {
+      attendance: null,
+      students: null,
       subjects: null,
       maxDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
       start_h: 8,
@@ -380,6 +495,7 @@ export default {
       },
       cal_event: {
         title: "",
+        task: "",
         subject: null,
         date: new Date(),
         end_date: this.getNextMonth(),
@@ -390,6 +506,58 @@ export default {
     };
   },
   methods: {
+    disableAttendance() {
+      axios
+        .post(`/classroom/${this.code}/attendance/disable`, {
+          event: this.selectedEvent.id,
+        })
+        .then((response) => {
+          this.isAttendanceModalActive = false;
+          this.reloadEvents();
+        });
+    },
+    deleteEvent(all = false) {
+      this.$buefy.dialog.confirm({
+        title: "__Delete event/s",
+        message:
+          "__Are you sure you want to <b>delete</b> the event/s? This action cannot be undone.",
+        confirmText: this.trans.get('general.delete'),
+        type: "is-danger",
+        hasIcon: true,
+        onConfirm: () => {
+          axios
+            .post(`/classroom/${this.code}/attendance/delete`, {
+              event: this.selectedEvent.id,
+              all: all,
+            })
+            .then((response) => {
+              this.isAttendanceModalActive = false;
+              this.reloadEvents();
+            });
+        },
+      });
+    },
+    getBg(student) {
+      switch (student.calevents[0].pivot.type) {
+        case 0:
+          return "has-background-success-light";
+        case 1:
+          return "has-background-warning-light";
+        case 2:
+          return "has-background-danger-light";
+      }
+    },
+    sendAttendance() {
+      axios
+        .post(`/classroom/${this.code}/attendance/save`, {
+          event: this.selectedEvent.id,
+          students: this.students,
+        })
+        .then((response) => {
+          this.isAttendanceModalActive = false;
+          this.reloadEvents();
+        });
+    },
     addSubject() {
       axios
         .post(`/classroom/${this.code}/subjects`, {
@@ -415,8 +583,20 @@ export default {
     },
     onEventClick(event, e) {
       this.selectedEvent = event;
-      this.isAttendanceModalActive = true;
-      console.log(event);
+      axios
+        .post(`/classroom/${this.code}/attendance/info`, {
+          event: event.id,
+        })
+        .then((response) => {
+          this.students = response.data.students;
+          this.students.forEach((student) => {
+            if (student.calevents[0].pivot.type === null)
+              student.calevents[0].pivot.type = 0;
+          });
+          // this.attendance = response.data.attendance;
+          this.isAttendanceModalActive = true;
+        });
+
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation();
     },
@@ -460,6 +640,11 @@ export default {
         value: [this.end_h, this.end_m],
       });
       location.reload();
+    },
+  },
+  computed: {
+    orderedStudents() {
+      return _.orderBy(this.students, "name", "asc");
     },
   },
   components: { VueCal },
@@ -527,7 +712,7 @@ export default {
   color: white !important;
 }
 .notAttendance {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 .subject1 is-focused,
@@ -541,5 +726,9 @@ export default {
 .subject9 is-focused,
 .subject10 is-focused {
   border: 1px solid black;
+}
+
+.dropdown-content {
+  z-index: 100;
 }
 </style>

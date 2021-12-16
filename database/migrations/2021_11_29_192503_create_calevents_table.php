@@ -19,6 +19,7 @@ class CreateCaleventsTable extends Migration
             $table->unsignedBigInteger('classroom_id');
             $table->unsignedBigInteger('group');
             $table->unsignedBigInteger('subject_id');
+            $table->string('task')->nullable();
             $table->boolean('attendance')->default(0);
             $table->timestamps();
         });

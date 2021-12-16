@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Calevent;
 use App\Classroom;
+use App\Student;
 use App\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
 {
@@ -42,7 +44,6 @@ class AttendanceController extends Controller
         }
 
         $subject = Subject::where('classroom_id', $class->id)->where('id', $data['event']['subject'])->firstOrFail();
-        dump(Carbon::parse($data['event']['date']));
         for($i = 0; $i < $times; $i++) {
 
             $string_start = Carbon::parse($data['event']['date'])->setTimezone($tz)->addWeeks($i)->format('Y-m-d') . " " . $start->format('H:i');
@@ -55,6 +56,7 @@ class AttendanceController extends Controller
                     'title' => $data['event']['title'],
                     'class' => $subject->class,
                 ]),
+                'task' => $data['event']['task'],
                 'group' => $group,
                 'subject_id' => $subject->id,
                 'classroom_id' => $class->id,
@@ -63,6 +65,81 @@ class AttendanceController extends Controller
         }
         
         
+    }
+    public function destroy($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'event' => ['numeric', 'required'],
+            'all' => ['boolean', 'required'],
+        ]);
+        
+        $calevent = Calevent::where('id', $data['event'])->where('classroom_id', $class->id)->firstOrFail();
+        if($data['all']) {
+            DB::table('calevents')->where('group', $calevent->group)->delete();
+        } else {
+            $calevent->delete();
+        }
+        
+    }
+    public function info($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'event' => ['numeric', 'required'],
+        ]);
+
+        $students = $class->students()->with(['calevents' => function ($query) use ($data) {
+            $query
+                ->where('calevent_id', '=', $data['event']);
+        }])->get();
+
+        $students->each(function ($student) {
+            if (!count($student->calevents)) {
+                $student->calevents->push(['pivot' => ['type' => null, 'student_id' => $student->id]]);
+            }
+        });
+
+        return ['students' => $students];
+    }
+    public function disable($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'event' => ['numeric', 'required'],
+        ]);
+
+        $calevent = Calevent::where('classroom_id', $class->id)->where('id', $data['event'])->firstOrFail();
+        $calevent->update([
+            'attendance' => false,
+        ]);
+
+        return true;
+
+    }
+    public function storeAttendance($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'students' => ['array', 'required'],
+            'event' => ['numeric', 'required'],
+        ]);
+
+        $calevent = Calevent::where('classroom_id', $class->id)->where('id', $data['event'])->firstOrFail();
+        foreach ($data['students'] as $student) {
+            $studentObj = Student::findOrFail($student['id']);
+            $studentObj->calevents()->sync([$calevent->id => ['type' => $student['calevents'][0]['pivot']['type']]], false);
+        }
+        $calevent->update([
+            'attendance' => true,
+        ]);
+
+        return true;
+
     }
     public function getEvents($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
