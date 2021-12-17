@@ -157,7 +157,7 @@ class AttendanceController extends Controller
         $this->authorize('view', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $settings = json_encode(["attendance_start" => settings()->get('attendance_start'), "attendance_end" => settings()->get('attendance_end')]);
+        $settings = json_encode(["hideWeekends" => settings()->get('hideWeekends', true), "attendance_start" => settings()->get('attendance_start'), "attendance_end" => settings()->get('attendance_end')]);
 
         return view('attendance.index', compact('class', 'settings'));
 

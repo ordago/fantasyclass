@@ -30,5 +30,5 @@
 @endsection
 
 @section('content')
-<attendance code="{{ $class->code }}" :settings="{{ $settings }}"></attendance>
+<attendance ref="attendance" code="{{ $class->code }}" :settings="{{ $settings }}"></attendance>
 @endsection
