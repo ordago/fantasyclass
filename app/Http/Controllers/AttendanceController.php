@@ -8,6 +8,7 @@ use App\Student;
 use App\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class AttendanceController extends Controller
@@ -157,7 +158,7 @@ class AttendanceController extends Controller
         $this->authorize('view', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        $settings = json_encode(["hideWeekends" => settings()->get('hideWeekends', true), "attendance_start" => settings()->get('attendance_start'), "attendance_end" => settings()->get('attendance_end')]);
+        $settings = json_encode(["locale" => Auth::user()->locale,"hideWeekends" => settings()->get('hideWeekends', true), "attendance_start" => settings()->get('attendance_start'), "attendance_end" => settings()->get('attendance_end')]);
 
         return view('attendance.index', compact('class', 'settings'));
 

@@ -29,7 +29,7 @@
       </div>
       <vue-cal
         ref="vuecal"
-        locale="es"
+        :locale="settings.locale"
         :events="events"
         :hide-weekends="hideWeekends"
         :time-from="start_h * 60 + start_m"
@@ -393,7 +393,6 @@
     <b-modal
       :active.sync="isPrefsModalActive"
       has-modal-card
-      full-screen
       :can-cancel="false"
     >
       <div class="modal-card" style="width: auto">
@@ -503,6 +502,7 @@
 import VueCal from "vue-cal";
 import "vue-cal/dist/vuecal.css";
 import "vue-cal/dist/i18n/es.js";
+import "vue-cal/dist/i18n/ca.js";
 // import "vue-cal/dist/drag-and-drop.js";
 
 export default {

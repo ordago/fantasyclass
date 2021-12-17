@@ -52,6 +52,15 @@
         >
           <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
         </a>
+        <a
+          class="link outer_glow has-text-dark pl-0 ml-0 pr-2"
+          v-tippy
+          :content="trans.get('menu.attendance')"
+          v-if="students.length"
+          :href="'/classroom/' + classroom.code + '/attendance'"
+        >
+          <i class="fad fa-calendar-alt outer_glow" style="font-size: 2em"></i>
+        </a>
         <div class="dropdown is-hoverable" style="display: inline-block">
           <span class="dropdown-trigger link outer_glow m-0 p-0">
             <i class="fad fa-random outer_glow" style="font-size: 2em"></i>

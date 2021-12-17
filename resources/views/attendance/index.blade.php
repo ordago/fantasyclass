@@ -18,8 +18,14 @@
     <span>{{ __('menu.attendance') }}</span>
   </a>
 </li>
-<span class="left-auto is-flex tag is-dark">
-  <a class="has-text-light" @click="$refs.attendance.$data.isPrefsModalActive = true">
+<span class="left-auto is-flex">
+  <a class="has-text-light tag is-primary" href="/classroom/{{ $class->code }}/attendance/report">
+    <span class="icon is-small">
+      <i class="mx-2 fas fa-file"></i>
+    </span>
+    <span class="is-hidden-mobile">{{ __('attendance.report') }}</span>
+  </a>
+  <a class="has-text-light ml-1 tag is-dark" @click="$refs.attendance.$data.isPrefsModalActive = true">
     <span class="icon is-small">
       <i class="mx-2 fas fa-cog"></i>
     </span>
