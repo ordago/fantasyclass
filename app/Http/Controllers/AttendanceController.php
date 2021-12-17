@@ -77,12 +77,15 @@ class AttendanceController extends Controller
         
         $calevent = Calevent::where('id', $data['event'])->where('classroom_id', $class->id)->firstOrFail();
         if($data['all']) {
+            DB::table('calevent_student')->whereIn('calevent_id', DB::table('calevents')->where('group', $calevent->group)->get()->pluck('id'))->delete();
             DB::table('calevents')->where('group', $calevent->group)->delete();
         } else {
+            DB::table('calevent_student')->where('calevent_id', $calevent->id)->delete();
             $calevent->delete();
         }
         
     }
+
     public function info($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);

@@ -383,6 +383,7 @@ Route::group(['middleware' => 'language'], function () {
         
         Route::get('/{code}/subjects', 'SubjectController@index');
         Route::post('/{code}/subjects', 'SubjectController@store');
+        Route::delete('/{code}/subject/{id}', 'SubjectController@destroy');
 
     });
     

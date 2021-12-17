@@ -90,6 +90,11 @@
           :key="`subject-${sub.id}`"
         >
           {{ sub.name }}
+          <span
+            class="tag is-danger ml-2 cursor-pointer"
+            @click="deleteSubject(sub.id)"
+            ><i class="fas fa-trash-alt"></i
+          ></span>
         </span>
       </div>
       <vue-cal
@@ -506,6 +511,26 @@ export default {
     };
   },
   methods: {
+    deleteSubject(id) {
+      this.$buefy.dialog.confirm({
+        title: "Deleting account",
+        message:
+          "__ Are you sure you want to <b>delete</b> your account? This action cannot be undone.",
+        confirmText: "Delete subject",
+        type: "is-danger",
+        hasIcon: true,
+        onConfirm: () => {
+          axios
+            .delete(`/classroom/${this.code}/subject/${id}`)
+            .then((response) => {
+              this.$toast(this.trans.get("success_error.delete_success"), {
+                type: "success",
+              });
+              this.reloadEvents();
+            });
+        },
+      });
+    },
     disableAttendance() {
       axios
         .post(`/classroom/${this.code}/attendance/disable`, {
@@ -513,6 +538,9 @@ export default {
         })
         .then((response) => {
           this.isAttendanceModalActive = false;
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
           this.reloadEvents();
         });
     },
@@ -521,7 +549,7 @@ export default {
         title: "__Delete event/s",
         message:
           "__Are you sure you want to <b>delete</b> the event/s? This action cannot be undone.",
-        confirmText: this.trans.get('general.delete'),
+        confirmText: this.trans.get("general.delete"),
         type: "is-danger",
         hasIcon: true,
         onConfirm: () => {
@@ -532,6 +560,9 @@ export default {
             })
             .then((response) => {
               this.isAttendanceModalActive = false;
+              this.$toast(this.trans.get("success_error.delete_success"), {
+                type: "success",
+              });
               this.reloadEvents();
             });
         },
@@ -555,6 +586,9 @@ export default {
         })
         .then((response) => {
           this.isAttendanceModalActive = false;
+          this.$toast(this.trans.get("success_error.update_success"), {
+            type: "success",
+          });
           this.reloadEvents();
         });
     },
@@ -566,6 +600,9 @@ export default {
         })
         .then((response) => {
           this.subjects = response.data;
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
           this.isModalSubjectActive = false;
           this.subject = {
             name: "",
@@ -623,6 +660,9 @@ export default {
         })
         .then((respose) => {
           this.isModalActive = false;
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
           this.reloadEvents();
         });
     },
