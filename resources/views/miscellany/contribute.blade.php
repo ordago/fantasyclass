@@ -62,7 +62,7 @@
 
     body {
       background: url('/img/contribute.png');
-      height: 100vh;
+      background-size: cover;
       color: var(--textDark);
       font-size: 2em;
     }
@@ -72,7 +72,7 @@
     }
 
     .register {
-      margin-top: 10rem;
+      margin-top: 20px;
       background: white;
       border-radius: 10px;
     }
