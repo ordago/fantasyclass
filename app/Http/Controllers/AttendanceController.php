@@ -87,6 +87,19 @@ class AttendanceController extends Controller
         
     }
 
+    public function report($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $students = $class->students()->with('calevents.subject')->get();
+        foreach ($students as $student) {
+            $student->subjects = $class->subjects; 
+        }
+        
+        return view('attendance.report', compact('students', 'class'));
+
+    }
+
     public function info($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
@@ -130,16 +143,17 @@ class AttendanceController extends Controller
 
         $data = request()->validate([
             'students' => ['array', 'required'],
-            'event' => ['numeric', 'required'],
+            'event' => ['array', 'required'],
         ]);
 
-        $calevent = Calevent::where('classroom_id', $class->id)->where('id', $data['event'])->firstOrFail();
+        $calevent = Calevent::where('classroom_id', $class->id)->where('id', $data['event']['id'])->firstOrFail();
         foreach ($data['students'] as $student) {
             $studentObj = Student::findOrFail($student['id']);
             $studentObj->calevents()->sync([$calevent->id => ['type' => $student['calevents'][0]['pivot']['type']]], false);
         }
         $calevent->update([
             'attendance' => true,
+            'task' => $data['event']['task'],
         ]);
 
         return true;

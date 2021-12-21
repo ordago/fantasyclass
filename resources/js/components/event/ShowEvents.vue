@@ -12,64 +12,65 @@
         sort-icon="arrow-up"
         :row-class="(row, index) => isDisabled(row.id) && 'is-disabled'"
       >
-        <template slot-scope="props">
-          <b-table-column
-            field="name"
-            :label="trans.get('events.title')"
-            sortable
-            ><span v-html="trans.get(props.row.title)"></span
-          ></b-table-column>
+        <b-table-column
+          v-slot="props"
+          field="name"
+          :label="trans.get('events.title')"
+          sortable
+          ><span v-html="trans.get(props.row.title)"></span
+        ></b-table-column>
 
-          <b-table-column
-            field="url"
-            :label="trans.get('events.content')"
-            sortable
-            ><span v-html="trans.get(props.row.content)"></span
-          ></b-table-column>
+        <b-table-column
+          v-slot="props"
+          field="url"
+          :label="trans.get('events.content')"
+          sortable
+          ><span v-html="trans.get(props.row.content)"></span
+        ></b-table-column>
 
-          <b-table-column
-            field="settings"
-            :label="trans.get('menu.settings')"
-            centered
-            class="w-100 is-flex has-all-centered"
+        <b-table-column
+          v-slot="props"
+          field="settings"
+          :label="trans.get('menu.settings')"
+          centered
+          class="w-100 is-flex has-all-centered"
+        >
+          <a
+            v-tippy
+            :content="
+              isDisabled(props.row.id)
+                ? trans.get('general.enable')
+                : trans.get('general.disable')
+            "
+            @click.prevent="toggle(props.row.id)"
+            class="button is-small mr-3"
+            :class="{
+              'is-dark': !isDisabled(props.row.id),
+              'is-light': isDisabled(props.row.id),
+            }"
           >
-            <a
-              v-tippy
-              :content="
-                isDisabled(props.row.id)
-                  ? trans.get('general.enable')
-                  : trans.get('general.disable')
-              "
-              @click.prevent="toggle(props.row.id)"
-              class="button is-small mr-3"
-              :class="{
-                'is-dark': !isDisabled(props.row.id),
-                'is-light': isDisabled(props.row.id),
-              }"
-            >
-              <i class="fas fa-eye" v-if="isDisabled(props.row.id)"></i>
-              <i class="fas fa-eye-slash" v-else></i>
-            </a>
-            <button
-              v-tippy
-              :content="trans.get('general.edit')"
-              v-if="props.row.classroom_id != null"
-              @click="editModal(props.row)"
-              class="button is-info is-small mr-3"
-            >
-              <i class="fas fa-edit"></i>
-            </button>
-            <b-button
-              v-tippy
-              :content="trans.get('general.delete')"
-              type="is-danger is-small"
-              v-if="props.row.classroom_id != null"
-              @click="confirmDelete(props.row.id)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </b-button>
-          </b-table-column>
-        </template>
+            <i class="fas fa-eye" v-if="isDisabled(props.row.id)"></i>
+            <i class="fas fa-eye-slash" v-else></i>
+          </a>
+          <button
+            v-tippy
+            :content="trans.get('general.edit')"
+            v-if="props.row.classroom_id != null"
+            @click="editModal(props.row)"
+            class="button is-info is-small mr-3"
+          >
+            <i class="fas fa-edit"></i>
+          </button>
+          <b-button
+            v-tippy
+            :content="trans.get('general.delete')"
+            type="is-danger is-small"
+            v-if="props.row.classroom_id != null"
+            @click="confirmDelete(props.row.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </b-button>
+        </b-table-column>
       </b-table>
     </div>
     <b-modal
@@ -130,7 +131,11 @@
                 :true-value="1"
                 :false-value="-1"
               >
-                {{ event.options[key] == 1 ? trans.get('events.type_win') : trans.get('events.type_lose') }}
+                {{
+                  event.options[key] == 1
+                    ? trans.get("events.type_win")
+                    : trans.get("events.type_lose")
+                }}
               </b-switch>
               <b-input
                 v-else-if="key == 'textOK' || key == 'textKO'"

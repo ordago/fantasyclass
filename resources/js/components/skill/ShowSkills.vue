@@ -30,110 +30,114 @@
       icon-pack="fas"
       sort-icon="arrow-up"
     >
-      <template slot-scope="props">
-        <b-table-column
-          field="icon"
-          style="width: 80px"
-          :label="trans.get('skills.image')"
-          centered
-        >
-          <img class="rounded" @contextmenu.prevent="" :src="props.row.icon" />
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="icon"
+        style="width: 80px"
+        :label="trans.get('skills.image')"
+        centered
+      >
+        <img class="rounded" @contextmenu.prevent="" :src="props.row.icon" />
+      </b-table-column>
 
-        <b-table-column
-          field="title"
-          :label="trans.get('skills.name')"
-          sortable
-          >{{ trans.get(props.row.name) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="title"
+        :label="trans.get('skills.name')"
+        sortable
+        >{{ trans.get(props.row.name) }}</b-table-column
+      >
 
-        <b-table-column
-          field="description"
-          :label="trans.get('skills.description')"
-          sortable
-          >{{ trans.get(props.row.description) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="description"
+        :label="trans.get('skills.description')"
+        sortable
+        >{{ trans.get(props.row.description) }}</b-table-column
+      >
 
-        <b-table-column
-          field="hp"
-          :label="trans.get('skills.type')"
-          sortable
-          centered
-        >
-          {{
-            props.row.type == 0
-              ? trans.get("skills.active")
-              : trans.get("skills.passive")
-          }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="hp"
+        :label="trans.get('skills.type')"
+        sortable
+        centered
+      >
+        {{
+          props.row.type == 0
+            ? trans.get("skills.active")
+            : trans.get("skills.passive")
+        }}
+      </b-table-column>
 
-        <b-table-column
-          field="hp"
-          :label="trans.get('skills.type')"
-          sortable
-          centered
-          class="has-all-centered"
+      <b-table-column
+        v-slot="props"
+        field="hp"
+        :label="trans.get('skills.type')"
+        sortable
+        centered
+        class="has-all-centered"
+      >
+        <span
+          v-for="(value, key, index) in props.row.properties"
+          :key="index"
+          class="tag is-dark m-1"
         >
-          <span
-            v-for="(value, key, index) in props.row.properties"
-            :key="index"
-            class="tag is-dark m-1"
-          >
-            <span v-if="key == 'type'">
-              <i
-                class="mx-0 my-0"
-                :class="{
-                  'fas fa-hand-point-up': value == 'common',
-                  'fas fa-heart':
-                    value == 'heal_passive' ||
-                    value == 'heal_self' ||
-                    value == 'heal_group' ||
-                    value == 'heal_classroom',
-                  'fas fa-user-secret':
-                    value == 'steal_money' || value == 'steal_xp',
-                  'fas fa-skull-crossbones': value == 'protection_death',
-                  'fas fa-shield-alt':
-                    value == 'protection' || value == 'protection_steal',
-                  'fak fa-deck': value == 'cards',
-                  'fas fa-undo': value == 'undo_action',
-                }"
-              ></i>
-
-              <i
-                class="my-0 ml-1"
-                v-if="
+          <span v-if="key == 'type'">
+            <i
+              class="mx-0 my-0"
+              :class="{
+                'fas fa-hand-point-up': value == 'common',
+                'fas fa-heart':
+                  value == 'heal_passive' ||
                   value == 'heal_self' ||
-                  value == 'heal_classroom' ||
                   value == 'heal_group' ||
-                  value == 'protection_steal'
-                "
-                :class="{
-                  'fas fa-user': value == 'heal_self',
-                  'fas fa-users': value == 'heal_group',
-                  'fas fa-chalkboard': value == 'heal_classroom',
-                  'fas fa-user-secret': value == 'protection_steal',
-                }"
-              ></i>
-            </span>
-            <span v-else>
-              <span v-html="trans.get('skills.' + key)"></span>: {{ value }}
-            </span>
-          </span>
-        </b-table-column>
+                  value == 'heal_classroom',
+                'fas fa-user-secret':
+                  value == 'steal_money' || value == 'steal_xp',
+                'fas fa-skull-crossbones': value == 'protection_death',
+                'fas fa-shield-alt':
+                  value == 'protection' || value == 'protection_steal',
+                'fak fa-deck': value == 'cards',
+                'fas fa-undo': value == 'undo_action',
+              }"
+            ></i>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('menu.settings')"
-          centered
-        >
-          <a class="button is-info is-small" @click="editSkill(props.row)">
-            <i class="fas fa-edit"></i>
-          </a>
-          <b-button type="is-danger is-small" @click="deleteItem(props.row.id)">
-            <i class="fas fa-trash-alt"></i>
-          </b-button>
-        </b-table-column>
-      </template>
+            <i
+              class="my-0 ml-1"
+              v-if="
+                value == 'heal_self' ||
+                value == 'heal_classroom' ||
+                value == 'heal_group' ||
+                value == 'protection_steal'
+              "
+              :class="{
+                'fas fa-user': value == 'heal_self',
+                'fas fa-users': value == 'heal_group',
+                'fas fa-chalkboard': value == 'heal_classroom',
+                'fas fa-user-secret': value == 'protection_steal',
+              }"
+            ></i>
+          </span>
+          <span v-else>
+            <span v-html="trans.get('skills.' + key)"></span>: {{ value }}
+          </span>
+        </span>
+      </b-table-column>
+
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('menu.settings')"
+        centered
+      >
+        <a class="button is-info is-small" @click="editSkill(props.row)">
+          <i class="fas fa-edit"></i>
+        </a>
+        <b-button type="is-danger is-small" @click="deleteItem(props.row.id)">
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+      </b-table-column>
     </b-table>
 
     <b-modal

@@ -380,6 +380,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/attendance/save', 'AttendanceController@storeAttendance');
         Route::post('/{code}/attendance/disable', 'AttendanceController@disable');
         Route::post('/{code}/attendance/delete', 'AttendanceController@destroy');
+        Route::get('/{code}/attendance/report', 'AttendanceController@report');
         
         Route::get('/{code}/subjects', 'SubjectController@index');
         Route::post('/{code}/subjects', 'SubjectController@store');

@@ -293,7 +293,7 @@
         <section class="modal-card-body is-relative">
           <div class="mb-3">
             <b-field label="__Class info">
-              <b-input v-model="cal_event.task"></b-input>
+              <b-input v-model="selectedEvent.task"></b-input>
             </b-field>
           </div>
           <div class="columns is-multiline is-flex">
@@ -369,7 +369,6 @@
             </button>
             <b-dropdown
               position="is-top-right"
-              triggers="hover"
               aria-role="list"
             >
               <template #trigger>
@@ -543,9 +542,9 @@ export default {
         name: "",
         class: "subject1",
       },
+      task: "",
       cal_event: {
         title: "",
-        task: "",
         subject: null,
         date: new Date(),
         end_date: this.getNextMonth(),
@@ -633,7 +632,7 @@ export default {
     sendAttendance() {
       axios
         .post(`/classroom/${this.code}/attendance/save`, {
-          event: this.selectedEvent.id,
+          event: this.selectedEvent,
           students: this.students,
         })
         .then((response) => {
@@ -699,6 +698,7 @@ export default {
             let info = JSON.parse(element.info);
             info.id = element.id;
             info.attendance = element.attendance;
+            info.task = element.task;
             if (!info.attendance) info.class = info.class + " notAttendance";
             this.events.push(info);
           });

@@ -20,62 +20,62 @@
         sort-icon="arrow-up"
         :row-class="(row, index) => row.id == mapSelected && 'is-info'"
       >
-        <template slot-scope="props">
-          <b-table-column
-            field="name"
-            :label="trans.get('maps.name')"
-            sortable
-            >{{ props.row.name }}</b-table-column
-          >
+        <b-table-column
+          v-slot="props"
+          field="name"
+          :label="trans.get('maps.name')"
+          sortable
+          >{{ props.row.name }}</b-table-column
+        >
 
-          <b-table-column field="url" label="Url" sortable>{{
-            props.row.url
-          }}</b-table-column>
+        <b-table-column v-slot="props" field="url" label="Url" sortable>{{
+          props.row.url
+        }}</b-table-column>
 
-          <b-table-column
-            field="settings"
-            :label="trans.get('menu.settings')"
-            centered
-            class="w-100 is-flex has-all-centered"
+        <b-table-column
+          v-slot="props"
+          field="settings"
+          :label="trans.get('menu.settings')"
+          centered
+          class="w-100 is-flex has-all-centered"
+        >
+          <b-button
+            v-tippy
+            :content="trans.get('maps.preview')"
+            type="is-dark is-small"
+            @click="
+              mapFullScreen(props.row.name, getURLRefactoring(props.row.url))
+            "
           >
-            <b-button
-              v-tippy
-              :content="trans.get('maps.preview')"
-              type="is-dark is-small"
-              @click="
-                mapFullScreen(props.row.name, getURLRefactoring(props.row.url))
-              "
-            >
-              <i class="fas fa-eye"></i>
-            </b-button>
-            <b-button
-              v-tippy
-              :content="trans.get('maps.set_active')"
-              type="is-primary is-small ml-3"
-              v-if="props.row.id != mapSelected"
-              @click="confirmActive(props.row.id)"
-            >
-              <i class="fas fa-map-marker-check"></i>
-            </b-button>
-            <i class="fal fa-ellipsis-v fas fa-lg px-3"></i>
-            <a
-              v-tippy
-              :content="trans.get('general.edit')"
-              :href="'/classroom/' + code + '/maps/' + props.row.id"
-              class="button is-info is-small mr-3"
-            >
-              <i class="fas fa-edit"></i>
-            </a>
-            <b-button
-              v-tippy
-              :content="trans.get('general.delete')"
-              type="is-danger is-small"
-              @click="confirmDelete(props.row.id)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </b-button>
-          </b-table-column>
-        </template>
+            <i class="fas fa-eye"></i>
+          </b-button>
+          <b-button
+            v-tippy
+            :content="trans.get('maps.set_active')"
+            type="is-primary is-small ml-3"
+            v-if="props.row.id != mapSelected"
+            @click="confirmActive(props.row.id)"
+          >
+            <i class="fas fa-map-marker-check"></i>
+          </b-button>
+          <i class="fal fa-ellipsis-v fas fa-lg px-3"></i>
+          <a
+            v-tippy
+            :content="trans.get('general.edit')"
+            :href="'/classroom/' + code + '/maps/' + props.row.id"
+            class="button is-info is-small mr-3"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <b-button
+            v-tippy
+            :content="trans.get('general.delete')"
+            type="is-danger is-small"
+            @click="confirmDelete(props.row.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </b-button>
+        </b-table-column>
       </b-table>
     </div>
     <b-modal
@@ -214,9 +214,7 @@
           </p>
           <p class="card-footer-item mb-0 has-background-dark rounded">
             <span>
-              <span
-                class="has-text-light"
-                target="_blank"
+              <span class="has-text-light" target="_blank"
                 ><i class="fad fa-image"></i> By Jordi Hernandez</span
               >
             </span>
@@ -356,7 +354,7 @@ td [data-label="Url"] {
   top: 0;
   left: 0;
   z-index: -1;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .elem {

@@ -18,4 +18,7 @@ class Calevent extends Model
     public function students() {
         return $this->belongsToMany(Student::class)->withPivot('type');
     }
+    public function subject() {
+        return $this->belongsTo(Subject::class);
+    }
 }
