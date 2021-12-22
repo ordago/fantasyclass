@@ -294,6 +294,10 @@ class StudentController extends Controller
         $student->load(['logEntries' => function($query) {
             $query->orderByDesc('id')->take(100);
         }]);
+
+        $student->load('calevents.subject');
+        $student->subjects = $class->subjects;
+        
         return view('students.show', compact('student', 'section', 'shop', 'class', 'admin', 'items', 'challenges', 'cards', 'evaluation', 'settings', 'allcards'));
     }
 

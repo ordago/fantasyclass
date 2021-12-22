@@ -389,6 +389,8 @@ class SettingsController extends Controller
                 $values[2] = request()->value[3] - request()->value[2];
                 $values[3] = request()->value[4] - request()->value[3];
                 $value = settings()->set(request()->prop, json_encode($values));
+            } else if(request()->prop == "attendance_start" || request()->prop == "attendance_end") {
+                $value = settings()->set(request()->prop, json_encode(request()->value));
             } else {
                 $value = settings()->set(request()->prop, request()->value);
             }

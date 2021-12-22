@@ -91,61 +91,61 @@
         cell-class="align-right"
         sort-icon="arrow-up"
       >
-        <template slot-scope="props">
-          <b-table-column
-            field="description"
-            :label="trans.get('evaluation.description')"
-            sortable
-            >{{ props.row.description }}</b-table-column
-          >
+        <b-table-column
+          v-slot="props"
+          field="description"
+          :label="trans.get('evaluation.description')"
+          sortable
+          >{{ props.row.description }}</b-table-column
+        >
 
-          <b-table-column
-            field="tags"
-            :label="trans.get('evaluation.tags')"
-            sortable
+        <b-table-column
+          v-slot="props"
+          field="tags"
+          :label="trans.get('evaluation.tags')"
+          sortable
+        >
+          <span
+            class="tag is-dark mr-2"
+            v-for="tag in props.row.tags"
+            :key="tag.id"
+            v-tippy
+            :content="trans.get('evaluation.weight') + ': ' + tag.pivot.weight"
+            >{{ tag.short }}</span
           >
-            <span
-              class="tag is-dark mr-2"
-              v-for="tag in props.row.tags"
-              :key="tag.id"
-              v-tippy
-              :content="
-                trans.get('evaluation.weight') + ': ' + tag.pivot.weight
-              "
-              >{{ tag.short }}</span
-            >
-          </b-table-column>
+        </b-table-column>
 
-          <b-table-column
-            field="settings"
-            :label="trans.get('menu.settings')"
-            centered
-            class="w-100 is-flex has-all-centered"
+        <b-table-column
+          v-slot="props"
+          field="settings"
+          :label="trans.get('menu.settings')"
+          centered
+          class="w-100 is-flex has-all-centered"
+        >
+          <a
+            :href="'/classroom/evaluation/' + props.row.id + '/grade'"
+            class="button is-dark is-small mr-3"
           >
-            <a
-              :href="'/classroom/evaluation/' + props.row.id + '/grade'"
-              class="button is-dark is-small mr-3"
-            >
-              <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }} <i class="fas fa-users ml-1" v-if="props.row.subtype == 1"></i>
-            </a>
-            <b-button
-              v-tippy
-              :content="trans.get('general.edit')"
-              type="is-info is-small mr-1"
-              @click="editLine(props.row)"
-            >
-              <i class="fas fa-edit"></i>
-            </b-button>
-            <b-button
-              v-tippy
-              :content="trans.get('general.delete')"
-              type="is-danger is-small"
-              @click="deleteLine(props.row.id)"
-            >
-              <i class="fas fa-trash-alt"></i>
-            </b-button>
-          </b-table-column>
-        </template>
+            <i class="fad fa-pencil"></i> {{ trans.get("evaluation.grade") }}
+            <i class="fas fa-users ml-1" v-if="props.row.subtype == 1"></i>
+          </a>
+          <b-button
+            v-tippy
+            :content="trans.get('general.edit')"
+            type="is-info is-small mr-1"
+            @click="editLine(props.row)"
+          >
+            <i class="fas fa-edit"></i>
+          </b-button>
+          <b-button
+            v-tippy
+            :content="trans.get('general.delete')"
+            type="is-danger is-small"
+            @click="deleteLine(props.row.id)"
+          >
+            <i class="fas fa-trash-alt"></i>
+          </b-button>
+        </b-table-column>
       </b-table>
     </div>
 
@@ -293,7 +293,10 @@
                 </option>
               </b-select>
             </b-field>
-            <b-field :label="trans.get('evaluation.subtype')" v-if="line.type == 1">
+            <b-field
+              :label="trans.get('evaluation.subtype')"
+              v-if="line.type == 1"
+            >
               <b-select v-model="line.subtype" expanded>
                 <option value="0">{{ trans.get("evaluation.teacher") }}</option>
                 <option value="1" v-if="groups && groups.length">
@@ -302,7 +305,7 @@
                 <option value="2">
                   {{ trans.get("evaluation.autoeval") }}
                 </option>
-                <option value="3"  v-if="groups && groups.length">
+                <option value="3" v-if="groups && groups.length">
                   {{ trans.get("evaluation.autocoeval") }}
                 </option>
               </b-select>

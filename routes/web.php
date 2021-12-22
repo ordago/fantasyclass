@@ -372,6 +372,20 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/videochat/toggle', 'VideochatController@toggle');
         Route::post('/videochat/notify', 'VideochatController@notify');
         Route::post('/videochat/groups', 'VideochatController@updateGroups');
+        
+        Route::get('/{code}/attendance', 'AttendanceController@index');
+        Route::get('/{code}/attendance/get', 'AttendanceController@getEvents');
+        Route::post('/{code}/attendance/createEvent', 'AttendanceController@store');
+        Route::post('/{code}/attendance/info', 'AttendanceController@info');
+        Route::post('/{code}/attendance/save', 'AttendanceController@storeAttendance');
+        Route::post('/{code}/attendance/disable', 'AttendanceController@disable');
+        Route::post('/{code}/attendance/delete', 'AttendanceController@destroy');
+        Route::get('/{code}/attendance/report', 'AttendanceController@report');
+        
+        Route::get('/{code}/subjects', 'SubjectController@index');
+        Route::post('/{code}/subjects', 'SubjectController@store');
+        Route::delete('/{code}/subject/{id}', 'SubjectController@destroy');
+
     });
     
     // External

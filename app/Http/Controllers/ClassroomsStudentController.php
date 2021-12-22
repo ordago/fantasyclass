@@ -844,6 +844,9 @@ class ClassroomsStudentController extends Controller
         $student->load(['logEntries' => function ($query) {
             $query->orderByDesc('id')->take(100);
         }]);
+
+        $student->load('calevents.subject');
+        $student->subjects = $class->subjects;
         return view('studentsview.show', compact('student', 'section', 'docs', 'videochats', 'students_money', 'class', 'admin', 'shop', 'challenges', 'cards', 'evaluation', 'settings', 'chat', 'showChat', 'pets', 'notifications'));
     }
 

@@ -7,14 +7,22 @@
           class="button is-link"
           >{{ trans.get("badges.add") }}</a
         >
-            <import-from-class :code="code" import-type="badges"></import-from-class>
-
+        <import-from-class
+          :code="code"
+          import-type="badges"
+        ></import-from-class>
       </div>
     </div>
 
     <div class="my-3">
-      <h4 class="is-size-4 mb-1 ml-2">{{ trans.get('badges.base_theme') }}</h4>
-      <img @click="changeDefault(index)" :class="{ 'selected' : getSelected(index) }" :src="'/img/badges/badge_'+ (index - 1) +'.png'" v-for="index in 18" :key="index">
+      <h4 class="is-size-4 mb-1 ml-2">{{ trans.get("badges.base_theme") }}</h4>
+      <img
+        @click="changeDefault(index)"
+        :class="{ selected: getSelected(index) }"
+        :src="'/img/badges/badge_' + (index - 1) + '.png'"
+        v-for="index in 18"
+        :key="index"
+      />
     </div>
 
     <b-table
@@ -24,83 +32,91 @@
       icon-pack="fas"
       sort-icon="arrow-up"
     >
-      <template slot-scope="props">
-        <b-table-column field="icon" style="width:80px" :label="trans.get('badges.icon')" centered>
-          <ShowBadge :admin="false" :badge="props.row"></ShowBadge>
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="icon"
+        style="width: 80px"
+        :label="trans.get('badges.icon')"
+        centered
+      >
+        <ShowBadge :admin="false" :badge="props.row"></ShowBadge>
+      </b-table-column>
 
-        <b-table-column
-          field="title"
-          :label="trans.get('badges.title')"
-          sortable
-          >{{ trans.get(props.row.title) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="title"
+        :label="trans.get('badges.title')"
+        sortable
+        >{{ trans.get(props.row.title) }}</b-table-column
+      >
 
-        <b-table-column
-          field="description"
-          :label="trans.get('badges.description')"
-          sortable
-          >{{ trans.get(props.row.description) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="description"
+        :label="trans.get('badges.description')"
+        sortable
+        >{{ trans.get(props.row.description) }}</b-table-column
+      >
 
-        <b-table-column
-          field="hp"
-          :label="trans.get('badges.hp')"
-          sortable
-          centered
-        >
-          <i class="fas fa-heart"></i>
-          {{ props.row.hp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="hp"
+        :label="trans.get('badges.hp')"
+        sortable
+        centered
+      >
+        <i class="fas fa-heart"></i>
+        {{ props.row.hp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('badges.experience')"
-          sortable
-          centered
-        >
-          <i class="fas fa-fist-raised"></i>
-          {{ props.row.xp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('badges.experience')"
+        sortable
+        centered
+      >
+        <i class="fas fa-fist-raised"></i>
+        {{ props.row.xp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('badges.gold')"
-          sortable
-          centered
-        >
-          <i class="fas fa-coins"></i>
-          {{ props.row.gold }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('badges.gold')"
+        sortable
+        centered
+      >
+        <i class="fas fa-coins"></i>
+        {{ props.row.gold }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('menu.settings')"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('menu.settings')"
+        centered
+      >
+        <a
+          :href="'/classroom/' + code + '/badges/' + props.row.id"
+          class="button is-info is-small"
         >
-          <a
-            :href="'/classroom/' + code + '/badges/' + props.row.id"
-            class="button is-info is-small"
-          >
-            <i class="fas fa-edit"></i>
-          </a>
-          <b-button
-            type="is-danger is-small"
-            @click="confirmDelete(props.row.id)"
-          >
-            <i class="fas fa-trash-alt"></i>
-          </b-button>
-        </b-table-column>
-      </template>
+          <i class="fas fa-edit"></i>
+        </a>
+        <b-button
+          type="is-danger is-small"
+          @click="confirmDelete(props.row.id)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+      </b-table-column>
     </b-table>
   </section>
 </template>
 
 <script>
-
 import ShowBadge from "./ShowBadge.vue";
 const ImportFromClass = () => import("../utils/ImportFromClass.vue");
-
 
 export default {
   props: ["badges", "code", "background"],
@@ -128,11 +144,15 @@ export default {
   },
   methods: {
     changeDefault(index) {
-      axios.patch('/classroom/' + this.code + '/setting', {action: 'update', prop: 'badge_background', value: '/img/badges/badge_' + (index-1) + ".png" })
+      axios.patch("/classroom/" + this.code + "/setting", {
+        action: "update",
+        prop: "badge_background",
+        value: "/img/badges/badge_" + (index - 1) + ".png",
+      });
       location.reload();
     },
     getSelected(index) {
-      if(this.background == '/img/badges/badge_' + (index -1) + ".png") {
+      if (this.background == "/img/badges/badge_" + (index - 1) + ".png") {
         return true;
       }
       return false;

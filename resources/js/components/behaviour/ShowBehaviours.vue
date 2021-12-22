@@ -36,91 +36,95 @@
     <b-table
       v-if="data.length"
       :data="data"
-      :default-sort="['hp', 'desc']"
       icon-pack="fas"
       sort-icon="arrow-up"
     >
-      <template slot-scope="props">
-        <b-table-column
-          field="icon"
-          :label="trans.get('behaviours.icon')"
-          centered
+      <b-table-column
+        field="icon"
+        :label="trans.get('behaviours.icon')"
+        centered
+        v-slot="props"
+      >
+        <span
+          class="tag"
+          v-bind:class="[
+            props.row.xp + props.row.hp + props.row.gold >= 0
+              ? 'is-success'
+              : 'is-danger',
+          ]"
         >
-          <span
-            class="tag"
-            v-bind:class="[
-              props.row.xp + props.row.hp + props.row.gold >= 0
-                ? 'is-success'
-                : 'is-danger',
-            ]"
-          >
-            <i :class="props.row.icon"></i>
-          </span>
-        </b-table-column>
+          <i :class="props.row.icon"></i>
+        </span>
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('behaviours.name')"
-          sortable
-          >{{ trans.get(props.row.name) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('behaviours.name')"
+        sortable
+        >{{ trans.get(props.row.name) }}</b-table-column
+      >
 
-        <b-table-column
-          field="custom_text"
-          :label="trans.get('behaviours.custom_text')"
-          sortable
-          >{{ trans.get(props.row.custom_text) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="custom_text"
+        :label="trans.get('behaviours.custom_text')"
+        sortable
+        >{{ trans.get(props.row.custom_text) }}</b-table-column
+      >
 
-        <b-table-column
-          field="hp"
-          :label="trans.get('behaviours.hp')"
-          sortable
-          centered
-        >
-          <i class="fas fa-heart"></i>
-          {{ props.row.hp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="hp"
+        :label="trans.get('behaviours.hp')"
+        sortable
+        centered
+      >
+        <i class="fas fa-heart"></i>
+        {{ props.row.hp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('behaviours.experience')"
-          sortable
-          centered
-        >
-          <i class="fas fa-fist-raised"></i>
-          {{ props.row.xp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('behaviours.experience')"
+        sortable
+        centered
+      >
+        <i class="fas fa-fist-raised"></i>
+        {{ props.row.xp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('behaviours.gold')"
-          sortable
-          centered
-        >
-          <i class="fas fa-coins"></i>
-          {{ props.row.gold }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('behaviours.gold')"
+        sortable
+        centered
+      >
+        <i class="fas fa-coins"></i>
+        {{ props.row.gold }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('menu.settings')"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('menu.settings')"
+        centered
+      >
+        <a
+          :href="'/classroom/' + code + '/behaviours/' + props.row.id"
+          class="button is-info is-small"
         >
-          <a
-            :href="'/classroom/' + code + '/behaviours/' + props.row.id"
-            class="button is-info is-small"
-          >
-            <i class="fas fa-edit"></i>
-          </a>
-          <b-button
-            type="is-danger is-small"
-            @click="confirmDelete(props.row.id)"
-          >
-            <i class="fas fa-trash-alt"></i>
-          </b-button>
-        </b-table-column>
-      </template>
+          <i class="fas fa-edit"></i>
+        </a>
+        <b-button
+          type="is-danger is-small"
+          @click="confirmDelete(props.row.id)"
+        >
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+      </b-table-column>
     </b-table>
   </section>
 </template>
@@ -150,6 +154,12 @@ export default {
         XP: "xp",
         Gold: "gold",
       },
+      columns: [
+        {
+          field: "icon",
+          label: `<i class="${this.trans.get("behaviours.icon")}"></i>`,
+        },
+      ],
       sortIcon: "arrow-down",
       sortIconSize: "is-small",
     };

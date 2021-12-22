@@ -13,6 +13,16 @@
       ></apexchart>
     </div>
 
+    <div class="mb-1" v-if="type == 'attendance'">
+      <button class="cursor-pointer tag is-dark noprint" @click="print">
+        <i class="fas fa-print"></i>
+      </button>
+      <span class="tag is-success is-light">{{ trans.get('attendance.present') }}</span>
+      <span class="tag is-warning is-light">{{ trans.get('attendance.late') }}</span>
+      <span class="tag is-danger is-light">{{ trans.get('attendance.absence') }}</span>
+      <span class="tag is-light">Total</span>
+    </div>
+
     <div class="columns" v-if="type == 'behaviours'">
       <div class="column">
         <input type="date" class="input is-rounded" v-model="dateStart" />
@@ -30,181 +40,245 @@
       icon-pack="fas"
       sort-icon="arrow-up"
     >
-      <template slot-scope="props">
-        <b-table-column
-          field="icon"
-          :label="trans.get('students.icon')"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="icon"
+        :label="trans.get('students.icon')"
+        centered
+      >
+        <span
+          class="tag is-light"
+          v-bind:class="[
+            props.row.xp + props.row.hp + props.row.gold >= 0
+              ? 'is-success'
+              : 'is-danger',
+          ]"
         >
-          <span
-            class="tag is-light"
-            v-bind:class="[
-              props.row.xp + props.row.hp + props.row.gold >= 0
-                ? 'is-success'
-                : 'is-danger',
-            ]"
-          >
-            <i :class="props.row.icon"></i>
-          </span>
-        </b-table-column>
+          <i :class="props.row.icon"></i>
+        </span>
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('students.name')"
-          centered
-          sortable
-          >{{ trans.get(props.row.name) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.name')"
+        centered
+        sortable
+        >{{ trans.get(props.row.name) }}</b-table-column
+      >
 
-        <b-table-column
-          field="created_at"
-          :custom-sort="sortByDate"
-          :label="trans.get('students.created_at')"
-          sortable
-          centered
-          >{{ getDate(props.row.pivot.created_at) }}</b-table-column
-        >
+      <b-table-column
+        v-slot="props"
+        field="created_at"
+        :custom-sort="sortByDate"
+        :label="trans.get('students.created_at')"
+        sortable
+        centered
+        >{{ getDate(props.row.pivot.created_at) }}</b-table-column
+      >
 
-        <b-table-column
-          field="hp"
-          :label="trans.get('students.hp')"
-          centered
-          sortable
-        >
-          <i class="fas fa-heart"></i>
-          {{ props.row.hp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="hp"
+        :label="trans.get('students.hp')"
+        centered
+        sortable
+      >
+        <i class="fas fa-heart"></i>
+        {{ props.row.hp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('students.xp')"
-          sortable
-          centered
-        >
-          <i class="fas fa-fist-raised"></i>
-          {{ props.row.xp }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.xp')"
+        sortable
+        centered
+      >
+        <i class="fas fa-fist-raised"></i>
+        {{ props.row.xp }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('students.gold')"
-          sortable
-          centered
-        >
-          <i class="fas fa-coins"></i>
-          {{ props.row.gold }}
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.gold')"
+        sortable
+        centered
+      >
+        <i class="fas fa-coins"></i>
+        {{ props.row.gold }}
+      </b-table-column>
 
-        <b-table-column
-          field="name"
-          :label="trans.get('students.settings')"
-          v-if="admin"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.settings')"
+        v-if="admin"
+        centered
+      >
+        <b-button
+          type="is-danger is-small"
+          @click="
+            confirmDelete('behaviour', props.row, props.row.pivot.created_at)
+          "
         >
-          <b-button
-            type="is-danger is-small"
-            @click="
-              confirmDelete('behaviour', props.row, props.row.pivot.created_at)
-            "
-          >
-            <i class="fas fa-trash-alt"></i>
-          </b-button>
-        </b-table-column>
-      </template>
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+      </b-table-column>
     </b-table>
     <b-table
-      v-else
+      v-else-if="type == 'log'"
       :data="filteredLogEntries"
       default-sort-direction="asc"
       default-sort="created_at"
       icon-pack="fas"
       sort-icon="arrow-up"
     >
-      <template slot-scope="props">
-        <b-table-column
-          field="type"
-          :label="trans.get('students.type')"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="type"
+        :label="trans.get('students.type')"
+        centered
+      >
+        <span
+          class="tag is-light"
+          v-bind:class="[
+            props.row.value > 0 ||
+            props.row.type == 'card_use' ||
+            props.row.type == 'card_assign'
+              ? 'is-success'
+              : 'is-danger',
+          ]"
         >
-          <span
-            class="tag is-light"
-            v-bind:class="[
-              props.row.value > 0 ||
-              props.row.type == 'card_use' ||
-              props.row.type == 'card_assign'
-                ? 'is-success'
-                : 'is-danger',
-            ]"
-          >
-            <span v-if="props.row.type == 'xp'"
-              ><i class="fas fa-fist-raised colored"></i
-            ></span>
-            <span v-else-if="props.row.type == 'gold'"
-              ><i class="fas fa-coins colored"></i
-            ></span>
-            <span v-else-if="props.row.type == 'hp'"
-              ><i class="fas fa-heart colored"></i
-            ></span>
-            <span v-else-if="props.row.type == 'card_use'"
-              ><i class="fak fa-deck colored"></i
-            ></span>
-            <span v-else-if="props.row.type == 'card_delete'"
-              ><i class="fak fa-deck colored"></i
-            ></span>
-            <span v-else-if="props.row.type == 'card_assign'"
-              ><i class="fak fa-deck colored"></i
-            ></span>
-          </span>
-        </b-table-column>
+          <span v-if="props.row.type == 'xp'"
+            ><i class="fas fa-fist-raised colored"></i
+          ></span>
+          <span v-else-if="props.row.type == 'gold'"
+            ><i class="fas fa-coins colored"></i
+          ></span>
+          <span v-else-if="props.row.type == 'hp'"
+            ><i class="fas fa-heart colored"></i
+          ></span>
+          <span v-else-if="props.row.type == 'card_use'"
+            ><i class="fak fa-deck colored"></i
+          ></span>
+          <span v-else-if="props.row.type == 'card_delete'"
+            ><i class="fak fa-deck colored"></i
+          ></span>
+          <span v-else-if="props.row.type == 'card_assign'"
+            ><i class="fak fa-deck colored"></i
+          ></span>
+        </span>
+      </b-table-column>
 
-        <b-table-column
-          field="value"
-          centered
-          :label="trans.get('students.value')"
-          sortable
-          ><span v-if="props.row.value">{{ props.row.value }}</span>
-          <span v-else>----</span>
-        </b-table-column>
+      <b-table-column
+        v-slot="props"
+        field="value"
+        centered
+        :label="trans.get('students.value')"
+        sortable
+        ><span v-if="props.row.value">{{ props.row.value }}</span>
+        <span v-else>----</span>
+      </b-table-column>
 
-        <b-table-column
-          field="created_at"
-          :custom-sort="sortByDate"
-          :label="trans.get('students.created_at')"
-          sortable
-          centered
-          >{{ getDate(props.row.created_at) }}</b-table-column
+      <b-table-column
+        v-slot="props"
+        field="created_at"
+        :custom-sort="sortByDate"
+        :label="trans.get('students.created_at')"
+        sortable
+        centered
+        >{{ getDate(props.row.created_at) }}</b-table-column
+      >
+
+      <b-table-column
+        v-slot="props"
+        field="message"
+        :label="trans.get('students.details')"
+        centered
+      >
+        <span
+          v-tippy
+          :content="getMessage(props.row)"
+          v-html="getIcon(props.row.message)"
         >
+        </span>
+      </b-table-column>
 
-        <b-table-column
-          field="message"
-          :label="trans.get('students.details')"
-          centered
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.settings')"
+        v-if="admin"
+        centered
+      >
+        <b-button
+          type="is-danger is-small"
+          @click="confirmDelete('logentry', props.row, props.row.created_at)"
         >
-          <span
-            v-tippy
-            :content="getMessage(props.row)"
-            v-html="getIcon(props.row.message)"
-          >
-          </span>
-        </b-table-column>
-
-        <b-table-column
-          field="name"
-          :label="trans.get('students.settings')"
-          v-if="admin"
-          centered
-        >
-          <b-button
-            type="is-danger is-small"
-            @click="confirmDelete('logentry', props.row, props.row.created_at)"
-          >
-            <i class="fas fa-trash-alt"></i>
-          </b-button>
-        </b-table-column>
-      </template>
+          <i class="fas fa-trash-alt"></i>
+        </b-button>
+      </b-table-column>
     </b-table>
-    <button class="button mt-2" @click="loadAllLog" v-if="type == 'log' && info && info.length == 100">
-      {{ trans.get('students.load_all_log') }}
+    <b-table
+      v-else-if="type == 'attendance'"
+      :data="info"
+      default-sort-direction="asc"
+      default-sort="created_at"
+      icon-pack="fas"
+      sort-icon="arrow-up"
+      detailed
+      detail-key="id"
+    >
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('students.name')"
+        centered
+      >
+        <span>
+          {{ props.row.name }}
+        </span>
+      </b-table-column>
+
+      <b-table-column
+        v-for="subject in info[0].subjects"
+        :key="'subject-' + subject.id"
+        v-slot="props"
+        field="calevents"
+        :label="subject.name"
+        centered
+      >
+        <span id="tippy" v-html="getField(props.row, subject.id)"> </span>
+      </b-table-column>
+
+      <template #detail="props">
+                <article class="media">
+                    <div class="media-content">
+                        <div class="content">
+                              <span class="mb-2" v-for="(record, index) in props.row.calevents" :key="`'att-${record.id}-${index}`">
+                                <!-- v-if="record.pivot.type == 1 || record.pivot.type == 2" -->
+                                <div class="mb-2">
+                                  <span class="tag is-dark">{{ record.subject.name }} </span>
+                                  <span class="tag">{{ JSON.parse(record.info).start }} </span>
+                                  <span class="tag is-success is-light" v-if="record.pivot.type == 0">{{ trans.get('attendance.present') }}</span>
+                                  <span class="tag is-warning is-light" v-else-if="record.pivot.type == 1">{{ trans.get('attendance.late') }}</span>
+                                  <span class="tag is-danger is-light" v-else>{{ trans.get('attendance.absence') }}</span>
+                                  <span v-if="record.task"><i class="fas fa-info-circle m-1"></i> {{ record.task }}</span>
+                                </div>
+                              </span>
+                        </div>
+                    </div>
+                </article>
+            </template>
+    </b-table>
+    <button
+      class="button mt-2"
+      @click="loadAllLog"
+      v-if="type == 'log' && info && info.length == 100"
+    >
+      {{ trans.get("students.load_all_log") }}
     </button>
   </div>
 </template>
@@ -229,11 +303,50 @@ export default {
     };
   },
   methods: {
+    getField(row, subject) {
+      let total = 0;
+      let absence = 0;
+      let late = 0;
+      let presence = 0;
+      row.calevents.forEach((calevent) => {
+        if (calevent.subject.id == subject && calevent.attendance) {
+          total++;
+          switch (calevent.pivot.type) {
+            case 0:
+              presence++;
+              break;
+            case 1:
+              late++;
+              break;
+            case 2:
+              absence++;
+              break;
+          }
+        }
+      });
+      if (total != 0) {
+        return `<span class="tag is-success is-light">${presence} (${(
+          (presence * 100) /
+          total
+        ).toFixed(2)}%)</span>
+        <span class="tag is-warning is-light">${late} (${(
+          (late * 100) /
+          total
+        ).toFixed(2)}%)</span>
+        <span class="tag is-danger is-light">${absence} (${(
+          (absence * 100) /
+          total
+        ).toFixed(2)}%)</span>
+        <span class="tag is-light">${total}</span>`;
+      }
+
+      return this.trans.get('attendance.no_data');
+    },
     loadAllLog() {
-      axios.get('/classroom/log/' + this.id).then(response => {
+      axios.get("/classroom/log/" + this.id).then((response) => {
         this.info = response.data;
         this.$forceUpdate();
-      })
+      });
     },
     confirmDelete(type, row, date) {
       this.$buefy.dialog.confirm({

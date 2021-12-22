@@ -799,6 +799,15 @@
         </b-tab-item>
 
         <b-tab-item
+          :label="trans.get('menu.attendance')"
+          icon="calendar-alt"
+          v-if="student.subjects && student.calevents"
+          icon-pack="fad"
+          class="p-2"
+        >
+          <show-data :code="classroom.code" :id="null" type="attendance" :admin="false" :info="[student]"></show-data>
+        </b-tab-item>
+        <b-tab-item
           :label="trans.get('menu.adventure')"
           icon="feather-alt"
           v-if="settings.disable_your_adventure == 0"

@@ -203,42 +203,42 @@
         >
       </div>
       <div v-if="challenge.is_conquer == 1" class="p-4 has-border rounded">
-        <div
-            class="control content"
-            data-app
-          >
-            <label class="label" for="name">{{ trans.get('challenges.max_date') }}</label>
-            <span>
-              <b-datetimepicker
-                v-model="datepickerEnd"
-                locale="es-ES"
-                :placeholder="trans.get('challenges.click_select')"
-                icon-pack="fa"
-                position="is-top-right"
-                class="button is-rounded mr-2"
-                style="height: 40px !important"
-              >
-                <template slot="left">
-                  <button
-                    class="button is-primary"
-                    @click.prevent="datepickerEnd = new Date()"
-                  >
-                    <b-icon icon="clock"></b-icon>
-                    <span>{{ trans.get("general.now") }}</span>
-                  </button>
-                </template>
-                <template slot="right">
-                  <button
-                    class="button is-danger"
-                    @click.prevent="datepickerEnd = null"
-                  >
-                    <b-icon icon="times"></b-icon>
-                    <span>{{ trans.get("general.delete") }}</span>
-                  </button>
-                </template>
-              </b-datetimepicker>
-            </span>
-          </div>
+        <div class="control content" data-app>
+          <label class="label" for="name">{{
+            trans.get("challenges.max_date")
+          }}</label>
+          <span>
+            <b-datetimepicker
+              :first-day-of-week="1"
+              v-model="datepickerEnd"
+              locale="es-ES"
+              :placeholder="trans.get('challenges.click_select')"
+              icon-pack="fa"
+              position="is-top-right"
+              class="button is-rounded mr-2"
+              style="height: 40px !important"
+            >
+              <template slot="left">
+                <button
+                  class="button is-primary"
+                  @click.prevent="datepickerEnd = new Date()"
+                >
+                  <b-icon icon="clock"></b-icon>
+                  <span>{{ trans.get("general.now") }}</span>
+                </button>
+              </template>
+              <template slot="right">
+                <button
+                  class="button is-danger"
+                  @click.prevent="datepickerEnd = null"
+                >
+                  <b-icon icon="times"></b-icon>
+                  <span>{{ trans.get("general.delete") }}</span>
+                </button>
+              </template>
+            </b-datetimepicker>
+          </span>
+        </div>
         <div class="field">
           <b-switch
             type="is-info"
@@ -501,7 +501,7 @@
               </div>
             </div>
           </div>
-          
+
           <div
             class="control content"
             data-app
@@ -780,7 +780,7 @@ export default {
         route = "/classroom/" + this.code + "/challenges";
       }
 
-      if(this.challenge.type == 1) this.challenge.completion = 0;
+      if (this.challenge.type == 1) this.challenge.completion = 0;
 
       axios.post(route, this.challenge).then((response) => {
         this.$toast(response.data.message, { type: response.data.type });

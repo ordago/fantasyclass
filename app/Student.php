@@ -135,6 +135,11 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Group::class);
     }
+   
+    public function calevents()
+    {
+        return $this->belongsToMany(Calevent::class)->withPivot('type');
+    }
 
     public function character()
     {

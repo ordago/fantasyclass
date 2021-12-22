@@ -12,7 +12,7 @@ class Classroom extends Model implements HasMedia
 
     use InteractsWithMedia;
 
-    public function registerMediaCollections() : void 
+    public function registerMediaCollections(): void
     {
         $this->addMediaCollection('pets');
         $this->addMediaCollection('avatars');
@@ -31,17 +31,19 @@ class Classroom extends Model implements HasMedia
 
     protected $appends = ['state', 'background'];
 
-    public function getStateAttribute() {
+    public function getStateAttribute()
+    {
 
         settings()->setExtraColumns(['classroom_id' => $this->id]);
         return settings()->get('state', 0);
     }
 
-        public function getBackgroundAttribute() {
+    public function getBackgroundAttribute()
+    {
 
         settings()->setExtraColumns(['classroom_id' => $this->id]);
         $default = "";
-        if($this->theme) {
+        if ($this->theme) {
             $default = "/img/bg/base/thumb_" . $this->theme->name;
         }
         return settings()->get('background', $default);
@@ -76,7 +78,7 @@ class Classroom extends Model implements HasMedia
     {
         return $this->hasMany(QuestionBank::class);
     }
-    
+
     public function evalgroups()
     {
         return $this->hasMany(EvaluablesGroup::class);
@@ -126,53 +128,72 @@ class Classroom extends Model implements HasMedia
     {
         return $this->hasMany(ChallengesGroup::class);
     }
-    
-    public function maps() {
+
+    public function maps()
+    {
         return $this->hasMany(Map::class);
     }
-    
-    public function events() {
+
+    public function events()
+    {
         return $this->hasMany(Event::class);
     }
 
-    public function pets() {
+    public function pets()
+    {
         return $this->hasMany(Pet::class);
     }
-    
-    public function monsters() {
+
+    public function monsters()
+    {
         return $this->hasMany(Monster::class);
     }
 
-    public function skills() {
+    public function skills()
+    {
         return $this->hasMany(Skill::class);
     }
 
-    public function rules() {
+    public function rules()
+    {
         return $this->hasOne(Rules::class);
     }
 
-    public function badges() {
+    public function badges()
+    {
         return $this->hasMany(Badge::class);
     }
-    public function evaluables() {
+    public function evaluables()
+    {
         return $this->hasMany(Evaluable::class);
     }
 
-    public function documents() {
+    public function documents()
+    {
         return $this->hasMany(DocumentCategory::class);
     }
-    
-    public function videochats() {
+
+    public function videochats()
+    {
         return $this->hasMany(Videochat::class);
+    }
+
+    public function calevents()
+    {
+        return $this->hasMany(Calevent::class);
+    }
+    
+    public function subjects()
+    {
+        return $this->hasMany(Subject::class);
     }
 
     public static function boot()
     {
-        parent::boot();    
-    
+        parent::boot();
+
         // cause a delete of a product to cascade to children so they are also deleted
-        static::deleted(function($classroom)
-        {
+        static::deleted(function ($classroom) {
             $classroom->students()->delete();
             $classroom->cards()->delete();
             $classroom->grouping()->delete();
@@ -193,5 +214,5 @@ class Classroom extends Model implements HasMedia
             $classroom->rules()->delete();
             $classroom->videochats()->delete();
         });
-    } 
+    }
 }

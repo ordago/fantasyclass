@@ -61,5 +61,6 @@ return [
 
     'send_message_all' => 'Envía una notificación a todos los estudiantes',
     'like' => '¿Te gusta FantasyClass?',
+    'attendance' => 'Asistencia',
 
 ];
