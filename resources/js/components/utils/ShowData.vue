@@ -17,10 +17,10 @@
       <button class="cursor-pointer tag is-dark noprint" @click="print">
         <i class="fas fa-print"></i>
       </button>
-      <span class="tag is-success is-light">__ Present</span>
-      <span class="tag is-warning is-light">__ Late</span>
-      <span class="tag is-danger is-light">__ Absence</span>
-      <span class="tag is-light">__ Total</span>
+      <span class="tag is-success is-light">{{ trans.get('attendance.present') }}</span>
+      <span class="tag is-warning is-light">{{ trans.get('attendance.late') }}</span>
+      <span class="tag is-danger is-light">{{ trans.get('attendance.absence') }}</span>
+      <span class="tag is-light">Total</span>
     </div>
 
     <div class="columns" v-if="type == 'behaviours'">
@@ -258,12 +258,14 @@
                     <div class="media-content">
                         <div class="content">
                               <span class="mb-2" v-for="(record, index) in props.row.calevents" :key="`'att-${record.id}-${index}`">
-                                <div class="mb-2" v-if="record.pivot.type == 1 || record.pivot.type == 2">
+                                <!-- v-if="record.pivot.type == 1 || record.pivot.type == 2" -->
+                                <div class="mb-2">
                                   <span class="tag is-dark">{{ record.subject.name }} </span>
                                   <span class="tag">{{ JSON.parse(record.info).start }} </span>
-                                  <span class="tag is-warning is-light" v-if="record.pivot.type == 1">__Late</span>
-                                  <span class="tag is-danger is-light" v-else>__Absence</span>
-                                  <span><i class="fas fa-info-circle m-1"></i> {{ record.task }}</span>
+                                  <span class="tag is-success is-light" v-if="record.pivot.type == 0">{{ trans.get('attendance.present') }}</span>
+                                  <span class="tag is-warning is-light" v-else-if="record.pivot.type == 1">{{ trans.get('attendance.late') }}</span>
+                                  <span class="tag is-danger is-light" v-else>{{ trans.get('attendance.absence') }}</span>
+                                  <span v-if="record.task"><i class="fas fa-info-circle m-1"></i> {{ record.task }}</span>
                                 </div>
                               </span>
                         </div>
@@ -338,7 +340,7 @@ export default {
         <span class="tag is-light">${total}</span>`;
       }
 
-      return "No data available";
+      return this.trans.get('attendance.no_data');
     },
     loadAllLog() {
       axios.get("/classroom/log/" + this.id).then((response) => {

@@ -57,7 +57,6 @@ class AttendanceController extends Controller
                     'title' => $data['event']['title'],
                     'class' => $subject->class,
                 ]),
-                'task' => $data['event']['task'],
                 'group' => $group,
                 'subject_id' => $subject->id,
                 'classroom_id' => $class->id,

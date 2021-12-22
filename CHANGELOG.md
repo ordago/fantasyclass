@@ -1,5 +1,5 @@
 # Changelog
-## v1.98 Beta (XX/12/2021)
+## v1.98 Beta (22/12/2021)
 ### Added
 - Attendance
 

@@ -7,10 +7,10 @@
           class="button is-success"
           @click="isModalActive = true"
         >
-          __ Add event
+          <i class="fas fa-calendar-plus mr-1"></i> {{ trans.get('attendance.add_event') }}
         </button>
         <button class="button is-primary" @click="isModalSubjectActive = true">
-          __ Add subject
+          <i class="fas fa-chalkboard mr-1"></i> {{ trans.get('attendance.add_subject') }}
         </button>
       </div>
       <div class="my-1" v-if="subjects && subjects.length">
@@ -68,10 +68,10 @@
             </b-field>
             <div class="columns mt-3">
               <div class="column is-narrow">
-                <b-field label="__ Subject">
+                <b-field :label="trans.get('attendance.subject')">
                   <b-select
                     v-model="cal_event.subject"
-                    placeholder="__Select a subject"
+                    :placeholder="trans.get('attendance.select_subject')"
                   >
                     <option
                       v-for="sub in subjects"
@@ -86,7 +86,7 @@
             </div>
             <div class="columns mt-3">
               <div class="column is-narrow">
-                <b-field label="__Select a date">
+                <b-field :label="trans.get('attendance.date')">
                   <b-datepicker
                     rounded
                     locale="es-ES"
@@ -101,7 +101,7 @@
             </div>
             <div class="columns">
               <div class="column is-narrow">
-                <b-field label="__From">
+                <b-field :label="trans.get('attendance.from')">
                   <b-timepicker
                     rounded
                     v-model="cal_event.event_start_hour"
@@ -112,7 +112,7 @@
                 </b-field>
               </div>
               <div class="column is-narrow">
-                <b-field label="__To">
+                <b-field :label="trans.get('attendance.to')">
                   <b-timepicker
                     rounded
                     v-model="cal_event.event_end_hour"
@@ -126,13 +126,13 @@
             <div class="">
               <b-field>
                 <b-switch v-model="cal_event.repeat">
-                  __ Repeat every week
+                  {{ trans.get('attendance.repeat') }}
                 </b-switch>
               </b-field>
             </div>
             <div class="columns mt-3" v-if="cal_event.repeat">
               <div class="column is-narrow">
-                <b-field label="__Max date">
+                <b-field :label="trans.get('attendance.until')">
                   <b-datepicker
                     :first-day-of-week="1"
                     locale="es-ES"
@@ -178,11 +178,11 @@
         <div class="modal-card" style="width: auto">
           <header class="modal-card-head">
             <p class="modal-card-title">
-              {{ trans.get("subject.add_subject") }}
+              {{ trans.get("attendance.add_subject") }}
             </p>
           </header>
           <section class="modal-card-body">
-            <b-field :label="trans.get('subject.name')" class="mt-4">
+            <b-field :label="trans.get('attendance.subject_name')" class="mt-4">
               <b-input
                 required
                 v-model="subject.name"
@@ -287,12 +287,12 @@
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title">
-            __ Attendance {{ selectedEvent.title }}
+            {{ trans.get('menu.attendance') }} {{ selectedEvent.title }}
           </p>
         </header>
         <section class="modal-card-body is-relative">
           <div class="mb-3">
-            <b-field label="__Class info">
+            <b-field :label="trans.get('attendance.class_info')">
               <b-input v-model="selectedEvent.task"></b-input>
             </b-field>
           </div>
@@ -362,10 +362,10 @@
               @click="disableAttendance"
               class="button is-dark"
               v-tippy="{ placement: 'right', arrow: true }"
-              :content="'__To reenable just save again'"
+              :content="trans.get('attendance.info_enable')"
               v-if="selectedEvent.attendance == 1"
             >
-              <i class="fas fa-calendar-times mr-1"></i>__ Disable attendance
+              <i class="fas fa-calendar-times mr-1"></i>{{ trans.get('attendance.disable') }}
             </button>
             <b-dropdown
               position="is-top-right"
@@ -379,10 +379,10 @@
               </template>
 
               <b-dropdown-item @click="deleteEvent(false)" aria-role="listitem"
-                >__Delete only this event</b-dropdown-item
+                >{{ trans.get('attendance.delete_event') }}</b-dropdown-item
               >
               <b-dropdown-item @click="deleteEvent(true)" aria-role="listitem"
-                >__ Delete all series of this event</b-dropdown-item
+                >{{ trans.get('attendance.delete_all_events') }}</b-dropdown-item
               >
             </b-dropdown>
           </div>
@@ -396,14 +396,14 @@
     >
       <div class="modal-card" style="width: auto">
         <header class="modal-card-head">
-          <p class="modal-card-title">__ Prefs</p>
+          <p class="modal-card-title">{{ trans.get('menu.config') }}</p>
         </header>
         <section class="modal-card-body is-relative">
           <div class="is-flex p-2" style="flex-direction: column">
-            <h5 class="is-size-5">__ Configura el marco horario</h5>
+            <h5 class="is-size-5">{{ trans.get('attendance.configure_hours') }}</h5>
             <div class="columns mt-2">
               <div class="column is-narrow is-flex has-all-centered">
-                <i class="fad fa-hourglass-start mr-1"></i> __ Hora entrada
+                <i class="fad fa-hourglass-start mr-1"></i>{{ trans.get('attendance.start_hour') }}
               </div>
               <div class="column is-narrow">
                 <input
@@ -431,7 +431,7 @@
             </div>
             <div class="columns">
               <div class="column is-narrow is-flex has-all-centered">
-                <i class="fad fa-hourglass-end mr-1"></i> __ Hora Salida
+                <i class="fad fa-hourglass-end mr-1"></i> {{ trans.get('attendance.end_hour') }}
               </div>
               <div class="column is-narrow">
                 <input
@@ -464,14 +464,13 @@
                 :true-value="true"
                 :false-value="false"
               >
-                {{ trans.get("attendance.hideWeekends") }}
+                {{ trans.get("attendance.hide_weekends") }}
               </b-switch>
             </b-field>
 
             <div class="mt-0">
               <small class="is-italic" v-if="!settings.attendance_start"
-                >__ Lo podrás cambiar más tarde en la configuración de la
-                asistencia</small
+                >{{ trans.get('attendance.info_change') }}</small
               >
             </div>
             <div class="mt-1"></div>
@@ -564,10 +563,9 @@ export default {
     // },
     deleteSubject(id) {
       this.$buefy.dialog.confirm({
-        title: "Deleting account",
-        message:
-          "__ Are you sure you want to <b>delete</b> your account? This action cannot be undone.",
-        confirmText: "Delete subject",
+        title: this.trans.get('attendance.delete_subject'),
+        message: this.trans.get('attendance.delete_event_confirm'),
+        confirmText: this.trans.get('general.delete'),
         type: "is-danger",
         hasIcon: true,
         onConfirm: () => {
@@ -597,9 +595,8 @@ export default {
     },
     deleteEvent(all = false) {
       this.$buefy.dialog.confirm({
-        title: "__Delete event/s",
-        message:
-          "__Are you sure you want to <b>delete</b> the event/s? This action cannot be undone.",
+        title: all ? this.trans.get('attendance.delete_all_events') : this.trans.get('attendance.delete_event'),
+        message: this.trans.get('attendance.delete_event_confirm'),
         confirmText: this.trans.get("general.delete"),
         type: "is-danger",
         hasIcon: true,

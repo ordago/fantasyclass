@@ -61,6 +61,8 @@ return [
 
     'send_message_all' => 'Send message to all students',
     'like' => 'Do you like FantasyClass?',
+    'attendance' => 'Attendance',
+
 
 
 ];
