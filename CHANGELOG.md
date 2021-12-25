@@ -5,6 +5,10 @@
 - Add comments to behaviours.
 - Show last time student access.
 
+### Changed
+- Show collections individually in students view.
+
+
 ## v1.98 Beta (22/12/2021)
 ### Added
 - Attendance

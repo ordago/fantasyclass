@@ -51,5 +51,6 @@ return [
     'send' => "Send",
     'thanks' => "Thanks!",
     'summary' => "Summary",
+    'back' => 'Go back',
 
 ];

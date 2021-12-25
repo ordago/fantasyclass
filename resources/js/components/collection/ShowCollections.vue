@@ -19,11 +19,9 @@
           class="collection-container mx-2"
           v-for="collection in collectionsReactive"
           :key="collection.id"
-
         >
           <div
-                    :class="{ grayscale: collection.disabled == 1 }"
-
+            :class="{ grayscale: collection.disabled == 1 }"
             class="collection mx-1 cursor-pointer"
             @click="selectedCollection = collection"
           >
@@ -41,7 +39,7 @@
             >
               <i class="fas fa-info"></i>
             </span>
-           
+
             <button
               @click="shareCollection(collection)"
               class="button is-success"
@@ -68,7 +66,7 @@
             >
               <i class="fas fa-trash-alt"></i>
             </button>
-             <button
+            <button
               type="submit"
               @click="toggleDisable(collection)"
               v-tippy
@@ -149,18 +147,18 @@
                 </div>
               </div>
               <div>
-                  <b-field>
-                    <template slot="label">
-                      {{ trans.get("collections.max_collect") }}
-                    </template>
-                    <b-input
-                      v-model="collection.max"
-                      required
-                      type="number"
-                      step="1"
-                    ></b-input>
-                  </b-field>
-                </div>
+                <b-field>
+                  <template slot="label">
+                    {{ trans.get("collections.max_collect") }}
+                  </template>
+                  <b-input
+                    v-model="collection.max"
+                    required
+                    type="number"
+                    step="1"
+                  ></b-input>
+                </b-field>
+              </div>
             </section>
             <footer class="modal-card-foot">
               <button
@@ -188,9 +186,9 @@
       <button @click="showAddCollectionable()" class="button is-dark noprint">
         {{ trans.get("collections.add_collectionable") }}
       </button>
-        <button class="button is-dark noprint" @click="print">
-          <i class="fas fa-print"></i>
-        </button>
+      <button class="button is-dark noprint" @click="print">
+        <i class="fas fa-print"></i>
+      </button>
       <h1 class="is-size-1 has-text-centered mb-3">
         <i class="fak fa-collection mr-2"></i> {{ selectedCollection.name }}
       </h1>
@@ -454,7 +452,11 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button" type="button" @click="isModalImportActive = false">
+          <button
+            class="button"
+            type="button"
+            @click="isModalImportActive = false"
+          >
             {{ trans.get("general.close") }}
           </button>
         </footer>
@@ -503,22 +505,23 @@ export default {
     },
   },
   methods: {
-     getMessageDisable(collection) {
+    getMessageDisable(collection) {
       if (collection.disabled) return this.trans.get("general.enable");
       return this.trans.get("general.disable");
     },
     toggleDisable(collection) {
-      axios.get("/classroom/collection/disable/" + collection.id).then((response) => {
-        collection.disabled
-          ? (collection.disabled = 0)
-          : (collection.disabled = 1);
-        this.$forceUpdate();
-      });
-
+      axios
+        .get("/classroom/collection/disable/" + collection.id)
+        .then((response) => {
+          collection.disabled
+            ? (collection.disabled = 0)
+            : (collection.disabled = 1);
+          this.$forceUpdate();
+        });
     },
     importPack(collection) {
       this.$buefy.dialog.confirm({
-        title: this.trans.get("general.import") + " \"" + collection.name + "\"",
+        title: this.trans.get("general.import") + ' "' + collection.name + '"',
         message: this.trans.get("collections.import_alert"),
         confirmText: this.trans.get("general.import"),
         type: "is-warning",
@@ -582,13 +585,15 @@ export default {
     },
     getContent(collection) {
       let text = "";
-      text += 
+      text +=
         collection.xp +
         "<i class='fas fa-fist-raised colored'></i>, " +
         collection.gold +
         "<i class='fas fa-coins colored'></i> ";
-       
-       collection.max < 1 ? text += "<i class='fas fa-infinity'></i>" : text += collection.max + " max ";
+
+      collection.max < 1
+        ? (text += "<i class='fas fa-infinity'></i>")
+        : (text += collection.max + " max ");
       return text;
     },
     showAddCollectionable() {

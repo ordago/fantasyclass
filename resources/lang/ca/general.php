@@ -51,5 +51,6 @@ return [
     'send' => "Envia",
     'thanks' => "Gràcies!",
     'summary' => "Resum",
+    'back' => 'Tornar',
 
 ];

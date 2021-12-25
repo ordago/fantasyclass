@@ -371,7 +371,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'offset0': gear.offset == 0,
+                    offset0: gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -396,7 +396,7 @@
                         v-bind:key="'store-' + itemStore.id"
                         class="inventory-item inv-item-armor w-100"
                         v-bind:class="{
-                          'offset0': index == 0,
+                          offset0: index == 0,
                           'inv-item-armor-bronce': index == 1,
                           'inv-item-armor-silver': index == 2,
                           'inv-item-armor-gold': index == 3,
@@ -563,7 +563,7 @@
                   :ref="'item' + gear.id"
                   class="w-100 inventory-item inv-item-armor relative rounded"
                   v-bind:class="{
-                    'offset0': gear.offset == 0,
+                    offset0: gear.offset == 0,
                     'inv-item-armor-bronce': gear.offset == 1,
                     'inv-item-armor-silver': gear.offset == 2,
                     'inv-item-armor-gold': gear.offset == 3,
@@ -805,7 +805,13 @@
           icon-pack="fad"
           class="p-2"
         >
-          <show-data :code="classroom.code" :id="null" type="attendance" :admin="false" :info="[student]"></show-data>
+          <show-data
+            :code="classroom.code"
+            :id="null"
+            type="attendance"
+            :admin="false"
+            :info="[student]"
+          ></show-data>
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.adventure')"
@@ -877,7 +883,9 @@
             </div>
           </div>
           <div v-else>
-            <button class="button is-danger mb-5" @click="assign(null)">{{ trans.get('shop.remove_pet') }}</button>
+            <button class="button is-danger mb-5" @click="assign(null)">
+              {{ trans.get("shop.remove_pet") }}
+            </button>
             <div
               v-for="pet in classroom.pets"
               :key="'pet2-' + pet.id"
@@ -929,25 +937,56 @@
             {{ trans.get("menu.collections") }}
           </template>
 
-          <button class="button is-primary" @click="prepareExchange()">
+          <button v-if="!selectedCollection" class="button is-primary" @click="prepareExchange()">
             <i class="fas fa-exchange mr-1"></i>
             {{ trans.get("collections.exchange") }}
           </button>
+          <button class="button is-link" v-else @click="selectedCollection = null">
+            <i class="fas fa-arrow-left mr-1"></i> {{ trans.get('general.back') }}
+          </button>
           <div
-            v-for="collection in classroom.collections"
-            :key="'collection-' + collection.id"
+            class="columns p-4 has-text-centered is-multiline"
+            v-if="!selectedCollection"
           >
             <div
+              v-for="collection in classroom.collections"
+              :key="'collection-' + collection.id"
+              class="column is-narrow p-0 m-0"
+            >
+              <div
+                v-if="
+                  collection.collectionables &&
+                  collection.collectionables.length &&
+                  collection.disabled != 1
+                "
+                class="collection mx-1 cursor-pointer"
+                @click="selectedCollection = collection"
+              >
+                <img
+                  src="/img/cardgen/collections/back_small.png"
+                  @contextmenu.prevent=""
+                />
+                <h1 class="is-size-4 rounded border py-4">
+                  {{ collection.name }} ({{ getCollectionNumber(collection.id) }})
+                </h1>
+              </div>
+            </div>
+          </div>
+          <div
+            v-else
+          >
+
+            <div
               v-if="
-                collection.collectionables &&
-                collection.collectionables.length &&
-                collection.disabled != 1
+                selectedCollection.collectionables &&
+                selectedCollection.collectionables.length &&
+                selectedCollection.disabled != 1
               "
             >
               <h3 class="is-size-3 m-2">
                 <i class="fak fa-collection mr-2"></i>
                 <span
-                  v-if="getCollectionNumber(collection.id) > 0"
+                  v-if="getCollectionNumber(selectedCollection.id) > 0"
                   class="collectionable-count mr-0"
                   style="
                     position: relative;
@@ -956,23 +995,23 @@
                     top: 0;
                     left: 0;
                   "
-                  >{{ getCollectionNumber(collection.id) }}</span
+                  >{{ getCollectionNumber(selectedCollection.id) }}</span
                 >
-                {{ collection.name }}
+                {{ selectedCollection.name }}
                 <small
-                  >({{ collection.xp }}
+                  >({{ selectedCollection.xp }}
                   <i class="fas fa-fist-raised colored"></i>,
-                  {{ collection.gold }}
+                  {{ selectedCollection.gold }}
                   <i class="fas fa-coins colored"></i>)</small
                 >
                 <span
                   class="button is-info"
-                  @click="claimReward(collection)"
+                  @click="claimReward(selectedCollection)"
                   v-if="
                     !admin &&
-                    checkReward(collection) &&
-                    (collection.max == 0 ||
-                      collection.max > getCollectionNumber(collection.id))
+                    checkReward(selectedCollection) &&
+                    (selectedCollection.max == 0 ||
+                      selectedCollection.max > getCollectionNumber(selectedCollection.id))
                   "
                   >{{ trans.get("collections.claim_reward") }}</span
                 >
@@ -982,11 +1021,11 @@
                   v-if="
                     settings.buy_collectionable == 1 &&
                     !admin &&
-                    (collection.max == 0 ||
-                      collection.max > getCollectionNumber(collection.id))
+                    (selectedCollection.max == 0 ||
+                      selectedCollection.max > getCollectionNumber(selectedCollection.id))
                   "
                   class="button is-dark mb-1"
-                  @click="buyCollectionablePack(collection.id)"
+                  @click="buyCollectionablePack(selectedCollection.id)"
                 >
                   <i class="fas fa-envelope mr-1" aria-hidden="true"></i>
                   {{ trans.get("collections.buy_pack") }} ({{
@@ -999,13 +1038,13 @@
               </div>
               <div
                 v-for="collectionable in orderedCollectionables(
-                  collection.collectionables
+                  selectedCollection.collectionables
                 )"
                 :key="collectionable.id"
                 class="collectionable-container m-1"
               >
                 <show-collectionable
-                  :style="getStyle(collectionable.id, collection)"
+                  :style="getStyle(collectionable.id, selectedCollection)"
                   :collectionable="collectionable"
                   :count="getCount(collectionable.id)"
                   :admin="false"
@@ -1890,8 +1929,8 @@
                 style="min-width: 200px"
                 class="inventory-item inv-item-armor m-1 p-3"
                 v-bind:class="{
-                  'hidden': !notInOffset0(itemStore.id),
-                  'offset0': index == 0,
+                  hidden: !notInOffset0(itemStore.id),
+                  offset0: index == 0,
                   'inv-item-armor-bronce': index == 1,
                   'inv-item-armor-silver': index == 2,
                   'inv-item-armor-gold': index == 3,
@@ -2167,6 +2206,7 @@ export default {
       quantity: 1,
       showShopEquipment: false,
       gearShop: null,
+      selectedCollection: null,
     };
   },
   methods: {
@@ -2279,7 +2319,7 @@ export default {
         [
           41, 50, 640, 641, 642, 643, 644, 645, 646, 647, 648, 649, 658, 659,
           710, 711, 712, 713, 714, 715, 716, 717, 718, 800, 801, 802, 803, 804,
-          805, 806, 807, 808, 809, 810, 811, 1000, 1001, 1002, 1003, 1004, 1005
+          805, 806, 807, 808, 809, 810, 811, 1000, 1001, 1002, 1003, 1004, 1005,
         ].findIndex((id) => id === gearId) === -1
       );
     },
@@ -2973,7 +3013,10 @@ export default {
         n - this.student.items.length ? n - this.student.items.length - 1 : 5;
     },
     confirmChangeClass(subclass) {
-      if (this.classroom.character_theme.id == 10 || this.classroom.character_theme.id == 13) {
+      if (
+        this.classroom.character_theme.id == 10 ||
+        this.classroom.character_theme.id == 13
+      ) {
         axios
           .post(
             "/classroom/" + this.classroom.code + "/student/changecharacter",
@@ -3101,9 +3144,15 @@ export default {
     },
     assign(pet) {
       this.$buefy.dialog.confirm({
-        title: pet ? this.trans.get("general.assign") : this.trans.get("general.delete"),
-        message: pet ? this.trans.get("shop.assign_text") : this.trans.get("shop.remove_text"),
-        confirmText: pet ? this.trans.get("general.assign"): this.trans.get("general.delete"),
+        title: pet
+          ? this.trans.get("general.assign")
+          : this.trans.get("general.delete"),
+        message: pet
+          ? this.trans.get("shop.assign_text")
+          : this.trans.get("shop.remove_text"),
+        confirmText: pet
+          ? this.trans.get("general.assign")
+          : this.trans.get("general.delete"),
         cancelText: this.trans.get("general.cancel"),
         type: "is-link",
         iconPack: "fa",
