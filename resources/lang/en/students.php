@@ -105,4 +105,7 @@ return [
     'bypass' => 'You\'re viewing as a student, click there to go back to teacher.',
     'boost' => 'Boost:',
 
+    'with_comment' => 'With comment',
+    'add_comment' => 'Add or edit a comment',
+
 ];

@@ -79,5 +79,7 @@ return [
     'import_alert' => 'Los elementos de esta clase serán reemplazados, <strong>esta acción no se puede deshacer</strong>, ¿estás seguro/a?',
     'delete_current' => '¿Eliminar los elementos actuales?',
 
+    'block_equipment' => 'Evitar la compra de un equipo si no se tiene el anterior',
+
 
 ];

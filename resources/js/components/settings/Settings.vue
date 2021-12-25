@@ -321,6 +321,16 @@
             >{{ trans.get("settings.allow_send_money") }}</b-switch
           >
         </div>
+        <div class="my-4">
+          <b-switch
+            class="ml-4"
+            true-value="1"
+            false-value="0"
+            @input="toggleProp('block_equipment')"
+            v-model="settings.block_equipment"
+            >{{ trans.get("settings.block_equipment") }}</b-switch
+          >
+        </div>
       </div>
       <div class="mt-4">
         <h1>

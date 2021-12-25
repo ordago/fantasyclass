@@ -1065,6 +1065,7 @@
             :info="behaviours"
             type="behaviours"
             :id="student.id"
+            :code="classroom.code"
           >
           </show-data>
         </b-tab-item>

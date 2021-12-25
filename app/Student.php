@@ -190,7 +190,7 @@ class Student extends Model implements HasMedia
 
     public function behaviours()
     {
-        return $this->belongsToMany(Behaviour::class)->withTimestamps();
+        return $this->belongsToMany(Behaviour::class)->withPivot('comment')->withTimestamps();
     }
 
     public function challenges()
@@ -260,11 +260,11 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Document::class);
     }
 
-    public function addBehaviour($behaviourId)
+    public function addBehaviour($behaviourId, $comment = null)
     {
         $behaviour = Behaviour::findOrFail($behaviourId);
         $behaviour->update(['count_number' => $behaviour->count_number + 1]);
-        $this->behaviours()->attach($behaviourId);
+        $this->behaviours()->attach([$behaviourId => ['comment' => $comment]]);
         $valHp = $this->setProperty('hp', $behaviour->hp, true, 'behaviour');
         $valXp = $this->setProperty('xp', $behaviour->xp, true, 'behaviour');
         $valGold = $this->setProperty('gold', $behaviour->gold, true, 'behaviour');

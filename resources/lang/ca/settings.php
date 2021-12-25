@@ -77,5 +77,6 @@ return [
 
     'import_alert' => 'Els elements d\'aquesta classe seran reemplaçats, <strong>aquest acció no es pot desfer</strong>, estàs segur/a?',
     'delete_current' => 'Eliminar els elements actuals?',
-
+    
+    'block_equipment' => 'Previndre la compra d\'un equipament si no es té l\'anterior',
 ];

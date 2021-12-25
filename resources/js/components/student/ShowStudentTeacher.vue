@@ -123,7 +123,7 @@
             <div class="w-100 is-flex has-all-centered">
               <button
                 v-for="behaviour in behaviours"
-                v-tippy
+                v-tippy="{ interactive: true, arrow: true }"
                 :content="getMessage(behaviour)"
                 class="button m-1 px-3 is-light"
                 @click="addBehaviour(student.id, behaviour)"
@@ -159,7 +159,7 @@
             <div v-if="show2l">
               <button
                 v-for="behaviour in behaviourshidden"
-                v-tippy
+                v-tippy="{ interactive: true, arrow: true }"
                 :content="getMessage(behaviour)"
                 class="button m-1 is-light px-4"
                 v-bind:class="[
@@ -172,7 +172,13 @@
               >
                 <i :class="behaviour.icon"></i>
               </button>
-              <a v-tippy :content="trans.get('menu.behaviours')" class="button m-1" :href="'/classroom/' + classroom.code +'/behaviours'"><i class="fas fa-cog"></i></a>
+              <a
+                v-tippy
+                :content="trans.get('menu.behaviours')"
+                class="button m-1"
+                :href="'/classroom/' + classroom.code + '/behaviours'"
+                ><i class="fas fa-cog"></i
+              ></a>
             </div>
           </div>
           <div class="columns p-0 m-0">
@@ -379,6 +385,9 @@ export default {
     },
   },
   mounted() {},
+  created() {
+    window.behaviourWithComment = this.behaviourWithComment;
+  },
   data: function () {
     return {
       show2l: false,
@@ -403,18 +412,40 @@ export default {
     //       this.report = true;
     //     });
     // },
+    behaviourWithComment(id, behaviour) {
+      let behaviourObj = this.behaviours.find((x) => x.id === behaviour);
+      if (!behaviourObj)
+        behaviourObj = this.behaviourshidden.find((x) => x.id === behaviour);
+
+      this.$buefy.dialog.prompt({
+        message: `${this.trans.get("students.add_comment")}`,
+        inputAttrs: {
+          maxlength: 150,
+        },
+        trapFocus: true,
+        onConfirm: (value) => {
+          this.addBehaviour(id, behaviourObj, value);
+        },
+      });
+    },
     getMessage(behaviour) {
       let text = this.trans.get(behaviour.name) + " <small>(";
-      if(behaviour.hp)
-          text += ' <i class=\'fas fa-heart colored\'></i> ' + behaviour.hp ;
-          
-      if(behaviour.xp)
-          text +=  ' <i class=\'fas fa-fist-raised colored\'></i> ' + behaviour.xp;
-                  
-      if(behaviour.gold)
-          text += ' <i class=\'fas fa-coins colored\'></i> ' +  behaviour.gold;
+      if (behaviour.hp)
+        text += " <i class='fas fa-heart colored'></i> " + behaviour.hp;
 
-      text += ')</small>';
+      if (behaviour.xp)
+        text += " <i class='fas fa-fist-raised colored'></i> " + behaviour.xp;
+
+      if (behaviour.gold)
+        text += " <i class='fas fa-coins colored'></i> " + behaviour.gold;
+
+      text += ")";
+      text += `<span onclick="behaviourWithComment(${this.student.id}, ${
+        behaviour.id
+      })"  class="cursor-pointer tag is-light ml-1"><i class="fas fa-comment-dots mr-1"></i> ${this.trans.get(
+        "students.with_comment"
+      )}</span></small>`;
+
       return text;
     },
     byPassStudent(id) {
@@ -457,16 +488,16 @@ export default {
         this.$parent.$forceUpdate();
       });
     },
-    addBehaviour: function (id, behaviour) {
+    addBehaviour: function (id, behaviour, comment = null) {
       let audio;
-      if(behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
-         audio = new Audio("/sound/positive.mp3");
+      if (behaviour.xp + behaviour.hp + behaviour.gold >= 0) {
+        audio = new Audio("/sound/positive.mp3");
       } else {
         audio = new Audio("/sound/boing.mp3");
       }
       audio.play();
 
-      let options = { id: id, behaviour: behaviour.id };
+      let options = { id: id, behaviour: behaviour.id, comment: comment };
       let student;
       axios.post("/classroom/student/behaviour", options).then((response) => {
         if (this.random) student = this.$parent.$parent.currentStudent;

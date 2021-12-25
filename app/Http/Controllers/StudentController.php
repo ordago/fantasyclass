@@ -187,7 +187,7 @@ class StudentController extends Controller
         $class = Classroom::where('id', '=', $student->classroom->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
 
-        return $student->addBehaviour($data['behaviour']);
+        return $student->addBehaviour($data['behaviour'], $data['comment']);
     }
 
     public function assignPet($code)

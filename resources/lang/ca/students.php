@@ -106,4 +106,7 @@ return [
     
     'bypass' => 'Estàs veient com a estudiant, clica ací per tornar a ser profe',
     'boost' => 'Potenciadors:',
+    
+    'with_comment' => 'Amb comentari',
+    'add_comment' => 'Afegeix o edita un comentari',
 ];

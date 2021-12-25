@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Behaviour;
 use App\Classroom;
+use App\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BehaviourController extends Controller
 {
@@ -13,8 +15,9 @@ class BehaviourController extends Controller
     {
         $this->middleware('verified');
     }
-    
-    public function index($code) {
+
+    public function index($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $behaviours = $class->behaviours;
@@ -34,56 +37,82 @@ class BehaviourController extends Controller
         return redirect('/classroom/' . $code . '/behaviours');
     }
 
-    public function create($code) {
+    public function create($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         return view('behaviours.create', compact('class'));
     }
 
-    public function show($code, $id) {
+    public function show($code, $id)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('view', $class);
         $behaviour = Behaviour::where('id', '=', $id)
-        ->where('classroom_id', "=", $class->id)
-        ->firstOrFail();
+            ->where('classroom_id', "=", $class->id)
+            ->firstOrFail();
         return view('behaviours.create', compact('class', 'behaviour'));
     }
-    
-    public function update($behaviour) {
+
+    public function update($behaviour)
+    {
         $behaviour = Behaviour::findOrFail($behaviour);
         $class = Classroom::where('id', '=', $behaviour->classroom_id)->firstOrFail();
         $this->authorize('update', $class);
         try {
             $behaviour->update($this->validateFormat(request()));
             return [
-                    "message" => __('success_error.update_success'),
-                    "type" => "success",
-                    "icon" => "check"
+                "message" => __('success_error.update_success'),
+                "type" => "success",
+                "icon" => "check"
             ];
-            
         } catch (\Throwable $th) {
             return [
-                    "message" => __('success_error.error'),
-                    "type" => "times",
-                    "type" => "error"
+                "message" => __('success_error.error'),
+                "type" => "times",
+                "type" => "error"
             ];
             return $th;
         }
-        
     }
-    
-    public function store($code) {
+
+    public function store($code)
+    {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         $data = $this->validateFormat(request());
-        
+
         $behaviour = Behaviour::create($data);
         $class->behaviours()->save($behaviour);
-        return redirect('/classroom/'.$code.'/behaviours');
-        
+        return redirect('/classroom/' . $code . '/behaviours');
     }
-    
-    public function validateFormat($request) {
+    public function addOrEditComment($code)
+    {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+        $data = request()->validate([
+            'id' => ['numeric', 'required'],
+            'student' => ['numeric', 'required'],
+            'comment' => ['string', 'required'],
+            'date' => ['date', 'required'],
+        ]);
+
+        $behaviour = Behaviour::where('classroom_id', $class->id)->where('id', $data['id'])->firstOrFail();
+        $student = Student::findOrFail($data['student']);
+        if ($student->classroom->classroom_id != $class->id)
+            abort(403);
+
+        DB::table('behaviour_student')
+            ->where('behaviour_id', $behaviour->id)
+            ->where('student_id', $student->id)
+            ->where('created_at', $data['date'])
+            ->update(['comment' => $data['comment']]);
+
+        return $student->fresh()->behaviours;
+    }
+
+    public function validateFormat($request)
+    {
         return $request->validate([
             'icon' => ['required', 'string'],
             'name' => ['required', 'string'],
@@ -91,17 +120,18 @@ class BehaviourController extends Controller
             'xp' => ['required', 'numeric'],
             'hp' => ['required', 'numeric'],
             'gold' => ['required', 'numeric'],
-            ]);
-        }
+        ]);
+    }
 
-        public function destroy($id) {
-            $behaviour = Behaviour::where('id', '=', $id)->first();
-            $class = Classroom::where('id', $behaviour->classroom_id)->firstOrFail();
-            $this->authorize('update', $class);
-            try {
+    public function destroy($id)
+    {
+        $behaviour = Behaviour::where('id', '=', $id)->first();
+        $class = Classroom::where('id', $behaviour->classroom_id)->firstOrFail();
+        $this->authorize('update', $class);
+        try {
             $behaviour->delete();
         } catch (\Throwable $th) {
-            return [ 'error' => $th];
+            return ['error' => $th];
         }
         return 1;
     }

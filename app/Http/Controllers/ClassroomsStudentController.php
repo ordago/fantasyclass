@@ -540,12 +540,12 @@ class ClassroomsStudentController extends Controller
             'item' => ['numeric', 'required'],
             'quantity' => ['numeric', 'required'],
         ]);
-        
+
         $item = Item::where('id', $data['item'])->where('classroom_id', $class->id)->firstOrFail();
         $studentItem = $student->items->where('id', $item->id)->first();
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        if(!settings()->get('allow_sell', false))
+        if (!settings()->get('allow_sell', false))
             abort(403);
 
         if ($studentItem) {
@@ -558,16 +558,16 @@ class ClassroomsStudentController extends Controller
                 ];
             }
             $newCount = $studentItem->pivot->count - $data['quantity'];
-            
+
             if ($newCount <= 0) {
                 $student->items()->detach($item->id);
             } else
-            $student->items()->updateExistingPivot($item->id, ['count' => $newCount]);
+                $student->items()->updateExistingPivot($item->id, ['count' => $newCount]);
 
             // $student->gold = $student->gold + ($item.price * settings()->get('sell_price', 75) * quantity);
 
             $student->setProperty("gold", $item->price * settings()->get('sell_price', 75) / 100 * $data['quantity'], true, "shop", true);
-            
+
             return [
                 "message" => " " . __('success_error.update_success'),
                 "icon" => "check",
@@ -575,9 +575,7 @@ class ClassroomsStudentController extends Controller
                 "student" => $student->fresh(),
                 "items" => $student->fresh()->items,
             ];
-            
         }
-
     }
     public function craft($code)
     {
@@ -1323,14 +1321,14 @@ class ClassroomsStudentController extends Controller
         $studentCollection = $student->fresh()->collections->where('id', $collection->id)->first();
 
         if ($studentCollection) {
-            if($collection->max != 0 && $studentCollection->pivot->count >= $collection->max)
-            abort(403);
+            if ($collection->max != 0 && $studentCollection->pivot->count >= $collection->max)
+                abort(403);
         }
 
         if ($studentCollection)
             $count = $studentCollection->pivot->count + 1;
         else $count = 1;
-    
+
 
         $student->collections()->sync([$collection->id => ['count' => $count]], false);
 
@@ -1749,6 +1747,8 @@ class ClassroomsStudentController extends Controller
             ->select('*')
             ->first();
 
+
+
         // Avoid user mistakes
         if ($old->id == $new->id || $old->type != $new->type || $old->offset > $new->offset || array_search($student->character_id, json_decode($new->character_id)) === false || $student->equipment->contains($new->id)) {
             return [
@@ -1758,6 +1758,16 @@ class ClassroomsStudentController extends Controller
             ];
         }
         settings()->setExtraColumns(['classroom_id' => $class->id]);
+
+        if (settings()->get('block_equipment', 0)) {
+            if ($new->offset - $old->offset >= 2)
+                return [
+                    "message" => " " . __('success_error.shop_failed_prevent'),
+                    "icon" => "sad-tear",
+                    "type" => "error"
+                ];
+        }
+
         switch ($new->offset) {
             case 1:
             default:

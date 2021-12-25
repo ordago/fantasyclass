@@ -26,6 +26,7 @@ return [
     'shop_failed_money' => 'Insuficiente oro',
     'shop_failed_level' => 'Insuficiente nivel',
     'shop_failed_exists' => 'Ya tienes este objeto o uno de mejor!!',
+    'shop_failed_prevent' => 'Necesitas comprar el equipo anterior antes de comprar este',
     'min_name' => 'El nombre tiene que ser de como mínimo 4 caracteres',
 
     'taginput' => 'Selecciona como mínimo una etiqueta válida',

@@ -143,7 +143,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/behaviours/{id}', 'BehaviourController@show');
         Route::patch('/behaviours/{id}', 'BehaviourController@update');
         Route::get('/{code}/behaviours/import/default', 'BehaviourController@importDefault');
-
+        Route::post('/{code}/behaviour/comment', 'BehaviourController@addOrEditComment');
+        
         // Badges
         Route::get('/{code}/badges', 'BadgeController@index');
         Route::get('/{code}/badges/create', 'BadgeController@create');

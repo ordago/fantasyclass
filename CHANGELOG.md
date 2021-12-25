@@ -1,4 +1,11 @@
 # Changelog
+## v1.99 Beta (XX/12/2021)
+### Added
+- Setting to prevent buying equipment if not having the lowe level one.
+- Add comments to behaviours.
+
+### Changed
+
 ## v1.98 Beta (22/12/2021)
 ### Added
 - Attendance

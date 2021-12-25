@@ -25,6 +25,7 @@ return [
     'shop_failed_money' => 'Insuficient or',
     'shop_failed_level' => 'Insuficient nivell',
     'shop_failed_exists' => 'Ja tens aquest objecte o un de millor!',
+    'shop_failed_prevent' => 'Necessites comprar l\'equipament anterior abans de comprar aquest',
     'min_name' => 'El nom ha de ser de com a mínim 4 caràcters',
     
     'taginput' => 'Selecciona com a mínim una etiqueta vàlida',

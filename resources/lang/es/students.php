@@ -107,4 +107,7 @@ return [
     'bypass' => 'Estás visuallizando como estudiante, clica aquí para volver a ser profe',
     'boost' => 'Potenciadores:',
 
+    'with_comment' => 'Con comentario',
+    'add_comment' => 'Añade o edita un comentario',
+
 ];

@@ -78,5 +78,7 @@ return [
     'import_alert' => 'Current classroom elements will be replaced, <strong>this actions can\'t be undone</strong>, are you sure?',
     'delete_current' => 'Delete current elements?',
 
+    'block_equipment' => 'Prevent to buy equipment if don\'t have the previous one',
+
 
 ];

@@ -17,9 +17,15 @@
       <button class="cursor-pointer tag is-dark noprint" @click="print">
         <i class="fas fa-print"></i>
       </button>
-      <span class="tag is-success is-light">{{ trans.get('attendance.present') }}</span>
-      <span class="tag is-warning is-light">{{ trans.get('attendance.late') }}</span>
-      <span class="tag is-danger is-light">{{ trans.get('attendance.absence') }}</span>
+      <span class="tag is-success is-light">{{
+        trans.get("attendance.present")
+      }}</span>
+      <span class="tag is-warning is-light">{{
+        trans.get("attendance.late")
+      }}</span>
+      <span class="tag is-danger is-light">{{
+        trans.get("attendance.absence")
+      }}</span>
       <span class="tag is-light">Total</span>
     </div>
 
@@ -114,10 +120,33 @@
         v-slot="props"
         field="name"
         :label="trans.get('students.settings')"
-        v-if="admin"
         centered
       >
+        <span
+          v-if="props.row.pivot.comment"
+          v-tippy
+          :content="props.row.pivot.comment"
+          class="cursor-default button is-dark is-small"
+        >
+          <i class="fas fa-comment"></i>
+        </span>
         <b-button
+          v-if="admin"
+          type="is-info is-small"
+          v-tippy
+          :content="trans.get('students.add_comment')"
+          @click="addOrEditComment(props.row.id, props.row.pivot.created_at)"
+        >
+          <i
+            class="fas"
+            :class="{
+              'fa-comment-plus': !props.row.pivot.comment,
+              'fa-comment-edit': props.row.pivot.comment,
+            }"
+          ></i>
+        </b-button>
+        <b-button
+          v-if="admin"
           type="is-danger is-small"
           @click="
             confirmDelete('behaviour', props.row, props.row.pivot.created_at)
@@ -254,24 +283,41 @@
       </b-table-column>
 
       <template #detail="props">
-                <article class="media">
-                    <div class="media-content">
-                        <div class="content">
-                              <span class="mb-2" v-for="(record, index) in props.row.calevents" :key="`'att-${record.id}-${index}`">
-                                <!-- v-if="record.pivot.type == 1 || record.pivot.type == 2" -->
-                                <div class="mb-2">
-                                  <span class="tag is-dark">{{ record.subject.name }} </span>
-                                  <span class="tag">{{ JSON.parse(record.info).start }} </span>
-                                  <span class="tag is-success is-light" v-if="record.pivot.type == 0">{{ trans.get('attendance.present') }}</span>
-                                  <span class="tag is-warning is-light" v-else-if="record.pivot.type == 1">{{ trans.get('attendance.late') }}</span>
-                                  <span class="tag is-danger is-light" v-else>{{ trans.get('attendance.absence') }}</span>
-                                  <span v-if="record.task"><i class="fas fa-info-circle m-1"></i> {{ record.task }}</span>
-                                </div>
-                              </span>
-                        </div>
-                    </div>
-                </article>
-            </template>
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <span
+                class="mb-2"
+                v-for="(record, index) in props.row.calevents"
+                :key="`'att-${record.id}-${index}`"
+              >
+                <!-- v-if="record.pivot.type == 1 || record.pivot.type == 2" -->
+                <div class="mb-2">
+                  <span class="tag is-dark">{{ record.subject.name }} </span>
+                  <span class="tag">{{ JSON.parse(record.info).start }} </span>
+                  <span
+                    class="tag is-success is-light"
+                    v-if="record.pivot.type == 0"
+                    >{{ trans.get("attendance.present") }}</span
+                  >
+                  <span
+                    class="tag is-warning is-light"
+                    v-else-if="record.pivot.type == 1"
+                    >{{ trans.get("attendance.late") }}</span
+                  >
+                  <span class="tag is-danger is-light" v-else>{{
+                    trans.get("attendance.absence")
+                  }}</span>
+                  <span v-if="record.task"
+                    ><i class="fas fa-info-circle m-1"></i>
+                    {{ record.task }}</span
+                  >
+                </div>
+              </span>
+            </div>
+          </div>
+        </article>
+      </template>
     </b-table>
     <button
       class="button mt-2"
@@ -340,12 +386,36 @@ export default {
         <span class="tag is-light">${total}</span>`;
       }
 
-      return this.trans.get('attendance.no_data');
+      return this.trans.get("attendance.no_data");
     },
     loadAllLog() {
       axios.get("/classroom/log/" + this.id).then((response) => {
         this.info = response.data;
         this.$forceUpdate();
+      });
+    },
+    addOrEditComment(id, date) {
+      this.$buefy.dialog.prompt({
+        message: `${this.trans.get("students.add_comment")}`,
+        inputAttrs: {
+          maxlength: 150,
+        },
+        trapFocus: true,
+        onConfirm: (comment) => {
+          axios
+            .post(`/classroom/${this.code}/behaviour/comment`, {
+              id: id,
+              date: date,
+              student: this.id,
+              comment: comment,
+            })
+            .then((response) => {
+              this.info = response.data;
+              this.$toast(this.trans.get("success_error.update_success"), {
+                type: "success",
+              });
+            });
+        },
       });
     },
     confirmDelete(type, row, date) {
