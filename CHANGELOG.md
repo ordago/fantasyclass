@@ -3,8 +3,7 @@
 ### Added
 - Setting to prevent buying equipment if not having the lowe level one.
 - Add comments to behaviours.
-
-### Changed
+- Show last time student access.
 
 ## v1.98 Beta (22/12/2021)
 ### Added

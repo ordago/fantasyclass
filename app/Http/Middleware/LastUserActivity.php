@@ -18,9 +18,11 @@ class LastUserActivity
      */
     public function handle($request, Closure $next)
     {
-        if (auth()->user()) {
+        $user = auth()->user();
+        if ($user) {
             $expiresAt = Carbon::now()->addMinutes(5);
-            Cache::put('user-is-online-' . auth()->user()->id, true, $expiresAt);
+            Cache::put('user-is-online-' . $user->id, true, $expiresAt);
+            $user->update(['last_seen' => Carbon::now()]);
         }
         return $next($request);
     }

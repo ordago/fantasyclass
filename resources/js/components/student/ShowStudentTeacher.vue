@@ -84,7 +84,7 @@
           </span>
           <span
             class="tag is-success ml-1"
-            v-if="student.online"
+            v-if="student.online === true"
             v-tippy
             :content="trans.get('students.online')"
           >
@@ -94,7 +94,7 @@
             v-else
             class="tag is-light border ml-1"
             v-tippy
-            content="Offline"
+            :content="`Offline ${getOnlineMessage(student.online)}`"
           >
             <i class="fas fa-wifi-slash"></i>
           </span>
@@ -372,6 +372,8 @@
 </template>
 
 <script>
+import Utils from "../../utils.js";
+
 export default {
   props: {
     student: {},
@@ -427,6 +429,10 @@ export default {
           this.addBehaviour(id, behaviourObj, value);
         },
       });
+    },
+    getOnlineMessage(date) {
+      if (date) return Utils.getDateFrom(date, this.trans.locale);
+      return "";
     },
     getMessage(behaviour) {
       let text = this.trans.get(behaviour.name) + " <small>(";

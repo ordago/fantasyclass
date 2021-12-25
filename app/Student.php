@@ -41,7 +41,7 @@ class Student extends Model implements HasMedia
         if (Cache::has('user-is-online-' . $id))
             return true;
         else
-            return false;
+            return $this->classroom->user->last_seen;
     }
 
 

@@ -22,7 +22,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $fillable = [
         'name', 'email', 'password', 'username', 'email_verified_at',
-        'is_student', 'locale', 'refresh_token', 'expires_in', 'token', 'pending_messages'
+        'is_student', 'locale', 'refresh_token', 'expires_in', 'token', 'pending_messages',
+        'last_seen', 
     ];
     
     public function getFilesAttribute()

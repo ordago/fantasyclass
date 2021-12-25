@@ -605,10 +605,10 @@ class ClassroomsController extends Controller
         $this->authorize('view', $class);
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        // ClassroomUser::where()
-        ClassroomUser::where('user_id', Auth()->user()->id)
-            ->where('classroom_id', $class->id)
-            ->where('role', '>', 0)->first()->touch();
+
+        // ClassroomUser::where('user_id', Auth()->user()->id)
+        //     ->where('classroom_id', $class->id)
+        //     ->where('role', '>', 0)->first()->touch();
 
         // DB::table('classroom_user')
         // ->where('user_id', Auth()->user()->id)
