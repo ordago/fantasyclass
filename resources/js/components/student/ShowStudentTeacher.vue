@@ -190,7 +190,12 @@
                 <span>
                   <i class="fas fa-fist-raised colored"></i>
                 </span>
-                {{ student.xp }}
+                <span v-if="student.xp % 1 == 0">
+                  {{ student.xp }}
+                </span>
+                <span class="has-text-light" v-else>
+                  {{ student.xp.toFixed(2) }}
+                </span>
                 <span class="bottom-right" style="right: 8px">
                   <i
                     class="fad"
@@ -206,7 +211,12 @@
             <div class="column p-0 m-0">
               <div class="gold p-3 m-1 cursor-pointer" @click="enableXPGold(1)">
                 <i class="fas fa-coins colored"></i>
-                {{ student.gold }}
+                <span v-if="student.gold % 1 == 0">
+                  {{ student.gold }}
+                </span>
+                <span v-else>
+                  {{ student.gold.toFixed(2) }}
+                </span>
                 <span class="bottom-right" style="right: 8px">
                   <i
                     class="fad"

@@ -68,13 +68,23 @@
             <span>
               <i class="fas fa-fist-raised colored"></i>
             </span>
-            {{ student.xp }}
+            <span v-if="student.xp % 1 == 0">
+              {{ student.xp }}
+            </span>
+            <span v-else>
+              {{ student.xp.toFixed(2) }}
+            </span>
           </div>
           <div class="gold p-3 m-1 mt-2 border">
             <span>
               <i class="fas fa-coins colored"></i>
             </span>
-            {{ student.gold }}
+            <span v-if="student.gold % 1 == 0">
+              {{ student.gold }}
+            </span>
+            <span v-else>
+              {{ student.gold.toFixed(2) }}
+            </span>
           </div>
           <div class="has-text-centered">
             <button

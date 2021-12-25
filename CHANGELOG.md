@@ -1,13 +1,13 @@
 # Changelog
-## v1.99 Beta (XX/12/2021)
+## v1.99 Beta (26/12/2021)
 ### Added
-- Setting to prevent buying equipment if not having the lowe level one.
+- Setting to prevent buying equipment if not having the lower level one.
 - Add comments to behaviours.
 - Show last time student access.
 
 ### Changed
 - Show collections individually in students view.
-
+- Better decimal showing (rounded to 2 if necessary).
 
 ## v1.98 Beta (22/12/2021)
 ### Added
