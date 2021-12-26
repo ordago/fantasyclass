@@ -414,13 +414,18 @@
           <p class="modal-card-title">{{ trans.get("general.import") }}</p>
         </header>
         <section class="modal-card-body">
+          <div class="buttons" v-if="collectionsb.length && collectionsb.length > 5">
+            <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button" v-for="index in collectionsb.length % 5" :key="index">
+              {{ index }}
+            </button>
+          </div>
           <div v-if="!collectionsb.length">
             {{ trans.get("collections.empty") }}
           </div>
           <div class="p-2 justify-content-center w-100" v-else>
             <div
               class="mb-2"
-              v-for="collectionp in collectionsb"
+              v-for="collectionp in paginatedCollections"
               :key="collectionp.id"
             >
               <h4 class="is-size-4 is-flex is-center-vertically">
@@ -477,6 +482,7 @@ export default {
     return {
       image: {},
       collectionsb: [],
+      page: 0,
       collectionsReactive: [],
       selectedCollection: null,
       isPrefsModalActive: false,
@@ -502,6 +508,10 @@ export default {
   computed: {
     orderedCollectionables: function () {
       return _.orderBy(this.selectedCollection.collectionables, "type", "asc");
+    },
+    paginatedCollections: function() {
+      console.log(this.collectionsb.slice(this.page * 5, 5))
+      return this.collectionsb.slice(this.page * 5, this.page * 5 + 5);
     },
   },
   methods: {
