@@ -510,7 +510,6 @@ export default {
       return _.orderBy(this.selectedCollection.collectionables, "type", "asc");
     },
     paginatedCollections: function() {
-      console.log(this.collectionsb.slice(this.page * 5, 5))
       return this.collectionsb.slice(this.page * 5, this.page * 5 + 5);
     },
   },
@@ -548,6 +547,7 @@ export default {
     getCollections() {
       axios.get("/collections/share/get").then((response) => {
         this.collectionsb = response.data;
+        console.log(this.collectionsb.length)
         this.isModalImportActive = true;
       });
     },
