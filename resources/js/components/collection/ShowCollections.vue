@@ -415,7 +415,7 @@
         </header>
         <section class="modal-card-body">
           <div class="buttons" v-if="collectionsb.length && collectionsb.length > 5">
-            <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button" v-for="index in collectionsb.length % 5" :key="index">
+            <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button" v-for="index in collectionsb.length / 5" :key="index">
               {{ index }}
             </button>
           </div>
@@ -547,7 +547,6 @@ export default {
     getCollections() {
       axios.get("/collections/share/get").then((response) => {
         this.collectionsb = response.data;
-        console.log(this.collectionsb.length)
         this.isModalImportActive = true;
       });
     },
