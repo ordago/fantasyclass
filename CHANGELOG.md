@@ -1,4 +1,10 @@
 # Changelog
+## v2.00 Beta (XX/12/2021)
+### Added
+
+### Changed
+
+
 ## v1.99 Beta (26/12/2021)
 ### Added
 - Setting to prevent buying equipment if not having the lower level one.
