@@ -99,7 +99,7 @@ export default {
         var regExp = /genial.ly/;
         var match = url.match(regExp);
 
-        if (match) {
+        if (match && (url.match(/!/g)||[]).length == 4) {
             return url.slice(0, url.lastIndexOf('/'));
         } else {
             return url;
