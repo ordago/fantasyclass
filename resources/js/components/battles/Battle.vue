@@ -47,6 +47,15 @@
           </b-radio-button>
           <b-radio-button
             v-model="type"
+            :native-value="4"
+            expanded
+            type="is-info"
+          >
+            <i class="fas fa-user mr-1"></i> vs
+            <i class="fas fa-dragon ml-1"></i>
+          </b-radio-button>
+          <b-radio-button
+            v-model="type"
             expanded
             :native-value="3"
             type="is-info"
@@ -63,7 +72,10 @@
         </article>
         <article
           class="message is-warning"
-          v-if="classroom.monsters.length == 0 && (type == 3 || type == 2)"
+          v-if="
+            classroom.monsters.length == 0 &&
+            (type == 3 || type == 2 || type == 4)
+          "
         >
           <div class="message-body">
             {{ trans.get("battles.monster_empty") }}:
@@ -79,10 +91,10 @@
         :label="trans.get('battles.settings')"
         :clickable="true"
       >
-        <h3 class="m-2" v-if="type == 0">
+        <h3 class="m-2" v-if="type == 0 || type == 4">
           <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
         </h3>
-        <div class="columns m-2" v-if="type == 0">
+        <div class="columns m-2" v-if="type == 0 || type == 4">
           <div class="column is-narrow">
             <div class="field is-horizontal">
               <div class="field-body">
@@ -414,7 +426,7 @@
             </div>
           </div>
         </div>
-        <b-field>
+        <b-field v-if="type != 4">
           <b-switch v-model="autoStart" :true-value="true" :false-value="false">
             {{ trans.get("battles.auto_start") }}
           </b-switch>
@@ -423,7 +435,7 @@
 
       <b-step-item
         step="3"
-        :visible="type == 3 || type == 2"
+        :visible="type == 3 || type == 2 || type == 4"
         :label="trans.get('battles.monster')"
         :clickable="true"
       >
@@ -477,7 +489,7 @@
           <p class="m-2">
             {{ trans.get("battles.bank_empty") }}
           </p>
-          <a class="button is-info" @click="activeStep += 1">
+          <a class="button is-info" v-if="type != 4" @click="activeStep += 1">
             {{ trans.get("battles.im_bank") }} 😏</a
           >
           <a
@@ -493,6 +505,7 @@
               selectedBank = null;
               activeStep += 1;
             "
+            v-if="type != 4"
           >
             {{ trans.get("battles.im_bank") }} 😏</a
           >
@@ -526,7 +539,7 @@
               <i
                 class="fas"
                 :class="{
-                  'fa-user': type == 0 || type == 3,
+                  'fa-user': type == 0 || type == 3 || type == 4,
                   'fa-users': type == 1 || type == 2,
                 }"
               ></i>
@@ -536,24 +549,27 @@
                 :class="{
                   'fa-user': type == 0,
                   'fa-users': type == 1,
-                  'fa-dragon': type == 3 || type == 2,
+                  'fa-dragon': type == 3 || type == 2 || type == 4,
                 }"
               ></i>
             </li>
             <li>
-              <span v-if="!selectedBank">{{ trans.get("battles.wb") }}</span>
+              <span v-if="!selectedBank && type != 4">{{
+                trans.get("battles.wb")
+              }}</span>
+              <span class="has-text-danger" v-else-if="!selectedBank">
+                {{ trans.get("battles.wb") }}
+              </span>
               <span v-else
                 >{{ trans.get("battles.questions") }}:
                 {{ selectedBank.title }}</span
               >
             </li>
-            <li v-if="type == 3 || type == 2">
-              <span
-                class="has-text-danger"
-                v-if="(type == 3 || type == 2) && !monsterSelected"
-                >{{ trans.get("battles.wm") }}</span
-              >
-              <span v-else-if="type == 3 || type == 2"
+            <li v-if="type == 3 || type == 2 || type == 4">
+              <span class="has-text-danger" v-if="!monsterSelected">{{
+                trans.get("battles.wm")
+              }}</span>
+              <span v-else
                 >{{ trans.get("battles.monster") }}:
                 {{ monsterSelected.name }}</span
               >
@@ -563,10 +579,19 @@
         <div class="has-text-centered">
           <h1
             class="button is-size-2 py-3 px-6 is-info m-3"
+            v-if="type != 4"
             :disabled="(type == 3 || type == 2) && !monsterSelected"
             @click="start"
           >
             {{ trans.get("battles.start") }}!
+          </h1>
+          <h1
+            class="button is-size-2 py-3 px-6 is-info m-3"
+            v-else
+            :disabled="!monsterSelected || !selectedBank"
+            @click="scheduleBattle"
+          >
+            {{ trans.get("battles.start_14") }}!
           </h1>
         </div>
       </b-step-item>
@@ -1055,6 +1080,9 @@ export default {
     };
   },
   methods: {
+    scheduleBattle() {
+      
+    },
     sendReward() {
       this.isLoading = true;
       if (this.type == 1 && this.winner) {
@@ -1553,16 +1581,14 @@ export default {
       switch (this.type) {
         case 0:
           return "1 vs 1. " + this.trans.get("battles.1vs1");
-          break;
         case 1:
           return this.trans.get("battles.groupVSgroup");
-          break;
         case 2:
           return this.trans.get("battles.groupVSmonsters");
-          break;
         case 3:
           return this.trans.get("battles.allVSmonsters");
-          break;
+        case 4:
+          return this.trans.get("battles.oneVSmonsters");
       }
     },
   },
