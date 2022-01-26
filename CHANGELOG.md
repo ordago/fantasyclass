@@ -1,5 +1,10 @@
 # Changelog
-## v1.99 Beta (26/12/2021)
+## v1.99.1 Beta (26/01/2022)
+### Changed
+- Bug fixes in battles.
+- Allow to upload 10MB files.
+
+## v1.99.1 Beta (26/12/2021)
 ### Added
 - Setting to prevent buying equipment if not having the lower level one.
 - Add comments to behaviours.

@@ -145,6 +145,8 @@ export default {
     answerTextQuestion() {
       let correct = false;
       this.reactiveQuestion.options.forEach((element) => {
+        console.log(this.answer)
+        console.log(element.answer)
         if (element.caseSensitive) {
           if (this.answer == element.answer) {
             correct = true;
@@ -159,7 +161,7 @@ export default {
     },
     answerQuestion(answer, type = 1) {
       var correct = false;
-      if (type == 1 || type == 2) {
+      if (type == 1) {
         this.question.options.forEach((element) => {
           if (element.correctAnswer && element.correctAnswer == answer) {
             correct = true;
