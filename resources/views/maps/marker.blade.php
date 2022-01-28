@@ -27,7 +27,7 @@
   </a>
   @endif
   @else
-  <a href="{{ $permalink }}" target="_blank">
+  <a href="{{ $permalink ?? '' }}" target="_blank">
     <img width="100%" src="/img/maps/marker.png" alt="marker">
   </a>
   @endif
