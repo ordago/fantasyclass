@@ -417,7 +417,7 @@ class ClassroomsStudentController extends Controller
                     $challenge->completed = true;
                 } else $challenge->completed = false;
             } else {
-                if ($student->groups->first()->challenges->contains($challenge->id)) {
+                if ($student->groups->first() && $student->groups->first()->challenges->contains($challenge->id)) {
                     $challenge->completed = true;
                 } else $challenge->completed = false;
             }
