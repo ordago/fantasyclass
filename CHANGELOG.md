@@ -1,9 +1,10 @@
 # Changelog
-## v2.0 Beta (XX/02/2022)
+## v1.99.2 Beta (11/02/2022)
 ### Changed
 - Bug and error fixes.
 - Round in evaluation.
 - Hide attendance if not registers.
+- Fix collection bank.
 
 ## v1.99.1 Beta (26/01/2022)
 ### Changed
