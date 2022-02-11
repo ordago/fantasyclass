@@ -811,7 +811,7 @@
         <b-tab-item
           :label="trans.get('menu.attendance')"
           icon="calendar-alt"
-          v-if="student.subjects && student.calevents"
+          v-if="student.subjects && student.subjects.length && student.calevents && student.calevents.length"
           icon-pack="fad"
           class="p-2"
         >
@@ -1271,7 +1271,7 @@
                             grade.pivot.grade < settings.eval_max / 2,
                         }"
                         ><i class="fas fa-external-link-alt mr-2"></i>
-                        {{ grade.pivot.grade }}</span
+                        {{ grade.pivot.grade.toFixed(2) }}</span
                       >
                     </span>
 
