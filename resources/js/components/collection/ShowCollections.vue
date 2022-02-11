@@ -414,8 +414,8 @@
           <p class="modal-card-title">{{ trans.get("general.import") }}</p>
         </header>
         <section class="modal-card-body">
-          <div class="buttons" v-if="collectionsb.length && collectionsb.length > 5">
-            <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button" v-for="index in collectionsb.length / 5" :key="index">
+          <div class="buttons" v-if="collectionsb && collectionsb.length && collectionsb.length > 5">
+            <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button" v-for="index in getRange(collectionsb.length)" :key="index">
               {{ index }}
             </button>
           </div>
@@ -514,6 +514,9 @@ export default {
     },
   },
   methods: {
+    getRange(len) {
+      return parseInt(len / 5) + 1
+    },
     getMessageDisable(collection) {
       if (collection.disabled) return this.trans.get("general.enable");
       return this.trans.get("general.disable");
@@ -546,6 +549,7 @@ export default {
     },
     getCollections() {
       axios.get("/collections/share/get").then((response) => {
+        console.log(response.data)
         this.collectionsb = response.data;
         this.isModalImportActive = true;
       });
