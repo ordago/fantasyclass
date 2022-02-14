@@ -1258,7 +1258,7 @@
                     "
                   >
                     <span
-                      v-if="grade.type == 1 && grade.rubric_id"
+                      v-if="grade.type == 1 && grade.rubric_id && grade.pivot.grade"
                       class="cursor-pointer"
                       @click="loadRubric(grade)"
                     >
