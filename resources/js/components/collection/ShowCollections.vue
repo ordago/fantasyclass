@@ -549,7 +549,7 @@ export default {
     },
     getCollections() {
       axios.get("/collections/share/get").then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         this.collectionsb = response.data;
         this.isModalImportActive = true;
       });

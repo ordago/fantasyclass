@@ -60,7 +60,6 @@ export default {
       }
     },
     onChange(event) {
-      console.log(event)
       this.file = event ? event : null;
       this.showExcel = false;
     },
