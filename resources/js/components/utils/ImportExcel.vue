@@ -13,7 +13,7 @@
           >
         </div>
         <b-field v-if="showExcel">
-          <b-upload @input="onChange" drag-drop accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" >
+          <b-upload v-model="files" @input="onChange" drag-drop>
             <section class="section">
               <div class="content has-text-centered">
                 <p>
@@ -45,6 +45,7 @@ export default {
   data() {
     return {
       file: null,
+      files: null,
       showExcel: false,
     };
   },
@@ -60,6 +61,7 @@ export default {
       }
     },
     onChange(event) {
+      console.log(event)
       this.file = event ? event : null;
       this.showExcel = false;
     },
