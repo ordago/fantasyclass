@@ -13,7 +13,7 @@
           >
         </div>
         <b-field v-if="showExcel">
-          <b-upload v-model="files" @input="onChange" drag-drop>
+          <b-upload @input="onChange" drag-drop>
             <section class="section">
               <div class="content has-text-centered">
                 <p>
@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       file: null,
-      files: null,
       showExcel: false,
     };
   },
