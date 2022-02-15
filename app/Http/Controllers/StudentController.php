@@ -151,12 +151,15 @@ class StudentController extends Controller
         return json_encode($student);
     }
 
-    public function generateUsername($name)
+    public function generateUsername($name, $times = 1)
     {
         $generator = new Generator();
         $username = $generator->generate($name);
         $userRows  = User::whereRaw("username REGEXP '^{$username}([0-9]*)?$'")->get();
-        $countUser = count($userRows) + 1;
+        $countUser = count($userRows) + $times * 1;
+        $userRows  = User::where("username", "{$username}{$countUser}")->get();
+        if(count($userRows))
+            return $this->generateUsername($name, $times+1);
 
         return ($countUser > 1) ? "{$username}{$countUser}" : $username;
     }
