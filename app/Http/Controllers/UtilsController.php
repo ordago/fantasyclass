@@ -313,10 +313,13 @@ class UtilsController extends Controller
                         return view('maps.marker', compact('check', 'permalink', 'title'));
                     }
                 }
+                $check = false;
                 if ($challenge->type == 0)
                     $check = $student->challenges->contains($text[1]);
-                else
-                    $check = $student->groups->first()->challenges->contains($text[1]);
+                else {
+                    if($student->groups->first())
+                        $check = $student->groups->first()->challenges->contains($text[1]);
+                }
 
                 $title = $challenge->title;
                 return view('maps.marker', compact('check', 'permalink', 'title'));

@@ -1,11 +1,18 @@
 # Changelog
-## v2.00 Beta (XX/12/2021)
-### Added
-
+## v1.99.2 Beta (11/02/2022)
 ### Changed
-- Fixed cannot upload xlsx.
+- Bug and error fixes.
+- Round in evaluation.
+- Hide attendance if not registers.
+- Fix collection bank.
 
-## v1.99 Beta (26/12/2021)
+## v1.99.1 Beta (26/01/2022)
+### Changed
+- Bug fixes in battles.
+- Allow to upload 10MB files.
+- Fix genial.ly showing.
+
+## v1.99.1 Beta (26/12/2021)
 ### Added
 - Setting to prevent buying equipment if not having the lower level one.
 - Add comments to behaviours.

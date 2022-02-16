@@ -22,10 +22,7 @@
           >
         </div>
         <b-field v-if="showExcel">
-          <b-upload
-            @input="onChange"
-            drag-drop
-          >
+          <b-upload @input="onChange" drag-drop>
             <section class="section">
               <div class="content has-text-centered">
                 <p>
