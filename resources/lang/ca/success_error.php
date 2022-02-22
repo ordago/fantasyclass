@@ -38,7 +38,7 @@ return [
     'use_delete_gold' => 'Aquesta acció tindria un cost de :gold d\'or, fes clic a "pagar" per cobrar-ho',
     
     'max_size' => 'Has superat la mida màxima de fitxer',
-    'file_tyle' => 'Tipus de fitxer no acceptat',
+    'file_type' => 'Tipus de fitxer no acceptat',
     'quota_exceded' => 'Has superat la quota d\'usuari',
 
     '403time' => 'Aquest repte estarà actiu el ',

@@ -343,7 +343,7 @@ export default {
         .catch((error) => {
           if (error.response) {
             if (error.response.status == 422) {
-              this.$toast(this.trans.get("success_error.file_tyle"), {
+              this.$toast(this.trans.get("success_error.file_type"), {
                 type: "error",
               });
             }

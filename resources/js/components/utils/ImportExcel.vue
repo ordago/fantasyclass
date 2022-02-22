@@ -87,6 +87,12 @@ export default {
       }
     },
     onChange(event) {
+      console.log(event);
+      if(!event.type.includes("xls")) {
+        this.$toast(this.trans.get("success_error.file_type"), {type: "error"})
+        return false;  
+      }
+
       this.file = event ? event : null;
       this.showExcel = false;
     },

@@ -37,7 +37,7 @@ return [
     'use_delete_gold' => 'This action would have a cost of :gold gold, click on "pay" to cash it',
 
     'max_size' => 'Max file size exceded',
-    'file_tyle' => 'File type not accepted',
+    'file_type' => 'File type not accepted',
     'quota_exceded' => 'Yo have exceded your user quota',
 
     '403time' => 'This challenge will be active at ',

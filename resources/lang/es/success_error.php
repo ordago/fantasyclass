@@ -39,7 +39,7 @@ return [
     'use_delete_gold' => 'Esta acción tendria un coste de :gold de oro, clica en "pagar" para cobrarlo',
 
     'max_size' => 'Has superado el límite de fichero',
-    'file_tyle' => 'Tipo de fichero no aceptado',
+    'file_type' => 'Tipo de fichero no aceptado',
     'quota_exceded' => 'Has superado la cuota de usuario',
 
     '403time' => 'Este reto estará activo el ',

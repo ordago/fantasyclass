@@ -216,11 +216,14 @@
             </div>
           </div>
         </div>
-        <h3 class="m-2" v-if="type == 3 || type == 2">
+        <h3 class="m-2" v-if="type == 3 || type == 2 || type == 4">
           <i class="fas fa-dragon"></i>
           {{ trans.get("battles.monster_hp_loss") }}
         </h3>
-        <div class="column is-narrow" v-if="type == 3 || type == 2">
+        <div
+          class="column is-narrow"
+          v-if="type == 3 || type == 2 || type == 4"
+        >
           <div class="field is-horizontal">
             <div class="field-body">
               <div class="field is-expanded">
@@ -1081,7 +1084,22 @@ export default {
   },
   methods: {
     scheduleBattle() {
-      
+      axios
+        .post(`/classroom/${this.classroom.code}/battles/schedule`, {
+          question_bank_id: this.selectedBank.id,
+          monster_id: this.monsterSelected.id,
+          options: {
+            hp_loss: this.hp_loss,
+            gold_loss: this.gold_loss,
+            xp_loss: this.xp_loss,
+            monster_hp_loss: this.monster_hp_loss,
+            timer_default: this.timer_default,
+            max_fails: this.max_fails,
+          },
+        })
+        .then((response) => {
+          console.log(response);
+        });
     },
     sendReward() {
       this.isLoading = true;

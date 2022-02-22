@@ -1,10 +1,19 @@
 # Changelog
+## v2.0 Beta (XX/02/2022)
+### Added
+~ Schedule individual battles
+
+### Changed
+- Only upload XLS in import.
+~ Paginate images in items.
+
 ## v1.99.2 Beta (11/02/2022)
 ### Changed
 - Bug and error fixes.
 - Round in evaluation.
 - Hide attendance if not registers.
 - Fix collection bank.
+- Fix username generator.
 
 ## v1.99.1 Beta (26/01/2022)
 ### Changed
