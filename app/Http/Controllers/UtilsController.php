@@ -354,6 +354,19 @@ class UtilsController extends Controller
         Mail::to(env('EMAIL'))->send(new ReportUser(request()->messages, request()->room));
     }
 
+    public function wordle($code)
+    {
+
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        // $contents = Storage::get('words/es_5.js');
+        // $contents = Storage::get('/public/words/es_5.js');
+        $contents = Storage::disk('words')->get('es_5.js');
+
+        return view('utils.wordle', compact('contents'));
+ 
+    }
     public function exportConfidentialDataStudent($code)
     {
 

@@ -366,6 +366,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/get/objects', 'UtilsController@getObjects');
         Route::get('/{code}/random/student', 'UtilsController@getRandomStudent');
         
+        Route::get('/{code}/wordle', 'UtilsController@wordle');
+        
         Route::get('/{code}/videochats/get', 'VideochatController@index');
         Route::post('/{code}/videochat', 'VideochatController@store');
         Route::delete('/videochat/{id}', 'VideochatController@destroy');
