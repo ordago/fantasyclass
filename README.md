@@ -224,8 +224,9 @@ https://github.com/antoniandre/vue-cal
 vue-keypress
 https://github.com/lupas/vue-keypress
 
-wardle
+wardle / wordle
 https://github.com/bpapin19/wardle
+https://github.com/yyx990803/vue-wordle
 
 ## 3rd party Licenses
 

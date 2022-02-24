@@ -8,7 +8,6 @@
 <script>
 import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
-import axios from "axios";
 
 export default {
   name: "SimpleKeyboard",
@@ -74,12 +73,12 @@ export default {
         this.keyboard.setOptions({
           buttonTheme: [
             {
-              class: "hg-green",
-              buttons: this.greenKey.join(" ").toUpperCase(),
-            },
-            {
               class: "hg-yellow",
               buttons: this.yellowKey.join(" ").toUpperCase(),
+            },
+            {
+              class: "hg-green",
+              buttons: this.greenKey.join(" ").toUpperCase(),
             },
             {
               class: "hg-gray",
@@ -127,7 +126,7 @@ export default {
       if (event.event.keyCode == 8) this.write(event);
     },
     write: function (event) {
-      let key = event.event.key.toUpperCase();
+      let key = event.event.key;
       switch (event.event.keyCode) {
         case 13:
           key = "{enter}";

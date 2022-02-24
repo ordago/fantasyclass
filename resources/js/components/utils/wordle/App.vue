@@ -2,12 +2,7 @@
   <div class="p-2">
     <h2 v-if="this.is_game_over">{{ this.game_over_msg }}</h2>
     <div class="invalid-word">{{ this.invalidMsg }}</div>
-    <LetterGrid
-      v-bind:letterArray="this.letterArray"
-      v-bind:rightSpot="this.rightSpot"
-      v-bind:rightLetter="this.rightLetter"
-      ref="letterGrid"
-    />
+    <LetterGrid v-bind:letterArray="this.letterArray" ref="letterGrid" />
     <Keyboard
       style="max-width: 400px; margin: 0 auto"
       @fill-tile="fillTile"
@@ -37,14 +32,55 @@ export default {
   },
   data() {
     // eslint-disable-next-line prettier/prettier
-    let word_list = ["acaba"];
+    let word_list = ["aaaaa"];
     let three_words = word_list.sort(() => 0.5 - Math.random()).slice(0, 3);
     let first_word = three_words[0];
 
     return {
-        
-      letterArray: [[], [], [], [], [], []],
-      stateArray: [[], [], [], [], [], []],
+      letterArray: [
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+        [
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+          { letter: null, state: null },
+        ],
+      ],
       words: word_list,
       word: first_word,
       rightSpot: [],
@@ -66,165 +102,86 @@ export default {
     };
   },
   mounted() {
+    // Accept the current word
+    this.availableWords.push(this.word);
     this.startGame();
   },
   methods: {
     startGame() {
       this.round++;
-      //   this.$refs.stopwatchRef.start();
       this.showKeyboard = true;
     },
     fillTile(button, row) {
       if (!this.is_game_over && !this.is_round_over) {
-        this.letterArray[row].push(button);
+        var i = 0;
+
+        for (let obj of this.letterArray[row]) {
+          if (!obj.letter) {
+            obj.letter = button;
+            break;
+          }
+        }
         this.$refs.letterGrid.$forceUpdate();
       }
     },
     backspace(row) {
-      if (!this.is_game_over) {
-        this.letterArray[row] = this.letterArray[row].slice(0, -1);
-        this.$refs.letterGrid.$forceUpdate();
-      }
-    },
-    checkYellowLetter(letter, word, position, row) {
-      this.yellowAppearances = 0;
-      for (let i = 0; i < word.length; i++) {
-        if (letter == word[i]) {
-          if (i != position) {
-            let reg = new RegExp(word[i], "g");
-            if ((word.match(reg) || []).length > 1) {
-              console.log(
-                "Detectada lletra " + letter + " no al lloc " + position
-              );
-              this.rightLetter.push(row + "" + i);
-              break;
-            }
-            //       if(this.rightSpot.includes(row + "" + i)) {
-            //           console.log("Ja està bé!")
-            //       } else {
-            //           console.log("No està bé!")
-            //           this.rightLetter.push(row + "" + i);
-            //           this.yellowAppearances++;
-            //       }
-          }
+      for (let tile of this.letterArray[row].reverse()) {
+        if (tile.letter) {
+          tile.letter = "";
+          break;
         }
       }
-    },
-    checkGreenLetter(letter, word, position, row) {
-      for (let i = 0; i < word.length; i++) {
-        if (letter == word[i]) {
-          if (i == position) {
-            // this.rightAppearances++;
-            // this.rightAppearances[letter]++;
-            console.log("Right " + letter);
-            // right spot
-            this.rightSpot.push(row + "" + i);
-            this.greenKey.push(word[i].toUpperCase());
-
-            // CHECK
-            if (this.yellowKey.includes(word[i].toUpperCase())) {
-              this.yellowKey = this.yellowKey.filter(function (f) {
-                return f !== word[i].toUpperCase();
-              });
-            }
-          }
-        }
-        // console.log(letter + " " + this.appearances);
-      }
+      this.letterArray[row].reverse();
     },
     checkWord(word, row) {
       this.invalidMsg = "";
       if (word === this.word) {
-        // this.is_round_over = true;
         for (let i = 0; i < this.word.length; i++) {
-          // right spot
-          this.rightSpot.push(row + "" + i);
-          this.stateArray[row][i] = 2;
+          this.letterArray[row][i].state = "correct";
         }
+        this.showKeyboard = false;
 
         this.triesCount += row + 1;
-
-        // if (this.round === 3) {
-        //   this.is_game_over = true;
-        //   this.game_over_msg =
-        //     "Congratulations! You completed all 3 rounds in " +
-        //     this.triesCount +
-        //     " total tries!";
-        //   //   this.$refs.stopwatchRef.stop();
-        //   this.showKeyboard = false;
-        // }
       } else {
-        for (let i = 0; i < word.length; i++) {
-          if (this.word.indexOf(word[i]) == -1) {
-            this.stateArray[row][i] = 0;
-            this.grayKey.push(word[i].toUpperCase());
-          } else {
-            if (this.word[i] == word[i]) {
-              this.stateArray[row][i] = 2;
-              this.greenKey.push(word[i].toUpperCase());
+        let answerLetters = this.word.split("");
+        console.log(answerLetters);
+        this.letterArray[row].forEach((tile, i) => {
+          console.log(i);
+          if (answerLetters[i] === tile.letter) {
+            tile.state = "correct";
+            answerLetters[i] = null;
+            if (!this.greenKey.includes(tile.letter)) {
+              this.greenKey.push(tile.letter);
+              if (this.yellowKey.includes(tile.letter))
+                this.yellowKey.splice(this.yellowKey.indexOf(tile.letter), 1);
             }
           }
-        }
-        for (let i = 0; i < word.length; i++) {
-            if (this.word[i] == word[i]) {
-              this.stateArray[row][i] = 2;
-              this.greenKey.push(word[i].toUpperCase());
+        });
+
+        this.letterArray[row].forEach((tile) => {
+          if (!tile.state && answerLetters.includes(tile.letter)) {
+            tile.state = "present";
+            answerLetters[answerLetters.indexOf(tile.letter)] = null;
+            if (
+              !this.greenKey.includes(tile.letter) &&
+              !this.yellowKey.includes(tile.letter)
+            ) {
+              this.yellowKey.push(tile.letter);
             }
           }
-        }
+        });
+        this.letterArray[row].forEach((tile) => {
+          if (!tile.state) {
+            tile.state = "absent";
+            this.grayKey.push(tile.letter);
+          }
+        });
+      }
 
-        // for (let i = 0; i < word.length; i++) {
-        //   if (this.word.indexOf(word[i]) == -1) {
-        //     this.grayKey.push(word[i].toUpperCase());
-        //   } else {
-        //     console.log("Checking " + word[i]);
-
-        //     // this.checkGreenLetter(word[i], this.word, i, row);
-        //     // this.checkYellowLetter(word[i], this.word, i, row);
-        //   }
-        // }
-        // this.$forceUpdate();
-        // this.$refs.letterGrid.$forceUpdate();
-
-        // for (let i = 0; i < this.word.length; i++) {
-        //   if (this.word[i] === word[i]) {
-        //     // right spot
-        //     this.rightSpot.push(row + "" + i);
-        //     this.greenKey.push(word[i].toUpperCase());
-        //     if (this.yellowKey.includes(word[i].toUpperCase())) {
-        //       this.yellowKey = this.yellowKey.filter(function (f) {
-        //         return f !== word[i].toUpperCase();
-        //       });
-        //     }
-        //   } else {
-        //     for (let j = 0; j < this.word.length; j++) {
-        //       if (this.word[j] === word[i]) {
-        //         // right letter
-        //         console.log("Checking " + word[i]);
-        //         console.log(this.greenKey);
-        //         console.log(this.yellowKey);
-        //         if (!this.greenKey.includes(word[i].toUpperCase())) {
-        //           this.rightLetter.push(row + "" + i);
-        //           console.log("Not find in greenkey");
-        //           this.yellowKey.push(word[i].toUpperCase());
-        //         } else {
-        //         }
-        //       }
-        //     }
-        //     if (
-        //       !this.greenKey.includes(word[i].toUpperCase()) &&
-        //       !this.yellowKey.includes(word[i].toUpperCase())
-        //     ) {
-        //       this.grayKey.push(word[i].toUpperCase());
-        //     }
-        //   }
-        // }
-    //   }
       if (row === 5 && word !== this.word) {
         this.game_over_msg =
           "Tough Scene. You didn't get the word: " + this.word.toUpperCase();
         this.is_game_over = true;
-        // this.$refs.stopwatchRef.stop();
         this.showKeyboard = false;
       }
     },
@@ -233,23 +190,40 @@ export default {
       setTimeout(() => (this.invalidMsg = ""), 2500);
     },
     nextRound() {
-      this.is_round_over = false;
-      this.round++;
-      this.word = this.words[this.round - 1];
-      this.letterArray = [[], [], [], [], [], []];
-      this.$refs.keyboardRef.reset();
-      this.rightSpot = [];
-      this.rightLetter = [];
-      this.greenKey = [];
-      this.yellowKey = [];
-      this.grayKey = [];
+      //   this.is_round_over = false;
+      //   this.round++;
+      //   this.word = this.words[this.round - 1];
+      //   this.letterArray = [[], [], [], [], [], []];
+      //   this.$refs.keyboardRef.reset();
+      //   this.rightSpot = [];
+      //   this.rightLetter = [];
+      //   this.greenKey = [];
+      //   this.yellowKey = [];
+      //   this.grayKey = [];
     },
   },
 };
 </script>
 
 <style>
-#app {
+.correct,
+.present,
+.absent {
+  color: #fff !important;
+}
+
+.correct {
+  background-color: #6aaa64 !important;
+}
+
+.present {
+  background-color: #c9b458 !important;
+}
+
+.absent {
+  background-color: #787c7e !important;
+}
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -278,5 +252,5 @@ button:hover {
 }
 .invalid-word {
   color: red;
-}
+} */
 </style>
