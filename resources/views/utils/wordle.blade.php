@@ -1,5 +1,5 @@
 @extends('layouts.app')
 
 @section('content')
-<wordle :available-words="{{ $contents }}"></wordle>
+<wordle code="{{ $code }}" :available-words="{{ $contents }}"></wordle>
 @endsection

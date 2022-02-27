@@ -19,6 +19,9 @@ export default {
     input: {
       type: String,
     },
+    rowNum: {
+      type: Number,
+    },
     availableWords: Array,
     greenKey: Array,
     yellowKey: Array,
@@ -142,7 +145,7 @@ export default {
 
       this.$parent.$refs.letterGrid.$forceUpdate();
       var letters = /^[a-zA-ZçÇñÑ]+$/;
-      if (this.word.length < 5 && button.length == 1 && button.match(letters)) {
+      if (this.word.length < this.rowNum && button.length == 1 && button.match(letters)) {
         this.$emit("fill-tile", button, this.row);
         this.word += button;
       }
@@ -152,7 +155,7 @@ export default {
         this.$emit("backspace", this.row);
       }
 
-      if (button === "{enter}" && this.word.length === 5) {
+      if (button === "{enter}" && this.word.length === this.rowNum) {
         if (
           !this.availableWords.find(
             (element) => element == this.word.toLowerCase()

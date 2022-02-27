@@ -2,8 +2,14 @@
   <div class="p-2">
     <h2 v-if="this.is_game_over">{{ this.game_over_msg }}</h2>
     <div class="invalid-word">{{ this.invalidMsg }}</div>
-    <LetterGrid v-bind:letterArray="this.letterArray" ref="letterGrid" />
+    <LetterGrid
+      :row="word.length"
+      v-if="this.letterArray.length"
+      v-bind:letterArray="this.letterArray"
+      ref="letterGrid"
+    />
     <Keyboard
+      :row-num="word.length"
       style="max-width: 400px; margin: 0 auto"
       @fill-tile="fillTile"
       @backspace="backspace"
@@ -22,75 +28,25 @@
 <script>
 import LetterGrid from "./components/LetterGrid";
 import Keyboard from "./components/Keyboard";
+import confetti from "canvas-confetti";
 
 export default {
   name: "App",
-  props: ["availableWords"],
+  props: ["code", "availableWords"],
   components: {
     LetterGrid,
     Keyboard,
   },
   data() {
-    // eslint-disable-next-line prettier/prettier
-    let word_list = ["aaaaa"];
-    let three_words = word_list.sort(() => 0.5 - Math.random()).slice(0, 3);
-    let first_word = three_words[0];
-
     return {
-      letterArray: [
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-        [
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-          { letter: null, state: null },
-        ],
-      ],
-      words: word_list,
-      word: first_word,
-      rightSpot: [],
-      rightLetter: [],
+      letterArray: [],
+      words: [],
+      word: null,
       greenKey: [],
       yellowKey: [],
       grayKey: [],
       game_over_msg: "",
       is_game_over: false,
-      difficulty: "Easy",
       round: 0,
       is_round_over: false,
       showKeyboard: false,
@@ -99,14 +55,32 @@ export default {
       appearances: 0,
       rightAppearances: 0,
       yellowAppearances: 0,
+      messages: [this.trans.get('wordle.genius'), this.trans.get('wordle.magnificent'), this.trans.get('wordle.impressive'), this.trans.get('wordle.splendid'), this.trans.get('wordle.great'),this.trans.get('wordle.phew')],
     };
   },
   mounted() {
-    // Accept the current word
-    this.availableWords.push(this.word);
-    this.startGame();
+    axios.get(`/classroom/${this.code}/games/wordle/load`).then((response) => {
+      this.words = response.data.words;
+      this.word = this.words[0].word;
+      this.createLetterArray(this.word.length);
+
+      // Accept the current word
+      this.availableWords.push(this.word);
+
+      this.startGame();
+    });
   },
   methods: {
+    createLetterArray(dimensions) {
+      for (let i = 0; i < 6; i++) {
+        let row = [];
+        for (let j = 0; j < dimensions; j++) {
+          row.push({ letter: null, state: null });
+        }
+        this.letterArray.push(row);
+      }
+      this.$forceUpdate();
+    },
     startGame() {
       this.round++;
       this.showKeyboard = true;
@@ -134,19 +108,35 @@ export default {
       this.letterArray[row].reverse();
     },
     checkWord(word, row) {
-      this.invalidMsg = "";
       if (word === this.word) {
         for (let i = 0; i < this.word.length; i++) {
           this.letterArray[row][i].state = "correct";
         }
         this.showKeyboard = false;
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 1.0 },
+        });
 
-        this.triesCount += row + 1;
+
+        this.$toast.success(
+          this.messages[row],
+          {
+            position: "top-center",
+            timeout: 10000,
+            closeButton: false,
+            closeOnClick: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            icon: false,
+            rtl: false,
+          }
+        );
+        
       } else {
         let answerLetters = this.word.split("");
-        console.log(answerLetters);
         this.letterArray[row].forEach((tile, i) => {
-          console.log(i);
           if (answerLetters[i] === tile.letter) {
             tile.state = "correct";
             answerLetters[i] = null;
@@ -179,15 +169,38 @@ export default {
       }
 
       if (row === 5 && word !== this.word) {
-        this.game_over_msg =
-          "Tough Scene. You didn't get the word: " + this.word.toUpperCase();
+        this.$toast.error(
+          this.trans.get("wordle.gameover") + this.word.toUpperCase(),
+          {
+            position: "top-center",
+            timeout: 10000,
+            closeOnClick: false,
+            showCloseButtonOnHover: false,
+            hideProgressBar: true,
+            icon: true,
+            rtl: false,
+          }
+        );
+
         this.is_game_over = true;
         this.showKeyboard = false;
+        setTimeout(() => location.reload(), 5000);
       }
     },
     invalidWord(word) {
-      this.invalidMsg = word.toUpperCase() + " is not a valid word.";
-      setTimeout(() => (this.invalidMsg = ""), 2500);
+      this.$toast.error(
+        word.toUpperCase() + this.trans.get("wordle.incorrect"),
+        {
+          position: "top-center",
+          timeout: 2000,
+          closeOnClick: true,
+          showCloseButtonOnHover: false,
+          hideProgressBar: true,
+          closeButton: "button",
+          icon: true,
+          rtl: false,
+        }
+      );
     },
     nextRound() {
       //   this.is_round_over = false;

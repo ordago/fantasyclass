@@ -1,4 +1,4 @@
-var es_4 = [
+[
 'abad',
 'abaz',
 'abes',
@@ -3226,4 +3226,4 @@ var es_4 = [
 'ñumi',
 'ñuta',
 'ñuto',
-];
+]

@@ -351,7 +351,16 @@ Route::group(['middleware' => 'language'], function () {
         Route::delete('/collections/{id}', 'CollectionController@destroy');
         Route::post('/{code}/collections/edit', 'CollectionController@update');
         Route::get('/collection/disable/{id}', 'CollectionController@toggleDisable');
+        
+        // Wordle
+        Route::get('/{code}/games/wordle', 'WordleController@index');
+        Route::post('/{code}/games/wordle', 'WordleController@store');
+        Route::post('/{code}/games/wordle/word', 'WordleController@addWord');
+        Route::delete('/{code}/games/wordle/word/{id}', 'WordleController@delWord');
+        Route::get('/{code}/games/wordle/load', 'WordleController@load');
 
+
+        Route::get('/show/{code}/wordle', 'UtilsController@wordle');
         
         // Utils
         Route::post('/{code}/utils/impostor', 'UtilsController@impostor');
@@ -366,7 +375,6 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/get/objects', 'UtilsController@getObjects');
         Route::get('/{code}/random/student', 'UtilsController@getRandomStudent');
         
-        Route::get('/{code}/wordle', 'UtilsController@wordle');
         
         Route::get('/{code}/videochats/get', 'VideochatController@index');
         Route::post('/{code}/videochat', 'VideochatController@store');

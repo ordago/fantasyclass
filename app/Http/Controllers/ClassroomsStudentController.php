@@ -17,6 +17,7 @@ use App\Notifications\NewInteractionStudent;
 use App\Pet;
 use App\Rating;
 use App\Rules;
+use App\Wordle;
 use App\Skill;
 use App\Collection;
 use App\Collectionable;
@@ -265,6 +266,7 @@ class ClassroomsStudentController extends Controller
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
 
+
         return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
@@ -281,7 +283,7 @@ class ClassroomsStudentController extends Controller
 
         if ($challenge->challenge_required) {
             $challenge_required = Challenge::find($challenge->challenge_required);
-            if($challenge_required) {
+            if ($challenge_required) {
                 if ($challenge_required->type == 0) {
                     if (!$student->challenges->contains($challenge->challenge_required) || $student->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0) {
                         return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
@@ -657,6 +659,21 @@ class ClassroomsStudentController extends Controller
         $this->authorize('studyOrTeach', $class);
         $admin = false;
         $student = Functions::getCurrentStudent($class);
+
+        $wordleActive = settings()->get('active_wordle', null);
+        if ($wordleActive) {
+            $wordle = Wordle::find($wordleActive);
+            if ($wordle) {
+                $code = $class->code;
+                settings()->setExtraColumns(['classroom_id' => $class->id]);
+                $active = settings()->get('active_wordle', null);
+                $contents = Storage::disk('words')->get('es.js');
+                return view('utils.wordle', compact('code', 'contents'));
+            } else {
+                settings()->set('active_wordle', null);
+                abort(501);
+            }
+        }
 
         $student->notifyLevel = false;
 

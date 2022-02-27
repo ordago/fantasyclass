@@ -620,7 +620,6 @@ export default {
     },
 
     addTag() {
-      debugger;
       axios
         .post("/classroom/" + this.code + "/tag", this.tag)
         .then((response) => {
