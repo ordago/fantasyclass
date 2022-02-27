@@ -97,6 +97,9 @@ export default {
             this.currentRow = i;
             break;
           }
+          for(let j = 0; j < this.letterArray[i].length; j++) {
+            // TODO Highlight keyboard keys
+          }
         }
       }
 

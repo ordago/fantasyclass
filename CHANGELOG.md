@@ -1,8 +1,8 @@
 # Changelog
 ## v2.0 Beta (XX/02/2022)
 ### Added
-~ Wordle game.
-~ Show feedback in challenges.
+- Wordle game.
+- Show feedback in challenges.
 
 ### Changed
 ~ Images paginated in objects.
