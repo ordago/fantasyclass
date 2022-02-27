@@ -667,7 +667,18 @@ class ClassroomsStudentController extends Controller
                 $code = $class->code;
                 settings()->setExtraColumns(['classroom_id' => $class->id]);
                 $active = settings()->get('active_wordle', null);
-                $contents = Storage::disk('words')->get('es.js');
+                switch ($wordle->dictionary) {
+                    case 0:
+                    default:
+                        $contents = Storage::disk('words')->get('es.js');
+                        break;
+                    case 1:
+                        $contents = Storage::disk('words')->get('ca.js');
+                        break;
+                    case 2:
+                        $contents = Storage::disk('words')->get('en.js');
+                        break;
+                }
                 return view('utils.wordle', compact('code', 'contents'));
             } else {
                 settings()->set('active_wordle', null);
