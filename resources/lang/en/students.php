@@ -97,6 +97,7 @@ return [
     'log_collection' => 'Collectibles',
     'log_level_up' => 'For level up',
     'log_exchange_collectible' => 'Collectible exchange',
+    'log_wordle' => 'Wordle',
 
     'load_all_log' => 'Load all entries',
 

@@ -22,4 +22,10 @@ class Wordle extends Model
     public function words() {
         return $this->hasMany(Words::class);
     }
+
+    public function student()
+    {
+        return $this->belongsToMany(Student::class)->withPivot('state');
+    }
+
 }

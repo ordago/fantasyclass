@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Classroom;
+use App\Http\Classes\Functions;
 use App\Wordle;
 use App\Words;
 use Illuminate\Http\Request;
@@ -93,9 +94,45 @@ class WordleController extends Controller
             settings()->set('active_wordle', null);
             abort(501);
         }
-        $words = $wordle->words;
 
-        return ['words' => $words, 'reward' => [$wordle->xp, $wordle->gold]];
+        $words = $wordle->words;
+        $student = Functions::getCurrentStudent($class);
+        $attempt = $student->words()->where('words_id', $words[0]->id)->where("state", 0)->first();
+        if($attempt)
+            $attempt = $attempt->pivot->word_progress;
+        return ['words' => $words, 'reward' => [$wordle->xp, $wordle->gold], 'attempt' => $attempt];
+
+    }
+
+    public function setState($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        $student = Functions::getCurrentStudent($class);
+
+        $data = request()->validate([
+            "word" => ['numeric', 'required'],
+            "progress" => ['array', 'required'],
+            "state" => ['numeric', 'required'],
+        ]); 
+
+        $word = Words::find($data['word']);
+        if($word->classroom() != $class->id) {
+            abort(403);
+        }
+
+        $wordle = Wordle::find($word->wordle_id);
+        
+        
+        $student->words()->sync([$word->id => ['word_progress' => json_encode($data['progress']), 'state' => $data['state']]], false);
+        
+        // For now, only one word allowed
+        if($data['state'] == 2) {
+            $student->setProperty('xp', $wordle->xp, true, 'wordle');
+            $student->setProperty('gold', $wordle->gold, true, 'wordle');
+        }
+        $student->wordle()->sync([$word->wordle->id => ['state' => $data['state']]], false);
+
 
     }
 }

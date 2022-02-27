@@ -666,22 +666,25 @@ class ClassroomsStudentController extends Controller
         if ($wordleActive) {
             $wordle = Wordle::find($wordleActive);
             if ($wordle) {
-                $code = $class->code;
-                settings()->setExtraColumns(['classroom_id' => $class->id]);
-                $active = settings()->get('active_wordle', null);
-                switch ($wordle->dictionary) {
-                    case 0:
-                    default:
-                        $contents = Storage::disk('words')->get('es.js');
-                        break;
-                    case 1:
-                        $contents = Storage::disk('words')->get('ca.js');
-                        break;
-                    case 2:
-                        $contents = Storage::disk('words')->get('en.js');
-                        break;
+                $active = $student->wordle()->where('wordle_id', $wordle->id)->where('state', '>', 0)->first();
+                if(!$active) {
+                    $code = $class->code;
+                    settings()->setExtraColumns(['classroom_id' => $class->id]);
+                    $active = settings()->get('active_wordle', null);
+                    switch ($wordle->dictionary) {
+                        case 0:
+                        default:
+                            $contents = Storage::disk('words')->get('es.js');
+                            break;
+                        case 1:
+                            $contents = Storage::disk('words')->get('ca.js');
+                            break;
+                        case 2:
+                            $contents = Storage::disk('words')->get('en.js');
+                            break;
+                    }
+                    return view('utils.wordle', compact('code', 'contents'));
                 }
-                return view('utils.wordle', compact('code', 'contents'));
             } else {
                 settings()->forget('active_wordle');
                 return redirect('/classroom/show/'.$class->code);

@@ -1,7 +1,7 @@
 <template>
   <div class="p-2">
     <div class="buttons">
-      <div class="button" @click="isModalActive = true">__ Añade wordle</div>
+      <div class="button" @click="isModalActive = true">{{ trans.get('wordle.new_wordle') }}</div>
     </div>
     <div>
       <div
@@ -14,10 +14,11 @@
           <span v-if="obj.dictionary == 0">🇪🇦</span>
           <span v-else-if="obj.dictionary == 1">ca</span>
           <span v-else>🇬🇧</span>
+          <span>{{ obj.xp }} <i class="fas fa-fist-raised"></i> / {{ obj.gold }} <i class="fas fa-coins"></i></span>
         </div>
         <div class="column is-narrow">
-          <button class="tag is-success" @click="addWord(obj.id)">
-            __ Add word
+          <button class="tag is-success" v-if="obj.words && obj.words.length != 1" @click="addWord(obj.id)">
+            {{ trans.get('wordle.new_word') }}
           </button>
         </div>
         <div v-if="obj.words && obj.words.length" class="column is-narrow">
@@ -57,7 +58,7 @@
               </small>
             </span>
           </div>
-          <div v-else>__ Sin palabras</div>
+          <div v-else>{{ trans.get('wordle.without_words') }}</div>
         </div>
       </div>
     </div>
@@ -117,7 +118,7 @@
                 </select>
               </div>
             </div>
-            <div class="mt-2">
+            <div class="mt-2" style="display: none">
               <div class="select">
                 <select v-model="wordle.type">
                   <option :value="0">__ Acertar 1 o varias palabras</option>
@@ -192,11 +193,10 @@ export default {
     },
     addWord(wordle) {
       this.$buefy.dialog.prompt({
-        message: this.trans.get("wordle.word"),
+        message: this.trans.get("wordle.word_info"),
         confirmText: this.trans.get("general.add"),
         cancelText: this.trans.get("general.cancel"),
         inputAttrs: {
-          placeholder: this.trans.get("wordle.word"),
           minlength: 4,
           maxlength: 6,
         },

@@ -358,7 +358,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/games/wordle/word', 'WordleController@addWord');
         Route::delete('/{code}/games/wordle/word/{id}', 'WordleController@delWord');
         Route::get('/{code}/games/wordle/load', 'WordleController@load');
-
+        Route::post('/{code}/games/wordle/state', 'WordleController@setState');
+        
 
         Route::get('/show/{code}/wordle', 'UtilsController@wordle');
         

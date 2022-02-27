@@ -22,6 +22,9 @@ export default {
     rowNum: {
       type: Number,
     },
+    currentRow: {
+      type: Number,
+    },
     availableWords: Array,
     greenKey: Array,
     yellowKey: Array,
@@ -98,6 +101,8 @@ export default {
     row: 0,
   }),
   mounted() {
+    console.log(this.currentRow)
+    this.row = this.currentRow
     this.keyboard = new Keyboard(this.keyboardClass, {
       onChange: this.onChange,
       onKeyPress: this.onKeyPress,
