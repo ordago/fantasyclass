@@ -660,7 +660,9 @@ class ClassroomsStudentController extends Controller
         $admin = false;
         $student = Functions::getCurrentStudent($class);
 
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
         $wordleActive = settings()->get('active_wordle', null);
+        // abort(403, $wordleActive);
         if ($wordleActive) {
             $wordle = Wordle::find($wordleActive);
             if ($wordle) {
@@ -681,8 +683,8 @@ class ClassroomsStudentController extends Controller
                 }
                 return view('utils.wordle', compact('code', 'contents'));
             } else {
-                settings()->set('active_wordle', null);
-                abort(501);
+                settings()->forget('active_wordle');
+                return redirect('/classroom/show/'.$class->code);
             }
         }
 

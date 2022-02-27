@@ -95,7 +95,7 @@ class WordleController extends Controller
         }
         $words = $wordle->words;
 
-        return ['words' => $words];
+        return ['words' => $words, 'reward' => [$wordle->xp, $wordle->gold]];
 
     }
 }

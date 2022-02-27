@@ -1,7 +1,8 @@
 <template>
   <div class="p-2">
-    <h2 v-if="this.is_game_over">{{ this.game_over_msg }}</h2>
-    <div class="invalid-word">{{ this.invalidMsg }}</div>
+    <div class="has-text-centered p-2 fs-2" v-if="words && reward && reward.length">
+      {{ words.length }} <i class="fas fa-w"></i>: {{ reward[0] }} <i class="fas fa-fist-raised colored"></i> {{ reward[1] }} <i class="fas fa-coins colored"></i> 
+    </div>
     <LetterGrid
       :row="word.length"
       v-if="this.letterArray.length"
@@ -53,6 +54,7 @@ export default {
       triesCount: 0,
       invalidMsg: "",
       appearances: 0,
+      reward: [],
       rightAppearances: 0,
       yellowAppearances: 0,
       messages: [this.trans.get('wordle.genius'), this.trans.get('wordle.magnificent'), this.trans.get('wordle.impressive'), this.trans.get('wordle.splendid'), this.trans.get('wordle.great'),this.trans.get('wordle.phew')],
@@ -62,6 +64,7 @@ export default {
     axios.get(`/classroom/${this.code}/games/wordle/load`).then((response) => {
       this.words = response.data.words;
       this.word = this.words[0].word;
+      this.reward = response.data.reward;
       this.createLetterArray(this.word.length);
 
       // Accept the current word
