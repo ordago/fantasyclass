@@ -43,15 +43,37 @@
         >
           <i class="fad fa-users outer_glow" style="font-size: 2em"></i>
         </a>
-        <a
-          class="link outer_glow has-text-dark pl-0 ml-0 pr-2 has-text-danger"
-          v-tippy
-          :content="trans.get('menu.battles')"
-          v-if="students.length"
-          :href="'/classroom/' + classroom.code + '/battles'"
+        <div
+          v-if="allStudents && allStudents.length"
+          class="dropdown is-hoverable mr-1"
+          style="display: inline-block"
         >
-          <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
-        </a>
+          <span
+            class="has-text-danger dropdown-trigger link outer_glow m-0 p-0"
+          >
+            <i class="fa-duotone fa-alien-8bit glow" style="font-size: 2em"></i>
+            <span class="icon is-small">
+              <i class="fas fa-angle-down" aria-hidden="true"></i>
+            </span>
+          </span>
+
+          <div class="dropdown-menu has-background-white rounded p-3">
+            <a
+              class="dropdown-item"
+              :href="'/classroom/' + classroom.code + '/battles'"
+            >
+              <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>
+              {{ trans.get("menu.battles") }}
+            </a>
+            <a @click="isImpostorActive = true" class="dropdown-item">
+              <i class="fad fa-user-secret" style="font-size: 2em"></i> Impostor
+            </a>
+            <a :href="'/classroom/' + classroom.code + '/games/wordle'" class="dropdown-item">
+              <i class="fa-duotone fa-w" style="font-size: 2em"></i> WordleFC
+            </a>
+          </div>
+        </div>
+
         <a
           class="link outer_glow has-text-dark pl-0 ml-0 pr-2"
           v-tippy
@@ -244,16 +266,6 @@
             </div>
           </span>
         </tippy>
-
-        <a
-          v-tippy
-          v-if="allStudents && allStudents.length"
-          :content="'Impostor'"
-          @click="isImpostorActive = true"
-          class="link outer_glow px-1 cursor-pointer has-text-danger"
-        >
-          <i class="fad fa-user-secret" style="font-size: 2em"></i>
-        </a>
         <a
           v-tippy
           :content="trans.get('menu.videochat')"

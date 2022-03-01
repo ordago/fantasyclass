@@ -327,7 +327,7 @@
               full &&
               !challengeReactive.incomplete
             "
-            class="message is-warning"
+            class="message is-warning mt-2"
           >
             <div v-html="getMessage(challenge)" class="message-body"></div>
           </article>
@@ -627,6 +627,18 @@
                 {{ trans.get("general.send") }}
               </label>
             </form>
+          </div>
+          <div
+            v-if="
+              !admin &&
+              !full &&
+              challengeReactive.count > 0 &&
+              challengeReactive.feedback
+            "
+            class="p-2"
+          >
+            <div v-html="challengeReactive.feedback" class="notification is-info">
+            </div>
           </div>
           <div class="buttons" v-if="(edit && admin) || !admin">
             <button

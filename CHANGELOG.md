@@ -1,11 +1,15 @@
 # Changelog
-## v2.0 Beta (XX/02/2022)
+## v2.0 Beta (01/03/2022)
 ### Added
-~ Schedule individual battles
+- Wordle game.
+- Show feedback in challenges.
 
 ### Changed
-- Only upload XLS in import.
-~ Paginate images in items.
+- Images paginated in objects.
+
+### Required
+- npm i simple-keyboard
+- npm i vue-keypress
 
 ## v1.99.2 Beta (11/02/2022)
 ### Changed

@@ -172,6 +172,7 @@
     </button>
     <b-modal
       :active.sync="isModalActive"
+      v-if="isModalActive"
       has-modal-card
       full-screen
       :can-cancel="false"
@@ -183,15 +184,22 @@
           </p>
         </header>
         <section class="modal-card-body is-relative mb-2">
+          <div class="columns is-multiline mb-5" v-if="images">
+             <button :class="{'has-background-success-light' : page == index - 1}" @click="page = index - 1" class="button"
+             v-for="index in getRange()" :key="index">
+              {{ index }}
+            </button>
+          </div>
           <div class="columns is-multiline" v-if="images">
             <img
               @contextmenu.prevent=""
               width="60px"
               @click="updateImg(image)"
-              v-for="image in images"
+              v-for="image in paginatedImages"
               :key="image"
               :src="image"
             />
+
           </div>
         </section>
         <footer
@@ -220,7 +228,7 @@ export default {
       return { id: row.id, src: row.icon, alt: row.description };
     });
     axios.get("/classroom/utils/get-shop").then((response) => {
-      this.images = response.data;
+      this.images = Object.values(response.data);
     });
   },
   created() {
@@ -255,9 +263,13 @@ export default {
       id: null,
       craftItems: [],
       isModalActive: false,
+      page: 0,
     };
   },
   methods: {
+    getRange() {
+      return parseInt(this.images.length / 100  ) + 1
+    },
     onSelectMultipleImage(items) {
       this.craft = items;
     },
@@ -308,6 +320,11 @@ export default {
   components: {
     VueSelectImage,
   },
-  computed: {},
+  computed: {
+     paginatedImages: function() {
+       if(this.images && this.images.length)
+      return this.images.slice(this.page * 100, this.page * 100 + 100);
+    },
+  },
 };
 </script>

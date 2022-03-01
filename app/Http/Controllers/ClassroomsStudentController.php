@@ -17,6 +17,7 @@ use App\Notifications\NewInteractionStudent;
 use App\Pet;
 use App\Rating;
 use App\Rules;
+use App\Wordle;
 use App\Skill;
 use App\Collection;
 use App\Collectionable;
@@ -265,6 +266,7 @@ class ClassroomsStudentController extends Controller
         $docs = $this->getDocuments($class);
         $videochats = $this->getVideochats($class);
 
+
         return view('studentsview.index', compact('class', 'docs', 'videochats', 'settings', 'student', 'chat', 'showChat', 'monsters', 'rating'));
     }
 
@@ -281,7 +283,7 @@ class ClassroomsStudentController extends Controller
 
         if ($challenge->challenge_required) {
             $challenge_required = Challenge::find($challenge->challenge_required);
-            if($challenge_required) {
+            if ($challenge_required) {
                 if ($challenge_required->type == 0) {
                     if (!$student->challenges->contains($challenge->challenge_required) || $student->challenges->where('id', $challenge->challenge_required)->first()->pivot->count == 0) {
                         return [false, "requirement", "ℹ️" . __('success_error.403reqChallenge') . $challenge_required->title];
@@ -457,7 +459,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_student.challenge_id')
                     ->where('challenge_student.student_id', '=', $student->id);
             })
-            ->selectRaw('challenges.id, challenges.dateend, challenge_student.evaluated, challenges.pinned, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenges.id, challenges.feedback, challenges.dateend, challenge_student.evaluated, challenges.pinned, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.is_conquer, challenges.items, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_student.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
 
@@ -480,7 +482,7 @@ class ClassroomsStudentController extends Controller
                 $join->on('challenges.id', '=', 'challenge_group.challenge_id')
                     ->whereIn('challenge_group.group_id', $groups);
             })
-            ->selectRaw('challenge_group.group_id, challenges.dateend, challenges.pinned, challenges.id, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
+            ->selectRaw('challenge_group.group_id, challenges.feedback, challenges.dateend, challenges.pinned, challenges.id, challenges.type, challenges.collectionables, challenges.type_collectionable, challenges.objects, challenges.items, challenges.is_conquer, challenges.title, challenges.description, challenges.datetime, challenges.icon, challenges.color, challenges.xp, challenges.hp, challenges.gold, challenges.cards, challenges.completion, challenges.optional, challenge_group.count, challenges.challenge_required, challenges.challenges_group_id, challenges.requirements')
             ->get();
 
         $challenges = $challenges->merge($groupChallenges);
@@ -657,6 +659,37 @@ class ClassroomsStudentController extends Controller
         $this->authorize('studyOrTeach', $class);
         $admin = false;
         $student = Functions::getCurrentStudent($class);
+
+        settings()->setExtraColumns(['classroom_id' => $class->id]);
+        $wordleActive = settings()->get('active_wordle', null);
+        // abort(403, $wordleActive);
+        if ($wordleActive) {
+            $wordle = Wordle::find($wordleActive);
+            if ($wordle) {
+                $active = $student->wordle()->where('wordle_id', $wordle->id)->where('state', '>', 0)->first();
+                if(!$active) {
+                    $code = $class->code;
+                    settings()->setExtraColumns(['classroom_id' => $class->id]);
+                    $active = settings()->get('active_wordle', null);
+                    switch ($wordle->dictionary) {
+                        case 0:
+                        default:
+                            $contents = Storage::disk('words')->get('es.js');
+                            break;
+                        case 1:
+                            $contents = Storage::disk('words')->get('ca.js');
+                            break;
+                        case 2:
+                            $contents = Storage::disk('words')->get('en.js');
+                            break;
+                    }
+                    return view('utils.wordle', compact('code', 'contents'));
+                }
+            } else {
+                settings()->forget('active_wordle');
+                return redirect('/classroom/show/'.$class->code);
+            }
+        }
 
         $student->notifyLevel = false;
 

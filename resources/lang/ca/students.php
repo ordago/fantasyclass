@@ -99,6 +99,7 @@ return [
     'log_collection' => 'Compra col·leccionables',
     'log_level_up' => 'Per pujar nivell',
     'log_exchange_collectible' => 'Intercanvi de col·leccionables',
+    'log_wordle' => 'Wordle',
  
     'load_all_log' => 'Carrega totes les entrades',
     

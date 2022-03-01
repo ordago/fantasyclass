@@ -507,6 +507,8 @@ export default {
           return "<i class='fas fa-spinner colored' style='color: #E6E6FA'></i>";
         case "feed":
           return "<i class='fas fa-apple-alt colored' style='color: red'></i>";
+        case "wordle":
+          return "<i class='fas fa-w colored'></i>";
         default:
           return "<i class='fas fa-info-circle colored' style='color: #E6E6FA'></i>";
       }

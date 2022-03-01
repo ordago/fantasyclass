@@ -78,6 +78,11 @@ class Classroom extends Model implements HasMedia
     {
         return $this->hasMany(QuestionBank::class);
     }
+  
+    public function wordles()
+    {
+        return $this->hasMany(Wordle::class);
+    }
 
     public function evalgroups()
     {

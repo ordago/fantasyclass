@@ -2,6 +2,23 @@
 .media-content {
     // overflow: hidden;
 }
+.correct,
+.present,
+.absent {
+  color: #fff !important;
+}
+
+.correct {
+  background-color: #6aaa64 !important;
+}
+
+.present {
+  background-color: #c9b458 !important;
+}
+
+.absent {
+  background-color: #787c7e !important;
+}
 
 pre {
     border-radius: 5px;

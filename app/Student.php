@@ -260,6 +260,16 @@ class Student extends Model implements HasMedia
         return $this->belongsToMany(Document::class);
     }
 
+    public function words()
+    {
+        return $this->belongsToMany(Words::class)->withPivot('word_progress', 'state');
+    }
+
+    public function wordle()
+    {
+        return $this->belongsToMany(Wordle::class)->withPivot('state');
+    }
+
     public function addBehaviour($behaviourId, $comment = null)
     {
         $behaviour = Behaviour::findOrFail($behaviourId);

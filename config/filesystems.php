@@ -55,6 +55,13 @@ return [
             'visibility' => 'public',
         ],
         
+        'words' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/words',
+            'url' => env('APP_URL').'/public',
+            'visibility' => 'public',
+        ],
+        
         'music' => [
             'driver' => 'local',
             'root'   => public_path() . '/music',
