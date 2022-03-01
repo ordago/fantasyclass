@@ -505,11 +505,6 @@
           <div
             class="control content"
             data-app
-            v-if="
-              challenge.completion == 1 ||
-              challenge.completion == 3 ||
-              challenge.completion == 2
-            "
           >
             <label class="label" for="name">Feedback</label>
             <Editor
