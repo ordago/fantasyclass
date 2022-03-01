@@ -16,6 +16,7 @@ return [
     'word_info' => 'Afegeix una paraula de entre 4 i 6 lletres',
     'active' => 'Actiu',
     'remove_active' => 'Elimina WordleFC actiu',
+    'results' => 'Resultats',
 
     'incorrect' => ' no és una paraula vàlida',
     'gameover' => 'Final del joc 😵. No has encertat: ',

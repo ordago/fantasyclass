@@ -24,7 +24,7 @@
             <i class="fas fa-coins"></i
           ></span>
           <span class="tag is-dark cursor-pointer" @click="showResults(obj.id)"
-            >__Resultados</span
+            >{{ trans.get('wordle.results') }}</span
           >
         </div>
         <div class="column is-narrow" v-if="obj.words && obj.words.length != 1">
@@ -180,19 +180,19 @@
                 <h3
                   class="rounded p-2"
                   :class="{
-                    'has-background-success': student.pivot.state == 2,
-                    'has-background-danger': student.pivot.state == 1,
+                    'correct': student.pivot.state == 2,
+                    'has-background-danger has-text-light': student.pivot.state == 1,
+                    'has-background-grey-lighter': student.pivot.state == 0,
                   }"
                 >
                   {{ student.name }}
                 </h3>
                 <div v-for="index in 6" :key="index">
                   <div
-                    class="p-2 my-2"
+                    class=""
                     v-if="showRow(student.pivot.word_progress, index)"
+                    v-html="getRow(student.pivot.word_progress, index)"
                   >
-                    <span v-html="getRow(student.pivot.word_progress, index)">
-                    </span>
                   </div>
                 </div>
               </div>
@@ -252,7 +252,7 @@ export default {
         if (element.state == "present") color = "present";
         else if (element.state == "correct") color = "correct";
 
-        row += `<span class='p-2 mx-1 rounded border ${color}'>`;
+        row += `<span style="display: inline-block; width: 40px" class=' has-text-centered py-2 rounded border ${color}'>`;
         row += element.letter;
         row += "</span>";
       });

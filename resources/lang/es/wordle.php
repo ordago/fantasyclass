@@ -15,6 +15,7 @@ return [
     'word_info' => 'Añade una palabra de entre 4 y 6 letras',
     'active' => 'Activo',
     'remove_active' => 'Elimina WordleFC activo',
+    'results' => 'Resultados',
     
     'incorrect' => ' no es una palabra válida',
     'gameover' => 'Final del juego. No has acertado: ',
