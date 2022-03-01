@@ -1,5 +1,8 @@
 <template>
   <div class="p-2">
+    <div @click="isModalActive = true" class="top-right fs-2 cursor-pointer" style="right: 10px;">
+      <span class="is-hidden-mobile">{{ trans.get("wordle.how_play") }}</span> <i class="fa-solid fa-circle-question"></i>
+    </div>
     <div
       class="has-text-centered p-2 fs-2"
       v-if="words && reward && reward.length"
@@ -36,6 +39,41 @@
         {{ trans.get("general.classroom") }}
       </button>
     </div>
+    <b-modal
+      :active.sync="isModalActive"
+      has-modal-card
+      trap-focus
+      :destroy-on-hide="false"
+      aria-role="dialog"
+      aria-modal
+    >
+        <div class="modal-card" style="width: auto">
+          <header class="modal-card-head">
+            <p class="modal-card-title">
+              <i class="fas fa-w mr-2"></i
+              >{{ trans.get("wordle.how_play") }}
+            </p>
+          </header>
+          <section class="modal-card-body">
+            <p>{{ trans.get('wordle.info_general') }}</p>
+            <div class="my-1 is-flex is-center-vertically">
+              <img src="/img/wordlefc/green.png" class="mr-2" alt="green key" width="30px"> {{ trans.get('wordle.info_green') }}
+            </div>
+            <div class="my-1 is-flex is-center-vertically">
+              <img src="/img/wordlefc/yellow.png" class="mr-2" alt="yellow key" width="30px"> {{ trans.get('wordle.info_yellow') }}
+            </div>
+            <div class="my-1 is-flex is-center-vertically">
+              <img src="/img/wordlefc/gray.png" class="mr-2" alt="gray key" width="30px"> {{ trans.get('wordle.info_yellow') }}
+            </div>
+            <p class="mt-2">{{ trans.get('wordle.info_end') }}</p>
+          </section>
+          <footer class="modal-card-foot">
+            <button class="button" type="button" @click="isModalActive = false">
+              {{ trans.get("general.close") }}
+            </button>
+          </footer>
+        </div>
+    </b-modal>
   </div>
 </template>
 
@@ -53,6 +91,7 @@ export default {
   },
   data() {
     return {
+      isModalActive: false,
       currentRow: 0,
       letterArray: [],
       words: [],
