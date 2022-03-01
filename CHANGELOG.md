@@ -1,5 +1,5 @@
 # Changelog
-## v2.0 Beta (XX/02/2022)
+## v2.0 Beta (01/03/2022)
 ### Added
 - Wordle game.
 - Show feedback in challenges.
