@@ -5,7 +5,7 @@
 - Show feedback in challenges.
 
 ### Changed
-~ Images paginated in objects.
+- Images paginated in objects.
 
 ### Required
 - npm i simple-keyboard
