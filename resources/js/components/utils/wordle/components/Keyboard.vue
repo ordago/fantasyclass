@@ -101,7 +101,6 @@ export default {
     row: 0,
   }),
   mounted() {
-    console.log(this.currentRow)
     this.row = this.currentRow
     this.keyboard = new Keyboard(this.keyboardClass, {
       onChange: this.onChange,

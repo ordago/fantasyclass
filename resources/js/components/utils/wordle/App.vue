@@ -1,7 +1,12 @@
 <template>
   <div class="p-2">
-    <div @click="isModalActive = true" class="top-right fs-2 cursor-pointer" style="right: 10px;">
-      <span class="is-hidden-mobile">{{ trans.get("wordle.how_play") }}</span> <i class="fa-solid fa-circle-question"></i>
+    <div
+      @click="isModalActive = true"
+      class="top-right fs-2 cursor-pointer"
+      style="right: 10px"
+    >
+      <span class="is-hidden-mobile">{{ trans.get("wordle.how_play") }}</span>
+      <i class="fa-solid fa-circle-question"></i>
     </div>
     <div
       class="has-text-centered p-2 fs-2"
@@ -47,32 +52,49 @@
       aria-role="dialog"
       aria-modal
     >
-        <div class="modal-card" style="width: auto">
-          <header class="modal-card-head">
-            <p class="modal-card-title">
-              <i class="fas fa-w mr-2"></i
-              >{{ trans.get("wordle.how_play") }}
-            </p>
-          </header>
-          <section class="modal-card-body">
-            <p>{{ trans.get('wordle.info_general') }}</p>
-            <div class="my-1 is-flex is-center-vertically">
-              <img src="/img/wordlefc/green.png" class="mr-2" alt="green key" width="30px"> {{ trans.get('wordle.info_green') }}
-            </div>
-            <div class="my-1 is-flex is-center-vertically">
-              <img src="/img/wordlefc/yellow.png" class="mr-2" alt="yellow key" width="30px"> {{ trans.get('wordle.info_yellow') }}
-            </div>
-            <div class="my-1 is-flex is-center-vertically">
-              <img src="/img/wordlefc/gray.png" class="mr-2" alt="gray key" width="30px"> {{ trans.get('wordle.info_yellow') }}
-            </div>
-            <p class="mt-2">{{ trans.get('wordle.info_end') }}</p>
-          </section>
-          <footer class="modal-card-foot">
-            <button class="button" type="button" @click="isModalActive = false">
-              {{ trans.get("general.close") }}
-            </button>
-          </footer>
-        </div>
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">
+            <i class="fas fa-w mr-2"></i>{{ trans.get("wordle.how_play") }}
+          </p>
+        </header>
+        <section class="modal-card-body">
+          <p>{{ trans.get("wordle.info_general") }}</p>
+          <div class="my-1 is-flex is-center-vertically">
+            <img
+              src="/img/wordlefc/green.png"
+              class="mr-2"
+              alt="green key"
+              width="30px"
+            />
+            {{ trans.get("wordle.info_green") }}
+          </div>
+          <div class="my-1 is-flex is-center-vertically">
+            <img
+              src="/img/wordlefc/yellow.png"
+              class="mr-2"
+              alt="yellow key"
+              width="30px"
+            />
+            {{ trans.get("wordle.info_yellow") }}
+          </div>
+          <div class="my-1 is-flex is-center-vertically">
+            <img
+              src="/img/wordlefc/gray.png"
+              class="mr-2"
+              alt="gray key"
+              width="30px"
+            />
+            {{ trans.get("wordle.info_yellow") }}
+          </div>
+          <p class="mt-2">{{ trans.get("wordle.info_end") }}</p>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button" type="button" @click="isModalActive = false">
+            {{ trans.get("general.close") }}
+          </button>
+        </footer>
+      </div>
     </b-modal>
   </div>
 </template>
@@ -131,15 +153,33 @@ export default {
       this.createLetterArray(this.word.length);
       if (response.data.attempt) {
         this.letterArray = JSON.parse(response.data.attempt);
-        for (let i = 1; i < this.letterArray.length; i++) {
+        for (let i = 0; i < this.letterArray.length; i++) {
           if (!this.letterArray[i][0].letter) {
             this.currentRow = i;
             break;
           }
-          for(let j = 0; j < this.letterArray[i].length; j++) {
-            // TODO Highlight keyboard keys
+          for (let j = 0; j < this.letterArray[i].length; j++) {
+            if (this.letterArray[i][j].state == "correct") {
+              if (!this.greenKey.includes(this.letterArray[i][j].letter)) {
+                this.greenKey.push(this.letterArray[i][j].letter);
+              }
+            } else if (this.letterArray[i][j].state == "absent") {
+              if (!this.grayKey.includes(this.letterArray[i][j].letter)) {
+                this.grayKey.push(this.letterArray[i][j].letter);
+                this.$forceUpdate();
+              }
+            }
+          }
+          for (let j = 0; j < this.letterArray[i].length; j++) {
+            if (this.letterArray[i][j].state == "present") {
+              if (!this.greenKey.includes(this.letterArray[i][j].letter) && !this.yellowKey.includes(this.letterArray[i][j].letter)) {
+                this.yellowKey.push(this.letterArray[i][j].letter);
+              }
+            }
           }
         }
+        this.$forceUpdate();
+
       }
 
       // Accept the current word
