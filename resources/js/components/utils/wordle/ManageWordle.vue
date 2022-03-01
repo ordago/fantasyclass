@@ -1,7 +1,12 @@
 <template>
   <div class="p-2">
     <div class="buttons">
-      <div class="button" @click="isModalActive = true">{{ trans.get('wordle.new_wordle') }}</div>
+      <div class="button" @click="isModalActive = true">
+        {{ trans.get("wordle.new_wordle") }}
+      </div>
+      <div class="button is-danger" @click="removeActive()">
+        {{ trans.get("wordle.remove_active") }}
+      </div>
     </div>
     <div>
       <div
@@ -14,11 +19,17 @@
           <span v-if="obj.dictionary == 0">🇪🇦</span>
           <span v-else-if="obj.dictionary == 1">ca</span>
           <span v-else>🇬🇧</span>
-          <span>{{ obj.xp }} <i class="fas fa-fist-raised"></i> / {{ obj.gold }} <i class="fas fa-coins"></i></span>
+          <span
+            >{{ obj.xp }} <i class="fas fa-fist-raised"></i> / {{ obj.gold }}
+            <i class="fas fa-coins"></i
+          ></span>
+          <span class="tag is-dark cursor-pointer" @click="showResults(obj.id)"
+            >__Resultados</span
+          >
         </div>
-        <div class="column is-narrow">
-          <button class="tag is-success" v-if="obj.words && obj.words.length != 1" @click="addWord(obj.id)">
-            {{ trans.get('wordle.new_word') }}
+        <div class="column is-narrow" v-if="obj.words && obj.words.length != 1">
+          <button class="tag is-success" @click="addWord(obj.id)">
+            {{ trans.get("wordle.new_word") }}
           </button>
         </div>
         <div v-if="obj.words && obj.words.length" class="column is-narrow">
@@ -30,7 +41,7 @@
             :value="'' + obj.id"
             v-model="active"
           />
-          <label :for="`w-${obj.id}`">__ Activo</label>
+          <label :for="`w-${obj.id}`">{{ trans.get("wordle.active") }}</label>
         </div>
         <div class="column">
           <div v-if="obj.words && obj.words.length">
@@ -58,7 +69,7 @@
               </small>
             </span>
           </div>
-          <div v-else>{{ trans.get('wordle.without_words') }}</div>
+          <div v-else>{{ trans.get("wordle.without_words") }}</div>
         </div>
       </div>
     </div>
@@ -140,6 +151,66 @@
         </div>
       </form>
     </b-modal>
+    <b-modal
+      :active.sync="isInfoModal"
+      v-if="isInfoModal"
+      has-modal-card
+      full-screen
+      :can-cancel="false"
+    >
+      <div class="modal-card" style="width: auto">
+        <header class="modal-card-head">
+          <p class="modal-card-title">WordleFC Info</p>
+        </header>
+        <section class="modal-card-body is-relative content">
+          <div v-for="word in info" :key="'wordi-' + word.id">
+            <h1>{{ word.word }}</h1>
+            <div
+              class="columns is-multiline is-variable is-relative is-1 p-2 pt-3"
+            >
+              <div
+                class="
+                  column
+                  py-2
+                  is-6-tablet is-12-mobile is-4-desktop is-3-fullhd
+                "
+                v-for="student in word.student"
+                v-bind:key="student.id"
+              >
+                <h3
+                  class="rounded p-2"
+                  :class="{
+                    'has-background-success': student.pivot.state == 2,
+                    'has-background-danger': student.pivot.state == 1,
+                  }"
+                >
+                  {{ student.name }}
+                </h3>
+                <div v-for="index in 6" :key="index">
+                  <div
+                    class="p-2 my-2"
+                    v-if="showRow(student.pivot.word_progress, index)"
+                  >
+                    <span v-html="getRow(student.pivot.word_progress, index)">
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <footer
+          class="modal-card-foot columns is-multiline"
+          style="overflow-x: auto"
+        >
+          <div class="column is-narrow is-12-mobile is-flex has-all-centered">
+            <button class="button" type="button" @click="isInfoModal = false">
+              {{ trans.get("general.close") }}
+            </button>
+          </div>
+        </footer>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -155,8 +226,10 @@ export default {
   },
   data: function () {
     return {
+      isInfoModal: false,
       isModalActive: false,
       wordlesReactive: null,
+      info: [],
       wordle: {
         type: 0,
         xp: 20,
@@ -166,6 +239,42 @@ export default {
     };
   },
   methods: {
+    showRow(info, index) {
+      let progress = JSON.parse(info);
+      return progress[index - 1][0].letter ? true : false;
+    },
+    getRow(info, index) {
+      let progress = JSON.parse(info);
+      let row = "";
+
+      progress[index - 1].forEach((element) => {
+        let color = "absent";
+        if (element.state == "present") color = "present";
+        else if (element.state == "correct") color = "correct";
+
+        row += `<span class='p-2 mx-1 rounded border ${color}'>`;
+        row += element.letter;
+        row += "</span>";
+      });
+      return row;
+    },
+    showResults(wordle) {
+      axios
+        .post(`/classroom/games/wordle`, { wordle: wordle })
+        .then((response) => {
+          console.log(response.data);
+          this.info = response.data;
+          this.isInfoModal = true;
+        });
+    },
+    removeActive() {
+      axios.patch("/classroom/" + this.code + "/setting", {
+        _method: "patch",
+        prop: "active_wordle",
+        action: "remove",
+      });
+      this.active = null;
+    },
     select(wordle) {
       axios.patch("/classroom/" + this.code + "/setting", {
         _method: "patch",

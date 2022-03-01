@@ -375,14 +375,15 @@ class SettingsController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
         settings()->setExtraColumns(['classroom_id' => $class->id]);
-        if (request()->action == 'toggle') {
+        $action = request()->action;
+        if ($action == 'toggle') {
             $old = 0;
             if (request()->prop == 'allow_change_class') {
                 $old = 1;
             }
             $value = !settings()->get(request()->prop, $old);
             settings()->set(request()->prop, $value);
-        } else if (request()->action == 'update') {
+        } else if ($action == 'update') {
             if (request()->prop == "card_probabilities" || request()->prop == "collectionable_probabilities") {
 
                 $values[0] = request()->value[1];
@@ -395,6 +396,9 @@ class SettingsController extends Controller
             } else {
                 $value = settings()->set(request()->prop, request()->value);
             }
+        } else if($action == "remove") {
+            settings()->forget(request()->prop);
+            return true;
         }
         settings()->save();
         return $value ? true : false;

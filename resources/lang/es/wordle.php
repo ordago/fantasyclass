@@ -13,6 +13,8 @@ return [
     'new_word' => 'Nueva palabra',
     'without_words' => 'Sin palabras',
     'word_info' => 'Añade una palabra de entre 4 y 6 letras',
+    'active' => 'Activo',
+    'remove_active' => 'Elimina WordleFC activo',
     
     'incorrect' => ' no es una palabra válida',
     'gameover' => 'Final del juego. No has acertado: ',

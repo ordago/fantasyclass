@@ -104,6 +104,20 @@ class WordleController extends Controller
 
     }
 
+    public function getInfo() {
+
+        $data = request()->validate([
+            'wordle' => ['numeric', 'required'],
+        ]);
+
+        $wordle = Wordle::findOrFail($data['wordle']);
+        $class = Classroom::findOrFail($wordle->classroom_id);
+        $this->authorize('update', $class);
+
+        return $wordle->words()->with('student')->get();
+
+    }
+
     public function setState($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
