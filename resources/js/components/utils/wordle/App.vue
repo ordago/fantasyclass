@@ -172,14 +172,16 @@ export default {
           }
           for (let j = 0; j < this.letterArray[i].length; j++) {
             if (this.letterArray[i][j].state == "present") {
-              if (!this.greenKey.includes(this.letterArray[i][j].letter) && !this.yellowKey.includes(this.letterArray[i][j].letter)) {
+              if (
+                !this.greenKey.includes(this.letterArray[i][j].letter) &&
+                !this.yellowKey.includes(this.letterArray[i][j].letter)
+              ) {
                 this.yellowKey.push(this.letterArray[i][j].letter);
               }
             }
           }
         }
         this.$forceUpdate();
-
       }
 
       // Accept the current word
@@ -254,6 +256,7 @@ export default {
       } else {
         let answerLetters = this.word.split("");
         this.letterArray[row].forEach((tile, i) => {
+          tile.letter = tile.letter.toLowerCase();
           if (answerLetters[i] === tile.letter) {
             tile.state = "correct";
             answerLetters[i] = null;
@@ -266,6 +269,8 @@ export default {
         });
 
         this.letterArray[row].forEach((tile) => {
+          tile.letter = tile.letter.toLowerCase();
+
           if (!tile.state && answerLetters.includes(tile.letter)) {
             tile.state = "present";
             answerLetters[answerLetters.indexOf(tile.letter)] = null;
@@ -278,6 +283,7 @@ export default {
           }
         });
         this.letterArray[row].forEach((tile) => {
+          tile.letter = tile.letter.toLowerCase();
           if (!tile.state) {
             tile.state = "absent";
             if (
