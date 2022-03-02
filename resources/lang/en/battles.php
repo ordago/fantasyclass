@@ -37,7 +37,7 @@ return [
     'finish' => 'End battle',
     'give_reward' => 'Give reward ',
     'show_timer' => 'Start countdown',
-    'timer_default' => 'Default timer seconds (optional)',
+    'timer_default' => 'Default timer seconds',
     'monster' => 'Monster',
     'monster_empty' => 'Your class don\'t have monsters,  please create one to play this section',
     'monster_hp_loss' => 'Monster HP loss',

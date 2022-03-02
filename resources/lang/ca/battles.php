@@ -37,7 +37,7 @@ return [
     'finish' => 'Acaba batalla',
     'give_reward' => 'Entrega premi ',
     'show_timer' => 'Comença cronòmetre',
-    'timer_default' => 'Temps per defecte del cronòmetre (opcional)',
+    'timer_default' => 'Temps per defecte del cronòmetre',
     'monster' => 'Monstre',
     'monster_empty' => 'No tens monstres, crea un per a jugar en aquesta secció',
     'monster_hp_loss' => 'Pèrdua de punts de vida del monstre',
