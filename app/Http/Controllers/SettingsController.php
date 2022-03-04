@@ -394,7 +394,6 @@ class SettingsController extends Controller
             } else if(request()->prop == "attendance_start" || request()->prop == "attendance_end") {
                 $value = settings()->set(request()->prop, json_encode(request()->value));
             } else {
-                dump(request()->prop. " ".request()->value);
                 $value = settings()->set(request()->prop, request()->value);
             }
         } else if($action == "remove") {
