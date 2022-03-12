@@ -571,7 +571,7 @@
             </div>
           </div>
         </div>
-        <button class="button is-primary m-4" @click="saveEconomic()">
+        <button :class="{'is-loading' : isLoading}" class="button is-primary m-4" @click="saveEconomic()">
           <i class="fas fa-save mr-3"></i>
           {{ trans.get("general.save") }}
         </button>
@@ -764,6 +764,7 @@ export default {
       customUpload: false,
       resetAssistant: false,
       state: "0",
+      isLoading: false,
       value: [],
       collectionable_value: [],
       collectionable_process: (dotsPos) => [
@@ -957,15 +958,16 @@ export default {
       });
     },
     regenerate(codeType) {
-        axios
-          .post("/classroom/" + this.classroom.code + "/regenerate", {type: codeType})
-          .then((response) => {
-            if(codeType == "enrollment_code")
-              this.classroom.enrollment_code = response.data;
-            else
-              this.classroom.share_code = response.data;
-            this.$forceUpdate();
-          });
+      axios
+        .post("/classroom/" + this.classroom.code + "/regenerate", {
+          type: codeType,
+        })
+        .then((response) => {
+          if (codeType == "enrollment_code")
+            this.classroom.enrollment_code = response.data;
+          else this.classroom.share_code = response.data;
+          this.$forceUpdate();
+        });
     },
     confirmDelete() {
       this.$buefy.dialog.confirm({
@@ -993,7 +995,7 @@ export default {
         iconPack: "fa",
         ariaRole: "alertdialog",
         ariaModal: true,
-        message: this.trans.get('settings.confirm_admin'),
+        message: this.trans.get("settings.confirm_admin"),
         onConfirm: () =>
           axios
             .post("/classroom/" + this.classroom.code + "/teacher/admin", {
@@ -1096,57 +1098,92 @@ export default {
       });
     },
     saveEconomic() {
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "card_use",
-        action: "update",
-        value: this.settings.card_use,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "transfer_fee",
-        action: "update",
-        value: this.settings.transfer_fee,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "card_delete",
-        action: "update",
-        value: this.settings.card_delete,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "num_cards",
-        action: "update",
-        value: this.settings.num_cards,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "feed",
-        action: "update",
-        value: this.settings.feed,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "repair_equipment",
-        action: "update",
-        value: this.settings.repair_equipment,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "comission_collectibles",
-        action: "update",
-        value: this.settings.comission_collectibles,
-      });
-      axios.patch("/classroom/" + this.classroom.code + "/setting", {
-        _method: "patch",
-        prop: "sell_price",
-        action: "update",
-        value: this.settings.sell_price,
-      });
-      this.$toast(this.trans.get("success_error.update_success"), {
-        type: "success",
-      });
+      this.isLoading = true;
+      axios
+        .patch("/classroom/" + this.classroom.code + "/setting", {
+          _method: "patch",
+          prop: "card_use",
+          action: "update",
+          value: this.settings.card_use,
+        })
+        .then((response) => {
+          axios
+            .patch("/classroom/" + this.classroom.code + "/setting", {
+              _method: "patch",
+              prop: "transfer_fee",
+              action: "update",
+              value: this.settings.transfer_fee,
+            })
+            .then((response) => {
+              axios.patch("/classroom/" + this.classroom.code + "/setting", {
+                _method: "patch",
+                prop: "card_delete",
+                action: "update",
+                value: this.settings.card_delete,
+              });
+            })
+            .then((response) => {
+              axios
+                .patch("/classroom/" + this.classroom.code + "/setting", {
+                  _method: "patch",
+                  prop: "num_cards",
+                  action: "update",
+                  value: this.settings.num_cards,
+                })
+                .then((response) => {
+                  axios.patch(
+                    "/classroom/" + this.classroom.code + "/setting",
+                    {
+                      _method: "patch",
+                      prop: "feed",
+                      action: "update",
+                      value: this.settings.feed,
+                    }
+                  );
+                })
+                .then((response) => {
+                  axios
+                    .patch("/classroom/" + this.classroom.code + "/setting", {
+                      _method: "patch",
+                      prop: "repair_equipment",
+                      action: "update",
+                      value: this.settings.repair_equipment,
+                    })
+                    .then((response) => {
+                      axios.patch(
+                        "/classroom/" + this.classroom.code + "/setting",
+                        {
+                          _method: "patch",
+                          prop: "comission_collectibles",
+                          action: "update",
+                          value: this.settings.comission_collectibles,
+                        }
+                      );
+                    })
+                    .then((response) => {
+                      axios
+                        .patch(
+                          "/classroom/" + this.classroom.code + "/setting",
+                          {
+                            _method: "patch",
+                            prop: "sell_price",
+                            action: "update",
+                            value: this.settings.sell_price,
+                          }
+                        )
+                        .then((response) => {
+                          this.isLoading = false;
+                          this.$toast(
+                            this.trans.get("success_error.update_success"),
+                            {
+                              type: "success",
+                            }
+                          );
+                        });
+                    });
+                });
+            });
+        });
     },
   },
 };

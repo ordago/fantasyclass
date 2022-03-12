@@ -111,12 +111,8 @@
             .then(function (cache) {
                 return cache.addAll([
                     '/css/app.css',
-                    '/offline',
                     '/css/home.css',
-                    '/img/logo.svg',
-                    '/img/google-logo.svg',
-                    'https://unpkg.com/bulma@0.9.1/css/bulma.min.css',
-                    'https://kit.fontawesome.com/90342cb187.js',
+                    '/img/logo.png',
                 ]);
             });
     };

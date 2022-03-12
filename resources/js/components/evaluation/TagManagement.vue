@@ -537,24 +537,30 @@ export default {
     },
 
     updatePrefs() {
-      axios.patch("/classroom/" + this.code + "/setting", {
-        _method: "patch",
-        prop: "eval_visible",
-        value: this.settings.eval_visible,
-        action: "update",
-      });
-      axios.patch("/classroom/" + this.code + "/setting", {
-        _method: "patch",
-        prop: "eval_type",
-        value: this.settings.eval_type,
-        action: "update",
-      });
-      axios.patch("/classroom/" + this.code + "/setting", {
-        _method: "patch",
-        prop: "eval_max",
-        value: this.settings.eval_max,
-        action: "update",
-      });
+      axios
+        .patch("/classroom/" + this.code + "/setting", {
+          _method: "patch",
+          prop: "eval_visible",
+          value: this.settings.eval_visible,
+          action: "update",
+        })
+        .then((response) => {
+          axios
+            .patch("/classroom/" + this.code + "/setting", {
+              _method: "patch",
+              prop: "eval_type",
+              value: this.settings.eval_type,
+              action: "update",
+            })
+            .then((response) => {
+              axios.patch("/classroom/" + this.code + "/setting", {
+                _method: "patch",
+                prop: "eval_max",
+                value: this.settings.eval_max,
+                action: "update",
+              });
+            });
+        });
       this.isPrefsModalActive = false;
     },
 

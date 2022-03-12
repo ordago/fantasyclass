@@ -6,6 +6,7 @@
 
 ### Changed
 - Images paginated in objects.
+- Improved saving props.
 
 ### Required
 - npm i simple-keyboard
