@@ -18,6 +18,7 @@ class CreateBattlesTable extends Migration
             $table->unsignedBigInteger('classroom_id');
             $table->unsignedBigInteger('question_bank_id');
             $table->unsignedBigInteger('monster_id');
+            $table->boolean('enabled')->default(1);
             $table->json('options');
             $table->timestamps();
         });

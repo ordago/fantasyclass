@@ -32,11 +32,27 @@ class BattleController extends Controller
         ]);
     }
 
+    public function toggle($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('update', $class);
+
+        $data = request()->validate([
+            'battle' => ['required', 'numeric'],
+            'state' => ['required', 'numeric'],
+        ]);
+
+        $battle = Battle::find($data['battle']);
+        if($battle->classroom_id != $class->id)
+            abort(403);
+        
+        $battle->update(['enabled' => $data['state']]);
+        
+    }
+
     public function index($code) {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'grouping.groups.students.equipment', 'grouping.groups.students.character', 'theme', 'questionBanks.questions', 'monsters')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->with('battles.monster', 'battles.bank', 'students.equipment', 'students.character', 'grouping.groups.students.equipment', 'grouping.groups.students.character', 'theme', 'questionBanks.questions', 'monsters')->firstOrFail();
         $this->authorize('view', $class);
-
-
+        
         return view('battles.index', compact('class'));
     }
 }

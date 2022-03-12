@@ -83,6 +83,10 @@ class Classroom extends Model implements HasMedia
     {
         return $this->hasMany(Wordle::class);
     }
+    public function battles()
+    {
+        return $this->hasMany(Battle::class);
+    }
 
     public function evalgroups()
     {

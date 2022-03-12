@@ -1,606 +1,631 @@
 <template>
   <div class="p-3">
-    <b-steps
-      v-model="activeStep"
-      :animated="true"
-      :rounded="true"
-      :has-navigation="true"
-      icon-prev="chevron-left"
-      icon-next="chevron-right"
-      label-position="bottom"
-      mobile-mode="minimalist"
-    >
-      <b-step-item
-        step="1"
-        :label="trans.get('battles.type_battle')"
-        :clickable="true"
+    <div v-if="!isBattleActive">
+      <b-steps
+        v-model="activeStep"
+        :animated="true"
+        :rounded="true"
+        :has-navigation="true"
+        icon-prev="chevron-left"
+        icon-next="chevron-right"
+        label-position="bottom"
+        mobile-mode="minimalist"
       >
-        <b-field :expanded="true">
-          <b-radio-button
-            v-model="type"
-            :native-value="0"
-            type="is-info"
-            expanded
-          >
-            <i class="fas fa-user mr-1"></i> vs <i class="fas fa-user ml-1"></i>
-          </b-radio-button>
-
-          <b-radio-button
-            v-model="type"
-            :native-value="1"
-            type="is-info"
-            expanded
-            :disabled="groups.length < 2"
-          >
-            <i class="fas fa-users mr-1"></i> vs
-            <i class="fas fa-users ml-1"></i>
-          </b-radio-button>
-          <b-radio-button
-            v-model="type"
-            :native-value="2"
-            expanded
-            type="is-info"
-            :disabled="groups.length < 1"
-          >
-            <i class="fas fa-users mr-1"></i> vs
-            <i class="fas fa-dragon ml-1"></i>
-          </b-radio-button>
-          <b-radio-button
-            v-model="type"
-            :native-value="4"
-            expanded
-            type="is-info"
-          >
-            <i class="fas fa-user mr-1"></i> vs
-            <i class="fas fa-dragon ml-1"></i>
-          </b-radio-button>
-          <b-radio-button
-            v-model="type"
-            expanded
-            :native-value="3"
-            type="is-info"
-          >
-            <i class="fad fa-users-class mr-1"></i> vs
-            <i class="fas fa-dragon ml-1"></i>
-          </b-radio-button>
-        </b-field>
-
-        <article class="message is-link">
-          <div class="message-body">
-            {{ getMessage() }}
-          </div>
-        </article>
-        <article
-          class="message is-warning"
-          v-if="
-            classroom.monsters.length == 0 &&
-            (type == 3 || type == 2 || type == 4)
-          "
+        <b-step-item
+          step="1"
+          :label="trans.get('battles.type_battle')"
+          :clickable="true"
         >
-          <div class="message-body">
-            {{ trans.get("battles.monster_empty") }}:
-            <a :href="'/classroom/' + classroom.code + '/monsters'">{{
-              trans.get("menu.monsters")
-            }}</a>
-          </div>
-        </article>
-      </b-step-item>
+          <b-field :expanded="true">
+            <b-radio-button
+              v-model="type"
+              :native-value="0"
+              type="is-info"
+              expanded
+            >
+              <i class="fas fa-user mr-1"></i> vs
+              <i class="fas fa-user ml-1"></i>
+            </b-radio-button>
 
-      <b-step-item
-        step="2"
-        :label="trans.get('battles.settings')"
-        :clickable="true"
-      >
-        <h3 class="m-2" v-if="type == 0 || type == 4">
-          <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
-        </h3>
-        <div class="columns m-2" v-if="type == 0 || type == 4">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-heart colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="hp_loss"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-fist-raised colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="xp_loss"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-coins colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="gold_loss"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2" v-if="type == 3 || type == 2">
-          <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
-        </h3>
-        <div class="columns m-2" v-if="type == 3 || type == 2">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-heart colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="hp_loss"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-danger">
-                        <i class="fas fa-fist-raised colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="xp_loss"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2" v-if="type == 3 || type == 2 || type == 4">
-          <i class="fas fa-dragon"></i>
-          {{ trans.get("battles.monster_hp_loss") }}
-        </h3>
-        <div
-          class="column is-narrow"
-          v-if="type == 3 || type == 2 || type == 4"
-        >
-          <div class="field is-horizontal">
-            <div class="field-body">
-              <div class="field is-expanded">
-                <div class="field has-addons">
-                  <p class="control">
-                    <a class="button is-danger">
-                      <i class="fas fa-fist-raised colored"></i>
-                    </a>
-                  </p>
-                  <p class="control is-expanded">
-                    <input
-                      type="number"
-                      class="input"
-                      max="0"
-                      v-model="monster_hp_loss"
-                    />
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2" v-if="type == 1">
-          {{ trans.get("battles.reward") }}
-        </h3>
-        <div class="columns m-2" v-if="type == 1">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-fist-raised colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        min="0"
-                        v-model="xp_reward"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-coins colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        min="0"
-                        v-model="gold_reward"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2" v-if="type == 0">
-          {{ trans.get("battles.gain") }}
-        </h3>
-        <div class="columns m-2" v-if="type == 0">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-heart colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="hp_transfer"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-fist-raised colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="xp_transfer"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button is-success">
-                        <i class="fas fa-coins colored"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        max="0"
-                        v-model="gold_transfer"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2">{{ trans.get("battles.max_fails") }}</h3>
-        <div class="colums m-2">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a
-                        class="button"
-                        v-tippy
-                        :content="trans.get('battles.protect_shield')"
-                      >
-                        <i class="far fa-shield-alt colored"></i>
-                      </a>
-                    </p>
-                    <p class="control">
-                      <input
-                        type="number"
-                        class="input"
-                        min="0"
-                        v-model="max_fails"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <h3 class="m-2">
-          {{ trans.get("battles.timer_default") }}
-        </h3>
-        <div class="columns m-2">
-          <div class="column is-narrow">
-            <div class="field is-horizontal">
-              <div class="field-body">
-                <div class="field is-expanded">
-                  <div class="field has-addons">
-                    <p class="control">
-                      <a class="button">
-                        <i class="fas fa-stopwatch colored has-text-light"></i>
-                      </a>
-                    </p>
-                    <p class="control is-expanded">
-                      <input
-                        type="number"
-                        class="input"
-                        min="0"
-                        v-model="timer_default"
-                      />
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <b-field v-if="type != 4">
-          <b-switch v-model="autoStart" :true-value="true" :false-value="false">
-            {{ trans.get("battles.auto_start") }}
-          </b-switch>
-        </b-field>
-      </b-step-item>
+            <b-radio-button
+              v-model="type"
+              :native-value="1"
+              type="is-info"
+              expanded
+              :disabled="groups.length < 2"
+            >
+              <i class="fas fa-users mr-1"></i> vs
+              <i class="fas fa-users ml-1"></i>
+            </b-radio-button>
+            <b-radio-button
+              v-model="type"
+              :native-value="2"
+              expanded
+              type="is-info"
+              :disabled="groups.length < 1"
+            >
+              <i class="fas fa-users mr-1"></i> vs
+              <i class="fas fa-dragon ml-1"></i>
+            </b-radio-button>
+            <b-radio-button
+              v-model="type"
+              :native-value="4"
+              expanded
+              type="is-info"
+            >
+              <i class="fas fa-user mr-1"></i> vs
+              <i class="fas fa-dragon ml-1"></i>
+            </b-radio-button>
+            <b-radio-button
+              v-model="type"
+              expanded
+              :native-value="3"
+              type="is-info"
+            >
+              <i class="fad fa-users-class mr-1"></i> vs
+              <i class="fas fa-dragon ml-1"></i>
+            </b-radio-button>
+          </b-field>
 
-      <b-step-item
-        step="3"
-        :visible="type == 3 || type == 2 || type == 4"
-        :label="trans.get('battles.monster')"
-        :clickable="true"
-      >
-        <div
-          v-for="monster in classroom.monsters"
-          :key="monster.id"
-          @click="monsterSelected = monster"
-          class="my-3 monster-select cursor-pointer"
-          :class="{
-            'has-background-info':
-              monsterSelected && monster.id == monsterSelected.id,
-            'has-hr': monster.hp > 0,
-          }"
-        >
-          <div v-if="monster.hp > 0" class="columns">
-            <div class="column is-narrow">
-              <img
-                @contextmenu.prevent=""
-                width="81px"
-                :src="monster.image"
-                class="pet-selector mt-2"
-              />
+          <article class="message is-link">
+            <div class="message-body">
+              {{ getMessage() }}
             </div>
-            <div class="column is-narrow is-flex has-all-centered">
-              <span>{{ monster.name }}</span>
-            </div>
-            <div class="column">
-              <hp class="mt-3" :hp="monster.hp"></hp>
-            </div>
-            <div class="column is-narrow is-flex has-all-centered">
-              {{ monster.reward_xp }}
-              <i class="fas fa-fist-raised colored"></i> /
-              {{ monster.reward_gold }} <i class="fas fa-coins colored"></i>
-            </div>
-          </div>
-        </div>
-        <a
-          :href="'/classroom/' + classroom.code + '/monsters'"
-          class="button is-info mt-5"
-        >
-          {{ trans.get("monsters.new") }}
-        </a>
-      </b-step-item>
-
-      <b-step-item
-        :step="type == 3 || type == 2 ? '4' : '3'"
-        :label="trans.get('battles.questions')"
-        :clickable="true"
-      >
-        <div v-if="!classroom.question_banks.length">
-          <p class="m-2">
-            {{ trans.get("battles.bank_empty") }}
-          </p>
-          <a class="button is-info" v-if="type != 4" @click="activeStep += 1">
-            {{ trans.get("battles.im_bank") }} 😏</a
-          >
-          <a
-            class="button is-link"
-            :href="'/classroom/' + classroom.code + '/questions'"
-            >{{ trans.get("battles.bank_create") }} 🙄</a
-          >
-        </div>
-        <div v-else class="content has-text-centered">
-          <a
-            class="button is-info"
-            @click="
-              selectedBank = null;
-              activeStep += 1;
+          </article>
+          <article
+            class="message is-warning"
+            v-if="
+              classroom.monsters.length == 0 &&
+              (type == 3 || type == 2 || type == 4)
             "
-            v-if="type != 4"
           >
-            {{ trans.get("battles.im_bank") }} 😏</a
-          >
-          <h2>{{ trans.get("battles.bank") }}</h2>
+            <div class="message-body">
+              {{ trans.get("battles.monster_empty") }}:
+              <a :href="'/classroom/' + classroom.code + '/monsters'">{{
+                trans.get("menu.monsters")
+              }}</a>
+            </div>
+          </article>
+        </b-step-item>
 
-          <p class="control select is-fullwidth">
-            <select v-model="selectedBank" class="mt-2" name="type">
-              <option :value="null">{{ trans.get("battles.wb") }}</option>
-              <option
-                v-for="bank in classroom.question_banks"
-                :value="bank"
-                :key="bank.id"
-              >
-                {{ bank.title }}
-              </option>
-            </select>
-          </p>
-        </div>
-      </b-step-item>
+        <b-step-item
+          step="2"
+          :label="trans.get('battles.settings')"
+          :clickable="true"
+        >
+          <h3 class="m-2" v-if="type == 0 || type == 4">
+            <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
+          </h3>
+          <div class="columns m-2" v-if="type == 0 || type == 4">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-danger">
+                          <i class="fas fa-heart colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="hp_loss"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-danger">
+                          <i class="fas fa-fist-raised colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="xp_loss"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-danger">
+                          <i class="fas fa-coins colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="gold_loss"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2" v-if="type == 3 || type == 2">
+            <i class="fas fa-user"></i> {{ trans.get("battles.loss_fail") }}
+          </h3>
+          <div class="columns m-2" v-if="type == 3 || type == 2">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-danger">
+                          <i class="fas fa-heart colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="hp_loss"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-danger">
+                          <i class="fas fa-fist-raised colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="xp_loss"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2" v-if="type == 3 || type == 2 || type == 4">
+            <i class="fas fa-dragon"></i>
+            {{ trans.get("battles.monster_hp_loss") }}
+          </h3>
+          <div
+            class="column is-narrow"
+            v-if="type == 3 || type == 2 || type == 4"
+          >
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field is-expanded">
+                  <div class="field has-addons">
+                    <p class="control">
+                      <a class="button is-danger">
+                        <i class="fas fa-fist-raised colored"></i>
+                      </a>
+                    </p>
+                    <p class="control is-expanded">
+                      <input
+                        type="number"
+                        class="input"
+                        max="0"
+                        v-model="monster_hp_loss"
+                      />
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2" v-if="type == 1">
+            {{ trans.get("battles.reward") }}
+          </h3>
+          <div class="columns m-2" v-if="type == 1">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-success">
+                          <i class="fas fa-fist-raised colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          min="0"
+                          v-model="xp_reward"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-success">
+                          <i class="fas fa-coins colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          min="0"
+                          v-model="gold_reward"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2" v-if="type == 0">
+            {{ trans.get("battles.gain") }}
+          </h3>
+          <div class="columns m-2" v-if="type == 0">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-success">
+                          <i class="fas fa-heart colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="hp_transfer"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-success">
+                          <i class="fas fa-fist-raised colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="xp_transfer"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button is-success">
+                          <i class="fas fa-coins colored"></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          max="0"
+                          v-model="gold_transfer"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2">{{ trans.get("battles.max_fails") }}</h3>
+          <div class="colums m-2">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a
+                          class="button"
+                          v-tippy
+                          :content="trans.get('battles.protect_shield')"
+                        >
+                          <i class="far fa-shield-alt colored"></i>
+                        </a>
+                      </p>
+                      <p class="control">
+                        <input
+                          type="number"
+                          class="input"
+                          min="0"
+                          v-model="max_fails"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3 class="m-2">
+            {{ trans.get("battles.timer_default") }}
+          </h3>
+          <div class="columns m-2">
+            <div class="column is-narrow">
+              <div class="field is-horizontal">
+                <div class="field-body">
+                  <div class="field is-expanded">
+                    <div class="field has-addons">
+                      <p class="control">
+                        <a class="button">
+                          <i
+                            class="fas fa-stopwatch colored has-text-light"
+                          ></i>
+                        </a>
+                      </p>
+                      <p class="control is-expanded">
+                        <input
+                          type="number"
+                          class="input"
+                          min="0"
+                          v-model="timer_default"
+                        />
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <b-field v-if="type != 4">
+            <b-switch
+              v-model="autoStart"
+              :true-value="true"
+              :false-value="false"
+            >
+              {{ trans.get("battles.auto_start") }}
+            </b-switch>
+          </b-field>
+        </b-step-item>
 
-      <b-step-item
-        :step="type == 3 || type == 2 ? '5' : '4'"
-        :label="trans.get('battles.start')"
-        :clickable="true"
-        disabled
-      >
-        <div class="content">
-          <h1>{{ trans.get("general.summary") }}</h1>
-          <ul class="fs-2">
-            <li>
-              <i
-                class="fas"
-                :class="{
-                  'fa-user': type == 0 || type == 3 || type == 4,
-                  'fa-users': type == 1 || type == 2,
-                }"
-              ></i>
-              vs
-              <i
-                class="fas"
-                :class="{
-                  'fa-user': type == 0,
-                  'fa-users': type == 1,
-                  'fa-dragon': type == 3 || type == 2 || type == 4,
-                }"
-              ></i>
-            </li>
-            <li>
-              <span v-if="!selectedBank && type != 4">{{
-                trans.get("battles.wb")
-              }}</span>
-              <span class="has-text-danger" v-else-if="!selectedBank">
-                {{ trans.get("battles.wb") }}
-              </span>
-              <span v-else
-                >{{ trans.get("battles.questions") }}:
-                {{ selectedBank.title }}</span
-              >
-            </li>
-            <li v-if="type == 3 || type == 2 || type == 4">
-              <span class="has-text-danger" v-if="!monsterSelected">{{
-                trans.get("battles.wm")
-              }}</span>
-              <span v-else
-                >{{ trans.get("battles.monster") }}:
-                {{ monsterSelected.name }}</span
-              >
-            </li>
-          </ul>
-        </div>
-        <div class="has-text-centered">
-          <h1
-            class="button is-size-2 py-3 px-6 is-info m-3"
-            v-if="type != 4"
-            :disabled="(type == 3 || type == 2) && !monsterSelected"
-            @click="start"
+        <b-step-item
+          step="3"
+          :visible="type == 3 || type == 2 || type == 4"
+          :label="trans.get('battles.monster')"
+          :clickable="true"
+        >
+          <div
+            v-for="monster in classroom.monsters"
+            :key="monster.id"
+            @click="monsterSelected = monster"
+            class="my-3 monster-select cursor-pointer"
+            :class="{
+              'has-background-info':
+                monsterSelected && monster.id == monsterSelected.id,
+              'has-hr': monster.hp > 0,
+            }"
           >
-            {{ trans.get("battles.start") }}!
-          </h1>
-          <h1
-            class="button is-size-2 py-3 px-6 is-info m-3"
-            v-else
-            :disabled="!monsterSelected || !selectedBank"
-            @click="scheduleBattle"
+            <div v-if="monster.hp > 0" class="columns">
+              <div class="column is-narrow">
+                <img
+                  @contextmenu.prevent=""
+                  width="81px"
+                  :src="monster.image"
+                  class="pet-selector mt-2"
+                />
+              </div>
+              <div class="column is-narrow is-flex has-all-centered">
+                <span>{{ monster.name }}</span>
+              </div>
+              <div class="column">
+                <hp class="mt-3" :hp="monster.hp"></hp>
+              </div>
+              <div class="column is-narrow is-flex has-all-centered">
+                {{ monster.reward_xp }}
+                <i class="fas fa-fist-raised colored"></i> /
+                {{ monster.reward_gold }} <i class="fas fa-coins colored"></i>
+              </div>
+            </div>
+          </div>
+          <a
+            :href="'/classroom/' + classroom.code + '/monsters'"
+            class="button is-info mt-5"
           >
-            {{ trans.get("battles.start_14") }}!
-          </h1>
+            {{ trans.get("monsters.new") }}
+          </a>
+        </b-step-item>
+
+        <b-step-item
+          :step="type == 3 || type == 2 ? '4' : '3'"
+          :label="trans.get('battles.questions')"
+          :clickable="true"
+        >
+          <div v-if="!classroom.question_banks.length">
+            <p class="m-2">
+              {{ trans.get("battles.bank_empty") }}
+            </p>
+            <a class="button is-info" v-if="type != 4" @click="activeStep += 1">
+              {{ trans.get("battles.im_bank") }} 😏</a
+            >
+            <a
+              class="button is-link"
+              :href="'/classroom/' + classroom.code + '/questions'"
+              >{{ trans.get("battles.bank_create") }} 🙄</a
+            >
+          </div>
+          <div v-else class="content has-text-centered">
+            <a
+              class="button is-info"
+              @click="
+                selectedBank = null;
+                activeStep += 1;
+              "
+              v-if="type != 4"
+            >
+              {{ trans.get("battles.im_bank") }} 😏</a
+            >
+            <h2>{{ trans.get("battles.bank") }}</h2>
+
+            <p class="control select is-fullwidth">
+              <select v-model="selectedBank" class="mt-2" name="type">
+                <option :value="null">{{ trans.get("battles.wb") }}</option>
+                <option
+                  v-for="bank in classroom.question_banks"
+                  :value="bank"
+                  :key="bank.id"
+                >
+                  {{ bank.title }}
+                </option>
+              </select>
+            </p>
+          </div>
+        </b-step-item>
+
+        <b-step-item
+          :step="type == 3 || type == 2 ? '5' : '4'"
+          :label="trans.get('battles.start')"
+          :clickable="true"
+          disabled
+        >
+          <div class="content">
+            <h1>{{ trans.get("general.summary") }}</h1>
+            <ul class="fs-2">
+              <li>
+                <i
+                  class="fas"
+                  :class="{
+                    'fa-user': type == 0 || type == 3 || type == 4,
+                    'fa-users': type == 1 || type == 2,
+                  }"
+                ></i>
+                vs
+                <i
+                  class="fas"
+                  :class="{
+                    'fa-user': type == 0,
+                    'fa-users': type == 1,
+                    'fa-dragon': type == 3 || type == 2 || type == 4,
+                  }"
+                ></i>
+              </li>
+              <li>
+                <span v-if="!selectedBank && type != 4">{{
+                  trans.get("battles.wb")
+                }}</span>
+                <span class="has-text-danger" v-else-if="!selectedBank">
+                  {{ trans.get("battles.wb") }}
+                </span>
+                <span v-else
+                  >{{ trans.get("battles.questions") }}:
+                  {{ selectedBank.title }}</span
+                >
+              </li>
+              <li v-if="selectedBank && monsterSelected && checkImpossible()">
+                <span class="has-text-danger">{{
+                  trans.get("battles.impossible")
+                }}</span>
+              </li>
+              <li v-if="type == 3 || type == 2 || type == 4">
+                <span class="has-text-danger" v-if="!monsterSelected">{{
+                  trans.get("battles.wm")
+                }}</span>
+                <span v-else
+                  >{{ trans.get("battles.monster") }}:
+                  {{ monsterSelected.name }}</span
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="has-text-centered">
+            <button
+              class="button is-size-2 py-3 px-6 is-info m-3"
+              v-if="type != 4"
+              :disabled="(type == 3 || type == 2) && !monsterSelected"
+              @click="start"
+            >
+              {{ trans.get("battles.start") }}!
+            </button>
+            <button
+              class="button is-size-2 py-3 px-6 is-info m-3"
+              v-else
+              :disabled="!monsterSelected || !selectedBank || checkImpossible()"
+              @click="scheduleBattle"
+            >
+              {{ trans.get("battles.start_14") }}!
+            </button>
+          </div>
+        </b-step-item>
+      </b-steps>
+      <div class="p-2 mt-2">
+        <h3 class="is-size-3">Batallas individuales</h3>
+        <div @input="changeState(battle)" class="p-2" v-for="battle in classroom.battles" :key="battle.id">
+           <b-field>
+            <b-switch v-model="battle.enabled" :true-value="1" :false-value="0">
+                {{ battle.monster.name }} ({{ getDate(battle.created_at) }})
+            </b-switch>
+        </b-field>
         </div>
-      </b-step-item>
-    </b-steps>
+      </div>
+    </div>
 
     <b-modal
+      v-else
       :active.sync="isBattleActive"
       has-modal-card
       full-screen
@@ -969,6 +994,8 @@ import confetti from "canvas-confetti";
 import ShowQuestion from "./ShowQuestion.vue";
 import CountDown from "../utils/CountDown.vue";
 import VueAwesomeCountdown from "vue-awesome-countdown";
+import Utils from "../../utils.js";
+
 
 export default {
   components: { ShowQuestion, CountDown, VueAwesomeCountdown },
@@ -1083,6 +1110,17 @@ export default {
     };
   },
   methods: {
+    getDate(date) {
+      return Utils.getDate(date);
+    },
+    changeState(battle) {
+      axios.post(`/classroom/${this.classroom.code}/battles/toggle`, {battle: battle.id, state: !battle.enabled ? 1:0})
+    },
+    checkImpossible() {
+      if (this.selectedBank.questions.length * this.monster_hp_loss * -1 < 100)
+        return true;
+      return false;
+    },
     scheduleBattle() {
       axios
         .post(`/classroom/${this.classroom.code}/battles/schedule`, {

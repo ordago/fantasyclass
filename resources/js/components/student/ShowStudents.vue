@@ -60,6 +60,7 @@
           <div class="dropdown-menu has-background-white rounded p-3">
             <a
               class="dropdown-item"
+              v-if="students.length >= 2"
               :href="'/classroom/' + classroom.code + '/battles'"
             >
               <i class="fad fa-swords outer_glow" style="font-size: 2em"></i>

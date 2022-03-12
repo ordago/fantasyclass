@@ -11,5 +11,13 @@ class Battle extends Model
         'question_bank_id',
         'monster_id',
         'options',
+        'enabled',
     ];
+
+    public function monster() {
+        return $this->belongsTo(Monster::class);
+    }
+    public function bank() {
+        return $this->belongsTo(QuestionBank::class);
+    }
 }

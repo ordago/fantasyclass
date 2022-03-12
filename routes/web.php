@@ -234,6 +234,8 @@ Route::group(['middleware' => 'language'], function () {
         Route::post('/{code}/group/reward', 'ClassroomsController@rewardGroup');
         Route::post('/{code}/battles/schedule', 'BattleController@schedule');
         
+        Route::post('/{code}/battles/toggle', 'BattleController@toggle');
+
         // Comment
         Route::post('/challenge/comment', 'CommentController@store');
         Route::delete('/challenge/comment/{id}', 'CommentController@destroy');
