@@ -111,10 +111,8 @@
             .then(function (cache) {
                 return cache.addAll([
                     '/css/app.css',
-                    '/offline',
                     '/css/home.css',
-                    '/img/logo.svg',
-                    '/img/google-logo.svg',
+                    '/img/logo.png',
                 ]);
             });
     };
