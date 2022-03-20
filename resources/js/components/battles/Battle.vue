@@ -1,6 +1,6 @@
 <template>
   <div class="p-3">
-    <div v-if="!isBattleActive">
+    <div v-if="!isBattleActive && !battlestd">
       <b-steps
         v-model="activeStep"
         :animated="true"
@@ -32,7 +32,7 @@
               :native-value="1"
               type="is-info"
               expanded
-              :disabled="groups.length < 2"
+              :disabled="groups && groups.length < 2"
             >
               <i class="fas fa-users mr-1"></i> vs
               <i class="fas fa-users ml-1"></i>
@@ -42,7 +42,7 @@
               :native-value="2"
               expanded
               type="is-info"
-              :disabled="groups.length < 1"
+              :disabled="groups && groups.length < 1"
             >
               <i class="fas fa-users mr-1"></i> vs
               <i class="fas fa-dragon ml-1"></i>
@@ -520,7 +520,7 @@
             >
               {{ trans.get("battles.im_bank") }} 😏</a
             >
-            <h2>{{ trans.get("battles.bank") }}</h2>
+            <h2 v-if="type != 4">{{ trans.get("battles.bank") }}</h2>
 
             <p class="control select is-fullwidth">
               <select v-model="selectedBank" class="mt-2" name="type">
@@ -613,13 +613,28 @@
         </b-step-item>
       </b-steps>
       <div class="p-2 mt-2">
-        <h3 class="is-size-3">Batallas individuales</h3>
-        <div @input="changeState(battle)" class="p-2" v-for="battle in classroom.battles" :key="battle.id">
-           <b-field>
+        <h3
+          class="is-size-3 mb-3"
+          v-if="classroom.battles && classroom.battles.length"
+        >
+          <i class="mr-2 fad fa-swords"></i> Batallas individuales
+        </h3>
+        <div
+          @input="changeState(battle)"
+          class="p-2"
+          v-for="battle in sortedBattles"
+          :key="battle.id"
+        >
+          <b-field>
             <b-switch v-model="battle.enabled" :true-value="1" :false-value="0">
-                {{ battle.monster.name }} ({{ getDate(battle.created_at) }})
+              {{ battle.monster.name }}: {{ battle.monster.reward_xp }}
+              <i class="fas fa-fist-raised colored"></i> |
+              {{ battle.monster.reward_gold }}
+              <i class="fas fa-coins colored mr-2"></i> ({{
+                getDate(battle.created_at)
+              }})
             </b-switch>
-        </b-field>
+          </b-field>
         </div>
       </div>
     </div>
@@ -635,12 +650,14 @@
         <header class="modal-card-head">
           <p class="modal-card-title is-flex is-center-vertically">
             {{ trans.get("menu.battles") }}
-            <audio :src="'/music/' + track" loop controls></audio>
-            <select class="select" v-model="track">
-              <option v-for="(trackS, index) in music" :key="index">
-                {{ trackS }}
-              </option>
-            </select>
+            <span v-if="!battlestd">
+              <audio :src="'/music/' + track" loop controls></audio>
+              <select class="select" v-model="track">
+                <option v-for="(trackS, index) in music" :key="index">
+                  {{ trackS }}
+                </option>
+              </select>
+            </span>
           </p>
         </header>
         <section class="modal-card-body is-relative" id="confetti-bg">
@@ -696,7 +713,7 @@
                   v-for="(answer, index) in getAnswers(1)"
                   :key="index"
                   class="tag mr-1"
-                  :class="{ 'is-success': answer, 'is-danger': !answer }"
+                  :class="{ 'is-success': answer.state, 'is-danger': !answer.state }"
                 >
                   {{ index + 1 }}
                 </span>
@@ -738,7 +755,11 @@
                       >
                         {{ timeObj.ceil.s }}
                       </span>
-                      <button class="button is-info fs-2" @click="toggleCd">
+                      <button
+                        class="button is-info fs-2"
+                        @click="toggleCd"
+                        v-if="!battlestd"
+                      >
                         <i
                           class="fas"
                           :class="{
@@ -931,7 +952,7 @@
                   v-for="(answer, index) in getAnswers(2)"
                   :key="index"
                   class="tag mr-1"
-                  :class="{ 'is-success': answer, 'is-danger': !answer }"
+                  :class="{ 'is-success': answer.state, 'is-danger': !answer.state }"
                 >
                   {{ index + 1 }}
                 </span>
@@ -953,7 +974,7 @@
               </div>
               <div
                 ref="monsterdiv"
-                v-if="(type == 3 || type == 2) && monsterSelected"
+                v-if="(type == 3 || type == 2 || type == 4) && monsterSelected"
               >
                 <img
                   @contextmenu.prevent=""
@@ -970,6 +991,7 @@
         <footer
           class="modal-card-foot columns is-multiline"
           style="overflow-x: auto"
+          v-if="!battlestd"
         >
           <div class="column is-narrow is-12-mobile is-flex has-all-centered">
             <a class="button" :href="'/classroom/' + classroom.code">
@@ -996,11 +1018,19 @@ import CountDown from "../utils/CountDown.vue";
 import VueAwesomeCountdown from "vue-awesome-countdown";
 import Utils from "../../utils.js";
 
-
 export default {
   components: { ShowQuestion, CountDown, VueAwesomeCountdown },
-  props: ["classroom"],
+  props: {
+    classroom: null,
+    battlestd: {
+      type: Number,
+      default: false,
+    },
+  },
   computed: {
+    sortedBattles() {
+      return _.orderBy(this.classroom.battles, "created_at", "desc");
+    },
     cantStart() {
       if (this.type == 0 || this.type == 1) {
         return (
@@ -1015,13 +1045,46 @@ export default {
     },
   },
   mounted() {
-    this.students = _.shuffle(this.classroom.students);
-    this.classroom.grouping[0].groups.forEach((element) => {
-      if (element.students && element.students.length) {
-        this.groups.push(element);
-      }
-    });
-    this.groups = _.shuffle(this.groups);
+    if (this.battlestd) {
+      axios
+        .post(`/classroom/${this.classroom.code}/battles/info`, {
+          battle: this.battlestd,
+        })
+        .then((response) => {
+          let options = JSON.parse(response.data.battle.options);
+          console.log(options);
+          console.log(response.data);
+          this.monsterSelected = response.data.monster;
+
+          // TODO :D
+          this.monsterSelected.hp = 100;
+
+          this.selectedBank = response.data.bank;
+          this.questions = _.shuffle(this.selectedBank.questions);
+          this.xp_loss = options.xp_loss;
+          this.max_fails = options.max_fails;
+          this.monster_hp_loss = options.monster_hp_loss;
+          this.timer_default = options.timer_default;
+          this.hp_loss = options.hp_loss;
+          this.gold_loss = options.gold_loss;
+          this.student1 = response.data.student;
+
+          // TODO! :D
+          this.student1.answers = [];
+          this.autoStart = true;
+          this.student1.max_fails = options.max_fails;
+          this.type = 4;
+          this.isBattleActive = true;
+        });
+    } else {
+      this.students = _.shuffle(this.classroom.students);
+      this.classroom.grouping[0].groups.forEach((element) => {
+        if (element.students && element.students.length) {
+          this.groups.push(element);
+        }
+      });
+      this.groups = _.shuffle(this.groups);
+    }
   },
   data: function () {
     return {
@@ -1114,7 +1177,10 @@ export default {
       return Utils.getDate(date);
     },
     changeState(battle) {
-      axios.post(`/classroom/${this.classroom.code}/battles/toggle`, {battle: battle.id, state: !battle.enabled ? 1:0})
+      axios.post(`/classroom/${this.classroom.code}/battles/toggle`, {
+        battle: battle.id,
+        state: !battle.enabled ? 1 : 0,
+      });
     },
     checkImpossible() {
       if (this.selectedBank.questions.length * this.monster_hp_loss * -1 < 100)
@@ -1136,7 +1202,13 @@ export default {
           },
         })
         .then((response) => {
-          console.log(response);
+          // console.log(response);
+          this.$toast(this.trans.get("success_error.add_success"), {
+            type: "success",
+          });
+          setTimeout(() => {
+            location.reload();
+          }, 1000);
         });
     },
     sendReward() {
@@ -1189,7 +1261,7 @@ export default {
     },
     getAnswers(slot) {
       if (slot == 1) {
-        if (this.type == 0) {
+        if (this.type == 0 || this.type == 4) {
           return this.student1.answers;
         } else if (this.type == 3) {
           return this.classroom_answers;
@@ -1204,7 +1276,7 @@ export default {
     },
     getMaxFails(slot) {
       if (slot == 1) {
-        if (this.type == 0) {
+        if (this.type == 0 || this.type == 4) {
           return parseInt(this.student1.max_fails);
         } else if (this.type == 1 || this.type == 2) {
           return parseInt(this.group1.max_fails);
@@ -1256,6 +1328,38 @@ export default {
       this.finished = true;
       this.winnerElem = group;
     },
+    shake(elem) {
+      elem.classList.add("shake-slow");
+      elem.classList.add("shake-constant");
+      elem.classList.add("shake-constant--hover");
+      setTimeout(() => {
+        elem.classList.remove("shake-slow");
+        elem.classList.remove("shake-constant");
+        elem.classList.remove("shake-constant--hover");
+      }, 2000);
+    },
+    hitMonster() {
+      this.monsterSelected.hp = Math.max(
+        this.monsterSelected.hp + parseInt(this.monster_hp_loss),
+        0
+      );
+      let options = {
+        id: this.monsterSelected.id,
+        value: parseInt(this.monster_hp_loss),
+      };
+      axios.post("/classroom/monsters/fight", options);
+      this.shake(this.$refs.monster);
+
+      if (this.monsterSelected.hp == 0) {
+        confetti({
+          particleCount: 200,
+          spread: 100,
+          origin: { y: 1.0 },
+        });
+        this.winnerClass();
+        return true;
+      }
+    },
     answerClass(correct, next = true) {
       if (!correct) {
         this.student1.hp += parseInt(this.hp_loss);
@@ -1265,39 +1369,14 @@ export default {
         if (this.max_fails != 0) this.classroom_max_fails -= 1;
         if (this.classroom_max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
-          this.classroom_answers.push(correct);
+          this.classroom_answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
           this.winnerClass();
           return true;
         }
       } else {
-        this.monsterSelected.hp = Math.max(
-          this.monsterSelected.hp + parseInt(this.monster_hp_loss),
-          0
-        );
-        let options = {
-          id: this.monsterSelected.id,
-          value: parseInt(this.monster_hp_loss),
-        };
-        axios.post("/classroom/monsters/fight", options);
-
-        this.$refs.monster.classList.add("shake-slow");
-        this.$refs.monster.classList.add("shake-constant");
-        this.$refs.monster.classList.add("shake-constant--hover");
-        setTimeout(() => {
-          this.$refs.monster.classList.remove("shake-constant");
-        }, 1000);
-
-        if (this.monsterSelected.hp == 0) {
-          confetti({
-            particleCount: 200,
-            spread: 100,
-            origin: { y: 1.0 },
-          });
-          this.winnerClass();
-          return true;
-        }
+        this.hitMonster();
       }
-      this.classroom_answers.push(correct);
+      this.classroom_answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
       return false;
     },
     answerGroupMonster(correct, next = true) {
@@ -1309,39 +1388,14 @@ export default {
         if (this.max_fails != 0) this.group1.max_fails -= 1;
         if (this.group1.max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
-          this.group1.answers.push(correct);
+          this.group1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
           this.winnerClass();
           return true;
         }
       } else {
-        this.monsterSelected.hp = Math.max(
-          this.monsterSelected.hp + parseInt(this.monster_hp_loss),
-          0
-        );
-        let options = {
-          id: this.monsterSelected.id,
-          value: parseInt(this.monster_hp_loss),
-        };
-        axios.post("/classroom/monsters/fight", options);
-
-        this.$refs.monster.classList.add("shake-slow");
-        this.$refs.monster.classList.add("shake-constant");
-        this.$refs.monster.classList.add("shake-constant--hover");
-        setTimeout(() => {
-          this.$refs.monster.classList.remove("shake-constant");
-        }, 1000);
-
-        if (this.monsterSelected.hp == 0) {
-          confetti({
-            particleCount: 200,
-            spread: 100,
-            origin: { y: 1.0 },
-          });
-          this.winnerClass();
-          return true;
-        }
+        this.hitMonster();
       }
-      this.group1.answers.push(correct);
+      this.group1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
       this.$forceUpdate();
       return false;
     },
@@ -1365,12 +1419,12 @@ export default {
           } else {
             this.$refs.student2.$el.classList.add("animate__rotateOut");
           }
-          group_1.answers.push(correct);
+          group_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
           this.winner(group_2);
           return true;
         }
       }
-      group_1.answers.push(correct);
+      group_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
       return false;
     },
     answerIndividual(correct, next = true) {
@@ -1384,7 +1438,7 @@ export default {
         student_2 = this.student1;
       }
       student_1.lastAnswer = correct;
-      student_1.answers.push(correct);
+      student_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
 
       if (!correct) {
         if (this.max_fails != 0) student_1.max_fails -= 1;
@@ -1396,7 +1450,7 @@ export default {
         student_1.xp = Math.max(student_1.xp + parseInt(this.xp_loss), 0);
         this.updateProp(student_1.id, "xp", parseInt(this.xp_loss));
 
-        if (student_2.lastAnswer) {
+        if (!this.battlestd && student_2.lastAnswer) {
           student_2.hp = Math.min(
             student_2.hp + parseInt(this.hp_transfer),
             100
@@ -1427,6 +1481,8 @@ export default {
           this.$forceUpdate();
           return true;
         }
+      } else if (this.type == 4) {
+        this.hitMonster();
       }
       return false;
     },
@@ -1434,7 +1490,7 @@ export default {
       this.pauseCd();
       this.answered = true;
       let gameOver;
-      if (this.type == 0) {
+      if (this.type == 0 || this.type == 4) {
         gameOver = this.answerIndividual(correct, next);
       } else if (this.type == 1) {
         gameOver = this.answerGroup(correct, next);
@@ -1458,23 +1514,9 @@ export default {
       } else {
         if (!gameOver) {
           if (this.turn == 1) {
-            this.$refs.student2.$el.classList.add("shake-slow");
-            this.$refs.student2.$el.classList.add("shake-constant");
-            this.$refs.student2.$el.classList.add("shake-constant--hover");
-            setTimeout(() => {
-              this.$refs.student2.$el.classList.remove("shake-slow");
-              this.$refs.student2.$el.classList.remove("shake-constant");
-              this.$refs.student2.$el.classList.remove("shake-constant--hover");
-            }, 2000);
+            this.shake(this.$refs.student2.$el);
           } else {
-            this.$refs.student1.$el.classList.add("shake-slow");
-            this.$refs.student1.$el.classList.add("shake-constant");
-            this.$refs.student1.$el.classList.add("shake-constant--hover");
-            setTimeout(() => {
-              this.$refs.student1.$el.classList.remove("shake-slow");
-              this.$refs.student1.$el.classList.remove("shake-constant");
-              this.$refs.student1.$el.classList.remove("shake-constant--hover");
-            }, 2000);
+            this.shake(this.$refs.student1.$el);
           }
         }
         this.audioKO.play();
@@ -1527,7 +1569,7 @@ export default {
       this.$forceUpdate();
     },
     startBattle() {
-      if (this.type != 3 && this.type != 2) {
+      if (this.type != 3 && this.type != 2 && !this.battlestd) {
         Math.random() < 0.5 ? (this.turn = 0) : (this.turn = 1);
       }
       this.started = true;
@@ -1564,9 +1606,9 @@ export default {
           this.selectStudent(2);
         }
       }
-      if (this.type != 3 && this.type != 2) {
+      if (this.type != 3 && this.type != 2 && this.type != 4) {
         this.turn = (this.turn + 1) % 2;
-      } else {
+      } else if (this.type != 4) {
         this.selectStudent(1);
       }
       this.answered = false;

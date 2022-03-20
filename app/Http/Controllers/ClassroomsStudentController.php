@@ -654,6 +654,7 @@ class ClassroomsStudentController extends Controller
 
     public function show($code, $section = false)
     {
+        //with('students.equipment', 'theme')->
         $class = Classroom::where('code', '=', $code)->with('theme', 'collections.collectionables', 'characterTheme.characters')->firstOrFail();
         $this->checkVisibility($class->id);
         $this->authorize('studyOrTeach', $class);
@@ -662,7 +663,19 @@ class ClassroomsStudentController extends Controller
 
         settings()->setExtraColumns(['classroom_id' => $class->id]);
         $wordleActive = settings()->get('active_wordle', null);
-        // abort(403, $wordleActive);
+        $code = $class->code;
+        foreach ($class->battles()->where('enabled', 1)->get() as $battle) {
+            $current = $student->battles()->where('battle_id', $battle->id)->first();
+            
+            if(!$current || !count($current) || $current->pivot->passed == 0) {
+                $battlestd = $battle->id;
+                return view('battles.student', compact('class', 'battlestd', 'student'));
+
+            }
+            // dump($battle);
+        }
+
+
         if ($wordleActive) {
             $wordle = Wordle::find($wordleActive);
             if ($wordle) {

@@ -269,6 +269,10 @@ class Student extends Model implements HasMedia
     {
         return $this->belongsToMany(Wordle::class)->withPivot('state');
     }
+    public function battles()
+    {
+        return $this->belongsToMany(Battle::class)->withPivot('passed', 'monster_hp');
+    }
 
     public function addBehaviour($behaviourId, $comment = null)
     {

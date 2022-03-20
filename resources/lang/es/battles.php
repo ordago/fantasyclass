@@ -13,7 +13,7 @@ return [
     'groupVSgroup' => 'Batalla de equipos, intentarán ganar la recompensa',
     'groupVSmonsters' => 'Un equipo se enfrentará contra un monstruo, intentarán ganar la recompensa',
     'allVSmonsters' => 'La clase luchará contra monstruos y conseguirán recompensas al vencerlos',
-    'oneVSmonsters' => 'Toda la classe luchará individualmente contra el monstruo, <strong>tendrán que jugar desde su sesión</strong>.',
+    'oneVSmonsters' => 'Toda la classe luchará individualmente contra el monstruo, tendrán que jugar desde su sesión.',
     'not_available' => 'Próximamente ... Estamos trabajando en ello :D',
     'loss_fail' => 'Pérdida de puntos por fallo',
     'gain' => 'Ganancia del contrario si ha acertado la pregunta anterior.',

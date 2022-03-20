@@ -91,7 +91,7 @@
     </div>
     <button
       class="button"
-      v-if="!$parent.$parent.answered"
+      v-if="!$parent.$parent.answered && $parent.$parent.type != 4"
       @click="skipQuestion"
     >
       {{ trans.get("battles.skip_question") }}
@@ -134,7 +134,7 @@ export default {
       this.$parent.$parent.$refs.student1.$el.classList.remove(
         "animate__bounce"
       );
-      if (this.$parent.$parent.type != 3 && this.$parent.$parent.type != 2) {
+      if (this.$parent.$parent.type != 4 && this.$parent.$parent.type != 3 && this.$parent.$parent.type != 2) {
         this.$parent.$parent.$refs.student2.$el.classList.remove(
           "animate__bounce"
         );

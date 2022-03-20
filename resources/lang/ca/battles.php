@@ -12,7 +12,7 @@ return [
     '1vs1' => 'Els i les estudiants batallaran de manera individual per a no perdre els seus atributs i mantenir l\'honor!',
     'groupVSgroup' => 'Batalla d\'equips, intentaran guanyar la recompensa',
     'allVSmonsters' => 'La classe lluitarà contra monstres i aconseguiran recompenses al véncer-los',
-    'oneVSmonsters' => 'Tota la classe farà una lluita individual contra el monstre, <strong>hauran de jugar des de la seva sessió.</strong>',
+    'oneVSmonsters' => 'Tota la classe farà una lluita individual contra el monstre, hauran de jugar des de la seva sessió.',
     'groupVSmonsters' => 'Un equip s\'enfrontarà contra un monstre, intentaran guanyar la recompensa',
     'not_available' => 'Properament ... Estem treballant-hi :D',
     'loss_fail' => 'Pèrdua de punts per errada',

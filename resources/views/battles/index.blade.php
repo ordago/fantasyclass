@@ -22,5 +22,5 @@
 @endsection
 
 @section('content')
-<battles :classroom="{{ $class }}"></battles>
+<battles :classroom="{{ $class }}" :battlestd="{{ $battlestd ?? 0 }}"></battles>
 @endsection

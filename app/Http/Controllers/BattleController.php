@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Battle;
 use App\Classroom;
+use App\Http\Classes\Functions;
+use App\Monster;
 use App\QuestionBank;
 use Illuminate\Http\Request;
 
@@ -15,7 +17,7 @@ class BattleController extends Controller
     }
 
     public function schedule($code) {
-        $class = Classroom::where('code', '=', $code)->with('students.equipment', 'students.character', 'grouping.groups.students.equipment', 'grouping.groups.students.character', 'theme', 'questionBanks.questions', 'monsters')->firstOrFail();
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('update', $class);
 
         $data = request()->validate([
@@ -30,6 +32,22 @@ class BattleController extends Controller
             'monster_id' => $data['monster_id'],
             'options' => json_encode($data['options']),
         ]);
+    }
+
+    public function getInfo($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+
+        $data = request()->validate([
+            "battle" => ['required', 'numeric'],
+        ]);
+
+        $battle = Battle::find($data['battle']);
+        $monster = Monster::find($battle->monster_id);
+        $bank = QuestionBank::with('questions')->where("id", $battle->question_bank_id)->first();
+        $student = Functions::getCurrentStudent($class, ['equipment', 'classroom', 'character']);
+
+        return ["battle" => $battle, "monster" => $monster, "bank" => $bank, "student" => $student];
     }
 
     public function toggle($code) {

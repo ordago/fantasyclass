@@ -233,6 +233,7 @@ Route::group(['middleware' => 'language'], function () {
         Route::get('/{code}/battles', 'BattleController@index');
         Route::post('/{code}/group/reward', 'ClassroomsController@rewardGroup');
         Route::post('/{code}/battles/schedule', 'BattleController@schedule');
+        Route::post('/{code}/battles/info', 'BattleController@getInfo');
         
         Route::post('/{code}/battles/toggle', 'BattleController@toggle');
 
