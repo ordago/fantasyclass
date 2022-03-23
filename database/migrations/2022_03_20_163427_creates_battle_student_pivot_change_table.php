@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatesBattleStudentPivotTable extends Migration
+class CreatesBattleStudentPivotChangeTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,7 +17,7 @@ class CreatesBattleStudentPivotTable extends Migration
             $table->id();
             $table->unsignedBigInteger('battle_id');
             $table->unsignedBigInteger('student_id');
-            $table->integer('monster_hp');
+            $table->json('state');
             // 1 for passed, 2 for failed, 0 in progress
             $table->smallInteger('passed')->default(0);
             $table->timestamps();

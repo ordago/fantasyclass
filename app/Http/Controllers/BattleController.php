@@ -34,6 +34,13 @@ class BattleController extends Controller
         ]);
     }
 
+    public function save($code) {
+        $class = Classroom::where('code', '=', $code)->firstOrFail();
+        $this->authorize('studyOrTeach', $class);
+        $student = Functions::getCurrentStudent($class, []);
+        $student->battles()->sync([request()->battle => ['passed' => request()->passed, 'state' => json_encode(['time' => request()->time, 'fails'=> request()->fails,'answers' => request()->answers,'monster_hp' => request()->monsterHp])]], false);
+        
+    }
     public function getInfo($code) {
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
@@ -46,8 +53,9 @@ class BattleController extends Controller
         $monster = Monster::find($battle->monster_id);
         $bank = QuestionBank::with('questions')->where("id", $battle->question_bank_id)->first();
         $student = Functions::getCurrentStudent($class, ['equipment', 'classroom', 'character']);
+        $current = $student->battles()->where('battle_id', $battle->id)->first();
 
-        return ["battle" => $battle, "monster" => $monster, "bank" => $bank, "student" => $student];
+        return ["battle" => $battle, "monster" => $monster, "bank" => $bank, "student" => $student, "current" => $current];
     }
 
     public function toggle($code) {

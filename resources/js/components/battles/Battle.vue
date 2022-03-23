@@ -713,7 +713,10 @@
                   v-for="(answer, index) in getAnswers(1)"
                   :key="index"
                   class="tag mr-1"
-                  :class="{ 'is-success': answer.state, 'is-danger': !answer.state }"
+                  :class="{
+                    'is-success': answer.state,
+                    'is-danger': !answer.state,
+                  }"
                 >
                   {{ index + 1 }}
                 </span>
@@ -741,6 +744,7 @@
                     v-if="!finished"
                     @finish="finishCd"
                     class="ml-2"
+                    @start="startCd"
                     ref="cd"
                     :autoStart="false"
                     :left-time="timer"
@@ -778,7 +782,7 @@
                 <div class="column has-all-centered">
                   <button
                     class="button is-primary is-size-2"
-                    v-if="!started"
+                    v-if="!started && !gameOver"
                     :disabled="cantStart"
                     @click="startBattle"
                   >
@@ -952,7 +956,10 @@
                   v-for="(answer, index) in getAnswers(2)"
                   :key="index"
                   class="tag mr-1"
-                  :class="{ 'is-success': answer.state, 'is-danger': !answer.state }"
+                  :class="{
+                    'is-success': answer.state,
+                    'is-danger': !answer.state,
+                  }"
                 >
                   {{ index + 1 }}
                 </span>
@@ -1014,12 +1021,12 @@
 <script>
 import confetti from "canvas-confetti";
 import ShowQuestion from "./ShowQuestion.vue";
-import CountDown from "../utils/CountDown.vue";
+// import CountDown from "../utils/CountDown.vue";
 import VueAwesomeCountdown from "vue-awesome-countdown";
 import Utils from "../../utils.js";
 
 export default {
-  components: { ShowQuestion, CountDown, VueAwesomeCountdown },
+  components: { ShowQuestion, VueAwesomeCountdown },
   props: {
     classroom: null,
     battlestd: {
@@ -1056,9 +1063,6 @@ export default {
           console.log(response.data);
           this.monsterSelected = response.data.monster;
 
-          // TODO :D
-          this.monsterSelected.hp = 100;
-
           this.selectedBank = response.data.bank;
           this.questions = _.shuffle(this.selectedBank.questions);
           this.xp_loss = options.xp_loss;
@@ -1069,12 +1073,25 @@ export default {
           this.gold_loss = options.gold_loss;
           this.student1 = response.data.student;
 
-          // TODO! :D
-          this.student1.answers = [];
           this.autoStart = true;
           this.student1.max_fails = options.max_fails;
           this.type = 4;
           this.isBattleActive = true;
+
+          // TODO :D
+          if (response.data.current) {
+            let opt = JSON.parse(response.data.current.pivot.state);
+            this.student1.answers = opt.answers;
+            this.monsterSelected.hp = opt.monster_hp;
+            this.timer = opt.time - 5000;
+
+            setTimeout(() => {
+              this.startBattle();
+            }, 500);
+          } else {
+            this.monsterSelected.hp = 100;
+            this.student1.answers = [];
+          }
         });
     } else {
       this.students = _.shuffle(this.classroom.students);
@@ -1134,6 +1151,8 @@ export default {
       monsterSelected: null,
       classroom_max_fails: 0,
       classroom_answers: [],
+      counterInterval: null,
+      gameOver: false,
       track: "Battle theme.mp3",
       music: [
         "A legend will rise.mp3",
@@ -1202,7 +1221,6 @@ export default {
           },
         })
         .then((response) => {
-          // console.log(response);
           this.$toast(this.trans.get("success_error.add_success"), {
             type: "success",
           });
@@ -1289,23 +1307,51 @@ export default {
         } else return parseInt(this.group2.max_fails);
       }
     },
+    individualWin() {
+      clearInterval(this.counterInterval);
+      this.$toast("Oleeee", { type: "success" });
+      setTimeout(() => {
+        console.log("win!");
+        this.saveState(1);
+        setTimeout(() => {
+          location.reload()
+        }, 3000);
+      }, 100);
+    },
+    individualLose() {
+      clearInterval(this.counterInterval);
+      console.log("Lose");
+      this.$toast("Waaaa :(", { type: "error" });
+      setTimeout(() => {
+        this.saveState(2);
+         setTimeout(() => {
+          location.reload()
+        }, 1300);
+      }, 100);
+    },
     checkWinner() {
-      let points1 = 0;
-      let points2 = 0;
-      this.group1.answers.forEach((answer) => {
-        if (answer) {
-          points1++;
-        } else points1--;
-      });
-      this.group2.answers.forEach((answer) => {
-        if (answer) {
-          points2++;
-        } else points2--;
-      });
-      if (points1 > points2) this.winner(this.group1);
-      else if (points2 > points1) this.winner(this.group2);
-      else {
-        this.winner(null);
+      if (this.type == 4) {
+        if (this.monsterSelected.hp > 0) {
+          this.individualLose();
+        }
+      } else {
+        let points1 = 0;
+        let points2 = 0;
+        this.group1.answers.forEach((answer) => {
+          if (answer) {
+            points1++;
+          } else points1--;
+        });
+        this.group2.answers.forEach((answer) => {
+          if (answer) {
+            points2++;
+          } else points2--;
+        });
+        if (points1 > points2) this.winner(this.group1);
+        else if (points2 > points1) this.winner(this.group2);
+        else {
+          this.winner(null);
+        }
       }
     },
     winnerClass(all = true) {
@@ -1343,12 +1389,14 @@ export default {
         this.monsterSelected.hp + parseInt(this.monster_hp_loss),
         0
       );
-      let options = {
-        id: this.monsterSelected.id,
-        value: parseInt(this.monster_hp_loss),
-      };
-      axios.post("/classroom/monsters/fight", options);
       this.shake(this.$refs.monster);
+      if (!this.battlestd) {
+        let options = {
+          id: this.monsterSelected.id,
+          value: parseInt(this.monster_hp_loss),
+        };
+        axios.post("/classroom/monsters/fight", options);
+      }
 
       if (this.monsterSelected.hp == 0) {
         confetti({
@@ -1356,11 +1404,15 @@ export default {
           spread: 100,
           origin: { y: 1.0 },
         });
-        this.winnerClass();
+        if (this.type == 4) {
+          this.individualWin();
+        } else {
+          this.winnerClass();
+        }
         return true;
       }
     },
-    answerClass(correct, next = true) {
+    answerClass(correct, next = true, answer = null) {
       if (!correct) {
         this.student1.hp += parseInt(this.hp_loss);
         this.student1.xp += parseInt(this.xp_loss);
@@ -1369,17 +1421,25 @@ export default {
         if (this.max_fails != 0) this.classroom_max_fails -= 1;
         if (this.classroom_max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
-          this.classroom_answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+          this.classroom_answers.push({
+            question: this.currentQuestion,
+            state: correct,
+            answer: answer,
+          });
           this.winnerClass();
           return true;
         }
       } else {
         this.hitMonster();
       }
-      this.classroom_answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+      this.classroom_answers.push({
+        question: this.currentQuestion,
+        state: correct,
+        answer: answer,
+      });
       return false;
     },
-    answerGroupMonster(correct, next = true) {
+    answerGroupMonster(correct, next = true, answer = null) {
       if (!correct) {
         this.student1.hp += parseInt(this.hp_loss);
         this.student1.xp += parseInt(this.xp_loss);
@@ -1388,18 +1448,26 @@ export default {
         if (this.max_fails != 0) this.group1.max_fails -= 1;
         if (this.group1.max_fails == 0 && this.max_fails != 0) {
           this.$refs.student1.$el.classList.add("animate__rotateOut");
-          this.group1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+          this.group1.answers.push({
+            question: this.currentQuestion,
+            state: correct,
+            answer: answer,
+          });
           this.winnerClass();
           return true;
         }
       } else {
         this.hitMonster();
       }
-      this.group1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+      this.group1.answers.push({
+        question: this.currentQuestion,
+        state: correct,
+        answer: answer,
+      });
       this.$forceUpdate();
       return false;
     },
-    answerGroup(correct, next = true) {
+    answerGroup(correct, next = true, answer = null) {
       let group_1;
       let group_2;
 
@@ -1419,15 +1487,23 @@ export default {
           } else {
             this.$refs.student2.$el.classList.add("animate__rotateOut");
           }
-          group_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+          group_1.answers.push({
+            question: this.currentQuestion,
+            state: correct,
+            answer: answer,
+          });
           this.winner(group_2);
           return true;
         }
       }
-      group_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+      group_1.answers.push({
+        question: this.currentQuestion,
+        state: correct,
+        answer: answer,
+      });
       return false;
     },
-    answerIndividual(correct, next = true) {
+    answerIndividual(correct, next = true, answer = null) {
       let student_1;
       let student_2;
       if (this.turn == 0) {
@@ -1438,7 +1514,12 @@ export default {
         student_2 = this.student1;
       }
       student_1.lastAnswer = correct;
-      student_1.answers.push({question: this.currentQuestion ? this.currentQuestion.id : null , state: correct});
+
+      student_1.answers.push({
+        question: this.currentQuestion,
+        state: correct,
+        answer: answer,
+      });
 
       if (!correct) {
         if (this.max_fails != 0) student_1.max_fails -= 1;
@@ -1470,6 +1551,7 @@ export default {
               this.started = false;
               this.answered = false;
             }, 1000);
+            if (this.type == 4) this.individualLose();
           } else {
             this.$refs.student2.$el.classList.add("animate__rotateOut");
             setTimeout(() => {
@@ -1484,20 +1566,20 @@ export default {
       } else if (this.type == 4) {
         this.hitMonster();
       }
+      if (this.battlestd) this.saveState();
       return false;
     },
-    answer(correct, next = true) {
+    answer(correct, next = true, answer = null) {
       this.pauseCd();
       this.answered = true;
-      let gameOver;
       if (this.type == 0 || this.type == 4) {
-        gameOver = this.answerIndividual(correct, next);
+        this.gameOver = this.answerIndividual(correct, next, answer);
       } else if (this.type == 1) {
-        gameOver = this.answerGroup(correct, next);
+        this.gameOver = this.answerGroup(correct, next, answer);
       } else if (this.type == 3) {
-        gameOver = this.answerClass(correct, next);
+        this.gameOver = this.answerClass(correct, next, answer);
       } else if (this.type == 2) {
-        gameOver = this.answerGroupMonster(correct, next);
+        this.gameOver = this.answerGroupMonster(correct, next, answer);
       }
       if (correct) {
         if (this.turn == 0) {
@@ -1512,7 +1594,7 @@ export default {
         });
         this.audioOK.play();
       } else {
-        if (!gameOver) {
+        if (!this.gameOver) {
           if (this.turn == 1) {
             this.shake(this.$refs.student2.$el);
           } else {
@@ -1527,6 +1609,7 @@ export default {
       axios.post("/classroom/students/update", options);
     },
     start() {
+      this.gameOver = false;
       this.timer = this.timer_default * 1000;
       if (this.selectedBank) {
         this.classroom.question_banks.forEach((element) => {
@@ -1540,8 +1623,37 @@ export default {
       if (this.type == 3) this.classroom_max_fails = this.max_fails;
       this.isBattleActive = true;
     },
-
+    saveState(passed = 0) {
+      console.log("Save " + passed);
+      setTimeout(() => {
+        let left = this.$refs.cd.timeObj.leftTime;
+        if (!left) left = this.timer;
+        axios.post(`/classroom/${this.classroom.code}/battles/save`, {
+          monsterHp: this.monsterSelected.hp,
+          battle: this.battlestd,
+          answers: this.student1.answers,
+          time: left,
+          fails: this.student1.max_fails,
+          passed: passed,
+        });
+      }, 500);
+    },
+    startCd() {
+      if (this.battlestd) {
+        this.saveState();
+        this.counterInterval = setInterval(
+          function () {
+            this.saveState();
+          }.bind(this),
+          5000
+        );
+      }
+    },
     finishCd() {
+      if (this.battlestd) {
+        this.answer(false, true, null);
+        clearInterval(this.counterInterval);
+      }
       this.audioTimer.play();
     },
     resetCd() {
@@ -1564,9 +1676,30 @@ export default {
       this.$forceUpdate();
     },
     pauseCd() {
+      if (this.battlestd) {
+        clearInterval(this.counterInterval);
+      }
       this.$refs.cd.pauseCountdown();
       this.isCountDownPaused = true;
       this.$forceUpdate();
+    },
+    getNextQuestion() {
+      if (this.selectedBank) {
+        if (this.battlestd) {
+          let answers = this.student1.answers;
+          if (answers && answers.length) {
+            let q;
+            while ((q = this.questions.pop())) {
+              var index = answers.findIndex(function (a, i) {
+                return a.question.id === q.id;
+              });
+              if (index >= 0) continue;
+              this.currentQuestion = q;
+              break;
+            }
+          } else this.currentQuestion = this.questions.pop();
+        } else this.currentQuestion = this.questions.pop();
+      }
     },
     startBattle() {
       if (this.type != 3 && this.type != 2 && !this.battlestd) {
@@ -1574,7 +1707,7 @@ export default {
       }
       this.started = true;
       this.resetCd();
-      if (this.selectedBank) this.currentQuestion = this.questions.pop();
+      this.getNextQuestion();
     },
     skipQuestion() {
       this.resetCd();
@@ -1592,7 +1725,7 @@ export default {
       }
 
       setTimeout(this.reset, 1000);
-      if (this.selectedBank) this.currentQuestion = this.questions.pop();
+      this.getNextQuestion();
       if (this.type == 2) {
         this.group_count1++;
         this.selectStudent(1);

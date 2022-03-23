@@ -167,13 +167,12 @@ export default {
         });
       } else {
         correct = this.answerTextQuestion();
+        answer = this.answer;
       }
       this.lastText = correct;
-      if (correct) {
-        this.$parent.$parent.answer(true, false);
-      } else {
-        this.$parent.$parent.answer(false, false);
-      }
+    
+      this.$parent.$parent.answer(correct, false, answer);
+      
       this.$parent.$parent.answered = true;
       this.$parent.$forceUpdate();
     },
