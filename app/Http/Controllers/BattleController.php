@@ -38,6 +38,12 @@ class BattleController extends Controller
         $class = Classroom::where('code', '=', $code)->firstOrFail();
         $this->authorize('studyOrTeach', $class);
         $student = Functions::getCurrentStudent($class, []);
+        if(request()->passed === 1) {
+            $battle = Battle::where('classroom_id', $class->id)->where('id', request()->battle)->firstOrFail();
+            $monster = Monster::find($battle->monster_id);
+            $student->setProperty("xp", $monster->reward_xp, true, "battle");
+            $student->setProperty("gold", $monster->reward_gold, true, "battle");
+        }
         $student->battles()->sync([request()->battle => ['passed' => request()->passed, 'state' => json_encode(['time' => request()->time, 'fails'=> request()->fails,'answers' => request()->answers,'monster_hp' => request()->monsterHp])]], false);
         
     }

@@ -606,6 +606,7 @@
               v-else
               :disabled="!monsterSelected || !selectedBank || checkImpossible()"
               @click="scheduleBattle"
+              :class="{ 'is-loading': isLoading }"
             >
               {{ trans.get("battles.start_14") }}!
             </button>
@@ -646,7 +647,25 @@
       full-screen
       :can-cancel="false"
     >
-      <div class="modal-card" style="width: auto">
+      <div
+        class="fullScreenGO is-flex has-all-centered"
+        style="position: relative; top: -100px"
+        v-if="battlestd && finished"
+      >
+        <div>
+          <h1 class="is-size-1" v-if="!gameOver">
+            {{ trans.get("battles.well_done") }}
+          </h1>
+          <h1 class="is-size-1" v-else>Game Over 😢</h1>
+          <h3 class="is-size-3" v-if="!gameOver">
+            {{ trans.get('utils.reward') }}: {{ monsterSelected.reward_xp }}
+            <i class="fas fa-fist-raised colored"></i>
+            {{ monsterSelected.reward_gold }}
+            <i class="fas fa-coins colored"></i>
+          </h3>
+        </div>
+      </div>
+      <div v-else class="modal-card" style="width: auto">
         <header class="modal-card-head">
           <p class="modal-card-title is-flex is-center-vertically">
             {{ trans.get("menu.battles") }}
@@ -1081,9 +1100,11 @@ export default {
           // TODO :D
           if (response.data.current) {
             let opt = JSON.parse(response.data.current.pivot.state);
+            console.log(opt);
             this.student1.answers = opt.answers;
             this.monsterSelected.hp = opt.monster_hp;
             this.timer = opt.time - 5000;
+            this.student1.max_fails = opt.fails;
 
             setTimeout(() => {
               this.startBattle();
@@ -1207,6 +1228,7 @@ export default {
       return false;
     },
     scheduleBattle() {
+      this.isLoading = true;
       axios
         .post(`/classroom/${this.classroom.code}/battles/schedule`, {
           question_bank_id: this.selectedBank.id,
@@ -1308,26 +1330,27 @@ export default {
       }
     },
     individualWin() {
+      this.finished = true;
       clearInterval(this.counterInterval);
-      this.$toast("Oleeee", { type: "success" });
       setTimeout(() => {
         console.log("win!");
         this.saveState(1);
         setTimeout(() => {
-          location.reload()
+          location.reload();
         }, 3000);
-      }, 100);
+      }, 300);
     },
     individualLose() {
+      this.finished = true;
+      this.gameOver = true;
       clearInterval(this.counterInterval);
-      console.log("Lose");
-      this.$toast("Waaaa :(", { type: "error" });
       setTimeout(() => {
+        console.log("Lose");
         this.saveState(2);
-         setTimeout(() => {
-          location.reload()
-        }, 1300);
-      }, 100);
+        setTimeout(() => {
+          location.reload();
+        }, 3000);
+      }, 300);
     },
     checkWinner() {
       if (this.type == 4) {
@@ -1520,6 +1543,7 @@ export default {
         state: correct,
         answer: answer,
       });
+      if (this.battlestd) this.saveState();
 
       if (!correct) {
         if (this.max_fails != 0) student_1.max_fails -= 1;
@@ -1566,7 +1590,6 @@ export default {
       } else if (this.type == 4) {
         this.hitMonster();
       }
-      if (this.battlestd) this.saveState();
       return false;
     },
     answer(correct, next = true, answer = null) {
@@ -1626,7 +1649,8 @@ export default {
     saveState(passed = 0) {
       console.log("Save " + passed);
       setTimeout(() => {
-        let left = this.$refs.cd.timeObj.leftTime;
+        let left = null;
+        if (this.$refs.cd) left = this.$refs.cd.timeObj.leftTime;
         if (!left) left = this.timer;
         axios.post(`/classroom/${this.classroom.code}/battles/save`, {
           monsterHp: this.monsterSelected.hp,
@@ -1691,6 +1715,7 @@ export default {
             let q;
             while ((q = this.questions.pop())) {
               var index = answers.findIndex(function (a, i) {
+                if (!a || !a.question || !a.question.id) return false;
                 return a.question.id === q.id;
               });
               if (index >= 0) continue;
@@ -1720,6 +1745,9 @@ export default {
     nextQuestion() {
       this.resetCd();
       if (this.selectedBank && !this.questions.length) {
+        if (this.battlestd) {
+          if (this.monsterSelected.hp > 0) this.gameOver = true;
+        }
         this.finished = true;
         this.checkWinner();
       }
@@ -1831,6 +1859,15 @@ export default {
 .monster-select:hover,
 .monster-selected {
   background-color: skyblue;
+}
+.fullScreenGO {
+  position: fixed;
+  width: 100%;
+  height: calc(100vh + 100px);
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: white;
 }
 </style>
 
