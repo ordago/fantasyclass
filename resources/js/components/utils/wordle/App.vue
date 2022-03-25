@@ -85,7 +85,7 @@
               alt="gray key"
               width="30px"
             />
-            {{ trans.get("wordle.info_yellow") }}
+            {{ trans.get("wordle.info_gray") }}
           </div>
           <p class="mt-2">{{ trans.get("wordle.info_end") }}</p>
         </section>
