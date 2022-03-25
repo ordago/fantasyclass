@@ -1,4 +1,8 @@
 # Changelog
+## v2.1 Beta (25/03/2022)
+### Added
+- Individual battles.
+
 ## v2.0 Beta (01/03/2022)
 ### Added
 - Wordle game.

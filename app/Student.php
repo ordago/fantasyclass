@@ -271,7 +271,7 @@ class Student extends Model implements HasMedia
     }
     public function battles()
     {
-        return $this->belongsToMany(Battle::class)->withPivot('passed', 'state');
+        return $this->belongsToMany(Battle::class)->withPivot('passed', 'state')->withTimestamps();
     }
 
     public function addBehaviour($behaviourId, $comment = null)

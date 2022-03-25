@@ -18,6 +18,6 @@ class Battle extends Model
         return $this->belongsTo(Monster::class);
     }
     public function bank() {
-        return $this->belongsTo(QuestionBank::class);
+        return $this->belongsTo(QuestionBank::class, 'question_bank_id');
     }
 }

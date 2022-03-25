@@ -319,6 +319,72 @@
         </article>
       </template>
     </b-table>
+    <b-table
+      v-else-if="type == 'battles'"
+      :data="info"
+      default-sort-direction="desc"
+      default-sort="pivot.created_at"
+      icon-pack="fas"
+      sort-icon="arrow-up"
+      detailed
+      detail-key="id"
+    >
+      <b-table-column
+        v-slot="props"
+        field="name"
+        :label="trans.get('menu.monsters')"
+        centered
+      >
+        <span class="is-flex is-center-vertically">
+          <img
+            v-tippy
+            :content="getAttrib(props.row)"
+            :src="props.row.monster.image"
+            width="40px"
+            class="mr-2"
+          />
+          {{ props.row.monster.name }}
+          <i
+            class="fas has-text-light p-1 rounded ml-1"
+            :class="{
+              'has-background-danger fa-times': props.row.pivot.passed == 2,
+              'has-background-success fa-check': props.row.pivot.passed == 1,
+            }"
+          ></i>
+        </span>
+      </b-table-column>
+
+      <b-table-column v-slot="props" field="props.row" label="Info" centered>
+        <span class="tag is-info mr-2">{{ props.row.bank.title }}</span>
+        <span class="tag is-dark">{{
+          datetime(props.row.pivot.created_at)
+        }}</span>
+      </b-table-column>
+
+      <template #detail="props">
+        <article class="media">
+          <div class="media-content">
+            <div class="content">
+              <div
+                class="mb-1"
+                v-for="(question, index) in JSON.parse(props.row.pivot.state)
+                  .answers"
+                :key="index"
+              >
+                <i
+                  class="fas has-text-light p-1 rounded"
+                  :class="{
+                    'has-background-danger fa-times': !question.state,
+                    'has-background-success fa-check': question.state,
+                  }"
+                ></i>
+                {{ question.question.name }}
+              </div>
+            </div>
+          </div>
+        </article>
+      </template>
+    </b-table>
     <button
       class="button mt-2"
       @click="loadAllLog"
@@ -349,6 +415,12 @@ export default {
     };
   },
   methods: {
+    datetime(date) {
+      return Utils.getDate(date, false);
+    },
+    getAttrib(battle) {
+      return `${battle.monster.reward_xp} <i class=\'fas fa-fist-raised colored\'></i> ${battle.monster.reward_gold} <i class=\'fas fa-coins colored'></i>`;
+    },
     getField(row, subject) {
       let total = 0;
       let absence = 0;

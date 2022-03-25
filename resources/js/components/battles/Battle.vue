@@ -658,7 +658,7 @@
           </h1>
           <h1 class="is-size-1" v-else>Game Over 😢</h1>
           <h3 class="is-size-3" v-if="!gameOver">
-            {{ trans.get('utils.reward') }}: {{ monsterSelected.reward_xp }}
+            {{ trans.get("utils.reward") }}: {{ monsterSelected.reward_xp }}
             <i class="fas fa-fist-raised colored"></i>
             {{ monsterSelected.reward_gold }}
             <i class="fas fa-coins colored"></i>
@@ -669,7 +669,7 @@
         <header class="modal-card-head">
           <p class="modal-card-title is-flex is-center-vertically">
             {{ trans.get("menu.battles") }}
-            <span v-if="!battlestd">
+            <span class="is-flex is-center-vertically" v-if="!battlestd">
               <audio :src="'/music/' + track" loop controls></audio>
               <select class="select" v-model="track">
                 <option v-for="(trackS, index) in music" :key="index">
@@ -678,6 +678,9 @@
               </select>
             </span>
           </p>
+          <div v-if="selectedBank && questions">
+            <span class="fs-2 border px-2 is-full-rounded">{{ questions.length }}</span>
+          </div>
         </header>
         <section class="modal-card-body is-relative" id="confetti-bg">
           <div class="columns">
@@ -1078,8 +1081,6 @@ export default {
         })
         .then((response) => {
           let options = JSON.parse(response.data.battle.options);
-          console.log(options);
-          console.log(response.data);
           this.monsterSelected = response.data.monster;
 
           this.selectedBank = response.data.bank;
@@ -1106,8 +1107,27 @@ export default {
             this.timer = opt.time - 5000;
             this.student1.max_fails = opt.fails;
 
+            let answers = this.student1.answers;
+            if (answers && answers.length) {
+              answers.forEach((element) => {
+                var index = this.questions.findIndex(function (a) {
+                  return a.id === element.question.id;
+                });
+                if (index >= 0) {
+                  this.questions.splice(index, 1);
+                }
+              });
+            }
+
+            var q = this.questions.findIndex(function (a) {  
+                return a.id === opt.question;
+            });
+
+            this.currentQuestion = this.questions.splice(q, 1)[0];
+
             setTimeout(() => {
-              this.startBattle();
+               this.started = true;
+              this.resetCd();
             }, 500);
           } else {
             this.monsterSelected.hp = 100;
@@ -1333,7 +1353,6 @@ export default {
       this.finished = true;
       clearInterval(this.counterInterval);
       setTimeout(() => {
-        console.log("win!");
         this.saveState(1);
         setTimeout(() => {
           location.reload();
@@ -1345,7 +1364,6 @@ export default {
       this.gameOver = true;
       clearInterval(this.counterInterval);
       setTimeout(() => {
-        console.log("Lose");
         this.saveState(2);
         setTimeout(() => {
           location.reload();
@@ -1357,16 +1375,16 @@ export default {
         if (this.monsterSelected.hp > 0) {
           this.individualLose();
         }
-      } else {
+      } else if(this.type == 1){
         let points1 = 0;
         let points2 = 0;
         this.group1.answers.forEach((answer) => {
-          if (answer) {
+          if (answer.state) {
             points1++;
           } else points1--;
         });
         this.group2.answers.forEach((answer) => {
-          if (answer) {
+          if (answer.state) {
             points2++;
           } else points2--;
         });
@@ -1634,12 +1652,14 @@ export default {
     start() {
       this.gameOver = false;
       this.timer = this.timer_default * 1000;
-      if (this.selectedBank) {
-        this.classroom.question_banks.forEach((element) => {
-          if (element.id == this.selectedBank.id) {
-            this.questions = _.shuffle(element.questions);
-          }
-        });
+      if (!this.current) {
+        if (this.selectedBank) {
+          this.classroom.question_banks.forEach((element) => {
+            if (element.id == this.selectedBank.id) {
+              this.questions = _.shuffle(element.questions);
+            }
+          });
+        }
       }
       if ((this.type == 3 || this.type == 2) && !this.monsterSelected)
         return false;
@@ -1647,12 +1667,12 @@ export default {
       this.isBattleActive = true;
     },
     saveState(passed = 0) {
-      console.log("Save " + passed);
       setTimeout(() => {
         let left = null;
         if (this.$refs.cd) left = this.$refs.cd.timeObj.leftTime;
         if (!left) left = this.timer;
         axios.post(`/classroom/${this.classroom.code}/battles/save`, {
+          currentQuestion: this.currentQuestion.id,
           monsterHp: this.monsterSelected.hp,
           battle: this.battlestd,
           answers: this.student1.answers,
@@ -1708,23 +1728,12 @@ export default {
       this.$forceUpdate();
     },
     getNextQuestion() {
-      if (this.selectedBank) {
-        if (this.battlestd) {
-          let answers = this.student1.answers;
-          if (answers && answers.length) {
-            let q;
-            while ((q = this.questions.pop())) {
-              var index = answers.findIndex(function (a, i) {
-                if (!a || !a.question || !a.question.id) return false;
-                return a.question.id === q.id;
-              });
-              if (index >= 0) continue;
-              this.currentQuestion = q;
-              break;
-            }
-          } else this.currentQuestion = this.questions.pop();
-        } else this.currentQuestion = this.questions.pop();
+      if (this.battlestd && !this.questions.length) {
+        if (this.monsterSelected.hp > 0) this.individualLose();
+        else this.individualWin();
+        return false;
       }
+      if (this.selectedBank) this.currentQuestion = this.questions.pop();
     },
     startBattle() {
       if (this.type != 3 && this.type != 2 && !this.battlestd) {

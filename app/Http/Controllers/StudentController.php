@@ -258,6 +258,7 @@ class StudentController extends Controller
         $student->load('collectionables');
         $student->load('role');
         $student->append('blogsp');
+        $student->load('battles.monster', 'battles.bank');
         $student->groups->each->append('blogs');
 
         foreach ($student->getAutomaticBadges() as $badge) {

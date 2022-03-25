@@ -666,13 +666,10 @@ class ClassroomsStudentController extends Controller
         $code = $class->code;
         foreach ($class->battles()->where('enabled', 1)->get() as $battle) {
             $current = $student->battles()->where('battle_id', $battle->id)->first();
-            // dump($current);
             if(!$current || $current->pivot->passed == 0) {
                 $battlestd = $battle->id;
                 return view('battles.student', compact('class', 'battlestd', 'student'));
-
             }
-            // dump($battle);
         }
 
 
@@ -727,6 +724,7 @@ class ClassroomsStudentController extends Controller
         $student->load('character');
         $student->load('collections');
         $student->load('collectionables');
+        $student->load('battles.monster', 'battles.bank');
 
 
         // Shop information

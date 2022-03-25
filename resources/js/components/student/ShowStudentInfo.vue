@@ -811,7 +811,12 @@
         <b-tab-item
           :label="trans.get('menu.attendance')"
           icon="calendar-alt"
-          v-if="student.subjects && student.subjects.length && student.calevents && student.calevents.length"
+          v-if="
+            student.subjects &&
+            student.subjects.length &&
+            student.calevents &&
+            student.calevents.length
+          "
           icon-pack="fad"
           class="p-2"
         >
@@ -837,6 +842,21 @@
             :admin="admin"
             :blogs="student.blogs"
           ></Blogs>
+        </b-tab-item>
+        <b-tab-item
+          :label="trans.get('menu.battles')"
+          icon="swords"
+          v-if="student.battles && student.battles.length"
+          icon-pack="fad"
+          class="p-2"
+        >
+        <show-data
+            :code="classroom.code"
+            :id="null"
+            type="battles"
+            :admin="false"
+            :info="orderedBattles(student.battles)"
+          ></show-data>
         </b-tab-item>
         <b-tab-item
           :label="trans.get('menu.pets')"
@@ -947,12 +967,21 @@
             {{ trans.get("menu.collections") }}
           </template>
 
-          <button v-if="!selectedCollection" class="button is-primary" @click="prepareExchange()">
+          <button
+            v-if="!selectedCollection"
+            class="button is-primary"
+            @click="prepareExchange()"
+          >
             <i class="fas fa-exchange mr-1"></i>
             {{ trans.get("collections.exchange") }}
           </button>
-          <button class="button is-link" v-else @click="selectedCollection = null">
-            <i class="fas fa-arrow-left mr-1"></i> {{ trans.get('general.back') }}
+          <button
+            class="button is-link"
+            v-else
+            @click="selectedCollection = null"
+          >
+            <i class="fas fa-arrow-left mr-1"></i>
+            {{ trans.get("general.back") }}
           </button>
           <div
             class="columns p-4 has-text-centered is-multiline"
@@ -977,15 +1006,14 @@
                   @contextmenu.prevent=""
                 />
                 <h1 class="is-size-4 rounded border py-4">
-                  {{ collection.name }} ({{ getCollectionNumber(collection.id) }})
+                  {{ collection.name }} ({{
+                    getCollectionNumber(collection.id)
+                  }})
                 </h1>
               </div>
             </div>
           </div>
-          <div
-            v-else
-          >
-
+          <div v-else>
             <div
               v-if="
                 selectedCollection.collectionables &&
@@ -1021,7 +1049,8 @@
                     !admin &&
                     checkReward(selectedCollection) &&
                     (selectedCollection.max == 0 ||
-                      selectedCollection.max > getCollectionNumber(selectedCollection.id))
+                      selectedCollection.max >
+                        getCollectionNumber(selectedCollection.id))
                   "
                   >{{ trans.get("collections.claim_reward") }}</span
                 >
@@ -1032,7 +1061,8 @@
                     settings.buy_collectionable == 1 &&
                     !admin &&
                     (selectedCollection.max == 0 ||
-                      selectedCollection.max > getCollectionNumber(selectedCollection.id))
+                      selectedCollection.max >
+                        getCollectionNumber(selectedCollection.id))
                   "
                   class="button is-dark mb-1"
                   @click="buyCollectionablePack(selectedCollection.id)"
@@ -1258,7 +1288,9 @@
                     "
                   >
                     <span
-                      v-if="grade.type == 1 && grade.rubric_id && grade.pivot.grade"
+                      v-if="
+                        grade.type == 1 && grade.rubric_id && grade.pivot.grade
+                      "
                       class="cursor-pointer"
                       @click="loadRubric(grade)"
                     >
@@ -3386,6 +3418,9 @@ export default {
         "image/png",
         0.8
       );
+    },
+    orderedBattles: function (battles) {
+      return _.orderBy(battles, "pivot.created_at", "desc");
     },
     orderedCollectionables: function (collectionables) {
       return _.orderBy(collectionables, "type", "asc");

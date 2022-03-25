@@ -44,7 +44,7 @@ class BattleController extends Controller
             $student->setProperty("xp", $monster->reward_xp, true, "battle");
             $student->setProperty("gold", $monster->reward_gold, true, "battle");
         }
-        $student->battles()->sync([request()->battle => ['passed' => request()->passed, 'state' => json_encode(['time' => request()->time, 'fails'=> request()->fails,'answers' => request()->answers,'monster_hp' => request()->monsterHp])]], false);
+        $student->battles()->sync([request()->battle => ['passed' => request()->passed, 'state' => json_encode(['question' => request()->currentQuestion, 'time' => request()->time, 'fails'=> request()->fails,'answers' => request()->answers,'monster_hp' => request()->monsterHp])]], false);
         
     }
     public function getInfo($code) {
