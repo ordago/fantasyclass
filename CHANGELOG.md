@@ -1,4 +1,9 @@
 # Changelog
+## v2.2 Beta (28/03/2022)
+### Changed
+- Fix events creation.
+- Fix event life decrease in challenges.
+
 ## v2.1 Beta (25/03/2022)
 ### Added
 - Individual battles.
