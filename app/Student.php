@@ -415,7 +415,13 @@ class Student extends Model implements HasMedia
     {
         $boost = $this->getBoost();
 
-        $this->setProperty('hp', $mult * ($challenge->hp +  $challenge->hp * $boost['hp'] / 100), true, 'challenge', true);
+        if($challenge->hp){
+            if($challenge->hp < 0) {
+                $this->setProperty('hp', $mult * $challenge->hp, true, 'challenge', true);
+            } else {
+                $this->setProperty('hp', $mult * ($challenge->hp +  $challenge->hp * $boost['hp'] / 100), true, 'challenge', true);
+            }
+        }
         $this->setProperty('xp', $mult * ($challenge->xp +  $challenge->xp * $boost['xp'] / 100), true, 'challenge', true);
         $this->setProperty('gold', $mult * ($challenge->gold +  $challenge->gold * $boost['gold'] / 100), true, 'challenge', true);
         if (count($cards) && $mult == 1) {

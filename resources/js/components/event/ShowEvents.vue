@@ -255,7 +255,7 @@ export default {
           break;
         case "random_student":
           this.event.type = 3;
-          this.event.options = { type: "win_life_all" };
+          this.event.options = { type: "random_student" };
           break;
         case "random_type_character":
           this.event.type = 7;
