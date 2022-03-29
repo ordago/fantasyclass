@@ -1628,7 +1628,7 @@ class ClassroomsStudentController extends Controller
             $student = Functions::getCurrentStudent($class, []);
         }
 
-        if ($student->hp == 0 || settings()->get('skill_enabled', 0) == 0 || $student->skills->count() >= 4)
+        if ($student->hp == 0 || settings()->get('skill_enabled', 0) == 0 || $student->fresh()->skills->count() >= 4)
             return false;
 
         $price = settings()->get('skill_price', 600);
