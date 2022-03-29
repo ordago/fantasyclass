@@ -88,7 +88,7 @@ export default {
     },
     onChange(event) {
       console.log(event.type);
-      if(!event.type.toLowerCase().includes("xls")) {
+      if(!event.type.toLowerCase().includes("xls") && !event.type.toLowerCase().includes("sheet")) {
         this.$toast(this.trans.get("success_error.file_type"), {type: "error"})
         return false;  
       }
